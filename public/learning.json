@@ -1,10 +1,10 @@
 {
   "date": "2026-06-17",
-  "generatedAt": "2026-06-17T12:54:28.621Z",
+  "generatedAt": "2026-06-17T13:49:28.001Z",
   "moversChecked": 17,
-  "caught": 4,
-  "missed": 13,
-  "catchRate": 23.5,
+  "caught": 3,
+  "missed": 14,
+  "catchRate": 17.6,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
@@ -30,7 +30,7 @@
     },
     {
       "reason": "setup present but ranked below the cut — widen coverage",
-      "count": 2
+      "count": 3
     },
     {
       "reason": "RSI already hot (>N) — excluded by gate",
@@ -61,7 +61,7 @@
       "changePct": 7.2,
       "reasons": [
         "not above rising 20/50 EMA yet",
-        "pre-move score 15 below gate 36",
+        "pre-move score 22 below gate 40",
         "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
@@ -113,7 +113,7 @@
       "changePct": 5.9,
       "reasons": [
         "not above rising 20/50 EMA yet",
-        "pre-move score 20 below gate 36",
+        "pre-move score 22 below gate 40",
         "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
@@ -124,6 +124,8 @@
       "changePct": 5.8,
       "reasons": [
         "not above rising 20/50 EMA yet",
+        "pre-move score 27 below gate 40",
+        "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
@@ -136,12 +138,18 @@
       ]
     },
     {
+      "symbol": "GVT&D",
+      "name": "GE Vernova T&D India Ltd.",
+      "changePct": 5.8,
+      "reasons": [
+        "setup present but ranked below the cut — widen coverage"
+      ]
+    },
+    {
       "symbol": "WOCKPHARMA",
       "name": "Wockhardt Ltd.",
       "changePct": 5.4,
       "reasons": [
-        "pre-move score 33 below gate 36",
-        "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
@@ -156,7 +164,7 @@
   ],
   "adjustments": [],
   "tuning": {
-    "minMoveScore": 36
+    "minMoveScore": 40
   },
   "note": "Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such."
 }

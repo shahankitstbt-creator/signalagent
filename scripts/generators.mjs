@@ -20,6 +20,8 @@ export const GEN_META = [
   { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#DB2777', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
   { id: 'option_buildup', label: 'Option Chain Build-Up', color: '#DC2626', desc: 'Live NIFTY/BANKNIFTY option OI via Angel One — PCR, support/resistance' },
 ]
+// id → meta lookup (robust against reordering — never index GEN_META by position)
+const M = Object.fromEntries(GEN_META.map(g => [g.id, g]))
 
 // ── helpers on the OHLCV {o,h,l,c,v} shape ──
 function mfi(d, len = 14) {
@@ -65,29 +67,34 @@ function mk(gen, st, a, reason, accuracy, addDays) {
 
 // ── stock-based generators. ctx = { st, d, a, f, addDays } ──
 const STOCK_GENS = {
-  vol_accum: ({ st, a, addDays }) => (a.squeeze || a.volBuildup) && a.higherLows && a.emaStack
-    ? mk(GEN_META[0], st, a, `${a.setupType}: ${a.precursors.slice(0, 3).join('; ')}`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null,
+  // Volume + Accumulation: real big-money footprint (RVOL, up/down vol, dry-up, stealth)
+  vol_accum: ({ st, a, addDays }) => {
+    const V = a.vol || {}
+    const strong = (V.volScore >= 40) || V.stealthAccum || (V.accRatio >= 1.3 && (V.vol1GtVol5 || V.dryUp))
+    return strong && a.emaStack && a.higherLows
+      ? mk(M.vol_accum, st, a, `Accumulation (vol ${V.volScore}/100): ${V.signals.slice(0, 3).join('; ')}`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+  },
   vp_fib: ({ st, d, a, addDays }) => {
     const vp = volProfile(d); const swingLo = Math.min(...d.l.slice(-40)), swingHi = Math.max(...d.h.slice(-40))
     const fibs = [0.382, 0.5, 0.618, 0.786].map(f => swingHi - (swingHi - swingLo) * f)
     const nearPOC = Math.abs(a.price - vp.poc) / a.price < 0.012
     const nearFib = fibs.some(fp => Math.abs(a.price - fp) / a.price < 0.012)
     return nearPOC && nearFib && a.emaStack
-      ? mk(GEN_META[1], st, a, `At POC ₹${round(vp.poc)} + Fib confluence — institutional magnet zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+      ? mk(M.vp_fib, st, a, `At POC ₹${round(vp.poc)} + Fib confluence — institutional magnet zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
   },
   money_flow: ({ st, d, a, addDays }) => {
     const m = mfi(d), ob = obv(d), i = d.c.length - 1
     const mfiRising = m[i] != null && m[i] > 50 && m[i] < 80 && m[i] > (m[i - 3] ?? 0)
     const obvRising = ob[i] > ob[i - 5]
     return mfiRising && obvRising && a.emaStack && a.price > a.entry * 0.999
-      ? mk(GEN_META[2], st, a, `MFI ${round(m[i], 0)} rising + OBV up — money flowing in`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+      ? mk(M.money_flow, st, a, `MFI ${round(m[i], 0)} rising + OBV up — money flowing in`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
   },
   harmonic: ({ st, d, a, addDays }) => {
     const pat = (() => { try { return detectPatterns(d) } catch { return null } })()
     if ((a.harmonic?.bullish || pat) && a.bullish && a.emaStack) {
       const name = a.harmonic?.bullish ? a.harmonic.pattern : pat.pattern
       const extra = pat && a.harmonic?.bullish && pat.pattern !== a.harmonic.pattern ? ` + ${pat.pattern}` : ''
-      return mk(GEN_META[4], st, a, `Bullish ${name}${extra} — pattern breakout/continuation zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
+      return mk(M.harmonic, st, a, `Bullish ${name}${extra} — pattern breakout/continuation zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
     }
     return null
   },
@@ -96,7 +103,7 @@ const STOCK_GENS = {
     const ok = x => x === 'up' || x === 'stable'
     const q = ok(f.promoter.status) && (ok(f.fii.status) || ok(f.dii.status)) && f.pledge?.low
     return q && a.emaStack
-      ? mk(GEN_META[3], st, a, `Quality: Promoter ${f.promoter.status}, FII ${f.fii.status}, DII ${f.dii.status}, Pledge ${f.pledge?.pct ?? 0}%`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+      ? mk(M.multibagger, st, a, `Quality: Promoter ${f.promoter.status}, FII ${f.fii.status}, DII ${f.dii.status}, Pledge ${f.pledge?.pct ?? 0}%`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
   },
 }
 

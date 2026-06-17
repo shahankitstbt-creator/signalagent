@@ -99,6 +99,13 @@ function bbWidthSeries(c, len = 20) {
   return out
 }
 
+// OBV slope: is on-balance volume higher than 5 bars ago?
+function obvSlope(c, v) {
+  let o = 0; const ser = [0]
+  for (let k = 1; k < c.length; k++) { o += c[k] > c[k - 1] ? v[k] : c[k] < c[k - 1] ? -v[k] : 0; ser.push(o) }
+  return ser[ser.length - 1] > ser[Math.max(0, ser.length - 6)]
+}
+
 // ── pre-move detection: find stocks coiled/poised to move BEFORE they run ──
 function analyze(d) {
   const { o, h, l, c, v, time } = d
@@ -106,9 +113,32 @@ function analyze(d) {
   const rsi = rsiSeries(c), atr = atrSeries(h, l, c)
   const a = atr[i] || c[i] * 0.02
   const e20 = emaSeries(c, 20), e50 = emaSeries(c, 50)
+  // ── VOLUME / BIG-MONEY ACCUMULATION footprint (detect inflow BEFORE the move) ──
   const vol5 = avg(v.slice(-6, -1)), vol5prev = avg(v.slice(-11, -6))
+  const vol20 = avg(v.slice(-21, -1)) || vol5
+  const rvol = vol20 ? +(v[i] / vol20).toFixed(2) : 1                       // relative volume vs 20-period avg
   const volGt5d = v[i] > vol5
   const volIncreasing = vol5 > vol5prev && v[i] >= v[i - 1]
+  const vol5GtAvg = vol5 > vol20 * 1.1                                      // last-5 volume > average  (#1)
+  const vol1GtVol5 = v[i] > vol5 * 1.3                                      // 1-day volume > 5-day avg surge  (#2)
+  let upVol = 0, dnVol = 0; const upV = [], dnV = []
+  for (let k = Math.max(1, n - 20); k < n; k++) { if (c[k] >= c[k - 1]) { upVol += v[k]; if (k >= n - 10) upV.push(v[k]) } else { dnVol += v[k]; if (k >= n - 10) dnV.push(v[k]) } }
+  const accRatio = dnVol ? +(upVol / dnVol).toFixed(2) : +upVol.toFixed(0) // up vs down volume = accumulation pressure
+  const volBuildup = upVol > dnVol * 1.1
+  const dryUp = upV.length && dnV.length && avg(upV) > avg(dnV) * 1.5       // dip-volume dries up, rally-volume expands
+  const priceFlat5 = i >= 5 && c[i - 5] ? Math.abs((c[i] - c[i - 5]) / c[i - 5]) < 0.03 : false
+  const obvUp = obvSlope(c, v)
+  const stealthAccum = priceFlat5 && vol5 > vol5prev * 1.2 && accRatio > 1.2 // volume in BEFORE price moves
+  let volScore = 0; const volSignals = []
+  const vadd = (cond, pts, label) => { if (cond) { volScore += pts; volSignals.push(label) } }
+  vadd(vol5GtAvg, 18, `5-day volume > 20-day average (RVOL ${rvol}×)`)
+  vadd(vol1GtVol5, 18, `1-day volume ${(v[i] / (vol5 || 1)).toFixed(1)}× the 5-day average — surge`)
+  vadd(accRatio >= 1.3, 22, `Up/down volume ${accRatio}× — accumulation pressure`)
+  vadd(dryUp, 15, 'Volume dries up on dips, expands on rallies (strong hands holding)')
+  vadd(stealthAccum, 20, 'Stealth accumulation — volume rising while price still flat')
+  vadd(obvUp, 10, 'OBV rising — on-balance volume confirms net inflow')
+  volScore = Math.min(100, volScore)
+  const vol = { rvol, vol5GtAvg, vol1GtVol5, accRatio, dryUp, stealthAccum, obvUp, volScore, signals: volSignals }
   const rsiVal = rsi[i] ?? 50
   const rsiRising = rsiVal > (rsi[i - 3] ?? rsiVal)
   const rsiBreakoutReady = rsiVal > 50 && rsiVal < 68 && rsiRising
@@ -126,9 +156,6 @@ function analyze(d) {
   const distToHigh = (high20 - c[i]) / c[i]
   const nearBreakout = distToHigh < 0.03 && distToHigh > -0.005 // hugging 20-day high
   const emaStack = c[i] > e20[i] && e20[i] > e50[i] && e20[i] > e20[i - 3]
-  let upVol = 0, dnVol = 0
-  for (let k = Math.max(1, n - 10); k < n; k++) c[k] >= c[k - 1] ? upVol += v[k] : dnVol += v[k]
-  const volBuildup = upVol > dnVol * 1.1
   const mom20 = n > 21 ? ((c[i] - c[i - 20]) / c[i - 20]) * 100 : 0
   const contraction = atr[i] != null && atr[i - 15] != null && atr[i] < atr[i - 15]
   const pctOf52 = c[i] / Math.max(...h.slice(-250))
@@ -139,12 +166,14 @@ function analyze(d) {
   add(nearBreakout, 18, `Hugging 20-day high (${(distToHigh * 100).toFixed(1)}% below)`)
   add(emaStack, 15, 'Above rising 20 & 50 EMA')
   add(rsiBreakoutReady, 12, `RSI ${rsiVal.toFixed(0)} building (not overbought)`)
-  add(volBuildup, 10, 'Accumulation — up-day volume dominates')
+  add(stealthAccum, 14, 'Stealth volume accumulation — money in before the move')
+  add(accRatio >= 1.3, 10, `Up/down volume ${accRatio}× (accumulation)`)
   add(higherLows, 10, 'Higher lows (ascending base)')
   add(mom20 > 3, 8, `Positive 20-day momentum +${mom20.toFixed(0)}%`)
+  add(vol1GtVol5, 7, `1-day volume surge (${rvol}× RVOL)`)
   add(contraction, 5, 'Range contraction')
   add(pctOf52 > 0.9, 5, 'Near 52-week high')
-  add(volGt5d, 5, 'Volume > 5-day average')
+  add(vol5GtAvg, 5, '5-day volume > 20-day average')
   ms = Math.min(100, ms)
 
   const setupType = squeeze && nearBreakout ? 'Squeeze breakout'
@@ -173,7 +202,7 @@ function analyze(d) {
     squeeze, nearBreakout, emaStack, volBuildup, higherLows, mom20: round(mom20, 1),
     moveScore: Math.round(ms), setupType, precursors: pre, bullish,
     entry: round(entry), sl: round(sl), targets: targets.map(t => round(t)), rr: round(rr, 2),
-    bt, etaDays: [eta1, eta2, eta3], lastTime: time[i],
+    bt, etaDays: [eta1, eta2, eta3], lastTime: time[i], vol,
   }
 }
 const avg = arr => arr.reduce((a, b) => a + b, 0) / (arr.length || 1)
