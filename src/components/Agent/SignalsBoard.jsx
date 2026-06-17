@@ -3,6 +3,8 @@ import { useViewStore } from '../../store/viewStore'
 import { useChartStore } from '../../store/chartStore'
 
 const confColor = c => c >= 80 ? 'text-green' : c >= 65 ? 'text-cyan' : c >= 50 ? 'text-yellow' : 'text-txt-sec'
+// hex → rgba tint for the multi-color column theming
+const tint = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})` }
 
 export default function SignalsBoard() {
   const [board, setBoard] = useState(null)
@@ -18,15 +20,15 @@ export default function SignalsBoard() {
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
-      <div className="shrink-0 px-5 py-3 border-b border-border bg-bg-panel flex items-center gap-4">
+      <div className="shrink-0 px-5 py-3 border-b border-border bg-bg-panel flex items-center gap-4 elev">
         <div>
-          <div className="mono text-lg font-bold text-accent">🎯 Signal Board</div>
-          <div className="mono text-[11px] text-txt-sec">{total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green">● live</span></div>
+          <div className="mono text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
+          <div className="mono text-[11px] text-txt-sec">{total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span></div>
         </div>
-        <button onClick={load} className="mono text-xs text-txt-sec hover:text-txt">⟳ refresh</button>
+        <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳ refresh</button>
         <div className="ml-auto flex gap-2">
-          <button onClick={() => setView('agent')} className="mono text-xs px-3 py-1.5 rounded bg-bg-card border border-border hover:border-accent">📣 Content</button>
-          <button onClick={() => setView('chart')} className="mono text-xs px-3 py-1.5 rounded bg-bg-card border border-border hover:border-accent">📈 Chart</button>
+          <button onClick={() => setView('agent')} className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📣 Content</button>
+          <button onClick={() => setView('chart')} className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📈 Chart</button>
         </div>
       </div>
 
@@ -36,12 +38,13 @@ export default function SignalsBoard() {
       <div className="flex-1 overflow-x-auto overflow-y-hidden">
         <div className="flex gap-3 p-3 h-full" style={{ minWidth: 'max-content' }}>
           {gens.map(g => (
-            <div key={g.id} className="w-[300px] shrink-0 flex flex-col bg-bg-panel rounded-lg border border-border elev">
-              <div className="px-3 py-2 border-b border-border flex items-center gap-2" style={{ borderTopColor: g.color, borderTopWidth: 3 }}>
-                <span className="mono text-xs font-bold" style={{ color: g.color }}>{g.label}</span>
-                <span className="mono text-[10px] px-1.5 rounded bg-bg-card text-txt-sec ml-auto">{g.count}</span>
+            <div key={g.id} className="w-[304px] shrink-0 flex flex-col rounded-xl border border-border elev overflow-hidden" style={{ background: tint(g.color, 0.04) }}>
+              <div className="px-3 py-2.5 flex items-center gap-2" style={{ background: tint(g.color, 0.13), borderBottom: `2px solid ${g.color}` }}>
+                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: g.color }} />
+                <span className="mono text-xs font-bold leading-tight" style={{ color: g.color }}>{g.label}</span>
+                <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white ml-auto shrink-0 font-bold" style={{ background: g.color }}>{g.count}</span>
               </div>
-              <div className="px-3 py-1.5 text-[10px] mono text-txt-muted border-b border-border/50 leading-tight">{g.desc}</div>
+              <div className="px-3 py-1.5 text-[10px] mono text-txt-muted leading-tight">{g.desc}</div>
               <div className="flex-1 overflow-y-auto p-2 space-y-2">
                 {g.signals.length === 0 && <div className="mono text-[11px] text-txt-muted p-1">No signals today.</div>}
                 {g.signals.map((s, i) => <Card key={s.symbol + i} s={s} color={g.color} setView={setView} />)}
@@ -63,7 +66,7 @@ function Card({ s, color, setView }) {
   if (s.placeholder || s.isAstro || s.isOption) {
     const tone = s.biasTone === 'up' ? 'text-green' : s.biasTone === 'down' ? 'text-red' : 'text-yellow'
     return (
-      <div className="rounded-lg border border-border bg-bg-card p-2 elev">
+      <div className="rounded-lg border border-border bg-bg-card p-2 elev card-hover" style={{ borderLeft: `3px solid ${color}` }}>
         <div className="flex items-center gap-1.5">
           <span className="mono text-xs font-bold text-txt">{s.symbol}</span>
           {s.method && <span className="mono text-[9px] px-1 rounded bg-bg-panel text-txt-sec">{s.method}</span>}
@@ -87,7 +90,7 @@ function Card({ s, color, setView }) {
   }
   const isBuy = (s.direction || 'LONG') === 'LONG'
   return (
-    <div className="rounded-lg border border-border bg-bg-card p-2 elev">
+    <div className="rounded-lg border border-border bg-bg-card p-2 elev card-hover" style={{ borderLeft: `3px solid ${color}` }}>
       <div className="flex items-center gap-1.5">
         <button onClick={chart} className="mono text-sm font-bold text-txt hover:text-accent">{s.symbol}</button>
         <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>

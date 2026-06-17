@@ -32,11 +32,16 @@ body {
   font-size: 13px;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 ::-webkit-scrollbar { width: 9px; height: 9px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D4DBE8; border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: #BCC6D8; }
-/* soft elevation for cards/panels in the light theme */
-.elev { box-shadow: 0 1px 2px rgba(20,30,55,.04), 0 1px 3px rgba(20,30,55,.06); }
+::-webkit-scrollbar-thumb { background: #CBD5E6; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #AEBBD2; }
+/* soft, layered elevation for the light theme */
+.elev { box-shadow: 0 1px 2px rgba(20,30,55,.04), 0 2px 6px rgba(20,30,55,.05); }
+.elev-lg { box-shadow: 0 2px 4px rgba(20,30,55,.05), 0 8px 24px rgba(20,30,55,.08); }
+.card-hover { transition: box-shadow .15s ease, transform .15s ease; }
+.card-hover:hover { box-shadow: 0 4px 12px rgba(20,30,55,.10); transform: translateY(-1px); }
+.brand-grad { background: linear-gradient(90deg, #2962FF, #7C3AED 55%, #DB2777); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }

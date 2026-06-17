@@ -9,14 +9,14 @@ const round = (x, d = 2) => x == null ? null : +(+x).toFixed(d)
 const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i = 1; i < a.length; i++) o.push(a[i] * k + o[i - 1] * (1 - k)); return o }
 
 export const GEN_META = [
-  { id: 'vol_accum', label: 'Volume + Accumulation', color: '#00C853', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
-  { id: 'vp_fib', label: 'Volume Profile + Fib', color: '#FFB300', desc: 'Price at a high-volume node (POC) coinciding with a Fib level' },
-  { id: 'money_flow', label: 'Money Flow', color: '#00E5FF', desc: 'MFI & OBV rising with price — money flowing in' },
-  { id: 'multibagger', label: 'Multibagger Quality', color: '#AA00FF', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
-  { id: 'harmonic', label: 'Harmonic Patterns', color: '#FF6D00', desc: 'Bullish harmonic / ABC retrace completing' },
-  { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#B388FF', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP — real positions, traditional reading (no edge claim)' },
-  { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#E040FB', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
-  { id: 'option_buildup', label: 'Option Chain Build-Up', color: '#FF1744', desc: 'Live NIFTY option OI via Angel One — PCR, support/resistance' },
+  { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
+  { id: 'vp_fib', label: 'Volume Profile + Fib', color: '#D97706', desc: 'Price at a high-volume node (POC) coinciding with a Fib level' },
+  { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
+  { id: 'multibagger', label: 'Multibagger Quality', color: '#7C3AED', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
+  { id: 'harmonic', label: 'Harmonic & Chart Patterns', color: '#EA580C', desc: 'Bullish harmonic / chart-pattern breakout completing' },
+  { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#9333EA', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP — real positions, traditional reading (no edge claim)' },
+  { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#DB2777', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
+  { id: 'option_buildup', label: 'Option Chain Build-Up', color: '#DC2626', desc: 'Live NIFTY/BANKNIFTY option OI via Angel One — PCR, support/resistance' },
 ]
 
 // ── helpers on the OHLCV {o,h,l,c,v} shape ──
