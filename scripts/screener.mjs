@@ -19,10 +19,18 @@ import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
 
+// timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
+const TF = {
+  daily: { interval: '1d', range: '1y', label: 'Daily' },
+  weekly: { interval: '1wk', range: '5y', label: 'Weekly' },
+  intraday: { interval: '60m', range: '1mo', label: 'Intraday 1h' },
+}
+
 const ARGS = process.argv.slice(2)
 const FULL = ARGS.includes('--full')
 const TOP = +(ARGS[ARGS.indexOf('--top') + 1]) || 50
 const LIMIT = ARGS.includes('--limit') ? +ARGS[ARGS.indexOf('--limit') + 1] : 0
+const TFARG = ARGS.includes('--tf') ? ARGS[ARGS.indexOf('--tf') + 1] : 'daily'
 
 // NSE archive CSVs (skipped automatically if a name 404s)
 const INDEX_CSV = {
@@ -304,45 +312,52 @@ function computeBreadth(scored) {
 }
 
 // ── main ──
-export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
+export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' } = {}) {
   const t0 = Date.now()
-  console.log('Building universe…')
+  const cfg = TF[tf] || TF.daily
+  const isDaily = tf === 'daily'
+  console.log(`Building universe… [${cfg.label}]`)
   let uni = await buildUniverse(full)
   // expose the full universe to the UI for stock search/watchlist
   mkdirSync('public', { recursive: true })
-  writeFileSync('public/universe.json', JSON.stringify(uni.map(s => ({ symbol: s.symbol, name: s.name, sector: s.sector, indices: s.indices }))))
+  if (isDaily) writeFileSync('public/universe.json', JSON.stringify(uni.map(s => ({ symbol: s.symbol, name: s.name, sector: s.sector, indices: s.indices }))))
   if (limit) uni = uni.slice(0, limit)
-  console.log(`Universe: ${uni.length} stocks. Fetching OHLCV…`)
+  console.log(`Universe: ${uni.length} stocks. Fetching ${cfg.interval} OHLCV…`)
 
   let count = 0
   const scored = (await pool(uni, 8, async (st) => {
-    const d = await ohlcv(st.symbol)
+    const d = await ohlcv(st.symbol, cfg.interval, cfg.range)
     if (!d) return null
     const s = analyze(d)
     let eng = null; try { eng = runEngine(d) } catch {}
     return { ...st, ...s, _eng: eng, _d: d }
   }, (done, total) => console.log(`  OHLCV ${done}/${total}`))).filter(Boolean)
 
-  // ── SIGNAL ENGINE: pool backtests per logic, gate >=75%, emit today's signals ──
-  buildSignals(scored)
+  // daily-only aggregates (legacy signal-engine board + breadth) — skip on weekly/intraday
+  if (isDaily) {
+    buildSignals(scored)
+    const breadth = computeBreadth(scored)
+    writeFileSync('public/breadth.json', JSON.stringify({ generatedAt: new Date().toISOString(), breadth }))
+  }
 
-  // breadth across the whole scanned universe (advance/decline per index)
-  const breadth = computeBreadth(scored)
-  writeFileSync('public/breadth.json', JSON.stringify({ generatedAt: new Date().toISOString(), breadth }))
+  const today = new Date()
+  const fmtDate = d => d.toISOString().slice(0, 10)
+  // forecast-date formatter, timeframe-aware (daily=trading days, weekly=weeks, intraday=hours)
+  const addBiz = n => { const d = new Date(today); let a = 0; const t = Math.max(1, Math.round(n)); while (a < t) { d.setDate(d.getDate() + 1); const wd = d.getDay(); if (wd !== 0 && wd !== 6) a++ } return fmtDate(d) }
+  const addDays = tf === 'weekly' ? (n => { const d = new Date(today); d.setDate(d.getDate() + Math.max(1, Math.round(n)) * 7); return fmtDate(d) })
+    : tf === 'intraday' ? (n => `~${Math.max(1, Math.round(n))}h`)
+      : addBiz
 
-  // candidates = bullish bias + meaningful pre-move score (gate is self-tuned), ranked by impending-move likelihood
+  // candidates = bullish bias + meaningful pre-move score (self-tuned gate)
   const tuning = loadTuning()
   const cand = scored.filter(s => s.bullish && s.moveScore >= tuning.minMoveScore && s.rr >= 0.8)
     .sort((a, b) => b.moveScore - a.moveScore || (b.bt.hitRate ?? 0) - (a.bt.hitRate ?? 0))
-  console.log(`Pre-move candidates: ${cand.length}. Fetching fundamentals for top ${top}…`)
-
   const finalists = cand.slice(0, top)
-  await pool(finalists, 4, async (s) => { s._fund = await fundamentals(s.symbol); await sleep(250) },
-    (d, t) => console.log(`  fundamentals ${d}/${t}`))
-
-  const today = new Date()
-  // business-day-aware forecast date (skip weekends) — sharper, realistic target dates
-  const addDays = (n) => { const d = new Date(today); let added = 0; const tgt = Math.max(1, Math.round(n)); while (added < tgt) { d.setDate(d.getDate() + 1); const wd = d.getDay(); if (wd !== 0 && wd !== 6) added++ } return d.toISOString().slice(0, 10) }
+  // fundamentals (multibagger) only on daily — too heavy to scrape on each weekly/intraday run
+  if (isDaily) {
+    console.log(`Pre-move candidates: ${cand.length}. Fetching fundamentals for top ${top}…`)
+    await pool(finalists, 4, async (s) => { s._fund = await fundamentals(s.symbol); await sleep(250) }, (d, t) => console.log(`  fundamentals ${d}/${t}`))
+  }
 
   const picks = finalists.map(s => {
     const sc = scorePick(s, s._fund)
@@ -369,25 +384,30 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
 
   // ── SIGNAL BOARD (grouped by generator) ──
   const board = await buildBoard(scored, finalists, addDays, today)
-
-  // ── LEDGER: track every signal to win/loss/expired; closed signals leave the board ──
-  const ledger = loadLedger()
   const todayTs = Math.floor(today.getTime() / 1000)
   const todayISO = today.toISOString().slice(0, 10)
-  const barsBySymbol = {}
-  for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
-  for (const g of board) if (TRADE_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
-  evaluate(ledger, barsBySymbol, todayISO, todayTs)
-  // rebuild trade columns from the ledger's OPEN signals (carry forward until closed)
-  for (const g of board) if (TRADE_GENS.has(g.id)) {
-    const act = Object.values(ledger.active).filter(s => s.generator === g.id).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
-    g.signals = act; g.count = act.length
-  }
-  saveLedger(ledger)
-  const tr = trackRecord(ledger, GEN_META)
-  writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
 
-  // ── ⭐ CONFLUENCE: stocks flagged by 2+ generators, Vedic-aligned, with a position-sized plan ──
+  // ── LEDGER (DAILY only): track every signal to win/loss/expired; closed signals leave the board ──
+  let tr = null
+  if (isDaily) {
+    const ledger = loadLedger()
+    const barsBySymbol = {}
+    for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
+    for (const g of board) if (TRADE_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
+    evaluate(ledger, barsBySymbol, todayISO, todayTs)
+    for (const g of board) if (TRADE_GENS.has(g.id)) {
+      const act = Object.values(ledger.active).filter(s => s.generator === g.id).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
+      g.signals = act; g.count = act.length
+    }
+    saveLedger(ledger)
+    tr = trackRecord(ledger, GEN_META)
+    writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
+    const extNote = await fetchExternalGainers()
+    await runSelfImprovement(scored, board, today, ledger, extNote)
+    try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
+  }
+
+  // ── ⭐ CONFLUENCE (all timeframes): stocks flagged by 2+ generators, Vedic-aligned, with a position-sized plan ──
   const dbAssets = Object.fromEntries(dailyBias(today).assets.map(a => [a.id, a]))
   const bySym = {}
   for (const g of board) if (TRADE_GENS.has(g.id)) for (const s of g.signals) (bySym[s.symbol] = bySym[s.symbol] || []).push({ gen: g.label, s })
@@ -415,29 +435,25 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
   const confCol = board.find(g => g.id === 'confluence')
   if (confCol) { confCol.signals = confluence.slice(0, 12); confCol.count = confCol.signals.length }
 
-  // ── DAILY SELF-IMPROVEMENT: which ≥5% movers did we miss, and why → learning.json ──
-  const extNote = await fetchExternalGainers()
-  await runSelfImprovement(scored, board, today, ledger, extNote)
+  // ── write the timeframe board (board-daily/weekly/intraday.json); daily also writes board.json ──
+  const boardJson = JSON.stringify({
+    generatedAt: today.toISOString(), date: todayISO, timeframe: tf, label: cfg.label,
+    note: `${cfg.label} signals. Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).`,
+    trackRecord: tr, generators: board,
+  }, null, 2)
+  writeFileSync(`public/board-${tf}.json`, boardJson)
+  if (isDaily) writeFileSync('public/board.json', boardJson)
+  console.log(`Board [${cfg.label}]:`, board.map(g => `${g.label.split(' ')[0]}:${g.count}`).join(' · '))
 
-  // ── NEWS: top market-news sources → news.json (best-effort RSS) ──
-  try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
-
-  writeFileSync('public/board.json', JSON.stringify({
-    generatedAt: today.toISOString(), date: todayISO,
-    note: 'Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).',
-    trackRecord: tr,
-    generators: board,
-  }, null, 2))
-  console.log('Board:', board.map(g => `${g.label.split(' ')[0]}:${g.count}`).join(' · '))
-
-  mkdirSync('public', { recursive: true })
-  writeFileSync('public/picks.json', JSON.stringify({
-    generatedAt: today.toISOString(),
-    universe: uni.length, scanned: scored.length, candidates: cand.length, count: picks.length,
-    note: 'Confidence = blend of criteria confluence and measured backtest hit-rate. NOT a guaranteed win-rate. Fundamentals are quarterly (screener.in). Curate before trading.',
-    picks,
-  }, null, 2))
-  console.log(`\nWrote public/picks.json — ${picks.length} picks in ${Math.round((Date.now() - t0) / 1000)}s`)
+  if (isDaily) {
+    writeFileSync('public/picks.json', JSON.stringify({
+      generatedAt: today.toISOString(),
+      universe: uni.length, scanned: scored.length, candidates: cand.length, count: picks.length,
+      note: 'Confidence = blend of criteria confluence and measured backtest hit-rate. NOT a guaranteed win-rate. Fundamentals are quarterly (screener.in). Curate before trading.',
+      picks,
+    }, null, 2))
+  }
+  console.log(`\nDone [${cfg.label}] in ${Math.round((Date.now() - t0) / 1000)}s`)
   // NOTE: content (text + branded images) is generated by scripts/contentImages.mjs
   // as one atomic step so content.json always carries image paths. Run post-scan.
 }
@@ -655,5 +671,5 @@ function buildSignals(scored) {
   console.log(`Signals: ${logics.filter(l => l.active).length}/${LOGICS.length} logics >=${MIN_ACCURACY}% → ${signals.length} live signals`)
 }
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('screener.mjs')) {
-  runScan({ full: FULL, top: TOP, limit: LIMIT }).catch(e => { console.error(e); process.exit(1) })
+  runScan({ full: FULL, top: TOP, limit: LIMIT, tf: TFARG }).catch(e => { console.error(e); process.exit(1) })
 }

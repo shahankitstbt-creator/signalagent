@@ -14,14 +14,16 @@ export default function SignalsBoard() {
   const [err, setErr] = useState(null)
   const [tab, setTab] = useState(0)
   const [modal, setModal] = useState(null)
+  const [tf, setTf] = useState('daily')
   const setView = useViewStore(s => s.setView)
   const alertsOn = useHitAlerts(s => s.enabled)
   const enableAlerts = useHitAlerts(s => s.enable)
   const disableAlerts = useHitAlerts(s => s.disable)
   const startAlerts = useHitAlerts(s => s.start)
 
-  const load = () => { setLoading(true); fetch('/board.json?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error('No board yet — runs with the scan'))).then(d => { setBoard(d); setLoading(false) }).catch(e => { setErr(e.message); setLoading(false) }) }
-  useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [])
+  const file = tf === 'daily' ? '/board.json' : `/board-${tf}.json`
+  const load = () => { setLoading(true); setErr(null); fetch(file + '?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error(`No ${tf} board yet — runs with the ${tf} scan`))).then(d => { setBoard(d); setLoading(false) }).catch(e => { setErr(e.message); setBoard(null); setLoading(false) }) }
+  useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [tf])
   useEffect(() => { if (alertsOn) startAlerts() }, [alertsOn, startAlerts])
 
   const gens = board?.generators || []
@@ -44,6 +46,13 @@ export default function SignalsBoard() {
           </div>
         </div>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
+        <div className="flex rounded-lg border border-border overflow-hidden">
+          {[['daily', 'Daily'], ['weekly', 'Weekly'], ['intraday', 'Intraday']].map(([k, lbl]) => (
+            <button key={k} onClick={() => { setTf(k); setTab(0) }}
+              className={`mono text-[11px] px-2.5 py-1.5 ${tf === k ? 'text-white' : 'text-txt-sec hover:text-txt'}`}
+              style={tf === k ? { background: 'linear-gradient(90deg,#2962FF,#7C3AED)' } : {}}>{lbl}</button>
+          ))}
+        </div>
         <div className="ml-auto flex gap-1.5 sm:gap-2">
           <button onClick={() => setModal('learning')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Self-improvement log">🧠</button>
           <button onClick={() => setModal('news')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Market news">📰</button>
