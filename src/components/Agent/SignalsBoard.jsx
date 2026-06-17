@@ -22,7 +22,17 @@ export default function SignalsBoard() {
   const startAlerts = useHitAlerts(s => s.start)
 
   const file = tf === 'daily' ? '/board.json' : `/board-${tf}.json`
-  const load = () => { setLoading(true); setErr(null); fetch(file + '?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error(`No ${tf} board yet — runs with the ${tf} scan`))).then(d => { setBoard(d); setLoading(false) }).catch(e => { setErr(e.message); setBoard(null); setLoading(false) }) }
+  const load = () => {
+    setLoading(true); setErr(null)
+    fetch(file + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(async r => {
+        const txt = await r.text()
+        if (!r.ok || txt.trim().startsWith('<')) throw new Error(`No ${tf} board yet — it generates with the ${tf} scan. Refresh in a moment.`)
+        try { return JSON.parse(txt) } catch { throw new Error('Board is updating — refresh in a moment.') }
+      })
+      .then(d => { setBoard(d); setLoading(false) })
+      .catch(e => { setErr(e.message); setBoard(null); setLoading(false) })
+  }
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [tf])
   useEffect(() => { if (alertsOn) startAlerts() }, [alertsOn, startAlerts])
 
