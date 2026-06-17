@@ -3,13 +3,14 @@ import { useViewStore } from '../../store/viewStore'
 import { useChartStore } from '../../store/chartStore'
 
 const confColor = c => c >= 80 ? 'text-green' : c >= 65 ? 'text-cyan' : c >= 50 ? 'text-yellow' : 'text-txt-sec'
-// hex → rgba tint for the multi-color column theming
 const tint = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})` }
+const isTrade = s => s && s.entry != null && Array.isArray(s.targets) && !s.isAstro && !s.isOption && !s.placeholder
 
 export default function SignalsBoard() {
   const [board, setBoard] = useState(null)
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
+  const [tab, setTab] = useState(0)
   const setView = useViewStore(s => s.setView)
 
   const load = () => { setLoading(true); fetch('/board.json?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error('No board yet — runs with the scan'))).then(d => { setBoard(d); setLoading(false) }).catch(e => { setErr(e.message); setLoading(false) }) }
@@ -17,9 +18,11 @@ export default function SignalsBoard() {
 
   const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
+  const active = gens[tab] || gens[0]
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
+      {/* header */}
       <div className="shrink-0 px-5 py-3 border-b border-border bg-bg-panel flex items-center gap-4 elev">
         <div>
           <div className="mono text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
@@ -32,89 +35,149 @@ export default function SignalsBoard() {
         </div>
       </div>
 
-      {loading && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
+      {/* nav tabs — one per generator (the card title is the tab) */}
+      <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border overflow-x-auto">
+        {gens.map((g, i) => {
+          const on = i === tab
+          return (
+            <button key={g.id} onClick={() => setTab(i)}
+              className="mono text-xs whitespace-nowrap px-3 py-2 rounded-t-lg border-b-2 transition-colors"
+              style={on
+                ? { color: g.color, borderBottomColor: g.color, background: tint(g.color, 0.10), fontWeight: 700 }
+                : { color: 'var(--color-txt-sec)', borderBottomColor: 'transparent' }}>
+              {g.label}
+              <span className="ml-1.5 px-1.5 rounded-full text-[10px]" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {loading && !board && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
       {err && <div className="p-4 mono text-sm text-yellow">{err}</div>}
 
-      <div className="flex-1 overflow-x-auto overflow-y-hidden">
-        <div className="flex gap-3 p-3 h-full" style={{ minWidth: 'max-content' }}>
-          {gens.map(g => (
-            <div key={g.id} className="w-[304px] shrink-0 flex flex-col rounded-xl border border-border elev overflow-hidden" style={{ background: tint(g.color, 0.04) }}>
-              <div className="px-3 py-2.5 flex items-center gap-2" style={{ background: tint(g.color, 0.13), borderBottom: `2px solid ${g.color}` }}>
-                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: g.color }} />
-                <span className="mono text-xs font-bold leading-tight" style={{ color: g.color }}>{g.label}</span>
-                <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white ml-auto shrink-0 font-bold" style={{ background: g.color }}>{g.count}</span>
-              </div>
-              <div className="px-3 py-1.5 text-[10px] mono text-txt-muted leading-tight">{g.desc}</div>
-              <div className="flex-1 overflow-y-auto p-2 space-y-2">
-                {g.signals.length === 0 && <div className="mono text-[11px] text-txt-muted p-1">No signals today.</div>}
-                {g.signals.map((s, i) => <Card key={s.symbol + i} s={s} color={g.color} setView={setView} />)}
-              </div>
-            </div>
-          ))}
+      {/* active tab content */}
+      {active && (
+        <div className="flex-1 overflow-y-auto">
+          <div className="px-5 py-2.5 text-[11px] mono text-txt-sec border-b border-border" style={{ background: tint(active.color, 0.05) }}>
+            <span className="font-bold" style={{ color: active.color }}>{active.label}</span> — {active.desc}
+          </div>
+          {active.signals.length === 0
+            ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
+            : isTrade(active.signals[0])
+              ? <TradeTable signals={active.signals} color={active.color} setView={setView} />
+              : <InfoList signals={active.signals} color={active.color} setView={setView} />}
         </div>
-      </div>
+      )}
     </div>
   )
 }
 
-function Card({ s, color, setView }) {
+function TradeTable({ signals, color, setView }) {
+  const [open, setOpen] = useState(-1)
+  const rows = [...signals].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0))
+  return (
+    <table className="w-full mono text-xs border-collapse">
+      <thead>
+        <tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+          {['Symbol', 'Signal', 'LTP', 'Entry', 'Stop', 'T1', 'T2', 'T3', 'Conf', '']
+            .map((h, i) => <th key={i} className={`px-3 py-2 font-semibold ${i >= 2 && i <= 8 ? 'text-right' : 'text-left'}`}>{h}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((s, i) => {
+          const isBuy = (s.direction || 'LONG') === 'LONG'
+          const t = s.targets
+          return (
+            <RowGroup key={s.symbol + i} s={s} i={i} isBuy={isBuy} t={t} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} setView={setView} />
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
+function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
+  const [copied, setCopied] = useState(false)
+  const openSymbol = useChartStore(st => st.openSymbol)
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
+  return (
+    <>
+      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
+        <td className="px-3 py-2 text-right text-txt-sec">{s.ltp}</td>
+        <td className="px-3 py-2 text-right">{s.entry}</td>
+        <td className="px-3 py-2 text-right text-red">{s.sl}</td>
+        <td className="px-3 py-2 text-right text-green">{t[0]?.price}</td>
+        <td className="px-3 py-2 text-right text-green">{t[1]?.price}</td>
+        <td className="px-3 py-2 text-right text-green">{t[2]?.price}</td>
+        <td className={`px-3 py-2 text-right font-bold ${confColor(s.confidence)}`}>{s.confidence}%</td>
+        <td className="px-3 py-2 text-right">
+          <button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button>
+        </td>
+      </tr>
+      {open && (
+        <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
+          <td colSpan={10} className="px-5 py-3">
+            <div className="text-txt-sec mb-2">{s.reason}</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
+              <Field label="Entry" value={`₹${s.entry}`} />
+              <Field label="Stop loss" value={`₹${s.sl} (${s.slPct}%)`} tone="text-red" />
+              <Field label="R:R" value={`1:${s.rr}`} />
+              <Field label={s.accuracy != null ? `Backtested (n=${s.backtestTrades})` : 'Setup score'} value={s.accuracy != null ? `~${s.accuracy}%` : `${s.confidence}/100`} tone="text-cyan" />
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              {t.map((x, k) => <Field key={k} label={`Target ${k + 1} · by ${x.by}`} value={`₹${x.price} (+${x.pct}%)`} tone="text-green" />)}
+            </div>
+            <div className="flex gap-2">
+              <button onClick={copy} className="mono text-[11px] px-3 py-1.5 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied caption' : '📋 Copy social post'}</button>
+              <button onClick={chart} className="mono text-[11px] px-3 py-1.5 rounded-lg border border-border hover:border-accent">📈 Open chart</button>
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
+  )
+}
+function Field({ label, value, tone }) {
+  return <div><div className="text-[10px] text-txt-muted uppercase">{label}</div><div className={`text-xs font-bold ${tone || 'text-txt'}`}>{value}</div></div>
+}
+
+// astro / option / timing tabs — richer info cards in a roomy grid
+function InfoList({ signals, color, setView }) {
+  return (
+    <div className="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
+      {signals.map((s, i) => <InfoCard key={s.symbol + (s.method || '') + i} s={s} color={color} setView={setView} />)}
+    </div>
+  )
+}
+function InfoCard({ s, color, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
   const copy = () => { navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
-  const chart = () => { const sym = s.symbol === 'NIFTY' ? '^NSEI' : s.symbol === 'GOLD' ? 'GC=F' : s.symbol + '.NS'; openSymbol(s.symbol === 'NIFTY' || s.symbol === 'GOLD' ? 'indices' : 'stocks', sym); setView('chart') }
-
-  if (s.placeholder || s.isAstro || s.isOption) {
-    const tone = s.biasTone === 'up' ? 'text-green' : s.biasTone === 'down' ? 'text-red' : 'text-yellow'
-    return (
-      <div className="rounded-lg border border-border bg-bg-card p-2 elev card-hover" style={{ borderLeft: `3px solid ${color}` }}>
-        <div className="flex items-center gap-1.5">
-          <span className="mono text-xs font-bold text-txt">{s.symbol}</span>
-          {s.method && <span className="mono text-[9px] px-1 rounded bg-bg-panel text-txt-sec">{s.method}</span>}
-          {s.bias && <span className={`mono text-[9px] ml-auto font-bold ${tone}`}>{s.bias}</span>}
-        </div>
-        {s.name && <div className="mono text-[9px] text-txt-muted">{s.name}</div>}
-        <div className="mono text-[10px] text-txt-sec mt-1 leading-snug">{s.reason}</div>
-        {s.lines && (
-          <div className="mt-1.5 space-y-0.5 border-t border-border/50 pt-1">
-            {s.lines.map((l, i) => (
-              <div key={i} className="flex justify-between mono text-[9px]">
-                <span className="text-txt-muted">{l.k}</span>
-                <span className="text-txt-sec text-right ml-2">{l.v}</span>
-              </div>
-            ))}
-          </div>
-        )}
-        {s.social && <button onClick={copy} className="w-full mt-2 mono text-[10px] py-1 rounded bg-accent/90 text-white hover:bg-accent">{copied ? '✓ Copied' : '📋 Copy social post'}</button>}
-      </div>
-    )
-  }
-  const isBuy = (s.direction || 'LONG') === 'LONG'
+  const tone = s.biasTone === 'up' ? 'text-green' : s.biasTone === 'down' ? 'text-red' : 'text-yellow'
+  const chart = () => { const sym = s.symbol === 'NIFTY' ? '^NSEI' : s.symbol === 'GOLD' ? 'GC=F' : s.symbol === 'BANKNIFTY' ? '^NSEBANK' : s.symbol + '.NS'; openSymbol(s.symbol === 'NIFTY' || s.symbol === 'GOLD' || s.symbol === 'BANKNIFTY' ? 'indices' : 'stocks', sym); setView('chart') }
   return (
-    <div className="rounded-lg border border-border bg-bg-card p-2 elev card-hover" style={{ borderLeft: `3px solid ${color}` }}>
+    <div className="rounded-lg border border-border bg-bg-card p-3 elev card-hover" style={{ borderLeft: `3px solid ${color}` }}>
       <div className="flex items-center gap-1.5">
         <button onClick={chart} className="mono text-sm font-bold text-txt hover:text-accent">{s.symbol}</button>
-        <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>
-        <span className="ml-auto flex items-center gap-1.5">
-          <span className="mono text-[11px] text-txt-sec">₹{s.ltp}</span>
-          <span className={`mono text-xs font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
-        </span>
+        {s.method && <span className="mono text-[9px] px-1.5 py-0.5 rounded" style={{ background: tint(color, 0.12), color }}>{s.method}</span>}
+        {s.bias && <span className={`mono text-[10px] ml-auto font-bold ${tone}`}>{s.bias}</span>}
       </div>
-      <div className="mono text-[10px] text-txt-sec mt-0.5 leading-snug">{s.reason}</div>
-      <div className="grid grid-cols-2 gap-x-2 mt-1.5 mono text-[10px]">
-        <span className="text-txt-muted">Entry <span className="text-txt">{s.entry}</span></span>
-        <span className="text-txt-muted">SL <span className="text-red">{s.sl} ({s.slPct}%)</span></span>
-      </div>
-      <div className="mt-1 space-y-0.5">
-        {s.targets.map((t, i) => (
-          <div key={i} className="flex justify-between mono text-[10px]">
-            <span className="text-txt-sec">T{i + 1} {t.price}</span>
-            <span className="text-green">+{t.pct}%</span>
-            <span className="text-txt-muted">{t.by}</span>
-          </div>
-        ))}
-      </div>
-      <div className="mono text-[9px] text-cyan mt-1">{s.accuracy != null ? `backtested ~${s.accuracy}% (n=${s.backtestTrades})` : `setup score ${s.confidence}/100`} · R:R 1:{s.rr}</div>
-      <button onClick={copy} className="w-full mt-1.5 mono text-[10px] py-1 rounded bg-accent/90 text-white hover:bg-accent">{copied ? '✓ Copied caption' : '📋 Copy social post'}</button>
+      {s.name && <div className="mono text-[10px] text-txt-muted mt-0.5">{s.name}</div>}
+      <div className="mono text-[11px] text-txt-sec mt-1.5 leading-snug">{s.reason}</div>
+      {s.lines && (
+        <div className="mt-2 space-y-0.5 border-t border-border pt-1.5">
+          {s.lines.map((l, i) => (
+            <div key={i} className="flex justify-between mono text-[10px]">
+              <span className="text-txt-muted">{l.k}</span>
+              <span className="text-txt-sec text-right ml-2">{l.v}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      {s.social && <button onClick={copy} className="w-full mt-2.5 mono text-[11px] py-1.5 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy social post'}</button>}
     </div>
   )
 }
