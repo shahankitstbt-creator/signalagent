@@ -387,6 +387,34 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
   const tr = trackRecord(ledger, GEN_META)
   writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
 
+  // ── ⭐ CONFLUENCE: stocks flagged by 2+ generators, Vedic-aligned, with a position-sized plan ──
+  const dbAssets = Object.fromEntries(dailyBias(today).assets.map(a => [a.id, a]))
+  const bySym = {}
+  for (const g of board) if (TRADE_GENS.has(g.id)) for (const s of g.signals) (bySym[s.symbol] = bySym[s.symbol] || []).push({ gen: g.label, s })
+  const CAP = 100000, RISKPCT = 1
+  const confluence = []
+  for (const [sym, list] of Object.entries(bySym)) {
+    if (list.length < 2) continue
+    const best = [...list].map(x => x.s).sort((a, b) => ((b.accuracy ?? b.confidence ?? 0) - (a.accuracy ?? a.confidence ?? 0)))[0]
+    const vb = dbAssets[sectorAsset(best.sector, best.indices)]; const vedicUp = vb && vb.tone === 'up'
+    const gens = [...new Set(list.map(x => x.gen))]
+    const riskPS = Math.max(0.05, best.entry - best.sl)
+    const shares = Math.max(1, Math.floor((CAP * RISKPCT / 100) / riskPS))
+    const grade = gens.length >= 3 ? 'A++' : (gens.length >= 2 && vedicUp) ? 'A+' : 'A'
+    const rewardT1 = round(shares * (best.targets[0].price - best.entry))
+    const accLine = best.accuracy != null ? `Backtested ~${best.accuracy}% (n=${best.backtestTrades})` : 'Limited backtest history'
+    const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
+    confluence.push({
+      ...best, generator: 'confluence', generators: gens, genCount: gens.length, grade, social,
+      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0)),
+      vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp,
+      plan: { capital: CAP, riskPct: RISKPCT, shares, deploy: round(shares * best.entry), riskRs: round(shares * riskPS), rewardT1Rs: rewardT1 },
+    })
+  }
+  confluence.sort((a, b) => b.confluenceScore - a.confluenceScore)
+  const confCol = board.find(g => g.id === 'confluence')
+  if (confCol) { confCol.signals = confluence.slice(0, 12); confCol.count = confCol.signals.length }
+
   // ── DAILY SELF-IMPROVEMENT: which ≥5% movers did we miss, and why → learning.json ──
   const extNote = await fetchExternalGainers()
   await runSelfImprovement(scored, board, today, ledger, extNote)
@@ -496,6 +524,19 @@ function oiBuildup(o, index, hist, today) {
 }
 function loadOIHist() { try { return JSON.parse(readFileSync('public/oi_history.json', 'utf8')) } catch { return [] } }
 function saveOIHist(hist) { try { writeFileSync('public/oi_history.json', JSON.stringify(hist.slice(-400))) } catch {} }
+
+// map a stock's sector/indices to the nearest Vedic asset-bias bucket
+function sectorAsset(sector = '', indices = []) {
+  const s = (sector + ' ' + (indices || []).join(' ')).toLowerCase()
+  if (/bank/.test(s)) return 'BANKNIFTY'
+  if (/(\bit\b|software|tech)/.test(s)) return 'NIFTYIT'
+  if (/pharma|health|drug/.test(s)) return 'NIFTYPHARMA'
+  if (/auto|motor|vehicle/.test(s)) return 'NIFTYAUTO'
+  if (/fmcg|consum|food/.test(s)) return 'NIFTYFMCG'
+  if (/metal|steel|mining|iron/.test(s)) return 'NIFTYMETAL'
+  if (/financ|nbfc|insur/.test(s)) return 'NIFTYFIN'
+  return 'NIFTY'
+}
 
 // ── self-improvement: load/save self-tuned thresholds ──
 function loadTuning() { try { const t = JSON.parse(readFileSync('public/tuning.json', 'utf8')); t.minMoveScore ??= 40; t.history ||= []; return t } catch { return { minMoveScore: 40, history: [] } } }

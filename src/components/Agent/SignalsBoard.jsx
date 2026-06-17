@@ -88,6 +88,8 @@ export default function SignalsBoard() {
           </div>
           {active.signals.length === 0
             ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
+            : active.id === 'confluence'
+              ? <ConfluenceTable signals={active.signals} color={active.color} setView={setView} />
             : active.id === 'vedic_astro'
               ? <AssetBiasTable signals={active.signals} color={active.color} />
               : active.id === 'astro_timing'
@@ -174,6 +176,104 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
 }
 function Field({ label, value, tone }) {
   return <div><div className="text-[10px] text-txt-muted uppercase">{label}</div><div className={`text-xs font-bold ${tone || 'text-txt'}`}>{value}</div></div>
+}
+
+// ── ⭐ Top Confluence Picks: multi-generator agreement + Vedic + trade plan ──
+const gradeBg = g => g === 'A++' ? '#0E9F6E' : g === 'A+' ? '#0E7FA3' : '#2962FF'
+function ConfluenceTable({ signals, color, setView }) {
+  const [open, setOpen] = useState(0)
+  const rows = [...signals].sort((a, b) => (b.confluenceScore ?? 0) - (a.confluenceScore ?? 0))
+  if (!rows.length) return (
+    <div className="p-8 mono text-sm text-txt-muted text-center max-w-xl mx-auto">
+      No 2-generator confluence today — the market didn't give a high-conviction overlap.<br />The individual generator tabs still have setups. Confluence picks appear when ≥2 engines agree on the same stock.
+    </div>
+  )
+  return (
+    <>
+      <table className="hidden md:table w-full mono text-xs border-collapse">
+        <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+          {['Stock', 'Grade', 'Agree', 'LTP', 'Entry', 'Stop', 'T1', 'Conf', ''].map((h, i) => <th key={i} className={`px-3 py-2 font-semibold ${i >= 3 && i <= 7 ? 'text-right' : 'text-left'}`}>{h}</th>)}
+        </tr></thead>
+        <tbody>{rows.map((s, i) => <ConfRow key={s.symbol + i} s={s} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} setView={setView} />)}</tbody>
+      </table>
+      <div className="md:hidden p-3 space-y-2.5">{rows.map((s, i) => <ConfCard key={s.symbol + i} s={s} setView={setView} />)}</div>
+    </>
+  )
+}
+function PlanGrid({ s }) {
+  const p = s.plan || {}
+  return (
+    <>
+      <div className="flex flex-wrap gap-1.5 mb-2">
+        {s.generators?.map(g => <span key={g} className="mono text-[10px] px-2 py-0.5 rounded-full bg-bg-panel border border-border text-txt-sec">✓ {g}</span>)}
+        {s.vedicAligned && <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: '#9333EA' }}>🔮 {s.vedicAsset} bias aligned</span>}
+      </div>
+      <div className="mono text-[10px] uppercase text-txt-muted mb-1">Trade plan · ₹{(p.capital || 0).toLocaleString('en-IN')} capital · {p.riskPct}% risk</div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
+        <Field label="Buy qty" value={`${p.shares} sh`} />
+        <Field label="Deploy" value={`₹${(p.deploy || 0).toLocaleString('en-IN')}`} />
+        <Field label="Risk (to SL)" value={`₹${(p.riskRs || 0).toLocaleString('en-IN')}`} tone="text-red" />
+        <Field label="Reward (T1)" value={`₹${(p.rewardT1Rs || 0).toLocaleString('en-IN')}`} tone="text-green" />
+      </div>
+      <div className="grid grid-cols-3 gap-2">{s.targets.map((t, k) => <Field key={k} label={`T${k + 1} · by ${t.by}`} value={`₹${t.price} (+${t.pct}%)`} tone="text-green" />)}</div>
+    </>
+  )
+}
+function ConfRow({ s, color, open, onToggle, setView }) {
+  const [copied, setCopied] = useState(false)
+  const openSymbol = useChartStore(st => st.openSymbol)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const chart = e => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
+  return (
+    <>
+      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2"><span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
+        <td className="px-3 py-2 text-accent font-bold">{s.genCount}×</td>
+        <td className="px-3 py-2 text-right text-txt-sec">{s.ltp}</td>
+        <td className="px-3 py-2 text-right">{s.entry}</td>
+        <td className="px-3 py-2 text-right text-red">{s.sl}</td>
+        <td className="px-3 py-2 text-right text-green">{s.targets[0]?.price}</td>
+        <td className={`px-3 py-2 text-right font-bold ${confColor(s.confidence)}`}>{s.confidence}%</td>
+        <td className="px-3 py-2 text-right"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
+      </tr>
+      {open && (
+        <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
+          <td colSpan={9} className="px-5 py-3">
+            <div className="text-txt-sec text-[11px] mb-2">{s.reason}</div>
+            <PlanGrid s={s} />
+            <div className="flex gap-2 mt-3">
+              <button onClick={copy} className="mono text-[11px] px-3 py-1.5 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy social post'}</button>
+              <button onClick={chart} className="mono text-[11px] px-3 py-1.5 rounded-lg border border-border hover:border-accent">📈 Open chart</button>
+            </div>
+            <div className="mono text-[10px] text-txt-muted mt-2">{s.accuracy != null ? `Measured backtest ~${s.accuracy}% (n=${s.backtestTrades})` : `Setup score ${s.confidence}/100`} · R:R 1:{s.rr}. Not advice. Manage risk.</div>
+          </td>
+        </tr>
+      )}
+    </>
+  )
+}
+function ConfCard({ s, setView }) {
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${gradeBg(s.grade)}` }} onClick={() => setOpen(o => !o)}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-base font-bold text-txt">{s.symbol}</span>
+        <span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span>
+        <span className="mono text-[10px] text-accent font-bold">{s.genCount}× agree</span>
+        <span className={`ml-auto mono text-sm font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
+        <div><div className="text-[9px] text-txt-muted uppercase">Entry</div><div className="font-bold">{s.entry}</div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">Stop</div><div className="font-bold text-red">{s.sl}</div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">Buy qty</div><div className="font-bold">{s.plan?.shares} sh</div></div>
+      </div>
+      {open && <div className="mt-2 pt-2 border-t border-border"><PlanGrid s={s} /></div>}
+      <button onClick={copy} className="w-full mt-2.5 mono text-[11px] py-2 rounded-lg text-white" style={{ background: gradeBg(s.grade) }}>{copied ? '✓ Copied' : '📋 Copy social post'}</button>
+    </div>
+  )
 }
 
 // mobile: stacked trade cards instead of a wide table

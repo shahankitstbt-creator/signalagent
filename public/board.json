@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T11:04:41.169Z",
+  "generatedAt": "2026-06-17T12:32:10.574Z",
   "date": "2026-06-17",
   "note": "Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).",
   "trackRecord": {
@@ -7,18 +7,28 @@
       "win": 0,
       "loss": 0,
       "expired": 0,
-      "open": 133,
+      "open": 179,
       "returnSum": 0,
       "decided": 0,
       "winRate": null,
       "avgReturn": null
     },
     "generators": {
+      "confluence": {
+        "win": 0,
+        "loss": 0,
+        "expired": 0,
+        "open": 0,
+        "returnSum": 0,
+        "decided": 0,
+        "winRate": null,
+        "avgReturn": null
+      },
       "vol_accum": {
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 36,
+        "open": 48,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -28,7 +38,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 17,
+        "open": 32,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -48,7 +58,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 15,
+        "open": 34,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -98,6 +108,875 @@
     "target": 80
   },
   "generators": [
+    {
+      "id": "confluence",
+      "label": "⭐ Top Confluence Picks",
+      "color": "#2962FF",
+      "desc": "Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan",
+      "count": 12,
+      "signals": [
+        {
+          "generator": "confluence",
+          "symbol": "IIFL",
+          "name": "IIFL Finance Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Breakout watch: Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought)",
+          "direction": "LONG",
+          "ltp": 531.1500244140625,
+          "entry": 531.15,
+          "sl": 481.31,
+          "slPct": -9.4,
+          "targets": [
+            {
+              "price": 570.06,
+              "pct": 7.3,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 599.24,
+              "pct": 12.8,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 628.42,
+              "pct": 18.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.78,
+          "rsi": 63.9,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 5,
+          "social": "⭐ TOP PICK (Grade A++) — IIFL\n5 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns + Nifty Financial Vedic bias bullish\nEntry ₹531.15 · SL ₹481.31 (-9.4%)\nT1 ₹570.06 (+7.3%) by 2026-06-26 · T2 +12.8% · T3 +18.3%\nPlan (₹1L, 1% risk): buy 20 sh · risk ₹996.8 · reward T1 ₹778.2 · R:R 1:0.78\nBacktested ~100% (n=5). 📌 Educational only, not advice. Not SEBI-registered.\n#IIFL #swingtrading #nifty",
+          "id": "vol_accum:IIFL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 570.06,
+          "t2": 599.24,
+          "t3": 628.42,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 5,
+          "grade": "A++",
+          "confluenceScore": 205,
+          "vedicAsset": "Nifty Financial",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 20,
+            "deploy": 10623,
+            "riskRs": 996.8,
+            "rewardT1Rs": 778.2
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "EMMBI",
+          "name": "Emmbi Industries Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 92.29000091552734,
+          "entry": 92.29,
+          "sl": 81.24,
+          "slPct": -12,
+          "targets": [
+            {
+              "price": 99.92,
+              "pct": 8.3,
+              "by": "2026-07-08",
+              "days": 15
+            },
+            {
+              "price": 105.65,
+              "pct": 14.5,
+              "by": "2026-07-13",
+              "days": 18
+            },
+            {
+              "price": 111.37,
+              "pct": 20.7,
+              "by": "2026-07-17",
+              "days": 22
+            }
+          ],
+          "rr": 0.69,
+          "rsi": 67.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "⭐ TOP PICK (Grade A++) — EMMBI\n5 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹92.29 · SL ₹81.24 (-12%)\nT1 ₹99.92 (+8.3%) by 2026-07-08 · T2 +14.5% · T3 +20.7%\nPlan (₹1L, 1% risk): buy 90 sh · risk ₹994.5 · reward T1 ₹686.7 · R:R 1:0.69\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#EMMBI #swingtrading #nifty",
+          "id": "vol_accum:EMMBI",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 99.92,
+          "t2": 105.65,
+          "t3": 111.37,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 5,
+          "grade": "A++",
+          "confluenceScore": 203,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 90,
+            "deploy": 8306.1,
+            "riskRs": 994.5,
+            "rewardT1Rs": 686.7
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "LGEINDIA",
+          "name": "LG Electronics India Ltd.",
+          "sector": "Consumer Durables",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 1578.800048828125,
+          "entry": 1578.8,
+          "sl": 1490.88,
+          "slPct": -5.6,
+          "targets": [
+            {
+              "price": 1658.98,
+              "pct": 5.1,
+              "by": "2026-06-19",
+              "days": 2
+            },
+            {
+              "price": 1719.11,
+              "pct": 8.9,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 1779.25,
+              "pct": 12.7,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.91,
+          "rsi": 59.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "⭐ TOP PICK (Grade A++) — LGEINDIA\n5 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns\nEntry ₹1578.8 · SL ₹1490.88 (-5.6%)\nT1 ₹1658.98 (+5.1%) by 2026-06-19 · T2 +8.9% · T3 +12.7%\nPlan (₹1L, 1% risk): buy 11 sh · risk ₹967.12 · reward T1 ₹881.98 · R:R 1:0.91\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#LGEINDIA #swingtrading #nifty",
+          "id": "vol_accum:LGEINDIA",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 1658.98,
+          "t2": 1719.11,
+          "t3": 1779.25,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 5,
+          "grade": "A++",
+          "confluenceScore": 188,
+          "vedicAsset": "Nifty FMCG",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 11,
+            "deploy": 17366.8,
+            "riskRs": 967.12,
+            "rewardT1Rs": 881.98
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "HBLENGINE",
+          "name": "HBL Engineering Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 53 building (not overbought)",
+          "direction": "LONG",
+          "ltp": 795.9500122070312,
+          "entry": 795.95,
+          "sl": 726.6,
+          "slPct": -8.7,
+          "targets": [
+            {
+              "price": 850.98,
+              "pct": 6.9,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 892.25,
+              "pct": 12.1,
+              "by": "2026-06-29",
+              "days": 8
+            },
+            {
+              "price": 933.52,
+              "pct": 17.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.79,
+          "rsi": 53.1,
+          "confidence": 86,
+          "accuracy": 85.7,
+          "backtestTrades": 7,
+          "social": "⭐ TOP PICK (Grade A++) — HBLENGINE\n4 signals agree: Volume + Accumulation, Volume Profile + Fib, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹795.95 · SL ₹726.6 (-8.7%)\nT1 ₹850.98 (+6.9%) by 2026-06-24 · T2 +12.1% · T3 +17.3%\nPlan (₹1L, 1% risk): buy 14 sh · risk ₹970.9 · reward T1 ₹770.42 · R:R 1:0.79\nBacktested ~85.7% (n=7). 📌 Educational only, not advice. Not SEBI-registered.\n#HBLENGINE #swingtrading #nifty",
+          "id": "vol_accum:HBLENGINE",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 850.98,
+          "t2": 892.25,
+          "t3": 933.52,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 4,
+          "grade": "A++",
+          "confluenceScore": 169,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 14,
+            "deploy": 11143.3,
+            "riskRs": 970.9,
+            "rewardT1Rs": 770.42
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "IIFLCAPS",
+          "name": "IIFL Capital Services Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 346.20001220703125,
+          "entry": 346.2,
+          "sl": 336.31,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 359.38,
+              "pct": 3.8,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 369.27,
+              "pct": 6.7,
+              "by": "2026-06-29",
+              "days": 8
+            },
+            {
+              "price": 379.16,
+              "pct": 9.5,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 60.9,
+          "confidence": 86,
+          "accuracy": 85.7,
+          "backtestTrades": 7,
+          "social": "⭐ TOP PICK (Grade A++) — IIFLCAPS\n4 signals agree: Volume + Accumulation, Volume Profile + Fib, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹346.2 · SL ₹336.31 (-2.9%)\nT1 ₹359.38 (+3.8%) by 2026-06-24 · T2 +6.7% · T3 +9.5%\nPlan (₹1L, 1% risk): buy 101 sh · risk ₹998.89 · reward T1 ₹1331.18 · R:R 1:1.33\nBacktested ~85.7% (n=7). 📌 Educational only, not advice. Not SEBI-registered.\n#IIFLCAPS #swingtrading #nifty",
+          "id": "vol_accum:IIFLCAPS",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 359.38,
+          "t2": 369.27,
+          "t3": 379.16,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 4,
+          "grade": "A++",
+          "confluenceScore": 169,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 101,
+            "deploy": 34966.2,
+            "riskRs": 998.89,
+            "rewardT1Rs": 1331.18
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "ACEINTEG",
+          "name": "Ace Integrated Solutions Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 75 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 20.700000762939453,
+          "entry": 20.7,
+          "sl": 18.8,
+          "slPct": -9.2,
+          "targets": [
+            {
+              "price": 23.24,
+              "pct": 12.3,
+              "by": "2026-06-22",
+              "days": 3
+            },
+            {
+              "price": 25.14,
+              "pct": 21.4,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 27.04,
+              "pct": 30.6,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 56.5,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "⭐ TOP PICK (Grade A++) — ACEINTEG\n4 signals agree: Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹20.7 · SL ₹18.8 (-9.2%)\nT1 ₹23.24 (+12.3%) by 2026-06-22 · T2 +21.4% · T3 +30.6%\nPlan (₹1L, 1% risk): buy 526 sh · risk ₹999.4 · reward T1 ₹1336.04 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#ACEINTEG #swingtrading #nifty",
+          "id": "vp_fib:ACEINTEG",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 23.24,
+          "t2": 25.14,
+          "t3": 27.04,
+          "generators": [
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 4,
+          "grade": "A++",
+          "confluenceScore": 169,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 526,
+            "deploy": 10888.2,
+            "riskRs": 999.4,
+            "rewardT1Rs": 1336.04
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "VBL",
+          "name": "Varun Beverages Ltd.",
+          "sector": "Fast Moving Consumer Goods",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 500",
+            "NIFTY FMCG",
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 54 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 544.0499877929688,
+          "entry": 544.05,
+          "sl": 514.8,
+          "slPct": -5.4,
+          "targets": [
+            {
+              "price": 571.04,
+              "pct": 5,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 591.28,
+              "pct": 8.7,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 611.53,
+              "pct": 12.4,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.92,
+          "rsi": 64.6,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "social": "⭐ TOP PICK (Grade A++) — VBL\n4 signals agree: Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns\nEntry ₹544.05 · SL ₹514.8 (-5.4%)\nT1 ₹571.04 (+5%) by 2026-06-23 · T2 +8.7% · T3 +12.4%\nPlan (₹1L, 1% risk): buy 34 sh · risk ₹994.5 · reward T1 ₹917.66 · R:R 1:0.92\nBacktested ~83.3% (n=6). 📌 Educational only, not advice. Not SEBI-registered.\n#VBL #swingtrading #nifty",
+          "id": "vp_fib:VBL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 571.04,
+          "t2": 591.28,
+          "t3": 611.53,
+          "generators": [
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 4,
+          "grade": "A++",
+          "confluenceScore": 153,
+          "vedicAsset": "Nifty FMCG",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 34,
+            "deploy": 18497.7,
+            "riskRs": 994.5,
+            "rewardT1Rs": 917.66
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "EMMVEE",
+          "name": "Emmvee Photovoltaic Power Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Breakout watch: Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA; Accumulation — up-day volume dominates",
+          "direction": "LONG",
+          "ltp": 343.25,
+          "entry": 343.25,
+          "sl": 317.02,
+          "slPct": -7.6,
+          "targets": [
+            {
+              "price": 373.51,
+              "pct": 8.8,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 396.2,
+              "pct": 15.4,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 418.89,
+              "pct": 22,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.15,
+          "rsi": 66.6,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 4,
+          "social": "⭐ TOP PICK (Grade A++) — EMMVEE\n3 signals agree: Volume + Accumulation, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹343.25 · SL ₹317.02 (-7.6%)\nT1 ₹373.51 (+8.8%) by 2026-06-24 · T2 +15.4% · T3 +22%\nPlan (₹1L, 1% risk): buy 38 sh · risk ₹996.74 · reward T1 ₹1149.88 · R:R 1:1.15\nBacktested ~100% (n=4). 📌 Educational only, not advice. Not SEBI-registered.\n#EMMVEE #swingtrading #nifty",
+          "id": "vol_accum:EMMVEE",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 373.51,
+          "t2": 396.2,
+          "t3": 418.89,
+          "generators": [
+            "Volume + Accumulation",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 145,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 38,
+            "deploy": 13043.5,
+            "riskRs": 996.74,
+            "rewardT1Rs": 1149.88
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "EXIDEIND",
+          "name": "Exide Industries Ltd.",
+          "sector": "Automobile and Auto Components",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Auto",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation: Above rising 20 & 50 EMA; Accumulation — up-day volume dominates; Higher lows (ascending base)",
+          "direction": "LONG",
+          "ltp": 388.3999938964844,
+          "entry": 388.4,
+          "sl": 372.36,
+          "slPct": -4.1,
+          "targets": [
+            {
+              "price": 409.79,
+              "pct": 5.5,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 425.83,
+              "pct": 9.6,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 441.87,
+              "pct": 13.8,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 56.7,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 4,
+          "social": "⭐ TOP PICK (Grade A++) — EXIDEIND\n3 signals agree: Volume + Accumulation, Multibagger Quality, Harmonic & Chart Patterns + Nifty Auto Vedic bias bullish\nEntry ₹388.4 · SL ₹372.36 (-4.1%)\nT1 ₹409.79 (+5.5%) by 2026-06-23 · T2 +9.6% · T3 +13.8%\nPlan (₹1L, 1% risk): buy 62 sh · risk ₹994.48 · reward T1 ₹1326.18 · R:R 1:1.33\nBacktested ~100% (n=4). 📌 Educational only, not advice. Not SEBI-registered.\n#EXIDEIND #swingtrading #nifty",
+          "id": "vol_accum:EXIDEIND",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 409.79,
+          "t2": 425.83,
+          "t3": 441.87,
+          "generators": [
+            "Volume + Accumulation",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 145,
+          "vedicAsset": "Nifty Auto",
+          "vedicLabel": "BUY / TEJI",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 62,
+            "deploy": 24080.8,
+            "riskRs": 994.48,
+            "rewardT1Rs": 1326.18
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "ITI",
+          "name": "ITI Ltd.",
+          "sector": "Telecommunication",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 306.20001220703125,
+          "entry": 306.2,
+          "sl": 285.35,
+          "slPct": -6.8,
+          "targets": [
+            {
+              "price": 325.23,
+              "pct": 6.2,
+              "by": "2026-06-22",
+              "days": 3
+            },
+            {
+              "price": 339.5,
+              "pct": 10.9,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 353.78,
+              "pct": 15.5,
+              "by": "2026-07-01",
+              "days": 10
+            }
+          ],
+          "rr": 0.91,
+          "rsi": 59.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "⭐ TOP PICK (Grade A++) — ITI\n3 signals agree: Volume + Accumulation, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹306.2 · SL ₹285.35 (-6.8%)\nT1 ₹325.23 (+6.2%) by 2026-06-22 · T2 +10.9% · T3 +15.5%\nPlan (₹1L, 1% risk): buy 47 sh · risk ₹979.95 · reward T1 ₹894.41 · R:R 1:0.91\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#ITI #swingtrading #nifty",
+          "id": "vol_accum:ITI",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 325.23,
+          "t2": 339.5,
+          "t3": 353.78,
+          "generators": [
+            "Volume + Accumulation",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 143,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 47,
+            "deploy": 14391.4,
+            "riskRs": 979.95,
+            "rewardT1Rs": 894.41
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "NIPPOBATRY",
+          "name": "Indo-National Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 369.45001220703125,
+          "entry": 369.45,
+          "sl": 321.28,
+          "slPct": -13,
+          "targets": [
+            {
+              "price": 407.2,
+              "pct": 10.2,
+              "by": "2026-07-01",
+              "days": 10
+            },
+            {
+              "price": 435.51,
+              "pct": 17.9,
+              "by": "2026-07-06",
+              "days": 13
+            },
+            {
+              "price": 463.82,
+              "pct": 25.5,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.78,
+          "rsi": 55.7,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "⭐ TOP PICK (Grade A++) — NIPPOBATRY\n3 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow + Nifty 50 Vedic bias bullish\nEntry ₹369.45 · SL ₹321.28 (-13%)\nT1 ₹407.2 (+10.2%) by 2026-07-01 · T2 +17.9% · T3 +25.5%\nPlan (₹1L, 1% risk): buy 20 sh · risk ₹963.4 · reward T1 ₹755 · R:R 1:0.78\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#NIPPOBATRY #swingtrading #nifty",
+          "id": "vol_accum:NIPPOBATRY",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 407.2,
+          "t2": 435.51,
+          "t3": 463.82,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 143,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 20,
+            "deploy": 7389,
+            "riskRs": 963.4,
+            "rewardT1Rs": 755
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "WEWORK",
+          "name": "WeWork India Management Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA",
+          "direction": "LONG",
+          "ltp": 650.8499755859375,
+          "entry": 650.85,
+          "sl": 615.37,
+          "slPct": -5.5,
+          "targets": [
+            {
+              "price": 698.15,
+              "pct": 7.3,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 733.63,
+              "pct": 12.7,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 769.11,
+              "pct": 18.2,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 72.4,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "⭐ TOP PICK (Grade A++) — WEWORK\n3 signals agree: Volume + Accumulation, Multibagger Quality, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹650.85 · SL ₹615.37 (-5.5%)\nT1 ₹698.15 (+7.3%) by 2026-06-25 · T2 +12.7% · T3 +18.2%\nPlan (₹1L, 1% risk): buy 28 sh · risk ₹993.44 · reward T1 ₹1324.4 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#WEWORK #swingtrading #nifty",
+          "id": "vol_accum:WEWORK",
+          "openedAt": "2026-06-17",
+          "openTs": 1781693392,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 698.15,
+          "t2": 733.63,
+          "t3": 769.11,
+          "generators": [
+            "Volume + Accumulation",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 143,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 28,
+            "deploy": 18223.8,
+            "riskRs": 993.44,
+            "rewardT1Rs": 1324.4
+          }
+        }
+      ]
+    },
     {
       "id": "vol_accum",
       "label": "Volume + Accumulation",
@@ -893,6 +1772,265 @@
       "signals": [
         {
           "generator": "vp_fib",
+          "symbol": "IIFL",
+          "name": "IIFL Finance Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 65 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 531.1500244140625,
+          "entry": 531.15,
+          "sl": 481.31,
+          "slPct": -9.4,
+          "targets": [
+            {
+              "price": 570.06,
+              "pct": 7.3,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 599.24,
+              "pct": 12.8,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 628.42,
+              "pct": 18.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.78,
+          "rsi": 63.9,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 5,
+          "social": "IIFL — Volume Profile + Fib setup 📈\nMFI 65 rising + OBV up — money flowing in\nLTP ₹531.15 · Entry ₹531.15 · SL ₹481.31 (-9.4%)\nT1 ₹570.06 (+7.3%) by 2026-06-26\nT2 ₹599.24 (+12.8%) · T3 ₹628.42 (+18.3%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #IIFL #swingtrading #nifty",
+          "id": "vp_fib:IIFL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 570.06,
+          "t2": 599.24,
+          "t3": 628.42
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "LGEINDIA",
+          "name": "LG Electronics India Ltd.",
+          "sector": "Consumer Durables",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 63 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 1578.800048828125,
+          "entry": 1578.8,
+          "sl": 1490.88,
+          "slPct": -5.6,
+          "targets": [
+            {
+              "price": 1658.98,
+              "pct": 5.1,
+              "by": "2026-06-19",
+              "days": 2
+            },
+            {
+              "price": 1719.11,
+              "pct": 8.9,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 1779.25,
+              "pct": 12.7,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.91,
+          "rsi": 59.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "LGEINDIA — Volume Profile + Fib setup 📈\nMFI 63 rising + OBV up — money flowing in\nLTP ₹1578.8 · Entry ₹1578.8 · SL ₹1490.88 (-5.6%)\nT1 ₹1658.98 (+5.1%) by 2026-06-19\nT2 ₹1719.11 (+8.9%) · T3 ₹1779.25 (+12.7%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LGEINDIA #swingtrading #nifty",
+          "id": "vp_fib:LGEINDIA",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 1658.98,
+          "t2": 1719.11,
+          "t3": 1779.25
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "EMMBI",
+          "name": "Emmbi Industries Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 73 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 92.29000091552734,
+          "entry": 92.29,
+          "sl": 81.24,
+          "slPct": -12,
+          "targets": [
+            {
+              "price": 99.92,
+              "pct": 8.3,
+              "by": "2026-07-08",
+              "days": 15
+            },
+            {
+              "price": 105.65,
+              "pct": 14.5,
+              "by": "2026-07-13",
+              "days": 18
+            },
+            {
+              "price": 111.37,
+              "pct": 20.7,
+              "by": "2026-07-17",
+              "days": 22
+            }
+          ],
+          "rr": 0.69,
+          "rsi": 67.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "EMMBI — Volume Profile + Fib setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹92.29 · Entry ₹92.29 · SL ₹81.24 (-12%)\nT1 ₹99.92 (+8.3%) by 2026-07-08\nT2 ₹105.65 (+14.5%) · T3 ₹111.37 (+20.7%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMMBI #swingtrading #nifty",
+          "id": "vp_fib:EMMBI",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 99.92,
+          "t2": 105.65,
+          "t3": 111.37
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "NIPPOBATRY",
+          "name": "Indo-National Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 56 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 369.45001220703125,
+          "entry": 369.45,
+          "sl": 321.28,
+          "slPct": -13,
+          "targets": [
+            {
+              "price": 407.2,
+              "pct": 10.2,
+              "by": "2026-07-01",
+              "days": 10
+            },
+            {
+              "price": 435.51,
+              "pct": 17.9,
+              "by": "2026-07-06",
+              "days": 13
+            },
+            {
+              "price": 463.82,
+              "pct": 25.5,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.78,
+          "rsi": 55.7,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "NIPPOBATRY — Volume Profile + Fib setup 📈\nMFI 56 rising + OBV up — money flowing in\nLTP ₹369.45 · Entry ₹369.45 · SL ₹321.28 (-13%)\nT1 ₹407.2 (+10.2%) by 2026-07-01\nT2 ₹435.51 (+17.9%) · T3 ₹463.82 (+25.5%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NIPPOBATRY #swingtrading #nifty",
+          "id": "vp_fib:NIPPOBATRY",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 407.2,
+          "t2": 435.51,
+          "t3": 463.82
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "FIVESTAR",
+          "name": "Five-Star Business Finance Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 77 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 485.54998779296875,
+          "entry": 485.55,
+          "sl": 411.57,
+          "slPct": -15.2,
+          "targets": [
+            {
+              "price": 523.34,
+              "pct": 7.8,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 551.69,
+              "pct": 13.6,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 580.03,
+              "pct": 19.5,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.51,
+          "rsi": 66.2,
+          "confidence": 93,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "FIVESTAR — Volume Profile + Fib setup 📈\nMFI 77 rising + OBV up — money flowing in\nLTP ₹485.55 · Entry ₹485.55 · SL ₹411.57 (-15.2%)\nT1 ₹523.34 (+7.8%) by 2026-06-23\nT2 ₹551.69 (+13.6%) · T3 ₹580.03 (+19.5%)\nSetup score 93/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #FIVESTAR #swingtrading #nifty",
+          "id": "vp_fib:FIVESTAR",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 523.34,
+          "t2": 551.69,
+          "t3": 580.03
+        },
+        {
+          "generator": "vp_fib",
           "symbol": "CASTROLIND",
           "name": "Castrol India Ltd.",
           "sector": "Oil Gas & Consumable Fuels",
@@ -1049,605 +2187,357 @@
         },
         {
           "generator": "vp_fib",
-          "symbol": "SAKHTISUG",
-          "name": "Sakthi Sugars Limited",
+          "symbol": "ACEINTEG",
+          "name": "Ace Integrated Solutions Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume Profile + Fib",
-          "reason": "At POC ₹18.1 + Fib confluence — institutional magnet zone",
+          "reason": "MFI 75 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 18.1299991607666,
-          "entry": 18.13,
-          "sl": 17.04,
-          "slPct": -6,
+          "ltp": 20.700000762939453,
+          "entry": 20.7,
+          "sl": 18.8,
+          "slPct": -9.2,
           "targets": [
             {
-              "price": 19.56,
-              "pct": 7.9,
-              "by": "2026-06-24",
-              "days": 5
-            },
-            {
-              "price": 20.63,
-              "pct": 13.8,
-              "by": "2026-06-29",
-              "days": 8
-            },
-            {
-              "price": 21.7,
-              "pct": 19.7,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.31,
-          "rsi": 54.5,
-          "confidence": 80,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "social": "SAKHTISUG — Volume Profile + Fib setup 📈\nAt POC ₹18.1 + Fib confluence — institutional magnet zone\nLTP ₹18.13 · Entry ₹18.13 · SL ₹17.04 (-6%)\nT1 ₹19.56 (+7.9%) by 2026-06-24\nT2 ₹20.63 (+13.8%) · T3 ₹21.7 (+19.7%)\nSetup score 80/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SAKHTISUG #swingtrading #nifty",
-          "id": "vp_fib:SAKHTISUG",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 19.56,
-          "t2": 20.63,
-          "t3": 21.7
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "KAPSTON",
-          "name": "Kapston Services Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹344.7 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 345,
-          "entry": 345,
-          "sl": 326.87,
-          "slPct": -5.3,
-          "targets": [
-            {
-              "price": 369.18,
-              "pct": 7,
+              "price": 23.24,
+              "pct": 12.3,
               "by": "2026-06-22",
               "days": 3
             },
             {
-              "price": 387.31,
-              "pct": 12.3,
-              "by": "2026-06-25",
-              "days": 6
+              "price": 25.14,
+              "pct": 21.4,
+              "by": "2026-07-03",
+              "days": 12
             },
             {
-              "price": 405.44,
-              "pct": 17.5,
+              "price": 27.04,
+              "pct": 30.6,
               "by": "2026-07-16",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 57.8,
-          "confidence": 75,
-          "accuracy": 75,
-          "backtestTrades": 8,
-          "social": "KAPSTON — Volume Profile + Fib setup 📈\nAt POC ₹344.7 + Fib confluence — institutional magnet zone\nLTP ₹345 · Entry ₹345 · SL ₹326.87 (-5.3%)\nT1 ₹369.18 (+7%) by 2026-06-22\nT2 ₹387.31 (+12.3%) · T3 ₹405.44 (+17.5%)\nBacktested first-target hit ~75% over 8 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KAPSTON #swingtrading #nifty",
-          "id": "vp_fib:KAPSTON",
+          "rsi": 56.5,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "ACEINTEG — Volume Profile + Fib setup 📈\nMFI 75 rising + OBV up — money flowing in\nLTP ₹20.7 · Entry ₹20.7 · SL ₹18.8 (-9.2%)\nT1 ₹23.24 (+12.3%) by 2026-06-22\nT2 ₹25.14 (+21.4%) · T3 ₹27.04 (+30.6%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ACEINTEG #swingtrading #nifty",
+          "id": "vp_fib:ACEINTEG",
           "openedAt": "2026-06-17",
-          "openTs": 1781693392,
+          "openTs": 1781699530,
           "status": "open",
           "lastSeen": "2026-06-17",
-          "t1": 369.18,
-          "t2": 387.31,
-          "t3": 405.44
+          "t1": 23.24,
+          "t2": 25.14,
+          "t3": 27.04
         },
         {
           "generator": "vp_fib",
-          "symbol": "UNICHEMLAB",
-          "name": "Unichem Laboratories Limited",
+          "symbol": "NDRAUTO",
+          "name": "Ndr Auto Components Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume Profile + Fib",
-          "reason": "At POC ₹449.09 + Fib confluence — institutional magnet zone",
+          "reason": "MFI 73 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 449.45001220703125,
-          "entry": 449.45,
-          "sl": 371.53,
-          "slPct": -17.3,
+          "ltp": 854.9500122070312,
+          "entry": 854.95,
+          "sl": 764.96,
+          "slPct": -10.5,
           "targets": [
             {
-              "price": 500.14,
-              "pct": 11.3,
+              "price": 924.38,
+              "pct": 8.1,
+              "by": "2026-06-29",
+              "days": 8
+            },
+            {
+              "price": 976.46,
+              "pct": 14.2,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 1028.54,
+              "pct": 20.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.77,
+          "rsi": 63.2,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "NDRAUTO — Volume Profile + Fib setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹854.95 · Entry ₹854.95 · SL ₹764.96 (-10.5%)\nT1 ₹924.38 (+8.1%) by 2026-06-29\nT2 ₹976.46 (+14.2%) · T3 ₹1028.54 (+20.3%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NDRAUTO #swingtrading #nifty",
+          "id": "vp_fib:NDRAUTO",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 924.38,
+          "t2": 976.46,
+          "t3": 1028.54
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "VBL",
+          "name": "Varun Beverages Ltd.",
+          "sector": "Fast Moving Consumer Goods",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 500",
+            "NIFTY FMCG",
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 54 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 544.0499877929688,
+          "entry": 544.05,
+          "sl": 514.8,
+          "slPct": -5.4,
+          "targets": [
+            {
+              "price": 571.04,
+              "pct": 5,
               "by": "2026-06-23",
               "days": 4
             },
             {
-              "price": 538.16,
-              "pct": 19.7,
+              "price": 591.28,
+              "pct": 8.7,
               "by": "2026-06-26",
               "days": 7
             },
             {
-              "price": 576.18,
-              "pct": 28.2,
-              "by": "2026-07-02",
-              "days": 11
+              "price": 611.53,
+              "pct": 12.4,
+              "by": "2026-07-16",
+              "days": 21
             }
           ],
-          "rr": 0.65,
+          "rr": 0.92,
+          "rsi": 64.6,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "social": "VBL — Volume Profile + Fib setup 📈\nMFI 54 rising + OBV up — money flowing in\nLTP ₹544.05 · Entry ₹544.05 · SL ₹514.8 (-5.4%)\nT1 ₹571.04 (+5%) by 2026-06-23\nT2 ₹591.28 (+8.7%) · T3 ₹611.53 (+12.4%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #VBL #swingtrading #nifty",
+          "id": "vp_fib:VBL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 571.04,
+          "t2": 591.28,
+          "t3": 611.53
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "SHREEJISPG",
+          "name": "Shreeji Shipping Global Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 59 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 491,
+          "entry": 491,
+          "sl": 445.38,
+          "slPct": -9.3,
+          "targets": [
+            {
+              "price": 527.19,
+              "pct": 7.4,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 554.34,
+              "pct": 12.9,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 581.48,
+              "pct": 18.4,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.79,
+          "rsi": 66,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "social": "SHREEJISPG — Volume Profile + Fib setup 📈\nMFI 59 rising + OBV up — money flowing in\nLTP ₹491 · Entry ₹491 · SL ₹445.38 (-9.3%)\nT1 ₹527.19 (+7.4%) by 2026-06-23\nT2 ₹554.34 (+12.9%) · T3 ₹581.48 (+18.4%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SHREEJISPG #swingtrading #nifty",
+          "id": "vp_fib:SHREEJISPG",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 527.19,
+          "t2": 554.34,
+          "t3": 581.48
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "TEAMLEASE",
+          "name": "Teamlease Services Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "MFI 65 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 1433.199951171875,
+          "entry": 1433.2,
+          "sl": 1362.45,
+          "slPct": -4.9,
+          "targets": [
+            {
+              "price": 1495.74,
+              "pct": 4.4,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 1542.65,
+              "pct": 7.6,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 1589.56,
+              "pct": 10.9,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.88,
           "rsi": 69.4,
-          "confidence": 75,
-          "accuracy": 75,
-          "backtestTrades": 4,
-          "social": "UNICHEMLAB — Volume Profile + Fib setup 📈\nAt POC ₹449.09 + Fib confluence — institutional magnet zone\nLTP ₹449.45 · Entry ₹449.45 · SL ₹371.53 (-17.3%)\nT1 ₹500.14 (+11.3%) by 2026-06-23\nT2 ₹538.16 (+19.7%) · T3 ₹576.18 (+28.2%)\nBacktested first-target hit ~75% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #UNICHEMLAB #swingtrading #nifty",
-          "id": "vp_fib:UNICHEMLAB",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 500.14,
-          "t2": 538.16,
-          "t3": 576.18
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "SURYALAXMI",
-          "name": "Suryalakshmi Cotton Mills Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹59.94 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 59.81999969482422,
-          "entry": 59.82,
-          "sl": 53.47,
-          "slPct": -10.6,
-          "targets": [
-            {
-              "price": 65.73,
-              "pct": 9.9,
-              "by": "2026-06-25",
-              "days": 6
-            },
-            {
-              "price": 70.16,
-              "pct": 17.3,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 74.6,
-              "pct": 24.7,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 0.93,
-          "rsi": 55.7,
-          "confidence": 72,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "social": "SURYALAXMI — Volume Profile + Fib setup 📈\nAt POC ₹59.94 + Fib confluence — institutional magnet zone\nLTP ₹59.82 · Entry ₹59.82 · SL ₹53.47 (-10.6%)\nT1 ₹65.73 (+9.9%) by 2026-06-25\nT2 ₹70.16 (+17.3%) · T3 ₹74.6 (+24.7%)\nSetup score 72/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SURYALAXMI #swingtrading #nifty",
-          "id": "vp_fib:SURYALAXMI",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 65.73,
-          "t2": 70.16,
-          "t3": 74.6
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "MITTAL",
-          "name": "Mittal Life Style Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹1.03 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 1.0199999809265137,
-          "entry": 1.02,
-          "sl": 0.93,
-          "slPct": -8.8,
-          "targets": [
-            {
-              "price": 1.14,
-              "pct": 11.8,
-              "by": "2026-06-19",
-              "days": 2
-            },
-            {
-              "price": 1.23,
-              "pct": 20.6,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 1.31,
-              "pct": 28.4,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 54.8,
-          "confidence": 70,
+          "confidence": 83,
           "accuracy": null,
           "backtestTrades": 2,
-          "social": "MITTAL — Volume Profile + Fib setup 📈\nAt POC ₹1.03 + Fib confluence — institutional magnet zone\nLTP ₹1.02 · Entry ₹1.02 · SL ₹0.93 (-8.8%)\nT1 ₹1.14 (+11.8%) by 2026-06-19\nT2 ₹1.23 (+20.6%) · T3 ₹1.31 (+28.4%)\nSetup score 70/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #MITTAL #swingtrading #nifty",
-          "id": "vp_fib:MITTAL",
+          "social": "TEAMLEASE — Volume Profile + Fib setup 📈\nMFI 65 rising + OBV up — money flowing in\nLTP ₹1433.2 · Entry ₹1433.2 · SL ₹1362.45 (-4.9%)\nT1 ₹1495.74 (+4.4%) by 2026-06-23\nT2 ₹1542.65 (+7.6%) · T3 ₹1589.56 (+10.9%)\nSetup score 83/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #TEAMLEASE #swingtrading #nifty",
+          "id": "vp_fib:TEAMLEASE",
           "openedAt": "2026-06-17",
-          "openTs": 1781693392,
+          "openTs": 1781699530,
           "status": "open",
           "lastSeen": "2026-06-17",
-          "t1": 1.14,
-          "t2": 1.23,
-          "t3": 1.31
+          "t1": 1495.74,
+          "t2": 1542.65,
+          "t3": 1589.56
         },
         {
           "generator": "vp_fib",
-          "symbol": "RADIOCITY",
-          "name": "Music Broadcast Limited",
+          "symbol": "VARROC",
+          "name": "Varroc Engineering Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume Profile + Fib",
-          "reason": "At POC ₹6.23 + Fib confluence — institutional magnet zone",
+          "reason": "MFI 61 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 6.239999771118164,
-          "entry": 6.24,
-          "sl": 5.79,
-          "slPct": -7.2,
+          "ltp": 619.7000122070312,
+          "entry": 619.7,
+          "sl": 555.91,
+          "slPct": -10.3,
           "targets": [
             {
-              "price": 6.84,
-              "pct": 9.6,
-              "by": "2026-07-09",
-              "days": 16
-            },
-            {
-              "price": 7.3,
-              "pct": 17,
-              "by": "2026-07-14",
-              "days": 19
-            },
-            {
-              "price": 7.75,
-              "pct": 24.2,
-              "by": "2026-07-20",
-              "days": 23
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 55.3,
-          "confidence": 67,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "social": "RADIOCITY — Volume Profile + Fib setup 📈\nAt POC ₹6.23 + Fib confluence — institutional magnet zone\nLTP ₹6.24 · Entry ₹6.24 · SL ₹5.79 (-7.2%)\nT1 ₹6.84 (+9.6%) by 2026-07-09\nT2 ₹7.3 (+17%) · T3 ₹7.75 (+24.2%)\nSetup score 67/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RADIOCITY #swingtrading #nifty",
-          "id": "vp_fib:RADIOCITY",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 6.84,
-          "t2": 7.3,
-          "t3": 7.75
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "ALPA",
-          "name": "Alpa Laboratories Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹70.36 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 69.63999938964844,
-          "entry": 69.64,
-          "sl": 65.36,
-          "slPct": -6.1,
-          "targets": [
-            {
-              "price": 75.35,
-              "pct": 8.2,
-              "by": "2026-06-19",
-              "days": 2
-            },
-            {
-              "price": 79.63,
-              "pct": 14.3,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 83.91,
-              "pct": 20.5,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 52.3,
-          "confidence": 65,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "social": "ALPA — Volume Profile + Fib setup 📈\nAt POC ₹70.36 + Fib confluence — institutional magnet zone\nLTP ₹69.64 · Entry ₹69.64 · SL ₹65.36 (-6.1%)\nT1 ₹75.35 (+8.2%) by 2026-06-19\nT2 ₹79.63 (+14.3%) · T3 ₹83.91 (+20.5%)\nSetup score 65/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ALPA #swingtrading #nifty",
-          "id": "vp_fib:ALPA",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 75.35,
-          "t2": 79.63,
-          "t3": 83.91
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "EUROBOND",
-          "name": "Euro Panel Products Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹178.86 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 179.4600067138672,
-          "entry": 179.46,
-          "sl": 164.52,
-          "slPct": -8.3,
-          "targets": [
-            {
-              "price": 199.38,
-              "pct": 11.1,
-              "by": "2026-07-02",
-              "days": 11
-            },
-            {
-              "price": 214.32,
-              "pct": 19.4,
-              "by": "2026-07-07",
-              "days": 14
-            },
-            {
-              "price": 229.26,
-              "pct": 27.7,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 51.3,
-          "confidence": 62,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "social": "EUROBOND — Volume Profile + Fib setup 📈\nAt POC ₹178.86 + Fib confluence — institutional magnet zone\nLTP ₹179.46 · Entry ₹179.46 · SL ₹164.52 (-8.3%)\nT1 ₹199.38 (+11.1%) by 2026-07-02\nT2 ₹214.32 (+19.4%) · T3 ₹229.26 (+27.7%)\nSetup score 62/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EUROBOND #swingtrading #nifty",
-          "id": "vp_fib:EUROBOND",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 199.38,
-          "t2": 214.32,
-          "t3": 229.26
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "GRAVITA",
-          "name": "Gravita India Ltd.",
-          "sector": "Metals & Mining",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹1682.98 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 1668.9000244140625,
-          "entry": 1668.9,
-          "sl": 1534.92,
-          "slPct": -8,
-          "targets": [
-            {
-              "price": 1778.73,
+              "price": 660.62,
               "pct": 6.6,
-              "by": "2026-06-24",
-              "days": 5
+              "by": "2026-06-26",
+              "days": 7
             },
             {
-              "price": 1861.11,
-              "pct": 11.5,
+              "price": 691.31,
+              "pct": 11.6,
               "by": "2026-07-03",
               "days": 12
             },
             {
-              "price": 1943.48,
+              "price": 722.01,
               "pct": 16.5,
               "by": "2026-07-16",
               "days": 21
             }
           ],
-          "rr": 0.82,
-          "rsi": 56.4,
-          "confidence": 60,
-          "accuracy": 60,
-          "backtestTrades": 5,
-          "social": "GRAVITA — Volume Profile + Fib setup 📈\nAt POC ₹1682.98 + Fib confluence — institutional magnet zone\nLTP ₹1668.9 · Entry ₹1668.9 · SL ₹1534.92 (-8%)\nT1 ₹1778.73 (+6.6%) by 2026-06-24\nT2 ₹1861.11 (+11.5%) · T3 ₹1943.48 (+16.5%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRAVITA #swingtrading #nifty",
-          "id": "vp_fib:GRAVITA",
+          "rr": 0.64,
+          "rsi": 64.6,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "social": "VARROC — Volume Profile + Fib setup 📈\nMFI 61 rising + OBV up — money flowing in\nLTP ₹619.7 · Entry ₹619.7 · SL ₹555.91 (-10.3%)\nT1 ₹660.62 (+6.6%) by 2026-06-26\nT2 ₹691.31 (+11.6%) · T3 ₹722.01 (+16.5%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #VARROC #swingtrading #nifty",
+          "id": "vp_fib:VARROC",
           "openedAt": "2026-06-17",
-          "openTs": 1781693392,
+          "openTs": 1781699530,
           "status": "open",
           "lastSeen": "2026-06-17",
-          "t1": 1778.73,
-          "t2": 1861.11,
-          "t3": 1943.48
+          "t1": 660.62,
+          "t2": 691.31,
+          "t3": 722.01
         },
         {
           "generator": "vp_fib",
-          "symbol": "AURIGROW",
-          "name": "Auri Grow India Limited",
+          "symbol": "VOLTAMP",
+          "name": "Voltamp Transformers Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume Profile + Fib",
-          "reason": "At POC ₹0.34 + Fib confluence — institutional magnet zone",
+          "reason": "MFI 68 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 0.3400000035762787,
-          "entry": 0.34,
-          "sl": 0.32,
-          "slPct": -5.9,
+          "ltp": 10084,
+          "entry": 10084,
+          "sl": 9428.5,
+          "slPct": -6.5,
           "targets": [
             {
-              "price": 0.37,
-              "pct": 8.8,
-              "by": "2026-06-22",
-              "days": 3
-            },
-            {
-              "price": 0.4,
-              "pct": 17.6,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 0.42,
-              "pct": 23.5,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 53.3,
-          "confidence": 60,
-          "accuracy": 60,
-          "backtestTrades": 5,
-          "social": "AURIGROW — Volume Profile + Fib setup 📈\nAt POC ₹0.34 + Fib confluence — institutional magnet zone\nLTP ₹0.34 · Entry ₹0.34 · SL ₹0.32 (-5.9%)\nT1 ₹0.37 (+8.8%) by 2026-06-22\nT2 ₹0.4 (+17.6%) · T3 ₹0.42 (+23.5%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #AURIGROW #swingtrading #nifty",
-          "id": "vp_fib:AURIGROW",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 0.37,
-          "t2": 0.4,
-          "t3": 0.42
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "KIOCL",
-          "name": "KIOCL Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹411.37 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 410.70001220703125,
-          "entry": 410.7,
-          "sl": 381.58,
-          "slPct": -7.1,
-          "targets": [
-            {
-              "price": 444.88,
-              "pct": 8.3,
+              "price": 10798.95,
+              "pct": 7.1,
               "by": "2026-06-23",
               "days": 4
             },
             {
-              "price": 470.52,
-              "pct": 14.6,
-              "by": "2026-06-26",
-              "days": 7
-            },
-            {
-              "price": 496.15,
-              "pct": 20.8,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.17,
-          "rsi": 56.1,
-          "confidence": 60,
-          "accuracy": 60,
-          "backtestTrades": 10,
-          "social": "KIOCL — Volume Profile + Fib setup 📈\nAt POC ₹411.37 + Fib confluence — institutional magnet zone\nLTP ₹410.7 · Entry ₹410.7 · SL ₹381.58 (-7.1%)\nT1 ₹444.88 (+8.3%) by 2026-06-23\nT2 ₹470.52 (+14.6%) · T3 ₹496.15 (+20.8%)\nBacktested first-target hit ~60% over 10 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KIOCL #swingtrading #nifty",
-          "id": "vp_fib:KIOCL",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 444.88,
-          "t2": 470.52,
-          "t3": 496.15
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "AARNAV",
-          "name": "Aarnav Fashions Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹24.69 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 24.93000030517578,
-          "entry": 24.93,
-          "sl": 22.94,
-          "slPct": -8,
-          "targets": [
-            {
-              "price": 27.59,
-              "pct": 10.7,
-              "by": "2026-06-24",
-              "days": 5
-            },
-            {
-              "price": 29.58,
-              "pct": 18.7,
+              "price": 11335.17,
+              "pct": 12.4,
               "by": "2026-07-03",
               "days": 12
             },
             {
-              "price": 31.58,
-              "pct": 26.7,
+              "price": 11871.39,
+              "pct": 17.7,
               "by": "2026-07-16",
               "days": 21
             }
           ],
-          "rr": 1.33,
-          "rsi": 57,
-          "confidence": 53,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "social": "AARNAV — Volume Profile + Fib setup 📈\nAt POC ₹24.69 + Fib confluence — institutional magnet zone\nLTP ₹24.93 · Entry ₹24.93 · SL ₹22.94 (-8%)\nT1 ₹27.59 (+10.7%) by 2026-06-24\nT2 ₹29.58 (+18.7%) · T3 ₹31.58 (+26.7%)\nSetup score 53/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARNAV #swingtrading #nifty",
-          "id": "vp_fib:AARNAV",
+          "rr": 1.09,
+          "rsi": 57.8,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "social": "VOLTAMP — Volume Profile + Fib setup 📈\nMFI 68 rising + OBV up — money flowing in\nLTP ₹10084 · Entry ₹10084 · SL ₹9428.5 (-6.5%)\nT1 ₹10798.95 (+7.1%) by 2026-06-23\nT2 ₹11335.17 (+12.4%) · T3 ₹11871.39 (+17.7%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #VOLTAMP #swingtrading #nifty",
+          "id": "vp_fib:VOLTAMP",
           "openedAt": "2026-06-17",
-          "openTs": 1781693392,
+          "openTs": 1781699530,
           "status": "open",
           "lastSeen": "2026-06-17",
-          "t1": 27.59,
-          "t2": 29.58,
-          "t3": 31.58
+          "t1": 10798.95,
+          "t2": 11335.17,
+          "t3": 11871.39
         }
       ]
     },
@@ -2538,6 +3428,618 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "EMMVEE",
+          "name": "Emmvee Photovoltaic Power Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 343.25,
+          "entry": 343.25,
+          "sl": 317.02,
+          "slPct": -7.6,
+          "targets": [
+            {
+              "price": 373.51,
+              "pct": 8.8,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 396.2,
+              "pct": 15.4,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 418.89,
+              "pct": 22,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.15,
+          "rsi": 66.6,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 4,
+          "social": "EMMVEE — Multibagger Quality setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹343.25 · Entry ₹343.25 · SL ₹317.02 (-7.6%)\nT1 ₹373.51 (+8.8%) by 2026-06-24\nT2 ₹396.2 (+15.4%) · T3 ₹418.89 (+22%)\nBacktested first-target hit ~100% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #EMMVEE #swingtrading #nifty",
+          "id": "multibagger:EMMVEE",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 373.51,
+          "t2": 396.2,
+          "t3": 418.89
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "EXIDEIND",
+          "name": "Exide Industries Ltd.",
+          "sector": "Automobile and Auto Components",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Auto",
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 388.3999938964844,
+          "entry": 388.4,
+          "sl": 372.36,
+          "slPct": -4.1,
+          "targets": [
+            {
+              "price": 409.79,
+              "pct": 5.5,
+              "by": "2026-06-23",
+              "days": 4
+            },
+            {
+              "price": 425.83,
+              "pct": 9.6,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 441.87,
+              "pct": 13.8,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 56.7,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 4,
+          "social": "EXIDEIND — Multibagger Quality setup 📈\nBullish Bullish ABC retrace — pattern breakout/continuation zone\nLTP ₹388.4 · Entry ₹388.4 · SL ₹372.36 (-4.1%)\nT1 ₹409.79 (+5.5%) by 2026-06-23\nT2 ₹425.83 (+9.6%) · T3 ₹441.87 (+13.8%)\nBacktested first-target hit ~100% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #EXIDEIND #swingtrading #nifty",
+          "id": "multibagger:EXIDEIND",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 409.79,
+          "t2": 425.83,
+          "t3": 441.87
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "IIFL",
+          "name": "IIFL Finance Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Bullish ABC retrace + Morning Star — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 531.1500244140625,
+          "entry": 531.15,
+          "sl": 481.31,
+          "slPct": -9.4,
+          "targets": [
+            {
+              "price": 570.06,
+              "pct": 7.3,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 599.24,
+              "pct": 12.8,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 628.42,
+              "pct": 18.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.78,
+          "rsi": 63.9,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 5,
+          "social": "IIFL — Multibagger Quality setup 📈\nBullish Bullish ABC retrace + Morning Star — pattern breakout/continuation zone\nLTP ₹531.15 · Entry ₹531.15 · SL ₹481.31 (-9.4%)\nT1 ₹570.06 (+7.3%) by 2026-06-26\nT2 ₹599.24 (+12.8%) · T3 ₹628.42 (+18.3%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #IIFL #swingtrading #nifty",
+          "id": "multibagger:IIFL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 570.06,
+          "t2": 599.24,
+          "t3": 628.42
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "EMMBI",
+          "name": "Emmbi Industries Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 92.29000091552734,
+          "entry": 92.29,
+          "sl": 81.24,
+          "slPct": -12,
+          "targets": [
+            {
+              "price": 99.92,
+              "pct": 8.3,
+              "by": "2026-07-08",
+              "days": 15
+            },
+            {
+              "price": 105.65,
+              "pct": 14.5,
+              "by": "2026-07-13",
+              "days": 18
+            },
+            {
+              "price": 111.37,
+              "pct": 20.7,
+              "by": "2026-07-17",
+              "days": 22
+            }
+          ],
+          "rr": 0.69,
+          "rsi": 67.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "EMMBI — Multibagger Quality setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹92.29 · Entry ₹92.29 · SL ₹81.24 (-12%)\nT1 ₹99.92 (+8.3%) by 2026-07-08\nT2 ₹105.65 (+14.5%) · T3 ₹111.37 (+20.7%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMMBI #swingtrading #nifty",
+          "id": "multibagger:EMMBI",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 99.92,
+          "t2": 105.65,
+          "t3": 111.37
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "KSHINTL",
+          "name": "KSH International Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 861.5499877929688,
+          "entry": 861.55,
+          "sl": 777.16,
+          "slPct": -9.8,
+          "targets": [
+            {
+              "price": 967.99,
+              "pct": 12.4,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 1047.82,
+              "pct": 21.6,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 1127.64,
+              "pct": 30.9,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.26,
+          "rsi": 66,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 4,
+          "social": "KSHINTL — Multibagger Quality setup 📈\nBullish Bullish ABC retrace — pattern breakout/continuation zone\nLTP ₹861.55 · Entry ₹861.55 · SL ₹777.16 (-9.8%)\nT1 ₹967.99 (+12.4%) by 2026-06-25\nT2 ₹1047.82 (+21.6%) · T3 ₹1127.64 (+30.9%)\nBacktested first-target hit ~100% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KSHINTL #swingtrading #nifty",
+          "id": "multibagger:KSHINTL",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 967.99,
+          "t2": 1047.82,
+          "t3": 1127.64
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "WEWORK",
+          "name": "WeWork India Management Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 650.8499755859375,
+          "entry": 650.85,
+          "sl": 615.37,
+          "slPct": -5.5,
+          "targets": [
+            {
+              "price": 698.15,
+              "pct": 7.3,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 733.63,
+              "pct": 12.7,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 769.11,
+              "pct": 18.2,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 72.4,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "WEWORK — Multibagger Quality setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹650.85 · Entry ₹650.85 · SL ₹615.37 (-5.5%)\nT1 ₹698.15 (+7.3%) by 2026-06-25\nT2 ₹733.63 (+12.7%) · T3 ₹769.11 (+18.2%)\nSetup score 96/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #WEWORK #swingtrading #nifty",
+          "id": "multibagger:WEWORK",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 698.15,
+          "t2": 733.63,
+          "t3": 769.11
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "ROUTE",
+          "name": "ROUTE MOBILE LIMITED",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 538.9500122070312,
+          "entry": 538.95,
+          "sl": 503.56,
+          "slPct": -6.6,
+          "targets": [
+            {
+              "price": 574.81,
+              "pct": 6.7,
+              "by": "2026-06-26",
+              "days": 7
+            },
+            {
+              "price": 601.71,
+              "pct": 11.6,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 628.61,
+              "pct": 16.6,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.01,
+          "rsi": 56.8,
+          "confidence": 93,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "ROUTE — Multibagger Quality setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹538.95 · Entry ₹538.95 · SL ₹503.56 (-6.6%)\nT1 ₹574.81 (+6.7%) by 2026-06-26\nT2 ₹601.71 (+11.6%) · T3 ₹628.61 (+16.6%)\nSetup score 93/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ROUTE #swingtrading #nifty",
+          "id": "multibagger:ROUTE",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 574.81,
+          "t2": 601.71,
+          "t3": 628.61
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "HBLENGINE",
+          "name": "HBL Engineering Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 795.9500122070312,
+          "entry": 795.95,
+          "sl": 726.6,
+          "slPct": -8.7,
+          "targets": [
+            {
+              "price": 850.98,
+              "pct": 6.9,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 892.25,
+              "pct": 12.1,
+              "by": "2026-06-29",
+              "days": 8
+            },
+            {
+              "price": 933.52,
+              "pct": 17.3,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.79,
+          "rsi": 53.1,
+          "confidence": 86,
+          "accuracy": 85.7,
+          "backtestTrades": 7,
+          "social": "HBLENGINE — Multibagger Quality setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹795.95 · Entry ₹795.95 · SL ₹726.6 (-8.7%)\nT1 ₹850.98 (+6.9%) by 2026-06-24\nT2 ₹892.25 (+12.1%) · T3 ₹933.52 (+17.3%)\nBacktested first-target hit ~85.7% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #HBLENGINE #swingtrading #nifty",
+          "id": "multibagger:HBLENGINE",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 850.98,
+          "t2": 892.25,
+          "t3": 933.52
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "IIFLCAPS",
+          "name": "IIFL Capital Services Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 346.20001220703125,
+          "entry": 346.2,
+          "sl": 336.31,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 359.38,
+              "pct": 3.8,
+              "by": "2026-06-24",
+              "days": 5
+            },
+            {
+              "price": 369.27,
+              "pct": 6.7,
+              "by": "2026-06-29",
+              "days": 8
+            },
+            {
+              "price": 379.16,
+              "pct": 9.5,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 60.9,
+          "confidence": 86,
+          "accuracy": 85.7,
+          "backtestTrades": 7,
+          "social": "IIFLCAPS — Multibagger Quality setup 📈\nBullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone\nLTP ₹346.2 · Entry ₹346.2 · SL ₹336.31 (-2.9%)\nT1 ₹359.38 (+3.8%) by 2026-06-24\nT2 ₹369.27 (+6.7%) · T3 ₹379.16 (+9.5%)\nBacktested first-target hit ~85.7% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #IIFLCAPS #swingtrading #nifty",
+          "id": "multibagger:IIFLCAPS",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 359.38,
+          "t2": 369.27,
+          "t3": 379.16
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "ACEINTEG",
+          "name": "Ace Integrated Solutions Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 20.700000762939453,
+          "entry": 20.7,
+          "sl": 18.8,
+          "slPct": -9.2,
+          "targets": [
+            {
+              "price": 23.24,
+              "pct": 12.3,
+              "by": "2026-06-22",
+              "days": 3
+            },
+            {
+              "price": 25.14,
+              "pct": 21.4,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 27.04,
+              "pct": 30.6,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 56.5,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "social": "ACEINTEG — Multibagger Quality setup 📈\nBullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone\nLTP ₹20.7 · Entry ₹20.7 · SL ₹18.8 (-9.2%)\nT1 ₹23.24 (+12.3%) by 2026-06-22\nT2 ₹25.14 (+21.4%) · T3 ₹27.04 (+30.6%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ACEINTEG #swingtrading #nifty",
+          "id": "multibagger:ACEINTEG",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 23.24,
+          "t2": 25.14,
+          "t3": 27.04
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "LFIC",
+          "name": "Lakshmi Finance & Industrial Corporation Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 153.49000549316406,
+          "entry": 153.49,
+          "sl": 135.96,
+          "slPct": -11.4,
+          "targets": [
+            {
+              "price": 170.03,
+              "pct": 10.8,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 182.43,
+              "pct": 18.9,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 194.84,
+              "pct": 26.9,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 0.94,
+          "rsi": 61.9,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "LFIC — Multibagger Quality setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹153.49 · Entry ₹153.49 · SL ₹135.96 (-11.4%)\nT1 ₹170.03 (+10.8%) by 2026-06-25\nT2 ₹182.43 (+18.9%) · T3 ₹194.84 (+26.9%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LFIC #swingtrading #nifty",
+          "id": "multibagger:LFIC",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 170.03,
+          "t2": 182.43,
+          "t3": 194.84
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "MAXIND",
+          "name": "Max India Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 162.83999633789062,
+          "entry": 162.84,
+          "sl": 151.19,
+          "slPct": -7.2,
+          "targets": [
+            {
+              "price": 178.37,
+              "pct": 9.5,
+              "by": "2026-06-25",
+              "days": 6
+            },
+            {
+              "price": 190.02,
+              "pct": 16.7,
+              "by": "2026-07-03",
+              "days": 12
+            },
+            {
+              "price": 201.67,
+              "pct": 23.8,
+              "by": "2026-07-16",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 53.2,
+          "confidence": 85,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "social": "MAXIND — Multibagger Quality setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹162.84 · Entry ₹162.84 · SL ₹151.19 (-7.2%)\nT1 ₹178.37 (+9.5%) by 2026-06-25\nT2 ₹190.02 (+16.7%) · T3 ₹201.67 (+23.8%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #MAXIND #swingtrading #nifty",
+          "id": "multibagger:MAXIND",
+          "openedAt": "2026-06-17",
+          "openTs": 1781699530,
+          "status": "open",
+          "lastSeen": "2026-06-17",
+          "t1": 178.37,
+          "t2": 190.02,
+          "t3": 201.67
+        },
+        {
+          "generator": "multibagger",
           "symbol": "VBL",
           "name": "Varun Beverages Ltd.",
           "sector": "Fast Moving Consumer Goods",
@@ -2589,622 +4091,6 @@
           "t1": 571.04,
           "t2": 591.28,
           "t3": 611.53
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "BAJAJCON",
-          "name": "Bajaj Consumer Care Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 602.8499755859375,
-          "entry": 602.85,
-          "sl": 555.74,
-          "slPct": -7.8,
-          "targets": [
-            {
-              "price": 652.97,
-              "pct": 8.3,
-              "by": "2026-06-25",
-              "days": 6
-            },
-            {
-              "price": 690.56,
-              "pct": 14.5,
-              "by": "2026-06-30",
-              "days": 9
-            },
-            {
-              "price": 728.15,
-              "pct": 20.8,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.06,
-          "rsi": 67.6,
-          "confidence": 75,
-          "accuracy": 75,
-          "backtestTrades": 8,
-          "social": "BAJAJCON — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹602.85 · Entry ₹602.85 · SL ₹555.74 (-7.8%)\nT1 ₹652.97 (+8.3%) by 2026-06-25\nT2 ₹690.56 (+14.5%) · T3 ₹728.15 (+20.8%)\nBacktested first-target hit ~75% over 8 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BAJAJCON #swingtrading #nifty",
-          "id": "multibagger:BAJAJCON",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 652.97,
-          "t2": 690.56,
-          "t3": 728.15
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "AETHER",
-          "name": "Aether Industries Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 1179.300048828125,
-          "entry": 1179.3,
-          "sl": 1101.07,
-          "slPct": -6.6,
-          "targets": [
-            {
-              "price": 1268.59,
-              "pct": 7.6,
-              "by": "2026-06-23",
-              "days": 4
-            },
-            {
-              "price": 1335.56,
-              "pct": 13.3,
-              "by": "2026-06-26",
-              "days": 7
-            },
-            {
-              "price": 1402.54,
-              "pct": 18.9,
-              "by": "2026-07-02",
-              "days": 11
-            }
-          ],
-          "rr": 1.14,
-          "rsi": 62.9,
-          "confidence": 67,
-          "accuracy": 66.7,
-          "backtestTrades": 6,
-          "social": "AETHER — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII up, Pledge 0%\nLTP ₹1179.3 · Entry ₹1179.3 · SL ₹1101.07 (-6.6%)\nT1 ₹1268.59 (+7.6%) by 2026-06-23\nT2 ₹1335.56 (+13.3%) · T3 ₹1402.54 (+18.9%)\nBacktested first-target hit ~66.7% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #AETHER #swingtrading #nifty",
-          "id": "multibagger:AETHER",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 1268.59,
-          "t2": 1335.56,
-          "t3": 1402.54
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "ENGINERSIN",
-          "name": "Engineers India Ltd.",
-          "sector": "Construction",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 243.19000244140625,
-          "entry": 243.19,
-          "sl": 217.96,
-          "slPct": -10.4,
-          "targets": [
-            {
-              "price": 263.61,
-              "pct": 8.4,
-              "by": "2026-06-24",
-              "days": 5
-            },
-            {
-              "price": 278.92,
-              "pct": 14.7,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 294.24,
-              "pct": 21,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 0.81,
-          "rsi": 55.6,
-          "confidence": 60,
-          "accuracy": 60,
-          "backtestTrades": 5,
-          "social": "ENGINERSIN — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹243.19 · Entry ₹243.19 · SL ₹217.96 (-10.4%)\nT1 ₹263.61 (+8.4%) by 2026-06-24\nT2 ₹278.92 (+14.7%) · T3 ₹294.24 (+21%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ENGINERSIN #swingtrading #nifty",
-          "id": "multibagger:ENGINERSIN",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 263.61,
-          "t2": 278.92,
-          "t3": 294.24
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "GRASIM",
-          "name": "Grasim Industries Ltd.",
-          "sector": "Construction Materials",
-          "indices": [
-            "NIFTY 50",
-            "NIFTY 100",
-            "NIFTY 500",
-            "NIFTY Commodities",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter up, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 3150.39990234375,
-          "entry": 3150.4,
-          "sl": 3033.29,
-          "slPct": -3.7,
-          "targets": [
-            {
-              "price": 3275.52,
-              "pct": 4,
-              "by": "2026-06-26",
-              "days": 7
-            },
-            {
-              "price": 3369.36,
-              "pct": 7,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 3463.2,
-              "pct": 9.9,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.07,
-          "rsi": 63.5,
-          "confidence": 50,
-          "accuracy": 50,
-          "backtestTrades": 8,
-          "social": "GRASIM — Multibagger Quality setup 📈\nQuality: Promoter up, FII up, DII down, Pledge 0%\nLTP ₹3150.4 · Entry ₹3150.4 · SL ₹3033.29 (-3.7%)\nT1 ₹3275.52 (+4%) by 2026-06-26\nT2 ₹3369.36 (+7%) · T3 ₹3463.2 (+9.9%)\nBacktested first-target hit ~50% over 8 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty",
-          "id": "multibagger:GRASIM",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 3275.52,
-          "t2": 3369.36,
-          "t3": 3463.2
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "BOSCHLTD",
-          "name": "Bosch Ltd.",
-          "sector": "Automobile and Auto Components",
-          "indices": [
-            "NIFTY Next 50",
-            "NIFTY 100",
-            "NIFTY 500",
-            "NIFTY Auto",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 39230,
-          "entry": 39230,
-          "sl": 37256.03,
-          "slPct": -5,
-          "targets": [
-            {
-              "price": 41369.67,
-              "pct": 5.5,
-              "by": "2026-06-26",
-              "days": 7
-            },
-            {
-              "price": 42974.41,
-              "pct": 9.5,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 44579.16,
-              "pct": 13.6,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.08,
-          "rsi": 64.9,
-          "confidence": 50,
-          "accuracy": 50,
-          "backtestTrades": 6,
-          "social": "BOSCHLTD — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII up, Pledge 0%\nLTP ₹39230 · Entry ₹39230 · SL ₹37256.03 (-5%)\nT1 ₹41369.67 (+5.5%) by 2026-06-26\nT2 ₹42974.41 (+9.5%) · T3 ₹44579.16 (+13.6%)\nBacktested first-target hit ~50% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BOSCHLTD #swingtrading #nifty",
-          "id": "multibagger:BOSCHLTD",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 41369.67,
-          "t2": 42974.41,
-          "t3": 44579.16
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "OAL",
-          "name": "Oriental Aromatics Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII stable, DII stable, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 340.8500061035156,
-          "entry": 340.85,
-          "sl": 315.37,
-          "slPct": -7.5,
-          "targets": [
-            {
-              "price": 370.7,
-              "pct": 8.8,
-              "by": "2026-06-22",
-              "days": 3
-            },
-            {
-              "price": 393.08,
-              "pct": 15.3,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 415.47,
-              "pct": 21.9,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.17,
-          "rsi": 61.7,
-          "confidence": 50,
-          "accuracy": 50,
-          "backtestTrades": 6,
-          "social": "OAL — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII stable, Pledge 0%\nLTP ₹340.85 · Entry ₹340.85 · SL ₹315.37 (-7.5%)\nT1 ₹370.7 (+8.8%) by 2026-06-22\nT2 ₹393.08 (+15.3%) · T3 ₹415.47 (+21.9%)\nBacktested first-target hit ~50% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #OAL #swingtrading #nifty",
-          "id": "multibagger:OAL",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 370.7,
-          "t2": 393.08,
-          "t3": 415.47
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "KIMS",
-          "name": "Krishna Institute of Medical Sciences Ltd.",
-          "sector": "Healthcare",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 796.4000244140625,
-          "entry": 796.4,
-          "sl": 754.69,
-          "slPct": -5.2,
-          "targets": [
-            {
-              "price": 850.5,
-              "pct": 6.8,
-              "by": "2026-06-25",
-              "days": 6
-            },
-            {
-              "price": 891.08,
-              "pct": 11.9,
-              "by": "2026-06-30",
-              "days": 9
-            },
-            {
-              "price": 931.65,
-              "pct": 17,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.3,
-          "rsi": 59.8,
-          "confidence": 43,
-          "accuracy": 42.9,
-          "backtestTrades": 7,
-          "social": "KIMS — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹796.4 · Entry ₹796.4 · SL ₹754.69 (-5.2%)\nT1 ₹850.5 (+6.8%) by 2026-06-25\nT2 ₹891.08 (+11.9%) · T3 ₹931.65 (+17%)\nBacktested first-target hit ~42.9% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KIMS #swingtrading #nifty",
-          "id": "multibagger:KIMS",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 850.5,
-          "t2": 891.08,
-          "t3": 931.65
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "TARIL",
-          "name": "Transformers And Rectifiers (India) Ltd.",
-          "sector": "Capital Goods",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 325.8999938964844,
-          "entry": 325.9,
-          "sl": 297.24,
-          "slPct": -8.8,
-          "targets": [
-            {
-              "price": 350.5,
-              "pct": 7.5,
-              "by": "2026-06-23",
-              "days": 4
-            },
-            {
-              "price": 368.94,
-              "pct": 13.2,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 387.39,
-              "pct": 18.9,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 0.86,
-          "rsi": 56.8,
-          "confidence": 43,
-          "accuracy": 42.9,
-          "backtestTrades": 7,
-          "social": "TARIL — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹325.9 · Entry ₹325.9 · SL ₹297.24 (-8.8%)\nT1 ₹350.5 (+7.5%) by 2026-06-23\nT2 ₹368.94 (+13.2%) · T3 ₹387.39 (+18.9%)\nBacktested first-target hit ~42.9% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TARIL #swingtrading #nifty",
-          "id": "multibagger:TARIL",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 350.5,
-          "t2": 368.94,
-          "t3": 387.39
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "ZFCVINDIA",
-          "name": "ZF Commercial Vehicle Control Systems India Ltd.",
-          "sector": "Automobile and Auto Components",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 15112,
-          "entry": 15112,
-          "sl": 14171.17,
-          "slPct": -6.2,
-          "targets": [
-            {
-              "price": 15960.26,
-              "pct": 5.6,
-              "by": "2026-06-24",
-              "days": 5
-            },
-            {
-              "price": 16596.45,
-              "pct": 9.8,
-              "by": "2026-06-29",
-              "days": 8
-            },
-            {
-              "price": 17232.65,
-              "pct": 14,
-              "by": "2026-07-03",
-              "days": 12
-            }
-          ],
-          "rr": 0.9,
-          "rsi": 59.5,
-          "confidence": 43,
-          "accuracy": 42.9,
-          "backtestTrades": 7,
-          "social": "ZFCVINDIA — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹15112 · Entry ₹15112 · SL ₹14171.17 (-6.2%)\nT1 ₹15960.26 (+5.6%) by 2026-06-24\nT2 ₹16596.45 (+9.8%) · T3 ₹17232.65 (+14%)\nBacktested first-target hit ~42.9% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ZFCVINDIA #swingtrading #nifty",
-          "id": "multibagger:ZFCVINDIA",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 15960.26,
-          "t2": 16596.45,
-          "t3": 17232.65
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "NELCO",
-          "name": "NELCO Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 743.9000244140625,
-          "entry": 743.9,
-          "sl": 689.36,
-          "slPct": -7.3,
-          "targets": [
-            {
-              "price": 796.28,
-              "pct": 7,
-              "by": "2026-06-24",
-              "days": 5
-            },
-            {
-              "price": 835.56,
-              "pct": 12.3,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 874.84,
-              "pct": 17.6,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 0.96,
-          "rsi": 66.9,
-          "confidence": 40,
-          "accuracy": 40,
-          "backtestTrades": 5,
-          "social": "NELCO — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII up, Pledge 0%\nLTP ₹743.9 · Entry ₹743.9 · SL ₹689.36 (-7.3%)\nT1 ₹796.28 (+7%) by 2026-06-24\nT2 ₹835.56 (+12.3%) · T3 ₹874.84 (+17.6%)\nBacktested first-target hit ~40% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #NELCO #swingtrading #nifty",
-          "id": "multibagger:NELCO",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 796.28,
-          "t2": 835.56,
-          "t3": 874.84
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "TEXINFRA",
-          "name": "Texmaco Infrastructure & Holdings Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter up, FII stable, DII stable, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 101.33999633789062,
-          "entry": 101.34,
-          "sl": 96.91,
-          "slPct": -4.4,
-          "targets": [
-            {
-              "price": 107.25,
-              "pct": 5.8,
-              "by": "2026-06-22",
-              "days": 3
-            },
-            {
-              "price": 111.68,
-              "pct": 10.2,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 116.11,
-              "pct": 14.6,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.8,
-          "confidence": 40,
-          "accuracy": 40,
-          "backtestTrades": 5,
-          "social": "TEXINFRA — Multibagger Quality setup 📈\nQuality: Promoter up, FII stable, DII stable, Pledge 0%\nLTP ₹101.34 · Entry ₹101.34 · SL ₹96.91 (-4.4%)\nT1 ₹107.25 (+5.8%) by 2026-06-22\nT2 ₹111.68 (+10.2%) · T3 ₹116.11 (+14.6%)\nBacktested first-target hit ~40% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TEXINFRA #swingtrading #nifty",
-          "id": "multibagger:TEXINFRA",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 107.25,
-          "t2": 111.68,
-          "t3": 116.11
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "BBL",
-          "name": "Bharat Bijlee Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 2810.699951171875,
-          "entry": 2810.7,
-          "sl": 2663.03,
-          "slPct": -5.3,
-          "targets": [
-            {
-              "price": 2995.42,
-              "pct": 6.6,
-              "by": "2026-06-25",
-              "days": 6
-            },
-            {
-              "price": 3133.96,
-              "pct": 11.5,
-              "by": "2026-07-03",
-              "days": 12
-            },
-            {
-              "price": 3272.5,
-              "pct": 16.4,
-              "by": "2026-07-16",
-              "days": 21
-            }
-          ],
-          "rr": 1.25,
-          "rsi": 53.6,
-          "confidence": 40,
-          "accuracy": 40,
-          "backtestTrades": 5,
-          "social": "BBL — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII up, Pledge 0%\nLTP ₹2810.7 · Entry ₹2810.7 · SL ₹2663.03 (-5.3%)\nT1 ₹2995.42 (+6.6%) by 2026-06-25\nT2 ₹3133.96 (+11.5%) · T3 ₹3272.5 (+16.4%)\nBacktested first-target hit ~40% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BBL #swingtrading #nifty",
-          "id": "multibagger:BBL",
-          "openedAt": "2026-06-17",
-          "openTs": 1781693392,
-          "status": "open",
-          "lastSeen": "2026-06-17",
-          "t1": 2995.42,
-          "t2": 3133.96,
-          "t3": 3272.5
         }
       ]
     },

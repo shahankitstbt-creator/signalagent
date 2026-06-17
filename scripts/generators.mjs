@@ -10,6 +10,7 @@ const round = (x, d = 2) => x == null ? null : +(+x).toFixed(d)
 const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i = 1; i < a.length; i++) o.push(a[i] * k + o[i - 1] * (1 - k)); return o }
 
 export const GEN_META = [
+  { id: 'confluence', label: '⭐ Top Confluence Picks', color: '#2962FF', desc: 'Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan' },
   { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'vp_fib', label: 'Volume Profile + Fib', color: '#D97706', desc: 'Price at a high-volume node (POC) coinciding with a Fib level' },
   { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
