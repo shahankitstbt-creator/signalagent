@@ -7,6 +7,11 @@ import { restore, initPersistence } from './store/persist'
 restore()
 initPersistence()
 
+// Register the PWA service worker (installable + offline shell + notifications).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}))
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />

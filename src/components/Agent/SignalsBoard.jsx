@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useViewStore } from '../../store/viewStore'
 import { useChartStore } from '../../store/chartStore'
+import { useHitAlerts } from '../../store/hitAlerts'
+import HitPopups from '../Alerts/HitPopups'
 
 const confColor = c => c >= 80 ? 'text-green' : c >= 65 ? 'text-cyan' : c >= 50 ? 'text-yellow' : 'text-txt-sec'
 const tint = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})` }
@@ -12,9 +14,14 @@ export default function SignalsBoard() {
   const [err, setErr] = useState(null)
   const [tab, setTab] = useState(0)
   const setView = useViewStore(s => s.setView)
+  const alertsOn = useHitAlerts(s => s.enabled)
+  const enableAlerts = useHitAlerts(s => s.enable)
+  const disableAlerts = useHitAlerts(s => s.disable)
+  const startAlerts = useHitAlerts(s => s.start)
 
   const load = () => { setLoading(true); fetch('/board.json?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error('No board yet — runs with the scan'))).then(d => { setBoard(d); setLoading(false) }).catch(e => { setErr(e.message); setLoading(false) }) }
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [])
+  useEffect(() => { if (alertsOn) startAlerts() }, [alertsOn, startAlerts])
 
   const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
@@ -22,16 +29,21 @@ export default function SignalsBoard() {
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
+      <HitPopups />
       {/* header */}
-      <div className="shrink-0 px-5 py-3 border-b border-border bg-bg-panel flex items-center gap-4 elev">
+      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border bg-bg-panel flex items-center gap-2 sm:gap-4 flex-wrap elev">
         <div>
-          <div className="mono text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
-          <div className="mono text-[11px] text-txt-sec">{total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span></div>
+          <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
+          <div className="mono text-[10px] sm:text-[11px] text-txt-sec">{total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span></div>
         </div>
-        <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳ refresh</button>
-        <div className="ml-auto flex gap-2">
-          <button onClick={() => setView('agent')} className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📣 Content</button>
-          <button onClick={() => setView('chart')} className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📈 Chart</button>
+        <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
+        <div className="ml-auto flex gap-1.5 sm:gap-2">
+          <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()}
+            className={`mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border card-hover ${alertsOn ? 'border-green text-green' : 'border-border text-txt-sec hover:border-accent'}`}>
+            {alertsOn ? '🔔 Alerts on' : '🔕 Alerts'}
+          </button>
+          <button onClick={() => setView('agent')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📣</button>
+          <button onClick={() => setView('chart')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📈</button>
         </div>
       </div>
 
@@ -64,7 +76,10 @@ export default function SignalsBoard() {
           {active.signals.length === 0
             ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
             : isTrade(active.signals[0])
-              ? <TradeTable signals={active.signals} color={active.color} setView={setView} />
+              ? <>
+                  <div className="hidden md:block"><TradeTable signals={active.signals} color={active.color} setView={setView} /></div>
+                  <div className="md:hidden"><TradeCards signals={active.signals} color={active.color} setView={setView} /></div>
+                </>
               : <InfoList signals={active.signals} color={active.color} setView={setView} />}
         </div>
       )}
@@ -142,6 +157,48 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
 }
 function Field({ label, value, tone }) {
   return <div><div className="text-[10px] text-txt-muted uppercase">{label}</div><div className={`text-xs font-bold ${tone || 'text-txt'}`}>{value}</div></div>
+}
+
+// mobile: stacked trade cards instead of a wide table
+function TradeCards({ signals, color, setView }) {
+  const rows = [...signals].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0))
+  return <div className="p-3 space-y-2.5">{rows.map((s, i) => <MobileTradeCard key={s.symbol + i} s={s} color={color} setView={setView} />)}</div>
+}
+function MobileTradeCard({ s, color, setView }) {
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const openSymbol = useChartStore(st => st.openSymbol)
+  const isBuy = (s.direction || 'LONG') === 'LONG'
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-base font-bold text-txt">{s.symbol}</span>
+        <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>
+        <span className="ml-auto mono text-[11px] text-txt-sec">₹{s.ltp}</span>
+        <span className={`mono text-sm font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
+        <div><div className="text-[9px] text-txt-muted uppercase">Entry</div><div className="font-bold">{s.entry}</div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">Stop</div><div className="font-bold text-red">{s.sl}</div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">R:R</div><div className="font-bold">1:{s.rr}</div></div>
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-1.5 mono text-[11px]">
+        {s.targets.map((t, k) => <div key={k}><div className="text-[9px] text-txt-muted uppercase">T{k + 1}</div><div className="font-bold text-green">{t.price} <span className="text-[9px]">+{t.pct}%</span></div></div>)}
+      </div>
+      {open && (
+        <div className="mt-2 pt-2 border-t border-border">
+          <div className="mono text-[11px] text-txt-sec mb-1.5">{s.reason}</div>
+          <div className="mono text-[10px] text-cyan mb-2">{s.accuracy != null ? `backtested ~${s.accuracy}% (n=${s.backtestTrades})` : `setup score ${s.confidence}/100`} · targets by {s.targets.map(t => t.by).join(' / ')}</div>
+        </div>
+      )}
+      <div className="flex gap-2 mt-2.5">
+        <button onClick={copy} className="flex-1 mono text-[11px] py-2 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy post'}</button>
+        <button onClick={chart} className="mono text-[11px] px-3 py-2 rounded-lg border border-border">📈</button>
+      </div>
+    </div>
+  )
 }
 
 // astro / option / timing tabs — richer info cards in a roomy grid
