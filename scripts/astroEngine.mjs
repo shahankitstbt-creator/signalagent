@@ -297,19 +297,135 @@ function conjunctions(chart) {
 
 // ── Hora / Rahu-Kaal intraday timing (tradition). Equal-hour horas from ~06:00 IST. ──
 const RAHU = { 0: '16:30–18:00', 1: '07:30–09:00', 2: '15:00–16:30', 3: '12:00–13:30', 4: '13:30–15:00', 5: '10:30–12:00', 6: '09:00–10:30' }
-export function horaSignals(date) {
+// ═══════════════════════════════════════════════════════════════════════════
+// ADVANCED: per-asset daily bias + proper sunrise/sunset hora windows (VedicEdge-style)
+// ═══════════════════════════════════════════════════════════════════════════
+const NAVA = ['Janma', 'Sampat', 'Vipat', 'Kshema', 'Pratyak', 'Sadhaka', 'Vadha', 'Mitra', 'Param Mitra']
+const YOGAS = ['Vishkambha', 'Priti', 'Ayushman', 'Saubhagya', 'Shobhana', 'Atiganda', 'Sukarma', 'Dhriti', 'Shula', 'Ganda', 'Vriddhi', 'Dhruva', 'Vyaghata', 'Harshana', 'Vajra', 'Siddhi', 'Vyatipata', 'Variyana', 'Parigha', 'Shiva', 'Siddha', 'Sadhya', 'Shubha', 'Shukla', 'Brahma', 'Indra', 'Vaidhriti']
+const KARANA_M = ['Bava', 'Balava', 'Kaulava', 'Taitila', 'Gara', 'Vanija', 'Vishti']
+// asset registry: bullish/bearish significator planets + natal nakshatra (configurable)
+const ASSETS = [
+  { id: 'NIFTY', name: 'Nifty 50', bull: ['Jupiter', 'Mercury'], bear: ['Saturn', 'Mars'], natal: 'Dhanishta' },
+  { id: 'BANKNIFTY', name: 'Bank Nifty', bull: ['Jupiter', 'Mercury', 'Venus'], bear: ['Saturn', 'Mars'], natal: 'Vishakha' },
+  { id: 'SENSEX', name: 'Sensex', bull: ['Jupiter', 'Mercury'], bear: ['Saturn', 'Mars'], natal: 'Shatabhisha' },
+  { id: 'GOLD', name: 'Gold', bull: ['Jupiter', 'Venus', 'Sun', 'Moon'], bear: ['Saturn', 'Mars'], natal: 'Pushya' },
+  { id: 'SILVER', name: 'Silver', bull: ['Moon', 'Venus', 'Jupiter'], bear: ['Saturn', 'Mars', 'Sun'], natal: 'Rohini' },
+  { id: 'NIFTYFMCG', name: 'Nifty FMCG', bull: ['Moon', 'Venus', 'Jupiter'], bear: ['Saturn', 'Mars'], natal: 'Rohini' },
+  { id: 'NIFTYMETAL', name: 'Nifty Metal', bull: ['Mars', 'Jupiter', 'Sun'], bear: ['Saturn', 'Mercury'], natal: 'Bharani' },
+  { id: 'NIFTYPHARMA', name: 'Nifty Pharma', bull: ['Mercury', 'Jupiter', 'Moon'], bear: ['Saturn', 'Mars'], natal: 'Ashlesha' },
+  { id: 'NIFTYIT', name: 'Nifty IT', bull: ['Mercury', 'Venus', 'Rahu'], bear: ['Saturn', 'Mars'], natal: 'Ardra' },
+  { id: 'NIFTYAUTO', name: 'Nifty Auto', bull: ['Mars', 'Venus', 'Mercury'], bear: ['Saturn'], natal: 'Chitra' },
+  { id: 'NIFTYFIN', name: 'Nifty Financial', bull: ['Jupiter', 'Mercury', 'Venus'], bear: ['Saturn', 'Mars'], natal: 'Vishakha' },
+]
+
+const fmtT = h => { let hh = Math.floor(((h % 24) + 24) % 24), mm = Math.round(((h % 1) + 1) % 1 * 60); if (mm === 60) { mm = 0; hh = (hh + 1) % 24 } const ap = hh < 12 ? 'AM' : 'PM'; let h12 = hh % 12; if (h12 === 0) h12 = 12; return `${h12}:${pad(mm)} ${ap}` }
+const padaOf = lon => Math.floor((lon % (13 + 1 / 3)) / (10 / 3)) + 1
+function navaTara(natalName, moonNakIdx) {
+  const nIdx = NAK.indexOf(natalName); const count = (((moonNakIdx - nIdx) % 9) + 9) % 9; const num = count + 1
+  const bad = [3, 5, 7].includes(num), good = [2, 4, 6, 8, 9].includes(num)
+  return { num, name: NAVA[count], tone: bad ? 'bad' : good ? 'good' : 'neutral' }
+}
+function karanaName(half) { if (half === 0) return 'Kimstughna'; if (half < 57) return KARANA_M[(half - 1) % 7]; return ['Shakuni', 'Chatushpada', 'Naga'][half - 57] || 'Naga' }
+
+// approximate sunrise/sunset (NOAA), returns fractional IST hours
+function sunTimes(date, lat = 19.076, lng = 72.877) {
+  const rad = Math.PI / 180
+  const J = date.getTime() / 86400000 + 2440587.5
+  const n = Math.round(J - 2451545.0 + 0.0008)
+  const Js = n - lng / 360
+  const M = (357.5291 + 0.98560028 * Js) % 360
+  const C = 1.9148 * Math.sin(M * rad) + 0.0200 * Math.sin(2 * M * rad) + 0.0003 * Math.sin(3 * M * rad)
+  const lam = (M + C + 180 + 102.9372) % 360
+  const Jt = 2451545.0 + Js + 0.0053 * Math.sin(M * rad) - 0.0069 * Math.sin(2 * lam * rad)
+  const dec = Math.asin(Math.sin(lam * rad) * Math.sin(23.44 * rad)) / rad
+  const cosH = (Math.sin(-0.833 * rad) - Math.sin(lat * rad) * Math.sin(dec * rad)) / (Math.cos(lat * rad) * Math.cos(dec * rad))
+  if (cosH > 1 || cosH < -1) return { sunrise: 6, sunset: 18.5 }
+  const H = Math.acos(cosH) / rad
+  const toIST = Jd => { const d = new Date((Jd - 2440587.5) * 86400000); return (d.getUTCHours() + d.getUTCMinutes() / 60 + d.getUTCSeconds() / 3600 + 5.5) % 24 }
+  return { sunrise: toIST(Jt - H / 360), sunset: toIST(Jt + H / 360) }
+}
+// proper unequal horas (12 day + 12 night) + Rahu Kaal from sunrise/sunset
+function properHoras(date) {
+  const { sunrise, sunset } = sunTimes(date)
+  const dayLen = ((sunset - sunrise) + 24) % 24, nightLen = 24 - dayLen
+  const dayH = dayLen / 12, nightH = nightLen / 12
   const wd = date.getDay()
-  const sch = horaSchedule(date)
-  const noteFor = r => r.rahu ? 'Avoid fresh entries — stop-hunt window'
-    : r.stanceTone === 'up' ? 'Good for fresh longs / momentum entries'
-      : r.stanceTone === 'down' ? 'Be selective — book partials, tighten stops'
-        : 'Neutral — trade levels, not the clock'
-  return sch.rows.map(r => ({
-    generator: 'astro_timing', isAstro: true, isHora: true,
-    time: r.time, lord: r.lord, stance: r.stance, stanceTone: r.stanceTone, rahu: r.rahu,
-    note: noteFor(r),
-    social: `🕉️ Hora ${r.time} IST — ruler ${r.lord} (${r.stance})\n${noteFor(r)}\nDay lord ${DAY_RULER[wd]} · Rahu Kaal ${RAHU[wd]} IST (avoid).\nTradition/timing only — no proven edge. ${DISCLAIMER}\n#panchang #hora #intraday`,
+  const startIdx = CHALDEAN.indexOf(DAY_RULER[wd])
+  const rahuPortion = { 0: 8, 1: 2, 2: 7, 3: 5, 4: 6, 5: 4, 6: 3 }[wd]
+  const rkStart = sunrise + (rahuPortion - 1) * dayLen / 8, rkEnd = rkStart + dayLen / 8
+  const horas = []
+  for (let k = 0; k < 24; k++) {
+    const lord = CHALDEAN[(startIdx + k) % 7]
+    let start, end, session
+    if (k < 12) { start = sunrise + k * dayH; end = start + dayH; session = 'day' }
+    else { start = sunset + (k - 12) * nightH; end = start + nightH; session = 'night' }
+    horas.push({ k, lord, start, end, session, rahu: (start < rkEnd && end > rkStart) })
+  }
+  return { sunrise, sunset, rahuKaal: { start: rkStart, end: rkEnd }, horas }
+}
+
+function biasFor(asset, ph, chart) {
+  const bull = [], bear = []
+  for (const h of ph.horas) {
+    if (h.rahu) continue
+    const t = `${fmtT(h.start)}–${fmtT(h.end)}`
+    if (asset.bull.includes(h.lord)) bull.push({ time: t, planet: h.lord, prime: h.lord === asset.bull[0], session: h.session })
+    else if (asset.bear.includes(h.lord)) bear.push({ time: t, planet: h.lord, session: h.session })
+  }
+  const moonNakIdx = NAK.indexOf(chart.planets.Moon.nakshatra)
+  const nt = navaTara(asset.natal, moonNakIdx)
+  let score = (bull.length - bear.length) * 4
+  const rb = [], rr = []
+  if (nt.tone === 'bad') { score -= 28; rr.push(`Nava Tara ${nt.name} (pos ${nt.num}) from natal ${asset.natal} — danger/avoid`) }
+  else if (nt.tone === 'good') { score += 16; rb.push(`Nava Tara ${nt.name} (pos ${nt.num}) — supportive star`) }
+  if (chart.tithi.paksha.startsWith('Shukla')) { score += 8; rb.push('Shukla paksha (waxing Moon)') } else { score -= 8; rr.push('Krishna paksha (waning Moon)') }
+  for (const p of asset.bull) { const sg = chart.planets[p].sign; if ((STRONG_SIGN[p] || []).includes(sg)) { score += 7; rb.push(`${p} strong in ${sg}`) } else if ((WEAK_SIGN[p] || []).includes(sg)) { score -= 7; rr.push(`${p} weak in ${sg}`) } }
+  for (const p of asset.bear) { const sg = chart.planets[p].sign; if ((STRONG_SIGN[p] || []).includes(sg)) { score -= 7; rr.push(`${p} (bearish karaka) strong in ${sg}`) } }
+  score = Math.max(-100, Math.min(100, Math.round(score)))
+  const label = score >= 40 ? 'BUY / TEJI' : score >= 15 ? 'BUY ON DIP' : score > -15 ? 'RANGE / NEUTRAL' : score > -40 ? 'SELL ON RISE / MANDI' : 'STRONG SELL / MANDI'
+  const tone = score >= 15 ? 'up' : score <= -15 ? 'down' : 'flat'
+  return { score, label, tone, bull, bear, navaTara: nt, reasonsBull: rb.slice(0, 5), reasonsBear: rr.slice(0, 5) }
+}
+
+export function dailyBias(date) {
+  const chart = computeChart(date), ph = properHoras(date), moon = chart.planets.Moon
+  const yogaIdx = Math.floor((((chart.planets.Sun.lon + moon.lon) % 360) / (13 + 1 / 3))) % 27
+  const elong = ((moon.lon - chart.planets.Sun.lon) % 360 + 360) % 360
+  const panchang = {
+    moon: `${moon.sign} · ${moon.nakshatra} (Pada ${padaOf(moon.lon)}) · lord ${moon.nakLord}`,
+    tithi: `${chart.tithi.name} · ${chart.tithi.paksha}`, karana: karanaName(Math.floor(elong / 6)),
+    yoga: YOGAS[yogaIdx], vaar: WEEKDAY[chart.weekday],
+    sunrise: fmtT(ph.sunrise), sunset: fmtT(ph.sunset), rahuKaal: `${fmtT(ph.rahuKaal.start)}–${fmtT(ph.rahuKaal.end)}`,
+  }
+  return { date: date.toISOString().slice(0, 10), panchang, assets: ASSETS.map(a => ({ id: a.id, name: a.name, natal: a.natal, ...biasFor(a, ph, chart) })), horas: ph }
+}
+
+// per-asset daily-bias rows for the Vedic tab
+export function assetBiasSignals(date) {
+  return dailyBias(date).assets.map(a => ({
+    generator: 'vedic_astro', isAstro: true, isAssetBias: true,
+    symbol: a.id, name: a.name, score: a.score, label: a.label, biasTone: a.tone,
+    navaTara: `${a.navaTara.name} (pos ${a.navaTara.num})`, navaBad: a.navaTara.tone === 'bad',
+    bullWindows: a.bull, bearWindows: a.bear, bullCount: a.bull.length, bearCount: a.bear.length,
+    reasonsBull: a.reasonsBull, reasonsBear: a.reasonsBear,
+    social: `🔮 ${a.name} — Vedic daily bias ${a.score > 0 ? '+' : ''}${a.score} (${a.label})\nBullish windows (IST): ${a.bull.slice(0, 4).map(w => w.time + ' ' + w.planet).join(', ') || '—'}\nBearish windows: ${a.bear.slice(0, 4).map(w => w.time + ' ' + w.planet).join(', ') || '—'}\nNava Tara: ${a.navaTara.name}. ${DISCLAIMER}\n#${a.id.toLowerCase()} #vedicastro`,
   }))
+}
+
+// Nifty-focused full-day hora schedule (day + night sessions) for the Hora tab
+export function horaSignals(date) {
+  const ph = properHoras(date), nifty = ASSETS[0]
+  const descFor = l => l === 'Jupiter' ? 'Jupiter hora — PRIME window for Nifty/Bank' : l === 'Mercury' ? 'Mercury hora — favourable for Nifty/IT' : l === 'Saturn' ? 'Saturn hora — weak for equities' : l === 'Mars' ? 'Mars hora — volatile/weak for index' : l === 'Moon' ? 'Moon hora — sentiment, FMCG, silver' : l === 'Venus' ? 'Venus hora — sugar, autos, silver drift' : 'Sun hora — energy, confidence'
+  return ph.horas.map(h => {
+    const t = `${fmtT(h.start)}–${fmtT(h.end)}`
+    let stance, tone
+    if (h.rahu) { stance = 'Rahu Kaal — no new trades'; tone = 'down' }
+    else if (h.lord === nifty.bull[0]) { stance = 'PRIME BUY'; tone = 'up' }
+    else if (nifty.bull.includes(h.lord)) { stance = 'BUY'; tone = 'up' }
+    else if (nifty.bear.includes(h.lord)) { stance = 'SELL / EXIT'; tone = 'down' }
+    else { stance = 'NEUTRAL'; tone = 'flat' }
+    return { generator: 'astro_timing', isAstro: true, isHora: true, time: t, lord: h.lord, session: h.session, stance, stanceTone: tone, rahu: h.rahu, note: descFor(h.lord), social: `🕉️ Hora ${t} IST — ${h.lord} (${stance}). ${descFor(h.lord)}. ${DISCLAIMER}` }
+  })
 }
 
 // CLI smoke test

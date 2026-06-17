@@ -89,7 +89,7 @@ export default function SignalsBoard() {
           {active.signals.length === 0
             ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
             : active.id === 'vedic_astro'
-              ? <VedicTable signals={active.signals} color={active.color} setView={setView} />
+              ? <AssetBiasTable signals={active.signals} color={active.color} />
               : active.id === 'astro_timing'
                 ? <HoraTable signals={active.signals} color={active.color} />
                 : isTrade(active.signals[0])
@@ -218,8 +218,78 @@ function MobileTradeCard({ s, color, setView }) {
   )
 }
 
-// ── Vedic Astro tab: actionable timing list (when / which trade / expect / conviction) ──
+// ── Vedic Astro tab: ALL-ASSETS daily bias (score + bullish/bearish time windows) ──
 const biasToneCls = t => t === 'up' ? 'text-green' : t === 'down' ? 'text-red' : 'text-yellow'
+function AssetBiasTable({ signals, color }) {
+  const [open, setOpen] = useState(-1)
+  const rows = [...signals].sort((a, b) => b.score - a.score)
+  return (
+    <>
+      <table className="hidden md:table w-full mono text-xs border-collapse">
+        <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+          {['Asset', 'Daily bias', '▲ Bullish windows', '▼ Bearish windows', 'Nava Tara', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}
+        </tr></thead>
+        <tbody>{rows.map((s, i) => <AssetBiasRow key={s.symbol} s={s} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />)}</tbody>
+      </table>
+      <div className="md:hidden p-3 space-y-2.5">{rows.map(s => <AssetBiasCard key={s.symbol} s={s} color={color} />)}</div>
+    </>
+  )
+}
+function Windows({ s }) {
+  return (
+    <div className="grid md:grid-cols-2 gap-4">
+      <div><div className="text-[10px] uppercase text-green mb-1 font-bold">▲ Bullish windows (IST)</div>
+        {s.bullWindows.length ? s.bullWindows.map((w, k) => <div key={k} className="flex justify-between text-[11px] py-0.5 border-b border-border/40"><span className="text-txt">{w.time}</span><span className={w.prime ? 'text-green font-bold' : 'text-txt-sec'}>{w.planet}{w.prime ? ' ★ PRIME' : ''}</span></div>) : <div className="text-[11px] text-txt-muted">none today</div>}</div>
+      <div><div className="text-[10px] uppercase text-red mb-1 font-bold">▼ Bearish windows (IST)</div>
+        {s.bearWindows.length ? s.bearWindows.map((w, k) => <div key={k} className="flex justify-between text-[11px] py-0.5 border-b border-border/40"><span className="text-txt">{w.time}</span><span className="text-txt-sec">{w.planet}</span></div>) : <div className="text-[11px] text-txt-muted">none today</div>}</div>
+    </div>
+  )
+}
+function AssetBiasRow({ s, color, open, onToggle }) {
+  const [copied, setCopied] = useState(false)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const tcls = biasToneCls(s.biasTone)
+  return (
+    <>
+      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.name}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2"><span className={`font-bold ${tcls}`}>{s.score > 0 ? '+' : ''}{s.score}</span> <span className="text-txt-sec">{s.label}</span></td>
+        <td className="px-3 py-2 text-green">▲ {s.bullCount}</td>
+        <td className="px-3 py-2 text-red">▼ {s.bearCount}</td>
+        <td className={`px-3 py-2 ${s.navaBad ? 'text-red font-bold' : 'text-txt-sec'}`}>{s.navaTara}</td>
+        <td className="px-3 py-2"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
+      </tr>
+      {open && (
+        <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
+          <td colSpan={6} className="px-5 py-3">
+            <Windows s={s} />
+            <div className="mt-2 text-[11px] space-y-0.5">{s.reasonsBull?.map((r, k) => <div key={'b' + k} className="text-green">✔ {r}</div>)}{s.reasonsBear?.map((r, k) => <div key={'r' + k} className="text-red">✘ {r}</div>)}</div>
+            <button onClick={copy} className="mt-2 mono text-[11px] px-3 py-1.5 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied caption' : '📋 Copy social post'}</button>
+            <div className="text-[10px] text-txt-muted mt-1">⚠️ Astrology has no proven market edge — tradition/educational. Pair with structure + volume + risk.</div>
+          </td>
+        </tr>
+      )}
+    </>
+  )
+}
+function AssetBiasCard({ s, color }) {
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const tcls = biasToneCls(s.biasTone)
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-sm font-bold text-txt">{s.name}</span>
+        <span className={`ml-auto mono text-sm font-bold ${tcls}`}>{s.score > 0 ? '+' : ''}{s.score}</span>
+      </div>
+      <div className="flex items-center gap-2 mt-0.5"><span className={`mono text-[11px] font-bold ${tcls}`}>{s.label}</span><span className="mono text-[10px] text-green ml-auto">▲{s.bullCount}</span><span className="mono text-[10px] text-red">▼{s.bearCount}</span></div>
+      <div className={`mono text-[10px] mt-1 ${s.navaBad ? 'text-red' : 'text-txt-muted'}`}>Nava Tara: {s.navaTara}</div>
+      {open && <div className="mt-2 pt-2 border-t border-border"><Windows s={s} /></div>}
+      <button onClick={copy} className="w-full mt-2.5 mono text-[11px] py-2 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy social post'}</button>
+    </div>
+  )
+}
 const convCls = c => c === 'High' ? 'text-green' : c === 'Medium' ? 'text-yellow' : 'text-txt-sec'
 function VedicTable({ signals, color }) {
   const [open, setOpen] = useState(-1)

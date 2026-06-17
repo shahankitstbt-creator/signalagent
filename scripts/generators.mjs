@@ -109,4 +109,4 @@ export function runMultibagger(st, a, f, addDays) { try { return STOCK_GENS.mult
 
 // ── astro cards come from the real Vedic ephemeris engine (5 methods × Nifty/Gold)
 //    plus Hora/Rahu-Kaal timing. All honestly framed: real positions, tradition reading.
-export { vedicMarketSignals, horaSignals, panchangSummary } from './astroEngine.mjs'
+export { vedicMarketSignals, horaSignals, panchangSummary, assetBiasSignals, dailyBias } from './astroEngine.mjs'

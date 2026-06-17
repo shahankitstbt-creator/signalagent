@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-17T10:49:52.269Z",
+  "generatedAt": "2026-06-17T11:04:41.169Z",
   "date": "2026-06-17",
   "note": "Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).",
   "trackRecord": {
@@ -7,7 +7,7 @@
       "win": 0,
       "loss": 0,
       "expired": 0,
-      "open": 75,
+      "open": 133,
       "returnSum": 0,
       "decided": 0,
       "winRate": null,
@@ -18,7 +18,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 15,
+        "open": 36,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -28,7 +28,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 15,
+        "open": 17,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -38,7 +38,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 15,
+        "open": 32,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -58,7 +58,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 15,
+        "open": 33,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -3993,396 +3993,1238 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Tritiya (Shukla (waxing)) · Moon Cancer · Pushya · enter only in favourable horas (see Hora tab). Tradition — no proven edge.",
-      "count": 10,
+      "desc": "Tritiya · Shukla (waxing) · Dhruva yoga · Karana Gara · Moon Cancer · Pushya (Pada 1) · lord Saturn. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "count": 11,
       "signals": [
         {
           "generator": "vedic_astro",
           "isAstro": true,
+          "isAssetBias": true,
           "symbol": "NIFTY",
           "name": "Nifty 50",
-          "method": "VedicAstro",
-          "bias": "Bullish lean",
+          "score": 27,
+          "label": "BUY ON DIP",
           "biasTone": "up",
-          "conviction": "High",
-          "trade": "NIFTY longs (buy dips)",
-          "expect": "Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Wednesday (ruler Mercury). Moon in Cancer · Pushya (lord Saturn). Tritiya, Shukla (waxing). Mercury strong in Gemini; Jupiter strong in Cancer.",
-          "lines": [
+          "navaTara": "Kshema (pos 4)",
+          "navaBad": false,
+          "bullWindows": [
             {
-              "k": "Tithi",
-              "v": "Tritiya · Shukla (waxing)"
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Moon",
-              "v": "Cancer · Pushya"
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Day lord",
-              "v": "Mercury"
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
             }
           ],
-          "social": "🪐 Nifty 50 — VedicAstro (traditional view)\nReading: Bullish lean.\nWednesday (ruler Mercury). Moon in Cancer · Pushya (lord Saturn). Tritiya, Shukla (waxing). Mercury strong in Gemini; Jupiter strong in Cancer.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #panchang #astrology"
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 6,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Nava Tara Kshema (pos 4) — supportive star",
+            "Shukla paksha (waxing Moon)",
+            "Jupiter strong in Cancer",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Nifty 50 — Vedic daily bias +27 (BUY ON DIP)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 9:20 AM–10:27 AM Jupiter, 5:05 PM–6:11 PM Jupiter, 9:05 PM–9:58 PM Mercury\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "NIFTY",
-          "name": "Nifty 50",
-          "method": "Vyapar Ratna",
-          "bias": "Bullish lean",
+          "isAssetBias": true,
+          "symbol": "BANKNIFTY",
+          "name": "Bank Nifty",
+          "score": 35,
+          "label": "BUY ON DIP",
           "biasTone": "up",
-          "conviction": "High",
-          "trade": "NIFTY longs (buy dips)",
-          "expect": "Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
+          "navaTara": "Sampat (pos 2)",
+          "navaBad": false,
+          "bullWindows": [
+            {
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            }
           ],
-          "reason": "Moon transits Pushya (lord Saturn) — a cautious star for fresh longs in tradition. Shukla (waxing) favours building positions. Key karaka Mercury in Gemini.",
-          "lines": null,
-          "social": "🪐 Nifty 50 — Vyapar Ratna (traditional view)\nReading: Bullish lean.\nMoon transits Pushya (lord Saturn) — a cautious star for fresh longs in tradition. Shukla (waxing) favours building positions. Key karaka Mercury in Gemini.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #panchang #astrology"
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 8,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
+            "Shukla paksha (waxing Moon)",
+            "Jupiter strong in Cancer",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Bank Nifty — Vedic daily bias +35 (BUY ON DIP)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 9:20 AM–10:27 AM Jupiter, 5:05 PM–6:11 PM Jupiter, 8:11 PM–9:05 PM Venus\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "NIFTY",
-          "name": "Nifty 50",
-          "method": "Planet Positions",
-          "bias": "Bullish lean",
+          "isAssetBias": true,
+          "symbol": "SENSEX",
+          "name": "Sensex",
+          "score": -17,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vipat (pos 3)",
+          "navaBad": true,
+          "bullWindows": [
+            {
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            }
+          ],
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 6,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Jupiter strong in Cancer",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [
+            "Nava Tara Vipat (pos 3) from natal Shatabhisha — danger/avoid",
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Sensex — Vedic daily bias -17 (SELL ON RISE / MANDI)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 9:20 AM–10:27 AM Jupiter, 5:05 PM–6:11 PM Jupiter, 9:05 PM–9:58 PM Mercury\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
+        },
+        {
+          "generator": "vedic_astro",
+          "isAstro": true,
+          "isAssetBias": true,
+          "symbol": "GOLD",
+          "name": "Gold",
+          "score": 35,
+          "label": "BUY ON DIP",
           "biasTone": "up",
-          "conviction": "High",
-          "trade": "NIFTY longs (buy dips)",
-          "expect": "Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Significators for Nifty 50: Mercury, Jupiter. Mercury strong in Gemini; Jupiter strong in Cancer.",
-          "lines": [
+          "navaTara": "Janma (pos 1)",
+          "navaBad": false,
+          "bullWindows": [
             {
-              "k": "Sun",
-              "v": "Gemini 2.1° · Mrigashira"
+              "time": "7:07 AM–8:14 AM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Moon",
-              "v": "Cancer 5° · Pushya"
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Mercury",
-              "v": "Gemini 26.5° · Punarvasu"
+              "time": "11:33 AM–12:39 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Venus",
-              "v": "Cancer 10.4° · Pushya"
+              "time": "2:52 PM–3:58 PM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Mars",
-              "v": "Aries 27.6° · Krittika"
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Jupiter",
-              "v": "Cancer 3.1° · Punarvasu"
+              "time": "7:18 PM–8:11 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "night"
             },
             {
-              "k": "Saturn",
-              "v": "Pisces 19.3° · Revati"
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
             },
             {
-              "k": "Rahu",
-              "v": "Aquarius 9.1° · Shatabhisha"
+              "time": "9:58 PM–10:52 PM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "night"
             },
             {
-              "k": "Ketu",
-              "v": "Leo 9.1° · Magha"
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:27 AM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "4:14 AM–5:07 AM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "night"
             }
           ],
-          "social": "🪐 Nifty 50 — Planet Positions (traditional view)\nReading: Bullish lean.\nSignificators for Nifty 50: Mercury, Jupiter. Mercury strong in Gemini; Jupiter strong in Cancer.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #panchang #astrology"
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 12,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Jupiter strong in Cancer",
+            "Moon strong in Cancer"
+          ],
+          "reasonsBear": [
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Gold — Vedic daily bias +35 (BUY ON DIP)\nBullish windows (IST): 7:07 AM–8:14 AM Moon, 9:20 AM–10:27 AM Jupiter, 11:33 AM–12:39 PM Sun, 2:52 PM–3:58 PM Moon\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "NIFTY",
-          "name": "Nifty 50",
-          "method": "Planet Combination",
-          "bias": "Bullish lean",
+          "isAssetBias": true,
+          "symbol": "SILVER",
+          "name": "Silver",
+          "score": -17,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Pratyak (pos 5)",
+          "navaBad": true,
+          "bullWindows": [
+            {
+              "time": "7:07 AM–8:14 AM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "2:52 PM–3:58 PM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "9:58 PM–10:52 PM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "4:14 AM–5:07 AM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "night"
+            }
+          ],
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "11:33 AM–12:39 PM",
+              "planet": "Sun",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "7:18 PM–8:11 PM",
+              "planet": "Sun",
+              "session": "night"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:27 AM",
+              "planet": "Sun",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 9,
+          "bearCount": 10,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Moon strong in Cancer",
+            "Jupiter strong in Cancer"
+          ],
+          "reasonsBear": [
+            "Nava Tara Pratyak (pos 5) from natal Rohini — danger/avoid",
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Silver — Vedic daily bias -17 (SELL ON RISE / MANDI)\nBullish windows (IST): 7:07 AM–8:14 AM Moon, 9:20 AM–10:27 AM Jupiter, 2:52 PM–3:58 PM Moon, 5:05 PM–6:11 PM Jupiter\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 11:33 AM–12:39 PM Sun, 3:58 PM–5:05 PM Saturn\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
+        },
+        {
+          "generator": "vedic_astro",
+          "isAstro": true,
+          "isAssetBias": true,
+          "symbol": "NIFTYFMCG",
+          "name": "Nifty FMCG",
+          "score": -5,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Pratyak (pos 5)",
+          "navaBad": true,
+          "bullWindows": [
+            {
+              "time": "7:07 AM–8:14 AM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "2:52 PM–3:58 PM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "9:58 PM–10:52 PM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "4:14 AM–5:07 AM",
+              "planet": "Moon",
+              "prime": true,
+              "session": "night"
+            }
+          ],
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 9,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Moon strong in Cancer",
+            "Jupiter strong in Cancer"
+          ],
+          "reasonsBear": [
+            "Nava Tara Pratyak (pos 5) from natal Rohini — danger/avoid",
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Nifty FMCG — Vedic daily bias -5 (RANGE / NEUTRAL)\nBullish windows (IST): 7:07 AM–8:14 AM Moon, 9:20 AM–10:27 AM Jupiter, 2:52 PM–3:58 PM Moon, 5:05 PM–6:11 PM Jupiter\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
+        },
+        {
+          "generator": "vedic_astro",
+          "isAstro": true,
+          "isAssetBias": true,
+          "symbol": "NIFTYMETAL",
+          "name": "Nifty Metal",
+          "score": -5,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Vadha (pos 7)",
+          "navaBad": true,
+          "bullWindows": [
+            {
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "11:33 AM–12:39 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "7:18 PM–8:11 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:27 AM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "night"
+            }
+          ],
+          "bearWindows": [
+            {
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "session": "day"
+            },
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "session": "night"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 9,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Mars strong in Aries",
+            "Jupiter strong in Cancer"
+          ],
+          "reasonsBear": [
+            "Nava Tara Vadha (pos 7) from natal Bharani — danger/avoid",
+            "Mercury (bearish karaka) strong in Gemini"
+          ],
+          "social": "🔮 Nifty Metal — Vedic daily bias -5 (RANGE / NEUTRAL)\nBullish windows (IST): 9:20 AM–10:27 AM Jupiter, 10:27 AM–11:33 AM Mars, 11:33 AM–12:39 PM Sun, 5:05 PM–6:11 PM Jupiter\nBearish windows: 6:01 AM–7:07 AM Mercury, 8:14 AM–9:20 AM Saturn, 3:58 PM–5:05 PM Saturn, 9:05 PM–9:58 PM Mercury\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
+        },
+        {
+          "generator": "vedic_astro",
+          "isAstro": true,
+          "isAssetBias": true,
+          "symbol": "NIFTYPHARMA",
+          "name": "Nifty Pharma",
+          "score": 50,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "conviction": "High",
-          "trade": "NIFTY longs (buy dips)",
-          "expect": "Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Moon+Venus conjunct in Cancer (5°) — benefic blend · Moon+Jupiter conjunct in Cancer (2°) — benefic blend · Mercury+Jupiter conjunct in Gemini (7°) — benefic blend · Venus+Jupiter conjunct in Cancer (7°) — benefic blend",
-          "lines": [
+          "navaTara": "Param Mitra (pos 9)",
+          "navaBad": false,
+          "bullWindows": [
             {
-              "k": "Moon–Venus",
-              "v": "5.4° in Cancer"
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Moon–Jupiter",
-              "v": "1.9° in Cancer"
+              "time": "7:07 AM–8:14 AM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Mercury–Jupiter",
-              "v": "6.6° in Gemini"
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Venus–Jupiter",
-              "v": "7.3° in Cancer"
+              "time": "2:52 PM–3:58 PM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "9:58 PM–10:52 PM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "4:14 AM–5:07 AM",
+              "planet": "Moon",
+              "prime": false,
+              "session": "night"
             }
           ],
-          "social": "🪐 Nifty 50 — Planet Combination (traditional view)\nReading: Bullish lean.\nMoon+Venus conjunct in Cancer (5°) — benefic blend · Moon+Jupiter conjunct in Cancer (2°) — benefic blend · Mercury+Jupiter conjunct in Gemini (7°) — benefic blend · Venus+Jupiter conjunct in Cancer (7°) — benefic blend\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #panchang #astrology"
-        },
-        {
-          "generator": "vedic_astro",
-          "isAstro": true,
-          "symbol": "NIFTY",
-          "name": "Nifty 50",
-          "method": "KP Astro",
-          "bias": "Neutral / range",
-          "biasTone": "flat",
-          "conviction": "Low",
-          "trade": "NIFTY range — levels only",
-          "expect": "No clear directional bias — trade levels & structure, not the stars; keep size light.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Ruling planets — Day Mercury, Moon rasi-lord Moon, star-lord Saturn, sub-lord Saturn. KP weights the sub-lord most: Saturn is a caution signator for Nifty 50 in tradition.",
-          "lines": [
+          "bearWindows": [
             {
-              "k": "Day lord",
-              "v": "Mercury"
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
             },
             {
-              "k": "Rasi lord",
-              "v": "Moon"
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
             },
             {
-              "k": "Star lord",
-              "v": "Saturn"
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
             },
             {
-              "k": "Sub lord",
-              "v": "Saturn"
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
             }
           ],
-          "social": "🪐 Nifty 50 — KP Astro (traditional view)\nReading: Neutral / range.\nRuling planets — Day Mercury, Moon rasi-lord Moon, star-lord Saturn, sub-lord Saturn. KP weights the sub-lord most: Saturn is a caution signator for Nifty 50 in tradition.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #panchang #astrology"
+          "bullCount": 10,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Nava Tara Param Mitra (pos 9) — supportive star",
+            "Shukla paksha (waxing Moon)",
+            "Mercury strong in Gemini",
+            "Jupiter strong in Cancer",
+            "Moon strong in Cancer"
+          ],
+          "reasonsBear": [
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Nifty Pharma — Vedic daily bias +50 (BUY / TEJI)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 7:07 AM–8:14 AM Moon, 9:20 AM–10:27 AM Jupiter, 2:52 PM–3:58 PM Moon\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "GOLD",
-          "name": "Gold (MCX/Spot)",
-          "method": "VedicAstro",
-          "bias": "Neutral / range",
-          "biasTone": "flat",
-          "conviction": "Medium",
-          "trade": "GOLD range — levels only",
-          "expect": "No clear directional bias — trade levels & structure, not the stars; keep size light.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Wednesday (ruler Mercury). Moon in Cancer · Pushya (lord Saturn). Tritiya, Shukla (waxing). Jupiter strong in Cancer; Shukla paksha (waxing Moon).",
-          "lines": [
+          "isAssetBias": true,
+          "symbol": "NIFTYIT",
+          "name": "Nifty IT",
+          "score": -28,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vipat (pos 3)",
+          "navaBad": true,
+          "bullWindows": [
             {
-              "k": "Tithi",
-              "v": "Tritiya · Shukla (waxing)"
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Moon",
-              "v": "Cancer · Pushya"
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
             },
             {
-              "k": "Day lord",
-              "v": "Mercury"
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "night"
             }
           ],
-          "social": "🪐 Gold (MCX/Spot) — VedicAstro (traditional view)\nReading: Neutral / range.\nWednesday (ruler Mercury). Moon in Cancer · Pushya (lord Saturn). Tritiya, Shukla (waxing). Jupiter strong in Cancer; Shukla paksha (waxing Moon).\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #panchang #astrology"
-        },
-        {
-          "generator": "vedic_astro",
-          "isAstro": true,
-          "symbol": "GOLD",
-          "name": "Gold (MCX/Spot)",
-          "method": "Vyapar Ratna",
-          "bias": "Neutral / range",
-          "biasTone": "flat",
-          "conviction": "Medium",
-          "trade": "GOLD range — levels only",
-          "expect": "No clear directional bias — trade levels & structure, not the stars; keep size light.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Moon transits Pushya (lord Saturn) — a cautious star for fresh longs in tradition. Shukla (waxing) favours building positions. Key karaka Sun in Gemini.",
-          "lines": null,
-          "social": "🪐 Gold (MCX/Spot) — Vyapar Ratna (traditional view)\nReading: Neutral / range.\nMoon transits Pushya (lord Saturn) — a cautious star for fresh longs in tradition. Shukla (waxing) favours building positions. Key karaka Sun in Gemini.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #panchang #astrology"
-        },
-        {
-          "generator": "vedic_astro",
-          "isAstro": true,
-          "symbol": "GOLD",
-          "name": "Gold (MCX/Spot)",
-          "method": "Planet Positions",
-          "bias": "Neutral / range",
-          "biasTone": "flat",
-          "conviction": "Medium",
-          "trade": "GOLD range — levels only",
-          "expect": "No clear directional bias — trade levels & structure, not the stars; keep size light.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Significators for Gold (MCX/Spot): Sun, Venus, Jupiter. Jupiter strong in Cancer.",
-          "lines": [
+          "bearWindows": [
             {
-              "k": "Sun",
-              "v": "Gemini 2.1° · Mrigashira"
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
             },
             {
-              "k": "Moon",
-              "v": "Cancer 5° · Pushya"
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
             },
             {
-              "k": "Mercury",
-              "v": "Gemini 26.5° · Punarvasu"
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
             },
             {
-              "k": "Venus",
-              "v": "Cancer 10.4° · Pushya"
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
             },
             {
-              "k": "Mars",
-              "v": "Aries 27.6° · Krittika"
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
             },
             {
-              "k": "Jupiter",
-              "v": "Cancer 3.1° · Punarvasu"
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
             },
             {
-              "k": "Saturn",
-              "v": "Pisces 19.3° · Revati"
-            },
-            {
-              "k": "Rahu",
-              "v": "Aquarius 9.1° · Shatabhisha"
-            },
-            {
-              "k": "Ketu",
-              "v": "Leo 9.1° · Magha"
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
             }
           ],
-          "social": "🪐 Gold (MCX/Spot) — Planet Positions (traditional view)\nReading: Neutral / range.\nSignificators for Gold (MCX/Spot): Sun, Venus, Jupiter. Jupiter strong in Cancer.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #panchang #astrology"
+          "bullCount": 5,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [
+            "Nava Tara Vipat (pos 3) from natal Ardra — danger/avoid",
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Nifty IT — Vedic daily bias -28 (SELL ON RISE / MANDI)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 8:11 PM–9:05 PM Venus, 9:05 PM–9:58 PM Mercury, 2:27 AM–3:20 AM Venus\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "GOLD",
-          "name": "Gold (MCX/Spot)",
-          "method": "Planet Combination",
-          "bias": "Bullish lean",
+          "isAssetBias": true,
+          "symbol": "NIFTYAUTO",
+          "name": "Nifty Auto",
+          "score": 54,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "conviction": "High",
-          "trade": "GOLD longs (buy dips)",
-          "expect": "Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Moon+Venus conjunct in Cancer (5°) — benefic blend · Moon+Jupiter conjunct in Cancer (2°) — benefic blend · Mercury+Jupiter conjunct in Gemini (7°) — benefic blend · Venus+Jupiter conjunct in Cancer (7°) — benefic blend",
-          "lines": [
+          "navaTara": "Kshema (pos 4)",
+          "navaBad": false,
+          "bullWindows": [
             {
-              "k": "Moon–Venus",
-              "v": "5.4° in Cancer"
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Moon–Jupiter",
-              "v": "1.9° in Cancer"
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Mercury–Jupiter",
-              "v": "6.6° in Gemini"
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Venus–Jupiter",
-              "v": "7.3° in Cancer"
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
             }
           ],
-          "social": "🪐 Gold (MCX/Spot) — Planet Combination (traditional view)\nReading: Bullish lean.\nMoon+Venus conjunct in Cancer (5°) — benefic blend · Moon+Jupiter conjunct in Cancer (2°) — benefic blend · Mercury+Jupiter conjunct in Gemini (7°) — benefic blend · Venus+Jupiter conjunct in Cancer (7°) — benefic blend\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #panchang #astrology"
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 8,
+          "bearCount": 4,
+          "reasonsBull": [
+            "Nava Tara Kshema (pos 4) — supportive star",
+            "Shukla paksha (waxing Moon)",
+            "Mars strong in Aries",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [],
+          "social": "🔮 Nifty Auto — Vedic daily bias +54 (BUY / TEJI)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 10:27 AM–11:33 AM Mars, 6:11 PM–7:18 PM Mars, 8:11 PM–9:05 PM Venus\nBearish windows: 8:14 AM–9:20 AM Saturn, 3:58 PM–5:05 PM Saturn, 10:52 PM–11:46 PM Saturn, 5:07 AM–6:01 AM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
         },
         {
           "generator": "vedic_astro",
           "isAstro": true,
-          "symbol": "GOLD",
-          "name": "Gold (MCX/Spot)",
-          "method": "KP Astro",
-          "bias": "Neutral / range",
-          "biasTone": "flat",
-          "conviction": "Low",
-          "trade": "GOLD range — levels only",
-          "expect": "No clear directional bias — trade levels & structure, not the stars; keep size light.",
-          "entryWindow": "09:00–10:00, 13:00–14:00, 14:00–15:00",
-          "avoidWindow": "12:00–13:30 IST (Rahu Kaal)",
-          "expectDates": [
-            "2026-06-18",
-            "2026-06-19",
-            "2026-06-22"
-          ],
-          "reason": "Ruling planets — Day Mercury, Moon rasi-lord Moon, star-lord Saturn, sub-lord Saturn. KP weights the sub-lord most: Saturn is a caution signator for Gold (MCX/Spot) in tradition.",
-          "lines": [
+          "isAssetBias": true,
+          "symbol": "NIFTYFIN",
+          "name": "Nifty Financial",
+          "score": 35,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
+          "navaTara": "Sampat (pos 2)",
+          "navaBad": false,
+          "bullWindows": [
             {
-              "k": "Day lord",
-              "v": "Mercury"
+              "time": "6:01 AM–7:07 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
             },
             {
-              "k": "Rasi lord",
-              "v": "Moon"
+              "time": "9:20 AM–10:27 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Star lord",
-              "v": "Saturn"
+              "time": "5:05 PM–6:11 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
             },
             {
-              "k": "Sub lord",
-              "v": "Saturn"
+              "time": "8:11 PM–9:05 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "9:05 PM–9:58 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "11:46 PM–12:39 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "2:27 AM–3:20 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "3:20 AM–4:14 AM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "night"
             }
           ],
-          "social": "🪐 Gold (MCX/Spot) — KP Astro (traditional view)\nReading: Neutral / range.\nRuling planets — Day Mercury, Moon rasi-lord Moon, star-lord Saturn, sub-lord Saturn. KP weights the sub-lord most: Saturn is a caution signator for Gold (MCX/Spot) in tradition.\n🕐 Favourable entry windows (IST): 09:00–10:00, 13:00–14:00, 14:00–15:00\n⛔ Avoid (Rahu Kaal): 12:00–13:30 IST (Rahu Kaal)\n📅 Traditionally favoured days ahead: 2026-06-18, 2026-06-19, 2026-06-22\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #panchang #astrology"
+          "bearWindows": [
+            {
+              "time": "8:14 AM–9:20 AM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "10:27 AM–11:33 AM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "3:58 PM–5:05 PM",
+              "planet": "Saturn",
+              "session": "day"
+            },
+            {
+              "time": "6:11 PM–7:18 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "10:52 PM–11:46 PM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "12:39 AM–1:33 AM",
+              "planet": "Mars",
+              "session": "night"
+            },
+            {
+              "time": "5:07 AM–6:01 AM",
+              "planet": "Saturn",
+              "session": "night"
+            }
+          ],
+          "bullCount": 8,
+          "bearCount": 7,
+          "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
+            "Shukla paksha (waxing Moon)",
+            "Jupiter strong in Cancer",
+            "Mercury strong in Gemini"
+          ],
+          "reasonsBear": [
+            "Mars (bearish karaka) strong in Aries"
+          ],
+          "social": "🔮 Nifty Financial — Vedic daily bias +35 (BUY ON DIP)\nBullish windows (IST): 6:01 AM–7:07 AM Mercury, 9:20 AM–10:27 AM Jupiter, 5:05 PM–6:11 PM Jupiter, 8:11 PM–9:05 PM Venus\nBearish windows: 8:14 AM–9:20 AM Saturn, 10:27 AM–11:33 AM Mars, 3:58 PM–5:05 PM Saturn, 6:11 PM–7:18 PM Mars\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
         }
       ]
     },
@@ -4390,92 +5232,320 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Day lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid fresh entries) · Moon Cancer · Pushya",
-      "count": 7,
+      "desc": "Wednesday · ☀ 6:01 AM–7:18 PM · Rahu Kaal 12:39 PM–2:19 PM (avoid fresh entries) · Moon Cancer · Pushya (Pada 1) · lord Saturn",
+      "count": 24,
       "signals": [
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "09:00–10:00",
-          "lord": "Jupiter",
-          "stance": "Favourable",
+          "time": "6:01 AM–7:07 AM",
+          "lord": "Mercury",
+          "session": "day",
+          "stance": "BUY",
           "stanceTone": "up",
           "rahu": false,
-          "note": "Good for fresh longs / momentum entries",
-          "social": "🕉️ Hora 09:00–10:00 IST — ruler Jupiter (Favourable)\nGood for fresh longs / momentum entries\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 6:01 AM–7:07 AM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "10:00–11:00",
-          "lord": "Mars",
-          "stance": "Caution",
-          "stanceTone": "down",
-          "rahu": false,
-          "note": "Be selective — book partials, tighten stops",
-          "social": "🕉️ Hora 10:00–11:00 IST — ruler Mars (Caution)\nBe selective — book partials, tighten stops\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "11:00–12:00",
-          "lord": "Sun",
-          "stance": "Neutral",
+          "time": "7:07 AM–8:14 AM",
+          "lord": "Moon",
+          "session": "day",
+          "stance": "NEUTRAL",
           "stanceTone": "flat",
           "rahu": false,
-          "note": "Neutral — trade levels, not the clock",
-          "social": "🕉️ Hora 11:00–12:00 IST — ruler Sun (Neutral)\nNeutral — trade levels, not the clock\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "note": "Moon hora — sentiment, FMCG, silver",
+          "social": "🕉️ Hora 7:07 AM–8:14 AM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "12:00–13:00",
+          "time": "8:14 AM–9:20 AM",
+          "lord": "Saturn",
+          "session": "day",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Saturn hora — weak for equities",
+          "social": "🕉️ Hora 8:14 AM–9:20 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "9:20 AM–10:27 AM",
+          "lord": "Jupiter",
+          "session": "day",
+          "stance": "PRIME BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Jupiter hora — PRIME window for Nifty/Bank",
+          "social": "🕉️ Hora 9:20 AM–10:27 AM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "10:27 AM–11:33 AM",
+          "lord": "Mars",
+          "session": "day",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Mars hora — volatile/weak for index",
+          "social": "🕉️ Hora 10:27 AM–11:33 AM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "11:33 AM–12:39 PM",
+          "lord": "Sun",
+          "session": "day",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 11:33 AM–12:39 PM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "12:39 PM–1:46 PM",
           "lord": "Venus",
-          "stance": "Avoid · Rahu Kaal",
+          "session": "day",
+          "stance": "Rahu Kaal — no new trades",
           "stanceTone": "down",
           "rahu": true,
-          "note": "Avoid fresh entries — stop-hunt window",
-          "social": "🕉️ Hora 12:00–13:00 IST — ruler Venus (Avoid · Rahu Kaal)\nAvoid fresh entries — stop-hunt window\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 12:39 PM–1:46 PM IST — Venus (Rahu Kaal — no new trades). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "13:00–14:00",
+          "time": "1:46 PM–2:52 PM",
           "lord": "Mercury",
-          "stance": "Favourable",
-          "stanceTone": "up",
-          "rahu": false,
-          "note": "Good for fresh longs / momentum entries",
-          "social": "🕉️ Hora 13:00–14:00 IST — ruler Mercury (Favourable)\nGood for fresh longs / momentum entries\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "session": "day",
+          "stance": "Rahu Kaal — no new trades",
+          "stanceTone": "down",
+          "rahu": true,
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 1:46 PM–2:52 PM IST — Mercury (Rahu Kaal — no new trades). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "14:00–15:00",
+          "time": "2:52 PM–3:58 PM",
           "lord": "Moon",
-          "stance": "Favourable",
-          "stanceTone": "up",
+          "session": "day",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
           "rahu": false,
-          "note": "Good for fresh longs / momentum entries",
-          "social": "🕉️ Hora 14:00–15:00 IST — ruler Moon (Favourable)\nGood for fresh longs / momentum entries\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "note": "Moon hora — sentiment, FMCG, silver",
+          "social": "🕉️ Hora 2:52 PM–3:58 PM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "15:00–16:00",
+          "time": "3:58 PM–5:05 PM",
           "lord": "Saturn",
-          "stance": "Caution",
+          "session": "day",
+          "stance": "SELL / EXIT",
           "stanceTone": "down",
           "rahu": false,
-          "note": "Be selective — book partials, tighten stops",
-          "social": "🕉️ Hora 15:00–16:00 IST — ruler Saturn (Caution)\nBe selective — book partials, tighten stops\nDay lord Mercury · Rahu Kaal 12:00–13:30 IST (avoid).\nTradition/timing only — no proven edge. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#panchang #hora #intraday"
+          "note": "Saturn hora — weak for equities",
+          "social": "🕉️ Hora 3:58 PM–5:05 PM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "5:05 PM–6:11 PM",
+          "lord": "Jupiter",
+          "session": "day",
+          "stance": "PRIME BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Jupiter hora — PRIME window for Nifty/Bank",
+          "social": "🕉️ Hora 5:05 PM–6:11 PM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "6:11 PM–7:18 PM",
+          "lord": "Mars",
+          "session": "day",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Mars hora — volatile/weak for index",
+          "social": "🕉️ Hora 6:11 PM–7:18 PM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "7:18 PM–8:11 PM",
+          "lord": "Sun",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 7:18 PM–8:11 PM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "8:11 PM–9:05 PM",
+          "lord": "Venus",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 8:11 PM–9:05 PM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "9:05 PM–9:58 PM",
+          "lord": "Mercury",
+          "session": "night",
+          "stance": "BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 9:05 PM–9:58 PM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "9:58 PM–10:52 PM",
+          "lord": "Moon",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Moon hora — sentiment, FMCG, silver",
+          "social": "🕉️ Hora 9:58 PM–10:52 PM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "10:52 PM–11:46 PM",
+          "lord": "Saturn",
+          "session": "night",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Saturn hora — weak for equities",
+          "social": "🕉️ Hora 10:52 PM–11:46 PM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "11:46 PM–12:39 AM",
+          "lord": "Jupiter",
+          "session": "night",
+          "stance": "PRIME BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Jupiter hora — PRIME window for Nifty/Bank",
+          "social": "🕉️ Hora 11:46 PM–12:39 AM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "12:39 AM–1:33 AM",
+          "lord": "Mars",
+          "session": "night",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Mars hora — volatile/weak for index",
+          "social": "🕉️ Hora 12:39 AM–1:33 AM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "1:33 AM–2:27 AM",
+          "lord": "Sun",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 1:33 AM–2:27 AM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "2:27 AM–3:20 AM",
+          "lord": "Venus",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 2:27 AM–3:20 AM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "3:20 AM–4:14 AM",
+          "lord": "Mercury",
+          "session": "night",
+          "stance": "BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 3:20 AM–4:14 AM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "4:14 AM–5:07 AM",
+          "lord": "Moon",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Moon hora — sentiment, FMCG, silver",
+          "social": "🕉️ Hora 4:14 AM–5:07 AM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "5:07 AM–6:01 AM",
+          "lord": "Saturn",
+          "session": "night",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Saturn hora — weak for equities",
+          "social": "🕉️ Hora 5:07 AM–6:01 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         }
       ]
     },

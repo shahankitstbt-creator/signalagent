@@ -11,7 +11,7 @@ import { writeFileSync, mkdirSync } from 'node:fs'
 import { getText, getJSON, pool, sleep, sma, rsiSeries, atrSeries, pivots, UA } from './lib.mjs'
 import { runEngine, LOGICS, MIN_ACCURACY, MIN_TRADES } from './signalEngine.mjs'
 import { generateContent } from './contentEngine.mjs'
-import { GEN_META, runPriceGenerators, runMultibagger, vedicMarketSignals, horaSignals, panchangSummary } from './generators.mjs'
+import { GEN_META, runPriceGenerators, runMultibagger, horaSignals, assetBiasSignals, dailyBias } from './generators.mjs'
 import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { trackNews } from './news.mjs'
@@ -426,8 +426,8 @@ async function buildBoard(scored, finalists, addDays, today) {
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
   // price-based columns: rank by confidence, cap 15
   for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic']) byGen[id] = byGen[id].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
-  // astro columns: keep method/market order as produced
-  byGen.vedic_astro = vedicMarketSignals(today)
+  // astro columns: per-asset daily bias (Nifty/Gold/sectors) + full hora schedule
+  byGen.vedic_astro = assetBiasSignals(today)
   byGen.astro_timing = horaSignals(today)
   // live option-chain build-up via Angel One (NIFTY + BANKNIFTY; placeholder on failure)
   // OI history is diffed scan-to-scan to label long/short/writing build-up.
@@ -438,11 +438,11 @@ async function buildBoard(scored, finalists, addDays, today) {
   }
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
-  const ps = panchangSummary(today)
+  const p = dailyBias(today).panchang
   return GEN_META.map(g => {
     let desc = g.desc
-    if (g.id === 'astro_timing') desc = `Day lord ${ps.dayLord} · Rahu Kaal ${ps.rahu} IST (avoid fresh entries) · Moon ${ps.moon}`
-    if (g.id === 'vedic_astro') desc = `${ps.tithi} · Moon ${ps.moon} · enter only in favourable horas (see Hora tab). Tradition — no proven edge.`
+    if (g.id === 'astro_timing') desc = `${p.vaar} · ☀ ${p.sunrise}–${p.sunset} · Rahu Kaal ${p.rahuKaal} (avoid fresh entries) · Moon ${p.moon}`
+    if (g.id === 'vedic_astro') desc = `${p.tithi} · ${p.yoga} yoga · Karana ${p.karana} · Moon ${p.moon}. Per-asset bias from Nava Tara + significators (tradition — no proven edge).`
     return { ...g, desc, count: byGen[g.id].length, signals: byGen[g.id] }
   })
 }
