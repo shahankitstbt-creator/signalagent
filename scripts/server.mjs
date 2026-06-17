@@ -38,7 +38,7 @@ const server = createServer(async (req, res) => {
     }
 
     // generated data files (live in public/, may not be in dist)
-    if (path === '/picks.json' || path === '/universe.json' || path === '/breadth.json' || path === '/signals.json' || path === '/content.json' || path === '/board.json') {
+    if (['/picks.json', '/universe.json', '/breadth.json', '/signals.json', '/content.json', '/board.json', '/track_record.json', '/learning.json', '/news.json'].includes(path)) {
       try { return await sendFile(res, join(PUBLIC, path)) }
       catch { res.writeHead(404); return res.end('{}') }
     }

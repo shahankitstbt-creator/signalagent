@@ -147,11 +147,70 @@ function leanFrom(score) { return score >= 2 ? 'Bullish lean' : score <= -2 ? 'B
 function biasColor(b) { return b.startsWith('Bullish') ? 'up' : b.startsWith('Bearish') ? 'down' : 'flat' }
 
 const DISCLAIMER = 'Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.'
-function astroSocial(mkt, method, bias, reason) {
-  return `🪐 ${KARAKA[mkt].name} — ${method} (traditional view)\nReading: ${bias}.\n${reason}\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 ${DISCLAIMER}\n#${mkt === 'NIFTY' ? 'nifty' : 'gold'} #panchang #astrology`
+function astroSocial(mkt, method, bias, reason, extra = {}) {
+  const win = extra.entryWindow ? `\n🕐 Favourable entry windows (IST): ${extra.entryWindow}` : ''
+  const avoid = extra.avoidWindow ? `\n⛔ Avoid (Rahu Kaal): ${extra.avoidWindow}` : ''
+  const dates = extra.expectDates && extra.expectDates.length ? `\n📅 Traditionally favoured days ahead: ${extra.expectDates.join(', ')}` : ''
+  return `🪐 ${KARAKA[mkt].name} — ${method} (traditional view)\nReading: ${bias}.\n${reason}${win}${avoid}${dates}\nHonest take: shared as tradition & market-psychology, never a guaranteed signal. Real edge stays structure + volume + risk.\n📌 ${DISCLAIMER}\n#${mkt === 'NIFTY' ? 'nifty' : 'gold'} #panchang #astrology`
 }
-function card(mkt, method, bias, reason, lines) {
-  return { generator: 'vedic_astro', isAstro: true, symbol: mkt, method, name: KARAKA[mkt].name, bias, biasTone: biasColor(bias), reason, lines: lines || null, social: astroSocial(mkt, method, bias, reason) }
+const pad = n => String(n).padStart(2, '0')
+const convictionOf = sc => { const m = Math.abs(sc); return m >= 2.2 ? 'High' : m >= 1.1 ? 'Medium' : 'Low' }
+const expectText = bias => bias.startsWith('Bullish')
+  ? 'Traditional bias favours UPSIDE — prefer buying dips inside favourable horas; trail stops.'
+  : bias.startsWith('Bearish')
+    ? 'Upside looks CAPPED — avoid fresh longs; favour caution / partial booking in this window.'
+    : 'No clear directional bias — trade levels & structure, not the stars; keep size light.'
+const tradeOf = (mkt, bias) => `${mkt} ${bias.startsWith('Bullish') ? 'longs (buy dips)' : bias.startsWith('Bearish') ? 'avoid longs / hedge' : 'range — levels only'}`
+
+// Is clock-hour hh inside the Rahu-Kaal window string "HH:MM–HH:MM"?
+function inRahu(hh, rahuStr) {
+  const [a, b] = rahuStr.split('–')
+  const toH = s => +s.split(':')[0] + (+s.split(':')[1]) / 60
+  const mid = hh + 0.5
+  return mid >= toH(a) && mid < toH(b)
+}
+// Day's planetary-hour schedule across NSE market hours (09:00–15:00 windows).
+function horaSchedule(date) {
+  const wd = date.getDay()
+  const startIdx = CHALDEAN.indexOf(DAY_RULER[wd])
+  const rahu = RAHU[wd]
+  const rows = []
+  for (let hh = 9; hh <= 15; hh++) {
+    const lord = CHALDEAN[(startIdx + (hh - 6)) % 7]
+    const rahuHit = inRahu(hh, rahu)
+    let stance, tone
+    if (rahuHit) { stance = 'Avoid · Rahu Kaal'; tone = 'down' }
+    else if (['Jupiter', 'Mercury', 'Venus', 'Moon'].includes(lord)) { stance = 'Favourable'; tone = 'up' }
+    else if (['Saturn', 'Mars'].includes(lord)) { stance = 'Caution'; tone = 'down' }
+    else { stance = 'Neutral'; tone = 'flat' }
+    rows.push({ time: `${pad(hh)}:00–${pad(hh + 1)}:00`, lord, stance, stanceTone: tone, rahu: rahuHit })
+  }
+  return { rows, rahu, dayLord: DAY_RULER[wd] }
+}
+// upcoming traditionally-favoured trading days (Mon/Wed/Thu/Fri = Moon/Mercury/Jupiter/Venus)
+function nextFavourableDays(date, count) {
+  const FAV = [1, 3, 4, 5], out = []
+  for (let i = 1; i <= 12 && out.length < count; i++) {
+    const d = new Date(date); d.setDate(date.getDate() + i)
+    if (FAV.includes(d.getDay())) out.push(d.toISOString().slice(0, 10))
+  }
+  return out
+}
+export function panchangSummary(date) {
+  const chart = computeChart(date), sch = horaSchedule(date)
+  return { dayLord: sch.dayLord, rahu: sch.rahu, tithi: `${chart.tithi.name} (${chart.tithi.paksha})`, moon: `${chart.planets.Moon.sign} · ${chart.planets.Moon.nakshatra}` }
+}
+
+function card(mkt, method, bias, sc, reason, extra = {}) {
+  const K = KARAKA[mkt]
+  return {
+    generator: 'vedic_astro', isAstro: true, symbol: mkt, name: K.name, method,
+    bias, biasTone: biasColor(bias), conviction: convictionOf(sc),
+    trade: tradeOf(mkt, bias), expect: expectText(bias),
+    entryWindow: extra.entryWindow || '—', avoidWindow: extra.avoidWindow || '—',
+    expectDates: extra.expectDates || [], reason, lines: extra.lines || null,
+    social: astroSocial(mkt, method, bias, reason, extra),
+  }
 }
 
 // score a market from significator placement (shared by several methods)
@@ -169,45 +228,52 @@ function karakaScore(chart, mkt) {
   return { sc, notes }
 }
 
-// ── the 5 method cards per market ──
+// ── the 5 method rows per market — now with actionable timing + dates ──
 export function vedicMarketSignals(date) {
   const chart = computeChart(date)
+  const sch = horaSchedule(date)
+  const favWindows = sch.rows.filter(r => r.stanceTone === 'up').map(r => r.time)
+  const entryWindow = favWindows.slice(0, 3).join(', ') || 'no clearly favourable hora today — wait'
+  const avoidWindow = `${sch.rahu} IST (Rahu Kaal)`
+  const expectDates = nextFavourableDays(date, 3)
+  const ext = lines => ({ entryWindow, avoidWindow, expectDates, lines })
   const out = []
   for (const mkt of ['NIFTY', 'GOLD']) {
     const K = KARAKA[mkt], moon = chart.planets.Moon
     const ks = karakaScore(chart, mkt)
 
     // 1) VedicAstro — panchang overview
-    out.push(card(mkt, 'VedicAstro', leanFrom(ks.sc),
+    out.push(card(mkt, 'VedicAstro', leanFrom(ks.sc), ks.sc,
       `${WEEKDAY[chart.weekday]} (ruler ${DAY_RULER[chart.weekday]}). Moon in ${moon.sign} · ${moon.nakshatra} (lord ${moon.nakLord}). ${chart.tithi.name}, ${chart.tithi.paksha}. ${ks.notes.slice(0, 2).join('; ')}.`,
-      [{ k: 'Tithi', v: `${chart.tithi.name} · ${chart.tithi.paksha}` }, { k: 'Moon', v: `${moon.sign} · ${moon.nakshatra}` }, { k: 'Day lord', v: DAY_RULER[chart.weekday] }]))
+      ext([{ k: 'Tithi', v: `${chart.tithi.name} · ${chart.tithi.paksha}` }, { k: 'Moon', v: `${moon.sign} · ${moon.nakshatra}` }, { k: 'Day lord', v: DAY_RULER[chart.weekday] }])))
 
     // 2) Vyapar Ratna — Moon nakshatra + market karaka, waxing/waning timing
     const vrScore = ks.sc + (BENEFIC.has(moon.nakLord) ? 0.8 : -0.6)
     const friendly = K.primary.includes(moon.nakLord) || BENEFIC.has(moon.nakLord)
-    out.push(card(mkt, 'Vyapar Ratna', leanFrom(vrScore),
-      `Moon transits ${moon.nakshatra} (lord ${moon.nakLord}) — ${friendly ? 'a supportive star for trade/sentiment' : 'a cautious star for fresh longs'} in tradition. ${chart.tithi.paksha} favours ${chart.tithi.paksha.startsWith('Shukla') ? 'building positions' : 'lighter risk / booking'}. Key karaka ${K.primary[0]} in ${chart.planets[K.primary[0]].sign}.`))
+    out.push(card(mkt, 'Vyapar Ratna', leanFrom(vrScore), vrScore,
+      `Moon transits ${moon.nakshatra} (lord ${moon.nakLord}) — ${friendly ? 'a supportive star for trade/sentiment' : 'a cautious star for fresh longs'} in tradition. ${chart.tithi.paksha} favours ${chart.tithi.paksha.startsWith('Shukla') ? 'building positions' : 'lighter risk / booking'}. Key karaka ${K.primary[0]} in ${chart.planets[K.primary[0]].sign}.`,
+      ext(null)))
 
     // 3) Planet Positions — factual sidereal sky (genuinely accurate)
     const order = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Rahu', 'Ketu']
-    out.push(card(mkt, 'Planet Positions', leanFrom(ks.sc),
+    out.push(card(mkt, 'Planet Positions', leanFrom(ks.sc), ks.sc,
       `Significators for ${K.name}: ${K.primary.join(', ')}. ${ks.notes.filter(n => /strong|weak/.test(n)).join('; ') || 'significators in neutral signs'}.`,
-      order.map(g => ({ k: g, v: `${chart.planets[g].sign} ${chart.planets[g].deg}° · ${chart.planets[g].nakshatra}` }))))
+      ext(order.map(g => ({ k: g, v: `${chart.planets[g].sign} ${chart.planets[g].deg}° · ${chart.planets[g].nakshatra}` })))))
 
     // 4) Planet Combination — conjunctions / aspects today
     const combos = conjunctions(chart)
     const comboScore = combos.reduce((a, c) => a + c.tone, 0) + ks.sc * 0.5
-    out.push(card(mkt, 'Planet Combination', leanFrom(comboScore),
+    out.push(card(mkt, 'Planet Combination', leanFrom(comboScore), comboScore,
       combos.length ? combos.map(c => c.text).join(' · ') : 'No tight conjunctions today; planets dispersed across signs.',
-      combos.length ? combos.map(c => ({ k: c.pair, v: c.note })) : null))
+      ext(combos.length ? combos.map(c => ({ k: c.pair, v: c.note })) : null)))
 
     // 5) KP Astro — ruling planets & Moon sub-lord
     const rp = { day: DAY_RULER[chart.weekday], rasiLord: moon.signLord, starLord: moon.nakLord, subLord: moon.subLord }
     const kpFav = BENEFIC.has(rp.subLord) || K.primary.includes(rp.subLord)
     const kpScore = (kpFav ? 1.5 : -1.2) + (BENEFIC.has(rp.starLord) ? 0.6 : -0.4) + ks.sc * 0.3
-    out.push(card(mkt, 'KP Astro', leanFrom(kpScore),
+    out.push(card(mkt, 'KP Astro', leanFrom(kpScore), kpScore,
       `Ruling planets — Day ${rp.day}, Moon rasi-lord ${rp.rasiLord}, star-lord ${rp.starLord}, sub-lord ${rp.subLord}. KP weights the sub-lord most: ${rp.subLord} is ${kpFav ? 'favourable' : 'a caution signator'} for ${K.name} in tradition.`,
-      [{ k: 'Day lord', v: rp.day }, { k: 'Rasi lord', v: rp.rasiLord }, { k: 'Star lord', v: rp.starLord }, { k: 'Sub lord', v: rp.subLord }]))
+      ext([{ k: 'Day lord', v: rp.day }, { k: 'Rasi lord', v: rp.rasiLord }, { k: 'Star lord', v: rp.starLord }, { k: 'Sub lord', v: rp.subLord }])))
   }
   return out
 }
@@ -233,24 +299,17 @@ function conjunctions(chart) {
 const RAHU = { 0: '16:30–18:00', 1: '07:30–09:00', 2: '15:00–16:30', 3: '12:00–13:30', 4: '13:30–15:00', 5: '10:30–12:00', 6: '09:00–10:30' }
 export function horaSignals(date) {
   const wd = date.getDay()
-  // build the day's hora lords (24 hours from 06:00), Chaldean starting at day ruler
-  const startIdx = CHALDEAN.indexOf(DAY_RULER[wd])
-  const horas = []
-  for (let h = 0; h < 12; h++) { // 06:00 → 18:00 (trading-relevant span)
-    const lord = CHALDEAN[(startIdx + h) % 7]
-    const hh = 6 + h
-    horas.push({ time: `${String(hh).padStart(2, '0')}:00–${String(hh + 1).padStart(2, '0')}:00`, lord })
-  }
-  const fav = horas.filter(x => ['Jupiter', 'Mercury', 'Venus', 'Moon'].includes(x.lord)).map(x => `${x.time} (${x.lord})`)
-  const caution = horas.filter(x => ['Saturn', 'Mars', 'Rahu'].includes(x.lord)).map(x => `${x.time} (${x.lord})`)
-  const mk = (sym, label) => ({
-    generator: 'astro_timing', isAstro: true, symbol: sym, method: 'Hora Timing', name: `${label} timing`,
-    bias: 'Timing only', biasTone: 'flat',
-    reason: `Day lord ${DAY_RULER[wd]}. Rahu Kaal (avoid fresh entries): ${RAHU[wd]} IST. Traditionally favourable horas: ${fav.slice(0, 3).join(', ') || '—'}.`,
-    lines: [{ k: 'Rahu Kaal', v: RAHU[wd] + ' IST' }, { k: 'Favourable horas', v: fav.slice(0, 3).join(', ') || '—' }, { k: 'Caution horas', v: caution.slice(0, 3).join(', ') || '—' }],
-    social: `🕉️ ${label} — Hora timing (${WEEKDAY[wd]})\nRahu Kaal: ${RAHU[wd]} IST — many avoid fresh trades here.\nFavourable horas: ${fav.slice(0, 3).join(', ') || '—'}.\nHonest take: timing tradition only, no proven edge. ${DISCLAIMER}\n#panchang #${sym === 'NIFTY' ? 'nifty' : 'gold'} #intraday`,
-  })
-  return [mk('NIFTY', 'Nifty 50'), mk('GOLD', 'Gold')]
+  const sch = horaSchedule(date)
+  const noteFor = r => r.rahu ? 'Avoid fresh entries — stop-hunt window'
+    : r.stanceTone === 'up' ? 'Good for fresh longs / momentum entries'
+      : r.stanceTone === 'down' ? 'Be selective — book partials, tighten stops'
+        : 'Neutral — trade levels, not the clock'
+  return sch.rows.map(r => ({
+    generator: 'astro_timing', isAstro: true, isHora: true,
+    time: r.time, lord: r.lord, stance: r.stance, stanceTone: r.stanceTone, rahu: r.rahu,
+    note: noteFor(r),
+    social: `🕉️ Hora ${r.time} IST — ruler ${r.lord} (${r.stance})\n${noteFor(r)}\nDay lord ${DAY_RULER[wd]} · Rahu Kaal ${RAHU[wd]} IST (avoid).\nTradition/timing only — no proven edge. ${DISCLAIMER}\n#panchang #hora #intraday`,
+  }))
 }
 
 // CLI smoke test

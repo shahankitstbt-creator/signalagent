@@ -13,6 +13,7 @@ export default function SignalsBoard() {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
   const [tab, setTab] = useState(0)
+  const [modal, setModal] = useState(null)
   const setView = useViewStore(s => s.setView)
   const alertsOn = useHitAlerts(s => s.enabled)
   const enableAlerts = useHitAlerts(s => s.enable)
@@ -26,6 +27,9 @@ export default function SignalsBoard() {
   const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
   const active = gens[tab] || gens[0]
+  const tr = board?.trackRecord
+  const o = tr?.overall
+  const genTR = tr?.generators?.[active?.id]
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
@@ -34,18 +38,24 @@ export default function SignalsBoard() {
       <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border bg-bg-panel flex items-center gap-2 sm:gap-4 flex-wrap elev">
         <div>
           <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
-          <div className="mono text-[10px] sm:text-[11px] text-txt-sec">{total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span></div>
+          <div className="mono text-[10px] sm:text-[11px] text-txt-sec">
+            {total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span>
+            {o && <span className="ml-2 text-txt-muted">📊 {o.decided ? <>track record <b className={o.winRate >= 80 ? 'text-green' : 'text-txt'}>{o.winRate}%</b> ({o.win}/{o.decided}) · {o.open} open</> : <>{o.open} open · accuracy builds as trades close</>}</span>}
+          </div>
         </div>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
         <div className="ml-auto flex gap-1.5 sm:gap-2">
+          <button onClick={() => setModal('learning')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Self-improvement log">🧠</button>
+          <button onClick={() => setModal('news')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Market news">📰</button>
           <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()}
             className={`mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border card-hover ${alertsOn ? 'border-green text-green' : 'border-border text-txt-sec hover:border-accent'}`}>
-            {alertsOn ? '🔔 Alerts on' : '🔕 Alerts'}
+            {alertsOn ? '🔔 On' : '🔕'}
           </button>
           <button onClick={() => setView('agent')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📣</button>
           <button onClick={() => setView('chart')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📈</button>
         </div>
       </div>
+      {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
       {/* nav tabs — one per generator (the card title is the tab) */}
       <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border overflow-x-auto">
@@ -70,17 +80,24 @@ export default function SignalsBoard() {
       {/* active tab content */}
       {active && (
         <div className="flex-1 overflow-y-auto">
-          <div className="px-5 py-2.5 text-[11px] mono text-txt-sec border-b border-border" style={{ background: tint(active.color, 0.05) }}>
-            <span className="font-bold" style={{ color: active.color }}>{active.label}</span> — {active.desc}
+          <div className="px-5 py-2.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap" style={{ background: tint(active.color, 0.05) }}>
+            <span><span className="font-bold" style={{ color: active.color }}>{active.label}</span> — {active.desc}</span>
+            {genTR && (genTR.decided > 0
+              ? <span className="ml-auto shrink-0 px-2 py-0.5 rounded-full" style={{ background: tint(active.color, 0.12) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
+              : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}
           </div>
           {active.signals.length === 0
             ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
-            : isTrade(active.signals[0])
-              ? <>
-                  <div className="hidden md:block"><TradeTable signals={active.signals} color={active.color} setView={setView} /></div>
-                  <div className="md:hidden"><TradeCards signals={active.signals} color={active.color} setView={setView} /></div>
-                </>
-              : <InfoList signals={active.signals} color={active.color} setView={setView} />}
+            : active.id === 'vedic_astro'
+              ? <VedicTable signals={active.signals} color={active.color} setView={setView} />
+              : active.id === 'astro_timing'
+                ? <HoraTable signals={active.signals} color={active.color} />
+                : isTrade(active.signals[0])
+                  ? <>
+                      <div className="hidden md:block"><TradeTable signals={active.signals} color={active.color} setView={setView} /></div>
+                      <div className="md:hidden"><TradeCards signals={active.signals} color={active.color} setView={setView} /></div>
+                    </>
+                  : <InfoList signals={active.signals} color={active.color} setView={setView} />}
         </div>
       )}
     </div>
@@ -199,6 +216,166 @@ function MobileTradeCard({ s, color, setView }) {
       </div>
     </div>
   )
+}
+
+// ── Vedic Astro tab: actionable timing list (when / which trade / expect / conviction) ──
+const biasToneCls = t => t === 'up' ? 'text-green' : t === 'down' ? 'text-red' : 'text-yellow'
+const convCls = c => c === 'High' ? 'text-green' : c === 'Medium' ? 'text-yellow' : 'text-txt-sec'
+function VedicTable({ signals, color }) {
+  const [open, setOpen] = useState(-1)
+  return (
+    <>
+      {/* desktop */}
+      <table className="hidden md:table w-full mono text-xs border-collapse">
+        <thead>
+          <tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+            {['Market', 'Method', 'View', 'Conviction', 'Best entry (IST)', 'Avoid', 'Favoured days ahead', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {signals.map((s, i) => (
+            <AstroRow key={i} s={s} i={i} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
+          ))}
+        </tbody>
+      </table>
+      {/* mobile */}
+      <div className="md:hidden p-3 space-y-2.5">
+        {signals.map((s, i) => <AstroCard key={i} s={s} color={color} />)}
+      </div>
+    </>
+  )
+}
+function AstroRow({ s, i, color, open, onToggle }) {
+  const [copied, setCopied] = useState(false)
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  return (
+    <>
+      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2">{s.method}</td>
+        <td className={`px-3 py-2 font-bold ${biasToneCls(s.biasTone)}`}>{s.bias}</td>
+        <td className={`px-3 py-2 font-bold ${convCls(s.conviction)}`}>{s.conviction}</td>
+        <td className="px-3 py-2 text-green">{s.entryWindow}</td>
+        <td className="px-3 py-2 text-red">{s.avoidWindow}</td>
+        <td className="px-3 py-2 text-txt-sec">{(s.expectDates || []).join(', ') || '—'}</td>
+        <td className="px-3 py-2"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
+      </tr>
+      {open && (
+        <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
+          <td colSpan={8} className="px-5 py-3">
+            <div className="mono text-[11px] text-txt mb-1"><b>Trade:</b> {s.trade}</div>
+            <div className="mono text-[11px] text-txt-sec mb-2"><b>What to expect:</b> {s.expect}</div>
+            <div className="mono text-[11px] text-txt-sec mb-2">{s.reason}</div>
+            {s.lines && <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-0.5 mb-1">{s.lines.map((l, k) => <div key={k} className="flex justify-between mono text-[10px]"><span className="text-txt-muted">{l.k}</span><span className="text-txt-sec ml-2">{l.v}</span></div>)}</div>}
+            <div className="mono text-[10px] text-txt-muted mt-1">⚠️ Astrology has no proven market edge — shown as tradition. Pair with structure + volume + risk.</div>
+          </td>
+        </tr>
+      )}
+    </>
+  )
+}
+function AstroCard({ s, color }) {
+  const [copied, setCopied] = useState(false)
+  const copy = () => { navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-sm font-bold text-txt">{s.symbol}</span>
+        <span className="mono text-[9px] px-1.5 py-0.5 rounded" style={{ background: tint(color, 0.12), color }}>{s.method}</span>
+        <span className={`ml-auto mono text-[11px] font-bold ${biasToneCls(s.biasTone)}`}>{s.bias}</span>
+      </div>
+      <div className="mono text-[11px] text-txt-sec mt-1.5">{s.expect}</div>
+      <div className="mt-2 space-y-1 mono text-[10px]">
+        <div className="flex justify-between"><span className="text-txt-muted">Conviction</span><span className={`font-bold ${convCls(s.conviction)}`}>{s.conviction}</span></div>
+        <div className="flex justify-between"><span className="text-txt-muted">Enter (IST)</span><span className="text-green text-right ml-2">{s.entryWindow}</span></div>
+        <div className="flex justify-between"><span className="text-txt-muted">Avoid</span><span className="text-red">{s.avoidWindow}</span></div>
+        <div className="flex justify-between"><span className="text-txt-muted">Favoured days</span><span className="text-txt-sec text-right ml-2">{(s.expectDates || []).join(', ') || '—'}</span></div>
+      </div>
+      <button onClick={copy} className="w-full mt-2.5 mono text-[11px] py-2 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy social post'}</button>
+    </div>
+  )
+}
+
+// ── Hora tab: clear intraday timing schedule (when to enter / avoid) ──
+function HoraTable({ signals, color }) {
+  return (
+    <div className="p-3 sm:p-4 space-y-2 max-w-3xl">
+      {signals.map((r, i) => {
+        const tcls = r.stanceTone === 'up' ? 'text-green' : r.stanceTone === 'down' ? 'text-red' : 'text-yellow'
+        const bg = r.stanceTone === 'up' ? tint('#0E9F6E', 0.06) : r.rahu ? tint('#E02424', 0.07) : 'transparent'
+        return (
+          <div key={i} className="flex items-center gap-3 rounded-lg border border-border p-2.5 elev" style={{ background: bg, borderLeft: `4px solid ${r.stanceTone === 'up' ? '#0E9F6E' : r.stanceTone === 'down' ? '#E02424' : color}` }}>
+            <div className="mono text-sm font-bold text-txt w-28 shrink-0">{r.time}</div>
+            <div className="mono text-xs text-txt-sec w-20 shrink-0">{r.lord}</div>
+            <div className={`mono text-xs font-bold w-32 shrink-0 ${tcls}`}>{r.stance}</div>
+            <div className="mono text-[11px] text-txt-sec flex-1">{r.note}</div>
+          </div>
+        )
+      })}
+      <div className="mono text-[10px] text-txt-muted pt-1">All times IST · NSE session 09:15–15:30. Planetary-hour (hora) tradition — timing aid only, no proven edge.</div>
+    </div>
+  )
+}
+
+// Learning (self-improvement log) + News modal
+function InsightModal({ kind, onClose }) {
+  const [data, setData] = useState(null)
+  const [err, setErr] = useState(null)
+  useEffect(() => {
+    const f = kind === 'learning' ? '/learning.json' : '/news.json'
+    fetch(f + '?t=' + Date.now()).then(r => r.ok ? r.json() : Promise.reject(new Error('not generated yet'))).then(setData).catch(e => setErr(e.message))
+  }, [kind])
+  return (
+    <div className="fixed inset-0 z-[90] bg-black/30 flex items-start justify-center p-4 overflow-y-auto" onClick={onClose}>
+      <div className="bg-bg-panel rounded-xl border border-border elev-lg w-full max-w-2xl my-8" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center px-4 py-3 border-b border-border">
+          <div className="mono text-sm font-bold text-txt">{kind === 'learning' ? '🧠 Self-improvement log' : '📰 Market news'}</div>
+          <button onClick={onClose} className="ml-auto mono text-txt-muted hover:text-txt">✕</button>
+        </div>
+        <div className="p-4 max-h-[75vh] overflow-y-auto">
+          {err && <div className="mono text-xs text-yellow">{err} — runs with the daily scan.</div>}
+          {!data && !err && <div className="mono text-xs text-txt-sec">Loading…</div>}
+          {data && kind === 'learning' && <LearningBody d={data} />}
+          {data && kind === 'news' && <NewsBody d={data} />}
+        </div>
+      </div>
+    </div>
+  )
+}
+function LearningBody({ d }) {
+  return (
+    <div className="mono text-xs space-y-3">
+      <div className="grid grid-cols-3 gap-2">
+        <Stat k="≥5% movers" v={d.moversChecked} />
+        <Stat k="Caught" v={`${d.caught} (${d.catchRate ?? '–'}%)`} tone="text-green" />
+        <Stat k="Missed" v={d.missed} tone="text-red" />
+      </div>
+      <div className="text-[11px] text-txt-sec">{d.note}</div>
+      {d.adjustments?.length > 0 && <div><div className="text-[10px] uppercase text-txt-muted mb-1">Auto-tuning applied</div>{d.adjustments.map((a, i) => <div key={i} className="text-[11px] text-cyan">• {a}</div>)}</div>}
+      {d.reasonTally?.length > 0 && <div><div className="text-[10px] uppercase text-txt-muted mb-1">Why moves were missed</div>{d.reasonTally.map((r, i) => <div key={i} className="flex justify-between text-[11px]"><span className="text-txt-sec">{r.reason}</span><span className="text-txt-muted">×{r.count}</span></div>)}</div>}
+      {d.misses?.length > 0 && <div><div className="text-[10px] uppercase text-txt-muted mb-1">Missed movers</div>{d.misses.slice(0, 15).map((m, i) => <div key={i} className="border-b border-border/50 py-1"><span className="font-bold text-txt">{m.symbol}</span> <span className="text-green">+{m.changePct}%</span><div className="text-[10px] text-txt-muted">{m.reasons.join(' · ')}</div></div>)}</div>}
+      <div className="text-[10px] text-txt-muted border-t border-border pt-2">Sources: {(d.sources || []).join(' · ')}<br />{d.externalNote}</div>
+    </div>
+  )
+}
+function NewsBody({ d }) {
+  return (
+    <div className="space-y-2">
+      {(d.items || []).map((it, i) => (
+        <a key={i} href={it.link} target="_blank" rel="noreferrer" className="block rounded-lg border border-border p-2.5 hover:border-accent card-hover">
+          <div className="mono text-[12px] text-txt leading-snug">{it.title}</div>
+          <div className="mono text-[10px] text-txt-muted mt-1 flex gap-2 flex-wrap">
+            <span className="text-accent">{it.source}</span>
+            {it.symbols?.map(s => <span key={s} className="px-1.5 rounded bg-bg-card text-txt-sec">{s}</span>)}
+          </div>
+        </a>
+      ))}
+      <div className="mono text-[10px] text-txt-muted pt-1">Top market-news sources (RSS). X/Twitter handles need the paid X API — RSS is the auth-free equivalent.</div>
+    </div>
+  )
+}
+function Stat({ k, v, tone }) {
+  return <div className="rounded-lg border border-border bg-bg-card p-2"><div className="text-[9px] uppercase text-txt-muted">{k}</div><div className={`text-sm font-bold ${tone || 'text-txt'}`}>{v}</div></div>
 }
 
 // astro / option / timing tabs — richer info cards in a roomy grid

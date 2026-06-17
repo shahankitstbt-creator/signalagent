@@ -11,9 +11,13 @@ import { writeFileSync, mkdirSync } from 'node:fs'
 import { getText, getJSON, pool, sleep, sma, rsiSeries, atrSeries, pivots, UA } from './lib.mjs'
 import { runEngine, LOGICS, MIN_ACCURACY, MIN_TRADES } from './signalEngine.mjs'
 import { generateContent } from './contentEngine.mjs'
-import { GEN_META, runPriceGenerators, runMultibagger, vedicMarketSignals, horaSignals } from './generators.mjs'
+import { GEN_META, runPriceGenerators, runMultibagger, vedicMarketSignals, horaSignals, panchangSummary } from './generators.mjs'
 import { optionBuildup } from './angelClient.mjs'
+import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
+import { trackNews } from './news.mjs'
 import { readFileSync } from 'node:fs'
+
+const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
 
 const ARGS = process.argv.slice(2)
 const FULL = ARGS.includes('--full')
@@ -148,13 +152,20 @@ function analyze(d) {
   const targets = [entry + 2 * a, entry + 3.5 * a, entry + 5 * a]
   const rr = risk > 0 ? (targets[0] - entry) / risk : 0
   const bt = backtest(d, atr, rsi)
+  // expected days to each target = ATR-velocity estimate blended with measured backtest avg
+  const dpt = Math.max(a * 0.55, entry * 0.004)            // ~ expected directional progress / trading day
+  const atrD = targets.map(t => (t - entry) / dpt)
+  const blend = (ad, bd, fb) => Math.max(1, Math.round(bd ? 0.5 * ad + 0.5 * bd : (ad || fb)))
+  const eta1 = blend(atrD[0], bt.avgDaysT1, 8)
+  const eta2 = Math.max(blend(atrD[1], bt.avgDaysT2, 18), eta1 + 2)
+  const eta3 = Math.max(blend(atrD[2], bt.avgDaysT3, 32), eta2 + 3)
   return {
     price: round(entry), rsi: round(rsiVal, 1), atr: round(a), changePct: round(changePct, 2),
     volGt5d, volIncreasing, rsiBreakoutReady, priceActionBullish, harmonic: harm,
     squeeze, nearBreakout, emaStack, volBuildup, higherLows, mom20: round(mom20, 1),
     moveScore: Math.round(ms), setupType, precursors: pre, bullish,
     entry: round(entry), sl: round(sl), targets: targets.map(t => round(t)), rr: round(rr, 2),
-    bt, lastTime: time[i],
+    bt, etaDays: [eta1, eta2, eta3], lastTime: time[i],
   }
 }
 const avg = arr => arr.reduce((a, b) => a + b, 0) / (arr.length || 1)
@@ -319,8 +330,9 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
   const breadth = computeBreadth(scored)
   writeFileSync('public/breadth.json', JSON.stringify({ generatedAt: new Date().toISOString(), breadth }))
 
-  // candidates = bullish bias + meaningful pre-move score, ranked by likelihood of an impending move
-  const cand = scored.filter(s => s.bullish && s.moveScore >= 40 && s.rr >= 0.8)
+  // candidates = bullish bias + meaningful pre-move score (gate is self-tuned), ranked by impending-move likelihood
+  const tuning = loadTuning()
+  const cand = scored.filter(s => s.bullish && s.moveScore >= tuning.minMoveScore && s.rr >= 0.8)
     .sort((a, b) => b.moveScore - a.moveScore || (b.bt.hitRate ?? 0) - (a.bt.hitRate ?? 0))
   console.log(`Pre-move candidates: ${cand.length}. Fetching fundamentals for top ${top}…`)
 
@@ -329,7 +341,8 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
     (d, t) => console.log(`  fundamentals ${d}/${t}`))
 
   const today = new Date()
-  const addDays = (n) => { const d = new Date(today); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10) }
+  // business-day-aware forecast date (skip weekends) — sharper, realistic target dates
+  const addDays = (n) => { const d = new Date(today); let added = 0; const tgt = Math.max(1, Math.round(n)); while (added < tgt) { d.setDate(d.getDate() + 1); const wd = d.getDay(); if (wd !== 0 && wd !== 6) added++ } return d.toISOString().slice(0, 10) }
 
   const picks = finalists.map(s => {
     const sc = scorePick(s, s._fund)
@@ -354,11 +367,37 @@ export async function runScan({ full = false, top = 50, limit = 0 } = {}) {
     }
   }).sort((a, b) => b.confidence - a.confidence)
 
-  // ── SIGNAL BOARD (kanban grouped by generator) ──
+  // ── SIGNAL BOARD (grouped by generator) ──
   const board = await buildBoard(scored, finalists, addDays, today)
+
+  // ── LEDGER: track every signal to win/loss/expired; closed signals leave the board ──
+  const ledger = loadLedger()
+  const todayTs = Math.floor(today.getTime() / 1000)
+  const todayISO = today.toISOString().slice(0, 10)
+  const barsBySymbol = {}
+  for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
+  for (const g of board) if (TRADE_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
+  evaluate(ledger, barsBySymbol, todayISO, todayTs)
+  // rebuild trade columns from the ledger's OPEN signals (carry forward until closed)
+  for (const g of board) if (TRADE_GENS.has(g.id)) {
+    const act = Object.values(ledger.active).filter(s => s.generator === g.id).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
+    g.signals = act; g.count = act.length
+  }
+  saveLedger(ledger)
+  const tr = trackRecord(ledger, GEN_META)
+  writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
+
+  // ── DAILY SELF-IMPROVEMENT: which ≥5% movers did we miss, and why → learning.json ──
+  const extNote = await fetchExternalGainers()
+  await runSelfImprovement(scored, board, today, ledger, extNote)
+
+  // ── NEWS: top market-news sources → news.json (best-effort RSS) ──
+  try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
+
   writeFileSync('public/board.json', JSON.stringify({
-    generatedAt: today.toISOString(), date: today.toISOString().slice(0, 10),
-    note: 'Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge). Option build-up needs a live F&O feed.',
+    generatedAt: today.toISOString(), date: todayISO,
+    note: 'Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).',
+    trackRecord: tr,
     generators: board,
   }, null, 2))
   console.log('Board:', board.map(g => `${g.label.split(' ')[0]}:${g.count}`).join(' · '))
@@ -399,7 +438,13 @@ async function buildBoard(scored, finalists, addDays, today) {
   }
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
-  return GEN_META.map(g => ({ ...g, count: byGen[g.id].length, signals: byGen[g.id] }))
+  const ps = panchangSummary(today)
+  return GEN_META.map(g => {
+    let desc = g.desc
+    if (g.id === 'astro_timing') desc = `Day lord ${ps.dayLord} · Rahu Kaal ${ps.rahu} IST (avoid fresh entries) · Moon ${ps.moon}`
+    if (g.id === 'vedic_astro') desc = `${ps.tithi} · Moon ${ps.moon} · enter only in favourable horas (see Hora tab). Tradition — no proven edge.`
+    return { ...g, desc, count: byGen[g.id].length, signals: byGen[g.id] }
+  })
 }
 
 function optionCard(o, sym = 'NIFTY', name = 'Nifty Option Chain', hist = [], today = new Date()) {
@@ -451,6 +496,71 @@ function oiBuildup(o, index, hist, today) {
 }
 function loadOIHist() { try { return JSON.parse(readFileSync('public/oi_history.json', 'utf8')) } catch { return [] } }
 function saveOIHist(hist) { try { writeFileSync('public/oi_history.json', JSON.stringify(hist.slice(-400))) } catch {} }
+
+// ── self-improvement: load/save self-tuned thresholds ──
+function loadTuning() { try { const t = JSON.parse(readFileSync('public/tuning.json', 'utf8')); t.minMoveScore ??= 40; t.history ||= []; return t } catch { return { minMoveScore: 40, history: [] } } }
+function saveTuning(t) { try { writeFileSync('public/tuning.json', JSON.stringify(t, null, 2)) } catch {} }
+
+// diagnose WHY a big mover was not flagged the day before (analyze as-of yesterday)
+function diagnoseMiss(d, tuning) {
+  if (!d || d.c.length < 30) return ['insufficient price history']
+  const sl = k => d[k].slice(0, -1)
+  let a; try { a = analyze({ o: sl('o'), h: sl('h'), l: sl('l'), c: sl('c'), v: sl('v'), time: sl('time') }) } catch { return ['insufficient history'] }
+  const reasons = []
+  const open = d.o.at(-1), prevClose = d.c.at(-2)
+  if (open > prevClose * 1.03) reasons.push('gap-up open (news/event-driven — hard to pre-empt)')
+  if (!a.emaStack) reasons.push('not above rising 20/50 EMA yet')
+  if (a.moveScore < tuning.minMoveScore) reasons.push(`pre-move score ${a.moveScore} below gate ${tuning.minMoveScore}`)
+  if (!a.volBuildup) reasons.push('no prior up-volume accumulation')
+  if (a.rsi > 68) reasons.push('RSI already hot (>68) — excluded by gate')
+  if (!a.squeeze && !a.nearBreakout) reasons.push('no squeeze / breakout proximity')
+  if (!reasons.length) reasons.push('setup present but ranked below the cut — widen coverage')
+  return reasons
+}
+
+// best-effort note on the external gainer sources the user supplied
+async function fetchExternalGainers() {
+  const ok = []
+  for (const [name, url] of [['Groww', 'https://groww.in/markets/top-gainers'], ['Dhan', 'https://dhan.co/stock-market-live/top-gainers-today/']]) {
+    try { const t = await getText(url, 1); if (t && t.length > 500) ok.push(name) } catch {}
+  }
+  return ok.length
+    ? `${ok.join(' + ')} page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.`
+    : 'External gainer pages not server-reachable (JS-rendered) — used own NSE-universe ≥5% gainers as ground truth.'
+}
+
+// the daily missed-mover review → public/learning.json (+ bounded auto-tuning)
+async function runSelfImprovement(scored, board, today, ledger, externalNote) {
+  const tuning = loadTuning()
+  const flagged = new Set()
+  for (const g of board) if (TRADE_GENS.has(g.id)) for (const s of g.signals) flagged.add(s.symbol)
+  for (const s of Object.values(ledger.active)) flagged.add(s.symbol)
+  const movers = scored.filter(s => s.changePct >= 5).sort((a, b) => b.changePct - a.changePct)
+  const caught = movers.filter(m => flagged.has(m.symbol))
+  const missed = movers.filter(m => !flagged.has(m.symbol)).slice(0, 40)
+  const tally = {}
+  const misses = missed.map(m => {
+    const reasons = diagnoseMiss(m._d, tuning)
+    reasons.forEach(r => { const key = r.replace(/\d+/g, 'N'); tally[key] = (tally[key] || 0) + 1 })
+    return { symbol: m.symbol, name: m.name, changePct: round(m.changePct, 1), reasons }
+  })
+  const reasonTally = Object.entries(tally).sort((a, b) => b[1] - a[1]).map(([reason, count]) => ({ reason, count }))
+  const adjustments = []
+  const belowThresh = misses.filter(m => m.reasons.some(r => /pre-move score/.test(r))).length
+  if (belowThresh >= 5 && tuning.minMoveScore > 32) { tuning.minMoveScore -= 2; adjustments.push(`Lowered pre-move score gate to ${tuning.minMoveScore} — ${belowThresh} missed movers were just below it.`) }
+  const catchRate = movers.length ? round((caught.length / movers.length) * 100, 1) : null
+  tuning.history = (tuning.history || []).concat([{ date: today.toISOString().slice(0, 10), movers: movers.length, caught: caught.length, missed: missed.length, catchRate, minMoveScore: tuning.minMoveScore }]).slice(-90)
+  saveTuning(tuning)
+  writeFileSync('public/learning.json', JSON.stringify({
+    date: today.toISOString().slice(0, 10), generatedAt: today.toISOString(),
+    moversChecked: movers.length, caught: caught.length, missed: missed.length, catchRate,
+    sources: ['Own NSE-universe gainers (≥5% today)', 'Groww top-gainers (cross-check)', 'Dhan top-gainers (cross-check)'],
+    externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore },
+    note: 'Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such.',
+  }, null, 2))
+  console.log(`Self-improve: ${movers.length} movers, caught ${caught.length} (${catchRate ?? '–'}%), missed ${missed.length}${adjustments.length ? ' · tuned ↓' : ''} → learning.json`)
+  return catchRate
+}
 
 function buildSignals(scored) {
   const pool = {}

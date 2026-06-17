@@ -5,6 +5,7 @@
 // Astro generators emit market-level timing cards (honest, traditional framing).
 // ADD A GENERATOR: append to GEN_META + write its gen() — board updates itself.
 // ─────────────────────────────────────────────────────────────────────────
+import { detectPatterns } from './patterns.mjs'
 const round = (x, d = 2) => x == null ? null : +(+x).toFixed(d)
 const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i = 1; i < a.length; i++) o.push(a[i] * k + o[i - 1] * (1 - k)); return o }
 
@@ -38,10 +39,12 @@ function volProfile(d, bins = 50) {
 // build a signal card with targets+dates + social caption
 function mk(gen, st, a, reason, accuracy, addDays) {
   const pct = x => round(((x - a.entry) / a.entry) * 100, 1)
+  // ETA days = ATR-velocity estimate blended with measured backtest avg (sharper dates)
+  const eta = a.etaDays || [a.bt.avgDaysT1, a.bt.avgDaysT2, a.bt.avgDaysT3]
   const targets = [
-    { price: a.targets[0], pct: pct(a.targets[0]), by: addDays(a.bt.avgDaysT1) },
-    { price: a.targets[1], pct: pct(a.targets[1]), by: addDays(a.bt.avgDaysT2) },
-    { price: a.targets[2], pct: pct(a.targets[2]), by: addDays(a.bt.avgDaysT3) },
+    { price: a.targets[0], pct: pct(a.targets[0]), by: addDays(eta[0]), days: eta[0] },
+    { price: a.targets[1], pct: pct(a.targets[1]), by: addDays(eta[1]), days: eta[1] },
+    { price: a.targets[2], pct: pct(a.targets[2]), by: addDays(eta[2]), days: eta[2] },
   ]
   // Headline confidence is CAPPED at 95 so no card ever reads as a guarantee.
   // The true measured backtest hit-rate is preserved separately in `accuracy`.
@@ -78,8 +81,15 @@ const STOCK_GENS = {
     return mfiRising && obvRising && a.emaStack && a.price > a.entry * 0.999
       ? mk(GEN_META[2], st, a, `MFI ${round(m[i], 0)} rising + OBV up — money flowing in`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
   },
-  harmonic: ({ st, a, addDays }) => a.harmonic?.bullish
-    ? mk(GEN_META[4], st, a, `Bullish ${a.harmonic.pattern} — reversal/continuation zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null,
+  harmonic: ({ st, d, a, addDays }) => {
+    const pat = (() => { try { return detectPatterns(d) } catch { return null } })()
+    if ((a.harmonic?.bullish || pat) && a.bullish && a.emaStack) {
+      const name = a.harmonic?.bullish ? a.harmonic.pattern : pat.pattern
+      const extra = pat && a.harmonic?.bullish && pat.pattern !== a.harmonic.pattern ? ` + ${pat.pattern}` : ''
+      return mk(GEN_META[4], st, a, `Bullish ${name}${extra} — pattern breakout/continuation zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
+    }
+    return null
+  },
   multibagger: ({ st, a, f, addDays }) => {
     if (!f) return null
     const ok = x => x === 'up' || x === 'stable'
@@ -99,4 +109,4 @@ export function runMultibagger(st, a, f, addDays) { try { return STOCK_GENS.mult
 
 // ── astro cards come from the real Vedic ephemeris engine (5 methods × Nifty/Gold)
 //    plus Hora/Rahu-Kaal timing. All honestly framed: real positions, tradition reading.
-export { vedicMarketSignals, horaSignals } from './astroEngine.mjs'
+export { vedicMarketSignals, horaSignals, panchangSummary } from './astroEngine.mjs'
