@@ -1,0 +1,50 @@
+name: ProTrader scans (cloud cron)
+
+# Free 24x7 cloud scanner — no PC needed. Intraday during NSE hours, daily+weekly after close.
+on:
+  schedule:
+    # IST 09:15–15:30 == UTC 03:45–10:00. Run intraday hourly on weekdays in that window:
+    - cron: '45 3-9 * * 1-5'
+    # After close (IST ~16:00 == UTC 10:30): full daily + weekly:
+    - cron: '30 10 * * 1-5'
+  workflow_dispatch: {}   # lets you run it manually from the Actions tab
+
+concurrency:
+  group: protrader-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install --no-audit --no-fund
+      - name: Write .env from secrets
+        run: |
+          cat > .env <<'EOF'
+          ANGEL_API_KEY=${{ secrets.ANGEL_API_KEY }}
+          ANGEL_SECRET_KEY=${{ secrets.ANGEL_SECRET_KEY }}
+          ANGEL_TOTP_SECRET=${{ secrets.ANGEL_TOTP_SECRET }}
+          ANGEL_CLIENT_CODE=${{ secrets.ANGEL_CLIENT_CODE }}
+          ANGEL_MPIN=${{ secrets.ANGEL_MPIN }}
+          ALPHA_VANTAGE_KEY=${{ secrets.ALPHA_VANTAGE_KEY }}
+          TWELVE_DATA_KEY=${{ secrets.TWELVE_DATA_KEY }}
+          VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
+          EOF
+      - name: Run scan (intraday in market hours, else full daily + weekly)
+        run: |
+          HOUR=$(date -u +%H)
+          if [ "$HOUR" -ge 3 ] && [ "$HOUR" -le 9 ]; then
+            echo "Intraday scan (UTC hour $HOUR)"
+            node scripts/screener.mjs --tf intraday --limit 500
+          else
+            echo "Daily + weekly scan (UTC hour $HOUR)"
+            node scripts/screener.mjs --full --top 60
+            node scripts/screener.mjs --tf weekly
+          fi
+      - name: Deploy fresh data to Vercel
+        run: npx --yes vercel@latest deploy --prod --yes --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}
