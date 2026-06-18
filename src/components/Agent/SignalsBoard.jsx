@@ -178,7 +178,9 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
               <Field label="Entry" value={`₹${s.entry}`} />
               <Field label="Stop loss" value={`₹${s.sl} (${s.slPct}%)`} tone="text-red" />
               <Field label="R:R" value={`1:${s.rr}`} />
-              <Field label={s.accuracy != null ? `Backtested (n=${s.backtestTrades})` : 'Setup score'} value={s.accuracy != null ? `~${s.accuracy}%` : `${s.confidence}/100`} tone="text-cyan" />
+              {s.delivery != null
+                ? <Field label="NSE Delivery" value={`${s.delivery}%`} tone={s.delivery >= 60 ? 'text-green' : 'text-txt-sec'} />
+                : <Field label={s.accuracy != null ? `Backtested (n=${s.backtestTrades})` : 'Setup score'} value={s.accuracy != null ? `~${s.accuracy}%` : `${s.confidence}/100`} tone="text-cyan" />}
             </div>
             <div className="grid grid-cols-3 gap-3 mb-3">
               {t.map((x, k) => <Field key={k} label={`Target ${k + 1} · by ${x.by}`} value={`₹${x.price} (+${x.pct}%)`} tone="text-green" />)}
@@ -226,6 +228,7 @@ function PlanGrid({ s }) {
       <div className="flex flex-wrap gap-1.5 mb-2">
         {s.generators?.map(g => <span key={g} className="mono text-[10px] px-2 py-0.5 rounded-full bg-bg-panel border border-border text-txt-sec">✓ {g}</span>)}
         {s.vedicAligned && <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: '#9333EA' }}>🔮 {s.vedicAsset} bias aligned</span>}
+        {s.delivery != null && <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: s.strongDeliv ? '#0E9F6E' : '#9AA7BC' }}>📦 Delivery {s.delivery}%{s.strongDeliv ? ' · strong hands' : ''}</span>}
       </div>
       <div className="mono text-[10px] uppercase text-txt-muted mb-1">Trade plan · ₹{(p.capital || 0).toLocaleString('en-IN')} capital · {p.riskPct}% risk</div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">

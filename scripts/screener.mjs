@@ -15,6 +15,7 @@ import { GEN_META, runPriceGenerators, runMultibagger, horaSignals, assetBiasSig
 import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { trackNews } from './news.mjs'
+import { fetchDelivery } from './delivery.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
@@ -351,6 +352,9 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
   mkdirSync('public', { recursive: true })
   if (isDaily) writeFileSync('public/universe.json', JSON.stringify(uni.map(s => ({ symbol: s.symbol, name: s.name, sector: s.sector, indices: s.indices }))))
   if (limit) uni = uni.slice(0, limit)
+  // NSE delivery % (daily EOD metric) — the truest big-money confirmation
+  const deliv = isDaily ? await fetchDelivery() : { map: {}, date: null }
+  if (isDaily) writeFileSync('public/delivery.json', JSON.stringify({ date: deliv.date, count: Object.keys(deliv.map).length }))
   console.log(`Universe: ${uni.length} stocks. Fetching ${cfg.interval} OHLCV…`)
 
   let count = 0
@@ -359,7 +363,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
     if (!d) return null
     const s = analyze(d)
     let eng = null; try { eng = runEngine(d) } catch {}
-    return { ...st, ...s, _eng: eng, _d: d }
+    return { ...st, ...s, _eng: eng, _d: d, _deliv: deliv.map[st.symbol] || null }
   }, (done, total) => console.log(`  OHLCV ${done}/${total}`))).filter(Boolean)
 
   // daily-only aggregates (legacy signal-engine board + breadth) — skip on weekly/intraday
@@ -447,16 +451,18 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
     const best = [...list].map(x => x.s).sort((a, b) => ((b.accuracy ?? b.confidence ?? 0) - (a.accuracy ?? a.confidence ?? 0)))[0]
     const vb = dbAssets[sectorAsset(best.sector, best.indices)]; const vedicUp = vb && vb.tone === 'up'
     const gens = [...new Set(list.map(x => x.gen))]
+    const strongDeliv = best.delivery != null && best.delivery >= 60
     const riskPS = Math.max(0.05, best.entry - best.sl)
     const shares = Math.max(1, Math.floor((CAP * RISKPCT / 100) / riskPS))
-    const grade = gens.length >= 3 ? 'A++' : (gens.length >= 2 && vedicUp) ? 'A+' : 'A'
+    const grade = (gens.length >= 3 && strongDeliv) ? 'A++' : gens.length >= 3 ? 'A++' : (gens.length >= 2 && (vedicUp || strongDeliv)) ? 'A+' : 'A'
     const rewardT1 = round(shares * (best.targets[0].price - best.entry))
     const accLine = best.accuracy != null ? `Backtested ~${best.accuracy}% (n=${best.backtestTrades})` : 'Limited backtest history'
-    const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
+    const delivLine = best.delivery != null ? `\n📦 Delivery ${best.delivery}% (${strongDeliv ? 'strong hands accumulating' : 'mostly intraday'})` : ''
+    const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}${delivLine}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
     confluence.push({
       ...best, generator: 'confluence', generators: gens, genCount: gens.length, grade, social,
-      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0)),
-      vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp,
+      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0) + (strongDeliv ? 20 : 0)),
+      vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp, delivery: best.delivery, strongDeliv,
       plan: { capital: CAP, riskPct: RISKPCT, shares, deploy: round(shares * best.entry), riskRs: round(shares * riskPS), rewardT1Rs: rewardT1 },
     })
   }

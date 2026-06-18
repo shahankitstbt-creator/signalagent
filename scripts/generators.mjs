@@ -61,18 +61,24 @@ function mk(gen, st, a, reason, accuracy, addDays) {
     generator: gen.id, symbol: st.symbol, name: st.name, sector: st.sector, indices: st.indices,
     label: gen.label, reason, direction: 'LONG',
     ltp: a.price, entry: a.entry, sl: a.sl, slPct: pct(a.sl), targets,
-    rr: a.rr, rsi: a.rsi, confidence: conf, accuracy, backtestTrades: n, social,
+    rr: a.rr, rsi: a.rsi, confidence: conf, accuracy, backtestTrades: n,
+    delivery: st._deliv ? st._deliv.pct : null, social,
   }
 }
 
 // ── stock-based generators. ctx = { st, d, a, f, addDays } ──
 const STOCK_GENS = {
   // Volume + Accumulation: real big-money footprint (RVOL, up/down vol, dry-up, stealth)
+  // + NSE delivery % (truest "strong hands" confirmation when available)
   vol_accum: ({ st, a, addDays }) => {
     const V = a.vol || {}
-    const strong = (V.volScore >= 40) || V.stealthAccum || (V.accRatio >= 1.3 && (V.vol1GtVol5 || V.dryUp))
-    return strong && a.emaStack && a.higherLows
-      ? mk(M.vol_accum, st, a, `Accumulation (vol ${V.volScore}/100): ${V.signals.slice(0, 3).join('; ')}`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+    const dlv = st._deliv
+    const strongDeliv = dlv && dlv.pct >= 60
+    const strong = (V.volScore >= 40) || V.stealthAccum || (V.accRatio >= 1.3 && (V.vol1GtVol5 || V.dryUp)) || (strongDeliv && V.vol5GtAvg)
+    if (!(strong && a.emaStack && a.higherLows)) return null
+    let sig = V.signals.slice(0, 3)
+    if (dlv) sig = [`Delivery ${dlv.pct}% (${dlv.pct >= 65 ? 'strong hands' : dlv.pct >= 45 ? 'mixed' : 'mostly intraday'})`, ...sig].slice(0, 3)
+    return mk(M.vol_accum, st, a, `Accumulation (vol ${V.volScore}/100): ${sig.join('; ')}`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
   },
   vp_fib: ({ st, d, a, addDays }) => {
     const vp = volProfile(d); const swingLo = Math.min(...d.l.slice(-40)), swingHi = Math.max(...d.h.slice(-40))
