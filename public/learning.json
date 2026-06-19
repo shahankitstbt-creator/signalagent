@@ -1,171 +1,28 @@
 {
-  "date": "2026-06-18",
-  "generatedAt": "2026-06-18T10:42:24.216Z",
-  "moversChecked": 17,
-  "caught": 3,
-  "missed": 14,
-  "catchRate": 17.6,
+  "date": "2026-06-19",
+  "generatedAt": "2026-06-19T06:44:22.377Z",
+  "moversChecked": 0,
+  "caught": 0,
+  "missed": 0,
+  "catchRate": null,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
     "Dhan top-gainers (cross-check)"
   ],
   "externalNote": "Groww + Dhan page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.",
-  "reasonTally": [
-    {
-      "reason": "not above rising N/N EMA yet",
-      "count": 5
-    },
-    {
-      "reason": "no squeeze / breakout proximity",
-      "count": 5
-    },
-    {
-      "reason": "setup present but ranked below the cut — widen coverage",
-      "count": 4
-    },
-    {
-      "reason": "pre-move score N below gate N",
-      "count": 3
-    },
-    {
-      "reason": "no prior up-volume accumulation",
-      "count": 3
-    },
-    {
-      "reason": "RSI already hot (>N) — excluded by gate",
-      "count": 1
-    },
-    {
-      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
-      "count": 1
-    }
-  ],
-  "misses": [
-    {
-      "symbol": "BATAINDIA",
-      "name": "Bata India Ltd.",
-      "changePct": 16.4,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 37 below gate 38",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "KPRMILL",
-      "name": "K.P.R. Mill Ltd.",
-      "changePct": 13.7,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "WELSPUNLIV",
-      "name": "Welspun Living Ltd.",
-      "changePct": 11.2,
-      "reasons": [
-        "setup present but ranked below the cut — widen coverage"
-      ]
-    },
-    {
-      "symbol": "REDINGTON",
-      "name": "Redington Ltd.",
-      "changePct": 9.3,
-      "reasons": [
-        "setup present but ranked below the cut — widen coverage"
-      ]
-    },
-    {
-      "symbol": "NIACL",
-      "name": "The New India Assurance Company Ltd.",
-      "changePct": 8,
-      "reasons": [
-        "setup present but ranked below the cut — widen coverage"
-      ]
-    },
-    {
-      "symbol": "OLECTRA",
-      "name": "Olectra Greentech Ltd.",
-      "changePct": 6.8,
-      "reasons": [
-        "setup present but ranked below the cut — widen coverage"
-      ]
-    },
-    {
-      "symbol": "ABSLAMC",
-      "name": "Aditya Birla Sun Life AMC Ltd.",
-      "changePct": 6.3,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "MAXHEALTH",
-      "name": "Max Healthcare Institute Ltd.",
-      "changePct": 6.3,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 27 below gate 38",
-        "no prior up-volume accumulation",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "VTL",
-      "name": "Vardhman Textiles Ltd.",
-      "changePct": 5.6,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "GODREJIND",
-      "name": "Godrej Industries Ltd.",
-      "changePct": 5.6,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 35 below gate 38",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "ICICIAMC",
-      "name": "ICICI Prudential Asset Management Company Ltd.",
-      "changePct": 5.6,
-      "reasons": [
-        "not above rising 20/50 EMA yet"
-      ]
-    },
-    {
-      "symbol": "GRANULES",
-      "name": "Granules India Ltd.",
-      "changePct": 5.5,
-      "reasons": [
-        "not above rising 20/50 EMA yet"
-      ]
-    },
-    {
-      "symbol": "CARBORUNIV",
-      "name": "Carborundum Universal Ltd.",
-      "changePct": 5.5,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "HFCL",
-      "name": "HFCL Ltd.",
-      "changePct": 5,
-      "reasons": [
-        "gap-up open (news/event-driven — hard to pre-empt)",
-        "no squeeze / breakout proximity"
-      ]
-    }
-  ],
+  "reasonTally": [],
+  "misses": [],
   "adjustments": [],
   "tuning": {
-    "minMoveScore": 38
+    "minMoveScore": 36,
+    "qualityBar": 0
+  },
+  "goal": {
+    "target": 85,
+    "deadline": "2026-07-19",
+    "current": 100,
+    "status": "building track record — 1 closed so far (need ~20+ for a reliable read; small samples are noise)"
   },
   "note": "Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such."
 }

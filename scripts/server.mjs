@@ -38,7 +38,7 @@ const server = createServer(async (req, res) => {
     }
 
     // generated data files (live in public/, may not be in dist)
-    if (['/picks.json', '/universe.json', '/breadth.json', '/signals.json', '/content.json', '/board.json', '/track_record.json', '/learning.json', '/news.json'].includes(path) || /^\/board-(daily|weekly|intraday)\.json$/.test(path)) {
+    if (['/picks.json', '/universe.json', '/breadth.json', '/signals.json', '/content.json', '/board.json', '/track_record.json', '/learning.json', '/news.json', '/goal.json', '/delivery.json'].includes(path) || /^\/board-(daily|weekly|intraday)\.json$/.test(path)) {
       try { return await sendFile(res, join(PUBLIC, path)) }
       catch { res.writeHead(404); return res.end('{}') }
     }

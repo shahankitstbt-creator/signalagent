@@ -421,7 +421,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
   const todayISO = today.toISOString().slice(0, 10)
 
   // ── LEDGER (DAILY only): track every signal to win/loss/expired; closed signals leave the board ──
-  let tr = null
+  let tr = null, goal = null
   if (isDaily) {
     const ledger = loadLedger()
     const barsBySymbol = {}
@@ -436,7 +436,14 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
     tr = trackRecord(ledger, GEN_META)
     writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
     const extNote = await fetchExternalGainers()
-    await runSelfImprovement(scored, board, today, ledger, extNote)
+    const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
+    goal = si.goal
+    // SELECTIVITY: once the quality bar is set, only surface high-conviction or strong-delivery
+    // signals — this is how realized accuracy climbs toward the 85% goal (fewer, better signals).
+    if (si.qualityBar > 0) for (const g of board) if (TRADE_GENS.has(g.id)) {
+      g.signals = g.signals.filter(s => (s.confidence ?? 0) >= si.qualityBar || (s.delivery ?? 0) >= 60)
+      g.count = g.signals.length
+    }
     try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
   }
 
@@ -474,7 +481,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
   const boardJson = JSON.stringify({
     generatedAt: today.toISOString(), date: todayISO, timeframe: tf, label: cfg.label,
     note: `${cfg.label} signals. Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).`,
-    trackRecord: tr, generators: board,
+    trackRecord: tr, goal, generators: board,
   }, null, 2)
   writeFileSync(`public/board-${tf}.json`, boardJson)
   if (isDaily) writeFileSync('public/board.json', boardJson)
@@ -622,7 +629,10 @@ async function fetchExternalGainers() {
 }
 
 // the daily missed-mover review → public/learning.json (+ bounded auto-tuning)
-async function runSelfImprovement(scored, board, today, ledger, externalNote) {
+// the accuracy goal the user set: 85% by one month out (2026-07-19)
+const GOAL = { target: 85, start: '2026-06-19', deadline: '2026-07-19' }
+
+async function runSelfImprovement(scored, board, today, ledger, externalNote, tr) {
   const tuning = loadTuning()
   const flagged = new Set()
   for (const g of board) if (TRADE_GENS.has(g.id)) for (const s of g.signals) flagged.add(s.symbol)
@@ -641,17 +651,55 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote) {
   const belowThresh = misses.filter(m => m.reasons.some(r => /pre-move score/.test(r))).length
   if (belowThresh >= 5 && tuning.minMoveScore > 32) { tuning.minMoveScore -= 2; adjustments.push(`Lowered pre-move score gate to ${tuning.minMoveScore} — ${belowThresh} missed movers were just below it.`) }
   const catchRate = movers.length ? round((caught.length / movers.length) * 100, 1) : null
-  tuning.history = (tuning.history || []).concat([{ date: today.toISOString().slice(0, 10), movers: movers.length, caught: caught.length, missed: missed.length, catchRate, minMoveScore: tuning.minMoveScore }]).slice(-90)
+
+  // ── ACCURACY GOAL: track measured win-rate vs 85% target; adapt selectivity daily ──
+  const dateStr = today.toISOString().slice(0, 10)
+  const measured = tr?.overall?.winRate ?? null
+  const decided = tr?.overall?.decided ?? 0
+  tuning.qualityBar ??= 0
+  // Once enough trades have RESOLVED, raise/lower the quality bar to climb toward target.
+  // Below target → tighten (fewer, higher-conviction signals). Above → relax slightly.
+  if (decided >= 15 && measured != null) {
+    if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(80, Math.max(55, tuning.qualityBar + 1)); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → raised quality bar to ${tuning.qualityBar} (more selective).`) }
+    else if (measured > GOAL.target) { tuning.qualityBar = Math.max(50, tuning.qualityBar - 1); adjustments.push(`Above target → eased quality bar to ${tuning.qualityBar}.`) }
+  }
+  tuning.history = (tuning.history || []).concat([{ date: dateStr, movers: movers.length, caught: caught.length, missed: missed.length, catchRate, minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar }]).slice(-90)
   saveTuning(tuning)
+
+  // per-generator measured quality
+  const genQuality = Object.entries(tr?.generators || {}).map(([id, g]) => ({
+    id, winRate: g.winRate, decided: g.decided, open: g.open,
+    status: g.decided >= 10 ? (g.winRate >= GOAL.target ? 'proven' : g.winRate >= 55 ? 'ok' : 'weak') : 'building',
+  }))
+  const daysLeft = Math.max(0, Math.round((new Date(GOAL.deadline) - today) / 86400000))
+  const RELIABLE = 20                                            // need ~20 closed trades for a trustworthy read
+  const reliable = decided >= RELIABLE
+  const status = measured == null ? 'building track record — no trades have closed yet'
+    : !reliable ? `building track record — ${decided} closed so far (need ~${RELIABLE}+ for a reliable read; small samples are noise)`
+      : measured >= GOAL.target ? 'on target ✓'
+        : measured >= GOAL.target - 8 ? 'close — tightening selectivity'
+          : 'below target — tightening selectivity (fewer, higher-quality signals)'
+  let goal = {}
+  try { goal = JSON.parse(readFileSync('public/goal.json', 'utf8')) } catch {}
+  const trajectory = (goal.trajectory || []).filter(t => t.date !== dateStr).concat([{ date: dateStr, winRate: measured, decided, open: tr?.overall?.open || 0, catchRate, qualityBar: tuning.qualityBar }]).slice(-120)
+  goal = {
+    target: GOAL.target, deadline: GOAL.deadline, start: GOAL.start, daysLeft,
+    current: measured, decided, reliable, open: tr?.overall?.open || 0, qualityBar: tuning.qualityBar,
+    status, generators: genQuality, trajectory, generatedAt: today.toISOString(),
+    note: `Goal: ${GOAL.target}% measured win-rate by ${GOAL.deadline}. "Accuracy" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee.`,
+  }
+  writeFileSync('public/goal.json', JSON.stringify(goal, null, 2))
+
   writeFileSync('public/learning.json', JSON.stringify({
-    date: today.toISOString().slice(0, 10), generatedAt: today.toISOString(),
+    date: dateStr, generatedAt: today.toISOString(),
     moversChecked: movers.length, caught: caught.length, missed: missed.length, catchRate,
     sources: ['Own NSE-universe gainers (≥5% today)', 'Groww top-gainers (cross-check)', 'Dhan top-gainers (cross-check)'],
-    externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore },
+    externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar },
+    goal: { target: GOAL.target, deadline: GOAL.deadline, current: measured, status },
     note: 'Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such.',
   }, null, 2))
-  console.log(`Self-improve: ${movers.length} movers, caught ${caught.length} (${catchRate ?? '–'}%), missed ${missed.length}${adjustments.length ? ' · tuned ↓' : ''} → learning.json`)
-  return catchRate
+  console.log(`Self-improve: ${movers.length} movers, caught ${caught.length} (${catchRate ?? '–'}%), missed ${missed.length} · qualityBar ${tuning.qualityBar} · goal ${measured ?? '–'}%/${GOAL.target}% (${daysLeft}d) → learning.json`)
+  return { catchRate, qualityBar: tuning.qualityBar, goal }
 }
 
 function buildSignals(scored) {

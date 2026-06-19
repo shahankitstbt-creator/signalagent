@@ -42,6 +42,7 @@ export default function SignalsBoard() {
   const tr = board?.trackRecord
   const o = tr?.overall
   const genTR = tr?.generators?.[active?.id]
+  const goal = board?.goal
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
@@ -54,6 +55,12 @@ export default function SignalsBoard() {
             {total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span>
             {o && <span className="ml-2 text-txt-muted">📊 {o.decided ? <>track record <b className={o.winRate >= 80 ? 'text-green' : 'text-txt'}>{o.winRate}%</b> ({o.win}/{o.decided}) · {o.open} open</> : <>{o.open} open · accuracy builds as trades close</>}</span>}
           </div>
+          {goal && (
+            <div className="mono text-[10px] mt-1">
+              <span className="px-2 py-0.5 rounded-full text-white" style={{ background: 'linear-gradient(90deg,#2962FF,#7C3AED)' }}>🎯 Goal {goal.target}% by {goal.deadline} · {goal.daysLeft}d left</span>
+              <span className="ml-2 text-txt-sec">now <b className={goal.reliable && goal.current >= goal.target ? 'text-green' : 'text-txt-sec'}>{goal.current != null ? goal.current + '%' : '—'}</b>{goal.decided ? ` (${goal.decided} closed${goal.reliable ? '' : ' — building'})` : ''} · {goal.status}</span>
+            </div>
+          )}
         </div>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
         <div className="flex rounded-lg border border-border overflow-hidden">
