@@ -7,7 +7,12 @@ on:
     - cron: '0,30 4-9 * * 1-5'     # 09:30–15:00 IST — LIVE intraday, every 30 min
     - cron: '0 10 * * 1-5'         # 15:30 IST — LIVE intraday, market close
     - cron: '30 12 * * 1-5'        # 18:00 IST — POST-MARKET daily + weekly + SELF-IMPROVEMENT
-  workflow_dispatch: {}            # manual run from the Actions tab
+  workflow_dispatch:               # manual run (Actions tab or in-app "ScanNow")
+    inputs:
+      tf:
+        description: 'Timeframe (auto/daily/weekly/intraday)'
+        required: false
+        default: 'auto'
 
 concurrency:
   group: protrader-scan
@@ -35,19 +40,29 @@ jobs:
           TWELVE_DATA_KEY=${{ secrets.TWELVE_DATA_KEY }}
           VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
           EOF
-      - name: Run scan by session (pre-market / live / post-market)
+      - name: Run scan by session (or manual timeframe)
         run: |
-          H=$((10#$(date -u +%H)))
-          if [ "$H" -eq 2 ]; then
-            echo "PRE-MARKET — daily scan (setups before open)"
-            node scripts/screener.mjs --top 60
-          elif [ "$H" -ge 4 ] && [ "$H" -le 10 ]; then
-            echo "LIVE — intraday pre-move scan"
-            node scripts/screener.mjs --tf intraday --limit 500
+          TF="${{ github.event.inputs.tf }}"
+          if [ -n "$TF" ] && [ "$TF" != "auto" ]; then
+            echo "MANUAL ScanNow — $TF"
+            case "$TF" in
+              intraday) node scripts/screener.mjs --tf intraday --limit 500 ;;
+              weekly)   node scripts/screener.mjs --tf weekly ;;
+              *)        node scripts/screener.mjs --full --top 60 --improve ;;
+            esac
           else
-            echo "POST-MARKET — full daily + weekly + self-improvement"
-            node scripts/screener.mjs --full --top 60 --improve
-            node scripts/screener.mjs --tf weekly
+            H=$((10#$(date -u +%H)))
+            if [ "$H" -eq 2 ]; then
+              echo "PRE-MARKET — daily scan (setups before open)"
+              node scripts/screener.mjs --top 60
+            elif [ "$H" -ge 4 ] && [ "$H" -le 10 ]; then
+              echo "LIVE — intraday pre-move scan"
+              node scripts/screener.mjs --tf intraday --limit 500
+            else
+              echo "POST-MARKET — full daily + weekly + self-improvement"
+              node scripts/screener.mjs --full --top 60 --improve
+              node scripts/screener.mjs --tf weekly
+            fi
           fi
       - name: Deploy fresh data to Vercel
         run: npx --yes vercel@latest deploy --prod --yes --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}

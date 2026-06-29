@@ -15,7 +15,21 @@ export default function SignalsBoard() {
   const [tab, setTab] = useState(0)
   const [modal, setModal] = useState(null)
   const [tf, setTf] = useState('daily')
+  const [scanMsg, setScanMsg] = useState(null)
+  const [scanning, setScanning] = useState(false)
   const setView = useViewStore(s => s.setView)
+
+  const scanNow = async () => {
+    if (scanning) return
+    setScanning(true); setScanMsg('Starting scan…')
+    try {
+      const r = await fetch('/api/scan?tf=' + tf, { method: 'POST' })
+      const j = await r.json().catch(() => ({}))
+      setScanMsg(r.ok && j.ok ? '✓ Scan started — board auto-refreshes in a few minutes' : '⚠ ' + (j.error || 'Could not start scan'))
+    } catch (e) { setScanMsg('⚠ ' + e.message) }
+    setScanning(false)
+    setTimeout(() => setScanMsg(null), 9000)
+  }
   const alertsOn = useHitAlerts(s => s.enabled)
   const enableAlerts = useHitAlerts(s => s.enable)
   const disableAlerts = useHitAlerts(s => s.disable)
@@ -62,15 +76,20 @@ export default function SignalsBoard() {
             </div>
           )}
         </div>
-        <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
-        <div className="flex rounded-lg border border-border overflow-hidden">
-          {[['daily', 'Daily'], ['weekly', 'Weekly'], ['intraday', 'Intraday']].map(([k, lbl]) => (
-            <button key={k} onClick={() => { setTf(k); setTab(0) }}
-              className={`mono text-[11px] px-2.5 py-1.5 ${tf === k ? 'text-white' : 'text-txt-sec hover:text-txt'}`}
-              style={tf === k ? { background: 'linear-gradient(90deg,#2962FF,#7C3AED)' } : {}}>{lbl}</button>
-          ))}
-        </div>
-        <div className="ml-auto flex gap-1.5 sm:gap-2">
+        <div className="ml-auto flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
+          {scanMsg && <span className="mono text-[10px] text-txt-sec w-full sm:w-auto text-right">{scanMsg}</span>}
+          <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
+          <div className="flex rounded-lg border border-border overflow-hidden">
+            {[['daily', 'Daily'], ['weekly', 'Weekly'], ['intraday', 'Intraday']].map(([k, lbl]) => (
+              <button key={k} onClick={() => { setTf(k); setTab(0) }}
+                className={`mono text-[11px] px-2.5 py-1.5 ${tf === k ? 'text-white' : 'text-txt-sec hover:text-txt'}`}
+                style={tf === k ? { background: 'linear-gradient(90deg,#2962FF,#7C3AED)' } : {}}>{lbl}</button>
+            ))}
+          </div>
+          <button onClick={scanNow} disabled={scanning} title="Run a fresh scan now"
+            className="mono text-[11px] px-3 py-1.5 rounded-lg border border-green text-green hover:bg-green/10 card-hover disabled:opacity-50 font-bold">
+            {scanning ? '⏳ Scanning…' : '🔄 ScanNow'}
+          </button>
           <button onClick={() => setModal('learning')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Self-improvement log">🧠</button>
           <button onClick={() => setModal('news')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Market news">📰</button>
           <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()}
