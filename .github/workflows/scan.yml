@@ -1,13 +1,13 @@
 name: ProTrader scans (cloud cron)
 
-# Free 24x7 cloud scanner — no PC needed. Intraday during NSE hours, daily+weekly after close.
+# Free 24x7 cloud scanner — no PC needed. Times are UTC; IST = UTC + 5:30.
 on:
   schedule:
-    # IST 09:15–15:30 == UTC 03:45–10:00. Run intraday hourly on weekdays in that window:
-    - cron: '45 3-9 * * 1-5'
-    # After close (IST ~16:00 == UTC 10:30): full daily + weekly:
-    - cron: '30 10 * * 1-5'
-  workflow_dispatch: {}   # lets you run it manually from the Actions tab
+    - cron: '15 2 * * 1-5'         # 07:45 IST — PRE-MARKET daily scan (setups ready before open)
+    - cron: '0,30 4-9 * * 1-5'     # 09:30–15:00 IST — LIVE intraday, every 30 min
+    - cron: '0 10 * * 1-5'         # 15:30 IST — LIVE intraday, market close
+    - cron: '30 12 * * 1-5'        # 18:00 IST — POST-MARKET daily + weekly + SELF-IMPROVEMENT
+  workflow_dispatch: {}            # manual run from the Actions tab
 
 concurrency:
   group: protrader-scan
@@ -35,15 +35,18 @@ jobs:
           TWELVE_DATA_KEY=${{ secrets.TWELVE_DATA_KEY }}
           VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
           EOF
-      - name: Run scan (intraday in market hours, else full daily + weekly)
+      - name: Run scan by session (pre-market / live / post-market)
         run: |
-          HOUR=$(date -u +%H)
-          if [ "$HOUR" -ge 3 ] && [ "$HOUR" -le 9 ]; then
-            echo "Intraday scan (UTC hour $HOUR)"
+          H=$((10#$(date -u +%H)))
+          if [ "$H" -eq 2 ]; then
+            echo "PRE-MARKET — daily scan (setups before open)"
+            node scripts/screener.mjs --top 60
+          elif [ "$H" -ge 4 ] && [ "$H" -le 10 ]; then
+            echo "LIVE — intraday pre-move scan"
             node scripts/screener.mjs --tf intraday --limit 500
           else
-            echo "Daily + weekly scan (UTC hour $HOUR)"
-            node scripts/screener.mjs --full --top 60
+            echo "POST-MARKET — full daily + weekly + self-improvement"
+            node scripts/screener.mjs --full --top 60 --improve
             node scripts/screener.mjs --tf weekly
           fi
       - name: Deploy fresh data to Vercel

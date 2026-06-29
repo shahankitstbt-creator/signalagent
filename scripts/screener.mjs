@@ -32,6 +32,7 @@ const FULL = ARGS.includes('--full')
 const TOP = +(ARGS[ARGS.indexOf('--top') + 1]) || 50
 const LIMIT = ARGS.includes('--limit') ? +ARGS[ARGS.indexOf('--limit') + 1] : 0
 const TFARG = ARGS.includes('--tf') ? ARGS[ARGS.indexOf('--tf') + 1] : 'daily'
+const IMPROVE = ARGS.includes('--improve')
 
 // NSE archive CSVs (skipped automatically if a name 404s)
 const INDEX_CSV = {
@@ -342,7 +343,7 @@ function computeBreadth(scored) {
 }
 
 // ── main ──
-export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' } = {}) {
+export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily', improve = false } = {}) {
   const t0 = Date.now()
   const cfg = TF[tf] || TF.daily
   const isDaily = tf === 'daily'
@@ -435,16 +436,22 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily' 
     saveLedger(ledger)
     tr = trackRecord(ledger, GEN_META)
     writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
-    const extNote = await fetchExternalGainers()
-    const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
-    goal = si.goal
-    // SELECTIVITY: once the quality bar is set, only surface high-conviction or strong-delivery
-    // signals — this is how realized accuracy climbs toward the 85% goal (fewer, better signals).
-    if (si.qualityBar > 0) for (const g of board) if (TRADE_GENS.has(g.id)) {
-      g.signals = g.signals.filter(s => (s.confidence ?? 0) >= si.qualityBar || (s.delivery ?? 0) >= 60)
+    // SELF-IMPROVEMENT runs only on the post-market (--improve) pass (6 PM IST) when the
+    // day's moves are final. Pre-market/live passes just refresh the boards.
+    if (improve) {
+      const extNote = await fetchExternalGainers()
+      const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
+      goal = si.goal
+      try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
+    } else {
+      try { goal = JSON.parse(readFileSync('public/goal.json', 'utf8')) } catch {}
+    }
+    // SELECTIVITY: apply the self-tuned quality bar every pass (fewer, higher-quality signals → toward 85%)
+    const bar = loadTuning().qualityBar || 0
+    if (bar > 0) for (const g of board) if (TRADE_GENS.has(g.id)) {
+      g.signals = g.signals.filter(s => (s.confidence ?? 0) >= bar || (s.delivery ?? 0) >= 60)
       g.count = g.signals.length
     }
-    try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
   }
 
   // ── ⭐ CONFLUENCE (all timeframes): stocks flagged by 2+ generators, Vedic-aligned, with a position-sized plan ──
@@ -754,5 +761,5 @@ function buildSignals(scored) {
   console.log(`Signals: ${logics.filter(l => l.active).length}/${LOGICS.length} logics >=${MIN_ACCURACY}% → ${signals.length} live signals`)
 }
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('screener.mjs')) {
-  runScan({ full: FULL, top: TOP, limit: LIMIT, tf: TFARG }).catch(e => { console.error(e); process.exit(1) })
+  runScan({ full: FULL, top: TOP, limit: LIMIT, tf: TFARG, improve: IMPROVE }).catch(e => { console.error(e); process.exit(1) })
 }
