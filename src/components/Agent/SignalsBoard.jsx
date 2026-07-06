@@ -133,6 +133,8 @@ export default function SignalsBoard() {
           </div>
           {active.signals.length === 0
             ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
+            : active.id === 'fno'
+              ? <FnoTable signals={active.signals} color={active.color} setView={setView} />
             : active.id === 'confluence'
               ? <ConfluenceTable signals={active.signals} color={active.color} setView={setView} />
             : active.id === 'vedic_astro'
@@ -223,6 +225,81 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
 }
 function Field({ label, value, tone }) {
   return <div><div className="text-[10px] text-txt-muted uppercase">{label}</div><div className={`text-xs font-bold ${tone || 'text-txt'}`}>{value}</div></div>
+}
+
+// ── 📊 Futures & Options: index / commodity / stock F&O setups with lot + options play ──
+const dirCls = t => t === 'up' ? 'bg-green' : t === 'down' ? 'bg-red' : 'bg-yellow'
+function FnoTable({ signals, color, setView }) {
+  const [open, setOpen] = useState(0)
+  const rows = [...signals].sort((a, b) => (b.rank ?? 0) - (a.rank ?? 0))
+  if (!rows.length) return <div className="p-8 mono text-sm text-txt-muted text-center">No F&O setups right now — appears with the scan.</div>
+  return (
+    <>
+      <table className="hidden md:table w-full mono text-xs border-collapse">
+        <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+          {['Underlying', 'Type', 'Signal', 'Spot/LTP', 'Lot', 'Suggested options play', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}
+        </tr></thead>
+        <tbody>{rows.map((s, i) => <FnoRow key={s.underlying + i} s={s} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} setView={setView} />)}</tbody>
+      </table>
+      <div className="md:hidden p-3 space-y-2.5">{rows.map((s, i) => <FnoCard key={s.underlying + i} s={s} color={color} />)}</div>
+    </>
+  )
+}
+function FnoDetail({ s }) {
+  return (
+    <>
+      <div className="text-txt-sec text-[11px] mb-2">{s.reason}</div>
+      <div className="flex flex-wrap gap-1.5 mb-2">
+        <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: '#7C3AED' }}>👉 {s.optionPlay}</span>
+        {s.futures && <span className="mono text-[10px] px-2 py-0.5 rounded-full bg-bg-panel border border-border text-txt-sec">{s.futures}</span>}
+        {s.grade && <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: gradeBg(s.grade) }}>{s.grade}</span>}
+        {s.delivery != null && <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white" style={{ background: s.delivery >= 60 ? '#0E9F6E' : '#9AA7BC' }}>📦 Deliv {s.delivery}%</span>}
+      </div>
+      {s.kind === 'Index' && <div className="grid grid-cols-3 gap-2 mb-1">
+        <Field label="PCR" value={s.pcr} /><Field label="Support" value={s.support} tone="text-green" /><Field label="Resistance" value={s.resistance} tone="text-red" />
+      </div>}
+      {Array.isArray(s.targets) && <div className="grid grid-cols-3 gap-2 mt-1">
+        <Field label="Entry" value={`₹${s.entry}`} /><Field label="Stop" value={`₹${s.sl} (${s.slPct}%)`} tone="text-red" /><Field label="R:R" value={`1:${s.rr}`} />
+      </div>}
+      {Array.isArray(s.targets) && <div className="grid grid-cols-3 gap-2 mt-1">{s.targets.map((t, k) => <Field key={k} label={`T${k + 1} · ${t.by}`} value={`₹${t.price} (+${t.pct}%)`} tone="text-green" />)}</div>}
+    </>
+  )
+}
+function FnoRow({ s, color, open, onToggle }) {
+  const [copied, setCopied] = useState(false)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  return (
+    <>
+      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.underlying}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2 text-txt-sec">{s.kind}</td>
+        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
+        <td className="px-3 py-2 text-right text-txt-sec">{s.spot ?? '—'}</td>
+        <td className="px-3 py-2 text-txt-sec">{s.lot ?? '—'}</td>
+        <td className="px-3 py-2 text-[11px]" style={{ color: '#7C3AED' }}>{s.optionPlay}</td>
+        <td className="px-3 py-2"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
+      </tr>
+      {open && <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}><td colSpan={7} className="px-5 py-3"><FnoDetail s={s} /></td></tr>}
+    </>
+  )
+}
+function FnoCard({ s, color }) {
+  const [open, setOpen] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-sm font-bold text-txt">{s.underlying}</span>
+        <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{s.kind}</span>
+        <span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span>
+        <span className="ml-auto mono text-[10px] text-txt-sec">Lot {s.lot ?? '—'}</span>
+      </div>
+      <div className="mono text-[11px] mt-1.5" style={{ color: '#7C3AED' }}>👉 {s.optionPlay}</div>
+      {open && <div className="mt-2 pt-2 border-t border-border"><FnoDetail s={s} /></div>}
+      <button onClick={copy} className="w-full mt-2.5 mono text-[11px] py-2 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied' : '📋 Copy F&O post'}</button>
+    </div>
+  )
 }
 
 // ── ⭐ Top Confluence Picks: multi-generator agreement + Vedic + trade plan ──

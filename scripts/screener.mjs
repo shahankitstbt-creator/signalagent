@@ -16,6 +16,8 @@ import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { trackNews } from './news.mjs'
 import { fetchDelivery } from './delivery.mjs'
+import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
+import { notifyNewSignals } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
@@ -484,6 +486,16 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const confCol = board.find(g => g.id === 'confluence')
   if (confCol) { confCol.signals = confluence.slice(0, 12); confCol.count = confCol.signals.length }
 
+  // ── 📊 FUTURES & OPTIONS: F&O-eligible instruments (stocks/index/commodity) with lot + options play ──
+  const fnoLots = await fetchFnoLots()
+  const fno = buildFno(board, dbAssets, fnoLots, scored, addDays)
+  const fnoCol = board.find(g => g.id === 'fno')
+  if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
+  console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
+
+  // ── TELEGRAM: post new high-conviction signals (F&O + confluence) in rich format ──
+  try { await notifyNewSignals({ generators: board }, todayISO) } catch (e) { console.log('Telegram skipped:', e.message) }
+
   // ── write the timeframe board (board-daily/weekly/intraday.json); daily also writes board.json ──
   const boardJson = JSON.stringify({
     generatedAt: today.toISOString(), date: todayISO, timeframe: tf, label: cfg.label,
@@ -589,6 +601,61 @@ function oiBuildup(o, index, hist, today) {
 }
 function loadOIHist() { try { return JSON.parse(readFileSync('public/oi_history.json', 'utf8')) } catch { return [] } }
 function saveOIHist(hist) { try { writeFileSync('public/oi_history.json', JSON.stringify(hist.slice(-400))) } catch {} }
+
+// Build the F&O tab: index (option-chain), commodity (astro), and F&O-eligible stock setups.
+function buildFno(board, dbAssets, fnoLots, scored, addDays) {
+  const out = []
+  const col = id => board.find(g => g.id === id)
+  const lotOf = sym => fnoLots[sym] || null
+  const social = (u, kind, dir, reason, play) => `📊 F&O — ${u} (${kind}) ${dir}\n${reason}\n👉 ${play}\n📌 Educational only, not advice. Not SEBI-registered. #fno #${u.toLowerCase()} #options`
+  // 1) INDEX F&O — from live option-chain build-up (NIFTY / BANKNIFTY)
+  for (const o of (col('option_buildup')?.signals || [])) {
+    if (o.placeholder) continue
+    const dir = o.bias?.startsWith('Bullish') ? 'BUY' : o.bias?.startsWith('Bearish') ? 'SELL' : 'RANGE'
+    const play = dir === 'BUY' ? `Buy ${o.atm} CE / bull-call spread; resistance wall ${o.resistance}`
+      : dir === 'SELL' ? `Buy ${o.atm} PE / bear-put spread; support wall ${o.support}`
+        : `Range: sell ${o.resistance} CE + ${o.support} PE (iron condor)`
+    const reason = `PCR ${o.pcr} → ${o.bias}. Support ${o.support} / Resistance ${o.resistance} · ATM ${o.atm} · exp ${o.expiry}.`
+    out.push({ generator: 'fno', underlying: o.symbol, name: o.name, kind: 'Index', direction: dir, dirTone: dir === 'BUY' ? 'up' : dir === 'SELL' ? 'down' : 'flat', spot: o.spot, lot: lotOf(o.symbol), grade: dir === 'RANGE' ? 'B' : 'A', optionPlay: play, pcr: o.pcr, support: o.support, resistance: o.resistance, reason, social: social(o.symbol, 'Index', dir, reason, play), rank: 100 })
+  }
+  // 2) COMMODITY F&O — from Vedic bias (GOLD / SILVER)
+  for (const cid of ['GOLD', 'SILVER']) {
+    const a = dbAssets[cid]; if (!a) continue
+    const dir = a.tone === 'up' ? 'BUY' : a.tone === 'down' ? 'SELL' : 'RANGE'
+    const play = optionPlay(dir, null)
+    const reason = `Vedic daily bias ${a.score > 0 ? '+' : ''}${a.score} (${a.label}). Tradition — pair with MCX structure + volume.`
+    out.push({ generator: 'fno', underlying: cid, name: a.name || cid, kind: 'Commodity', direction: dir, dirTone: a.tone, spot: null, lot: lotOf(cid), grade: 'B', optionPlay: play, reason, social: social(cid, 'Commodity', dir, reason, play), rank: 90 })
+  }
+  // 3) STOCK F&O — confluence first, then strong single-generator picks; F&O-eligible only
+  const seen = new Set()
+  const pushStock = (s, rank) => {
+    if (!lotOf(s.symbol) || seen.has(s.symbol)) return
+    seen.add(s.symbol)
+    const lot = lotOf(s.symbol), px = s.ltp || s.entry || 0
+    const play = optionPlay('BUY', px)
+    out.push({
+      generator: 'fno', underlying: s.symbol, name: s.name, kind: 'Stock', direction: 'BUY', dirTone: 'up',
+      spot: s.ltp, lot, grade: s.grade || 'A', confidence: s.confidence, delivery: s.delivery,
+      entry: s.entry, sl: s.sl, slPct: s.slPct, targets: s.targets, rr: s.rr,
+      optionPlay: play, futures: `1 lot = ${lot} sh ≈ ₹${Math.round(lot * px).toLocaleString('en-IN')} notional`,
+      reason: s.reason, social: social(s.symbol, 'Stock', 'BUY', s.reason, `${play} · 1 lot = ${lot} sh`), rank,
+    })
+  }
+  for (const s of (col('confluence')?.signals || [])) pushStock(s, 80 + (s.genCount || 0))
+  // broaden: ANY F&O-eligible bullish stock from the full scan (F&O universe = large-caps)
+  for (const st of (scored || [])) {
+    if (seen.size >= 45) break
+    if (!lotOf(st.symbol) || seen.has(st.symbol)) continue
+    if (!(st.bullish && st.emaStack && (st.moveScore >= 35 || (st.vol && st.vol.volScore >= 35) || (st._deliv && st._deliv.pct >= 60)))) continue
+    seen.add(st.symbol)
+    const lot = lotOf(st.symbol), px = st.price
+    const tg = (st.targets || []).map((t, i) => ({ price: t, pct: round(((t - st.entry) / st.entry) * 100, 1), by: addDays((st.etaDays || [])[i] || (i + 1) * 5) }))
+    const reason = `${st.setupType}: ${(st.precursors || []).slice(0, 2).join('; ')}${st._deliv ? ` · Delivery ${st._deliv.pct}%` : ''}`
+    const play = optionPlay('BUY', px)
+    out.push({ generator: 'fno', underlying: st.symbol, name: st.name, kind: 'Stock', direction: 'BUY', dirTone: 'up', spot: px, lot, grade: st.moveScore >= 60 ? 'A+' : 'A', confidence: st.moveScore, delivery: st._deliv?.pct ?? null, entry: st.entry, sl: st.sl, slPct: round(((st.sl - st.entry) / st.entry) * 100, 1), targets: tg, rr: st.rr, optionPlay: play, futures: `1 lot = ${lot} sh ≈ ₹${Math.round(lot * px).toLocaleString('en-IN')} notional`, reason, social: social(st.symbol, 'Stock', 'BUY', reason, `${play} · 1 lot = ${lot} sh`), rank: 40 + st.moveScore / 5 })
+  }
+  return out.sort((a, b) => (b.rank || 0) - (a.rank || 0))
+}
 
 // map a stock's sector/indices to the nearest Vedic asset-bias bucket
 function sectorAsset(sector = '', indices = []) {
