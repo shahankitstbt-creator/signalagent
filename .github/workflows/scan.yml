@@ -1,18 +1,20 @@
 name: ProTrader scans (cloud cron)
 
-# Free 24x7 cloud scanner — no PC needed. Times are UTC; IST = UTC + 5:30.
+# 24x7 cloud scanner + real-time Telegram alerts. Times UTC; IST = UTC + 5:30.
 on:
   schedule:
-    - cron: '15 2 * * 1-5'         # 07:45 IST — PRE-MARKET daily scan (setups ready before open)
-    - cron: '0,30 4-9 * * 1-5'     # 09:30–15:00 IST — LIVE intraday, every 30 min
-    - cron: '0 10 * * 1-5'         # 15:30 IST — LIVE intraday, market close
-    - cron: '30 12 * * 1-5'        # 18:00 IST — POST-MARKET daily + weekly + SELF-IMPROVEMENT
-  workflow_dispatch:               # manual run (Actions tab or in-app "ScanNow")
+    # Every 30 min during LIVE market 09:00–23:30 IST, Mon–Fri (03:30–18:00 UTC).
+    - cron: '30 3-17 * * 1-5'      # :30 of 09:00 … 23:00 IST
+    - cron: '0 4-18 * * 1-5'       # :00 of 09:30 … 23:30 IST
+  workflow_dispatch:               # manual (Actions tab or in-app ScanNow)
     inputs:
       tf:
-        description: 'Timeframe (auto/daily/weekly/intraday)'
+        description: 'auto/daily/weekly/intraday'
         required: false
         default: 'auto'
+
+permissions:
+  contents: write                  # persist state (ledger/goal/tuning/tg_sent) back to repo
 
 concurrency:
   group: protrader-scan
@@ -38,31 +40,36 @@ jobs:
           ANGEL_MPIN=${{ secrets.ANGEL_MPIN }}
           ALPHA_VANTAGE_KEY=${{ secrets.ALPHA_VANTAGE_KEY }}
           TWELVE_DATA_KEY=${{ secrets.TWELVE_DATA_KEY }}
+          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
           VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
           EOF
-      - name: Run scan by session (or manual timeframe)
+      - name: Run scan by session (sends Telegram alerts for new signals)
         run: |
           TF="${{ github.event.inputs.tf }}"
+          H=$((10#$(date -u +%H))); MIN=$((10#$(date -u +%M)))
           if [ -n "$TF" ] && [ "$TF" != "auto" ]; then
-            echo "MANUAL ScanNow — $TF"
             case "$TF" in
               intraday) node scripts/screener.mjs --tf intraday --limit 500 ;;
               weekly)   node scripts/screener.mjs --tf weekly ;;
               *)        node scripts/screener.mjs --full --top 60 --improve ;;
             esac
+          elif [ "$H" -eq 12 ] && [ "$MIN" -lt 20 ]; then
+            echo "POST-MARKET ~17:30 IST — full daily + weekly + self-improvement"
+            node scripts/screener.mjs --full --top 60 --improve
+            node scripts/screener.mjs --tf weekly
           else
-            H=$((10#$(date -u +%H)))
-            if [ "$H" -eq 2 ]; then
-              echo "PRE-MARKET — daily scan (setups before open)"
-              node scripts/screener.mjs --top 60
-            elif [ "$H" -ge 4 ] && [ "$H" -le 10 ]; then
-              echo "LIVE — intraday pre-move scan"
-              node scripts/screener.mjs --tf intraday --limit 500
-            else
-              echo "POST-MARKET — full daily + weekly + self-improvement"
-              node scripts/screener.mjs --full --top 60 --improve
-              node scripts/screener.mjs --tf weekly
-            fi
+            echo "LIVE — intraday scan + real-time Telegram alerts"
+            node scripts/screener.mjs --tf intraday --limit 500
           fi
-      - name: Deploy fresh data to Vercel
-        run: npx --yes vercel@latest deploy --prod --yes --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Persist state back to repo (accumulates ledger/goal, dedups Telegram)
+        run: |
+          git config user.name "protrader-bot"
+          git config user.email "bot@stocksbyvarsha.local"
+          git add public/ledger.json public/goal.json public/tuning.json public/tg_sent.json public/track_record.json public/board*.json public/learning.json public/news.json public/delivery.json public/picks.json 2>/dev/null || true
+          git commit -m "state $(date -u +%FT%RZ)" || echo "no state changes"
+          git push || echo "push skipped"
+      - name: Deploy to Vercel (tradingview project → stocksbyvarsha.vercel.app)
+        run: |
+          npx --yes vercel@latest link --yes --project tradingview --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}
+          npx --yes vercel@latest deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
