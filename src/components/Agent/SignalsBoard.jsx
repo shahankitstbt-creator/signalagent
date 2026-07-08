@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useViewStore } from '../../store/viewStore'
 import { useChartStore } from '../../store/chartStore'
 import { useHitAlerts } from '../../store/hitAlerts'
+import { useLiveLtp } from '../../store/liveLtp'
+import Ltp from './Ltp'
 import HitPopups from '../Alerts/HitPopups'
 
 const confColor = c => c >= 80 ? 'text-green' : c >= 65 ? 'text-cyan' : c >= 50 ? 'text-yellow' : 'text-txt-sec'
@@ -49,6 +51,14 @@ export default function SignalsBoard() {
   }
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [tf])
   useEffect(() => { if (alertsOn) startAlerts() }, [alertsOn, startAlerts])
+  // live LTP ticker for the currently-viewed tab's symbols (market hours only)
+  const startLive = useLiveLtp(s => s.start)
+  const liveOn = useLiveLtp(s => s.live)
+  useEffect(() => {
+    const sigs = board?.generators?.[tab]?.signals || []
+    const syms = [...new Set(sigs.map(s => s.symbol || s.underlying).filter(Boolean))]
+    if (syms.length) startLive(syms)
+  }, [board, tab, startLive])
 
   const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
@@ -66,7 +76,7 @@ export default function SignalsBoard() {
         <div>
           <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
           <div className="mono text-[10px] sm:text-[11px] text-txt-sec">
-            {total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · <span className="text-green font-bold">● live</span>
+            {total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · {liveOn ? <span className="text-green font-bold">● LTP live</span> : <span className="text-txt-muted">○ prices at scan</span>}
             {o && <span className="ml-2 text-txt-muted">📊 {o.decided ? <>track record <b className={o.winRate >= 80 ? 'text-green' : 'text-txt'}>{o.winRate}%</b> ({o.win}/{o.decided}) · {o.open} open</> : <>{o.open} open · accuracy builds as trades close</>}</span>}
           </div>
           {goal && (
@@ -187,7 +197,7 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
         <td className="px-3 py-2 font-bold text-txt">{s.symbol}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
-        <td className="px-3 py-2 text-right text-txt-sec">{s.ltp}</td>
+        <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
         <td className="px-3 py-2 text-right">{s.entry}</td>
         <td className="px-3 py-2 text-right text-red">{s.sl}</td>
         <td className="px-3 py-2 text-right text-green">{t[0]?.price}</td>
@@ -274,7 +284,7 @@ function FnoRow({ s, color, open, onToggle }) {
         <td className="px-3 py-2 font-bold text-txt">{s.underlying}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2 text-txt-sec">{s.kind}</td>
         <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
-        <td className="px-3 py-2 text-right text-txt-sec">{s.spot ?? '—'}</td>
+        <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.underlying} base={s.spot} /></td>
         <td className="px-3 py-2 text-txt-sec">{s.lot ?? '—'}</td>
         <td className="px-3 py-2 text-[11px]" style={{ color: '#7C3AED' }}>{s.optionPlay}</td>
         <td className="px-3 py-2"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
@@ -355,7 +365,7 @@ function ConfRow({ s, color, open, onToggle, setView }) {
         <td className="px-3 py-2 font-bold text-txt">{s.symbol}<span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
         <td className="px-3 py-2 text-accent font-bold">{s.genCount}×</td>
-        <td className="px-3 py-2 text-right text-txt-sec">{s.ltp}</td>
+        <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
         <td className="px-3 py-2 text-right">{s.entry}</td>
         <td className="px-3 py-2 text-right text-red">{s.sl}</td>
         <td className="px-3 py-2 text-right text-green">{s.targets[0]?.price}</td>
@@ -418,7 +428,7 @@ function MobileTradeCard({ s, color, setView }) {
       <div className="flex items-center gap-2">
         <span className="mono text-base font-bold text-txt">{s.symbol}</span>
         <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>
-        <span className="ml-auto mono text-[11px] text-txt-sec">₹{s.ltp}</span>
+        <span className="ml-auto mono text-[11px] text-txt-sec">₹<Ltp symbol={s.symbol} base={s.ltp} /></span>
         <span className={`mono text-sm font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
       </div>
       <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
