@@ -3,9 +3,10 @@ name: ProTrader scans (cloud cron)
 # 24x7 cloud scanner + real-time Telegram alerts. Times UTC; IST = UTC + 5:30.
 on:
   schedule:
-    # Every 30 min during LIVE market 09:00–23:30 IST, Mon–Fri (03:30–18:00 UTC).
-    - cron: '30 3-17 * * 1-5'      # :30 of 09:00 … 23:00 IST
-    - cron: '0 4-18 * * 1-5'       # :00 of 09:30 … 23:30 IST
+    # Every 30 min during LIVE market ~09:00–23:00 IST, Mon–Fri. Uses OFF-PEAK
+    # minutes (:07/:37, not :00/:30) because GitHub drops far more top-of-hour runs.
+    - cron: '7 3-17 * * 1-5'       # :07 of hours 03–17 UTC (≈08:37…22:37 IST)
+    - cron: '37 3-17 * * 1-5'      # :37 of hours 03–17 UTC (≈09:07…23:07 IST)
   workflow_dispatch:               # manual (Actions tab or in-app ScanNow)
     inputs:
       tf:
