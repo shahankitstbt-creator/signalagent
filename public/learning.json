@@ -1,28 +1,216 @@
 {
-  "date": "2026-06-22",
-  "generatedAt": "2026-06-22T09:53:19.573Z",
-  "moversChecked": 0,
-  "caught": 0,
-  "missed": 0,
-  "catchRate": null,
+  "date": "2026-07-13",
+  "generatedAt": "2026-07-13T04:00:55.513Z",
+  "moversChecked": 21,
+  "caught": 3,
+  "missed": 18,
+  "catchRate": 14.3,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
     "Dhan top-gainers (cross-check)"
   ],
   "externalNote": "Groww + Dhan page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.",
-  "reasonTally": [],
-  "misses": [],
-  "adjustments": [],
+  "reasonTally": [
+    {
+      "reason": "not above rising N/N EMA yet",
+      "count": 8
+    },
+    {
+      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
+      "count": 5
+    },
+    {
+      "reason": "no squeeze / breakout proximity",
+      "count": 4
+    },
+    {
+      "reason": "setup present but ranked below the cut — widen coverage",
+      "count": 4
+    },
+    {
+      "reason": "RSI already hot (>N) — excluded by gate",
+      "count": 4
+    },
+    {
+      "reason": "pre-move score N below gate N",
+      "count": 3
+    },
+    {
+      "reason": "no prior up-volume accumulation",
+      "count": 2
+    }
+  ],
+  "misses": [
+    {
+      "symbol": "JUSTDIAL",
+      "name": "Just Dial Limited",
+      "changePct": 14.1,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)"
+      ]
+    },
+    {
+      "symbol": "FINOPB",
+      "name": "Fino Payments Bank Limited",
+      "changePct": 12,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "pre-move score 25 below gate 32",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "BFUTILITIE",
+      "name": "BF Utilities Limited",
+      "changePct": 11.4,
+      "reasons": [
+        "not above rising 20/50 EMA yet"
+      ]
+    },
+    {
+      "symbol": "BFINVEST",
+      "name": "BF Investment Limited",
+      "changePct": 9.6,
+      "reasons": [
+        "setup present but ranked below the cut — widen coverage"
+      ]
+    },
+    {
+      "symbol": "HESTERBIO",
+      "name": "Hester Biosciences Limited",
+      "changePct": 8.7,
+      "reasons": [
+        "not above rising 20/50 EMA yet"
+      ]
+    },
+    {
+      "symbol": "BUILDPRO",
+      "name": "Shankara Buildpro Limited",
+      "changePct": 7.7,
+      "reasons": [
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "COUNCODOS",
+      "name": "Country Condo's Limited",
+      "changePct": 7.3,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "GUJALKALI",
+      "name": "Gujarat Alkalies and Chemicals Limited",
+      "changePct": 7.3,
+      "reasons": [
+        "not above rising 20/50 EMA yet",
+        "pre-move score 25 below gate 32",
+        "no prior up-volume accumulation"
+      ]
+    },
+    {
+      "symbol": "SAKSOFT",
+      "name": "Saksoft Limited",
+      "changePct": 7,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "CANHLIFE",
+      "name": "Canara HSBC Life Insurance Company Ltd.",
+      "changePct": 6.9,
+      "reasons": [
+        "setup present but ranked below the cut — widen coverage"
+      ]
+    },
+    {
+      "symbol": "GAYAHWS",
+      "name": "Gayatri Highways Limited",
+      "changePct": 6,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "pre-move score 10 below gate 32",
+        "no prior up-volume accumulation",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "BLKASHYAP",
+      "name": "B. L. Kashyap and Sons Limited",
+      "changePct": 5.5,
+      "reasons": [
+        "not above rising 20/50 EMA yet"
+      ]
+    },
+    {
+      "symbol": "RAIN",
+      "name": "Rain Industries Limited",
+      "changePct": 5.5,
+      "reasons": [
+        "setup present but ranked below the cut — widen coverage"
+      ]
+    },
+    {
+      "symbol": "SKMEGGPROD",
+      "name": "SKM Egg Products Export (India) Limited",
+      "changePct": 5.4,
+      "reasons": [
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "DAMCAPITAL",
+      "name": "Dam Capital Advisors Limited",
+      "changePct": 5.3,
+      "reasons": [
+        "not above rising 20/50 EMA yet"
+      ]
+    },
+    {
+      "symbol": "BIMETAL",
+      "name": "Bimetal Bearings Limited",
+      "changePct": 5.1,
+      "reasons": [
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "ARKADE",
+      "name": "Arkade Developers Limited",
+      "changePct": 5,
+      "reasons": [
+        "setup present but ranked below the cut — widen coverage"
+      ]
+    },
+    {
+      "symbol": "GALLANTT",
+      "name": "Gallantt Ispat Ltd.",
+      "changePct": 5,
+      "reasons": [
+        "not above rising 20/50 EMA yet"
+      ]
+    }
+  ],
+  "adjustments": [
+    "Below 85% (measured 62.4%) → raised quality bar to 55 (more selective)."
+  ],
   "tuning": {
     "minMoveScore": 32,
-    "qualityBar": 0
+    "qualityBar": 55
   },
   "goal": {
     "target": 85,
     "deadline": "2026-07-19",
-    "current": 83.3,
-    "status": "building track record — 6 closed so far (need ~20+ for a reliable read; small samples are noise)"
+    "current": 62.4,
+    "status": "below target — tightening selectivity (fewer, higher-quality signals)"
   },
   "note": "Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such."
 }
