@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T18:12:32.065Z",
+  "generatedAt": "2026-07-14T18:43:16.473Z",
   "date": "2026-07-14",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -69,7 +69,7 @@
           "grade": "A++",
           "confluenceScore": 173,
           "vedicAsset": "Nifty Financial",
-          "vedicLabel": "BUY ON DIP",
+          "vedicLabel": "BUY / TEJI",
           "vedicAligned": true,
           "strongDeliv": false,
           "plan": {
@@ -261,7 +261,7 @@
           "delivery": null,
           "changePct": 0.29,
           "setupType": "Squeeze breakout",
-          "social": "⭐ TOP PICK (Grade A++) — JSWSTEEL\n3 signals agree: Volume Profile + Fib, Money Flow, Harmonic & Chart Patterns + Nifty Metal Vedic bias bullish\nEntry ₹1247.7 · SL ₹1235.48 (-1%)\nT1 ₹1263.99 (+1.3%) by ~6h · T2 +2.3% · T3 +3.3%\nPlan (₹1L, 1% risk): buy 81 sh · risk ₹989.82 · reward T1 ₹1319.49 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#JSWSTEEL #swingtrading #nifty",
+          "social": "⭐ TOP PICK (Grade A++) — JSWSTEEL\n3 signals agree: Volume Profile + Fib, Money Flow, Harmonic & Chart Patterns\nEntry ₹1247.7 · SL ₹1235.48 (-1%)\nT1 ₹1263.99 (+1.3%) by ~6h · T2 +2.3% · T3 +3.3%\nPlan (₹1L, 1% risk): buy 81 sh · risk ₹989.82 · reward T1 ₹1319.49 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#JSWSTEEL #swingtrading #nifty",
           "generators": [
             "Volume Profile + Fib",
             "Money Flow",
@@ -269,10 +269,10 @@
           ],
           "genCount": 3,
           "grade": "A++",
-          "confluenceScore": 139,
+          "confluenceScore": 124,
           "vedicAsset": "Nifty Metal",
-          "vedicLabel": "BUY / TEJI",
-          "vedicAligned": true,
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
             "capital": 100000,
@@ -281,6 +281,72 @@
             "deploy": 101063.7,
             "riskRs": 989.82,
             "rewardT1Rs": 1319.49
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "HSCL",
+          "name": "Himadri Speciality Chemical Ltd.",
+          "sector": "Chemicals",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.49× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 671.4,
+          "entry": 671.4,
+          "sl": 663.81,
+          "slPct": -1.1,
+          "targets": [
+            {
+              "price": 680.79,
+              "pct": 1.4,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 687.83,
+              "pct": 2.4,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 694.88,
+              "pct": 3.5,
+              "by": "~20h",
+              "days": 20
+            }
+          ],
+          "rr": 1.24,
+          "rsi": 63.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": null,
+          "changePct": -0.16,
+          "setupType": "Squeeze breakout",
+          "social": "⭐ TOP PICK (Grade A+) — HSCL\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹671.4 · SL ₹663.81 (-1.1%)\nT1 ₹680.79 (+1.4%) by ~6h · T2 +2.4% · T3 +3.5%\nPlan (₹1L, 1% risk): buy 131 sh · risk ₹994.29 · reward T1 ₹1230.09 · R:R 1:1.24\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#HSCL #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 2,
+          "grade": "A+",
+          "confluenceScore": 113,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 131,
+            "deploy": 87953.4,
+            "riskRs": 994.29,
+            "rewardT1Rs": 1230.09
           }
         },
         {
@@ -350,68 +416,69 @@
         },
         {
           "generator": "confluence",
-          "symbol": "PGEL",
-          "name": "PG Electroplast Ltd.",
-          "sector": "Consumer Durables",
+          "symbol": "POLYCAB",
+          "name": "Polycab India Ltd.",
+          "sector": "Capital Goods",
           "indices": [
             "NIFTY 500",
-            "NIFTY Smallcap 100",
-            "NIFTY Smallcap 250"
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Midcap Select"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
-          "ltp": 601.1,
-          "entry": 601.1,
-          "sl": 588.69,
-          "slPct": -2.1,
+          "ltp": 9532.5,
+          "entry": 9532.5,
+          "sl": 9414.96,
+          "slPct": -1.2,
           "targets": [
             {
-              "price": 614.25,
-              "pct": 2.2,
-              "by": "~5h",
-              "days": 5
+              "price": 9682.9,
+              "pct": 1.6,
+              "by": "~2h",
+              "days": 2
             },
             {
-              "price": 624.11,
-              "pct": 3.8,
+              "price": 9795.69,
+              "pct": 2.8,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 633.97,
-              "pct": 5.5,
+              "price": 9908.49,
+              "pct": 3.9,
               "by": "~21h",
               "days": 21
             }
           ],
-          "rr": 1.06,
-          "rsi": 60.5,
-          "confidence": 89,
+          "rr": 1.28,
+          "rsi": 65.5,
+          "confidence": 95,
           "accuracy": null,
-          "backtestTrades": 1,
+          "backtestTrades": 2,
           "delivery": null,
-          "changePct": -0.17,
+          "changePct": 0.03,
           "setupType": "Breakout watch",
-          "social": "⭐ TOP PICK (Grade A+) — PGEL\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty FMCG Vedic bias bullish\nEntry ₹601.1 · SL ₹588.69 (-2.1%)\nT1 ₹614.25 (+2.2%) by ~5h · T2 +3.8% · T3 +5.5%\nPlan (₹1L, 1% risk): buy 80 sh · risk ₹992.8 · reward T1 ₹1052 · R:R 1:1.06\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#PGEL #swingtrading #nifty",
+          "social": "⭐ TOP PICK (Grade A+) — POLYCAB\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\nEntry ₹9532.5 · SL ₹9414.96 (-1.2%)\nT1 ₹9682.9 (+1.6%) by ~2h · T2 +2.8% · T3 +3.9%\nPlan (₹1L, 1% risk): buy 8 sh · risk ₹940.32 · reward T1 ₹1203.2 · R:R 1:1.28\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#POLYCAB #swingtrading #nifty",
           "generators": [
             "Volume + Accumulation",
             "Harmonic & Chart Patterns"
           ],
           "genCount": 2,
           "grade": "A+",
-          "confluenceScore": 111,
-          "vedicAsset": "Nifty FMCG",
-          "vedicLabel": "BUY / TEJI",
+          "confluenceScore": 113,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
           "vedicAligned": true,
           "strongDeliv": false,
           "plan": {
             "capital": 100000,
             "riskPct": 1,
-            "shares": 80,
-            "deploy": 48088,
-            "riskRs": 992.8,
-            "rewardT1Rs": 1052
+            "shares": 8,
+            "deploy": 76260,
+            "riskRs": 940.32,
+            "rewardT1Rs": 1203.2
           }
         },
         {
@@ -469,7 +536,7 @@
           "grade": "A+",
           "confluenceScore": 109,
           "vedicAsset": "Nifty Financial",
-          "vedicLabel": "BUY ON DIP",
+          "vedicLabel": "BUY / TEJI",
           "vedicAligned": true,
           "strongDeliv": false,
           "plan": {
@@ -549,6 +616,138 @@
         },
         {
           "generator": "confluence",
+          "symbol": "PGEL",
+          "name": "PG Electroplast Ltd.",
+          "sector": "Consumer Durables",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "direction": "LONG",
+          "ltp": 601.1,
+          "entry": 601.1,
+          "sl": 588.69,
+          "slPct": -2.1,
+          "targets": [
+            {
+              "price": 614.25,
+              "pct": 2.2,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 624.11,
+              "pct": 3.8,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 633.97,
+              "pct": 5.5,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.06,
+          "rsi": 60.5,
+          "confidence": 89,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": null,
+          "changePct": -0.17,
+          "setupType": "Breakout watch",
+          "social": "⭐ TOP PICK (Grade A) — PGEL\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns\nEntry ₹601.1 · SL ₹588.69 (-2.1%)\nT1 ₹614.25 (+2.2%) by ~5h · T2 +3.8% · T3 +5.5%\nPlan (₹1L, 1% risk): buy 80 sh · risk ₹992.8 · reward T1 ₹1052 · R:R 1:1.06\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#PGEL #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 2,
+          "grade": "A",
+          "confluenceScore": 96,
+          "vedicAsset": "Nifty FMCG",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 80,
+            "deploy": 48088,
+            "riskRs": 992.8,
+            "rewardT1Rs": 1052
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "APOLLOHOSP",
+          "name": "Apollo Hospitals Enterprise Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY 50",
+            "NIFTY 100",
+            "NIFTY 500"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "At POC ₹8862.33 + Fib confluence — institutional magnet zone",
+          "direction": "LONG",
+          "ltp": 8900.5,
+          "entry": 8900.5,
+          "sl": 8830.47,
+          "slPct": -0.8,
+          "targets": [
+            {
+              "price": 8985.77,
+              "pct": 1,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 9049.72,
+              "pct": 1.7,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 9113.68,
+              "pct": 2.4,
+              "by": "~19h",
+              "days": 19
+            }
+          ],
+          "rr": 1.22,
+          "rsi": 62.7,
+          "confidence": 50,
+          "accuracy": 50,
+          "backtestTrades": 8,
+          "delivery": null,
+          "changePct": 0.08,
+          "setupType": "Squeeze breakout",
+          "social": "⭐ TOP PICK (Grade A+) — APOLLOHOSP\n2 signals agree: Volume Profile + Fib, Money Flow + Nifty Pharma Vedic bias bullish\nEntry ₹8900.5 · SL ₹8830.47 (-0.8%)\nT1 ₹8985.77 (+1%) by ~3h · T2 +1.7% · T3 +2.4%\nPlan (₹1L, 1% risk): buy 14 sh · risk ₹980.42 · reward T1 ₹1193.78 · R:R 1:1.22\nBacktested ~50% (n=8). 📌 Educational only, not advice. Not SEBI-registered.\n#APOLLOHOSP #swingtrading #nifty",
+          "generators": [
+            "Volume Profile + Fib",
+            "Money Flow"
+          ],
+          "genCount": 2,
+          "grade": "A+",
+          "confluenceScore": 95,
+          "vedicAsset": "Nifty Pharma",
+          "vedicLabel": "BUY / TEJI",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 14,
+            "deploy": 124607,
+            "riskRs": 980.42,
+            "rewardT1Rs": 1193.78
+          }
+        },
+        {
+          "generator": "confluence",
           "symbol": "ONGC",
           "name": "Oil & Natural Gas Corporation Ltd.",
           "sector": "Oil Gas & Consumable Fuels",
@@ -593,17 +792,17 @@
           "delivery": null,
           "changePct": -0.04,
           "setupType": "Breakout watch",
-          "social": "⭐ TOP PICK (Grade A+) — ONGC\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty FMCG Vedic bias bullish\nEntry ₹248.9 · SL ₹246.74 (-0.9%)\nT1 ₹251.79 (+1.2%) by ~4h · T2 +2% · T3 +2.9%\nPlan (₹1L, 1% risk): buy 462 sh · risk ₹997.92 · reward T1 ₹1335.18 · R:R 1:1.33\nBacktested ~80% (n=5). 📌 Educational only, not advice. Not SEBI-registered.\n#ONGC #swingtrading #nifty",
+          "social": "⭐ TOP PICK (Grade A) — ONGC\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns\nEntry ₹248.9 · SL ₹246.74 (-0.9%)\nT1 ₹251.79 (+1.2%) by ~4h · T2 +2% · T3 +2.9%\nPlan (₹1L, 1% risk): buy 462 sh · risk ₹997.92 · reward T1 ₹1335.18 · R:R 1:1.33\nBacktested ~80% (n=5). 📌 Educational only, not advice. Not SEBI-registered.\n#ONGC #swingtrading #nifty",
           "generators": [
             "Volume + Accumulation",
             "Harmonic & Chart Patterns"
           ],
           "genCount": 2,
-          "grade": "A+",
-          "confluenceScore": 107,
+          "grade": "A",
+          "confluenceScore": 92,
           "vedicAsset": "Nifty FMCG",
-          "vedicLabel": "BUY / TEJI",
-          "vedicAligned": true,
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
             "capital": 100000,
@@ -612,204 +811,6 @@
             "deploy": 114991.8,
             "riskRs": 997.92,
             "rewardT1Rs": 1335.18
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "BALRAMCHIN",
-          "name": "Balrampur Chini Mills Ltd.",
-          "sector": "Fast Moving Consumer Goods",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 250"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 42/100): Up/down volume 1.49× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
-          "direction": "LONG",
-          "ltp": 596.3,
-          "entry": 596.3,
-          "sl": 585.99,
-          "slPct": -1.7,
-          "targets": [
-            {
-              "price": 610.05,
-              "pct": 2.3,
-              "by": "~3h",
-              "days": 3
-            },
-            {
-              "price": 620.36,
-              "pct": 4,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 630.67,
-              "pct": 5.8,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 62,
-          "confidence": 80,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.2,
-          "setupType": "Breakout watch",
-          "social": "⭐ TOP PICK (Grade A+) — BALRAMCHIN\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty FMCG Vedic bias bullish\nEntry ₹596.3 · SL ₹585.99 (-1.7%)\nT1 ₹610.05 (+2.3%) by ~3h · T2 +4% · T3 +5.8%\nPlan (₹1L, 1% risk): buy 96 sh · risk ₹989.76 · reward T1 ₹1320 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#BALRAMCHIN #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Harmonic & Chart Patterns"
-          ],
-          "genCount": 2,
-          "grade": "A+",
-          "confluenceScore": 107,
-          "vedicAsset": "Nifty FMCG",
-          "vedicLabel": "BUY / TEJI",
-          "vedicAligned": true,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 96,
-            "deploy": 57244.8,
-            "riskRs": 989.76,
-            "rewardT1Rs": 1320
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "HSCL",
-          "name": "Himadri Speciality Chemical Ltd.",
-          "sector": "Chemicals",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Smallcap 100",
-            "NIFTY Smallcap 250"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.49× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "direction": "LONG",
-          "ltp": 671.4,
-          "entry": 671.4,
-          "sl": 663.81,
-          "slPct": -1.1,
-          "targets": [
-            {
-              "price": 680.79,
-              "pct": 1.4,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 687.83,
-              "pct": 2.4,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 694.88,
-              "pct": 3.5,
-              "by": "~20h",
-              "days": 20
-            }
-          ],
-          "rr": 1.24,
-          "rsi": 63.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": -0.16,
-          "setupType": "Squeeze breakout",
-          "social": "⭐ TOP PICK (Grade A) — HSCL\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns\nEntry ₹671.4 · SL ₹663.81 (-1.1%)\nT1 ₹680.79 (+1.4%) by ~6h · T2 +2.4% · T3 +3.5%\nPlan (₹1L, 1% risk): buy 131 sh · risk ₹994.29 · reward T1 ₹1230.09 · R:R 1:1.24\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#HSCL #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Harmonic & Chart Patterns"
-          ],
-          "genCount": 2,
-          "grade": "A",
-          "confluenceScore": 98,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "RANGE / NEUTRAL",
-          "vedicAligned": false,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 131,
-            "deploy": 87953.4,
-            "riskRs": 994.29,
-            "rewardT1Rs": 1230.09
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "POLYCAB",
-          "name": "Polycab India Ltd.",
-          "sector": "Capital Goods",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Midcap 100",
-            "NIFTY Midcap 150",
-            "NIFTY Midcap Select"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "direction": "LONG",
-          "ltp": 9532.5,
-          "entry": 9532.5,
-          "sl": 9414.96,
-          "slPct": -1.2,
-          "targets": [
-            {
-              "price": 9682.9,
-              "pct": 1.6,
-              "by": "~2h",
-              "days": 2
-            },
-            {
-              "price": 9795.69,
-              "pct": 2.8,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 9908.49,
-              "pct": 3.9,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.28,
-          "rsi": 65.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": 0.03,
-          "setupType": "Breakout watch",
-          "social": "⭐ TOP PICK (Grade A) — POLYCAB\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns\nEntry ₹9532.5 · SL ₹9414.96 (-1.2%)\nT1 ₹9682.9 (+1.6%) by ~2h · T2 +2.8% · T3 +3.9%\nPlan (₹1L, 1% risk): buy 8 sh · risk ₹940.32 · reward T1 ₹1203.2 · R:R 1:1.28\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#POLYCAB #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Harmonic & Chart Patterns"
-          ],
-          "genCount": 2,
-          "grade": "A",
-          "confluenceScore": 98,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "RANGE / NEUTRAL",
-          "vedicAligned": false,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 8,
-            "deploy": 76260,
-            "riskRs": 940.32,
-            "rewardT1Rs": 1203.2
           }
         }
       ]
@@ -868,8 +869,8 @@
           "lot": null,
           "grade": "B",
           "optionPlay": "Buy ATM Call / long futures",
-          "reason": "Vedic daily bias +58 (BUY / TEJI). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +58 (BUY / TEJI). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
+          "reason": "Vedic daily bias +42 (BUY / TEJI). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +42 (BUY / TEJI). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
           "rank": 90
         },
         {
@@ -877,14 +878,14 @@
           "underlying": "SILVER",
           "name": "Silver",
           "kind": "Commodity",
-          "direction": "BUY",
-          "dirTone": "up",
+          "direction": "RANGE",
+          "dirTone": "flat",
           "spot": null,
           "lot": null,
           "grade": "B",
-          "optionPlay": "Buy ATM Call / long futures",
-          "reason": "Vedic daily bias +34 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — SILVER (Commodity) BUY\nVedic daily bias +34 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
+          "optionPlay": "Range — sell strangle",
+          "reason": "Vedic daily bias -10 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — SILVER (Commodity) RANGE\nVedic daily bias -10 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.\n👉 Range — sell strangle\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
           "rank": 90
         },
         {
@@ -931,44 +932,44 @@
         },
         {
           "generator": "fno",
-          "underlying": "PGEL",
-          "name": "PG Electroplast Ltd.",
+          "underlying": "POLYCAB",
+          "name": "Polycab India Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 601.1,
-          "lot": 950,
+          "spot": 9532.5,
+          "lot": 125,
           "grade": "A+",
-          "confidence": 89,
+          "confidence": 95,
           "delivery": null,
-          "entry": 601.1,
-          "sl": 588.69,
-          "slPct": -2.1,
+          "entry": 9532.5,
+          "sl": 9414.96,
+          "slPct": -1.2,
           "targets": [
             {
-              "price": 614.25,
-              "pct": 2.2,
-              "by": "~5h",
-              "days": 5
+              "price": 9682.9,
+              "pct": 1.6,
+              "by": "~2h",
+              "days": 2
             },
             {
-              "price": 624.11,
-              "pct": 3.8,
+              "price": 9795.69,
+              "pct": 2.8,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 633.97,
-              "pct": 5.5,
+              "price": 9908.49,
+              "pct": 3.9,
               "by": "~21h",
               "days": 21
             }
           ],
-          "rr": 1.06,
-          "optionPlay": "Buy 600 CE (ATM) or 580 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 950 sh ≈ ₹5,71,045 notional",
-          "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
-          "social": "📊 F&O — PGEL (Stock) BUY\nAccumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat\n👉 Buy 600 CE (ATM) or 580 CE (ITM) — near expiry; or long futures · 1 lot = 950 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #pgel #options",
+          "rr": 1.28,
+          "optionPlay": "Buy 9500 CE (ATM) or 9400 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹11,91,563 notional",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "social": "📊 F&O — POLYCAB (Stock) BUY\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\n👉 Buy 9500 CE (ATM) or 9400 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #polycab #options",
           "rank": 82
         },
         {
@@ -1015,6 +1016,90 @@
         },
         {
           "generator": "fno",
+          "underlying": "PGEL",
+          "name": "PG Electroplast Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 601.1,
+          "lot": 950,
+          "grade": "A",
+          "confidence": 89,
+          "delivery": null,
+          "entry": 601.1,
+          "sl": 588.69,
+          "slPct": -2.1,
+          "targets": [
+            {
+              "price": 614.25,
+              "pct": 2.2,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 624.11,
+              "pct": 3.8,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 633.97,
+              "pct": 5.5,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.06,
+          "optionPlay": "Buy 600 CE (ATM) or 580 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 950 sh ≈ ₹5,71,045 notional",
+          "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "social": "📊 F&O — PGEL (Stock) BUY\nAccumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.97× — accumulation pressure; Stealth accumulation — volume rising while price still flat\n👉 Buy 600 CE (ATM) or 580 CE (ITM) — near expiry; or long futures · 1 lot = 950 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #pgel #options",
+          "rank": 82
+        },
+        {
+          "generator": "fno",
+          "underlying": "APOLLOHOSP",
+          "name": "Apollo Hospitals Enterprise Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 8900.5,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 50,
+          "delivery": null,
+          "entry": 8900.5,
+          "sl": 8830.47,
+          "slPct": -0.8,
+          "targets": [
+            {
+              "price": 8985.77,
+              "pct": 1,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 9049.72,
+              "pct": 1.7,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 9113.68,
+              "pct": 2.4,
+              "by": "~19h",
+              "days": 19
+            }
+          ],
+          "rr": 1.22,
+          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹11,12,563 notional",
+          "reason": "At POC ₹8862.33 + Fib confluence — institutional magnet zone",
+          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nAt POC ₹8862.33 + Fib confluence — institutional magnet zone\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
+          "rank": 82
+        },
+        {
+          "generator": "fno",
           "underlying": "ONGC",
           "name": "Oil & Natural Gas Corporation Ltd.",
           "kind": "Stock",
@@ -1022,7 +1107,7 @@
           "dirTone": "up",
           "spot": 248.9,
           "lot": 2250,
-          "grade": "A+",
+          "grade": "A",
           "confidence": 80,
           "delivery": null,
           "entry": 248.9,
@@ -1054,90 +1139,6 @@
           "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 1.74×); Up/down volume 1.36× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
           "social": "📊 F&O — ONGC (Stock) BUY\nAccumulation (vol 60/100): 5-day volume > 20-day average (RVOL 1.74×); Up/down volume 1.36× — accumulation pressure; Stealth accumulation — volume rising while price still flat\n👉 Buy 250 CE (ATM) or 245 CE (ITM) — near expiry; or long futures · 1 lot = 2250 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ongc #options",
           "rank": 82
-        },
-        {
-          "generator": "fno",
-          "underlying": "POLYCAB",
-          "name": "Polycab India Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 9532.5,
-          "lot": 125,
-          "grade": "A",
-          "confidence": 95,
-          "delivery": null,
-          "entry": 9532.5,
-          "sl": 9414.96,
-          "slPct": -1.2,
-          "targets": [
-            {
-              "price": 9682.9,
-              "pct": 1.6,
-              "by": "~2h",
-              "days": 2
-            },
-            {
-              "price": 9795.69,
-              "pct": 2.8,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 9908.49,
-              "pct": 3.9,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.28,
-          "optionPlay": "Buy 9500 CE (ATM) or 9400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹11,91,563 notional",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "social": "📊 F&O — POLYCAB (Stock) BUY\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\n👉 Buy 9500 CE (ATM) or 9400 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #polycab #options",
-          "rank": 82
-        },
-        {
-          "generator": "fno",
-          "underlying": "APOLLOHOSP",
-          "name": "Apollo Hospitals Enterprise Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 8900.5,
-          "lot": 125,
-          "grade": "A+",
-          "confidence": 100,
-          "delivery": null,
-          "entry": 8900.5,
-          "sl": 8830.47,
-          "slPct": -0.8,
-          "targets": [
-            {
-              "price": 8985.77,
-              "pct": 1,
-              "by": "~3h"
-            },
-            {
-              "price": 9049.72,
-              "pct": 1.7,
-              "by": "~6h"
-            },
-            {
-              "price": 9113.68,
-              "pct": 2.4,
-              "by": "~19h"
-            }
-          ],
-          "rr": 1.22,
-          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹11,12,563 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.3% below)",
-          "changePct": 0.08,
-          "setupType": "Squeeze breakout",
-          "rsi": 62.7,
-          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.3% below)\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
-          "rank": 60
         },
         {
           "generator": "fno",
@@ -5267,7 +5268,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Pratipada · Shukla (waxing) · Harshana yoga · Karana Kimstughna · Moon Cancer · Punarvasu (Pada 4) · lord Jupiter. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Pratipada · Shukla (waxing) · Harshana yoga · Karana Kimstughna · Moon Cancer · Pushya (Pada 1) · lord Saturn. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
@@ -5276,11 +5277,11 @@
           "isAssetBias": true,
           "symbol": "NIFTY",
           "name": "Nifty 50",
-          "score": -14,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Vipat (pos 3)",
-          "navaBad": true,
+          "score": 30,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
+          "navaTara": "Kshema (pos 4)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "9:26 AM–10:32 AM",
@@ -5353,14 +5354,13 @@
           "bullCount": 5,
           "bearCount": 7,
           "reasonsBull": [
+            "Nava Tara Kshema (pos 4) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Nava Tara Vipat (pos 3) from natal Dhanishta — danger/avoid"
-          ],
-          "social": "🔮 Nifty 50 — Vedic daily bias -14 (RANGE / NEUTRAL)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty 50 — Vedic daily bias +30 (BUY ON DIP)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5368,10 +5368,10 @@
           "isAssetBias": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty",
-          "score": 26,
-          "label": "BUY ON DIP",
+          "score": 42,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Janma (pos 1)",
+          "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -5463,12 +5463,13 @@
           "bullCount": 8,
           "bearCount": 7,
           "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
           "reasonsBear": [],
-          "social": "🔮 Bank Nifty — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
+          "social": "🔮 Bank Nifty — Vedic daily bias +42 (BUY / TEJI)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5476,11 +5477,11 @@
           "isAssetBias": true,
           "symbol": "SENSEX",
           "name": "Sensex",
-          "score": 30,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Sampat (pos 2)",
-          "navaBad": false,
+          "score": -14,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Vipat (pos 3)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "9:26 AM–10:32 AM",
@@ -5553,13 +5554,14 @@
           "bullCount": 5,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [],
-          "social": "🔮 Sensex — Vedic daily bias +30 (BUY ON DIP)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
+          "reasonsBear": [
+            "Nava Tara Vipat (pos 3) from natal Shatabhisha — danger/avoid"
+          ],
+          "social": "🔮 Sensex — Vedic daily bias -14 (RANGE / NEUTRAL)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5567,10 +5569,10 @@
           "isAssetBias": true,
           "symbol": "GOLD",
           "name": "Gold",
-          "score": 58,
+          "score": 42,
           "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Param Mitra (pos 9)",
+          "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -5686,13 +5688,12 @@
           "bullCount": 12,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Moon strong in Cancer"
           ],
           "reasonsBear": [],
-          "social": "🔮 Gold — Vedic daily bias +58 (BUY / TEJI)\nBullish windows (IST): 7:14 AM–8:20 AM Sun, 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
+          "social": "🔮 Gold — Vedic daily bias +42 (BUY / TEJI)\nBullish windows (IST): 7:14 AM–8:20 AM Sun, 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5700,11 +5701,11 @@
           "isAssetBias": true,
           "symbol": "SILVER",
           "name": "Silver",
-          "score": 34,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Kshema (pos 4)",
-          "navaBad": false,
+          "score": -10,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Pratyak (pos 5)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "8:20 AM–9:26 AM",
@@ -5816,13 +5817,14 @@
           "bullCount": 9,
           "bearCount": 10,
           "reasonsBull": [
-            "Nava Tara Kshema (pos 4) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Moon strong in Cancer",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [],
-          "social": "🔮 Silver — Vedic daily bias +34 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
+          "reasonsBear": [
+            "Nava Tara Pratyak (pos 5) from natal Rohini — danger/avoid"
+          ],
+          "social": "🔮 Silver — Vedic daily bias -10 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5830,11 +5832,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYFMCG",
           "name": "Nifty FMCG",
-          "score": 46,
-          "label": "BUY / TEJI",
-          "biasTone": "up",
-          "navaTara": "Kshema (pos 4)",
-          "navaBad": false,
+          "score": 2,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Pratyak (pos 5)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "8:20 AM–9:26 AM",
@@ -5931,13 +5933,14 @@
           "bullCount": 9,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Kshema (pos 4) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Moon strong in Cancer",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [],
-          "social": "🔮 Nifty FMCG — Vedic daily bias +46 (BUY / TEJI)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
+          "reasonsBear": [
+            "Nava Tara Pratyak (pos 5) from natal Rohini — danger/avoid"
+          ],
+          "social": "🔮 Nifty FMCG — Vedic daily bias +2 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -5945,11 +5948,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYMETAL",
           "name": "Nifty Metal",
-          "score": 44,
-          "label": "BUY / TEJI",
-          "biasTone": "up",
-          "navaTara": "Sadhaka (pos 6)",
-          "navaBad": false,
+          "score": 0,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Vadha (pos 7)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "6:09 AM–7:14 AM",
@@ -6042,14 +6045,14 @@
           "bullCount": 10,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
+            "Nava Tara Vadha (pos 7) from natal Bharani — danger/avoid",
             "Mercury (bearish karaka) strong in Gemini"
           ],
-          "social": "🔮 Nifty Metal — Vedic daily bias +44 (BUY / TEJI)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 12:44 PM–1:50 PM Jupiter, 1:50 PM–2:56 PM Mars\nBearish windows: 9:26 AM–10:32 AM Mercury, 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 11:50 PM–12:44 AM Mercury\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
+          "social": "🔮 Nifty Metal — Vedic daily bias 0 (RANGE / NEUTRAL)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 12:44 PM–1:50 PM Jupiter, 1:50 PM–2:56 PM Mars\nBearish windows: 9:26 AM–10:32 AM Mercury, 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 11:50 PM–12:44 AM Mercury\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6060,7 +6063,7 @@
           "score": 49,
           "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Mitra (pos 8)",
+          "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -6152,14 +6155,14 @@
           "bullCount": 8,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Mitra (pos 8) — supportive star",
+            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini",
             "Jupiter strong in Cancer",
             "Moon strong in Cancer"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty Pharma — Vedic daily bias +49 (BUY / TEJI)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
+          "social": "🔮 Nifty Pharma — Vedic daily bias +49 (BUY / TEJI)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6167,11 +6170,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYIT",
           "name": "Nifty IT",
-          "score": 23,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Sampat (pos 2)",
-          "navaBad": false,
+          "score": -21,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vipat (pos 3)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "8:20 AM–9:26 AM",
@@ -6244,12 +6247,13 @@
           "bullCount": 5,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [],
-          "social": "🔮 Nifty IT — Vedic daily bias +23 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 10:56 PM–11:50 PM Venus, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
+          "reasonsBear": [
+            "Nava Tara Vipat (pos 3) from natal Ardra — danger/avoid"
+          ],
+          "social": "🔮 Nifty IT — Vedic daily bias -21 (SELL ON RISE / MANDI)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 10:56 PM–11:50 PM Venus, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6257,11 +6261,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYAUTO",
           "name": "Nifty Auto",
-          "score": 11,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Vipat (pos 3)",
-          "navaBad": true,
+          "score": 55,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Kshema (pos 4)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "6:09 AM–7:14 AM",
@@ -6338,13 +6342,12 @@
           "bullCount": 9,
           "bearCount": 3,
           "reasonsBull": [
+            "Nava Tara Kshema (pos 4) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Nava Tara Vipat (pos 3) from natal Chitra — danger/avoid"
-          ],
-          "social": "🔮 Nifty Auto — Vedic daily bias +11 (RANGE / NEUTRAL)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 1:50 PM–2:56 PM Mars\nBearish windows: 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 1:38 AM–2:32 AM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty Auto — Vedic daily bias +55 (BUY / TEJI)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 1:50 PM–2:56 PM Mars\nBearish windows: 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 1:38 AM–2:32 AM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6352,10 +6355,10 @@
           "isAssetBias": true,
           "symbol": "NIFTYFIN",
           "name": "Nifty Financial",
-          "score": 26,
-          "label": "BUY ON DIP",
+          "score": 42,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Janma (pos 1)",
+          "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -6447,12 +6450,13 @@
           "bullCount": 8,
           "bearCount": 7,
           "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty Financial — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
+          "social": "🔮 Nifty Financial — Vedic daily bias +42 (BUY / TEJI)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
         }
       ]
     },
@@ -6460,7 +6464,7 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Tuesday · ☀ 6:09 AM–7:20 PM · Rahu Kaal 4:02 PM–5:41 PM (avoid fresh entries) · Moon Cancer · Punarvasu (Pada 4) · lord Jupiter",
+      "desc": "Tuesday · ☀ 6:09 AM–7:20 PM · Rahu Kaal 4:02 PM–5:41 PM (avoid fresh entries) · Moon Cancer · Pushya (Pada 1) · lord Saturn",
       "count": 24,
       "signals": [
         {
