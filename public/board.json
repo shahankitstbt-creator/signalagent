@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-14T07:11:25.988Z",
+  "generatedAt": "2026-07-14T12:20:42.133Z",
   "date": "2026-07-14",
   "timeframe": "daily",
   "label": "Daily",
   "note": "Daily signals. Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).",
   "trackRecord": {
     "overall": {
-      "win": 130,
-      "loss": 72,
+      "win": 133,
+      "loss": 76,
       "expired": 0,
-      "open": 239,
-      "returnSum": 449.19000000000005,
-      "decided": 202,
-      "winRate": 64.4,
-      "avgReturn": 2.22
+      "open": 265,
+      "returnSum": 434.0100000000001,
+      "decided": 209,
+      "winRate": 63.6,
+      "avgReturn": 2.08
     },
     "generators": {
       "confluence": {
@@ -38,49 +38,49 @@
       },
       "vol_accum": {
         "win": 37,
-        "loss": 8,
+        "loss": 9,
         "expired": 0,
-        "open": 56,
-        "returnSum": 210.10999999999999,
-        "decided": 45,
-        "winRate": 82.2,
-        "avgReturn": 4.67
+        "open": 59,
+        "returnSum": 200.67,
+        "decided": 46,
+        "winRate": 80.4,
+        "avgReturn": 4.36
       },
       "vp_fib": {
-        "win": 13,
-        "loss": 10,
+        "win": 14,
+        "loss": 11,
         "expired": 0,
-        "open": 43,
-        "returnSum": 39.410000000000004,
-        "decided": 23,
-        "winRate": 56.5,
-        "avgReturn": 1.71
+        "open": 48,
+        "returnSum": 38.160000000000004,
+        "decided": 25,
+        "winRate": 56,
+        "avgReturn": 1.53
       },
       "money_flow": {
-        "win": 26,
-        "loss": 14,
+        "win": 27,
+        "loss": 16,
         "expired": 0,
-        "open": 52,
-        "returnSum": 81.08000000000001,
-        "decided": 40,
-        "winRate": 65,
-        "avgReturn": 2.03
+        "open": 57,
+        "returnSum": 70.48000000000002,
+        "decided": 43,
+        "winRate": 62.8,
+        "avgReturn": 1.64
       },
       "multibagger": {
-        "win": 25,
+        "win": 26,
         "loss": 18,
         "expired": 0,
-        "open": 42,
-        "returnSum": 60.29999999999998,
-        "decided": 43,
-        "winRate": 58.1,
-        "avgReturn": 1.4
+        "open": 52,
+        "returnSum": 66.40999999999998,
+        "decided": 44,
+        "winRate": 59.1,
+        "avgReturn": 1.51
       },
       "harmonic": {
         "win": 29,
         "loss": 22,
         "expired": 0,
-        "open": 46,
+        "open": 49,
         "returnSum": 58.28999999999999,
         "decided": 51,
         "winRate": 56.9,
@@ -123,12 +123,12 @@
     "target": 85,
     "deadline": "2026-07-19",
     "start": "2026-06-19",
-    "daysLeft": 5,
-    "current": 64.4,
-    "decided": 202,
+    "daysLeft": 4,
+    "current": 63.6,
+    "decided": 209,
     "reliable": true,
-    "open": 239,
-    "qualityBar": 56,
+    "open": 265,
+    "qualityBar": 57,
     "status": "below target — tightening selectivity (fewer, higher-quality signals)",
     "generators": [
       {
@@ -147,37 +147,37 @@
       },
       {
         "id": "vol_accum",
-        "winRate": 82.2,
-        "decided": 45,
-        "open": 56,
+        "winRate": 80.4,
+        "decided": 46,
+        "open": 59,
         "status": "ok"
       },
       {
         "id": "vp_fib",
-        "winRate": 56.5,
-        "decided": 23,
-        "open": 43,
+        "winRate": 56,
+        "decided": 25,
+        "open": 48,
         "status": "ok"
       },
       {
         "id": "money_flow",
-        "winRate": 65,
-        "decided": 40,
-        "open": 52,
+        "winRate": 62.8,
+        "decided": 43,
+        "open": 57,
         "status": "ok"
       },
       {
         "id": "multibagger",
-        "winRate": 58.1,
-        "decided": 43,
-        "open": 42,
+        "winRate": 59.1,
+        "decided": 44,
+        "open": 52,
         "status": "ok"
       },
       {
         "id": "harmonic",
         "winRate": 56.9,
         "decided": 51,
-        "open": 46,
+        "open": 49,
         "status": "ok"
       },
       {
@@ -245,14 +245,14 @@
       },
       {
         "date": "2026-07-14",
-        "winRate": 64.4,
-        "decided": 202,
-        "open": 239,
-        "catchRate": 5.6,
-        "qualityBar": 56
+        "winRate": 63.6,
+        "decided": 209,
+        "open": 265,
+        "catchRate": 0,
+        "qualityBar": 57
       }
     ],
-    "generatedAt": "2026-07-14T07:11:25.988Z",
+    "generatedAt": "2026-07-14T12:20:42.133Z",
     "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
   },
   "generators": [
@@ -274,7 +274,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 48% (mixed); 5-day volume > 20-day average (RVOL 0.62×); Up/down volume 3.47× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 600.5499877929688,
+          "ltp": 600.2000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -323,7 +323,7 @@
           "grade": "A++",
           "confluenceScore": 158,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -333,78 +333,6 @@
             "deploy": 19854.45,
             "riskRs": 982.74,
             "rewardT1Rs": 1033.56
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "ALGOQUANT",
-          "name": "Algoquant Fintech Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 63 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 60.900001525878906,
-          "entry": 58.65,
-          "sl": 55.59,
-          "slPct": -5.2,
-          "targets": [
-            {
-              "price": 62.72,
-              "pct": 6.9,
-              "by": "2026-07-20",
-              "days": 5
-            },
-            {
-              "price": 65.78,
-              "pct": 12.2,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 68.84,
-              "pct": 17.4,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 20.8,
-          "social": "⭐ TOP PICK (Grade A++) — ALGOQUANT\n4 signals agree: Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns\n📦 Delivery 20.8% (mostly intraday)\nEntry ₹58.65 · SL ₹55.59 (-5.2%)\nT1 ₹62.72 (+6.9%) by 2026-07-20 · T2 +12.2% · T3 +17.4%\nPlan (₹1L, 1% risk): buy 326 sh · risk ₹997.56 · reward T1 ₹1326.82 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#ALGOQUANT #swingtrading #nifty",
-          "id": "money_flow:ALGOQUANT",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-14",
-          "t1": 62.72,
-          "t2": 65.78,
-          "t3": 68.84,
-          "generators": [
-            "Volume Profile + Fib",
-            "Money Flow",
-            "Multibagger Quality",
-            "Harmonic & Chart Patterns"
-          ],
-          "genCount": 4,
-          "grade": "A++",
-          "confluenceScore": 158,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
-          "vedicAligned": false,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 326,
-            "deploy": 19119.9,
-            "riskRs": 997.56,
-            "rewardT1Rs": 1326.82
           }
         },
         {
@@ -466,7 +394,7 @@
           "grade": "A++",
           "confluenceScore": 148,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": true,
           "plan": {
@@ -489,7 +417,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 63.1% (mixed); 5-day volume > 20-day average (RVOL 0.92×); Up/down volume 1.75× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 72.97000122070312,
+          "ltp": 72.80000305175781,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -537,7 +465,7 @@
           "grade": "A++",
           "confluenceScore": 148,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": true,
           "plan": {
@@ -551,6 +479,77 @@
         },
         {
           "generator": "confluence",
+          "symbol": "AKASH",
+          "name": "Akash Infra-Projects Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): Delivery 60.5% (mixed); 5-day volume > 20-day average (RVOL 0.02×); Up/down volume 3.08× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 26.940000534057617,
+          "entry": 27.2,
+          "sl": 25.38,
+          "slPct": -6.7,
+          "targets": [
+            {
+              "price": 29.45,
+              "pct": 8.3,
+              "by": "2026-07-15",
+              "days": 2
+            },
+            {
+              "price": 31.14,
+              "pct": 14.5,
+              "by": "2026-07-20",
+              "days": 5
+            },
+            {
+              "price": 32.83,
+              "pct": 20.7,
+              "by": "2026-08-11",
+              "days": 21
+            }
+          ],
+          "rr": 1.24,
+          "rsi": 53.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 60.5,
+          "social": "⭐ TOP PICK (Grade A++) — AKASH\n3 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow\n📦 Delivery 60.5% (strong hands accumulating)\nEntry ₹27.2 · SL ₹25.38 (-6.7%)\nT1 ₹29.45 (+8.3%) by 2026-07-15 · T2 +14.5% · T3 +20.7%\nPlan (₹1L, 1% risk): buy 549 sh · risk ₹999.18 · reward T1 ₹1235.25 · R:R 1:1.24\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#AKASH #swingtrading #nifty",
+          "id": "vol_accum:AKASH",
+          "openedAt": "2026-07-13",
+          "openTs": 1783915255,
+          "status": "open",
+          "lastSeen": "2026-07-13",
+          "t1": 29.45,
+          "t2": 31.14,
+          "t3": 32.83,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 148,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 549,
+            "deploy": 14932.8,
+            "riskRs": 999.18,
+            "rewardT1Rs": 1235.25
+          }
+        },
+        {
+          "generator": "confluence",
           "symbol": "INDIQUBE",
           "name": "Indiqube Spaces Limited",
           "sector": "Equity",
@@ -560,7 +559,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 88.9% (strong hands); 5-day volume > 20-day average (RVOL 0.09×); Up/down volume 2.17× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 174.64999389648438,
+          "ltp": 174.99000549316406,
           "entry": 177.49,
           "sl": 163.39,
           "slPct": -7.9,
@@ -608,7 +607,7 @@
           "grade": "A++",
           "confluenceScore": 148,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": true,
           "plan": {
@@ -631,7 +630,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 50.2% (mixed); 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 2.11× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 64.5,
+          "ltp": 64.79000091552734,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -679,7 +678,7 @@
           "grade": "A++",
           "confluenceScore": 128,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -702,7 +701,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 50/100): Delivery 47.9% (mixed); 5-day volume > 20-day average (RVOL 0.12×); Up/down volume 2.15× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 173.39999389648438,
+          "ltp": 171.47999572753906,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -750,7 +749,7 @@
           "grade": "A++",
           "confluenceScore": 128,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -773,7 +772,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 35.4% (mostly intraday); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 1.43× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 635.0999755859375,
+          "ltp": 619.0999755859375,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -821,7 +820,7 @@
           "grade": "A++",
           "confluenceScore": 128,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -844,7 +843,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 29.1% (mostly intraday); 5-day volume > 20-day average (RVOL 3.61×); 1-day volume 3.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 134.8300018310547,
+          "ltp": 132.74000549316406,
           "entry": 134.83,
           "sl": 125.9,
           "slPct": -6.6,
@@ -892,7 +891,7 @@
           "grade": "A++",
           "confluenceScore": 128,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -906,6 +905,77 @@
         },
         {
           "generator": "confluence",
+          "symbol": "ALGOQUANT",
+          "name": "Algoquant Fintech Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII up, DII stable, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 60.5099983215332,
+          "entry": 60.9,
+          "sl": 55.94,
+          "slPct": -8.1,
+          "targets": [
+            {
+              "price": 65.39,
+              "pct": 7.4,
+              "by": "2026-07-21",
+              "days": 5
+            },
+            {
+              "price": 68.75,
+              "pct": 12.9,
+              "by": "2026-07-30",
+              "days": 12
+            },
+            {
+              "price": 72.12,
+              "pct": 18.4,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 0.9,
+          "rsi": 65.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 19.7,
+          "social": "⭐ TOP PICK (Grade A++) — ALGOQUANT\n3 signals agree: Volume Profile + Fib, Multibagger Quality, Harmonic & Chart Patterns\n📦 Delivery 19.7% (mostly intraday)\nEntry ₹60.9 · SL ₹55.94 (-8.1%)\nT1 ₹65.39 (+7.4%) by 2026-07-21 · T2 +12.9% · T3 +18.4%\nPlan (₹1L, 1% risk): buy 201 sh · risk ₹996.96 · reward T1 ₹902.49 · R:R 1:0.9\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#ALGOQUANT #swingtrading #nifty",
+          "id": "multibagger:ALGOQUANT",
+          "openedAt": "2026-07-14",
+          "openTs": 1784013085,
+          "status": "open",
+          "lastSeen": "2026-07-14",
+          "t1": 65.39,
+          "t2": 68.75,
+          "t3": 72.12,
+          "generators": [
+            "Volume Profile + Fib",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 128,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 201,
+            "deploy": 12240.9,
+            "riskRs": 996.96,
+            "rewardT1Rs": 902.49
+          }
+        },
+        {
+          "generator": "confluence",
           "symbol": "TEAMLEASE",
           "name": "Teamlease Services Limited",
           "sector": "Equity",
@@ -915,7 +985,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 62.4% (mixed); 5-day volume > 20-day average (RVOL 2.35×); 1-day volume 2.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 1395.4000244140625,
+          "ltp": 1397.800048828125,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -962,7 +1032,7 @@
           "grade": "A+",
           "confluenceScore": 118,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": true,
           "plan": {
@@ -976,76 +1046,6 @@
         },
         {
           "generator": "confluence",
-          "symbol": "AKASH",
-          "name": "Akash Infra-Projects Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): Delivery 60.5% (mixed); 5-day volume > 20-day average (RVOL 0.02×); Up/down volume 3.08× — accumulation pressure",
-          "direction": "LONG",
-          "ltp": 26.780000686645508,
-          "entry": 27.2,
-          "sl": 25.38,
-          "slPct": -6.7,
-          "targets": [
-            {
-              "price": 29.45,
-              "pct": 8.3,
-              "by": "2026-07-15",
-              "days": 2
-            },
-            {
-              "price": 31.14,
-              "pct": 14.5,
-              "by": "2026-07-20",
-              "days": 5
-            },
-            {
-              "price": 32.83,
-              "pct": 20.7,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.24,
-          "rsi": 53.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 60.5,
-          "social": "⭐ TOP PICK (Grade A+) — AKASH\n2 signals agree: Volume + Accumulation, Money Flow\n📦 Delivery 60.5% (strong hands accumulating)\nEntry ₹27.2 · SL ₹25.38 (-6.7%)\nT1 ₹29.45 (+8.3%) by 2026-07-15 · T2 +14.5% · T3 +20.7%\nPlan (₹1L, 1% risk): buy 549 sh · risk ₹999.18 · reward T1 ₹1235.25 · R:R 1:1.24\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#AKASH #swingtrading #nifty",
-          "id": "vol_accum:AKASH",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-13",
-          "t1": 29.45,
-          "t2": 31.14,
-          "t3": 32.83,
-          "generators": [
-            "Volume + Accumulation",
-            "Money Flow"
-          ],
-          "genCount": 2,
-          "grade": "A+",
-          "confluenceScore": 118,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
-          "vedicAligned": false,
-          "strongDeliv": true,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 549,
-            "deploy": 14932.8,
-            "riskRs": 999.18,
-            "rewardT1Rs": 1235.25
-          }
-        },
-        {
-          "generator": "confluence",
           "symbol": "SAHLIBHFI",
           "name": "Shalibhadra Finance Limited",
           "sector": "Equity",
@@ -1055,7 +1055,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 100% (strong hands); 5-day volume > 20-day average (RVOL 0.93×); Up/down volume 3.32× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 79.54000091552734,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -1102,7 +1102,7 @@
           "grade": "A+",
           "confluenceScore": 118,
           "vedicAsset": "Nifty 50",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": true,
           "plan": {
@@ -1134,8 +1134,8 @@
           "lot": null,
           "grade": "B",
           "optionPlay": "Buy ATM Call / long futures",
-          "reason": "Vedic daily bias +35 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +35 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
+          "reason": "Vedic daily bias +51 (BUY / TEJI). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +51 (BUY / TEJI). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
           "rank": 90
         },
         {
@@ -1143,53 +1143,56 @@
           "underlying": "SILVER",
           "name": "Silver",
           "kind": "Commodity",
-          "direction": "RANGE",
-          "dirTone": "flat",
+          "direction": "BUY",
+          "dirTone": "up",
           "spot": null,
           "lot": null,
           "grade": "B",
-          "optionPlay": "Range — sell strangle",
-          "reason": "Vedic daily bias +11 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — SILVER (Commodity) RANGE\nVedic daily bias +11 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.\n👉 Range — sell strangle\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
+          "optionPlay": "Buy ATM Call / long futures",
+          "reason": "Vedic daily bias +27 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — SILVER (Commodity) BUY\nVedic daily bias +27 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
           "rank": 90
         },
         {
           "generator": "fno",
-          "underlying": "BAJAJ-AUTO",
-          "name": "Bajaj Auto Ltd.",
+          "underlying": "BHARTIARTL",
+          "name": "Bharti Airtel Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 10222.5,
-          "lot": 75,
+          "spot": 1936.5,
+          "lot": 475,
           "grade": "A+",
           "confidence": 100,
-          "delivery": 64.2,
-          "entry": 10222.5,
-          "sl": 9886.67,
-          "slPct": -3.3,
+          "delivery": 51.1,
+          "entry": 1936.5,
+          "sl": 1867.72,
+          "slPct": -3.6,
           "targets": [
             {
-              "price": 10670.28,
-              "pct": 4.4,
+              "price": 2010.3,
+              "pct": 3.8,
               "by": "2026-07-22"
             },
             {
-              "price": 11006.11,
-              "pct": 7.7,
-              "by": "2026-07-30"
+              "price": 2065.64,
+              "pct": 6.7,
+              "by": "2026-07-27"
             },
             {
-              "price": 11341.94,
-              "pct": 11,
+              "price": 2120.99,
+              "pct": 9.5,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.33,
-          "optionPlay": "Buy 10200 CE (ATM) or 10100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 75 sh ≈ ₹7,66,688 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 64.2%",
-          "social": "📊 F&O — BAJAJ-AUTO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 64.2%\n👉 Buy 10200 CE (ATM) or 10100 CE (ITM) — near expiry; or long futures · 1 lot = 75 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajaj-auto #options",
+          "rr": 1.07,
+          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹9,19,838 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 51.1%",
+          "changePct": 1.82,
+          "setupType": "Squeeze breakout",
+          "rsi": 60.4,
+          "social": "📊 F&O — BHARTIARTL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 51.1%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhartiartl #options",
           "rank": 60
         },
         {
@@ -1199,36 +1202,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1946.2,
+          "spot": 1942.6,
           "lot": 350,
           "grade": "A+",
           "confidence": 100,
-          "delivery": 52.7,
-          "entry": 1946.2,
-          "sl": 1868.52,
-          "slPct": -4,
+          "delivery": 63.1,
+          "entry": 1942.6,
+          "sl": 1868.61,
+          "slPct": -3.8,
           "targets": [
             {
-              "price": 2012.03,
-              "pct": 3.4,
+              "price": 2007.53,
+              "pct": 3.3,
               "by": "2026-07-22"
             },
             {
-              "price": 2061.4,
-              "pct": 5.9,
+              "price": 2056.22,
+              "pct": 5.8,
               "by": "2026-07-30"
             },
             {
-              "price": 2110.77,
-              "pct": 8.5,
+              "price": 2104.92,
+              "pct": 8.4,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.85,
+          "rr": 0.88,
           "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 350 sh ≈ ₹6,81,170 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.4% below) · Delivery 52.7%",
-          "social": "📊 F&O — SUNPHARMA (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.4% below) · Delivery 52.7%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 350 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #sunpharma #options",
+          "futures": "1 lot = 350 sh ≈ ₹6,79,910 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.6% below) · Delivery 63.1%",
+          "changePct": 1.1,
+          "setupType": "Squeeze breakout",
+          "rsi": 68.3,
+          "social": "📊 F&O — SUNPHARMA (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.6% below) · Delivery 63.1%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 350 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #sunpharma #options",
           "rank": 60
         },
         {
@@ -1238,37 +1244,124 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 439.6,
+          "spot": 437.3,
           "lot": 2500,
           "grade": "A+",
           "confidence": 100,
-          "delivery": 43.9,
-          "entry": 439.6,
+          "delivery": 19.2,
+          "entry": 437.3,
           "sl": 392.19,
-          "slPct": -10.8,
+          "slPct": -10.3,
           "targets": [
             {
-              "price": 466.25,
+              "price": 463.95,
               "pct": 6.1,
               "by": "2026-07-21"
             },
             {
-              "price": 486.23,
-              "pct": 10.6,
+              "price": 483.93,
+              "pct": 10.7,
               "by": "2026-07-24"
             },
             {
-              "price": 506.22,
+              "price": 503.92,
               "pct": 15.2,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.56,
+          "rr": 0.59,
           "optionPlay": "Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2500 sh ≈ ₹10,99,000 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below) · Delivery 43.9%",
-          "social": "📊 F&O — BIOCON (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below) · Delivery 43.9%\n👉 Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #biocon #options",
+          "futures": "1 lot = 2500 sh ≈ ₹10,93,250 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 19.2%",
+          "changePct": 6.41,
+          "setupType": "Squeeze breakout",
+          "rsi": 61.9,
+          "social": "📊 F&O — BIOCON (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 19.2%\n👉 Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #biocon #options",
           "rank": 60
+        },
+        {
+          "generator": "fno",
+          "underlying": "BAJAJ-AUTO",
+          "name": "Bajaj Auto Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 10166,
+          "lot": 75,
+          "grade": "A+",
+          "confidence": 99,
+          "delivery": 60.9,
+          "entry": 10166,
+          "sl": 9830.17,
+          "slPct": -3.3,
+          "targets": [
+            {
+              "price": 10613.78,
+              "pct": 4.4,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 10949.61,
+              "pct": 7.7,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 11285.44,
+              "pct": 11,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 10200 CE (ATM) or 10100 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 75 sh ≈ ₹7,62,450 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 60.9%",
+          "changePct": -2.07,
+          "setupType": "Squeeze breakout",
+          "rsi": 53.4,
+          "social": "📊 F&O — BAJAJ-AUTO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 60.9%\n👉 Buy 10200 CE (ATM) or 10100 CE (ITM) — near expiry; or long futures · 1 lot = 75 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajaj-auto #options",
+          "rank": 59.8
+        },
+        {
+          "generator": "fno",
+          "underlying": "SOLARINDS",
+          "name": "Solar Industries India Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 18287,
+          "lot": 50,
+          "grade": "A+",
+          "confidence": 99,
+          "delivery": 39.7,
+          "entry": 18287,
+          "sl": 16909.07,
+          "slPct": -7.5,
+          "targets": [
+            {
+              "price": 19476.27,
+              "pct": 6.5,
+              "by": "2026-07-21"
+            },
+            {
+              "price": 20368.22,
+              "pct": 11.4,
+              "by": "2026-07-24"
+            },
+            {
+              "price": 21260.18,
+              "pct": 16.3,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 0.86,
+          "optionPlay": "Buy 18300 CE (ATM) or 18200 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 50 sh ≈ ₹9,14,350 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 39.7%",
+          "changePct": 0.72,
+          "setupType": "Momentum building",
+          "rsi": 54.1,
+          "social": "📊 F&O — SOLARINDS (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 39.7%\n👉 Buy 18300 CE (ATM) or 18200 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #solarinds #options",
+          "rank": 59.8
         },
         {
           "generator": "fno",
@@ -1277,36 +1370,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 3186.5,
+          "spot": 3188.9,
           "lot": 309,
           "grade": "A+",
           "confidence": 98,
-          "delivery": 45.7,
-          "entry": 3186.5,
+          "delivery": 33.8,
+          "entry": 3188.9,
           "sl": 3009.37,
           "slPct": -5.6,
           "targets": [
             {
-              "price": 3360.81,
+              "price": 3363.21,
               "pct": 5.5,
               "by": "2026-07-21"
             },
             {
-              "price": 3491.55,
+              "price": 3493.95,
               "pct": 9.6,
               "by": "2026-07-30"
             },
             {
-              "price": 3622.28,
+              "price": 3624.68,
               "pct": 13.7,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.98,
+          "rr": 0.97,
           "optionPlay": "Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 309 sh ≈ ₹9,84,629 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 45.7%",
-          "social": "📊 F&O — ADANIENT (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 45.7%\n👉 Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
+          "futures": "1 lot = 309 sh ≈ ₹9,85,370 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 33.8%",
+          "changePct": 0.36,
+          "setupType": "Squeeze breakout",
+          "rsi": 62.5,
+          "social": "📊 F&O — ADANIENT (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 33.8%\n👉 Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
           "rank": 59.6
         },
         {
@@ -1316,75 +1412,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1404,
+          "spot": 1407.7,
           "lot": 700,
           "grade": "A+",
           "confidence": 98,
-          "delivery": 56.3,
-          "entry": 1404,
-          "sl": 1366.41,
+          "delivery": 55.9,
+          "entry": 1407.7,
+          "sl": 1370.11,
           "slPct": -2.7,
           "targets": [
             {
-              "price": 1454.12,
+              "price": 1457.82,
               "pct": 3.6,
               "by": "2026-07-20"
             },
             {
-              "price": 1491.71,
+              "price": 1495.41,
               "pct": 6.2,
               "by": "2026-07-30"
             },
             {
-              "price": 1529.3,
+              "price": 1533,
               "pct": 8.9,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 700 sh ≈ ₹9,82,800 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 56.3%",
-          "social": "📊 F&O — ICICIBANK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 56.3%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 700 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #icicibank #options",
-          "rank": 59.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "DIVISLAB",
-          "name": "Divi's Laboratories Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 7128.5,
-          "lot": 100,
-          "grade": "A+",
-          "confidence": 98,
-          "delivery": 57.7,
-          "entry": 7128.5,
-          "sl": 6662.46,
-          "slPct": -6.5,
-          "targets": [
-            {
-              "price": 7433.87,
-              "pct": 4.3,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 7662.9,
-              "pct": 7.5,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 7891.92,
-              "pct": 10.7,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 0.66,
-          "optionPlay": "Buy 7100 CE (ATM) or 7000 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 100 sh ≈ ₹7,12,850 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.3% below) · Delivery 57.7%",
-          "social": "📊 F&O — DIVISLAB (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.3% below) · Delivery 57.7%\n👉 Buy 7100 CE (ATM) or 7000 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #divislab #options",
+          "futures": "1 lot = 700 sh ≈ ₹9,85,390 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 55.9%",
+          "changePct": -0.13,
+          "setupType": "Squeeze breakout",
+          "rsi": 63.3,
+          "social": "📊 F&O — ICICIBANK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 55.9%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 700 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #icicibank #options",
           "rank": 59.6
         },
         {
@@ -1394,76 +1454,40 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1606.3,
+          "spot": 1604.5,
           "lot": 600,
           "grade": "A+",
           "confidence": 95,
-          "delivery": 14.7,
-          "entry": 1606.3,
+          "delivery": 24.6,
+          "entry": 1604.5,
           "sl": 1470.59,
-          "slPct": -8.4,
+          "slPct": -8.3,
           "targets": [
             {
-              "price": 1712.4,
+              "price": 1710.6,
               "pct": 6.6,
               "by": "2026-07-22"
             },
             {
-              "price": 1791.97,
+              "price": 1790.17,
               "pct": 11.6,
               "by": "2026-07-27"
             },
             {
-              "price": 1871.54,
+              "price": 1869.74,
               "pct": 16.5,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.78,
+          "rr": 0.79,
           "optionPlay": "Buy 1600 CE (ATM) or 1550 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 600 sh ≈ ₹9,63,780 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 14.7%",
-          "social": "📊 F&O — ADANIGREEN (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 14.7%\n👉 Buy 1600 CE (ATM) or 1550 CE (ITM) — near expiry; or long futures · 1 lot = 600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanigreen #options",
+          "futures": "1 lot = 600 sh ≈ ₹9,62,700 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below) · Delivery 24.6%",
+          "changePct": 3.75,
+          "setupType": "Squeeze breakout",
+          "rsi": 65.5,
+          "social": "📊 F&O — ADANIGREEN (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below) · Delivery 24.6%\n👉 Buy 1600 CE (ATM) or 1550 CE (ITM) — near expiry; or long futures · 1 lot = 600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanigreen #options",
           "rank": 59
-        },
-        {
-          "generator": "fno",
-          "underlying": "COFORGE",
-          "name": "Coforge Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1542,
-          "lot": 475,
-          "grade": "A+",
-          "confidence": 93,
-          "delivery": 42.7,
-          "entry": 1542,
-          "sl": 1417.24,
-          "slPct": -8.1,
-          "targets": [
-            {
-              "price": 1647.56,
-              "pct": 6.8,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 1726.72,
-              "pct": 12,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 1805.89,
-              "pct": 17.1,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 0.85,
-          "optionPlay": "Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹7,32,450 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 42.7%",
-          "social": "📊 F&O — COFORGE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 42.7%\n👉 Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #coforge #options",
-          "rank": 58.6
         },
         {
           "generator": "fno",
@@ -1472,114 +1496,165 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1688.8,
+          "spot": 1690.3,
           "lot": 675,
           "grade": "A+",
           "confidence": 91,
-          "delivery": 24.5,
-          "entry": 1688.8,
+          "delivery": 24.8,
+          "entry": 1690.3,
           "sl": 1598.63,
-          "slPct": -5.3,
+          "slPct": -5.4,
           "targets": [
             {
-              "price": 1803.5,
+              "price": 1805,
               "pct": 6.8,
               "by": "2026-07-24"
             },
             {
-              "price": 1889.53,
+              "price": 1891.03,
               "pct": 11.9,
               "by": "2026-07-29"
             },
             {
-              "price": 1975.56,
+              "price": 1977.06,
               "pct": 17,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.27,
+          "rr": 1.25,
           "optionPlay": "Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 675 sh ≈ ₹11,39,940 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 24.5%",
-          "social": "📊 F&O — ADANIENSOL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 24.5%\n👉 Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures · 1 lot = 675 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniensol #options",
+          "futures": "1 lot = 675 sh ≈ ₹11,40,953 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below) · Delivery 24.8%",
+          "changePct": 2.78,
+          "setupType": "Squeeze breakout",
+          "rsi": 70.3,
+          "social": "📊 F&O — ADANIENSOL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below) · Delivery 24.8%\n👉 Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures · 1 lot = 675 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniensol #options",
           "rank": 58.2
         },
         {
           "generator": "fno",
-          "underlying": "BHARTIARTL",
-          "name": "Bharti Airtel Ltd.",
+          "underlying": "BOSCHLTD",
+          "name": "Bosch Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1932.7,
-          "lot": 475,
+          "spot": 41460,
+          "lot": 25,
           "grade": "A+",
-          "confidence": 90,
-          "delivery": 66.8,
-          "entry": 1932.7,
-          "sl": 1867.75,
-          "slPct": -3.4,
+          "confidence": 91,
+          "delivery": 43.2,
+          "entry": 41460,
+          "sl": 40169.38,
+          "slPct": -3.1,
           "targets": [
             {
-              "price": 2006.18,
-              "pct": 3.8,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 2061.29,
-              "pct": 6.7,
-              "by": "2026-07-27"
-            },
-            {
-              "price": 2116.4,
-              "pct": 9.5,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.13,
-          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹9,18,033 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below) · Delivery 66.8%",
-          "social": "📊 F&O — BHARTIARTL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below) · Delivery 66.8%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhartiartl #options",
-          "rank": 58
-        },
-        {
-          "generator": "fno",
-          "underlying": "HYUNDAI",
-          "name": "Hyundai Motor India Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1974.5,
-          "lot": 275,
-          "grade": "A+",
-          "confidence": 90,
-          "delivery": 41.5,
-          "entry": 1974.5,
-          "sl": 1885.63,
-          "slPct": -4.5,
-          "targets": [
-            {
-              "price": 2072.16,
-              "pct": 4.9,
+              "price": 43180.82,
+              "pct": 4.2,
               "by": "2026-07-23"
             },
             {
-              "price": 2145.4,
-              "pct": 8.7,
+              "price": 44471.44,
+              "pct": 7.3,
               "by": "2026-07-30"
             },
             {
-              "price": 2218.64,
-              "pct": 12.4,
+              "price": 45762.05,
+              "pct": 10.4,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.1,
-          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 275 sh ≈ ₹5,42,988 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 41.5%",
-          "social": "📊 F&O — HYUNDAI (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 41.5%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 275 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hyundai #options",
+          "rr": 1.33,
+          "optionPlay": "Buy 41500 CE (ATM) or 41400 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 25 sh ≈ ₹10,36,500 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 43.2%",
+          "changePct": -0.56,
+          "setupType": "Squeeze breakout",
+          "rsi": 62.2,
+          "social": "📊 F&O — BOSCHLTD (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 43.2%\n👉 Buy 41500 CE (ATM) or 41400 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #boschltd #options",
+          "rank": 58.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "INDHOTEL",
+          "name": "Indian Hotels Co. Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 733.3,
+          "lot": 1000,
+          "grade": "A+",
+          "confidence": 91,
+          "delivery": 55,
+          "entry": 733.3,
+          "sl": 710.14,
+          "slPct": -3.2,
+          "targets": [
+            {
+              "price": 764.18,
+              "pct": 4.2,
+              "by": "2026-08-05"
+            },
+            {
+              "price": 787.33,
+              "pct": 7.4,
+              "by": "2026-08-10"
+            },
+            {
+              "price": 810.49,
+              "pct": 10.5,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 1000 sh ≈ ₹7,33,300 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 55%",
+          "changePct": -0.71,
+          "setupType": "Squeeze breakout",
+          "rsi": 57.9,
+          "social": "📊 F&O — INDHOTEL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 55%\n👉 Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures · 1 lot = 1000 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indhotel #options",
+          "rank": 58.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "TORNTPHARM",
+          "name": "Torrent Pharmaceuticals Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 4973.5,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 90,
+          "delivery": 66.1,
+          "entry": 4973.5,
+          "sl": 4758.28,
+          "slPct": -4.3,
+          "targets": [
+            {
+              "price": 5178.73,
+              "pct": 4.1,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 5332.65,
+              "pct": 7.2,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 5486.57,
+              "pct": 10.3,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 0.95,
+          "optionPlay": "Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹6,21,688 notional",
+          "reason": "Breakout watch: Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA · Delivery 66.1%",
+          "changePct": 0.45,
+          "setupType": "Breakout watch",
+          "rsi": 79.9,
+          "social": "📊 F&O — TORNTPHARM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA · Delivery 66.1%\n👉 Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #torntpharm #options",
           "rank": 58
         },
         {
@@ -1589,37 +1664,82 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 4432.1,
+          "spot": 4442.4,
           "lot": 150,
           "grade": "A+",
           "confidence": 88,
-          "delivery": 45.7,
-          "entry": 4432.1,
-          "sl": 4285.92,
-          "slPct": -3.3,
+          "delivery": 46.6,
+          "entry": 4442.4,
+          "sl": 4286.31,
+          "slPct": -3.5,
           "targets": [
             {
-              "price": 4627.01,
+              "price": 4637.31,
               "pct": 4.4,
               "by": "2026-07-20"
             },
             {
-              "price": 4773.19,
+              "price": 4783.49,
               "pct": 7.7,
               "by": "2026-07-30"
             },
             {
-              "price": 4919.37,
+              "price": 4929.67,
               "pct": 11,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.33,
+          "rr": 1.25,
           "optionPlay": "Buy 4400 CE (ATM) or 4300 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 150 sh ≈ ₹6,64,815 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 45.7%",
-          "social": "📊 F&O — HAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 45.7%\n👉 Buy 4400 CE (ATM) or 4300 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hal #options",
+          "futures": "1 lot = 150 sh ≈ ₹6,66,360 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 46.6%",
+          "changePct": -1.53,
+          "setupType": "Squeeze breakout",
+          "rsi": 53.9,
+          "social": "📊 F&O — HAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below) · Delivery 46.6%\n👉 Buy 4400 CE (ATM) or 4300 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hal #options",
           "rank": 57.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "APOLLOHOSP",
+          "name": "Apollo Hospitals Enterprise Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 8900.5,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 85,
+          "delivery": 66.7,
+          "entry": 8900.5,
+          "sl": 8671.3,
+          "slPct": -2.6,
+          "targets": [
+            {
+              "price": 9187.52,
+              "pct": 3.2,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 9402.78,
+              "pct": 5.6,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 9618.05,
+              "pct": 8.1,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 1.25,
+          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹11,12,563 notional",
+          "reason": "Breakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 66.7%",
+          "changePct": 1.34,
+          "setupType": "Breakout watch",
+          "rsi": 67.4,
+          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nBreakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 66.7%\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
+          "rank": 57
         },
         {
           "generator": "fno",
@@ -1628,76 +1748,166 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 404.8,
+          "spot": 403.9,
           "lot": 2625,
           "grade": "A+",
           "confidence": 85,
-          "delivery": 36.1,
-          "entry": 404.8,
+          "delivery": 52.9,
+          "entry": 403.9,
           "sl": 369.13,
-          "slPct": -8.8,
+          "slPct": -8.6,
           "targets": [
             {
-              "price": 431.5,
+              "price": 430.6,
               "pct": 6.6,
               "by": "2026-07-17"
             },
             {
-              "price": 451.52,
-              "pct": 11.5,
+              "price": 450.62,
+              "pct": 11.6,
               "by": "2026-07-22"
             },
             {
-              "price": 471.54,
+              "price": 470.64,
               "pct": 16.5,
               "by": "2026-07-28"
             }
           ],
-          "rr": 0.75,
+          "rr": 0.77,
           "optionPlay": "Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2625 sh ≈ ₹10,62,600 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 36.1%",
-          "social": "📊 F&O — BHEL (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 36.1%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 2625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhel #options",
+          "futures": "1 lot = 2625 sh ≈ ₹10,60,238 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.9%",
+          "changePct": -1.27,
+          "setupType": "Momentum building",
+          "rsi": 54.6,
+          "social": "📊 F&O — BHEL (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.9%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 2625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhel #options",
           "rank": 57
         },
         {
           "generator": "fno",
-          "underlying": "BOSCHLTD",
-          "name": "Bosch Ltd.",
+          "underlying": "ABCAPITAL",
+          "name": "Aditya Birla Capital Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 41580,
-          "lot": 25,
+          "spot": 399.25,
+          "lot": 3100,
           "grade": "A+",
-          "confidence": 81,
-          "delivery": 45.8,
-          "entry": 41580,
-          "sl": 40275.33,
-          "slPct": -3.1,
+          "confidence": 83,
+          "delivery": 50.8,
+          "entry": 399.25,
+          "sl": 381.75,
+          "slPct": -4.4,
           "targets": [
             {
-              "price": 43319.57,
-              "pct": 4.2,
+              "price": 421.73,
+              "pct": 5.6,
               "by": "2026-07-23"
             },
             {
-              "price": 44624.24,
-              "pct": 7.3,
+              "price": 438.59,
+              "pct": 9.9,
               "by": "2026-07-30"
             },
             {
-              "price": 45928.91,
-              "pct": 10.5,
+              "price": 455.45,
+              "pct": 14.1,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 1.28,
+          "optionPlay": "Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 3100 sh ≈ ₹12,37,675 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below) · Delivery 50.8%",
+          "changePct": -2.01,
+          "setupType": "Squeeze breakout",
+          "rsi": 57,
+          "social": "📊 F&O — ABCAPITAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below) · Delivery 50.8%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 3100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abcapital #options",
+          "rank": 56.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "COFORGE",
+          "name": "Coforge Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1534.5,
+          "lot": 475,
+          "grade": "A+",
+          "confidence": 83,
+          "delivery": 36.3,
+          "entry": 1534.5,
+          "sl": 1417.13,
+          "slPct": -7.6,
+          "targets": [
+            {
+              "price": 1641.23,
+              "pct": 7,
+              "by": "2026-07-21"
+            },
+            {
+              "price": 1721.27,
+              "pct": 12.2,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 1801.32,
+              "pct": 17.4,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 0.91,
+          "optionPlay": "Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹7,28,888 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below) · Delivery 36.3%",
+          "changePct": -0.42,
+          "setupType": "Squeeze breakout",
+          "rsi": 59.6,
+          "social": "📊 F&O — COFORGE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below) · Delivery 36.3%\n👉 Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #coforge #options",
+          "rank": 56.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "FEDERALBNK",
+          "name": "Federal Bank Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 327.5,
+          "lot": 2500,
+          "grade": "A+",
+          "confidence": 83,
+          "delivery": 61,
+          "entry": 327.5,
+          "sl": 317.92,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 340.27,
+              "pct": 3.9,
+              "by": "2026-07-17"
+            },
+            {
+              "price": 349.86,
+              "pct": 6.8,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 359.44,
+              "pct": 9.8,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 41600 CE (ATM) or 41500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 25 sh ≈ ₹10,39,500 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 45.8%",
-          "social": "📊 F&O — BOSCHLTD (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 45.8%\n👉 Buy 41600 CE (ATM) or 41500 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #boschltd #options",
-          "rank": 56.2
+          "optionPlay": "Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 2500 sh ≈ ₹8,18,750 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 61%",
+          "changePct": -1.5,
+          "setupType": "Squeeze breakout",
+          "rsi": 58.4,
+          "social": "📊 F&O — FEDERALBNK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below) · Delivery 61%\n👉 Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #federalbnk #options",
+          "rank": 56.6
         },
         {
           "generator": "fno",
@@ -1706,75 +1916,81 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 4578.5,
+          "spot": 4573.7,
           "lot": 175,
           "grade": "A+",
           "confidence": 80,
-          "delivery": 59.4,
-          "entry": 4578.5,
-          "sl": 4442.48,
+          "delivery": 65.5,
+          "entry": 4573.7,
+          "sl": 4437.68,
           "slPct": -3,
           "targets": [
             {
-              "price": 4759.86,
+              "price": 4755.06,
               "pct": 4,
               "by": "2026-07-22"
             },
             {
-              "price": 4895.88,
+              "price": 4891.08,
               "pct": 6.9,
               "by": "2026-07-30"
             },
             {
-              "price": 5031.9,
+              "price": 5027.1,
               "pct": 9.9,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 175 sh ≈ ₹8,01,238 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 59.4%",
-          "social": "📊 F&O — TITAN (Stock) BUY\nBreakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 59.4%\n👉 Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures · 1 lot = 175 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #titan #options",
+          "futures": "1 lot = 175 sh ≈ ₹8,00,398 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 65.5%",
+          "changePct": -0.6,
+          "setupType": "Breakout watch",
+          "rsi": 64.4,
+          "social": "📊 F&O — TITAN (Stock) BUY\nBreakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 65.5%\n👉 Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures · 1 lot = 175 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #titan #options",
           "rank": 56
         },
         {
           "generator": "fno",
-          "underlying": "BHARATFORG",
-          "name": "Bharat Forge Ltd.",
+          "underlying": "FORTIS",
+          "name": "Fortis Healthcare Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 2114.8,
-          "lot": 500,
+          "spot": 969.75,
+          "lot": 775,
           "grade": "A+",
           "confidence": 80,
-          "delivery": 46.3,
-          "entry": 2114.8,
-          "sl": 2028.88,
-          "slPct": -4.1,
+          "delivery": 64.1,
+          "entry": 969.75,
+          "sl": 934.14,
+          "slPct": -3.7,
           "targets": [
             {
-              "price": 2229.36,
-              "pct": 5.4,
+              "price": 1012.31,
+              "pct": 4.4,
+              "by": "2026-07-20"
+            },
+            {
+              "price": 1044.23,
+              "pct": 7.7,
               "by": "2026-07-23"
             },
             {
-              "price": 2315.28,
-              "pct": 9.5,
-              "by": "2026-07-28"
-            },
-            {
-              "price": 2401.19,
-              "pct": 13.5,
+              "price": 1076.15,
+              "pct": 11,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.33,
-          "optionPlay": "Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 500 sh ≈ ₹10,57,400 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.3%",
-          "social": "📊 F&O — BHARATFORG (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.3%\n👉 Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures · 1 lot = 500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bharatforg #options",
+          "rr": 1.2,
+          "optionPlay": "Buy 960 CE (ATM) or 940 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 775 sh ≈ ₹7,51,556 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 64.1%",
+          "changePct": 0.65,
+          "setupType": "Squeeze breakout",
+          "rsi": 52.9,
+          "social": "📊 F&O — FORTIS (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 64.1%\n👉 Buy 960 CE (ATM) or 940 CE (ITM) — near expiry; or long futures · 1 lot = 775 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #fortis #options",
           "rank": 56
         },
         {
@@ -1784,76 +2000,166 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1433.1,
+          "spot": 1428.5,
           "lot": 475,
           "grade": "A+",
           "confidence": 78,
-          "delivery": 30.6,
-          "entry": 1433.1,
+          "delivery": 33.2,
+          "entry": 1428.5,
           "sl": 1293.82,
-          "slPct": -9.7,
+          "slPct": -9.4,
           "targets": [
             {
-              "price": 1504.91,
+              "price": 1500.31,
               "pct": 5,
               "by": "2026-07-20"
             },
             {
-              "price": 1558.77,
+              "price": 1554.17,
               "pct": 8.8,
               "by": "2026-07-23"
             },
             {
-              "price": 1612.63,
-              "pct": 12.5,
+              "price": 1608.03,
+              "pct": 12.6,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.52,
+          "rr": 0.53,
           "optionPlay": "Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹6,80,723 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA · Delivery 30.6%",
-          "social": "📊 F&O — CDSL (Stock) BUY\nBreakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA · Delivery 30.6%\n👉 Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cdsl #options",
+          "futures": "1 lot = 475 sh ≈ ₹6,78,538 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA · Delivery 33.2%",
+          "changePct": -1.11,
+          "setupType": "Breakout watch",
+          "rsi": 66.9,
+          "social": "📊 F&O — CDSL (Stock) BUY\nBreakout watch: Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA · Delivery 33.2%\n👉 Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cdsl #options",
           "rank": 55.6
         },
         {
           "generator": "fno",
-          "underlying": "TORNTPHARM",
-          "name": "Torrent Pharmaceuticals Ltd.",
+          "underlying": "ULTRACEMCO",
+          "name": "UltraTech Cement Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 5000,
-          "lot": 125,
+          "spot": 11496,
+          "lot": 50,
           "grade": "A+",
-          "confidence": 76,
-          "delivery": 64.2,
-          "entry": 5000,
-          "sl": 4722.48,
-          "slPct": -5.6,
+          "confidence": 75,
+          "delivery": 68.4,
+          "entry": 11496,
+          "sl": 11191.77,
+          "slPct": -2.6,
           "targets": [
             {
-              "price": 5206.18,
-              "pct": 4.1,
-              "by": "2026-07-22"
+              "price": 11901.65,
+              "pct": 3.5,
+              "by": "2026-07-20"
             },
             {
-              "price": 5360.82,
-              "pct": 7.2,
+              "price": 12205.88,
+              "pct": 6.2,
               "by": "2026-07-30"
             },
             {
-              "price": 5515.46,
-              "pct": 10.3,
+              "price": 12510.11,
+              "pct": 8.8,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.74,
-          "optionPlay": "Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹6,25,000 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.2% below); Above rising 20 & 50 EMA · Delivery 64.2%",
-          "social": "📊 F&O — TORNTPHARM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.2% below); Above rising 20 & 50 EMA · Delivery 64.2%\n👉 Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #torntpharm #options",
-          "rank": 55.2
+          "rr": 1.33,
+          "optionPlay": "Buy 11500 CE (ATM) or 11400 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 50 sh ≈ ₹5,74,800 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below) · Delivery 68.4%",
+          "changePct": -0.65,
+          "setupType": "Squeeze breakout",
+          "rsi": 51,
+          "social": "📊 F&O — ULTRACEMCO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below) · Delivery 68.4%\n👉 Buy 11500 CE (ATM) or 11400 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ultracemco #options",
+          "rank": 55
+        },
+        {
+          "generator": "fno",
+          "underlying": "HYUNDAI",
+          "name": "Hyundai Motor India Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1959.7,
+          "lot": 275,
+          "grade": "A+",
+          "confidence": 75,
+          "delivery": 47.1,
+          "entry": 1959.7,
+          "sl": 1884.72,
+          "slPct": -3.8,
+          "targets": [
+            {
+              "price": 2059.67,
+              "pct": 5.1,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 2134.65,
+              "pct": 8.9,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 2209.63,
+              "pct": 12.8,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 275 sh ≈ ₹5,38,918 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 47.1%",
+          "changePct": -1.74,
+          "setupType": "Squeeze breakout",
+          "rsi": 51.8,
+          "social": "📊 F&O — HYUNDAI (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 47.1%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 275 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hyundai #options",
+          "rank": 55
+        },
+        {
+          "generator": "fno",
+          "underlying": "DIVISLAB",
+          "name": "Divi's Laboratories Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 7188.5,
+          "lot": 100,
+          "grade": "A+",
+          "confidence": 73,
+          "delivery": 39.9,
+          "entry": 7188.5,
+          "sl": 6662.3,
+          "slPct": -7.3,
+          "targets": [
+            {
+              "price": 7495.54,
+              "pct": 4.3,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 7725.82,
+              "pct": 7.5,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 7956.1,
+              "pct": 10.7,
+              "by": "2026-08-12"
+            }
+          ],
+          "rr": 0.58,
+          "optionPlay": "Buy 7200 CE (ATM) or 7100 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 100 sh ≈ ₹7,18,850 notional",
+          "reason": "Breakout watch: Hugging 20-day high (0.3% below); Above rising 20 & 50 EMA · Delivery 39.9%",
+          "changePct": 3.6,
+          "setupType": "Breakout watch",
+          "rsi": 71.6,
+          "social": "📊 F&O — DIVISLAB (Stock) BUY\nBreakout watch: Hugging 20-day high (0.3% below); Above rising 20 & 50 EMA · Delivery 39.9%\n👉 Buy 7200 CE (ATM) or 7100 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #divislab #options",
+          "rank": 54.6
         },
         {
           "generator": "fno",
@@ -1862,36 +2168,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 420.3,
+          "spot": 419.45,
           "lot": 1800,
           "grade": "A+",
           "confidence": 71,
-          "delivery": 31.4,
-          "entry": 420.3,
+          "delivery": 34.6,
+          "entry": 419.45,
           "sl": 401.66,
-          "slPct": -4.4,
+          "slPct": -4.2,
           "targets": [
             {
-              "price": 442.17,
+              "price": 441.32,
               "pct": 5.2,
               "by": "2026-07-20"
             },
             {
-              "price": 458.57,
+              "price": 457.72,
               "pct": 9.1,
               "by": "2026-07-30"
             },
             {
-              "price": 474.97,
+              "price": 474.12,
               "pct": 13,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.17,
+          "rr": 1.23,
           "optionPlay": "Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 1800 sh ≈ ₹7,56,540 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA · Delivery 31.4%",
-          "social": "📊 F&O — EXIDEIND (Stock) BUY\nBreakout watch: Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA · Delivery 31.4%\n👉 Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures · 1 lot = 1800 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #exideind #options",
+          "futures": "1 lot = 1800 sh ≈ ₹7,55,010 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA · Delivery 34.6%",
+          "changePct": -0.93,
+          "setupType": "Breakout watch",
+          "rsi": 63.9,
+          "social": "📊 F&O — EXIDEIND (Stock) BUY\nBreakout watch: Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA · Delivery 34.6%\n👉 Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures · 1 lot = 1800 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #exideind #options",
           "rank": 54.2
         },
         {
@@ -1901,192 +2210,123 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 325.05,
+          "spot": 324.45,
           "lot": 3125,
           "grade": "A+",
           "confidence": 71,
-          "delivery": 61.8,
-          "entry": 325.05,
-          "sl": 309.43,
-          "slPct": -4.8,
+          "delivery": 65.3,
+          "entry": 324.45,
+          "sl": 309.8,
+          "slPct": -4.5,
           "targets": [
             {
-              "price": 340.71,
+              "price": 339.99,
               "pct": 4.8,
               "by": "2026-07-24"
             },
             {
-              "price": 352.46,
+              "price": 351.64,
               "pct": 8.4,
               "by": "2026-08-18"
             },
             {
-              "price": 364.21,
+              "price": 363.3,
               "pct": 12,
               "by": "2026-08-24"
             }
           ],
-          "rr": 1,
-          "optionPlay": "Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3125 sh ≈ ₹10,15,781 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.8% below); Above rising 20 & 50 EMA · Delivery 61.8%",
-          "social": "📊 F&O — NYKAA (Stock) BUY\nBreakout watch: Hugging 20-day high (1.8% below); Above rising 20 & 50 EMA · Delivery 61.8%\n👉 Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures · 1 lot = 3125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #nykaa #options",
+          "rr": 1.06,
+          "optionPlay": "Buy 320 CE (ATM) or 310 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 3125 sh ≈ ₹10,13,906 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA · Delivery 65.3%",
+          "changePct": -1.2,
+          "setupType": "Breakout watch",
+          "rsi": 70.6,
+          "social": "📊 F&O — NYKAA (Stock) BUY\nBreakout watch: Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA · Delivery 65.3%\n👉 Buy 320 CE (ATM) or 310 CE (ITM) — near expiry; or long futures · 1 lot = 3125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #nykaa #options",
           "rank": 54.2
         },
         {
           "generator": "fno",
-          "underlying": "ABCAPITAL",
-          "name": "Aditya Birla Capital Ltd.",
+          "underlying": "BAJAJFINSV",
+          "name": "Bajaj Finserv Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 395.65,
-          "lot": 3100,
-          "grade": "A+",
-          "confidence": 70,
-          "delivery": 38.7,
-          "entry": 395.65,
-          "sl": 378.53,
-          "slPct": -4.3,
-          "targets": [
-            {
-              "price": 418.48,
-              "pct": 5.8,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 435.61,
-              "pct": 10.1,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 452.73,
-              "pct": 14.4,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3100 sh ≈ ₹12,26,515 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 38.7%",
-          "social": "📊 F&O — ABCAPITAL (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 38.7%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 3100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abcapital #options",
-          "rank": 54
-        },
-        {
-          "generator": "fno",
-          "underlying": "AMBER",
-          "name": "Amber Enterprises India Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 7867,
-          "lot": 100,
-          "grade": "A+",
-          "confidence": 70,
-          "delivery": 33.8,
-          "entry": 7867,
-          "sl": 7331.49,
-          "slPct": -6.8,
-          "targets": [
-            {
-              "price": 8352.05,
-              "pct": 6.2,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 8715.85,
-              "pct": 10.8,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 9079.64,
-              "pct": 15.4,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 0.91,
-          "optionPlay": "Buy 7900 CE (ATM) or 7800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 100 sh ≈ ₹7,86,700 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 33.8%",
-          "social": "📊 F&O — AMBER (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 33.8%\n👉 Buy 7900 CE (ATM) or 7800 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #amber #options",
-          "rank": 54
-        },
-        {
-          "generator": "fno",
-          "underlying": "CIPLA",
-          "name": "Cipla Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1452,
-          "lot": 425,
+          "spot": 1869.2,
+          "lot": 300,
           "grade": "A+",
           "confidence": 68,
-          "delivery": 62.3,
-          "entry": 1452,
-          "sl": 1410.53,
-          "slPct": -2.9,
+          "delivery": 66,
+          "entry": 1869.2,
+          "sl": 1808.13,
+          "slPct": -3.3,
           "targets": [
             {
-              "price": 1507.3,
-              "pct": 3.8,
+              "price": 1950.63,
+              "pct": 4.4,
               "by": "2026-07-21"
             },
             {
-              "price": 1548.77,
-              "pct": 6.7,
+              "price": 2011.7,
+              "pct": 7.6,
               "by": "2026-07-30"
             },
             {
-              "price": 1590.25,
-              "pct": 9.5,
+              "price": 2072.77,
+              "pct": 10.9,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 425 sh ≈ ₹6,17,100 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 62.3%",
-          "social": "📊 F&O — CIPLA (Stock) BUY\nBreakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 62.3%\n👉 Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures · 1 lot = 425 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cipla #options",
+          "optionPlay": "Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 300 sh ≈ ₹5,60,760 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 66%",
+          "changePct": -2.04,
+          "setupType": "Breakout watch",
+          "rsi": 58,
+          "social": "📊 F&O — BAJAJFINSV (Stock) BUY\nBreakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 66%\n👉 Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures · 1 lot = 300 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajajfinsv #options",
           "rank": 53.6
         },
         {
           "generator": "fno",
-          "underlying": "INDHOTEL",
-          "name": "Indian Hotels Co. Ltd.",
+          "underlying": "BHARATFORG",
+          "name": "Bharat Forge Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 734.45,
-          "lot": 1000,
+          "spot": 2119.7,
+          "lot": 500,
           "grade": "A+",
           "confidence": 68,
-          "delivery": 57,
-          "entry": 734.45,
-          "sl": 709.85,
-          "slPct": -3.3,
+          "delivery": 40.1,
+          "entry": 2119.7,
+          "sl": 2033.14,
+          "slPct": -4.1,
           "targets": [
             {
-              "price": 767.25,
-              "pct": 4.5,
-              "by": "2026-08-05"
+              "price": 2235.11,
+              "pct": 5.4,
+              "by": "2026-07-23"
             },
             {
-              "price": 791.85,
-              "pct": 7.8,
-              "by": "2026-08-10"
+              "price": 2321.67,
+              "pct": 9.5,
+              "by": "2026-07-28"
             },
             {
-              "price": 816.46,
-              "pct": 11.2,
-              "by": "2026-08-14"
+              "price": 2408.23,
+              "pct": 13.6,
+              "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 1000 sh ≈ ₹7,34,450 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 57%",
-          "social": "📊 F&O — INDHOTEL (Stock) BUY\nBreakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 57%\n👉 Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures · 1 lot = 1000 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indhotel #options",
+          "optionPlay": "Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 500 sh ≈ ₹10,59,850 notional",
+          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 40.1%",
+          "changePct": -1.21,
+          "setupType": "Accumulation",
+          "rsi": 56.6,
+          "social": "📊 F&O — BHARATFORG (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 40.1%\n👉 Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures · 1 lot = 500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bharatforg #options",
           "rank": 53.6
         },
         {
@@ -2096,75 +2336,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1825,
+          "spot": 1821.9,
           "lot": 475,
           "grade": "A+",
           "confidence": 67,
-          "delivery": 51.2,
-          "entry": 1825,
-          "sl": 1766.55,
+          "delivery": 42.6,
+          "entry": 1821.9,
+          "sl": 1763.45,
           "slPct": -3.2,
           "targets": [
             {
-              "price": 1902.93,
+              "price": 1899.83,
               "pct": 4.3,
               "by": "2026-07-22"
             },
             {
-              "price": 1961.38,
+              "price": 1958.28,
               "pct": 7.5,
               "by": "2026-07-30"
             },
             {
-              "price": 2019.83,
+              "price": 2016.73,
               "pct": 10.7,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹8,66,875 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 51.2%",
-          "social": "📊 F&O — ADANIPORTS (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 51.2%\n👉 Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniports #options",
-          "rank": 53.4
-        },
-        {
-          "generator": "fno",
-          "underlying": "GAIL",
-          "name": "GAIL (India) Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 172.44,
-          "lot": 3550,
-          "grade": "A+",
-          "confidence": 67,
-          "delivery": 41.4,
-          "entry": 172.44,
-          "sl": 167.28,
-          "slPct": -3,
-          "targets": [
-            {
-              "price": 179.29,
-              "pct": 4,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 184.42,
-              "pct": 6.9,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 189.56,
-              "pct": 9.9,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 170 CE (ATM) or 165 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3550 sh ≈ ₹6,12,162 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 41.4%",
-          "social": "📊 F&O — GAIL (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 41.4%\n👉 Buy 170 CE (ATM) or 165 CE (ITM) — near expiry; or long futures · 1 lot = 3550 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #gail #options",
+          "optionPlay": "Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹8,65,403 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 42.6%",
+          "changePct": 0.64,
+          "setupType": "Momentum building",
+          "rsi": 51.7,
+          "social": "📊 F&O — ADANIPORTS (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 42.6%\n👉 Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniports #options",
           "rank": 53.4
         },
         {
@@ -2174,36 +2378,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 208.82,
+          "spot": 207.87,
           "lot": 3600,
           "grade": "A+",
           "confidence": 67,
-          "delivery": 42,
-          "entry": 208.82,
+          "delivery": 41.3,
+          "entry": 207.87,
           "sl": 193.39,
-          "slPct": -7.4,
+          "slPct": -7,
           "targets": [
             {
-              "price": 223.11,
-              "pct": 6.8,
+              "price": 222.16,
+              "pct": 6.9,
               "by": "2026-07-21"
             },
             {
-              "price": 233.82,
+              "price": 232.87,
               "pct": 12,
               "by": "2026-07-30"
             },
             {
-              "price": 244.53,
-              "pct": 17.1,
+              "price": 243.58,
+              "pct": 17.2,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.93,
+          "rr": 0.99,
           "optionPlay": "Buy 210 CE (ATM) or 205 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3600 sh ≈ ₹7,51,752 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 42%",
-          "social": "📊 F&O — BANDHANBNK (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 42%\n👉 Buy 210 CE (ATM) or 205 CE (ITM) — near expiry; or long futures · 1 lot = 3600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bandhanbnk #options",
+          "futures": "1 lot = 3600 sh ≈ ₹7,48,332 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 41.3%",
+          "changePct": -2.48,
+          "setupType": "Momentum building",
+          "rsi": 52.9,
+          "social": "📊 F&O — BANDHANBNK (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 41.3%\n👉 Buy 210 CE (ATM) or 205 CE (ITM) — near expiry; or long futures · 1 lot = 3600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bandhanbnk #options",
           "rank": 53.4
         },
         {
@@ -2213,76 +2420,40 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 512.45,
+          "spot": 512.1,
           "lot": 2075,
           "grade": "A+",
           "confidence": 66,
-          "delivery": 56.6,
-          "entry": 512.45,
-          "sl": 490.93,
+          "delivery": 56.3,
+          "entry": 512.1,
+          "sl": 490.58,
           "slPct": -4.2,
           "targets": [
             {
-              "price": 541.15,
+              "price": 540.8,
               "pct": 5.6,
               "by": "2026-07-22"
             },
             {
-              "price": 562.67,
+              "price": 562.32,
               "pct": 9.8,
               "by": "2026-07-27"
             },
             {
-              "price": 584.19,
+              "price": 583.84,
               "pct": 14,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 520 CE (ATM) or 500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2075 sh ≈ ₹10,63,334 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 56.6%",
-          "social": "📊 F&O — DELHIVERY (Stock) BUY\nBreakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 56.6%\n👉 Buy 520 CE (ATM) or 500 CE (ITM) — near expiry; or long futures · 1 lot = 2075 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #delhivery #options",
+          "futures": "1 lot = 2075 sh ≈ ₹10,62,608 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 56.3%",
+          "changePct": -0.04,
+          "setupType": "Breakout watch",
+          "rsi": 62.7,
+          "social": "📊 F&O — DELHIVERY (Stock) BUY\nBreakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 56.3%\n👉 Buy 520 CE (ATM) or 500 CE (ITM) — near expiry; or long futures · 1 lot = 2075 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #delhivery #options",
           "rank": 53.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "SHREECEM",
-          "name": "Shree Cement Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 26185,
-          "lot": 25,
-          "grade": "A+",
-          "confidence": 63,
-          "delivery": 52.5,
-          "entry": 26185,
-          "sl": 25319.57,
-          "slPct": -3.3,
-          "targets": [
-            {
-              "price": 27338.91,
-              "pct": 4.4,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 28204.35,
-              "pct": 7.7,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 29069.78,
-              "pct": 11,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 26200 CE (ATM) or 26100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 25 sh ≈ ₹6,54,625 notional",
-          "reason": "Breakout watch: Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA · Delivery 52.5%",
-          "social": "📊 F&O — SHREECEM (Stock) BUY\nBreakout watch: Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA · Delivery 52.5%\n👉 Buy 26200 CE (ATM) or 26100 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #shreecem #options",
-          "rank": 52.6
         },
         {
           "generator": "fno",
@@ -2291,75 +2462,81 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 5618,
+          "spot": 5601.5,
           "lot": 125,
           "grade": "A+",
           "confidence": 63,
-          "delivery": 61.8,
-          "entry": 5618,
-          "sl": 5443.05,
-          "slPct": -3.1,
+          "delivery": 66.8,
+          "entry": 5601.5,
+          "sl": 5424.86,
+          "slPct": -3.2,
           "targets": [
             {
-              "price": 5851.27,
+              "price": 5837.01,
               "pct": 4.2,
               "by": "2026-07-21"
             },
             {
-              "price": 6026.23,
-              "pct": 7.3,
+              "price": 6013.65,
+              "pct": 7.4,
               "by": "2026-07-30"
             },
             {
-              "price": 6201.18,
-              "pct": 10.4,
+              "price": 6190.28,
+              "pct": 10.5,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 5600 CE (ATM) or 5500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹7,02,250 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.1% below); Above rising 20 & 50 EMA · Delivery 61.8%",
-          "social": "📊 F&O — ALKEM (Stock) BUY\nBreakout watch: Hugging 20-day high (2.1% below); Above rising 20 & 50 EMA · Delivery 61.8%\n👉 Buy 5600 CE (ATM) or 5500 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #alkem #options",
+          "futures": "1 lot = 125 sh ≈ ₹7,00,188 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA · Delivery 66.8%",
+          "changePct": 0.62,
+          "setupType": "Breakout watch",
+          "rsi": 58.3,
+          "social": "📊 F&O — ALKEM (Stock) BUY\nBreakout watch: Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA · Delivery 66.8%\n👉 Buy 5600 CE (ATM) or 5500 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #alkem #options",
           "rank": 52.6
         },
         {
           "generator": "fno",
-          "underlying": "SHRIRAMFIN",
-          "name": "Shriram Finance Ltd.",
+          "underlying": "AMBER",
+          "name": "Amber Enterprises India Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1022.9,
-          "lot": 825,
+          "spot": 7786.5,
+          "lot": 100,
           "grade": "A+",
           "confidence": 62,
-          "delivery": 54.9,
-          "entry": 1022.9,
-          "sl": 981.67,
-          "slPct": -4,
+          "delivery": 23.4,
+          "entry": 7786.5,
+          "sl": 7331.59,
+          "slPct": -5.8,
           "targets": [
             {
-              "price": 1077.87,
-              "pct": 5.4,
+              "price": 8270.56,
+              "pct": 6.2,
               "by": "2026-07-21"
             },
             {
-              "price": 1119.1,
-              "pct": 9.4,
-              "by": "2026-07-30"
+              "price": 8633.6,
+              "pct": 10.9,
+              "by": "2026-07-24"
             },
             {
-              "price": 1160.33,
-              "pct": 13.4,
+              "price": 8996.64,
+              "pct": 15.5,
               "by": "2026-08-12"
             }
           ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1000 CE (ATM) or 950 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 825 sh ≈ ₹8,43,893 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.9%",
-          "social": "📊 F&O — SHRIRAMFIN (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.9%\n👉 Buy 1000 CE (ATM) or 950 CE (ITM) — near expiry; or long futures · 1 lot = 825 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #shriramfin #options",
+          "rr": 1.06,
+          "optionPlay": "Buy 7800 CE (ATM) or 7700 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 100 sh ≈ ₹7,78,650 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 23.4%",
+          "changePct": 0.2,
+          "setupType": "Momentum building",
+          "rsi": 54.8,
+          "social": "📊 F&O — AMBER (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 23.4%\n👉 Buy 7800 CE (ATM) or 7700 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #amber #options",
           "rank": 52.4
         },
         {
@@ -2369,115 +2546,40 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 668.75,
+          "spot": 671.45,
           "lot": 950,
           "grade": "A+",
-          "confidence": 62,
-          "delivery": 54.4,
-          "entry": 668.75,
+          "confidence": 60,
+          "delivery": 43.9,
+          "entry": 671.45,
           "sl": 626.66,
-          "slPct": -6.3,
+          "slPct": -6.7,
           "targets": [
             {
-              "price": 709.63,
+              "price": 712.33,
               "pct": 6.1,
               "by": "2026-07-23"
             },
             {
-              "price": 740.3,
+              "price": 743,
               "pct": 10.7,
               "by": "2026-07-30"
             },
             {
-              "price": 770.96,
-              "pct": 15.3,
+              "price": 773.66,
+              "pct": 15.2,
               "by": "2026-08-12"
             }
           ],
-          "rr": 0.97,
-          "optionPlay": "Buy 660 CE (ATM) or 640 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 950 sh ≈ ₹6,35,313 notional",
-          "reason": "Accumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 54.4%",
-          "social": "📊 F&O — DLF (Stock) BUY\nAccumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 54.4%\n👉 Buy 660 CE (ATM) or 640 CE (ITM) — near expiry; or long futures · 1 lot = 950 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #dlf #options",
-          "rank": 52.4
-        },
-        {
-          "generator": "fno",
-          "underlying": "APOLLOHOSP",
-          "name": "Apollo Hospitals Enterprise Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 8894.5,
-          "lot": 125,
-          "grade": "A+",
-          "confidence": 61,
-          "delivery": 54.7,
-          "entry": 8894.5,
-          "sl": 8671.97,
-          "slPct": -2.5,
-          "targets": [
-            {
-              "price": 9174.76,
-              "pct": 3.2,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 9384.95,
-              "pct": 5.5,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 9595.14,
-              "pct": 7.9,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.26,
-          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹11,11,813 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 54.7%",
-          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nBreakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 54.7%\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
-          "rank": 52.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "BAJAJFINSV",
-          "name": "Bajaj Finserv Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1870.1,
-          "lot": 300,
-          "grade": "A+",
-          "confidence": 61,
-          "delivery": 58.5,
-          "entry": 1870.1,
-          "sl": 1809.46,
-          "slPct": -3.2,
-          "targets": [
-            {
-              "price": 1950.95,
-              "pct": 4.3,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 2011.6,
-              "pct": 7.6,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 2072.24,
-              "pct": 10.8,
-              "by": "2026-08-12"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 300 sh ≈ ₹5,61,030 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 58.5%",
-          "social": "📊 F&O — BAJAJFINSV (Stock) BUY\nBreakout watch: Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA · Delivery 58.5%\n👉 Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures · 1 lot = 300 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajajfinsv #options",
-          "rank": 52.2
+          "rr": 0.91,
+          "optionPlay": "Buy 680 CE (ATM) or 660 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 950 sh ≈ ₹6,37,878 notional",
+          "reason": "Momentum building: Above rising 20 & 50 EMA; RSI 61 building (not overbought) · Delivery 43.9%",
+          "changePct": -1.6,
+          "setupType": "Momentum building",
+          "rsi": 60.7,
+          "social": "📊 F&O — DLF (Stock) BUY\nMomentum building: Above rising 20 & 50 EMA; RSI 61 building (not overbought) · Delivery 43.9%\n👉 Buy 680 CE (ATM) or 660 CE (ITM) — near expiry; or long futures · 1 lot = 950 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #dlf #options",
+          "rank": 52
         },
         {
           "generator": "fno",
@@ -2486,36 +2588,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1004.3,
+          "spot": 1006.6,
           "lot": 750,
           "grade": "A",
           "confidence": 58,
-          "delivery": 57.1,
-          "entry": 1004.3,
-          "sl": 968.43,
+          "delivery": 47.2,
+          "entry": 1006.6,
+          "sl": 970.73,
           "slPct": -3.6,
           "targets": [
             {
-              "price": 1052.12,
+              "price": 1054.42,
               "pct": 4.8,
               "by": "2026-07-22"
             },
             {
-              "price": 1087.99,
+              "price": 1090.29,
               "pct": 8.3,
               "by": "2026-07-30"
             },
             {
-              "price": 1123.86,
+              "price": 1126.16,
               "pct": 11.9,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 1000 CE (ATM) or 950 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 750 sh ≈ ₹7,53,225 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 57.1%",
-          "social": "📊 F&O — BAJFINANCE (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 57.1%\n👉 Buy 1000 CE (ATM) or 950 CE (ITM) — near expiry; or long futures · 1 lot = 750 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajfinance #options",
+          "futures": "1 lot = 750 sh ≈ ₹7,54,950 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 47.2%",
+          "changePct": -1.56,
+          "setupType": "Watch",
+          "rsi": 57.4,
+          "social": "📊 F&O — BAJFINANCE (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 47.2%\n👉 Buy 1000 CE (ATM) or 950 CE (ITM) — near expiry; or long futures · 1 lot = 750 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajfinance #options",
           "rank": 51.6
         },
         {
@@ -2525,36 +2630,39 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 810.1,
+          "spot": 809.4,
           "lot": 650,
           "grade": "A",
           "confidence": 58,
-          "delivery": 54.7,
-          "entry": 810.1,
-          "sl": 787.54,
+          "delivery": 47.6,
+          "entry": 809.4,
+          "sl": 786.7,
           "slPct": -2.8,
           "targets": [
             {
-              "price": 840.18,
+              "price": 839.67,
               "pct": 3.7,
               "by": "2026-07-22"
             },
             {
-              "price": 862.75,
+              "price": 862.37,
               "pct": 6.5,
               "by": "2026-07-30"
             },
             {
-              "price": 885.31,
-              "pct": 9.3,
+              "price": 885.08,
+              "pct": 9.4,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 820 CE (ATM) or 800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 650 sh ≈ ₹5,26,565 notional",
-          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.7%",
-          "social": "📊 F&O — HDFCBANK (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.7%\n👉 Buy 820 CE (ATM) or 800 CE (ITM) — near expiry; or long futures · 1 lot = 650 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hdfcbank #options",
+          "optionPlay": "Buy 800 CE (ATM) or 780 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 650 sh ≈ ₹5,26,110 notional",
+          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 47.6%",
+          "changePct": -1.05,
+          "setupType": "Accumulation",
+          "rsi": 55.7,
+          "social": "📊 F&O — HDFCBANK (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 47.6%\n👉 Buy 800 CE (ATM) or 780 CE (ITM) — near expiry; or long futures · 1 lot = 650 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hdfcbank #options",
           "rank": 51.6
         },
         {
@@ -2564,76 +2672,82 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1767.3,
+          "spot": 1771.5,
           "lot": 625,
           "grade": "A",
           "confidence": 58,
-          "delivery": 46.6,
-          "entry": 1767.3,
-          "sl": 1696.25,
+          "delivery": 46.3,
+          "entry": 1771.5,
+          "sl": 1700.45,
           "slPct": -4,
           "targets": [
             {
-              "price": 1862.03,
-              "pct": 5.4,
+              "price": 1866.23,
+              "pct": 5.3,
               "by": "2026-07-24"
             },
             {
-              "price": 1933.08,
+              "price": 1937.28,
               "pct": 9.4,
               "by": "2026-07-30"
             },
             {
-              "price": 2004.13,
+              "price": 2008.33,
               "pct": 13.4,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
           "optionPlay": "Buy 1750 CE (ATM) or 1700 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 625 sh ≈ ₹11,04,563 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.6%",
-          "social": "📊 F&O — CHOLAFIN (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.6%\n👉 Buy 1750 CE (ATM) or 1700 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cholafin #options",
+          "futures": "1 lot = 625 sh ≈ ₹11,07,188 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.3%",
+          "changePct": -2.18,
+          "setupType": "Watch",
+          "rsi": 55.8,
+          "social": "📊 F&O — CHOLAFIN (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 46.3%\n👉 Buy 1750 CE (ATM) or 1700 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cholafin #options",
           "rank": 51.6
         },
         {
           "generator": "fno",
-          "underlying": "MAXHEALTH",
-          "name": "Max Healthcare Institute Ltd.",
+          "underlying": "SHREECEM",
+          "name": "Shree Cement Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1100,
-          "lot": 525,
+          "spot": 26280,
+          "lot": 25,
           "grade": "A",
-          "confidence": 57,
-          "delivery": 57.9,
-          "entry": 1100,
-          "sl": 1054.79,
-          "slPct": -4.1,
+          "confidence": 51,
+          "delivery": 46.4,
+          "entry": 26280,
+          "sl": 25464.33,
+          "slPct": -3.1,
           "targets": [
             {
-              "price": 1160.28,
-              "pct": 5.5,
-              "by": "2026-07-22"
+              "price": 27367.56,
+              "pct": 4.1,
+              "by": "2026-07-21"
             },
             {
-              "price": 1205.49,
-              "pct": 9.6,
+              "price": 28183.23,
+              "pct": 7.2,
               "by": "2026-07-30"
             },
             {
-              "price": 1250.7,
-              "pct": 13.7,
+              "price": 28998.9,
+              "pct": 10.3,
               "by": "2026-08-12"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 525 sh ≈ ₹5,77,500 notional",
-          "reason": "Accumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 57.9%",
-          "social": "📊 F&O — MAXHEALTH (Stock) BUY\nAccumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 57.9%\n👉 Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures · 1 lot = 525 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #maxhealth #options",
-          "rank": 51.4
+          "optionPlay": "Buy 26300 CE (ATM) or 26200 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 25 sh ≈ ₹6,57,000 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 46.4%",
+          "changePct": -0.53,
+          "setupType": "Breakout watch",
+          "rsi": 56.9,
+          "social": "📊 F&O — SHREECEM (Stock) BUY\nBreakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 46.4%\n👉 Buy 26300 CE (ATM) or 26200 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #shreecem #options",
+          "rank": 50.2
         }
       ]
     },
@@ -2706,7 +2820,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 48% (mixed); 5-day volume > 20-day average (RVOL 0.62×); Up/down volume 3.47× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 600.5499877929688,
+          "ltp": 600.2000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -2757,7 +2871,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 63.1% (mixed); 5-day volume > 20-day average (RVOL 0.92×); Up/down volume 1.75× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 72.97000122070312,
+          "ltp": 72.80000305175781,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -2808,7 +2922,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 62.4% (mixed); 5-day volume > 20-day average (RVOL 2.35×); 1-day volume 2.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 1395.4000244140625,
+          "ltp": 1397.800048828125,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -2859,7 +2973,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 54.8% (mixed); 5-day volume > 20-day average (RVOL 1.48×); 1-day volume 1.3× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 25.299999237060547,
+          "ltp": 25.260000228881836,
           "entry": 26.25,
           "sl": 24.58,
           "slPct": -6.4,
@@ -2910,7 +3024,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 60.5% (mixed); 5-day volume > 20-day average (RVOL 0.02×); Up/down volume 3.08× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 26.780000686645508,
+          "ltp": 26.940000534057617,
           "entry": 27.2,
           "sl": 25.38,
           "slPct": -6.7,
@@ -2961,7 +3075,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 50.2% (mixed); 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 2.11× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 64.5,
+          "ltp": 64.79000091552734,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -3012,7 +3126,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 88.9% (strong hands); 5-day volume > 20-day average (RVOL 0.09×); Up/down volume 2.17× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 174.64999389648438,
+          "ltp": 174.99000549316406,
           "entry": 177.49,
           "sl": 163.39,
           "slPct": -7.9,
@@ -3063,7 +3177,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 50/100): Delivery 47.9% (mixed); 5-day volume > 20-day average (RVOL 0.12×); Up/down volume 2.15× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 173.39999389648438,
+          "ltp": 171.47999572753906,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -3114,7 +3228,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 60/100): Delivery 46.4% (mixed); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 2.25× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 407.54998779296875,
+          "ltp": 408.54998779296875,
           "entry": 423.3,
           "sl": 395.32,
           "slPct": -6.6,
@@ -3165,7 +3279,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 35.4% (mostly intraday); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 1.43× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 635.0999755859375,
+          "ltp": 619.0999755859375,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -3216,7 +3330,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 40/100): Delivery 45.9% (mixed); 1-day volume 1.8× the 5-day average — surge; Up/down volume 1.38× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 584.9000244140625,
+          "ltp": 581.25,
           "entry": 584.9,
           "sl": 547.81,
           "slPct": -6.3,
@@ -3267,7 +3381,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 29.1% (mostly intraday); 5-day volume > 20-day average (RVOL 3.61×); 1-day volume 3.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 134.8300018310547,
+          "ltp": 132.74000549316406,
           "entry": 134.83,
           "sl": 125.9,
           "slPct": -6.6,
@@ -3318,7 +3432,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 100% (strong hands); 5-day volume > 20-day average (RVOL 0.93×); Up/down volume 3.32× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 79.54000091552734,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -3369,7 +3483,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 47/100): Delivery 54.4% (mixed); Up/down volume 4.35× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
-          "ltp": 978.2000122070312,
+          "ltp": 981.2000122070312,
           "entry": 978.2,
           "sl": 879.27,
           "slPct": -10.1,
@@ -3429,7 +3543,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹24.69 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 25.520000457763672,
+          "ltp": 26.139999389648438,
           "entry": 24.97,
           "sl": 23.03,
           "slPct": -7.8,
@@ -3480,7 +3594,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹612.46 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 600.5499877929688,
+          "ltp": 600.2000122070312,
           "entry": 608.5,
           "sl": 571.84,
           "slPct": -6,
@@ -3533,7 +3647,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹185.68 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 183.82000732421875,
+          "ltp": 183.5800018310547,
           "entry": 184.57,
           "sl": 180.78,
           "slPct": -2.1,
@@ -3584,7 +3698,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹835.76 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 821.0499877929688,
+          "ltp": 829.9500122070312,
           "entry": 832,
           "sl": 784.38,
           "slPct": -5.7,
@@ -3610,7 +3724,7 @@
           ],
           "rr": 1.19,
           "rsi": 56.4,
-          "confidence": 91,
+          "confidence": 86,
           "accuracy": null,
           "backtestTrades": 1,
           "delivery": 71.4,
@@ -3619,7 +3733,7 @@
           "openedAt": "2026-07-13",
           "openTs": 1783915255,
           "status": "open",
-          "lastSeen": "2026-07-13",
+          "lastSeen": "2026-07-14",
           "t1": 888.7,
           "t2": 931.23,
           "t3": 973.76
@@ -3637,7 +3751,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹796.87 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 747.25,
+          "ltp": 743.2999877929688,
           "entry": 804.4,
           "sl": 726.65,
           "slPct": -9.7,
@@ -3688,7 +3802,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹85.85 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 84.44999694824219,
+          "ltp": 84.36000061035156,
           "entry": 84.91,
           "sl": 80.8,
           "slPct": -4.8,
@@ -3727,6 +3841,59 @@
           "t1": 90.39,
           "t2": 94.5,
           "t3": 98.61
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "AKASH",
+          "name": "Akash Infra-Projects Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "At POC ₹26.89 + Fib confluence — institutional magnet zone",
+          "direction": "LONG",
+          "ltp": 26.940000534057617,
+          "entry": 26.94,
+          "sl": 25.23,
+          "slPct": -6.3,
+          "targets": [
+            {
+              "price": 29.22,
+              "pct": 8.5,
+              "by": "2026-07-16",
+              "days": 2
+            },
+            {
+              "price": 30.93,
+              "pct": 14.8,
+              "by": "2026-07-21",
+              "days": 5
+            },
+            {
+              "price": 32.64,
+              "pct": 21.2,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 50.9,
+          "confidence": 81,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 82.9,
+          "changePct": -0.96,
+          "setupType": "Accumulation",
+          "social": "AKASH — Volume Profile + Fib setup 📈\nAt POC ₹26.89 + Fib confluence — institutional magnet zone\nLTP ₹26.94 · Entry ₹26.94 · SL ₹25.23 (-6.3%)\nT1 ₹29.22 (+8.5%) by 2026-07-16\nT2 ₹30.93 (+14.8%) · T3 ₹32.64 (+21.2%)\nSetup score 81/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AKASH #swingtrading #nifty",
+          "id": "vp_fib:AKASH",
+          "openedAt": "2026-07-14",
+          "openTs": 1784031642,
+          "status": "open",
+          "lastSeen": "2026-07-14",
+          "t1": 29.22,
+          "t2": 30.93,
+          "t3": 32.64
         },
         {
           "generator": "vp_fib",
@@ -3781,57 +3948,6 @@
         },
         {
           "generator": "vp_fib",
-          "symbol": "HARDWYN",
-          "name": "Hardwyn India Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹25.32 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 23.739999771118164,
-          "entry": 25.19,
-          "sl": 23.21,
-          "slPct": -7.9,
-          "targets": [
-            {
-              "price": 27.69,
-              "pct": 9.9,
-              "by": "2026-07-06",
-              "days": 11
-            },
-            {
-              "price": 29.57,
-              "pct": 17.4,
-              "by": "2026-07-15",
-              "days": 18
-            },
-            {
-              "price": 31.44,
-              "pct": 24.8,
-              "by": "2026-07-21",
-              "days": 22
-            }
-          ],
-          "rr": 1.26,
-          "rsi": 54.7,
-          "confidence": 80,
-          "accuracy": 80,
-          "backtestTrades": 5,
-          "delivery": 15.5,
-          "social": "HARDWYN — Volume Profile + Fib setup 📈\nAt POC ₹25.32 + Fib confluence — institutional magnet zone\nLTP ₹25.19 · Entry ₹25.19 · SL ₹23.21 (-7.9%)\nT1 ₹27.69 (+9.9%) by 2026-07-06\nT2 ₹29.57 (+17.4%) · T3 ₹31.44 (+24.8%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #HARDWYN #swingtrading #nifty",
-          "id": "vp_fib:HARDWYN",
-          "openedAt": "2026-06-20",
-          "openTs": 1781922643,
-          "status": "open",
-          "lastSeen": "2026-06-22",
-          "t1": 27.69,
-          "t2": 29.57,
-          "t3": 31.44
-        },
-        {
-          "generator": "vp_fib",
           "symbol": "CLEAN",
           "name": "Clean Science and Technology Ltd.",
           "sector": "Chemicals",
@@ -3842,7 +3958,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹794.44 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 754.2000122070312,
+          "ltp": 758.0499877929688,
           "entry": 792.85,
           "sl": 751.54,
           "slPct": -5.2,
@@ -3893,7 +4009,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹58.71 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 60.900001525878906,
+          "ltp": 60.5099983215332,
           "entry": 58.65,
           "sl": 55.59,
           "slPct": -5.2,
@@ -3946,7 +4062,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹757.55 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 761.3499755859375,
+          "ltp": 757.7999877929688,
           "entry": 761.35,
           "sl": 718.18,
           "slPct": -5.7,
@@ -3997,7 +4113,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹148.67 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 144.97000122070312,
+          "ltp": 142.10000610351562,
           "entry": 148.11,
           "sl": 136.03,
           "slPct": -8.2,
@@ -4051,7 +4167,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹446.13 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 438.3999938964844,
+          "ltp": 438.79998779296875,
           "entry": 449.95,
           "sl": 413.73,
           "slPct": -8,
@@ -4102,7 +4218,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹167.34 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 168.6999969482422,
+          "ltp": 169.1300048828125,
           "entry": 168.7,
           "sl": 159.81,
           "slPct": -5.3,
@@ -4153,7 +4269,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹104 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 103.4000015258789,
+          "ltp": 104.12999725341797,
           "entry": 102.83,
           "sl": 95.06,
           "slPct": -7.6,
@@ -4264,7 +4380,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 600.5499877929688,
+          "ltp": 600.2000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -4315,7 +4431,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 1395.4000244140625,
+          "ltp": 1397.800048828125,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -4366,7 +4482,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 72.97000122070312,
+          "ltp": 72.80000305175781,
           "entry": 76.26,
           "sl": 68.22,
           "slPct": -10.5,
@@ -4418,7 +4534,7 @@
           "label": "Money Flow",
           "reason": "MFI 72 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 337.70001220703125,
+          "ltp": 334.1499938964844,
           "entry": 346.25,
           "sl": 322.73,
           "slPct": -6.8,
@@ -4469,7 +4585,7 @@
           "label": "Money Flow",
           "reason": "MFI 66 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 26.780000686645508,
+          "ltp": 26.940000534057617,
           "entry": 27.2,
           "sl": 25.38,
           "slPct": -6.7,
@@ -4520,7 +4636,7 @@
           "label": "Money Flow",
           "reason": "MFI 71 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 64.5,
+          "ltp": 64.79000091552734,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -4571,7 +4687,7 @@
           "label": "Money Flow",
           "reason": "MFI 52 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 174.64999389648438,
+          "ltp": 174.99000549316406,
           "entry": 177.49,
           "sl": 163.39,
           "slPct": -7.9,
@@ -4622,7 +4738,7 @@
           "label": "Money Flow",
           "reason": "MFI 56 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 173.39999389648438,
+          "ltp": 171.47999572753906,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -4673,7 +4789,7 @@
           "label": "Money Flow",
           "reason": "MFI 70 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 635.0999755859375,
+          "ltp": 619.0999755859375,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -4715,57 +4831,6 @@
         },
         {
           "generator": "money_flow",
-          "symbol": "ALGOQUANT",
-          "name": "Algoquant Fintech Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 63 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 60.900001525878906,
-          "entry": 58.65,
-          "sl": 55.59,
-          "slPct": -5.2,
-          "targets": [
-            {
-              "price": 62.72,
-              "pct": 6.9,
-              "by": "2026-07-20",
-              "days": 5
-            },
-            {
-              "price": 65.78,
-              "pct": 12.2,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 68.84,
-              "pct": 17.4,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 20.8,
-          "social": "ALGOQUANT — Money Flow setup 📈\nMFI 63 rising + OBV up — money flowing in\nLTP ₹58.65 · Entry ₹58.65 · SL ₹55.59 (-5.2%)\nT1 ₹62.72 (+6.9%) by 2026-07-20\nT2 ₹65.78 (+12.2%) · T3 ₹68.84 (+17.4%)\nSetup score 80/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ALGOQUANT #swingtrading #nifty",
-          "id": "money_flow:ALGOQUANT",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-14",
-          "t1": 62.72,
-          "t2": 65.78,
-          "t3": 68.84
-        },
-        {
-          "generator": "money_flow",
           "symbol": "GKSL",
           "name": "Gujarat Kidney And Super Speciality Limited",
           "sector": "Equity",
@@ -4775,7 +4840,7 @@
           "label": "Money Flow",
           "reason": "MFI 67 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 134.8300018310547,
+          "ltp": 132.74000549316406,
           "entry": 133.11,
           "sl": 125.98,
           "slPct": -5.4,
@@ -4826,7 +4891,7 @@
           "label": "Money Flow",
           "reason": "MFI 73 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 226.00999450683594,
+          "ltp": 226.47999572753906,
           "entry": 226.01,
           "sl": 195.66,
           "slPct": -13.4,
@@ -4877,7 +4942,7 @@
           "label": "Money Flow",
           "reason": "MFI 78 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 79.54000091552734,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -4919,6 +4984,59 @@
         },
         {
           "generator": "money_flow",
+          "symbol": "SHANTI",
+          "name": "Shanti Overseas (India) Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 79 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 7.139999866485596,
+          "entry": 7.14,
+          "sl": 6.29,
+          "slPct": -11.9,
+          "targets": [
+            {
+              "price": 7.98,
+              "pct": 11.8,
+              "by": "2026-07-22",
+              "days": 6
+            },
+            {
+              "price": 8.6,
+              "pct": 20.4,
+              "by": "2026-07-30",
+              "days": 12
+            },
+            {
+              "price": 9.23,
+              "pct": 29.3,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 0.98,
+          "rsi": 63.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 80.9,
+          "changePct": 0.85,
+          "setupType": "Squeeze breakout",
+          "social": "SHANTI — Money Flow setup 📈\nMFI 79 rising + OBV up — money flowing in\nLTP ₹7.14 · Entry ₹7.14 · SL ₹6.29 (-11.9%)\nT1 ₹7.98 (+11.8%) by 2026-07-22\nT2 ₹8.6 (+20.4%) · T3 ₹9.23 (+29.3%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SHANTI #swingtrading #nifty",
+          "id": "money_flow:SHANTI",
+          "openedAt": "2026-07-14",
+          "openTs": 1784031642,
+          "status": "open",
+          "lastSeen": "2026-07-14",
+          "t1": 7.98,
+          "t2": 8.6,
+          "t3": 9.23
+        },
+        {
+          "generator": "money_flow",
           "symbol": "CASTROLIND",
           "name": "Castrol India Ltd.",
           "sector": "Oil Gas & Consumable Fuels",
@@ -4931,7 +5049,7 @@
           "label": "Money Flow",
           "reason": "MFI 51 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 183.82000732421875,
+          "ltp": 183.5800018310547,
           "entry": 185.8,
           "sl": 181.69,
           "slPct": -2.2,
@@ -4993,7 +5111,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 1537.5,
+          "ltp": 1527.300048828125,
           "entry": 1586.2,
           "sl": 1491.01,
           "slPct": -6,
@@ -5044,7 +5162,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 635.0999755859375,
+          "ltp": 619.0999755859375,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -5095,7 +5213,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII stable, Pledge 0%",
           "direction": "LONG",
-          "ltp": 60.900001525878906,
+          "ltp": 60.5099983215332,
           "entry": 60.9,
           "sl": 55.94,
           "slPct": -8.1,
@@ -5137,6 +5255,59 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "SIYSIL",
+          "name": "Siyaram Silk Mills Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII down, DII stable, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 647.2999877929688,
+          "entry": 647.3,
+          "sl": 600.65,
+          "slPct": -7.2,
+          "targets": [
+            {
+              "price": 690.79,
+              "pct": 6.7,
+              "by": "2026-07-24",
+              "days": 8
+            },
+            {
+              "price": 723.4,
+              "pct": 11.8,
+              "by": "2026-07-29",
+              "days": 11
+            },
+            {
+              "price": 756.01,
+              "pct": 16.8,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 0.93,
+          "rsi": 58.4,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "delivery": 51.5,
+          "changePct": -0.35,
+          "setupType": "Momentum building",
+          "social": "SIYSIL — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII stable, Pledge 0%\nLTP ₹647.3 · Entry ₹647.3 · SL ₹600.65 (-7.2%)\nT1 ₹690.79 (+6.7%) by 2026-07-24\nT2 ₹723.4 (+11.8%) · T3 ₹756.01 (+16.8%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SIYSIL #swingtrading #nifty",
+          "id": "multibagger:SIYSIL",
+          "openedAt": "2026-07-14",
+          "openTs": 1784031642,
+          "status": "open",
+          "lastSeen": "2026-07-14",
+          "t1": 690.79,
+          "t2": 723.4,
+          "t3": 756.01
+        },
+        {
+          "generator": "multibagger",
           "symbol": "CLEAN",
           "name": "Clean Science and Technology Ltd.",
           "sector": "Chemicals",
@@ -5147,7 +5318,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter up, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 754.2000122070312,
+          "ltp": 758.0499877929688,
           "entry": 792.85,
           "sl": 751.54,
           "slPct": -5.2,
@@ -5198,7 +5369,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII stable, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 550.7999877929688,
+          "ltp": 549.0499877929688,
           "entry": 559.45,
           "sl": 516.6,
           "slPct": -7.7,
@@ -5252,7 +5423,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 1563.9000244140625,
+          "ltp": 1560.699951171875,
           "entry": 1523.8,
           "sl": 1442.21,
           "slPct": -5.4,
@@ -5294,6 +5465,59 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "GRWRHITECH",
+          "name": "Garware Hi-Tech Films Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII stable, DII down, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 7037,
+          "entry": 7037,
+          "sl": 6607.56,
+          "slPct": -6.1,
+          "targets": [
+            {
+              "price": 7551.38,
+              "pct": 7.3,
+              "by": "2026-07-20",
+              "days": 4
+            },
+            {
+              "price": 7937.17,
+              "pct": 12.8,
+              "by": "2026-07-23",
+              "days": 7
+            },
+            {
+              "price": 8322.95,
+              "pct": 18.3,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 1.2,
+          "rsi": 66.9,
+          "confidence": 78,
+          "accuracy": 77.8,
+          "backtestTrades": 9,
+          "delivery": 40.5,
+          "changePct": -0.06,
+          "setupType": "Squeeze breakout",
+          "social": "GRWRHITECH — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII down, Pledge 0%\nLTP ₹7037 · Entry ₹7037 · SL ₹6607.56 (-6.1%)\nT1 ₹7551.38 (+7.3%) by 2026-07-20\nT2 ₹7937.17 (+12.8%) · T3 ₹8322.95 (+18.3%)\nBacktested first-target hit ~77.8% over 9 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRWRHITECH #swingtrading #nifty",
+          "id": "multibagger:GRWRHITECH",
+          "openedAt": "2026-07-14",
+          "openTs": 1784031642,
+          "status": "open",
+          "lastSeen": "2026-07-14",
+          "t1": 7551.38,
+          "t2": 7937.17,
+          "t3": 8322.95
+        },
+        {
+          "generator": "multibagger",
           "symbol": "PNCINFRA",
           "name": "PNC Infratech Limited",
           "sector": "Equity",
@@ -5303,7 +5527,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 244.94000244140625,
+          "ltp": 244.52999877929688,
           "entry": 244.94,
           "sl": 231.84,
           "slPct": -5.3,
@@ -5356,7 +5580,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter up, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 395.6499938964844,
+          "ltp": 399.25,
           "entry": 401.7,
           "sl": 383.92,
           "slPct": -4.4,
@@ -5411,7 +5635,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter up, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 3186.5,
+          "ltp": 3188.89990234375,
           "entry": 3186.5,
           "sl": 3009.37,
           "slPct": -5.6,
@@ -5462,7 +5686,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 303.1000061035156,
+          "ltp": 303.95001220703125,
           "entry": 303.1,
           "sl": 289.47,
           "slPct": -4.5,
@@ -5513,7 +5737,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 180.75,
+          "ltp": 180.24000549316406,
           "entry": 192.32,
           "sl": 171.45,
           "slPct": -10.9,
@@ -5568,7 +5792,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII stable, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 10222.5,
+          "ltp": 10166,
           "entry": 10222.5,
           "sl": 9886.67,
           "slPct": -3.3,
@@ -5621,7 +5845,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 286.29998779296875,
+          "ltp": 290.1499938964844,
           "entry": 286.1,
           "sl": 266.03,
           "slPct": -7,
@@ -5660,113 +5884,6 @@
           "t1": 302.3,
           "t2": 314.46,
           "t3": 326.61
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "ADANIPORTS",
-          "name": "Adani Ports and Special Economic Zone Ltd.",
-          "sector": "Services",
-          "indices": [
-            "NIFTY 50",
-            "NIFTY 100",
-            "NIFTY 500"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII stable, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 1825,
-          "entry": 1842.1,
-          "sl": 1769.99,
-          "slPct": -3.9,
-          "targets": [
-            {
-              "price": 1921.17,
-              "pct": 4.3,
-              "by": "2026-06-26",
-              "days": 6
-            },
-            {
-              "price": 1980.48,
-              "pct": 7.5,
-              "by": "2026-07-06",
-              "days": 12
-            },
-            {
-              "price": 2039.78,
-              "pct": 10.7,
-              "by": "2026-07-17",
-              "days": 21
-            }
-          ],
-          "rr": 1.1,
-          "rsi": 62,
-          "confidence": 57,
-          "accuracy": 57.1,
-          "backtestTrades": 7,
-          "delivery": 67.5,
-          "social": "ADANIPORTS — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII stable, Pledge 0%\nLTP ₹1842.1 · Entry ₹1842.1 · SL ₹1769.99 (-3.9%)\nT1 ₹1921.17 (+4.3%) by 2026-06-26\nT2 ₹1980.48 (+7.5%) · T3 ₹2039.78 (+10.7%)\nBacktested first-target hit ~57.1% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ADANIPORTS #swingtrading #nifty",
-          "id": "multibagger:ADANIPORTS",
-          "openedAt": "2026-06-18",
-          "openTs": 1781779344,
-          "status": "open",
-          "lastSeen": "2026-06-19",
-          "t1": 1921.17,
-          "t2": 1980.48,
-          "t3": 2039.78
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "BOSCHLTD",
-          "name": "Bosch Ltd.",
-          "sector": "Automobile and Auto Components",
-          "indices": [
-            "NIFTY Next 50",
-            "NIFTY 100",
-            "NIFTY 500",
-            "NIFTY Auto"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 41580,
-          "entry": 41635,
-          "sl": 39561.99,
-          "slPct": -5,
-          "targets": [
-            {
-              "price": 43515.09,
-              "pct": 4.5,
-              "by": "2026-07-17",
-              "days": 7
-            },
-            {
-              "price": 44925.15,
-              "pct": 7.9,
-              "by": "2026-07-24",
-              "days": 12
-            },
-            {
-              "price": 46335.21,
-              "pct": 11.3,
-              "by": "2026-08-06",
-              "days": 21
-            }
-          ],
-          "rr": 0.91,
-          "rsi": 69.2,
-          "confidence": 57,
-          "accuracy": 57.1,
-          "backtestTrades": 7,
-          "delivery": 55.9,
-          "social": "BOSCHLTD — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII up, Pledge 0%\nLTP ₹41635 · Entry ₹41635 · SL ₹39561.99 (-5%)\nT1 ₹43515.09 (+4.5%) by 2026-07-17\nT2 ₹44925.15 (+7.9%) · T3 ₹46335.21 (+11.3%)\nBacktested first-target hit ~57.1% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BOSCHLTD #swingtrading #nifty",
-          "id": "multibagger:BOSCHLTD",
-          "openedAt": "2026-07-08",
-          "openTs": 1783497228,
-          "status": "open",
-          "lastSeen": "2026-07-08",
-          "t1": 43515.09,
-          "t2": 44925.15,
-          "t3": 46335.21
         }
       ]
     },
@@ -5788,7 +5905,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 25.520000457763672,
+          "ltp": 26.139999389648438,
           "entry": 24.97,
           "sl": 23.03,
           "slPct": -7.8,
@@ -5890,7 +6007,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 600.5499877929688,
+          "ltp": 600.2000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -5941,7 +6058,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Morning Star — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 72.97000122070312,
+          "ltp": 72.80000305175781,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -5992,7 +6109,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 25.299999237060547,
+          "ltp": 25.260000228881836,
           "entry": 26.25,
           "sl": 24.58,
           "slPct": -6.4,
@@ -6045,7 +6162,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish Engulfing — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 337.70001220703125,
+          "ltp": 334.1499938964844,
           "entry": 339.8,
           "sl": 319.34,
           "slPct": -6,
@@ -6096,7 +6213,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 64.5,
+          "ltp": 64.79000091552734,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -6147,7 +6264,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 174.64999389648438,
+          "ltp": 174.99000549316406,
           "entry": 177.49,
           "sl": 163.39,
           "slPct": -7.9,
@@ -6198,7 +6315,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 173.39999389648438,
+          "ltp": 171.47999572753906,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -6249,7 +6366,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 72.8499984741211,
+          "ltp": 71.45999908447266,
           "entry": 73.01,
           "sl": 66.43,
           "slPct": -9,
@@ -6300,7 +6417,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 407.54998779296875,
+          "ltp": 408.54998779296875,
           "entry": 423.3,
           "sl": 395.32,
           "slPct": -6.6,
@@ -6351,7 +6468,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 978.2000122070312,
+          "ltp": 981.2000122070312,
           "entry": 976.35,
           "sl": 879.59,
           "slPct": -9.9,
@@ -6402,7 +6519,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 60.900001525878906,
+          "ltp": 60.5099983215332,
           "entry": 60.9,
           "sl": 55.94,
           "slPct": -8.1,
@@ -6453,7 +6570,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 584.9000244140625,
+          "ltp": 581.25,
           "entry": 584.9,
           "sl": 547.81,
           "slPct": -6.3,
@@ -6504,7 +6621,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 134.8300018310547,
+          "ltp": 132.74000549316406,
           "entry": 134.83,
           "sl": 125.9,
           "slPct": -6.6,
@@ -6550,7 +6667,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Purnima/Amavasya · Krishna (waning) · Harshana yoga · Karana Naga · Moon Gemini · Punarvasu (Pada 2) · lord Jupiter. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Pratipada · Shukla (waxing) · Harshana yoga · Karana Kimstughna · Moon Gemini · Punarvasu (Pada 3) · lord Jupiter. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
@@ -6559,9 +6676,9 @@
           "isAssetBias": true,
           "symbol": "NIFTY",
           "name": "Nifty 50",
-          "score": -30,
-          "label": "SELL ON RISE / MANDI",
-          "biasTone": "down",
+          "score": -14,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
           "navaTara": "Vipat (pos 3)",
           "navaBad": true,
           "bullWindows": [
@@ -6636,14 +6753,14 @@
           "bullCount": 5,
           "bearCount": 7,
           "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
           "reasonsBear": [
-            "Nava Tara Vipat (pos 3) from natal Dhanishta — danger/avoid",
-            "Krishna paksha (waning Moon)"
+            "Nava Tara Vipat (pos 3) from natal Dhanishta — danger/avoid"
           ],
-          "social": "🔮 Nifty 50 — Vedic daily bias -30 (SELL ON RISE / MANDI)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
+          "social": "🔮 Nifty 50 — Vedic daily bias -14 (RANGE / NEUTRAL)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6651,9 +6768,9 @@
           "isAssetBias": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty",
-          "score": 10,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
+          "score": 26,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
           "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
@@ -6746,13 +6863,12 @@
           "bullCount": 8,
           "bearCount": 7,
           "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Bank Nifty — Vedic daily bias +10 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Bank Nifty — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6760,9 +6876,9 @@
           "isAssetBias": true,
           "symbol": "SENSEX",
           "name": "Sensex",
-          "score": 14,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
+          "score": 30,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
           "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
@@ -6838,13 +6954,12 @@
           "bearCount": 7,
           "reasonsBull": [
             "Nava Tara Sampat (pos 2) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Sensex — Vedic daily bias +14 (RANGE / NEUTRAL)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Sensex — Vedic daily bias +30 (BUY ON DIP)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6852,8 +6967,8 @@
           "isAssetBias": true,
           "symbol": "GOLD",
           "name": "Gold",
-          "score": 35,
-          "label": "BUY ON DIP",
+          "score": 51,
+          "label": "BUY / TEJI",
           "biasTone": "up",
           "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
@@ -6972,12 +7087,11 @@
           "bearCount": 7,
           "reasonsBull": [
             "Nava Tara Param Mitra (pos 9) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Gold — Vedic daily bias +35 (BUY ON DIP)\nBullish windows (IST): 7:14 AM–8:20 AM Sun, 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Gold — Vedic daily bias +51 (BUY / TEJI)\nBullish windows (IST): 7:14 AM–8:20 AM Sun, 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -6985,9 +7099,9 @@
           "isAssetBias": true,
           "symbol": "SILVER",
           "name": "Silver",
-          "score": 11,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
+          "score": 27,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
           "navaTara": "Kshema (pos 4)",
           "navaBad": false,
           "bullWindows": [
@@ -7102,12 +7216,11 @@
           "bearCount": 10,
           "reasonsBull": [
             "Nava Tara Kshema (pos 4) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Silver — Vedic daily bias +11 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Silver — Vedic daily bias +27 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7115,7 +7228,7 @@
           "isAssetBias": true,
           "symbol": "NIFTYFMCG",
           "name": "Nifty FMCG",
-          "score": 23,
+          "score": 39,
           "label": "BUY ON DIP",
           "biasTone": "up",
           "navaTara": "Kshema (pos 4)",
@@ -7217,12 +7330,11 @@
           "bearCount": 7,
           "reasonsBull": [
             "Nava Tara Kshema (pos 4) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Nifty FMCG — Vedic daily bias +23 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty FMCG — Vedic daily bias +39 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7230,8 +7342,8 @@
           "isAssetBias": true,
           "symbol": "NIFTYMETAL",
           "name": "Nifty Metal",
-          "score": 28,
-          "label": "BUY ON DIP",
+          "score": 44,
+          "label": "BUY / TEJI",
           "biasTone": "up",
           "navaTara": "Sadhaka (pos 6)",
           "navaBad": false,
@@ -7328,13 +7440,13 @@
           "bearCount": 5,
           "reasonsBull": [
             "Nava Tara Sadhaka (pos 6) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
-            "Krishna paksha (waning Moon)",
             "Mercury (bearish karaka) strong in Gemini"
           ],
-          "social": "🔮 Nifty Metal — Vedic daily bias +28 (BUY ON DIP)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 12:44 PM–1:50 PM Jupiter, 1:50 PM–2:56 PM Mars\nBearish windows: 9:26 AM–10:32 AM Mercury, 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 11:50 PM–12:44 AM Mercury\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
+          "social": "🔮 Nifty Metal — Vedic daily bias +44 (BUY / TEJI)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 7:14 AM–8:20 AM Sun, 12:44 PM–1:50 PM Jupiter, 1:50 PM–2:56 PM Mars\nBearish windows: 9:26 AM–10:32 AM Mercury, 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 11:50 PM–12:44 AM Mercury\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7342,8 +7454,8 @@
           "isAssetBias": true,
           "symbol": "NIFTYPHARMA",
           "name": "Nifty Pharma",
-          "score": 26,
-          "label": "BUY ON DIP",
+          "score": 42,
+          "label": "BUY / TEJI",
           "biasTone": "up",
           "navaTara": "Mitra (pos 8)",
           "navaBad": false,
@@ -7438,13 +7550,12 @@
           "bearCount": 7,
           "reasonsBull": [
             "Nava Tara Mitra (pos 8) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Nifty Pharma — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty Pharma — Vedic daily bias +42 (BUY / TEJI)\nBullish windows (IST): 9:26 AM–10:32 AM Mercury, 10:32 AM–11:38 AM Moon, 12:44 PM–1:50 PM Jupiter, 6:14 PM–7:20 PM Moon\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7452,9 +7563,9 @@
           "isAssetBias": true,
           "symbol": "NIFTYIT",
           "name": "Nifty IT",
-          "score": 7,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
+          "score": 23,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
           "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
@@ -7530,12 +7641,11 @@
           "bearCount": 7,
           "reasonsBull": [
             "Nava Tara Sampat (pos 2) — supportive star",
+            "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Nifty IT — Vedic daily bias +7 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 10:56 PM–11:50 PM Venus, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty IT — Vedic daily bias +23 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 10:56 PM–11:50 PM Venus, 11:50 PM–12:44 AM Mercury\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7543,7 +7653,7 @@
           "isAssetBias": true,
           "symbol": "NIFTYAUTO",
           "name": "Nifty Auto",
-          "score": -5,
+          "score": 11,
           "label": "RANGE / NEUTRAL",
           "biasTone": "flat",
           "navaTara": "Vipat (pos 3)",
@@ -7624,13 +7734,13 @@
           "bullCount": 9,
           "bearCount": 3,
           "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
             "Mercury strong in Gemini"
           ],
           "reasonsBear": [
-            "Nava Tara Vipat (pos 3) from natal Chitra — danger/avoid",
-            "Krishna paksha (waning Moon)"
+            "Nava Tara Vipat (pos 3) from natal Chitra — danger/avoid"
           ],
-          "social": "🔮 Nifty Auto — Vedic daily bias -5 (RANGE / NEUTRAL)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 1:50 PM–2:56 PM Mars\nBearish windows: 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 1:38 AM–2:32 AM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
+          "social": "🔮 Nifty Auto — Vedic daily bias +11 (RANGE / NEUTRAL)\nBullish windows (IST): 6:09 AM–7:14 AM Mars, 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 1:50 PM–2:56 PM Mars\nBearish windows: 11:38 AM–12:44 PM Saturn, 7:20 PM–8:14 PM Saturn, 1:38 AM–2:32 AM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -7638,9 +7748,9 @@
           "isAssetBias": true,
           "symbol": "NIFTYFIN",
           "name": "Nifty Financial",
-          "score": 10,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
+          "score": 26,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
           "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
@@ -7733,13 +7843,12 @@
           "bullCount": 8,
           "bearCount": 7,
           "reasonsBull": [
+            "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Gemini"
           ],
-          "reasonsBear": [
-            "Krishna paksha (waning Moon)"
-          ],
-          "social": "🔮 Nifty Financial — Vedic daily bias +10 (RANGE / NEUTRAL)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty Financial — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 8:20 AM–9:26 AM Venus, 9:26 AM–10:32 AM Mercury, 12:44 PM–1:50 PM Jupiter, 8:14 PM–9:08 PM Jupiter\nBearish windows: 6:09 AM–7:14 AM Mars, 11:38 AM–12:44 PM Saturn, 1:50 PM–2:56 PM Mars, 7:20 PM–8:14 PM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
         }
       ]
     },
@@ -7747,7 +7856,7 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Tuesday · ☀ 6:09 AM–7:20 PM · Rahu Kaal 4:02 PM–5:41 PM (avoid fresh entries) · Moon Gemini · Punarvasu (Pada 2) · lord Jupiter",
+      "desc": "Tuesday · ☀ 6:09 AM–7:20 PM · Rahu Kaal 4:02 PM–5:41 PM (avoid fresh entries) · Moon Gemini · Punarvasu (Pada 3) · lord Jupiter",
       "count": 24,
       "signals": [
         {
@@ -8077,7 +8186,7 @@
           "symbol": "NIFTY",
           "name": "Nifty Option Chain",
           "placeholder": true,
-          "reason": "Option master unavailable (Angel scrip file). Retry next scan.",
+          "reason": "Option build-up error: Unexpected token 'o', \"not found\" is not valid JSON",
           "bias": "No live feed",
           "biasTone": "flat"
         },
@@ -8087,7 +8196,7 @@
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty Option Chain",
           "placeholder": true,
-          "reason": "Option master unavailable (Angel scrip file). Retry next scan.",
+          "reason": "Option build-up error: Unexpected token 'o', \"not found\" is not valid JSON",
           "bias": "No live feed",
           "biasTone": "flat"
         }
