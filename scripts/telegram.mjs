@@ -57,28 +57,70 @@ export async function sendTelegram(text) {
   } catch (e) { return { ok: false, error: e.message } }
 }
 
-// Post NEW high-conviction signals (F&O A-grade + confluence A++/A+). Dedups by id.
+const loadSent = () => { try { return JSON.parse(readFileSync('public/tg_sent.json', 'utf8')) } catch { return {} } }
+const saveSent = sent => { const k = Object.keys(sent); const s = k.length > 1500 ? Object.fromEntries(k.slice(-1500).map(x => [x, sent[x]])) : sent; try { writeFileSync('public/tg_sent.json', JSON.stringify(s)) } catch {} }
+
+// A setup is "extended" (the move already started) — we only alert BEFORE the move.
+function isExtended(s) {
+  if (s.changePct != null && s.changePct >= 3) return true                       // already popped ≥3% today
+  if (s.ltp != null && s.entry != null && s.ltp > s.entry * 1.025) return true    // price already ran past entry
+  if (s.rsi != null && s.rsi > 72) return true                                    // already overbought
+  const preMove = ['Squeeze breakout', 'Breakout watch', 'Accumulation', 'Momentum building']
+  if (s.setupType && !preMove.includes(s.setupType)) return true
+  return false
+}
+
+// Post ONLY the highest-conviction PRE-MOVE setups (A++). One alert per symbol ever
+// (no duplicate for an entry made days ago). NOT "100% sure" — that doesn't exist.
 export async function notifyNewSignals(board, dateStr) {
   if (!E.TELEGRAM_BOT_TOKEN || !E.TELEGRAM_CHAT_ID) { console.log('Telegram: no creds — skipping'); return }
-  let sent = {}; try { sent = JSON.parse(readFileSync('public/tg_sent.json', 'utf8')) } catch {}
+  const sent = loadSent()
   const gens = board.generators || []
   const cands = []
   const fno = gens.find(g => g.id === 'fno')
-  if (fno) for (const s of fno.signals) if (s.kind === 'Index' || s.kind === 'Commodity' || (s.confidence ?? 0) >= 55 || ['A++', 'A+'].includes(s.grade)) cands.push(s)
+  if (fno) for (const s of fno.signals) if (s.kind === 'Stock' && (s.grade === 'A++' || (s.grade === 'A+' && (s.delivery ?? 0) >= 60))) cands.push(s)
   const conf = gens.find(g => g.id === 'confluence')
-  if (conf) for (const s of conf.signals) if (['A++', 'A+'].includes(s.grade)) cands.push(s)
-  let count = 0
+  if (conf) for (const s of conf.signals) if (s.grade === 'A++') cands.push(s)
+  let count = 0, skipped = 0
   for (const s of cands) {
-    const id = `${s.generator}:${s.underlying || s.symbol}:${s.entry ?? s.spot ?? ''}`
+    const id = 'entry:' + (s.underlying || s.symbol)                // stable per symbol → no repeat alerts
     if (sent[id]) continue
+    if (isExtended(s)) { sent[id] = dateStr; skipped++; continue }  // move already started → skip (and don't re-check)
     const res = await sendTelegram(formatSignal(s, dateStr))
     if (res.skipped) break
     if (res.ok) { sent[id] = dateStr; count++; await new Promise(r => setTimeout(r, 1300)) }
-    if (count >= 12) break
+    if (count >= 8) break
   }
-  const keys = Object.keys(sent); if (keys.length > 800) sent = Object.fromEntries(keys.slice(-800).map(k => [k, sent[k]]))
-  writeFileSync('public/tg_sent.json', JSON.stringify(sent))
-  console.log(`Telegram: sent ${count} new alerts`)
+  saveSent(sent)
+  console.log(`Telegram: ${count} A++ pre-move alerts (${skipped} skipped — move already started)`)
+}
+
+// UPDATE alerts for positions that just resolved (target hit / SL hit) — never re-send an entry.
+export async function notifyClosures(closed, dateStr) {
+  if (!E.TELEGRAM_BOT_TOKEN || !E.TELEGRAM_CHAT_ID || !closed || !closed.length) return
+  const sent = loadSent()
+  let count = 0
+  for (const s of closed) {
+    const id = 'close:' + s.symbol + ':' + s.result + ':' + (s.closePrice ?? '')
+    if (sent[id]) continue
+    const res = await sendTelegram(formatUpdate(s, dateStr))
+    if (res.skipped) break
+    if (res.ok) { sent[id] = dateStr; count++; await new Promise(r => setTimeout(r, 1200)) }
+  }
+  saveSent(sent)
+  if (count) console.log(`Telegram: ${count} update alerts (target/SL hit)`)
+}
+
+function formatUpdate(s, dateStr) {
+  const win = s.result === 'win'
+  const L = []
+  L.push('📈 *STOCKSBYVARSHA — UPDATE*')
+  L.push('━━━━━━━━━━━━━━━━━━')
+  L.push(`${win ? '🎯' : '🔴'} *${win ? `TARGET HIT (T${s.maxTarget || 1})` : 'STOP-LOSS HIT'} — ${s.symbol}*`)
+  L.push(`Entry ₹${s.entry} → ${win ? 'T' + (s.maxTarget || 1) : 'SL'} ₹${s.closePrice}  (${s.returnPct > 0 ? '+' : ''}${s.returnPct}%)`)
+  L.push(`Held ${s.daysHeld} day(s) · opened ${s.openedAt}`)
+  L.push(`🕐 ${dateStr} IST · 📌 _Educational only, not advice._`)
+  return L.join('\n')
 }
 
 // CLI: send a sample of the current board's top signal to verify format/delivery

@@ -17,7 +17,7 @@ import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './l
 import { trackNews } from './news.mjs'
 import { fetchDelivery } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
-import { notifyNewSignals } from './telegram.mjs'
+import { notifyNewSignals, notifyClosures } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
@@ -424,13 +424,13 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const todayISO = today.toISOString().slice(0, 10)
 
   // ── LEDGER (DAILY only): track every signal to win/loss/expired; closed signals leave the board ──
-  let tr = null, goal = null
+  let tr = null, goal = null, closedNow = []
   if (isDaily) {
     const ledger = loadLedger()
     const barsBySymbol = {}
     for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
     for (const g of board) if (TRADE_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
-    evaluate(ledger, barsBySymbol, todayISO, todayTs)
+    closedNow = evaluate(ledger, barsBySymbol, todayISO, todayTs)
     for (const g of board) if (TRADE_GENS.has(g.id)) {
       const act = Object.values(ledger.active).filter(s => s.generator === g.id).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
       g.signals = act; g.count = act.length
@@ -493,8 +493,9 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
-  // ── TELEGRAM: post new high-conviction signals (F&O + confluence) in rich format ──
+  // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──
   try { await notifyNewSignals({ generators: board }, todayISO) } catch (e) { console.log('Telegram skipped:', e.message) }
+  try { await notifyClosures(closedNow, todayISO) } catch (e) { console.log('Telegram updates skipped:', e.message) }
 
   // ── write the timeframe board (board-daily/weekly/intraday.json); daily also writes board.json ──
   const boardJson = JSON.stringify({
@@ -652,7 +653,7 @@ function buildFno(board, dbAssets, fnoLots, scored, addDays) {
     const tg = (st.targets || []).map((t, i) => ({ price: t, pct: round(((t - st.entry) / st.entry) * 100, 1), by: addDays((st.etaDays || [])[i] || (i + 1) * 5) }))
     const reason = `${st.setupType}: ${(st.precursors || []).slice(0, 2).join('; ')}${st._deliv ? ` · Delivery ${st._deliv.pct}%` : ''}`
     const play = optionPlay('BUY', px)
-    out.push({ generator: 'fno', underlying: st.symbol, name: st.name, kind: 'Stock', direction: 'BUY', dirTone: 'up', spot: px, lot, grade: st.moveScore >= 60 ? 'A+' : 'A', confidence: st.moveScore, delivery: st._deliv?.pct ?? null, entry: st.entry, sl: st.sl, slPct: round(((st.sl - st.entry) / st.entry) * 100, 1), targets: tg, rr: st.rr, optionPlay: play, futures: `1 lot = ${lot} sh ≈ ₹${Math.round(lot * px).toLocaleString('en-IN')} notional`, reason, social: social(st.symbol, 'Stock', 'BUY', reason, `${play} · 1 lot = ${lot} sh`), rank: 40 + st.moveScore / 5 })
+    out.push({ generator: 'fno', underlying: st.symbol, name: st.name, kind: 'Stock', direction: 'BUY', dirTone: 'up', spot: px, lot, grade: st.moveScore >= 60 ? 'A+' : 'A', confidence: st.moveScore, delivery: st._deliv?.pct ?? null, entry: st.entry, sl: st.sl, slPct: round(((st.sl - st.entry) / st.entry) * 100, 1), targets: tg, rr: st.rr, optionPlay: play, futures: `1 lot = ${lot} sh ≈ ₹${Math.round(lot * px).toLocaleString('en-IN')} notional`, reason, changePct: st.changePct, setupType: st.setupType, rsi: st.rsi, social: social(st.symbol, 'Stock', 'BUY', reason, `${play} · 1 lot = ${lot} sh`), rank: 40 + st.moveScore / 5 })
   }
   return out.sort((a, b) => (b.rank || 0) - (a.rank || 0))
 }

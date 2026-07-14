@@ -63,7 +63,9 @@ function mk(gen, st, a, reason, accuracy, addDays) {
     label: gen.label, reason, direction: 'LONG',
     ltp: a.price, entry: a.entry, sl: a.sl, slPct: pct(a.sl), targets,
     rr: a.rr, rsi: a.rsi, confidence: conf, accuracy, backtestTrades: n,
-    delivery: st._deliv ? st._deliv.pct : null, social,
+    delivery: st._deliv ? st._deliv.pct : null,
+    changePct: a.changePct, setupType: a.setupType, // for pre-move filtering (alert BEFORE the move)
+    social,
   }
 }
 

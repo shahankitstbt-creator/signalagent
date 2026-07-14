@@ -30,7 +30,9 @@ export function openOrUpdate(ledger, card, todayISO, todayTs) {
 }
 
 // Evaluate every open signal against bars after it opened. barsBySymbol[sym] = {time,h,l,c}
+// Returns the signals that CLOSED during this run (for update alerts).
 export function evaluate(ledger, barsBySymbol, todayISO, todayTs) {
+  const closedNow = []
   for (const id of Object.keys(ledger.active)) {
     const s = ledger.active[id]
     if (s.status !== 'open') continue
@@ -47,11 +49,12 @@ export function evaluate(ledger, barsBySymbol, todayISO, todayTs) {
         }
       }
       if (!res && (todayTs - s.openTs) / 86400 > EXPIRE_DAYS) res = { result: 'expired', ts: todayTs, price: s.ltp }
-      if (res) { close(ledger, id, res, todayISO) }
+      if (res) { const c = close(ledger, id, res, todayISO); if (res.result !== 'expired') closedNow.push(c) }
     } else if ((todayTs - s.openTs) / 86400 > EXPIRE_DAYS) {
       close(ledger, id, { result: 'expired', ts: todayTs, price: s.ltp }, todayISO)
     }
   }
+  return closedNow
 }
 function close(ledger, id, res, todayISO) {
   const s = ledger.active[id]
@@ -60,8 +63,10 @@ function close(ledger, id, res, todayISO) {
   s.daysHeld = Math.max(1, Math.round((res.ts - s.openTs) / 86400))
   s.returnPct = +(((res.price - s.entry) / s.entry) * 100).toFixed(2)
   ledger.history.push({ id, generator: s.generator, symbol: s.symbol, result: s.result, openedAt: s.openedAt, closedAt: s.closedAt, daysHeld: s.daysHeld, returnPct: s.returnPct, maxTarget: s.maxTarget, confidence: s.confidence })
+  const snap = { ...s }
   delete ledger.active[id]
   if (ledger.history.length > 4000) ledger.history = ledger.history.slice(-4000)
+  return snap
 }
 
 // Per-generator + overall measured track record from closed history.
