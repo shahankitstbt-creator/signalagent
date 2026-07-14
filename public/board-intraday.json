@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T11:10:35.959Z",
+  "generatedAt": "2026-07-14T12:50:48.946Z",
   "date": "2026-07-14",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -821,42 +821,6 @@
       "desc": "F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)",
       "count": 40,
       "signals": [
-        {
-          "generator": "fno",
-          "underlying": "NIFTY",
-          "name": "Nifty Option Chain",
-          "kind": "Index",
-          "direction": "RANGE",
-          "dirTone": "flat",
-          "spot": 24052.05,
-          "lot": 65,
-          "grade": "B",
-          "optionPlay": "Range: sell 24100 CE + 24050 PE (iron condor)",
-          "pcr": 1.1,
-          "support": 24050,
-          "resistance": 24100,
-          "reason": "PCR 1.1 → Range / balanced. Support 24050 / Resistance 24100 · ATM 24050 · exp 14JUL2026.",
-          "social": "📊 F&O — NIFTY (Index) RANGE\nPCR 1.1 → Range / balanced. Support 24050 / Resistance 24100 · ATM 24050 · exp 14JUL2026.\n👉 Range: sell 24100 CE + 24050 PE (iron condor)\n📌 Educational only, not advice. Not SEBI-registered. #fno #nifty #options",
-          "rank": 100
-        },
-        {
-          "generator": "fno",
-          "underlying": "BANKNIFTY",
-          "name": "Bank Nifty Option Chain",
-          "kind": "Index",
-          "direction": "RANGE",
-          "dirTone": "flat",
-          "spot": 57462.3,
-          "lot": 30,
-          "grade": "B",
-          "optionPlay": "Range: sell 58000 CE + 58000 PE (iron condor)",
-          "pcr": 0.92,
-          "support": 58000,
-          "resistance": 58000,
-          "reason": "PCR 0.92 → Range / balanced. Support 58000 / Resistance 58000 · ATM 57500 · exp 28JUL2026.",
-          "social": "📊 F&O — BANKNIFTY (Index) RANGE\nPCR 0.92 → Range / balanced. Support 58000 / Resistance 58000 · ATM 57500 · exp 28JUL2026.\n👉 Range: sell 58000 CE + 58000 PE (iron condor)\n📌 Educational only, not advice. Not SEBI-registered. #fno #banknifty #options",
-          "rank": 100
-        },
         {
           "generator": "fno",
           "underlying": "GOLD",
@@ -2397,6 +2361,90 @@
           "setupType": "Breakout watch",
           "rsi": 56.6,
           "social": "📊 F&O — INFY (Stock) BUY\nBreakout watch: Hugging 20-day high (2.0% below); Above rising 20 & 50 EMA\n👉 Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures · 1 lot = 400 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #infy #options",
+          "rank": 51.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "SUNPHARMA",
+          "name": "Sun Pharmaceutical Industries Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1942.6,
+          "lot": 350,
+          "grade": "A",
+          "confidence": 58,
+          "delivery": null,
+          "entry": 1942.6,
+          "sl": 1925.91,
+          "slPct": -0.9,
+          "targets": [
+            {
+              "price": 1964.85,
+              "pct": 1.1,
+              "by": "~4h"
+            },
+            {
+              "price": 1981.54,
+              "pct": 2,
+              "by": "~12h"
+            },
+            {
+              "price": 1998.22,
+              "pct": 2.9,
+              "by": "~20h"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 350 sh ≈ ₹6,79,910 notional",
+          "reason": "Breakout watch: Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA",
+          "changePct": -0.11,
+          "setupType": "Breakout watch",
+          "rsi": 58.4,
+          "social": "📊 F&O — SUNPHARMA (Stock) BUY\nBreakout watch: Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 350 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #sunpharma #options",
+          "rank": 51.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "AMBER",
+          "name": "Amber Enterprises India Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 7786.5,
+          "lot": 100,
+          "grade": "A",
+          "confidence": 58,
+          "delivery": null,
+          "entry": 7786.5,
+          "sl": 7669.48,
+          "slPct": -1.5,
+          "targets": [
+            {
+              "price": 7942.52,
+              "pct": 2,
+              "by": "~6h"
+            },
+            {
+              "price": 8059.54,
+              "pct": 3.5,
+              "by": "~12h"
+            },
+            {
+              "price": 8176.56,
+              "pct": 5,
+              "by": "~21h"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 7800 CE (ATM) or 7700 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 100 sh ≈ ₹7,78,650 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below)",
+          "changePct": 0.08,
+          "setupType": "Squeeze breakout",
+          "rsi": 52.7,
+          "social": "📊 F&O — AMBER (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below)\n👉 Buy 7800 CE (ATM) or 7700 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #amber #options",
           "rank": 51.6
         }
       ]
@@ -6785,118 +6833,20 @@
           "isOption": true,
           "symbol": "NIFTY",
           "name": "Nifty Option Chain",
-          "bias": "Range / balanced",
-          "biasTone": "down",
-          "buildup": "Call writing (bearish) · Put build-up (bearish)",
-          "spot": 24052.05,
-          "atm": 24050,
-          "expiry": "14JUL2026",
-          "pcr": 1.1,
-          "support": 24050,
-          "resistance": 24100,
-          "reason": "Spot 24052.05 · ATM 24050 · exp 14JUL2026. PCR 1.1 → Range / balanced. Walls: R 24100 / S 24050. Build-up: Call writing (bearish) · Put build-up (bearish).",
-          "lines": [
-            {
-              "k": "Spot / ATM",
-              "v": "24052.05 / 24050"
-            },
-            {
-              "k": "Expiry",
-              "v": "14JUL2026"
-            },
-            {
-              "k": "PCR",
-              "v": "1.1"
-            },
-            {
-              "k": "Resistance",
-              "v": "24100 (max call OI)"
-            },
-            {
-              "k": "Support",
-              "v": "24050 (max put OI)"
-            },
-            {
-              "k": "Δ Spot",
-              "v": "-168"
-            },
-            {
-              "k": "Δ Call OI",
-              "v": "+484.2L"
-            },
-            {
-              "k": "Δ Put OI",
-              "v": "+759.2L"
-            },
-            {
-              "k": "Call side",
-              "v": "Call writing (bearish)"
-            },
-            {
-              "k": "Put side",
-              "v": "Put build-up (bearish)"
-            }
-          ],
-          "social": "📊 NIFTY Option Chain build-up (14JUL2026)\nSpot 24052.05 · ATM 24050 · PCR 1.1 → Range / balanced\nResistance 24100 (max call OI) · Support 24050 (max put OI)\nOI build-up vs last scan: Call writing (bearish) · Put build-up (bearish)\nLive OI via broker feed. 📌 Educational only, not advice. Not SEBI-registered.\n#nifty #optionchain #PCR"
+          "placeholder": true,
+          "reason": "Option build-up error: Unexpected token 'o', \"not found\" is not valid JSON",
+          "bias": "No live feed",
+          "biasTone": "flat"
         },
         {
           "generator": "option_buildup",
           "isOption": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty Option Chain",
-          "bias": "Range / balanced",
-          "biasTone": "down",
-          "buildup": "Call writing (bearish) · Put build-up (bearish)",
-          "spot": 57462.3,
-          "atm": 57500,
-          "expiry": "28JUL2026",
-          "pcr": 0.92,
-          "support": 58000,
-          "resistance": 58000,
-          "reason": "Spot 57462.3 · ATM 57500 · exp 28JUL2026. PCR 0.92 → Range / balanced. Walls: R 58000 / S 58000. Build-up: Call writing (bearish) · Put build-up (bearish).",
-          "lines": [
-            {
-              "k": "Spot / ATM",
-              "v": "57462.3 / 57500"
-            },
-            {
-              "k": "Expiry",
-              "v": "28JUL2026"
-            },
-            {
-              "k": "PCR",
-              "v": "0.92"
-            },
-            {
-              "k": "Resistance",
-              "v": "58000 (max call OI)"
-            },
-            {
-              "k": "Support",
-              "v": "58000 (max put OI)"
-            },
-            {
-              "k": "Δ Spot",
-              "v": "-386"
-            },
-            {
-              "k": "Δ Call OI",
-              "v": "+1.3L"
-            },
-            {
-              "k": "Δ Put OI",
-              "v": "+1.7L"
-            },
-            {
-              "k": "Call side",
-              "v": "Call writing (bearish)"
-            },
-            {
-              "k": "Put side",
-              "v": "Put build-up (bearish)"
-            }
-          ],
-          "social": "📊 BANKNIFTY Option Chain build-up (28JUL2026)\nSpot 57462.3 · ATM 57500 · PCR 0.92 → Range / balanced\nResistance 58000 (max call OI) · Support 58000 (max put OI)\nOI build-up vs last scan: Call writing (bearish) · Put build-up (bearish)\nLive OI via broker feed. 📌 Educational only, not advice. Not SEBI-registered.\n#banknifty #optionchain #PCR"
+          "placeholder": true,
+          "reason": "Option build-up error: Unexpected token 'o', \"not found\" is not valid JSON",
+          "bias": "No live feed",
+          "biasTone": "flat"
         }
       ]
     }
