@@ -2,12 +2,12 @@
   "target": 85,
   "deadline": "2026-07-19",
   "start": "2026-06-19",
-  "daysLeft": 6,
-  "current": 62.4,
-  "decided": 178,
+  "daysLeft": 5,
+  "current": 64.4,
+  "decided": 202,
   "reliable": true,
-  "open": 217,
-  "qualityBar": 55,
+  "open": 239,
+  "qualityBar": 56,
   "status": "below target — tightening selectivity (fewer, higher-quality signals)",
   "generators": [
     {
@@ -26,37 +26,37 @@
     },
     {
       "id": "vol_accum",
-      "winRate": 82.5,
-      "decided": 40,
-      "open": 53,
+      "winRate": 82.2,
+      "decided": 45,
+      "open": 56,
       "status": "ok"
     },
     {
       "id": "vp_fib",
-      "winRate": 50,
-      "decided": 18,
-      "open": 35,
-      "status": "weak"
+      "winRate": 56.5,
+      "decided": 23,
+      "open": 43,
+      "status": "ok"
     },
     {
       "id": "money_flow",
-      "winRate": 61.8,
-      "decided": 34,
+      "winRate": 65,
+      "decided": 40,
       "open": 52,
       "status": "ok"
     },
     {
       "id": "multibagger",
-      "winRate": 55.3,
-      "decided": 38,
-      "open": 35,
+      "winRate": 58.1,
+      "decided": 43,
+      "open": 42,
       "status": "ok"
     },
     {
       "id": "harmonic",
-      "winRate": 56.3,
-      "decided": 48,
-      "open": 42,
+      "winRate": 56.9,
+      "decided": 51,
+      "open": 46,
       "status": "ok"
     },
     {
@@ -121,8 +121,16 @@
       "open": 217,
       "catchRate": 14.3,
       "qualityBar": 55
+    },
+    {
+      "date": "2026-07-14",
+      "winRate": 64.4,
+      "decided": 202,
+      "open": 239,
+      "catchRate": 5.6,
+      "qualityBar": 56
     }
   ],
-  "generatedAt": "2026-07-13T04:00:55.513Z",
+  "generatedAt": "2026-07-14T07:11:25.988Z",
   "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
 }
