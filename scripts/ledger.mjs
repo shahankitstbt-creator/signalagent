@@ -69,6 +69,12 @@ function close(ledger, id, res, todayISO) {
   return snap
 }
 
+// confluence & fno REUSE an underlying generator's trade (same symbol/entry) — each gets
+// its own per-generator track record, but they're excluded from `overall` so the headline
+// accuracy isn't double-counted.
+const DERIVED = new Set(['confluence', 'fno'])
+const MIN_RELIABLE = 20   // closed trades needed before a win-rate is trustworthy (badge/topGenerator)
+
 // Per-generator + overall measured track record from closed history.
 export function trackRecord(ledger, genMeta) {
   const blank = () => ({ win: 0, loss: 0, expired: 0, open: 0, returnSum: 0 })
@@ -76,12 +82,18 @@ export function trackRecord(ledger, genMeta) {
   const all = blank()
   for (const h of ledger.history) {
     const p = per[h.generator] || (per[h.generator] = blank())
-    if (h.result === 'win') { p.win++; all.win++; p.returnSum += h.returnPct; all.returnSum += h.returnPct }
-    else if (h.result === 'loss') { p.loss++; all.loss++; p.returnSum += h.returnPct; all.returnSum += h.returnPct }
-    else { p.expired++; all.expired++ }
+    const core = !DERIVED.has(h.generator)
+    if (h.result === 'win') { p.win++; p.returnSum += h.returnPct; if (core) { all.win++; all.returnSum += h.returnPct } }
+    else if (h.result === 'loss') { p.loss++; p.returnSum += h.returnPct; if (core) { all.loss++; all.returnSum += h.returnPct } }
+    else { p.expired++; if (core) all.expired++ }
   }
-  for (const s of Object.values(ledger.active)) { (per[s.generator] || (per[s.generator] = blank())).open++; all.open++ }
+  for (const s of Object.values(ledger.active)) { (per[s.generator] || (per[s.generator] = blank())).open++; if (!DERIVED.has(s.generator)) all.open++ }
   const fin = o => { const decided = o.win + o.loss; return { ...o, decided, winRate: decided ? +((o.win / decided) * 100).toFixed(1) : null, avgReturn: decided ? +(o.returnSum / decided).toFixed(2) : null } }
   const generators = {}; for (const k in per) generators[k] = fin(per[k])
-  return { overall: fin(all), generators, target: 80 }
+  // TOP ACCURATE tab = highest MEASURED win-rate among generators with a reliable sample.
+  let topGenerator = null
+  for (const [id, g] of Object.entries(generators)) {
+    if (g.decided >= MIN_RELIABLE && g.winRate != null && (!topGenerator || g.winRate > topGenerator.winRate)) topGenerator = { id, winRate: g.winRate, decided: g.decided }
+  }
+  return { overall: fin(all), generators, topGenerator, minReliable: MIN_RELIABLE, target: 85 }
 }

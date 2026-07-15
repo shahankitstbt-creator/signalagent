@@ -80,6 +80,8 @@ export default function SignalsBoard() {
   const active = gens[tab] || gens[0]
   const tr = board?.trackRecord
   const o = tr?.overall
+  const topId = tr?.topGenerator?.id           // most-accurate tab (measured, reliable sample)
+  const topWin = tr?.topGenerator?.winRate
   const genTR = tr?.generators?.[active?.id]
   const goal = board?.goal
 
@@ -140,6 +142,7 @@ export default function SignalsBoard() {
               {g.label}
               <span className="ml-1.5 px-1.5 rounded-full text-[10px]" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
               {newPerTab[i] > 0 && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold bg-green text-white">+{newPerTab[i]}</span>}
+              {g.id === topId && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#FF6D00' }} title={`Highest measured accuracy: ${topWin}%`}>★ TOP ACCURATE {topWin}%</span>}
             </button>
           )
         })}

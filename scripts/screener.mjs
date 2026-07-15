@@ -493,6 +493,21 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
+  // LOG the confluence + F&O Stock picks (the ones we alert on) into the ledger too, so
+  // their own tabs earn a REAL measured track record. They open now and are evaluated on
+  // the next daily run (like every other signal). Excluded from `overall` in trackRecord().
+  if (isDaily) {
+    const lg = loadLedger()
+    let logged = 0
+    for (const s of (confCol?.signals || [])) { try { openOrUpdate(lg, s, todayISO, todayTs); logged++ } catch {} }
+    for (const s of (fnoCol?.signals || [])) {
+      if (s.kind !== 'Stock' || !s.entry || !s.sl || !Array.isArray(s.targets) || !s.targets[0]?.price) continue
+      try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {}
+    }
+    saveLedger(lg)
+    console.log(`Ledger: logged ${logged} confluence/F&O picks for tracking`)
+  }
+
   // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──
   try { await notifyNewSignals({ generators: board }, todayISO) } catch (e) { console.log('Telegram skipped:', e.message) }
   try { await notifyClosures(closedNow, todayISO) } catch (e) { console.log('Telegram updates skipped:', e.message) }

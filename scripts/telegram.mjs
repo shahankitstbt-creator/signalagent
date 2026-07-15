@@ -82,9 +82,13 @@ export async function notifyNewSignals(board, dateStr) {
   const conf = gens.find(g => g.id === 'confluence')
   if (conf) for (const s of conf.signals) if (s.grade === 'A++') cands.push(s)
   let count = 0, skipped = 0
+  const seen = new Set()                                            // in-run guard (belt & suspenders vs same symbol twice)
   for (const s of cands) {
-    const id = 'entry:' + (s.underlying || s.symbol)                // stable per symbol → no repeat alerts
-    if (sent[id]) continue
+    const sym = String(s.underlying || s.symbol || '').toUpperCase().trim()
+    if (!sym) continue
+    const id = 'entry:' + sym                                       // stable, normalized → one alert per symbol EVER
+    if (seen.has(id) || sent[id]) continue
+    seen.add(id)
     if (isExtended(s)) { sent[id] = dateStr; skipped++; continue }  // move already started → skip (and don't re-check)
     const res = await sendTelegram(formatSignal(s, dateStr))
     if (res.skipped) break
@@ -101,7 +105,8 @@ export async function notifyClosures(closed, dateStr) {
   const sent = loadSent()
   let count = 0
   for (const s of closed) {
-    const id = 'close:' + s.symbol + ':' + s.result + ':' + (s.closePrice ?? '')
+    const sym = String(s.symbol || s.underlying || '').toUpperCase().trim()
+    const id = 'close:' + sym + ':' + s.result + ':' + (s.closePrice ?? '')
     if (sent[id]) continue
     const res = await sendTelegram(formatUpdate(s, dateStr))
     if (res.skipped) break
