@@ -51,20 +51,20 @@ jobs:
           H=$((10#$(date -u +%H))); MIN=$((10#$(date -u +%M)))
           if [ -n "$TF" ] && [ "$TF" != "auto" ]; then
             case "$TF" in
-              intraday) node scripts/screener.mjs --tf intraday --limit 500 ;;
-              weekly)   node scripts/screener.mjs --tf weekly ;;
-              *)        node scripts/screener.mjs --full --top 60 --improve ;;
+              intraday) node scripts/screener.mjs --tf intraday --full ;;
+              weekly)   node scripts/screener.mjs --tf weekly --full ;;
+              *)        node scripts/screener.mjs --full --top 80 --improve ;;
             esac
           elif [ "$H" -eq 12 ] && [ "$MIN" -lt 25 ]; then
             echo "POST-MARKET ~17:30 IST — full daily + weekly + self-improvement"
-            node scripts/screener.mjs --full --top 60 --improve
-            node scripts/screener.mjs --tf weekly
+            node scripts/screener.mjs --full --top 80 --improve
+            node scripts/screener.mjs --tf weekly --full
           elif [ "$H" -ge 3 ] && [ "$H" -le 4 ]; then
-            echo "MORNING ~08:37-10:07 IST — refresh DAILY board (today's swing picks)"
-            node scripts/screener.mjs --top 60
+            echo "MORNING ~08:37-10:07 IST — FULL daily board (scan ALL NSE, today's swing picks)"
+            node scripts/screener.mjs --full --top 80
           else
-            echo "LIVE — intraday scan + real-time Telegram alerts"
-            node scripts/screener.mjs --tf intraday --limit 500
+            echo "LIVE — intraday scan of the FULL NSE universe + real-time Telegram alerts"
+            node scripts/screener.mjs --tf intraday --full
           fi
       - name: Persist state back to repo (accumulates ledger/goal, dedups Telegram)
         run: |

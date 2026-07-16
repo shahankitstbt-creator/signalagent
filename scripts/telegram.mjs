@@ -45,6 +45,7 @@ export function formatSignal(s, dateStr) {
 }
 
 export async function sendTelegram(text) {
+  if (process.argv.includes('--no-telegram') || process.env.TG_DISABLE) return { ok: false, skipped: true }  // local/test runs
   const token = E.TELEGRAM_BOT_TOKEN, chat = E.TELEGRAM_CHAT_ID
   if (!token || !chat) return { ok: false, skipped: true }
   try {

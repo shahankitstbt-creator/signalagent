@@ -184,7 +184,7 @@ export default function SignalsBoard() {
 
 function TradeTable({ signals, color, setView }) {
   const [open, setOpen] = useState(-1)
-  const rows = [...signals].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0))
+  const rows = [...signals].sort((a, b) => (b._momScore ?? b.confidence ?? 0) - (a._momScore ?? a.confidence ?? 0))
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead>
@@ -214,7 +214,10 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag k={sigKey(s)} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag k={sigKey(s)} />
+          {s.movingNow && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#F59E0B' }}>🚀 MOVING</span>}
+          {s.news && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white bg-accent-primary" title={`${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`}>📰 NEWS</span>}
+          <span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
         <td className="px-3 py-2 text-right">{s.entry}</td>

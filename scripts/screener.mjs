@@ -20,7 +20,8 @@ import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
 import { notifyNewSignals, notifyClosures } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
-const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])
+const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
+const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum'])                                        // ALSO tracked in the ledger
 
 // timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
 const TF = {
@@ -39,7 +40,9 @@ const IMPROVE = ARGS.includes('--improve')
 // NSE archive CSVs (skipped automatically if a name 404s)
 const INDEX_CSV = {
   'NIFTY 50': 'ind_nifty50list.csv', 'NIFTY Next 50': 'ind_niftynext50list.csv',
-  'NIFTY 100': 'ind_nifty100list.csv', 'NIFTY 500': 'ind_nifty500list.csv',
+  'NIFTY 100': 'ind_nifty100list.csv', 'NIFTY 200': 'ind_nifty200list.csv', 'NIFTY 500': 'ind_nifty500list.csv',
+  'NIFTY Total Market': 'ind_niftytotalmarket_list.csv',
+  'NIFTY MidSmallcap 400': 'ind_niftymidsmallcap400list.csv',
   'NIFTY Midcap 100': 'ind_niftymidcap100list.csv', 'NIFTY Midcap 150': 'ind_niftymidcap150list.csv',
   'NIFTY Midcap Select': 'ind_niftymidcapselect_list.csv',
   'NIFTY Smallcap 100': 'ind_niftysmallcap100list.csv', 'NIFTY Smallcap 250': 'ind_niftysmallcap250list.csv',
@@ -418,8 +421,19 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     }
   }).sort((a, b) => b.confidence - a.confidence)
 
+  // ── NEWS (daily): pull market headlines, map to universe symbols → catalyst tags on cards ──
+  let newsMap = {}
+  if (isDaily) {
+    try {
+      const news = await trackNews(uni)
+      for (const it of news) for (const sym of (it.symbols || [])) if (!newsMap[sym]) newsMap[sym] = { title: it.title, source: it.source }
+      writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2))
+      console.log(`News: ${news.length} headlines, ${Object.keys(newsMap).length} symbols with a catalyst`)
+    } catch (e) { console.log('News skipped:', e.message) }
+  }
+
   // ── SIGNAL BOARD (grouped by generator) ──
-  const board = await buildBoard(scored, finalists, addDays, today)
+  const board = await buildBoard(scored, finalists, addDays, today, newsMap)
   const todayTs = Math.floor(today.getTime() / 1000)
   const todayISO = today.toISOString().slice(0, 10)
 
@@ -429,10 +443,14 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const ledger = loadLedger()
     const barsBySymbol = {}
     for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
-    for (const g of board) if (TRADE_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
+    for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
     closedNow = evaluate(ledger, barsBySymbol, todayISO, todayTs)
-    for (const g of board) if (TRADE_GENS.has(g.id)) {
-      const act = Object.values(ledger.active).filter(s => s.generator === g.id).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
+    for (const g of board) if (LEDGER_GENS.has(g.id)) {
+      // momentum = wide net (rank by fresh-momentum score, keep 25); others rank by confidence, keep 15
+      const mom = g.id === 'momentum'
+      const act = Object.values(ledger.active).filter(s => s.generator === g.id)
+        .sort((a, b) => mom ? ((b._momScore ?? 0) - (a._momScore ?? 0)) : ((b.confidence ?? 0) - (a.confidence ?? 0)))
+        .slice(0, mom ? 25 : 15)
       g.signals = act; g.count = act.length
     }
     saveLedger(ledger)
@@ -444,16 +462,13 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       const extNote = await fetchExternalGainers()
       const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
       goal = si.goal
-      try { const news = await trackNews(uni); writeFileSync('public/news.json', JSON.stringify({ generatedAt: today.toISOString(), count: news.length, items: news }, null, 2)); console.log(`News: ${news.length} headlines`) } catch (e) { console.log('News skipped:', e.message) }
     } else {
       try { goal = JSON.parse(readFileSync('public/goal.json', 'utf8')) } catch {}
     }
-    // SELECTIVITY: apply the self-tuned quality bar every pass (fewer, higher-quality signals → toward 85%)
-    const bar = loadTuning().qualityBar || 0
-    if (bar > 0) for (const g of board) if (TRADE_GENS.has(g.id)) {
-      g.signals = g.signals.filter(s => (s.confidence ?? 0) >= bar || (s.delivery ?? 0) >= 60)
-      g.count = g.signals.length
-    }
+    // NOTE: we no longer filter the whole board by a rising "quality bar" — that starved
+    // coverage (we were missing the very movers the user wants). Selectivity now lives ONLY
+    // in the alert path (Telegram = A++ pre-move) and the confluence grade. The board shows
+    // the full ranked set so nothing is hidden.
   }
 
   // ── ⭐ CONFLUENCE (all timeframes): stocks flagged by 2+ generators, Vedic-aligned, with a position-sized plan ──
@@ -541,12 +556,16 @@ function buildWhy(s, sc) {
 
 // Group every generator's signals into board columns. Astro = real ephemeris
 // (5 methods × Nifty/Gold) + Hora timing; option = live Angel One OI snapshot.
-async function buildBoard(scored, finalists, addDays, today) {
+async function buildBoard(scored, finalists, addDays, today, newsMap = {}) {
   const byGen = {}; for (const g of GEN_META) byGen[g.id] = []
   for (const st of scored) { if (!st._d) continue; for (const sg of runPriceGenerators(st, st._d, st, addDays)) byGen[sg.generator]?.push(sg) }
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
   // price-based columns: rank by confidence, cap 15
   for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic']) byGen[id] = byGen[id].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
+  // momentum = WIDE net: rank by fresh-momentum score, keep 25 (movers-now first)
+  byGen.momentum = (byGen.momentum || []).sort((a, b) => (b._momScore ?? 0) - (a._momScore ?? 0)).slice(0, 25)
+  // tag any card whose stock is in today's news with its catalyst headline
+  for (const id of Object.keys(byGen)) for (const c of byGen[id]) { const nm = c && newsMap[c.symbol]; if (nm) { c.news = nm.title; c.newsSource = nm.source } }
   // astro columns: per-asset daily bias (Nifty/Gold/sectors) + full hora schedule
   byGen.vedic_astro = assetBiasSignals(today)
   byGen.astro_timing = horaSignals(today)
@@ -725,8 +744,9 @@ const GOAL = { target: 85, start: '2026-06-19', deadline: '2026-07-19' }
 async function runSelfImprovement(scored, board, today, ledger, externalNote, tr) {
   const tuning = loadTuning()
   const flagged = new Set()
-  for (const g of board) if (TRADE_GENS.has(g.id)) for (const s of g.signals) flagged.add(s.symbol)
+  for (const g of board) if (LEDGER_GENS.has(g.id)) for (const s of g.signals) flagged.add(s.symbol)   // includes momentum wide-net
   for (const s of Object.values(ledger.active)) flagged.add(s.symbol)
+  const isGapUp = m => { const d = m._d; return d && d.o.at(-1) > d.c.at(-2) * 1.03 }   // opened >3% up = news/event driven
   const movers = scored.filter(s => s.changePct >= 5).sort((a, b) => b.changePct - a.changePct)
   const caught = movers.filter(m => flagged.has(m.symbol))
   const missed = movers.filter(m => !flagged.has(m.symbol)).slice(0, 40)
@@ -734,26 +754,32 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
   const misses = missed.map(m => {
     const reasons = diagnoseMiss(m._d, tuning)
     reasons.forEach(r => { const key = r.replace(/\d+/g, 'N'); tally[key] = (tally[key] || 0) + 1 })
-    return { symbol: m.symbol, name: m.name, changePct: round(m.changePct, 1), reasons }
+    return { symbol: m.symbol, name: m.name, changePct: round(m.changePct, 1), gapUp: isGapUp(m), reasons }
   })
   const reasonTally = Object.entries(tally).sort((a, b) => b[1] - a[1]).map(([reason, count]) => ({ reason, count }))
   const adjustments = []
-  const belowThresh = misses.filter(m => m.reasons.some(r => /pre-move score/.test(r))).length
-  if (belowThresh >= 5 && tuning.minMoveScore > 32) { tuning.minMoveScore -= 2; adjustments.push(`Lowered pre-move score gate to ${tuning.minMoveScore} — ${belowThresh} missed movers were just below it.`) }
+  const belowThresh = misses.filter(m => !m.gapUp && m.reasons.some(r => /pre-move score/.test(r))).length
+  if (belowThresh >= 5 && tuning.minMoveScore > 30) { tuning.minMoveScore -= 2; adjustments.push(`Lowered pre-move score gate to ${tuning.minMoveScore} — ${belowThresh} CATCHABLE missed movers were just below it.`) }
   const catchRate = movers.length ? round((caught.length / movers.length) * 100, 1) : null
+  // CATCHABLE catch-rate = excludes news gap-ups (TA can't pre-empt a news gap; those are caught
+  // intraday / flagged by news instead). This is the honest measure of the model's pre-move skill.
+  const catchable = movers.filter(m => !isGapUp(m))
+  const catchableCaught = catchable.filter(m => flagged.has(m.symbol))
+  const catchableRate = catchable.length ? round((catchableCaught.length / catchable.length) * 100, 1) : null
+  const gapUpMovers = movers.length - catchable.length
 
   // ── ACCURACY GOAL: track measured win-rate vs 85% target; adapt selectivity daily ──
   const dateStr = today.toISOString().slice(0, 10)
   const measured = tr?.overall?.winRate ?? null
   const decided = tr?.overall?.decided ?? 0
   tuning.qualityBar ??= 0
-  // Once enough trades have RESOLVED, raise/lower the quality bar to climb toward target.
-  // Below target → tighten (fewer, higher-conviction signals). Above → relax slightly.
+  // Alert-path selectivity signal (advisory — the BOARD is no longer filtered by this; it only
+  // informs how tight the A++/Telegram lane should lean). Track it, but never starve coverage.
   if (decided >= 15 && measured != null) {
-    if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(80, Math.max(55, tuning.qualityBar + 1)); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → raised quality bar to ${tuning.qualityBar} (more selective).`) }
-    else if (measured > GOAL.target) { tuning.qualityBar = Math.max(50, tuning.qualityBar - 1); adjustments.push(`Above target → eased quality bar to ${tuning.qualityBar}.`) }
+    if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(65, Math.max(50, tuning.qualityBar + 1)); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → alert-lane bar to ${tuning.qualityBar} (Telegram leans tighter; board coverage unchanged).`) }
+    else if (measured > GOAL.target) { tuning.qualityBar = Math.max(45, tuning.qualityBar - 1); adjustments.push(`Above target → eased alert-lane bar to ${tuning.qualityBar}.`) }
   }
-  tuning.history = (tuning.history || []).concat([{ date: dateStr, movers: movers.length, caught: caught.length, missed: missed.length, catchRate, minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar }]).slice(-90)
+  tuning.history = (tuning.history || []).concat([{ date: dateStr, movers: movers.length, caught: caught.length, missed: missed.length, catchRate, catchableRate, gapUpMovers, minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar }]).slice(-90)
   saveTuning(tuning)
 
   // per-generator measured quality
@@ -783,12 +809,13 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
   writeFileSync('public/learning.json', JSON.stringify({
     date: dateStr, generatedAt: today.toISOString(),
     moversChecked: movers.length, caught: caught.length, missed: missed.length, catchRate,
+    catchableRate, catchableMovers: catchable.length, gapUpMovers,
     sources: ['Own NSE-universe gainers (≥5% today)', 'Groww top-gainers (cross-check)', 'Dhan top-gainers (cross-check)'],
     externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar },
     goal: { target: GOAL.target, deadline: GOAL.deadline, current: measured, status },
     note: 'Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such.',
   }, null, 2))
-  console.log(`Self-improve: ${movers.length} movers, caught ${caught.length} (${catchRate ?? '–'}%), missed ${missed.length} · qualityBar ${tuning.qualityBar} · goal ${measured ?? '–'}%/${GOAL.target}% (${daysLeft}d) → learning.json`)
+  console.log(`Self-improve: ${movers.length} movers (${gapUpMovers} news gap-ups), caught ${caught.length} (${catchRate ?? '–'}% all / ${catchableRate ?? '–'}% catchable), missed ${missed.length} · goal ${measured ?? '–'}%/${GOAL.target}% (${daysLeft}d) → learning.json`)
   return { catchRate, qualityBar: tuning.qualityBar, goal }
 }
 

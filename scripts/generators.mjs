@@ -12,6 +12,7 @@ const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i 
 export const GEN_META = [
   { id: 'confluence', label: '⭐ Top Confluence Picks', color: '#2962FF', desc: 'Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan' },
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
+  { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
   { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'vp_fib', label: 'Volume Profile + Fib', color: '#D97706', desc: 'Price at a high-volume node (POC) coinciding with a Fib level' },
   { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
@@ -114,12 +115,35 @@ const STOCK_GENS = {
     return q && a.emaStack
       ? mk(M.multibagger, st, a, `Quality: Promoter ${f.promoter.status}, FII ${f.fii.status}, DII ${f.dii.status}, Pledge ${f.pledge?.pct ?? 0}%`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
   },
+  // Momentum & Early Movers — WIDE net across the full universe. Catches (a) stocks moving
+  // NOW on volume (intraday/day-of), and (b) stocks poised to break out (a day before).
+  // Lower bar than the other gens by design — labelled higher-risk. Ranked by fresh momentum.
+  momentum: ({ st, a, addDays }) => {
+    const V = a.vol || {}
+    const rvol = V.rvol ?? 1
+    const chg = a.changePct ?? 0
+    const movingNow = chg >= 3 && rvol >= 1.5 && a.bullish
+    const bigMove = chg >= 5 && rvol >= 1.8
+    const preBreak = a.nearBreakout && rvol >= 1.3 && (a.emaStack || a.higherLows)
+    const squeezeFire = a.squeeze && chg >= 1.5 && rvol >= 1.3
+    const volSurge = V.vol1GtVol5 && chg >= 2 && a.bullish
+    if (!(movingNow || bigMove || preBreak || squeezeFire || volSurge)) return null
+    const tag = (bigMove || movingNow) ? `🚀 Moving now +${chg.toFixed(1)}% on ${rvol}× volume`
+      : preBreak ? `About to break the 20-day high on ${rvol}× volume`
+        : squeezeFire ? `Squeeze firing — volatility expanding up (+${chg.toFixed(1)}%)`
+          : `Volume surge ${rvol}× with price up +${chg.toFixed(1)}%`
+    const card = mk(M.momentum, st, a, tag, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
+    // rank freshest, strongest momentum first (change% + relative volume + pre-move score)
+    card._momScore = Math.round(chg * 3 + rvol * 6 + a.moveScore * 0.3)
+    card.movingNow = movingNow || bigMove
+    return card
+  },
 }
 
 // run the price-only generators (no fundamentals) for one stock
 export function runPriceGenerators(st, d, a, addDays) {
   const out = []
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic', 'momentum']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
   return out
 }
 export function runMultibagger(st, a, f, addDays) { try { return STOCK_GENS.multibagger({ st, a, f, addDays }) } catch { return null } }
