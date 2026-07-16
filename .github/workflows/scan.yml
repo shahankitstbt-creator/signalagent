@@ -60,8 +60,8 @@ jobs:
             node scripts/screener.mjs --full --top 80 --improve
             node scripts/screener.mjs --tf weekly --full
           elif [ "$H" -ge 3 ] && [ "$H" -le 4 ]; then
-            echo "MORNING ~08:37-10:07 IST — FULL daily board (scan ALL NSE, today's swing picks)"
-            node scripts/screener.mjs --full --top 80
+            echo "MORNING ~08:37-10:07 IST — FULL daily board (scan ALL NSE) + self-improve on yesterday's completed session"
+            node scripts/screener.mjs --full --top 80 --improve
           else
             echo "LIVE — intraday scan of the FULL NSE universe + real-time Telegram alerts"
             node scripts/screener.mjs --tf intraday --full

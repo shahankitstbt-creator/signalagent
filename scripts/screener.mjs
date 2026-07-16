@@ -446,11 +446,13 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
     closedNow = evaluate(ledger, barsBySymbol, todayISO, todayTs)
     for (const g of board) if (LEDGER_GENS.has(g.id)) {
-      // momentum = wide net (rank by fresh-momentum score, keep 25); others rank by confidence, keep 15
+      // NEWEST-opened signals ALWAYS surface first (so fresh picks are visible), then by strength.
+      // Old still-open trades fall below the fresh ones instead of pinning the top forever.
       const mom = g.id === 'momentum'
+      const strength = (a, b) => mom ? ((b._momScore ?? 0) - (a._momScore ?? 0)) : ((b.confidence ?? 0) - (a.confidence ?? 0))
       const act = Object.values(ledger.active).filter(s => s.generator === g.id)
-        .sort((a, b) => mom ? ((b._momScore ?? 0) - (a._momScore ?? 0)) : ((b.confidence ?? 0) - (a.confidence ?? 0)))
-        .slice(0, mom ? 25 : 15)
+        .sort((a, b) => String(b.openedAt || '').localeCompare(String(a.openedAt || '')) || strength(a, b))
+        .slice(0, mom ? 25 : 20)
       g.signals = act; g.count = act.length
     }
     saveLedger(ledger)
@@ -560,8 +562,9 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}) {
   const byGen = {}; for (const g of GEN_META) byGen[g.id] = []
   for (const st of scored) { if (!st._d) continue; for (const sg of runPriceGenerators(st, st._d, st, addDays)) byGen[sg.generator]?.push(sg) }
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
-  // price-based columns: rank by confidence, cap 15
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic']) byGen[id] = byGen[id].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 15)
+  // price-based columns: rank by confidence, feed up to 30 fresh candidates/day into the ledger
+  // (was 15 — too narrow; new setups couldn't get in past the persistent high-confidence names)
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic']) byGen[id] = byGen[id].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 30)
   // momentum = WIDE net: rank by fresh-momentum score, keep 25 (movers-now first)
   byGen.momentum = (byGen.momentum || []).sort((a, b) => (b._momScore ?? 0) - (a._momScore ?? 0)).slice(0, 25)
   // tag any card whose stock is in today's news with its catalyst headline
