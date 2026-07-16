@@ -15,7 +15,7 @@ import { GEN_META, runPriceGenerators, runMultibagger, horaSignals, assetBiasSig
 import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { trackNews } from './news.mjs'
-import { fetchDelivery } from './delivery.mjs'
+import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
 import { notifyNewSignals, notifyClosures } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
@@ -93,6 +93,17 @@ async function ohlcv(symbol, interval = '1d', range = '1y') {
   const o = [], h = [], l = [], c = [], v = [], time = []
   for (let i = 0; i < t.length; i++) { if (q.close[i] == null) continue; time.push(t[i]); o.push(q.open[i]); h.push(q.high[i]); l.push(q.low[i]); c.push(q.close[i]); v.push(q.volume[i] || 0) }
   return c.length > 60 ? { time, o, h, l, c, v } : null
+}
+
+// NIFTY 50 index returns (for relative-strength) — one fetch per run, graceful on failure
+async function niftyReturns(interval = '1d', range = '1y') {
+  try {
+    const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/%5ENSEI?interval=${interval}&range=${range}`)
+    const c = d?.chart?.result?.[0]?.indicators?.quote?.[0]?.close?.filter(x => x != null)
+    if (!c || c.length < 51) return { r20: 0, r50: 0 }
+    const last = c.at(-1)
+    return { r20: (last - c.at(-21)) / c.at(-21), r50: (last - c.at(-51)) / c.at(-51) }
+  } catch { return { r20: 0, r50: 0 } }
 }
 
 const emaSeries = (arr, len) => { const k = 2 / (len + 1); const out = [arr[0]]; for (let i = 1; i < arr.length; i++) out.push(arr[i] * k + out[i - 1] * (1 - k)); return out }
@@ -372,6 +383,35 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     return { ...st, ...s, _eng: eng, _d: d, _deliv: deliv.map[st.symbol] || null }
   }, (done, total) => console.log(`  OHLCV ${done}/${total}`))).filter(Boolean)
 
+  // ── SMART-MONEY FOOTPRINT: read the tracks informed buyers leave BEFORE the move ──
+  // (1) delivery-% accumulation trend, (2) relative strength vs NIFTY, (3) stealth volume.
+  const nifty = await niftyReturns(cfg.interval, cfg.range)
+  let dhist = {}
+  if (isDaily) { dhist = loadDelivHistory(); updateDelivHistory(dhist, deliv.map, deliv.date) }
+  let fpCount = 0
+  for (const st of scored) {
+    const c = st._d?.c
+    if (c && c.length >= 51) {
+      const last = c.at(-1)
+      const r20 = (last - c.at(-21)) / c.at(-21), r50 = (last - c.at(-51)) / c.at(-51)
+      st._rs = { rs20: +(r20 - nifty.r20).toFixed(3), rs50: +(r50 - nifty.r50).toFixed(3), leader: r20 > nifty.r20 && r50 > nifty.r50 }
+    }
+    const fp = isDaily ? deliveryFootprint(dhist[st.symbol]) : null
+    st._delivFp = fp
+    const V = st.vol || {}, rs = st._rs
+    let sc = 0; const fl = []
+    if (fp?.rising) { sc += 30; fl.push(`Delivery% rising ${fp.prevAvg}→${fp.recentAvg} over ${fp.days}d (strong hands taking delivery)`) }
+    else if (fp?.sustained) { sc += 18; fl.push(`Delivery% steadily high (~${fp.recentAvg}%)`) }
+    if (V.stealthAccum) { sc += 20; fl.push('Stealth volume — buying while price still flat') }
+    if (rs?.leader) { sc += 20; fl.push('Outperforming NIFTY (relative-strength leader)') }
+    if (st.squeeze) { sc += 12; fl.push('Volatility coiled in a tight base') }
+    if (V.accRatio >= 1.5) { sc += 10; fl.push(`Up/down volume ${V.accRatio}× (accumulation)`) }
+    if (V.dryUp) { sc += 8; fl.push('Dip-volume drying up, rally-volume expanding') }
+    st._footprint = sc >= 45 ? { score: Math.min(100, sc), flags: fl.slice(0, 3), strong: sc >= 60 } : (sc > 0 ? { score: sc, flags: fl.slice(0, 2), weak: true } : null)
+    if (st._footprint && !st._footprint.weak) fpCount++
+  }
+  if (isDaily) console.log(`Footprint: ${fpCount} stocks show a smart-money accumulation footprint`)
+
   // daily-only aggregates (legacy signal-engine board + breadth) — skip on weekly/intraday
   if (isDaily) {
     buildSignals(scored)
@@ -485,17 +525,22 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const vb = dbAssets[sectorAsset(best.sector, best.indices)]; const vedicUp = vb && vb.tone === 'up'
     const gens = [...new Set(list.map(x => x.gen))]
     const strongDeliv = best.delivery != null && best.delivery >= 60
+    const fp = best.footprint                                          // smart-money accumulation footprint
+    const fpStrong = !!(fp && fp.strong)
     const riskPS = Math.max(0.05, best.entry - best.sl)
     const shares = Math.max(1, Math.floor((CAP * RISKPCT / 100) / riskPS))
-    const grade = (gens.length >= 3 && strongDeliv) ? 'A++' : gens.length >= 3 ? 'A++' : (gens.length >= 2 && (vedicUp || strongDeliv)) ? 'A+' : 'A'
+    // grade upgrades on a footprint: it's the "informed money is already in" edge
+    const grade = (gens.length >= 3 || (gens.length >= 2 && fpStrong)) ? 'A++'
+      : (gens.length >= 2 && (vedicUp || strongDeliv || fp)) ? 'A+' : 'A'
     const rewardT1 = round(shares * (best.targets[0].price - best.entry))
     const accLine = best.accuracy != null ? `Backtested ~${best.accuracy}% (n=${best.backtestTrades})` : 'Limited backtest history'
     const delivLine = best.delivery != null ? `\n📦 Delivery ${best.delivery}% (${strongDeliv ? 'strong hands accumulating' : 'mostly intraday'})` : ''
-    const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}${delivLine}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
+    const fpLine = fp ? `\n🕵️ Footprint ${fp.score}/100: ${fp.flags[0]}` : ''
+    const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}${delivLine}${fpLine}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
     confluence.push({
       ...best, generator: 'confluence', generators: gens, genCount: gens.length, grade, social,
-      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0) + (strongDeliv ? 20 : 0)),
-      vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp, delivery: best.delivery, strongDeliv,
+      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0) + (strongDeliv ? 20 : 0) + (fp?.score || 0) * 0.35),
+      vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp, delivery: best.delivery, strongDeliv, footprint: fp,
       plan: { capital: CAP, riskPct: RISKPCT, shares, deploy: round(shares * best.entry), riskRs: round(shares * riskPS), rewardT1Rs: rewardT1 },
     })
   }

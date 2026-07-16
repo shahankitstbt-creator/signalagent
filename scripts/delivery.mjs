@@ -3,6 +3,36 @@
 // vs intraday churn. High volume + high delivery % = genuine accumulation, not day-traders.
 // Best-effort: NSE archives sometimes rate-limit server scraping → graceful fallback.
 import { getText, sleep } from './lib.mjs'
+import { readFileSync, writeFileSync } from 'node:fs'
+
+// ── Delivery-% HISTORY: the footprint is the TREND, not one day. We accumulate daily
+// delivery% per symbol so we can see strong-hands quietly building BEFORE the move. ──
+const HIST = 'public/delivery_history.json'
+export function loadDelivHistory() { try { return JSON.parse(readFileSync(HIST, 'utf8')) } catch { return {} } }
+export function updateDelivHistory(hist, map, date) {
+  if (!date) return hist
+  for (const [sym, v] of Object.entries(map)) {
+    const arr = hist[sym] || (hist[sym] = [])
+    if (!arr.length || arr[arr.length - 1].d !== date) arr.push({ d: date, p: v.pct })
+    if (arr.length > 40) hist[sym] = arr.slice(-40)   // keep ~40 sessions
+  }
+  try { writeFileSync(HIST, JSON.stringify(hist)) } catch {}
+  return hist
+}
+// Rising-delivery footprint: recent delivery% meaningfully above the prior stretch, and
+// elevated in absolute terms → informed accumulation (taking delivery, not churning).
+export function deliveryFootprint(arr) {
+  if (!arr || arr.length < 6) return null
+  const p = arr.map(x => x.p)
+  const recent = p.slice(-3), older = p.slice(-8, -3)
+  const rAvg = recent.reduce((a, b) => a + b, 0) / recent.length
+  const oAvg = older.length ? older.reduce((a, b) => a + b, 0) / older.length : rAvg
+  return {
+    rising: rAvg > oAvg * 1.15 && rAvg >= 50,               // trending UP and high
+    sustained: p.slice(-5).filter(x => x >= 55).length >= 3, // steadily high
+    recentAvg: +rAvg.toFixed(1), prevAvg: +oAvg.toFixed(1), days: p.length,
+  }
+}
 
 function parseDelivery(txt, map) {
   const lines = txt.trim().split(/\r?\n/)

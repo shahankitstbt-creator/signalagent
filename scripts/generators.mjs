@@ -66,6 +66,8 @@ function mk(gen, st, a, reason, accuracy, addDays) {
     rr: a.rr, rsi: a.rsi, confidence: conf, accuracy, backtestTrades: n,
     delivery: st._deliv ? st._deliv.pct : null,
     changePct: a.changePct, setupType: a.setupType, // for pre-move filtering (alert BEFORE the move)
+    footprint: a._footprint || null,                // smart-money accumulation footprint (pre-move)
+    rs: a._rs || null,                              // relative strength vs NIFTY
     social,
   }
 }
@@ -122,19 +124,22 @@ const STOCK_GENS = {
     const V = a.vol || {}
     const rvol = V.rvol ?? 1
     const chg = a.changePct ?? 0
+    const fp = a._footprint
     const movingNow = chg >= 3 && rvol >= 1.5 && a.bullish
     const bigMove = chg >= 5 && rvol >= 1.8
     const preBreak = a.nearBreakout && rvol >= 1.3 && (a.emaStack || a.higherLows)
     const squeezeFire = a.squeeze && chg >= 1.5 && rvol >= 1.3
     const volSurge = V.vol1GtVol5 && chg >= 2 && a.bullish
-    if (!(movingNow || bigMove || preBreak || squeezeFire || volSurge)) return null
+    const footprintPre = fp && fp.strong && a.bullish && chg < 3   // accumulation footprint, BEFORE it runs
+    if (!(movingNow || bigMove || preBreak || squeezeFire || volSurge || footprintPre)) return null
     const tag = (bigMove || movingNow) ? `🚀 Moving now +${chg.toFixed(1)}% on ${rvol}× volume`
-      : preBreak ? `About to break the 20-day high on ${rvol}× volume`
-        : squeezeFire ? `Squeeze firing — volatility expanding up (+${chg.toFixed(1)}%)`
-          : `Volume surge ${rvol}× with price up +${chg.toFixed(1)}%`
+      : footprintPre ? `🕵️ Accumulation footprint — smart money in before the move: ${fp.flags[0]}`
+        : preBreak ? `About to break the 20-day high on ${rvol}× volume`
+          : squeezeFire ? `Squeeze firing — volatility expanding up (+${chg.toFixed(1)}%)`
+            : `Volume surge ${rvol}× with price up +${chg.toFixed(1)}%`
     const card = mk(M.momentum, st, a, tag, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
-    // rank freshest, strongest momentum first (change% + relative volume + pre-move score)
-    card._momScore = Math.round(chg * 3 + rvol * 6 + a.moveScore * 0.3)
+    // rank freshest, strongest momentum first (change% + relative volume + pre-move score + footprint)
+    card._momScore = Math.round(chg * 3 + rvol * 6 + a.moveScore * 0.3 + (fp?.score || 0) * 0.4)
     card.movingNow = movingNow || bigMove
     return card
   },

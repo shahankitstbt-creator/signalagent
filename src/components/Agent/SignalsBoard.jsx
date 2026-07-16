@@ -222,6 +222,7 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
         <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} />
           {s.movingNow && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#F59E0B' }}>🚀 MOVING</span>}
+          {s.footprint && !s.footprint.weak && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#0E9F6E' }} title={s.footprint.flags?.join(' · ')}>🕵️ FOOTPRINT {s.footprint.score}</span>}
           {s.news && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white bg-accent-primary" title={`${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`}>📰 NEWS</span>}
           <span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
@@ -240,6 +241,12 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
         <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
           <td colSpan={10} className="px-5 py-3">
             <div className="text-txt-sec mb-2">{s.reason}</div>
+            {s.footprint && !s.footprint.weak && (
+              <div className="mb-2 p-2 rounded-lg" style={{ background: tint('#0E9F6E', 0.08) }}>
+                <div className="text-[10px] font-bold text-green uppercase">🕵️ Smart-Money Footprint · {s.footprint.score}/100{s.rs?.leader ? ' · RS leader vs NIFTY' : ''}</div>
+                <ul className="text-[11px] text-txt-sec mt-0.5 list-disc list-inside">{s.footprint.flags?.map((f, k) => <li key={k}>{f}</li>)}</ul>
+              </div>
+            )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
               <Field label="Entry" value={`₹${s.entry}`} />
               <Field label="Stop loss" value={`₹${s.sl} (${s.slPct}%)`} tone="text-red" />

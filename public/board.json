@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T07:41:29.205Z",
+  "generatedAt": "2026-07-16T11:26:47.695Z",
   "date": "2026-07-16",
   "timeframe": "daily",
   "label": "Daily",
@@ -9,7 +9,7 @@
       "win": 155,
       "loss": 87,
       "expired": 0,
-      "open": 422,
+      "open": 486,
       "returnSum": 525.9499999999999,
       "decided": 242,
       "winRate": 64,
@@ -20,7 +20,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 13,
+        "open": 25,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -30,7 +30,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 38,
+        "open": 40,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -40,7 +40,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 31,
+        "open": 44,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -50,7 +50,7 @@
         "win": 41,
         "loss": 12,
         "expired": 0,
-        "open": 87,
+        "open": 101,
         "returnSum": 209.03999999999996,
         "decided": 53,
         "winRate": 77.4,
@@ -70,7 +70,7 @@
         "win": 31,
         "loss": 18,
         "expired": 0,
-        "open": 86,
+        "open": 99,
         "returnSum": 84.68000000000002,
         "decided": 49,
         "winRate": 63.3,
@@ -80,7 +80,7 @@
         "win": 28,
         "loss": 21,
         "expired": 0,
-        "open": 81,
+        "open": 87,
         "returnSum": 62.09999999999998,
         "decided": 49,
         "winRate": 57.1,
@@ -90,7 +90,7 @@
         "win": 36,
         "loss": 25,
         "expired": 0,
-        "open": 71,
+        "open": 89,
         "returnSum": 93.44000000000001,
         "decided": 61,
         "winRate": 59,
@@ -1195,6 +1195,42 @@
       "signals": [
         {
           "generator": "fno",
+          "underlying": "NIFTY",
+          "name": "Nifty Option Chain",
+          "kind": "Index",
+          "direction": "RANGE",
+          "dirTone": "flat",
+          "spot": 24072.75,
+          "lot": 65,
+          "grade": "B",
+          "optionPlay": "Range: sell 24200 CE + 24000 PE (iron condor)",
+          "pcr": 0.86,
+          "support": 24000,
+          "resistance": 24200,
+          "reason": "PCR 0.86 → Range / balanced. Support 24000 / Resistance 24200 · ATM 24050 · exp 21JUL2026.",
+          "social": "📊 F&O — NIFTY (Index) RANGE\nPCR 0.86 → Range / balanced. Support 24000 / Resistance 24200 · ATM 24050 · exp 21JUL2026.\n👉 Range: sell 24200 CE + 24000 PE (iron condor)\n📌 Educational only, not advice. Not SEBI-registered. #fno #nifty #options",
+          "rank": 100
+        },
+        {
+          "generator": "fno",
+          "underlying": "BANKNIFTY",
+          "name": "Bank Nifty Option Chain",
+          "kind": "Index",
+          "direction": "RANGE",
+          "dirTone": "flat",
+          "spot": 57582.25,
+          "lot": 30,
+          "grade": "B",
+          "optionPlay": "Range: sell 58000 CE + 58000 PE (iron condor)",
+          "pcr": 0.83,
+          "support": 58000,
+          "resistance": 58000,
+          "reason": "PCR 0.83 → Range / balanced. Support 58000 / Resistance 58000 · ATM 57600 · exp 28JUL2026.",
+          "social": "📊 F&O — BANKNIFTY (Index) RANGE\nPCR 0.83 → Range / balanced. Support 58000 / Resistance 58000 · ATM 57600 · exp 28JUL2026.\n👉 Range: sell 58000 CE + 58000 PE (iron condor)\n📌 Educational only, not advice. Not SEBI-registered. #fno #banknifty #options",
+          "rank": 100
+        },
+        {
+          "generator": "fno",
           "underlying": "GOLD",
           "name": "Gold",
           "kind": "Commodity",
@@ -1225,44 +1261,128 @@
         },
         {
           "generator": "fno",
+          "underlying": "APOLLOHOSP",
+          "name": "Apollo Hospitals Enterprise Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 8888,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 100,
+          "delivery": 57.2,
+          "entry": 8888,
+          "sl": 8681.63,
+          "slPct": -2.3,
+          "targets": [
+            {
+              "price": 9163.16,
+              "pct": 3.1,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 9369.53,
+              "pct": 5.4,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 9575.9,
+              "pct": 7.7,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹11,11,000 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA · Delivery 57.2%",
+          "changePct": -0.51,
+          "setupType": "Breakout watch",
+          "rsi": 64.9,
+          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nBreakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA · Delivery 57.2%\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
+          "rank": 60
+        },
+        {
+          "generator": "fno",
           "underlying": "BAJAJ-AUTO",
           "name": "Bajaj Auto Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 10295.5,
+          "spot": 10331.5,
           "lot": 75,
           "grade": "A+",
           "confidence": 100,
           "delivery": 51.8,
-          "entry": 10295.5,
-          "sl": 9973.9,
-          "slPct": -3.1,
+          "entry": 10331.5,
+          "sl": 9987.53,
+          "slPct": -3.3,
           "targets": [
             {
-              "price": 10724.31,
+              "price": 10761.24,
               "pct": 4.2,
               "by": "2026-07-24"
             },
             {
-              "price": 11045.91,
+              "price": 11083.54,
               "pct": 7.3,
               "by": "2026-08-03"
             },
             {
-              "price": 11367.52,
+              "price": 11405.84,
               "pct": 10.4,
               "by": "2026-08-14"
             }
           ],
-          "rr": 1.33,
+          "rr": 1.25,
           "optionPlay": "Buy 10300 CE (ATM) or 10200 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 75 sh ≈ ₹7,72,163 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below) · Delivery 51.8%",
-          "changePct": -0.27,
+          "futures": "1 lot = 75 sh ≈ ₹7,74,863 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below) · Delivery 51.8%",
+          "changePct": 0.08,
           "setupType": "Squeeze breakout",
-          "rsi": 57.1,
-          "social": "📊 F&O — BAJAJ-AUTO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below) · Delivery 51.8%\n👉 Buy 10300 CE (ATM) or 10200 CE (ITM) — near expiry; or long futures · 1 lot = 75 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajaj-auto #options",
+          "rsi": 58.4,
+          "social": "📊 F&O — BAJAJ-AUTO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below) · Delivery 51.8%\n👉 Buy 10300 CE (ATM) or 10200 CE (ITM) — near expiry; or long futures · 1 lot = 75 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajaj-auto #options",
+          "rank": 60
+        },
+        {
+          "generator": "fno",
+          "underlying": "ICICIBANK",
+          "name": "ICICI Bank Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1418.2,
+          "lot": 700,
+          "grade": "A+",
+          "confidence": 100,
+          "delivery": 68.2,
+          "entry": 1418.2,
+          "sl": 1372.46,
+          "slPct": -3.2,
+          "targets": [
+            {
+              "price": 1466.61,
+              "pct": 3.4,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 1502.91,
+              "pct": 6,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 1539.22,
+              "pct": 8.5,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.06,
+          "optionPlay": "Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 700 sh ≈ ₹9,92,740 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.0% below) · Delivery 68.2%",
+          "changePct": 0.14,
+          "setupType": "Squeeze breakout",
+          "rsi": 65.6,
+          "social": "📊 F&O — ICICIBANK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.0% below) · Delivery 68.2%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 700 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #icicibank #options",
           "rank": 60
         },
         {
@@ -1272,39 +1392,81 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1950,
+          "spot": 1950.1,
           "lot": 350,
           "grade": "A+",
           "confidence": 100,
           "delivery": 57.8,
-          "entry": 1950,
+          "entry": 1950.1,
           "sl": 1882.13,
           "slPct": -3.5,
           "targets": [
             {
-              "price": 2010.75,
+              "price": 2010.85,
               "pct": 3.1,
               "by": "2026-07-24"
             },
             {
-              "price": 2056.31,
+              "price": 2056.41,
               "pct": 5.5,
               "by": "2026-08-03"
             },
             {
-              "price": 2101.87,
+              "price": 2101.97,
               "pct": 7.8,
               "by": "2026-08-14"
             }
           ],
-          "rr": 0.9,
+          "rr": 0.89,
           "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 350 sh ≈ ₹6,82,500 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.7% below) · Delivery 57.8%",
-          "changePct": -0.08,
+          "futures": "1 lot = 350 sh ≈ ₹6,82,535 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.6% below) · Delivery 57.8%",
+          "changePct": -0.07,
           "setupType": "Squeeze breakout",
-          "rsi": 69.2,
-          "social": "📊 F&O — SUNPHARMA (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.7% below) · Delivery 57.8%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 350 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #sunpharma #options",
+          "rsi": 69.3,
+          "social": "📊 F&O — SUNPHARMA (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.6% below) · Delivery 57.8%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 350 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #sunpharma #options",
+          "rank": 60
+        },
+        {
+          "generator": "fno",
+          "underlying": "BHEL",
+          "name": "Bharat Heavy Electricals Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 435.4,
+          "lot": 2625,
+          "grade": "A+",
+          "confidence": 100,
+          "delivery": 47.7,
+          "entry": 435.4,
+          "sl": 376.23,
+          "slPct": -13.6,
+          "targets": [
+            {
+              "price": 466.12,
+              "pct": 7.1,
+              "by": "2026-07-21"
+            },
+            {
+              "price": 489.16,
+              "pct": 12.3,
+              "by": "2026-07-24"
+            },
+            {
+              "price": 512.21,
+              "pct": 17.6,
+              "by": "2026-07-30"
+            }
+          ],
+          "rr": 0.52,
+          "optionPlay": "Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 2625 sh ≈ ₹11,42,925 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.3% below) · Delivery 47.7%",
+          "changePct": 4.18,
+          "setupType": "Squeeze breakout",
+          "rsi": 66.3,
+          "social": "📊 F&O — BHEL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.3% below) · Delivery 47.7%\n👉 Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures · 1 lot = 2625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhel #options",
           "rank": 60
         },
         {
@@ -1314,39 +1476,81 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1037.1,
+          "spot": 1037.6,
           "lot": 750,
           "grade": "A+",
           "confidence": 98,
           "delivery": 55.3,
-          "entry": 1037.1,
+          "entry": 1037.6,
           "sl": 989.27,
-          "slPct": -4.6,
+          "slPct": -4.7,
           "targets": [
             {
-              "price": 1085.44,
+              "price": 1085.94,
               "pct": 4.7,
               "by": "2026-07-24"
             },
             {
-              "price": 1121.69,
+              "price": 1122.19,
               "pct": 8.2,
               "by": "2026-08-03"
             },
             {
-              "price": 1157.94,
-              "pct": 11.7,
+              "price": 1158.44,
+              "pct": 11.6,
               "by": "2026-08-14"
             }
           ],
-          "rr": 1.01,
+          "rr": 1,
           "optionPlay": "Buy 1050 CE (ATM) or 1000 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 750 sh ≈ ₹7,77,825 notional",
+          "futures": "1 lot = 750 sh ≈ ₹7,78,200 notional",
           "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 55.3%",
-          "changePct": 1.55,
+          "changePct": 1.6,
           "setupType": "Squeeze breakout",
-          "rsi": 64.7,
+          "rsi": 64.8,
           "social": "📊 F&O — BAJFINANCE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 55.3%\n👉 Buy 1050 CE (ATM) or 1000 CE (ITM) — near expiry; or long futures · 1 lot = 750 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bajfinance #options",
+          "rank": 59.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "ZYDUSLIFE",
+          "name": "Zydus Lifesciences Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1153.9,
+          "lot": 900,
+          "grade": "A+",
+          "confidence": 98,
+          "delivery": 55.8,
+          "entry": 1153.9,
+          "sl": 1115.92,
+          "slPct": -3.3,
+          "targets": [
+            {
+              "price": 1204.53,
+              "pct": 4.4,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 1242.51,
+              "pct": 7.7,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 1280.48,
+              "pct": 11,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 900 sh ≈ ₹10,38,510 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 55.8%",
+          "changePct": -0.26,
+          "setupType": "Squeeze breakout",
+          "rsi": 63.2,
+          "social": "📊 F&O — ZYDUSLIFE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 55.8%\n👉 Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures · 1 lot = 900 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #zyduslife #options",
           "rank": 59.6
         },
         {
@@ -1356,292 +1560,40 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 2059.5,
+          "spot": 2025,
           "lot": 275,
           "grade": "A+",
-          "confidence": 98,
+          "confidence": 97,
           "delivery": 25.8,
-          "entry": 2059.5,
-          "sl": 1884.61,
-          "slPct": -8.5,
+          "entry": 2025,
+          "sl": 1884.54,
+          "slPct": -6.9,
           "targets": [
             {
-              "price": 2167.44,
-              "pct": 5.2,
+              "price": 2133.62,
+              "pct": 5.4,
               "by": "2026-07-27"
             },
             {
-              "price": 2248.39,
-              "pct": 9.2,
+              "price": 2215.09,
+              "pct": 9.4,
               "by": "2026-08-03"
             },
             {
-              "price": 2329.35,
-              "pct": 13.1,
+              "price": 2296.56,
+              "pct": 13.4,
               "by": "2026-08-14"
             }
           ],
-          "rr": 0.62,
+          "rr": 0.77,
           "optionPlay": "Buy 2050 CE (ATM) or 2000 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 275 sh ≈ ₹5,66,363 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.0% below) · Delivery 25.8%",
-          "changePct": 2.83,
+          "futures": "1 lot = 275 sh ≈ ₹5,56,875 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.0% below) · Delivery 25.8%",
+          "changePct": 1.1,
           "setupType": "Squeeze breakout",
-          "rsi": 62.7,
-          "social": "📊 F&O — HYUNDAI (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.0% below) · Delivery 25.8%\n👉 Buy 2050 CE (ATM) or 2000 CE (ITM) — near expiry; or long futures · 1 lot = 275 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hyundai #options",
-          "rank": 59.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "INDHOTEL",
-          "name": "Indian Hotels Co. Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 735.55,
-          "lot": 1000,
-          "grade": "A+",
-          "confidence": 98,
-          "delivery": 56,
-          "entry": 735.55,
-          "sl": 712.65,
-          "slPct": -3.1,
-          "targets": [
-            {
-              "price": 766.08,
-              "pct": 4.2,
-              "by": "2026-08-07"
-            },
-            {
-              "price": 788.98,
-              "pct": 7.3,
-              "by": "2026-08-12"
-            },
-            {
-              "price": 811.89,
-              "pct": 10.4,
-              "by": "2026-08-18"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 1000 sh ≈ ₹7,35,550 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 56%",
-          "changePct": 0.31,
-          "setupType": "Squeeze breakout",
-          "rsi": 58.6,
-          "social": "📊 F&O — INDHOTEL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 56%\n👉 Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures · 1 lot = 1000 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indhotel #options",
-          "rank": 59.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "BHEL",
-          "name": "Bharat Heavy Electricals Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 416.4,
-          "lot": 2625,
-          "grade": "A+",
-          "confidence": 98,
-          "delivery": 47.7,
-          "entry": 416.4,
-          "sl": 369,
-          "slPct": -11.4,
-          "targets": [
-            {
-              "price": 444.37,
-              "pct": 6.7,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 465.35,
-              "pct": 11.8,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 486.32,
-              "pct": 16.8,
-              "by": "2026-07-30"
-            }
-          ],
-          "rr": 0.59,
-          "optionPlay": "Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2625 sh ≈ ₹10,93,050 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 47.7%",
-          "changePct": 3.09,
-          "setupType": "Squeeze breakout",
-          "rsi": 59.9,
-          "social": "📊 F&O — BHEL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 47.7%\n👉 Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures · 1 lot = 2625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhel #options",
-          "rank": 59.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "ULTRACEMCO",
-          "name": "UltraTech Cement Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 11859,
-          "lot": 50,
-          "grade": "A+",
-          "confidence": 93,
-          "delivery": 53.3,
-          "entry": 11859,
-          "sl": 11314.06,
-          "slPct": -4.6,
-          "targets": [
-            {
-              "price": 12268.39,
-              "pct": 3.5,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 12575.43,
-              "pct": 6,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 12882.47,
-              "pct": 8.6,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.75,
-          "optionPlay": "Buy 11900 CE (ATM) or 11800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 50 sh ≈ ₹5,92,950 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.1% below) · Delivery 53.3%",
-          "changePct": 0.4,
-          "setupType": "Squeeze breakout",
-          "rsi": 60.2,
-          "social": "📊 F&O — ULTRACEMCO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.1% below) · Delivery 53.3%\n👉 Buy 11900 CE (ATM) or 11800 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ultracemco #options",
-          "rank": 58.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "ABB",
-          "name": "ABB India Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 7711,
-          "lot": 125,
-          "grade": "A+",
-          "confidence": 93,
-          "delivery": 40.5,
-          "entry": 7711,
-          "sl": 6668.29,
-          "slPct": -13.5,
-          "targets": [
-            {
-              "price": 8183.11,
-              "pct": 6.1,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 8537.19,
-              "pct": 10.7,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 8891.28,
-              "pct": 15.3,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.45,
-          "optionPlay": "Buy 7700 CE (ATM) or 7600 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹9,63,875 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 40.5%",
-          "changePct": 11.88,
-          "setupType": "Squeeze breakout",
-          "rsi": 69.8,
-          "social": "📊 F&O — ABB (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 40.5%\n👉 Buy 7700 CE (ATM) or 7600 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abb #options",
-          "rank": 58.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "ADANIENT",
-          "name": "Adani Enterprises Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 3153.7,
-          "lot": 309,
-          "grade": "A+",
-          "confidence": 91,
-          "delivery": 38.6,
-          "entry": 3153.7,
-          "sl": 3010.29,
-          "slPct": -4.5,
-          "targets": [
-            {
-              "price": 3318.77,
-              "pct": 5.2,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 3442.57,
-              "pct": 9.2,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 3566.38,
-              "pct": 13.1,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.15,
-          "optionPlay": "Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 309 sh ≈ ₹9,74,493 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below) · Delivery 38.6%",
-          "changePct": 0.1,
-          "setupType": "Squeeze breakout",
-          "rsi": 58.9,
-          "social": "📊 F&O — ADANIENT (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below) · Delivery 38.6%\n👉 Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
-          "rank": 58.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "ICICIBANK",
-          "name": "ICICI Bank Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1411.5,
-          "lot": 700,
-          "grade": "A+",
-          "confidence": 91,
-          "delivery": 68.2,
-          "entry": 1411.5,
-          "sl": 1372.5,
-          "slPct": -2.8,
-          "targets": [
-            {
-              "price": 1459.54,
-              "pct": 3.4,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 1495.56,
-              "pct": 6,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 1531.59,
-              "pct": 8.5,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.23,
-          "optionPlay": "Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 700 sh ≈ ₹9,88,050 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 68.2%",
-          "changePct": -0.33,
-          "setupType": "Squeeze breakout",
-          "rsi": 63.2,
-          "social": "📊 F&O — ICICIBANK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.5% below) · Delivery 68.2%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 700 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #icicibank #options",
-          "rank": 58.2
+          "rsi": 59.4,
+          "social": "📊 F&O — HYUNDAI (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.0% below) · Delivery 25.8%\n👉 Buy 2050 CE (ATM) or 2000 CE (ITM) — near expiry; or long futures · 1 lot = 275 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hyundai #options",
+          "rank": 59.4
         },
         {
           "generator": "fno",
@@ -1650,880 +1602,40 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1934.3,
+          "spot": 1921.8,
           "lot": 475,
           "grade": "A+",
-          "confidence": 88,
+          "confidence": 94,
           "delivery": 63.7,
-          "entry": 1934.3,
-          "sl": 1867.97,
-          "slPct": -3.4,
+          "entry": 1921.8,
+          "sl": 1868.35,
+          "slPct": -2.8,
           "targets": [
             {
-              "price": 2005.61,
+              "price": 1993.07,
               "pct": 3.7,
               "by": "2026-07-24"
             },
             {
-              "price": 2059.09,
+              "price": 2046.51,
               "pct": 6.5,
               "by": "2026-07-29"
             },
             {
-              "price": 2112.57,
-              "pct": 9.2,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.08,
-          "optionPlay": "Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹9,18,793 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 63.7%",
-          "changePct": -0.11,
-          "setupType": "Squeeze breakout",
-          "rsi": 59.9,
-          "social": "📊 F&O — BHARTIARTL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 63.7%\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhartiartl #options",
-          "rank": 57.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "TITAN",
-          "name": "Titan Company Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 4635.2,
-          "lot": 175,
-          "grade": "A+",
-          "confidence": 88,
-          "delivery": 66.1,
-          "entry": 4635.2,
-          "sl": 4498.71,
-          "slPct": -2.9,
-          "targets": [
-            {
-              "price": 4817.19,
-              "pct": 3.9,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 4953.69,
-              "pct": 6.9,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 5090.18,
-              "pct": 9.8,
+              "price": 2099.96,
+              "pct": 9.3,
               "by": "2026-08-14"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 175 sh ≈ ₹8,11,160 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 66.1%",
-          "changePct": 1.34,
-          "setupType": "Breakout watch",
-          "rsi": 67.9,
-          "social": "📊 F&O — TITAN (Stock) BUY\nBreakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 66.1%\n👉 Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures · 1 lot = 175 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #titan #options",
-          "rank": 57.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "SOLARINDS",
-          "name": "Solar Industries India Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 18527,
-          "lot": 50,
-          "grade": "A+",
-          "confidence": 88,
-          "delivery": 30.4,
-          "entry": 18527,
-          "sl": 16912.27,
-          "slPct": -8.7,
-          "targets": [
-            {
-              "price": 19684.26,
-              "pct": 6.2,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 20552.2,
-              "pct": 10.9,
-              "by": "2026-07-28"
-            },
-            {
-              "price": 21420.15,
-              "pct": 15.6,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.72,
-          "optionPlay": "Buy 18500 CE (ATM) or 18400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 50 sh ≈ ₹9,26,350 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 30.4%",
-          "changePct": 1.32,
+          "optionPlay": "Buy 1900 CE (ATM) or 1850 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹9,12,855 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 63.7%",
+          "changePct": 0.18,
           "setupType": "Squeeze breakout",
           "rsi": 57,
-          "social": "📊 F&O — SOLARINDS (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below) · Delivery 30.4%\n👉 Buy 18500 CE (ATM) or 18400 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #solarinds #options",
-          "rank": 57.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "ADANIENSOL",
-          "name": "Adani Energy Solutions Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1716.4,
-          "lot": 675,
-          "grade": "A+",
-          "confidence": 86,
-          "delivery": 33.5,
-          "entry": 1716.4,
-          "sl": 1598.61,
-          "slPct": -6.9,
-          "targets": [
-            {
-              "price": 1831.25,
-              "pct": 6.7,
-              "by": "2026-07-27"
-            },
-            {
-              "price": 1917.39,
-              "pct": 11.7,
-              "by": "2026-07-30"
-            },
-            {
-              "price": 2003.53,
-              "pct": 16.7,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.98,
-          "optionPlay": "Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 675 sh ≈ ₹11,58,570 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 33.5%",
-          "changePct": 1.54,
-          "setupType": "Squeeze breakout",
-          "rsi": 72.5,
-          "social": "📊 F&O — ADANIENSOL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.6% below) · Delivery 33.5%\n👉 Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures · 1 lot = 675 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniensol #options",
-          "rank": 57.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "ADANIPORTS",
-          "name": "Adani Ports and Special Economic Zone Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1842.9,
-          "lot": 475,
-          "grade": "A+",
-          "confidence": 85,
-          "delivery": 48.4,
-          "entry": 1842.9,
-          "sl": 1775.36,
-          "slPct": -3.7,
-          "targets": [
-            {
-              "price": 1921.29,
-              "pct": 4.3,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 1980.09,
-              "pct": 7.4,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 2038.89,
-              "pct": 10.6,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.16,
-          "optionPlay": "Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹8,75,378 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.6% below) · Delivery 48.4%",
-          "changePct": 1.15,
-          "setupType": "Squeeze breakout",
-          "rsi": 55.2,
-          "social": "📊 F&O — ADANIPORTS (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.6% below) · Delivery 48.4%\n👉 Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniports #options",
-          "rank": 57
-        },
-        {
-          "generator": "fno",
-          "underlying": "APOLLOHOSP",
-          "name": "Apollo Hospitals Enterprise Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 8894,
-          "lot": 125,
-          "grade": "A+",
-          "confidence": 85,
-          "delivery": 57.2,
-          "entry": 8894,
-          "sl": 8672.02,
-          "slPct": -2.5,
-          "targets": [
-            {
-              "price": 9173.8,
-              "pct": 3.1,
-              "by": "2026-07-27"
-            },
-            {
-              "price": 9383.66,
-              "pct": 5.5,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 9593.51,
-              "pct": 7.9,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.26,
-          "optionPlay": "Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹11,11,750 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 57.2%",
-          "changePct": -0.07,
-          "setupType": "Breakout watch",
-          "rsi": 66.8,
-          "social": "📊 F&O — APOLLOHOSP (Stock) BUY\nBreakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 57.2%\n👉 Buy 8900 CE (ATM) or 8800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #apollohosp #options",
-          "rank": 57
-        },
-        {
-          "generator": "fno",
-          "underlying": "BPCL",
-          "name": "Bharat Petroleum Corporation Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 312.75,
-          "lot": 1975,
-          "grade": "A+",
-          "confidence": 85,
-          "delivery": 58.2,
-          "entry": 312.75,
-          "sl": 297.77,
-          "slPct": -4.8,
-          "targets": [
-            {
-              "price": 329.02,
-              "pct": 5.2,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 341.22,
-              "pct": 9.1,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 353.42,
-              "pct": 13,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.09,
-          "optionPlay": "Buy 310 CE (ATM) or 300 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 1975 sh ≈ ₹6,17,681 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 58.2%",
-          "changePct": 2.42,
-          "setupType": "Squeeze breakout",
-          "rsi": 55.6,
-          "social": "📊 F&O — BPCL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 58.2%\n👉 Buy 310 CE (ATM) or 300 CE (ITM) — near expiry; or long futures · 1 lot = 1975 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bpcl #options",
-          "rank": 57
-        },
-        {
-          "generator": "fno",
-          "underlying": "BIOCON",
-          "name": "Biocon Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 442.45,
-          "lot": 2500,
-          "grade": "A+",
-          "confidence": 83,
-          "delivery": 49.4,
-          "entry": 442.45,
-          "sl": 392.23,
-          "slPct": -11.4,
-          "targets": [
-            {
-              "price": 468.65,
-              "pct": 5.9,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 488.3,
-              "pct": 10.4,
-              "by": "2026-07-28"
-            },
-            {
-              "price": 507.95,
-              "pct": 14.8,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.52,
-          "optionPlay": "Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2500 sh ≈ ₹11,06,125 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.1% below); Above rising 20 & 50 EMA · Delivery 49.4%",
-          "changePct": 1.81,
-          "setupType": "Breakout watch",
-          "rsi": 63.4,
-          "social": "📊 F&O — BIOCON (Stock) BUY\nBreakout watch: Hugging 20-day high (1.1% below); Above rising 20 & 50 EMA · Delivery 49.4%\n👉 Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #biocon #options",
-          "rank": 56.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "COFORGE",
-          "name": "Coforge Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1531.4,
-          "lot": 475,
-          "grade": "A+",
-          "confidence": 83,
-          "delivery": 51.8,
-          "entry": 1531.4,
-          "sl": 1417.5,
-          "slPct": -7.4,
-          "targets": [
-            {
-              "price": 1634.39,
-              "pct": 6.7,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 1711.63,
-              "pct": 11.8,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 1788.88,
-              "pct": 16.8,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.9,
-          "optionPlay": "Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 475 sh ≈ ₹7,27,415 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 51.8%",
-          "changePct": -0.2,
-          "setupType": "Squeeze breakout",
-          "rsi": 59.1,
-          "social": "📊 F&O — COFORGE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 51.8%\n👉 Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #coforge #options",
-          "rank": 56.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "ABCAPITAL",
-          "name": "Aditya Birla Capital Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 400.4,
-          "lot": 3100,
-          "grade": "A+",
-          "confidence": 81,
-          "delivery": 39,
-          "entry": 400.4,
-          "sl": 384.38,
-          "slPct": -4,
-          "targets": [
-            {
-              "price": 421.77,
-              "pct": 5.3,
-              "by": "2026-07-27"
-            },
-            {
-              "price": 437.79,
-              "pct": 9.3,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 453.82,
-              "pct": 13.3,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3100 sh ≈ ₹12,41,240 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.6% below) · Delivery 39%",
-          "changePct": -0.96,
-          "setupType": "Squeeze breakout",
-          "rsi": 56.8,
-          "social": "📊 F&O — ABCAPITAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.6% below) · Delivery 39%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 3100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abcapital #options",
-          "rank": 56.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "MAXHEALTH",
-          "name": "Max Healthcare Institute Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1102.1,
-          "lot": 525,
-          "grade": "A+",
-          "confidence": 74,
-          "delivery": 66.3,
-          "entry": 1102.1,
-          "sl": 1058.04,
-          "slPct": -4,
-          "targets": [
-            {
-              "price": 1160.85,
-              "pct": 5.3,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 1204.92,
-              "pct": 9.3,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 1248.98,
-              "pct": 13.3,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 525 sh ≈ ₹5,78,603 notional",
-          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 66.3%",
-          "changePct": -0.05,
-          "setupType": "Accumulation",
-          "rsi": 53.8,
-          "social": "📊 F&O — MAXHEALTH (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 66.3%\n👉 Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures · 1 lot = 525 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #maxhealth #options",
-          "rank": 54.8
-        },
-        {
-          "generator": "fno",
-          "underlying": "FEDERALBNK",
-          "name": "Federal Bank Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 327.4,
-          "lot": 2500,
-          "grade": "A+",
-          "confidence": 73,
-          "delivery": 53.3,
-          "entry": 327.4,
-          "sl": 318.18,
-          "slPct": -2.8,
-          "targets": [
-            {
-              "price": 339.69,
-              "pct": 3.8,
-              "by": "2026-07-21"
-            },
-            {
-              "price": 348.91,
-              "pct": 6.6,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 358.13,
-              "pct": 9.4,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 2500 sh ≈ ₹8,18,500 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 53.3%",
-          "changePct": -0.05,
-          "setupType": "Squeeze breakout",
-          "rsi": 58.2,
-          "social": "📊 F&O — FEDERALBNK (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 53.3%\n👉 Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #federalbnk #options",
-          "rank": 54.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "UNITDSPR",
-          "name": "United Spirits Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1376.3,
-          "lot": 400,
-          "grade": "A+",
-          "confidence": 72,
-          "delivery": 65.2,
-          "entry": 1376.3,
-          "sl": 1331.67,
-          "slPct": -3.2,
-          "targets": [
-            {
-              "price": 1435.81,
-              "pct": 4.3,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 1480.45,
-              "pct": 7.6,
-              "by": "2026-07-27"
-            },
-            {
-              "price": 1525.08,
-              "pct": 10.8,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 400 sh ≈ ₹5,50,520 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 65.2%",
-          "changePct": -0.72,
-          "setupType": "Watch",
-          "rsi": 54.4,
-          "social": "📊 F&O — UNITDSPR (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 65.2%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 400 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #unitdspr #options",
-          "rank": 54.4
-        },
-        {
-          "generator": "fno",
-          "underlying": "DIVISLAB",
-          "name": "Divi's Laboratories Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 7346.5,
-          "lot": 100,
-          "grade": "A+",
-          "confidence": 71,
-          "delivery": 47.1,
-          "entry": 7346.5,
-          "sl": 6661.61,
-          "slPct": -9.3,
-          "targets": [
-            {
-              "price": 7660.4,
-              "pct": 4.3,
-              "by": "2026-07-29"
-            },
-            {
-              "price": 7895.82,
-              "pct": 7.5,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 8131.24,
-              "pct": 10.7,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.46,
-          "optionPlay": "Buy 7300 CE (ATM) or 7200 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 100 sh ≈ ₹7,34,650 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 47.1%",
-          "changePct": 2.2,
-          "setupType": "Breakout watch",
-          "rsi": 75.5,
-          "social": "📊 F&O — DIVISLAB (Stock) BUY\nBreakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 47.1%\n👉 Buy 7300 CE (ATM) or 7200 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #divislab #options",
-          "rank": 54.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "ZYDUSLIFE",
-          "name": "Zydus Lifesciences Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1159.6,
-          "lot": 900,
-          "grade": "A+",
-          "confidence": 71,
-          "delivery": 55.8,
-          "entry": 1159.6,
-          "sl": 1121.4,
-          "slPct": -3.3,
-          "targets": [
-            {
-              "price": 1210.53,
-              "pct": 4.4,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 1248.73,
-              "pct": 7.7,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 1286.93,
-              "pct": 11,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 900 sh ≈ ₹10,43,640 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA · Delivery 55.8%",
-          "changePct": 2.29,
-          "setupType": "Breakout watch",
-          "rsi": 65,
-          "social": "📊 F&O — ZYDUSLIFE (Stock) BUY\nBreakout watch: Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA · Delivery 55.8%\n👉 Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures · 1 lot = 900 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #zyduslife #options",
-          "rank": 54.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "ALKEM",
-          "name": "Alkem Laboratories Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 5700,
-          "lot": 125,
-          "grade": "A+",
-          "confidence": 71,
-          "delivery": 75.4,
-          "entry": 5700,
-          "sl": 5492.16,
-          "slPct": -3.6,
-          "targets": [
-            {
-              "price": 5933.41,
-              "pct": 4.1,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 6108.46,
-              "pct": 7.2,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 6283.51,
-              "pct": 10.2,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.12,
-          "optionPlay": "Buy 5700 CE (ATM) or 5600 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹7,12,500 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 75.4%",
-          "changePct": 1.76,
-          "setupType": "Breakout watch",
-          "rsi": 64.3,
-          "social": "📊 F&O — ALKEM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA · Delivery 75.4%\n👉 Buy 5700 CE (ATM) or 5600 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #alkem #options",
-          "rank": 54.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "NYKAA",
-          "name": "FSN E-Commerce Ventures Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 325.05,
-          "lot": 3125,
-          "grade": "A+",
-          "confidence": 71,
-          "delivery": 51.5,
-          "entry": 325.05,
-          "sl": 310.61,
-          "slPct": -4.4,
-          "targets": [
-            {
-              "price": 340.41,
-              "pct": 4.7,
-              "by": "2026-07-29"
-            },
-            {
-              "price": 351.93,
-              "pct": 8.3,
-              "by": "2026-08-20"
-            },
-            {
-              "price": 363.45,
-              "pct": 11.8,
-              "by": "2026-08-26"
-            }
-          ],
-          "rr": 1.06,
-          "optionPlay": "Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3125 sh ≈ ₹10,15,781 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 51.5%",
-          "changePct": 0.18,
-          "setupType": "Breakout watch",
-          "rsi": 70.9,
-          "social": "📊 F&O — NYKAA (Stock) BUY\nBreakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 51.5%\n👉 Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures · 1 lot = 3125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #nykaa #options",
-          "rank": 54.2
-        },
-        {
-          "generator": "fno",
-          "underlying": "CIPLA",
-          "name": "Cipla Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1434.7,
-          "lot": 425,
-          "grade": "A+",
-          "confidence": 70,
-          "delivery": 54.7,
-          "entry": 1434.7,
-          "sl": 1395.96,
-          "slPct": -2.7,
-          "targets": [
-            {
-              "price": 1486.36,
-              "pct": 3.6,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 1525.1,
-              "pct": 6.3,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 1563.85,
-              "pct": 9,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 425 sh ≈ ₹6,09,748 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.7%",
-          "changePct": -0.23,
-          "setupType": "Momentum building",
-          "rsi": 53.5,
-          "social": "📊 F&O — CIPLA (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 54.7%\n👉 Buy 1450 CE (ATM) or 1400 CE (ITM) — near expiry; or long futures · 1 lot = 425 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cipla #options",
-          "rank": 54
-        },
-        {
-          "generator": "fno",
-          "underlying": "ADANIGREEN",
-          "name": "Adani Green Energy Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1559.6,
-          "lot": 600,
-          "grade": "A+",
-          "confidence": 70,
-          "delivery": 31.5,
-          "entry": 1559.6,
-          "sl": 1470.48,
-          "slPct": -5.7,
-          "targets": [
-            {
-              "price": 1666.85,
-              "pct": 6.9,
-              "by": "2026-07-24"
-            },
-            {
-              "price": 1747.28,
-              "pct": 12,
-              "by": "2026-07-29"
-            },
-            {
-              "price": 1827.72,
-              "pct": 17.2,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.2,
-          "optionPlay": "Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 600 sh ≈ ₹9,35,760 notional",
-          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 31.5%",
-          "changePct": -2.8,
-          "setupType": "Momentum building",
-          "rsi": 57.4,
-          "social": "📊 F&O — ADANIGREEN (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 31.5%\n👉 Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures · 1 lot = 600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanigreen #options",
-          "rank": 54
-        },
-        {
-          "generator": "fno",
-          "underlying": "HAL",
-          "name": "Hindustan Aeronautics Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 4455.1,
-          "lot": 150,
-          "grade": "A+",
-          "confidence": 68,
-          "delivery": 46.8,
-          "entry": 4455.1,
-          "sl": 4286.76,
-          "slPct": -3.8,
-          "targets": [
-            {
-              "price": 4645.52,
-              "pct": 4.3,
-              "by": "2026-07-22"
-            },
-            {
-              "price": 4788.33,
-              "pct": 7.5,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 4931.14,
-              "pct": 10.7,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 1.13,
-          "optionPlay": "Buy 4500 CE (ATM) or 4400 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 150 sh ≈ ₹6,68,265 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 46.8%",
-          "changePct": 0.29,
-          "setupType": "Squeeze breakout",
-          "rsi": 55,
-          "social": "📊 F&O — HAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below) · Delivery 46.8%\n👉 Buy 4500 CE (ATM) or 4400 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hal #options",
-          "rank": 53.6
-        },
-        {
-          "generator": "fno",
-          "underlying": "SHREECEM",
-          "name": "Shree Cement Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 27070,
-          "lot": 25,
-          "grade": "A+",
-          "confidence": 68,
-          "delivery": 51.5,
-          "entry": 27070,
-          "sl": 25690.01,
-          "slPct": -5.1,
-          "targets": [
-            {
-              "price": 28219.88,
-              "pct": 4.2,
-              "by": "2026-07-23"
-            },
-            {
-              "price": 29082.29,
-              "pct": 7.4,
-              "by": "2026-08-03"
-            },
-            {
-              "price": 29944.7,
-              "pct": 10.6,
-              "by": "2026-08-14"
-            }
-          ],
-          "rr": 0.83,
-          "optionPlay": "Buy 27100 CE (ATM) or 27000 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 25 sh ≈ ₹6,76,750 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA · Delivery 51.5%",
-          "changePct": 3.01,
-          "setupType": "Breakout watch",
-          "rsi": 63.8,
-          "social": "📊 F&O — SHREECEM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA · Delivery 51.5%\n👉 Buy 27100 CE (ATM) or 27000 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #shreecem #options",
-          "rank": 53.6
+          "social": "📊 F&O — BHARTIARTL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 63.7%\n👉 Buy 1900 CE (ATM) or 1850 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhartiartl #options",
+          "rank": 58.8
         },
         {
           "generator": "fno",
@@ -2532,124 +1644,502 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 4909.6,
+          "spot": 4987.6,
           "lot": 125,
           "grade": "A+",
-          "confidence": 67,
+          "confidence": 92,
           "delivery": 63.5,
-          "entry": 4909.6,
-          "sl": 4748.48,
-          "slPct": -3.3,
+          "entry": 4987.6,
+          "sl": 4755.67,
+          "slPct": -4.7,
           "targets": [
             {
-              "price": 5124.42,
-              "pct": 4.4,
+              "price": 5218.94,
+              "pct": 4.6,
               "by": "2026-07-24"
             },
             {
-              "price": 5285.54,
-              "pct": 7.7,
+              "price": 5392.44,
+              "pct": 8.1,
               "by": "2026-08-03"
             },
             {
-              "price": 5446.65,
-              "pct": 10.9,
+              "price": 5565.94,
+              "pct": 11.6,
               "by": "2026-08-14"
             }
           ],
-          "rr": 1.33,
-          "optionPlay": "Buy 4900 CE (ATM) or 4800 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 125 sh ≈ ₹6,13,700 notional",
-          "reason": "Accumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 63.5%",
-          "changePct": -2.16,
-          "setupType": "Accumulation",
-          "rsi": 67.1,
-          "social": "📊 F&O — TORNTPHARM (Stock) BUY\nAccumulation: Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move · Delivery 63.5%\n👉 Buy 4900 CE (ATM) or 4800 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #torntpharm #options",
-          "rank": 53.4
+          "rr": 1,
+          "optionPlay": "Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹6,23,450 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.0% below); Above rising 20 & 50 EMA · Delivery 63.5%",
+          "changePct": -0.6,
+          "setupType": "Breakout watch",
+          "rsi": 76.9,
+          "social": "📊 F&O — TORNTPHARM (Stock) BUY\nBreakout watch: Hugging 20-day high (2.0% below); Above rising 20 & 50 EMA · Delivery 63.5%\n👉 Buy 5000 CE (ATM) or 4900 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #torntpharm #options",
+          "rank": 58.4
         },
         {
           "generator": "fno",
-          "underlying": "TECHM",
-          "name": "Tech Mahindra Ltd.",
+          "underlying": "ADANIENT",
+          "name": "Adani Enterprises Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1515,
-          "lot": 600,
+          "spot": 3151.4,
+          "lot": 309,
           "grade": "A+",
-          "confidence": 63,
-          "delivery": 42.1,
-          "entry": 1515,
-          "sl": 1389.83,
-          "slPct": -8.3,
+          "confidence": 91,
+          "delivery": 38.6,
+          "entry": 3151.4,
+          "sl": 3010.29,
+          "slPct": -4.5,
           "targets": [
             {
-              "price": 1606.68,
-              "pct": 6.1,
+              "price": 3316.47,
+              "pct": 5.2,
               "by": "2026-07-23"
             },
             {
-              "price": 1675.44,
-              "pct": 10.6,
+              "price": 3440.27,
+              "pct": 9.2,
               "by": "2026-08-03"
             },
             {
-              "price": 1744.2,
-              "pct": 15.1,
+              "price": 3564.08,
+              "pct": 13.1,
               "by": "2026-08-14"
             }
           ],
-          "rr": 0.73,
-          "optionPlay": "Buy 1500 CE (ATM) or 1450 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 600 sh ≈ ₹9,09,000 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.5% below); Above rising 20 & 50 EMA · Delivery 42.1%",
-          "changePct": 2.07,
-          "setupType": "Breakout watch",
-          "rsi": 60.2,
-          "social": "📊 F&O — TECHM (Stock) BUY\nBreakout watch: Hugging 20-day high (1.5% below); Above rising 20 & 50 EMA · Delivery 42.1%\n👉 Buy 1500 CE (ATM) or 1450 CE (ITM) — near expiry; or long futures · 1 lot = 600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #techm #options",
-          "rank": 52.6
+          "rr": 1.17,
+          "optionPlay": "Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 309 sh ≈ ₹9,73,783 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below) · Delivery 38.6%",
+          "changePct": 0.03,
+          "setupType": "Squeeze breakout",
+          "rsi": 58.7,
+          "social": "📊 F&O — ADANIENT (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below) · Delivery 38.6%\n👉 Buy 3200 CE (ATM) or 3100 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
+          "rank": 58.2
         },
         {
           "generator": "fno",
-          "underlying": "CHOLAFIN",
-          "name": "Cholamandalam Investment and Finance Company Ltd.",
+          "underlying": "TITAN",
+          "name": "Titan Company Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 1795.7,
-          "lot": 625,
+          "spot": 4625.8,
+          "lot": 175,
           "grade": "A+",
-          "confidence": 63,
-          "delivery": 52.3,
-          "entry": 1795.7,
-          "sl": 1726.86,
-          "slPct": -3.8,
+          "confidence": 83,
+          "delivery": 66.1,
+          "entry": 4625.8,
+          "sl": 4494.77,
+          "slPct": -2.8,
           "targets": [
             {
-              "price": 1887.49,
-              "pct": 5.1,
-              "by": "2026-07-28"
+              "price": 4800.51,
+              "pct": 3.8,
+              "by": "2026-07-24"
             },
             {
-              "price": 1956.33,
-              "pct": 8.9,
+              "price": 4931.54,
+              "pct": 6.6,
               "by": "2026-08-03"
             },
             {
-              "price": 2025.18,
-              "pct": 12.8,
+              "price": 5062.57,
+              "pct": 9.4,
               "by": "2026-08-14"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 625 sh ≈ ₹11,22,313 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.3%",
-          "changePct": -0.45,
-          "setupType": "Watch",
-          "rsi": 58.3,
-          "social": "📊 F&O — CHOLAFIN (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.3%\n👉 Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cholafin #options",
-          "rank": 52.6
+          "optionPlay": "Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 175 sh ≈ ₹8,09,515 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA · Delivery 66.1%",
+          "changePct": 1.01,
+          "setupType": "Breakout watch",
+          "rsi": 67.6,
+          "social": "📊 F&O — TITAN (Stock) BUY\nBreakout watch: Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA · Delivery 66.1%\n👉 Buy 4600 CE (ATM) or 4500 CE (ITM) — near expiry; or long futures · 1 lot = 175 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #titan #options",
+          "rank": 56.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "ALKEM",
+          "name": "Alkem Laboratories Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 5709,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 83,
+          "delivery": 75.4,
+          "entry": 5709,
+          "sl": 5492.11,
+          "slPct": -3.8,
+          "targets": [
+            {
+              "price": 5942.93,
+              "pct": 4.1,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 6118.38,
+              "pct": 7.2,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 6293.83,
+              "pct": 10.2,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.08,
+          "optionPlay": "Buy 5700 CE (ATM) or 5600 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹7,13,625 notional",
+          "reason": "Breakout watch: Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA · Delivery 75.4%",
+          "changePct": 0.88,
+          "setupType": "Breakout watch",
+          "rsi": 65,
+          "social": "📊 F&O — ALKEM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA · Delivery 75.4%\n👉 Buy 5700 CE (ATM) or 5600 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #alkem #options",
+          "rank": 56.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "BIOCON",
+          "name": "Biocon Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 440.7,
+          "lot": 2500,
+          "grade": "A+",
+          "confidence": 83,
+          "delivery": 49.4,
+          "entry": 440.7,
+          "sl": 392.23,
+          "slPct": -11,
+          "targets": [
+            {
+              "price": 466.9,
+              "pct": 5.9,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 486.55,
+              "pct": 10.4,
+              "by": "2026-07-28"
+            },
+            {
+              "price": 506.2,
+              "pct": 14.9,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.54,
+          "optionPlay": "Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 2500 sh ≈ ₹11,01,750 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.5% below); Above rising 20 & 50 EMA · Delivery 49.4%",
+          "changePct": 1.4,
+          "setupType": "Breakout watch",
+          "rsi": 62.7,
+          "social": "📊 F&O — BIOCON (Stock) BUY\nBreakout watch: Hugging 20-day high (1.5% below); Above rising 20 & 50 EMA · Delivery 49.4%\n👉 Buy 440 CE (ATM) or 430 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #biocon #options",
+          "rank": 56.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "ULTRACEMCO",
+          "name": "UltraTech Cement Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 11771,
+          "lot": 50,
+          "grade": "A+",
+          "confidence": 80,
+          "delivery": 53.3,
+          "entry": 11771,
+          "sl": 11312.83,
+          "slPct": -3.9,
+          "targets": [
+            {
+              "price": 12192.67,
+              "pct": 3.6,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 12508.93,
+              "pct": 6.3,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 12825.19,
+              "pct": 9,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.92,
+          "optionPlay": "Buy 11800 CE (ATM) or 11700 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 50 sh ≈ ₹5,88,550 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.9% below) · Delivery 53.3%",
+          "changePct": -0.35,
+          "setupType": "Squeeze breakout",
+          "rsi": 57.8,
+          "social": "📊 F&O — ULTRACEMCO (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.9% below) · Delivery 53.3%\n👉 Buy 11800 CE (ATM) or 11700 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ultracemco #options",
+          "rank": 56
+        },
+        {
+          "generator": "fno",
+          "underlying": "BPCL",
+          "name": "Bharat Petroleum Corporation Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 312,
+          "lot": 1975,
+          "grade": "A+",
+          "confidence": 80,
+          "delivery": 58.2,
+          "entry": 312,
+          "sl": 298.21,
+          "slPct": -4.4,
+          "targets": [
+            {
+              "price": 327.4,
+              "pct": 4.9,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 338.95,
+              "pct": 8.6,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 350.5,
+              "pct": 12.3,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.12,
+          "optionPlay": "Buy 310 CE (ATM) or 300 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 1975 sh ≈ ₹6,16,200 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 58.2%",
+          "changePct": 0.78,
+          "setupType": "Squeeze breakout",
+          "rsi": 55.2,
+          "social": "📊 F&O — BPCL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 58.2%\n👉 Buy 310 CE (ATM) or 300 CE (ITM) — near expiry; or long futures · 1 lot = 1975 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bpcl #options",
+          "rank": 56
+        },
+        {
+          "generator": "fno",
+          "underlying": "ABB",
+          "name": "ABB India Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 7667.5,
+          "lot": 125,
+          "grade": "A+",
+          "confidence": 75,
+          "delivery": 40.5,
+          "entry": 7667.5,
+          "sl": 6669.86,
+          "slPct": -13,
+          "targets": [
+            {
+              "price": 8123.85,
+              "pct": 6,
+              "by": "2026-07-21"
+            },
+            {
+              "price": 8466.12,
+              "pct": 10.4,
+              "by": "2026-07-24"
+            },
+            {
+              "price": 8808.38,
+              "pct": 14.9,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.46,
+          "optionPlay": "Buy 7700 CE (ATM) or 7600 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 125 sh ≈ ₹9,58,438 notional",
+          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 40.5%",
+          "changePct": 6.43,
+          "setupType": "Accumulation",
+          "rsi": 69.6,
+          "social": "📊 F&O — ABB (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 40.5%\n👉 Buy 7700 CE (ATM) or 7600 CE (ITM) — near expiry; or long futures · 1 lot = 125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abb #options",
+          "rank": 55
+        },
+        {
+          "generator": "fno",
+          "underlying": "ADANIENSOL",
+          "name": "Adani Energy Solutions Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1689.5,
+          "lot": 675,
+          "grade": "A+",
+          "confidence": 75,
+          "delivery": 33.5,
+          "entry": 1689.5,
+          "sl": 1598.76,
+          "slPct": -5.4,
+          "targets": [
+            {
+              "price": 1802.86,
+              "pct": 6.7,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 1887.88,
+              "pct": 11.7,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 1972.9,
+              "pct": 16.8,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.25,
+          "optionPlay": "Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 675 sh ≈ ₹11,40,413 notional",
+          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 33.5%",
+          "changePct": 0.69,
+          "setupType": "Accumulation",
+          "rsi": 68.9,
+          "social": "📊 F&O — ADANIENSOL (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 33.5%\n👉 Buy 1700 CE (ATM) or 1650 CE (ITM) — near expiry; or long futures · 1 lot = 675 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniensol #options",
+          "rank": 55
+        },
+        {
+          "generator": "fno",
+          "underlying": "SHREECEM",
+          "name": "Shree Cement Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 27000,
+          "lot": 25,
+          "grade": "A+",
+          "confidence": 75,
+          "delivery": 51.5,
+          "entry": 27000,
+          "sl": 25793.22,
+          "slPct": -4.5,
+          "targets": [
+            {
+              "price": 28117.8,
+              "pct": 4.1,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 28956.14,
+              "pct": 7.2,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 29794.49,
+              "pct": 10.3,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.93,
+          "optionPlay": "Buy 27000 CE (ATM) or 26900 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 25 sh ≈ ₹6,75,000 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 51.5%",
+          "changePct": 0.28,
+          "setupType": "Breakout watch",
+          "rsi": 63.3,
+          "social": "📊 F&O — SHREECEM (Stock) BUY\nBreakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 51.5%\n👉 Buy 27000 CE (ATM) or 26900 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #shreecem #options",
+          "rank": 55
+        },
+        {
+          "generator": "fno",
+          "underlying": "ADANIPORTS",
+          "name": "Adani Ports and Special Economic Zone Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1826.4,
+          "lot": 475,
+          "grade": "A+",
+          "confidence": 74,
+          "delivery": 48.4,
+          "entry": 1826.4,
+          "sl": 1769.41,
+          "slPct": -3.1,
+          "targets": [
+            {
+              "price": 1902.38,
+              "pct": 4.2,
+              "by": "2026-07-24"
+            },
+            {
+              "price": 1959.37,
+              "pct": 7.3,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 2016.36,
+              "pct": 10.4,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹8,67,540 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 48.4%",
+          "changePct": -0.15,
+          "setupType": "Momentum building",
+          "rsi": 52.4,
+          "social": "📊 F&O — ADANIPORTS (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 48.4%\n👉 Buy 1850 CE (ATM) or 1800 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adaniports #options",
+          "rank": 54.8
+        },
+        {
+          "generator": "fno",
+          "underlying": "MAXHEALTH",
+          "name": "Max Healthcare Institute Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1098.2,
+          "lot": 525,
+          "grade": "A+",
+          "confidence": 74,
+          "delivery": 66.3,
+          "entry": 1098.2,
+          "sl": 1054.14,
+          "slPct": -4,
+          "targets": [
+            {
+              "price": 1156.95,
+              "pct": 5.3,
+              "by": "2026-07-24"
+            },
+            {
+              "price": 1201.02,
+              "pct": 9.4,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 1245.08,
+              "pct": 13.4,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 525 sh ≈ ₹5,76,555 notional",
+          "reason": "Accumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 66.3%",
+          "changePct": -0.41,
+          "setupType": "Accumulation",
+          "rsi": 52.7,
+          "social": "📊 F&O — MAXHEALTH (Stock) BUY\nAccumulation: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 66.3%\n👉 Buy 1100 CE (ATM) or 1050 CE (ITM) — near expiry; or long futures · 1 lot = 525 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #maxhealth #options",
+          "rank": 54.8
         },
         {
           "generator": "fno",
@@ -2658,82 +2148,166 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 14434,
+          "spot": 14507,
           "lot": 50,
           "grade": "A+",
-          "confidence": 63,
+          "confidence": 73,
           "delivery": 26.6,
-          "entry": 14434,
-          "sl": 12751.25,
-          "slPct": -11.7,
+          "entry": 14507,
+          "sl": 13061.12,
+          "slPct": -10,
           "targets": [
             {
-              "price": 15401.54,
-              "pct": 6.7,
+              "price": 15425.8,
+              "pct": 6.3,
               "by": "2026-07-30"
             },
             {
-              "price": 16127.19,
-              "pct": 11.7,
+              "price": 16114.89,
+              "pct": 11.1,
               "by": "2026-08-04"
             },
             {
-              "price": 16852.85,
-              "pct": 16.8,
+              "price": 16803.99,
+              "pct": 15.8,
               "by": "2026-08-14"
             }
           ],
-          "rr": 0.57,
-          "optionPlay": "Buy 14400 CE (ATM) or 14300 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 50 sh ≈ ₹7,21,700 notional",
-          "reason": "Breakout watch: Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA · Delivery 26.6%",
-          "changePct": 8,
+          "rr": 0.64,
+          "optionPlay": "Buy 14500 CE (ATM) or 14400 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 50 sh ≈ ₹7,25,350 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA · Delivery 26.6%",
+          "changePct": 6.27,
           "setupType": "Breakout watch",
-          "rsi": 74.8,
-          "social": "📊 F&O — DIXON (Stock) BUY\nBreakout watch: Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA · Delivery 26.6%\n👉 Buy 14400 CE (ATM) or 14300 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #dixon #options",
-          "rank": 52.6
+          "rsi": 75.7,
+          "social": "📊 F&O — DIXON (Stock) BUY\nBreakout watch: Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA · Delivery 26.6%\n👉 Buy 14500 CE (ATM) or 14400 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #dixon #options",
+          "rank": 54.6
         },
         {
           "generator": "fno",
-          "underlying": "EXIDEIND",
-          "name": "Exide Industries Ltd.",
+          "underlying": "DIVISLAB",
+          "name": "Divi's Laboratories Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 419.9,
-          "lot": 1800,
+          "spot": 7316,
+          "lot": 100,
           "grade": "A+",
-          "confidence": 61,
-          "delivery": 42,
-          "entry": 419.9,
-          "sl": 404.21,
-          "slPct": -3.7,
+          "confidence": 71,
+          "delivery": 47.1,
+          "entry": 7316,
+          "sl": 6710.48,
+          "slPct": -8.3,
           "targets": [
             {
-              "price": 440.83,
-              "pct": 5,
-              "by": "2026-07-22"
+              "price": 7616.23,
+              "pct": 4.1,
+              "by": "2026-07-29"
             },
             {
-              "price": 456.52,
-              "pct": 8.7,
+              "price": 7841.4,
+              "pct": 7.2,
               "by": "2026-08-03"
             },
             {
-              "price": 472.21,
-              "pct": 12.5,
+              "price": 8066.57,
+              "pct": 10.3,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.5,
+          "optionPlay": "Buy 7300 CE (ATM) or 7200 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 100 sh ≈ ₹7,31,600 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 47.1%",
+          "changePct": 0.59,
+          "setupType": "Breakout watch",
+          "rsi": 74.9,
+          "social": "📊 F&O — DIVISLAB (Stock) BUY\nBreakout watch: Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA · Delivery 47.1%\n👉 Buy 7300 CE (ATM) or 7200 CE (ITM) — near expiry; or long futures · 1 lot = 100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #divislab #options",
+          "rank": 54.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "ABCAPITAL",
+          "name": "Aditya Birla Capital Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 399.7,
+          "lot": 3100,
+          "grade": "A+",
+          "confidence": 71,
+          "delivery": 39,
+          "entry": 399.7,
+          "sl": 383.54,
+          "slPct": -4,
+          "targets": [
+            {
+              "price": 421.25,
+              "pct": 5.4,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 437.4,
+              "pct": 9.4,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 453.56,
+              "pct": 13.5,
               "by": "2026-08-14"
             }
           ],
           "rr": 1.33,
-          "optionPlay": "Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 1800 sh ≈ ₹7,55,820 notional",
-          "reason": "Breakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 42%",
-          "changePct": 0.17,
-          "setupType": "Breakout watch",
-          "rsi": 64.1,
-          "social": "📊 F&O — EXIDEIND (Stock) BUY\nBreakout watch: Hugging 20-day high (2.6% below); Above rising 20 & 50 EMA · Delivery 42%\n👉 Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures · 1 lot = 1800 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #exideind #options",
-          "rank": 52.2
+          "optionPlay": "Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 3100 sh ≈ ₹12,39,070 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 39%",
+          "changePct": -1.14,
+          "setupType": "Squeeze breakout",
+          "rsi": 56.4,
+          "social": "📊 F&O — ABCAPITAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below) · Delivery 39%\n👉 Buy 400 CE (ATM) or 390 CE (ITM) — near expiry; or long futures · 1 lot = 3100 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #abcapital #options",
+          "rank": 54.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "COFORGE",
+          "name": "Coforge Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1530.7,
+          "lot": 475,
+          "grade": "A+",
+          "confidence": 71,
+          "delivery": 51.8,
+          "entry": 1530.7,
+          "sl": 1417.44,
+          "slPct": -7.4,
+          "targets": [
+            {
+              "price": 1634.35,
+              "pct": 6.8,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 1712.08,
+              "pct": 11.8,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 1789.82,
+              "pct": 16.9,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.92,
+          "optionPlay": "Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 475 sh ≈ ₹7,27,083 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 51.8%",
+          "changePct": -0.16,
+          "setupType": "Squeeze breakout",
+          "rsi": 59,
+          "social": "📊 F&O — COFORGE (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below) · Delivery 51.8%\n👉 Buy 1550 CE (ATM) or 1500 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #coforge #options",
+          "rank": 54.2
         },
         {
           "generator": "fno",
@@ -2742,82 +2316,460 @@
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 5247.5,
+          "spot": 5265.5,
           "lot": 150,
-          "grade": "A",
-          "confidence": 58,
+          "grade": "A+",
+          "confidence": 70,
           "delivery": 53.9,
-          "entry": 5247.5,
-          "sl": 5038.66,
-          "slPct": -4,
+          "entry": 5265.5,
+          "sl": 5038.37,
+          "slPct": -4.3,
           "targets": [
             {
-              "price": 5505.91,
-              "pct": 4.9,
+              "price": 5526.77,
+              "pct": 5,
               "by": "2026-07-27"
             },
             {
-              "price": 5699.73,
-              "pct": 8.6,
+              "price": 5722.73,
+              "pct": 8.7,
               "by": "2026-08-03"
             },
             {
-              "price": 5893.54,
-              "pct": 12.3,
+              "price": 5918.68,
+              "pct": 12.4,
               "by": "2026-08-14"
             }
           ],
-          "rr": 1.24,
-          "optionPlay": "Buy 5200 CE (ATM) or 5100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 150 sh ≈ ₹7,87,125 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.9%",
-          "changePct": 1.48,
+          "rr": 1.15,
+          "optionPlay": "Buy 5300 CE (ATM) or 5200 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 150 sh ≈ ₹7,89,825 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.9%",
+          "changePct": 1.83,
+          "setupType": "Momentum building",
+          "rsi": 57,
+          "social": "📊 F&O — INDIGO (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.9%\n👉 Buy 5300 CE (ATM) or 5200 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indigo #options",
+          "rank": 54
+        },
+        {
+          "generator": "fno",
+          "underlying": "SOLARINDS",
+          "name": "Solar Industries India Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 18400,
+          "lot": 50,
+          "grade": "A+",
+          "confidence": 70,
+          "delivery": 30.4,
+          "entry": 18400,
+          "sl": 16912.27,
+          "slPct": -8.1,
+          "targets": [
+            {
+              "price": 19557.26,
+              "pct": 6.3,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 20425.2,
+              "pct": 11,
+              "by": "2026-07-28"
+            },
+            {
+              "price": 21293.15,
+              "pct": 15.7,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.78,
+          "optionPlay": "Buy 18400 CE (ATM) or 18300 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 50 sh ≈ ₹9,20,000 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 30.4%",
+          "changePct": 0.63,
+          "setupType": "Momentum building",
+          "rsi": 55.5,
+          "social": "📊 F&O — SOLARINDS (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 30.4%\n👉 Buy 18400 CE (ATM) or 18300 CE (ITM) — near expiry; or long futures · 1 lot = 50 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #solarinds #options",
+          "rank": 54
+        },
+        {
+          "generator": "fno",
+          "underlying": "BHARATFORG",
+          "name": "Bharat Forge Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 2104.7,
+          "lot": 500,
+          "grade": "A+",
+          "confidence": 65,
+          "delivery": 60.6,
+          "entry": 2104.7,
+          "sl": 2019.62,
+          "slPct": -4,
+          "targets": [
+            {
+              "price": 2218.15,
+              "pct": 5.4,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 2303.23,
+              "pct": 9.4,
+              "by": "2026-07-30"
+            },
+            {
+              "price": 2388.31,
+              "pct": 13.5,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 500 sh ≈ ₹10,52,350 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 60.6%",
+          "changePct": 0.2,
           "setupType": "Watch",
-          "rsi": 56.3,
-          "social": "📊 F&O — INDIGO (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.9%\n👉 Buy 5200 CE (ATM) or 5100 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indigo #options",
+          "rsi": 53.9,
+          "social": "📊 F&O — BHARATFORG (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 60.6%\n👉 Buy 2100 CE (ATM) or 2050 CE (ITM) — near expiry; or long futures · 1 lot = 500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bharatforg #options",
+          "rank": 53
+        },
+        {
+          "generator": "fno",
+          "underlying": "CHOLAFIN",
+          "name": "Cholamandalam Investment and Finance Company Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1789.1,
+          "lot": 625,
+          "grade": "A+",
+          "confidence": 63,
+          "delivery": 52.3,
+          "entry": 1789.1,
+          "sl": 1719.17,
+          "slPct": -3.9,
+          "targets": [
+            {
+              "price": 1882.33,
+              "pct": 5.2,
+              "by": "2026-07-28"
+            },
+            {
+              "price": 1952.26,
+              "pct": 9.1,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 2022.18,
+              "pct": 13,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 625 sh ≈ ₹11,18,188 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.3%",
+          "changePct": -0.82,
+          "setupType": "Watch",
+          "rsi": 57.2,
+          "social": "📊 F&O — CHOLAFIN (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 52.3%\n👉 Buy 1800 CE (ATM) or 1750 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #cholafin #options",
+          "rank": 52.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "INDHOTEL",
+          "name": "Indian Hotels Co. Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 731.45,
+          "lot": 1000,
+          "grade": "A+",
+          "confidence": 62,
+          "delivery": 56,
+          "entry": 731.45,
+          "sl": 708.45,
+          "slPct": -3.1,
+          "targets": [
+            {
+              "price": 762.11,
+              "pct": 4.2,
+              "by": "2026-08-07"
+            },
+            {
+              "price": 785.11,
+              "pct": 7.3,
+              "by": "2026-08-12"
+            },
+            {
+              "price": 808.1,
+              "pct": 10.5,
+              "by": "2026-08-18"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 1000 sh ≈ ₹7,31,450 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 56%",
+          "changePct": -1.58,
+          "setupType": "Watch",
+          "rsi": 55.7,
+          "social": "📊 F&O — INDHOTEL (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 56%\n👉 Buy 740 CE (ATM) or 720 CE (ITM) — near expiry; or long futures · 1 lot = 1000 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #indhotel #options",
+          "rank": 52.4
+        },
+        {
+          "generator": "fno",
+          "underlying": "FEDERALBNK",
+          "name": "Federal Bank Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 326.6,
+          "lot": 2500,
+          "grade": "A+",
+          "confidence": 62,
+          "delivery": 53.3,
+          "entry": 326.6,
+          "sl": 317.19,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 339.14,
+              "pct": 3.8,
+              "by": "2026-07-21"
+            },
+            {
+              "price": 348.55,
+              "pct": 6.7,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 357.95,
+              "pct": 9.6,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 2500 sh ≈ ₹8,16,500 notional",
+          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.3%",
+          "changePct": -0.29,
+          "setupType": "Watch",
+          "rsi": 56.8,
+          "social": "📊 F&O — FEDERALBNK (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 53.3%\n👉 Buy 330 CE (ATM) or 320 CE (ITM) — near expiry; or long futures · 1 lot = 2500 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #federalbnk #options",
+          "rank": 52.4
+        },
+        {
+          "generator": "fno",
+          "underlying": "EXIDEIND",
+          "name": "Exide Industries Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 421.3,
+          "lot": 1800,
+          "grade": "A+",
+          "confidence": 61,
+          "delivery": 42,
+          "entry": 421.3,
+          "sl": 405.61,
+          "slPct": -3.7,
+          "targets": [
+            {
+              "price": 442.23,
+              "pct": 5,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 457.92,
+              "pct": 8.7,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 473.61,
+              "pct": 12.4,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 1800 sh ≈ ₹7,58,340 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 42%",
+          "changePct": 0.5,
+          "setupType": "Breakout watch",
+          "rsi": 64.9,
+          "social": "📊 F&O — EXIDEIND (Stock) BUY\nBreakout watch: Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA · Delivery 42%\n👉 Buy 420 CE (ATM) or 410 CE (ITM) — near expiry; or long futures · 1 lot = 1800 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #exideind #options",
+          "rank": 52.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "NYKAA",
+          "name": "FSN E-Commerce Ventures Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 324.85,
+          "lot": 3125,
+          "grade": "A+",
+          "confidence": 61,
+          "delivery": 51.5,
+          "entry": 324.85,
+          "sl": 313.16,
+          "slPct": -3.6,
+          "targets": [
+            {
+              "price": 340.43,
+              "pct": 4.8,
+              "by": "2026-07-29"
+            },
+            {
+              "price": 352.12,
+              "pct": 8.4,
+              "by": "2026-08-20"
+            },
+            {
+              "price": 363.81,
+              "pct": 12,
+              "by": "2026-08-26"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 320 CE (ATM) or 310 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 3125 sh ≈ ₹10,15,156 notional",
+          "reason": "Breakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 51.5%",
+          "changePct": -1.29,
+          "setupType": "Breakout watch",
+          "rsi": 67.5,
+          "social": "📊 F&O — NYKAA (Stock) BUY\nBreakout watch: Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA · Delivery 51.5%\n👉 Buy 320 CE (ATM) or 310 CE (ITM) — near expiry; or long futures · 1 lot = 3125 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #nykaa #options",
+          "rank": 52.2
+        },
+        {
+          "generator": "fno",
+          "underlying": "TECHM",
+          "name": "Tech Mahindra Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1510.3,
+          "lot": 600,
+          "grade": "A",
+          "confidence": 58,
+          "delivery": 42.1,
+          "entry": 1510.3,
+          "sl": 1389.92,
+          "slPct": -8,
+          "targets": [
+            {
+              "price": 1601.09,
+              "pct": 6,
+              "by": "2026-07-23"
+            },
+            {
+              "price": 1669.18,
+              "pct": 10.5,
+              "by": "2026-08-03"
+            },
+            {
+              "price": 1737.27,
+              "pct": 15,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 0.75,
+          "optionPlay": "Buy 1500 CE (ATM) or 1450 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 600 sh ≈ ₹9,06,180 notional",
+          "reason": "Breakout watch: Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA · Delivery 42.1%",
+          "changePct": 0.77,
+          "setupType": "Breakout watch",
+          "rsi": 59.7,
+          "social": "📊 F&O — TECHM (Stock) BUY\nBreakout watch: Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA · Delivery 42.1%\n👉 Buy 1500 CE (ATM) or 1450 CE (ITM) — near expiry; or long futures · 1 lot = 600 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #techm #options",
           "rank": 51.6
         },
         {
           "generator": "fno",
-          "underlying": "GAIL",
-          "name": "GAIL (India) Ltd.",
+          "underlying": "HAL",
+          "name": "Hindustan Aeronautics Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 172.75,
-          "lot": 3550,
+          "spot": 4433.8,
+          "lot": 150,
           "grade": "A",
-          "confidence": 55,
-          "delivery": 48.2,
-          "entry": 172.75,
-          "sl": 167.26,
+          "confidence": 58,
+          "delivery": 46.8,
+          "entry": 4433.8,
+          "sl": 4293.52,
           "slPct": -3.2,
           "targets": [
             {
-              "price": 179.76,
-              "pct": 4.1,
-              "by": "2026-07-23"
+              "price": 4620.84,
+              "pct": 4.2,
+              "by": "2026-07-22"
             },
             {
-              "price": 185.02,
-              "pct": 7.1,
+              "price": 4761.12,
+              "pct": 7.4,
               "by": "2026-08-03"
             },
             {
-              "price": 190.28,
-              "pct": 10.1,
+              "price": 4901.4,
+              "pct": 10.5,
               "by": "2026-08-14"
             }
           ],
-          "rr": 1.28,
-          "optionPlay": "Buy 175 CE (ATM) or 170 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 3550 sh ≈ ₹6,13,263 notional",
-          "reason": "Watch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 48.2%",
-          "changePct": 0.72,
-          "setupType": "Watch",
-          "rsi": 52.4,
-          "social": "📊 F&O — GAIL (Stock) BUY\nWatch: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 48.2%\n👉 Buy 175 CE (ATM) or 170 CE (ITM) — near expiry; or long futures · 1 lot = 3550 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #gail #options",
-          "rank": 51
+          "rr": 1.33,
+          "optionPlay": "Buy 4400 CE (ATM) or 4300 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 150 sh ≈ ₹6,65,070 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 46.8%",
+          "changePct": 0.3,
+          "setupType": "Squeeze breakout",
+          "rsi": 53.1,
+          "social": "📊 F&O — HAL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.3% below) · Delivery 46.8%\n👉 Buy 4400 CE (ATM) or 4300 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #hal #options",
+          "rank": 51.6
+        },
+        {
+          "generator": "fno",
+          "underlying": "UNITDSPR",
+          "name": "United Spirits Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1381.6,
+          "lot": 400,
+          "grade": "A",
+          "confidence": 57,
+          "delivery": 65.2,
+          "entry": 1381.6,
+          "sl": 1337.3,
+          "slPct": -3.2,
+          "targets": [
+            {
+              "price": 1440.67,
+              "pct": 4.3,
+              "by": "2026-07-22"
+            },
+            {
+              "price": 1484.97,
+              "pct": 7.5,
+              "by": "2026-07-27"
+            },
+            {
+              "price": 1529.26,
+              "pct": 10.7,
+              "by": "2026-08-14"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 400 sh ≈ ₹5,52,640 notional",
+          "reason": "Momentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 65.2%",
+          "changePct": 0.6,
+          "setupType": "Momentum building",
+          "rsi": 55.4,
+          "social": "📊 F&O — UNITDSPR (Stock) BUY\nMomentum building: Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA · Delivery 65.2%\n👉 Buy 1400 CE (ATM) or 1350 CE (ITM) — near expiry; or long futures · 1 lot = 400 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #unitdspr #options",
+          "rank": 51.4
         }
       ]
     },
@@ -3238,7 +3190,7 @@
           "label": "🚀 Momentum & Early Movers",
           "reason": "🚀 Moving now +12.7% on 7.75× volume",
           "direction": "LONG",
-          "ltp": 7711,
+          "ltp": 7667.5,
           "entry": 7765,
           "sl": 6668.29,
           "slPct": -14.1,
@@ -3264,7 +3216,7 @@
           ],
           "rr": 0.43,
           "rsi": 70.6,
-          "confidence": 31,
+          "confidence": 36,
           "accuracy": 30.8,
           "backtestTrades": 13,
           "delivery": 40.5,
@@ -3562,6 +3514,80 @@
           "t1": 123.65,
           "t2": 131.37,
           "t3": 139.08
+        },
+        {
+          "generator": "momentum",
+          "symbol": "TORNTPHARM",
+          "name": "Torrent Pharmaceuticals Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY Pharma"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "About to break the 20-day high on 8.69× volume",
+          "direction": "LONG",
+          "ltp": 4987.60009765625,
+          "entry": 4987.6,
+          "sl": 4755.67,
+          "slPct": -4.7,
+          "targets": [
+            {
+              "price": 5218.94,
+              "pct": 4.6,
+              "by": "2026-07-24",
+              "days": 6
+            },
+            {
+              "price": 5392.44,
+              "pct": 8.1,
+              "by": "2026-08-03",
+              "days": 12
+            },
+            {
+              "price": 5565.94,
+              "pct": 11.6,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 1,
+          "rsi": 76.9,
+          "confidence": 70,
+          "accuracy": 70,
+          "backtestTrades": 10,
+          "delivery": 63.5,
+          "changePct": -0.6,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 50,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 1.51× (accumulation)"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": 0.122,
+            "rs50": 0.142,
+            "leader": true
+          },
+          "social": "TORNTPHARM — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 8.69× volume\nLTP ₹4987.6 · Entry ₹4987.6 · SL ₹4755.67 (-4.7%)\nT1 ₹5218.94 (+4.6%) by 2026-07-24\nT2 ₹5392.44 (+8.1%) · T3 ₹5565.94 (+11.6%)\nBacktested first-target hit ~70% over 10 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TORNTPHARM #swingtrading #nifty",
+          "_momScore": 98,
+          "movingNow": false,
+          "id": "momentum:TORNTPHARM",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 5218.94,
+          "t2": 5392.44,
+          "t3": 5565.94
         },
         {
           "generator": "momentum",
@@ -3963,6 +3989,82 @@
         },
         {
           "generator": "momentum",
+          "symbol": "BHEL",
+          "name": "Bharat Heavy Electricals Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Midcap Select"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "🚀 Moving now +4.2% on 3.68× volume",
+          "direction": "LONG",
+          "ltp": 435.3999938964844,
+          "entry": 435.4,
+          "sl": 376.23,
+          "slPct": -13.6,
+          "targets": [
+            {
+              "price": 466.12,
+              "pct": 7.1,
+              "by": "2026-07-21",
+              "days": 3
+            },
+            {
+              "price": 489.16,
+              "pct": 12.3,
+              "by": "2026-07-24",
+              "days": 6
+            },
+            {
+              "price": 512.21,
+              "pct": 17.6,
+              "by": "2026-07-30",
+              "days": 10
+            }
+          ],
+          "rr": 0.52,
+          "rsi": 66.3,
+          "confidence": 55,
+          "accuracy": 54.5,
+          "backtestTrades": 11,
+          "delivery": 47.7,
+          "changePct": 4.18,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 42,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.073,
+            "rs50": 0.07,
+            "leader": true
+          },
+          "social": "BHEL — 🚀 Momentum & Early Movers setup 📈\n🚀 Moving now +4.2% on 3.68× volume\nLTP ₹435.4 · Entry ₹435.4 · SL ₹376.23 (-13.6%)\nT1 ₹466.12 (+7.1%) by 2026-07-21\nT2 ₹489.16 (+12.3%) · T3 ₹512.21 (+17.6%)\nBacktested first-target hit ~54.5% over 11 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BHEL #swingtrading #nifty",
+          "_momScore": 81,
+          "movingNow": true,
+          "news": "Q1 results today: Jio Financial, Wipro, Polycab India, BHEL among 41 companies to report earnings]]>",
+          "newsSource": "ET Markets",
+          "id": "momentum:BHEL",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 466.12,
+          "t2": 489.16,
+          "t3": 512.21
+        },
+        {
+          "generator": "momentum",
           "symbol": "GANESHBE",
           "name": "Ganesh Benzoplast Limited",
           "sector": "Equity",
@@ -4125,116 +4227,6 @@
           "t1": 1402.4,
           "t2": 1493.46,
           "t3": 1584.51
-        },
-        {
-          "generator": "momentum",
-          "symbol": "AJOONI",
-          "name": "Ajooni Biotech Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "About to break the 20-day high on 1.4× volume",
-          "direction": "LONG",
-          "ltp": 4.260000228881836,
-          "entry": 4.27,
-          "sl": 3.56,
-          "slPct": -16.6,
-          "targets": [
-            {
-              "price": 4.63,
-              "pct": 8.4,
-              "by": "2026-07-24",
-              "days": 6
-            },
-            {
-              "price": 4.9,
-              "pct": 14.8,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 5.17,
-              "pct": 21.1,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.51,
-          "rsi": 68.6,
-          "confidence": 43,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": 53.1,
-          "changePct": 15.41,
-          "setupType": "Accumulation",
-          "social": "AJOONI — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 1.4× volume\nLTP ₹4.27 · Entry ₹4.27 · SL ₹3.56 (-16.6%)\nT1 ₹4.63 (+8.4%) by 2026-07-24\nT2 ₹4.9 (+14.8%) · T3 ₹5.17 (+21.1%)\nSetup score 43/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AJOONI #swingtrading #nifty",
-          "_momScore": 68,
-          "movingNow": false,
-          "id": "momentum:AJOONI",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186855,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 4.63,
-          "t2": 4.9,
-          "t3": 5.17
-        },
-        {
-          "generator": "momentum",
-          "symbol": "CYIENTDLM",
-          "name": "Cyient DLM Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🚀 Moving now +8.7% on 3.17× volume",
-          "direction": "LONG",
-          "ltp": 577.9000244140625,
-          "entry": 578.75,
-          "sl": 506.65,
-          "slPct": -12.5,
-          "targets": [
-            {
-              "price": 633.78,
-              "pct": 9.5,
-              "by": "2026-07-21",
-              "days": 3
-            },
-            {
-              "price": 675.06,
-              "pct": 16.6,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 716.33,
-              "pct": 23.8,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.76,
-          "rsi": 73.9,
-          "confidence": 50,
-          "accuracy": 50,
-          "backtestTrades": 4,
-          "delivery": 51.9,
-          "changePct": 8.65,
-          "setupType": "Breakout watch",
-          "social": "CYIENTDLM — 🚀 Momentum & Early Movers setup 📈\n🚀 Moving now +8.7% on 3.17× volume\nLTP ₹578.75 · Entry ₹578.75 · SL ₹506.65 (-12.5%)\nT1 ₹633.78 (+9.5%) by 2026-07-21\nT2 ₹675.06 (+16.6%) · T3 ₹716.33 (+23.8%)\nBacktested first-target hit ~50% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #CYIENTDLM #swingtrading #nifty",
-          "_momScore": 68,
-          "movingNow": true,
-          "id": "momentum:CYIENTDLM",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186855,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 633.78,
-          "t2": 675.06,
-          "t3": 716.33
         }
       ]
     },
@@ -4726,63 +4718,6 @@
           "t1": 628.37,
           "t2": 654.41,
           "t3": 680.45
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "ABBOTINDIA",
-          "name": "Abbott India Ltd.",
-          "sector": "Healthcare",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Midcap 150",
-            "NIFTY Pharma"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 65/100): Delivery 52.9% (mixed); 5-day volume > 20-day average (RVOL 0.3×); Up/down volume 2.3× — accumulation pressure",
-          "direction": "LONG",
-          "ltp": 27755,
-          "entry": 27760,
-          "sl": 26024.8,
-          "slPct": -6.3,
-          "targets": [
-            {
-              "price": 28762.04,
-              "pct": 3.6,
-              "by": "2026-07-21",
-              "days": 3
-            },
-            {
-              "price": 29513.57,
-              "pct": 6.3,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 30265.09,
-              "pct": 9,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.58,
-          "rsi": 68,
-          "confidence": 83,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": 52.9,
-          "changePct": 0.95,
-          "setupType": "Breakout watch",
-          "social": "ABBOTINDIA — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 52.9% (mixed); 5-day volume > 20-day average (RVOL 0.3×); Up/down volume 2.3× — accumulation pressure\nLTP ₹27760 · Entry ₹27760 · SL ₹26024.8 (-6.3%)\nT1 ₹28762.04 (+3.6%) by 2026-07-21\nT2 ₹29513.57 (+6.3%) · T3 ₹30265.09 (+9%)\nSetup score 71/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ABBOTINDIA #swingtrading #nifty",
-          "id": "vol_accum:ABBOTINDIA",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186518,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 28762.04,
-          "t2": 29513.57,
-          "t3": 30265.09
         },
         {
           "generator": "vol_accum",
@@ -5325,6 +5260,60 @@
           "t1": 2057.21,
           "t2": 2170.99,
           "t3": 2284.77
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "CRAMC",
+          "name": "Canara Robeco Asset Management Company Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY Total Market",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 65/100): Delivery 52.5% (mixed); 5-day volume > 20-day average (RVOL 0.55×); Up/down volume 1.33× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 257.489990234375,
+          "entry": 257.49,
+          "sl": 241.54,
+          "slPct": -6.2,
+          "targets": [
+            {
+              "price": 272.13,
+              "pct": 5.7,
+              "by": "2026-07-28",
+              "days": 8
+            },
+            {
+              "price": 283.11,
+              "pct": 9.9,
+              "by": "2026-08-03",
+              "days": 12
+            },
+            {
+              "price": 294.09,
+              "pct": 14.2,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 0.92,
+          "rsi": 54.7,
+          "confidence": 75,
+          "accuracy": 75,
+          "backtestTrades": 4,
+          "delivery": 52.5,
+          "changePct": -2.97,
+          "setupType": "Momentum building",
+          "social": "CRAMC — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 52.5% (mixed); 5-day volume > 20-day average (RVOL 0.55×); Up/down volume 1.33× — accumulation pressure\nLTP ₹257.49 · Entry ₹257.49 · SL ₹241.54 (-6.2%)\nT1 ₹272.13 (+5.7%) by 2026-07-28\nT2 ₹283.11 (+9.9%) · T3 ₹294.09 (+14.2%)\nBacktested first-target hit ~75% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #CRAMC #swingtrading #nifty",
+          "id": "vol_accum:CRAMC",
+          "openedAt": "2026-07-16",
+          "openTs": 1784187689,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 272.13,
+          "t2": 283.11,
+          "t3": 294.09
         }
       ]
     },
@@ -7383,6 +7372,75 @@
         },
         {
           "generator": "money_flow",
+          "symbol": "ACUTAAS",
+          "name": "Acutaas Chemicals Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Smallcap 250"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 73 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 3583.800048828125,
+          "entry": 3583.8,
+          "sl": 3336.33,
+          "slPct": -6.9,
+          "targets": [
+            {
+              "price": 3856.46,
+              "pct": 7.6,
+              "by": "2026-07-22",
+              "days": 4
+            },
+            {
+              "price": 4060.95,
+              "pct": 13.3,
+              "by": "2026-07-27",
+              "days": 7
+            },
+            {
+              "price": 4265.45,
+              "pct": 19,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 1.1,
+          "rsi": 62.3,
+          "confidence": 73,
+          "accuracy": 72.7,
+          "backtestTrades": 11,
+          "delivery": 49.6,
+          "changePct": 1.04,
+          "setupType": "Momentum building",
+          "footprint": {
+            "score": 42,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.143,
+            "rs50": 0.313,
+            "leader": true
+          },
+          "social": "ACUTAAS — Money Flow setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹3583.8 · Entry ₹3583.8 · SL ₹3336.33 (-6.9%)\nT1 ₹3856.46 (+7.6%) by 2026-07-22\nT2 ₹4060.95 (+13.3%) · T3 ₹4265.45 (+19%)\nBacktested first-target hit ~72.7% over 11 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ACUTAAS #swingtrading #nifty",
+          "id": "money_flow:ACUTAAS",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 3856.46,
+          "t2": 4060.95,
+          "t3": 4265.45
+        },
+        {
+          "generator": "money_flow",
           "symbol": "LLOYDSME",
           "name": "Lloyds Metals And Energy Ltd.",
           "sector": "Metals & Mining",
@@ -7438,59 +7496,6 @@
           "t1": 1954.5,
           "t2": 2037.37,
           "t3": 2120.24
-        },
-        {
-          "generator": "money_flow",
-          "symbol": "GSPCROP",
-          "name": "GSP Crop Science Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 62 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 489.5,
-          "entry": 489.5,
-          "sl": 362.34,
-          "slPct": -26,
-          "targets": [
-            {
-              "price": 535.07,
-              "pct": 9.3,
-              "by": "2026-07-24",
-              "days": 6
-            },
-            {
-              "price": 569.25,
-              "pct": 16.3,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 603.43,
-              "pct": 23.3,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.36,
-          "rsi": 72.4,
-          "confidence": 71,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "delivery": 34.6,
-          "changePct": 11.2,
-          "setupType": "Breakout watch",
-          "social": "GSPCROP — Money Flow setup 📈\nMFI 62 rising + OBV up — money flowing in\nLTP ₹489.5 · Entry ₹489.5 · SL ₹362.34 (-26%)\nT1 ₹535.07 (+9.3%) by 2026-07-24\nT2 ₹569.25 (+16.3%) · T3 ₹603.43 (+23.3%)\nSetup score 71/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GSPCROP #swingtrading #nifty",
-          "id": "money_flow:GSPCROP",
-          "openedAt": "2026-07-16",
-          "openTs": 1784187689,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 535.07,
-          "t2": 569.25,
-          "t3": 603.43
         }
       ]
     },
@@ -7627,7 +7632,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII stable, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 4909.60009765625,
+          "ltp": 4987.60009765625,
           "entry": 4944.7,
           "sl": 4757.91,
           "slPct": -3.8,
@@ -7683,7 +7688,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 4764,
+          "ltp": 4779.5,
           "entry": 4783,
           "sl": 4566.26,
           "slPct": -4.5,
@@ -7740,7 +7745,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 7984,
+          "ltp": 8016.5,
           "entry": 7968.5,
           "sl": 7452.44,
           "slPct": -6.5,
@@ -7784,6 +7789,79 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "LUPIN",
+          "name": "Lupin Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Midcap Select",
+            "NIFTY Pharma"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 2500.5,
+          "entry": 2500.5,
+          "sl": 2431.89,
+          "slPct": -2.7,
+          "targets": [
+            {
+              "price": 2591.99,
+              "pct": 3.7,
+              "by": "2026-07-24",
+              "days": 6
+            },
+            {
+              "price": 2660.6,
+              "pct": 6.4,
+              "by": "2026-08-03",
+              "days": 12
+            },
+            {
+              "price": 2729.21,
+              "pct": 9.1,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 66.6,
+          "confidence": 64,
+          "accuracy": 63.6,
+          "backtestTrades": 11,
+          "delivery": 67,
+          "changePct": 0.3,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 30,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 1.88× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.075,
+            "rs50": 0.015,
+            "leader": true
+          },
+          "social": "LUPIN — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII down, Pledge 0%\nLTP ₹2500.5 · Entry ₹2500.5 · SL ₹2431.89 (-2.7%)\nT1 ₹2591.99 (+3.7%) by 2026-07-24\nT2 ₹2660.6 (+6.4%) · T3 ₹2729.21 (+9.1%)\nBacktested first-target hit ~63.6% over 11 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #LUPIN #swingtrading #nifty",
+          "id": "multibagger:LUPIN",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 2591.99,
+          "t2": 2660.6,
+          "t3": 2729.21
+        },
+        {
+          "generator": "multibagger",
           "symbol": "ADANIENSOL",
           "name": "Adani Energy Solutions Ltd.",
           "sector": "Power",
@@ -7798,7 +7876,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter up, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 1716.4000244140625,
+          "ltp": 1689.5,
           "entry": 1712,
           "sl": 1598.61,
           "slPct": -6.6,
@@ -7897,6 +7975,75 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "BALRAMCHIN",
+          "name": "Balrampur Chini Mills Ltd.",
+          "sector": "Fast Moving Consumer Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Smallcap 250"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 598,
+          "entry": 598,
+          "sl": 555.36,
+          "slPct": -7.1,
+          "targets": [
+            {
+              "price": 632.35,
+              "pct": 5.7,
+              "by": "2026-07-28",
+              "days": 8
+            },
+            {
+              "price": 658.11,
+              "pct": 10.1,
+              "by": "2026-07-31",
+              "days": 11
+            },
+            {
+              "price": 683.87,
+              "pct": 14.4,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 0.81,
+          "rsi": 66.6,
+          "confidence": 57,
+          "accuracy": 57.1,
+          "backtestTrades": 7,
+          "delivery": 46,
+          "changePct": 1.38,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 38,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 2.27× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.08,
+            "rs50": 0.136,
+            "leader": true
+          },
+          "social": "BALRAMCHIN — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII up, Pledge 0%\nLTP ₹598 · Entry ₹598 · SL ₹555.36 (-7.1%)\nT1 ₹632.35 (+5.7%) by 2026-07-28\nT2 ₹658.11 (+10.1%) · T3 ₹683.87 (+14.4%)\nBacktested first-target hit ~57.1% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BALRAMCHIN #swingtrading #nifty",
+          "id": "multibagger:BALRAMCHIN",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 632.35,
+          "t2": 658.11,
+          "t3": 683.87
+        },
+        {
+          "generator": "multibagger",
           "symbol": "RADICO",
           "name": "Radico Khaitan Ltd",
           "sector": "Fast Moving Consumer Goods",
@@ -7912,7 +8059,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 4124.2998046875,
+          "ltp": 4106,
           "entry": 4126,
           "sl": 3992.89,
           "slPct": -3.2,
@@ -8063,6 +8210,79 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "MANKIND",
+          "name": "Mankind Pharma Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Pharma"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 2546,
+          "entry": 2546,
+          "sl": 2452.1,
+          "slPct": -3.7,
+          "targets": [
+            {
+              "price": 2671.2,
+              "pct": 4.9,
+              "by": "2026-07-21",
+              "days": 3
+            },
+            {
+              "price": 2765.11,
+              "pct": 8.6,
+              "by": "2026-08-03",
+              "days": 12
+            },
+            {
+              "price": 2859.01,
+              "pct": 12.3,
+              "by": "2026-08-14",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 59.9,
+          "confidence": 50,
+          "accuracy": 50,
+          "backtestTrades": 6,
+          "delivery": 40.3,
+          "changePct": 0.11,
+          "setupType": "Momentum building",
+          "footprint": {
+            "score": 52,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": 0.059,
+            "rs50": 0.07,
+            "leader": true
+          },
+          "social": "MANKIND — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII up, Pledge 0%\nLTP ₹2546 · Entry ₹2546 · SL ₹2452.1 (-3.7%)\nT1 ₹2671.2 (+4.9%) by 2026-07-21\nT2 ₹2765.11 (+8.6%) · T3 ₹2859.01 (+12.3%)\nBacktested first-target hit ~50% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #MANKIND #swingtrading #nifty",
+          "id": "multibagger:MANKIND",
+          "openedAt": "2026-07-16",
+          "openTs": 1784201207,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 2671.2,
+          "t2": 2765.11,
+          "t3": 2859.01
+        },
+        {
+          "generator": "multibagger",
           "symbol": "CIPLA",
           "name": "Cipla Ltd.",
           "sector": "Healthcare",
@@ -8077,7 +8297,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 1434.699951171875,
+          "ltp": 1429.5,
           "entry": 1436.8,
           "sl": 1398.06,
           "slPct": -2.7,
@@ -8192,7 +8412,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 312.75,
+          "ltp": 312,
           "entry": 312.9,
           "sl": 297.77,
           "slPct": -4.8,
@@ -8253,7 +8473,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 2294.5,
+          "ltp": 2286.89990234375,
           "entry": 2291,
           "sl": 2201.41,
           "slPct": -3.9,
@@ -8460,169 +8680,6 @@
           "t1": 612.45,
           "t2": 639.78,
           "t3": 667.12
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "ESAFSFB",
-          "name": "ESAF Small Finance Bank Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII stable, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 36.16999816894531,
-          "entry": 36.16,
-          "sl": 32.43,
-          "slPct": -10.3,
-          "targets": [
-            {
-              "price": 39.42,
-              "pct": 9,
-              "by": "2026-07-22",
-              "days": 4
-            },
-            {
-              "price": 41.86,
-              "pct": 15.8,
-              "by": "2026-07-27",
-              "days": 7
-            },
-            {
-              "price": 44.31,
-              "pct": 22.5,
-              "by": "2026-07-31",
-              "days": 11
-            }
-          ],
-          "rr": 0.87,
-          "rsi": 66.2,
-          "confidence": 33,
-          "accuracy": 33.3,
-          "backtestTrades": 9,
-          "delivery": 52.6,
-          "changePct": 0.98,
-          "setupType": "Squeeze breakout",
-          "social": "ESAFSFB — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII down, Pledge 0%\nLTP ₹36.16 · Entry ₹36.16 · SL ₹32.43 (-10.3%)\nT1 ₹39.42 (+9%) by 2026-07-22\nT2 ₹41.86 (+15.8%) · T3 ₹44.31 (+22.5%)\nBacktested first-target hit ~33.3% over 9 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ESAFSFB #swingtrading #nifty",
-          "id": "multibagger:ESAFSFB",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186855,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 39.42,
-          "t2": 41.86,
-          "t3": 44.31
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "HFCL",
-          "name": "HFCL Ltd.",
-          "sector": "Telecommunication",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII up, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 226.52000427246094,
-          "entry": 226.72,
-          "sl": 204.16,
-          "slPct": -10,
-          "targets": [
-            {
-              "price": 246.07,
-              "pct": 8.5,
-              "by": "2026-07-21",
-              "days": 3
-            },
-            {
-              "price": 260.59,
-              "pct": 14.9,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 275.11,
-              "pct": 21.3,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.86,
-          "rsi": 66.2,
-          "confidence": 33,
-          "accuracy": 33.3,
-          "backtestTrades": 9,
-          "delivery": 37,
-          "changePct": 1.63,
-          "setupType": "Squeeze breakout",
-          "social": "HFCL — Multibagger Quality setup 📈\nQuality: Promoter stable, FII up, DII up, Pledge 0%\nLTP ₹226.72 · Entry ₹226.72 · SL ₹204.16 (-10%)\nT1 ₹246.07 (+8.5%) by 2026-07-21\nT2 ₹260.59 (+14.9%) · T3 ₹275.11 (+21.3%)\nBacktested first-target hit ~33.3% over 9 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #HFCL #swingtrading #nifty",
-          "id": "multibagger:HFCL",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186855,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 246.07,
-          "t2": 260.59,
-          "t3": 275.11
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "UNIMECH",
-          "name": "Unimech Aerospace and Manufacturing Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII stable, DII down, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 1274.300048828125,
-          "entry": 1281,
-          "sl": 1139.86,
-          "slPct": -11,
-          "targets": [
-            {
-              "price": 1402.4,
-              "pct": 9.5,
-              "by": "2026-07-23",
-              "days": 5
-            },
-            {
-              "price": 1493.46,
-              "pct": 16.6,
-              "by": "2026-08-03",
-              "days": 12
-            },
-            {
-              "price": 1584.51,
-              "pct": 23.7,
-              "by": "2026-08-14",
-              "days": 21
-            }
-          ],
-          "rr": 0.86,
-          "rsi": 65.7,
-          "confidence": 30,
-          "accuracy": 30,
-          "backtestTrades": 10,
-          "delivery": 46.1,
-          "changePct": 6.54,
-          "setupType": "Squeeze breakout",
-          "social": "UNIMECH — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII down, Pledge 0%\nLTP ₹1281 · Entry ₹1281 · SL ₹1139.86 (-11%)\nT1 ₹1402.4 (+9.5%) by 2026-07-23\nT2 ₹1493.46 (+16.6%) · T3 ₹1584.51 (+23.7%)\nBacktested first-target hit ~30% over 10 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #UNIMECH #swingtrading #nifty",
-          "id": "multibagger:UNIMECH",
-          "openedAt": "2026-07-16",
-          "openTs": 1784186855,
-          "status": "open",
-          "lastSeen": "2026-07-16",
-          "t1": 1402.4,
-          "t2": 1493.46,
-          "t3": 1584.51
         }
       ]
     },
@@ -9355,7 +9412,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 1563.300048828125,
+          "ltp": 1557.5999755859375,
           "entry": 1562.9,
           "sl": 1452.16,
           "slPct": -7.1,
@@ -9467,7 +9524,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 400.3999938964844,
+          "ltp": 399.70001220703125,
           "entry": 400.55,
           "sl": 384.57,
           "slPct": -4,
@@ -9523,7 +9580,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 392.6000061035156,
+          "ltp": 394,
           "entry": 394.3,
           "sl": 358.48,
           "slPct": -9.1,
@@ -9739,7 +9796,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Tritiya · Shukla (waxing) · Siddhi yoga · Karana Taitila · Moon Cancer · Ashlesha (Pada 3) · lord Mercury. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Tritiya · Shukla (waxing) · Siddhi yoga · Karana Taitila · Moon Cancer · Ashlesha (Pada 4) · lord Mercury. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
@@ -10942,7 +10999,7 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Thursday · ☀ 6:09 AM–7:19 PM · Rahu Kaal 2:23 PM–4:02 PM (avoid fresh entries) · Moon Cancer · Ashlesha (Pada 3) · lord Mercury",
+      "desc": "Thursday · ☀ 6:09 AM–7:19 PM · Rahu Kaal 2:23 PM–4:02 PM (avoid fresh entries) · Moon Cancer · Ashlesha (Pada 4) · lord Mercury",
       "count": 24,
       "signals": [
         {
@@ -11271,20 +11328,118 @@
           "isOption": true,
           "symbol": "NIFTY",
           "name": "Nifty Option Chain",
-          "placeholder": true,
-          "reason": "Option master unavailable (Angel scrip file). Retry next scan.",
-          "bias": "No live feed",
-          "biasTone": "flat"
+          "bias": "Range / balanced",
+          "biasTone": "down",
+          "buildup": "Call unwinding · Put short-covering (bearish)",
+          "spot": 24072.75,
+          "atm": 24050,
+          "expiry": "21JUL2026",
+          "pcr": 0.86,
+          "support": 24000,
+          "resistance": 24200,
+          "reason": "Spot 24072.75 · ATM 24050 · exp 21JUL2026. PCR 0.86 → Range / balanced. Walls: R 24200 / S 24000. Build-up: Call unwinding · Put short-covering (bearish).",
+          "lines": [
+            {
+              "k": "Spot / ATM",
+              "v": "24072.75 / 24050"
+            },
+            {
+              "k": "Expiry",
+              "v": "21JUL2026"
+            },
+            {
+              "k": "PCR",
+              "v": "0.86"
+            },
+            {
+              "k": "Resistance",
+              "v": "24200 (max call OI)"
+            },
+            {
+              "k": "Support",
+              "v": "24000 (max put OI)"
+            },
+            {
+              "k": "Δ Spot",
+              "v": "-147"
+            },
+            {
+              "k": "Δ Call OI",
+              "v": "−214.8L"
+            },
+            {
+              "k": "Δ Put OI",
+              "v": "−121.6L"
+            },
+            {
+              "k": "Call side",
+              "v": "Call unwinding"
+            },
+            {
+              "k": "Put side",
+              "v": "Put short-covering (bearish)"
+            }
+          ],
+          "social": "📊 NIFTY Option Chain build-up (21JUL2026)\nSpot 24072.75 · ATM 24050 · PCR 0.86 → Range / balanced\nResistance 24200 (max call OI) · Support 24000 (max put OI)\nOI build-up vs last scan: Call unwinding · Put short-covering (bearish)\nLive OI via broker feed. 📌 Educational only, not advice. Not SEBI-registered.\n#nifty #optionchain #PCR"
         },
         {
           "generator": "option_buildup",
           "isOption": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty Option Chain",
-          "placeholder": true,
-          "reason": "Option master unavailable (Angel scrip file). Retry next scan.",
-          "bias": "No live feed",
-          "biasTone": "flat"
+          "bias": "Range / balanced",
+          "biasTone": "down",
+          "buildup": "Call writing (bearish) · Put build-up (bearish)",
+          "spot": 57582.25,
+          "atm": 57600,
+          "expiry": "28JUL2026",
+          "pcr": 0.83,
+          "support": 58000,
+          "resistance": 58000,
+          "reason": "Spot 57582.25 · ATM 57600 · exp 28JUL2026. PCR 0.83 → Range / balanced. Walls: R 58000 / S 58000. Build-up: Call writing (bearish) · Put build-up (bearish).",
+          "lines": [
+            {
+              "k": "Spot / ATM",
+              "v": "57582.25 / 57600"
+            },
+            {
+              "k": "Expiry",
+              "v": "28JUL2026"
+            },
+            {
+              "k": "PCR",
+              "v": "0.83"
+            },
+            {
+              "k": "Resistance",
+              "v": "58000 (max call OI)"
+            },
+            {
+              "k": "Support",
+              "v": "58000 (max put OI)"
+            },
+            {
+              "k": "Δ Spot",
+              "v": "-266"
+            },
+            {
+              "k": "Δ Call OI",
+              "v": "+7.0L"
+            },
+            {
+              "k": "Δ Put OI",
+              "v": "+3.0L"
+            },
+            {
+              "k": "Call side",
+              "v": "Call writing (bearish)"
+            },
+            {
+              "k": "Put side",
+              "v": "Put build-up (bearish)"
+            }
+          ],
+          "social": "📊 BANKNIFTY Option Chain build-up (28JUL2026)\nSpot 57582.25 · ATM 57600 · PCR 0.83 → Range / balanced\nResistance 58000 (max call OI) · Support 58000 (max put OI)\nOI build-up vs last scan: Call writing (bearish) · Put build-up (bearish)\nLive OI via broker feed. 📌 Educational only, not advice. Not SEBI-registered.\n#banknifty #optionchain #PCR"
         }
       ]
     }
