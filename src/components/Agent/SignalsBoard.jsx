@@ -8,9 +8,14 @@ import Ltp from './Ltp'
 import HitPopups from '../Alerts/HitPopups'
 
 const sigKey = (s, gid) => (s.generator || gid) + ':' + (s.symbol || s.underlying)
-function NewTag({ k }) {
-  const isNew = useIsNew(k)
-  if (!isNew) return null
+// board date, set once per render so NewTag can flag anything generated TODAY (server-authoritative,
+// works all day) — not just the fragile 2h client-side "seen since last visit" window.
+let BOARD_DATE = null
+const isNewSig = (s, gid, flags) => (!!s?.openedAt && s.openedAt === BOARD_DATE) || isFresh(flags?.[sigKey(s, gid)])
+function NewTag({ s, gid }) {
+  const clientNew = useIsNew(sigKey(s, gid))
+  const serverNew = !!s?.openedAt && s.openedAt === BOARD_DATE
+  if (!serverNew && !clientNew) return null
   return <span className="ml-1 mono text-[9px] font-bold px-1.5 py-0.5 rounded bg-green text-white align-middle">NEW</span>
 }
 
@@ -71,12 +76,13 @@ export default function SignalsBoard() {
   const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
   // track NEW signals across all tabs (badge + header count)
+  BOARD_DATE = board?.date || BOARD_DATE
   const ingest = useNewFlags(s => s.ingest)
   const flags = useNewFlags(s => s.flags)
   const allKeys = gens.flatMap(g => (g.signals || []).map(s => sigKey(s, g.id)))
   useEffect(() => { if (gens.length) ingest(allKeys) }, [board])
-  const newCount = allKeys.filter(k => isFresh(flags[k])).length
-  const newPerTab = gens.map(g => (g.signals || []).filter(s => isFresh(flags[sigKey(s, g.id)])).length)
+  const newCount = gens.reduce((n, g) => n + (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length, 0)
+  const newPerTab = gens.map(g => (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length)
   const active = gens[tab] || gens[0]
   const tr = board?.trackRecord
   const o = tr?.overall
@@ -214,7 +220,7 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag k={sigKey(s)} />
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} />
           {s.movingNow && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#F59E0B' }}>🚀 MOVING</span>}
           {s.news && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white bg-accent-primary" title={`${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`}>📰 NEWS</span>}
           <span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
@@ -303,7 +309,7 @@ function FnoRow({ s, color, open, onToggle }) {
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.underlying}<NewTag k={sigKey(s)} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2 font-bold text-txt">{s.underlying}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2 text-txt-sec">{s.kind}</td>
         <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.underlying} base={s.spot} /></td>
@@ -322,7 +328,7 @@ function FnoCard({ s, color }) {
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
-        <span className="mono text-sm font-bold text-txt">{s.underlying}</span><NewTag k={sigKey(s)} />
+        <span className="mono text-sm font-bold text-txt">{s.underlying}</span><NewTag s={s} />
         <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{s.kind}</span>
         <span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span>
         <span className="ml-auto mono text-[10px] text-txt-sec">Lot {s.lot ?? '—'}</span>
@@ -384,7 +390,7 @@ function ConfRow({ s, color, open, onToggle, setView }) {
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag k={sigKey(s)} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
         <td className="px-3 py-2 text-accent font-bold">{s.genCount}×</td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
@@ -417,7 +423,7 @@ function ConfCard({ s, setView }) {
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${gradeBg(s.grade)}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
-        <span className="mono text-base font-bold text-txt">{s.symbol}</span><NewTag k={sigKey(s)} />
+        <span className="mono text-base font-bold text-txt">{s.symbol}</span><NewTag s={s} />
         <span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span>
         <span className="mono text-[10px] text-accent font-bold">{s.genCount}× agree</span>
         <span className={`ml-auto mono text-sm font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
@@ -448,7 +454,7 @@ function MobileTradeCard({ s, color, setView }) {
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
-        <span className="mono text-base font-bold text-txt">{s.symbol}</span><NewTag k={sigKey(s)} />
+        <span className="mono text-base font-bold text-txt">{s.symbol}</span><NewTag s={s} />
         <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>
         <span className="ml-auto mono text-[11px] text-txt-sec">₹<Ltp symbol={s.symbol} base={s.ltp} /></span>
         <span className={`mono text-sm font-bold ${confColor(s.confidence)}`}>{s.confidence}%</span>
@@ -578,7 +584,7 @@ function AstroRow({ s, i, color, open, onToggle }) {
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag k={sigKey(s)} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2">{s.method}</td>
         <td className={`px-3 py-2 font-bold ${biasToneCls(s.biasTone)}`}>{s.bias}</td>
         <td className={`px-3 py-2 font-bold ${convCls(s.conviction)}`}>{s.conviction}</td>
