@@ -474,9 +474,9 @@
       "expected": "Targets 2010.85 / 2056.41 / 2101.97 (3.1% / 5.5% / 7.8%), risk to 1882.13."
     },
     {
-      "symbol": "BAJFINANCE",
-      "name": "Bajaj Finance Ltd.",
-      "sector": "Financial Services",
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Ltd.",
+      "sector": "Healthcare",
       "indices": [
         "NIFTY 50",
         "NIFTY 100",
@@ -513,8 +513,8 @@
       "rr": 1.02,
       "rsi": 64.6,
       "confidence": 82,
-      "backtestHitRate": 60,
-      "backtestTrades": 10,
+      "backtestHitRate": 55.6,
+      "backtestTrades": 9,
       "criteria": [
         {
           "ok": true,
@@ -1920,7 +1920,7 @@
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -2069,7 +2069,11 @@
         },
         {
           "ok": true,
-          "label": "Promoter up"
+          "label": "DII up (1.76%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
         },
         {
           "ok": true,
@@ -2787,8 +2791,8 @@
           "label": "Higher lows (ascending base)"
         },
         {
-          "ok": false,
-          "label": "Harmonic up"
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
         }
       ],
       "fundamentals": null,
@@ -2961,7 +2965,7 @@
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -3312,7 +3316,7 @@
           "label": "RSI 68.5 building toward breakout"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Accumulation — up-day volume dominates"
         },
         {
@@ -4362,7 +4366,11 @@
         },
         {
           "ok": false,
-          "label": "Promoter down"
+          "label": "DII down (-6.8%)"
+        },
+        {
+          "ok": false,
+          "label": "Promoter n/a"
         },
         {
           "ok": true,

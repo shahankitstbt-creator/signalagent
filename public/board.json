@@ -20,7 +20,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 0,
+        "open": 12,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -30,7 +30,7 @@
         "win": 0,
         "loss": 0,
         "expired": 0,
-        "open": 0,
+        "open": 37,
         "returnSum": 0,
         "decided": 0,
         "winRate": null,
@@ -47,7 +47,7 @@
         "avgReturn": null
       },
       "vol_accum": {
-        "win": 38,
+        "win": 39,
         "loss": 10,
         "expired": 0,
         "open": 72,
@@ -57,14 +57,14 @@
         "avgReturn": 4.21
       },
       "vp_fib": {
-        "win": 14,
+        "win": 18,
         "loss": 11,
         "expired": 0,
-        "open": 51,
-        "returnSum": 38.160000000000004,
-        "decided": 25,
-        "winRate": 56,
-        "avgReturn": 1.53
+        "open": 57,
+        "returnSum": 67.7,
+        "decided": 29,
+        "winRate": 62.1,
+        "avgReturn": 2.33
       },
       "money_flow": {
         "win": 28,
@@ -87,7 +87,7 @@
         "avgReturn": 1.3
       },
       "harmonic": {
-        "win": 30,
+        "win": 31,
         "loss": 23,
         "expired": 0,
         "open": 60,
@@ -139,61 +139,61 @@
     "target": 85,
     "deadline": "2026-07-19",
     "start": "2026-06-19",
-    "daysLeft": 4,
-    "current": 63.4,
-    "decided": 213,
+    "daysLeft": 3,
+    "current": 64,
+    "decided": 222,
     "reliable": true,
-    "open": 283,
-    "qualityBar": 58,
+    "open": 326,
+    "qualityBar": 61,
     "status": "below target — tightening selectivity (fewer, higher-quality signals)",
     "generators": [
       {
         "id": "confluence",
         "winRate": null,
         "decided": 0,
-        "open": 0,
+        "open": 12,
         "status": "building"
       },
       {
         "id": "fno",
         "winRate": null,
         "decided": 0,
-        "open": 0,
+        "open": 37,
         "status": "building"
       },
       {
         "id": "vol_accum",
-        "winRate": 79.2,
-        "decided": 48,
-        "open": 61,
+        "winRate": 79.6,
+        "decided": 49,
+        "open": 71,
         "status": "ok"
       },
       {
         "id": "vp_fib",
-        "winRate": 56,
-        "decided": 25,
-        "open": 51,
+        "winRate": 62.1,
+        "decided": 29,
+        "open": 57,
         "status": "ok"
       },
       {
         "id": "money_flow",
-        "winRate": 62.8,
-        "decided": 43,
-        "open": 62,
+        "winRate": 60,
+        "decided": 45,
+        "open": 70,
         "status": "ok"
       },
       {
         "id": "multibagger",
-        "winRate": 59.1,
-        "decided": 44,
-        "open": 58,
+        "winRate": 60,
+        "decided": 45,
+        "open": 69,
         "status": "ok"
       },
       {
         "id": "harmonic",
-        "winRate": 56.6,
-        "decided": 53,
-        "open": 51,
+        "winRate": 57.4,
+        "decided": 54,
+        "open": 59,
         "status": "ok"
       },
       {
@@ -269,14 +269,22 @@
       },
       {
         "date": "2026-07-15",
-        "winRate": 63.4,
-        "decided": 213,
-        "open": 283,
-        "catchRate": 2.4,
-        "qualityBar": 58
+        "winRate": 63.9,
+        "decided": 219,
+        "open": 311,
+        "catchRate": 2,
+        "qualityBar": 60
+      },
+      {
+        "date": "2026-07-16",
+        "winRate": 64,
+        "decided": 222,
+        "open": 326,
+        "catchRate": 10,
+        "qualityBar": 61
       }
     ],
-    "generatedAt": "2026-07-15T03:59:10.742Z",
+    "generatedAt": "2026-07-16T03:45:49.215Z",
     "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
   },
   "generators": [
@@ -289,6 +297,81 @@
       "signals": [
         {
           "generator": "confluence",
+          "symbol": "PDMJEPAPER",
+          "name": "Pudumjee Paper Products Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 65/100): Delivery 59.4% (mixed); 5-day volume > 20-day average (RVOL 0.04×); Up/down volume 2.61× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 84.5,
+          "entry": 85.05,
+          "sl": 80.96,
+          "slPct": -4.8,
+          "targets": [
+            {
+              "price": 90.46,
+              "pct": 6.4,
+              "by": "2026-07-22",
+              "days": 5
+            },
+            {
+              "price": 94.52,
+              "pct": 11.1,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 98.58,
+              "pct": 15.9,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.32,
+          "rsi": 54.7,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 59.4,
+          "changePct": -0.65,
+          "setupType": "Squeeze breakout",
+          "social": "⭐ TOP PICK (Grade A++) — PDMJEPAPER\n5 signals agree: Volume + Accumulation, Volume Profile + Fib, Money Flow, Multibagger Quality, Harmonic & Chart Patterns\n📦 Delivery 59.4% (mostly intraday)\nEntry ₹85.05 · SL ₹80.96 (-4.8%)\nT1 ₹90.46 (+6.4%) by 2026-07-22 · T2 +11.1% · T3 +15.9%\nPlan (₹1L, 1% risk): buy 244 sh · risk ₹997.96 · reward T1 ₹1320.04 · R:R 1:1.32\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#PDMJEPAPER #swingtrading #nifty",
+          "id": "vol_accum:PDMJEPAPER",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 90.46,
+          "t2": 94.52,
+          "t3": 98.58,
+          "generators": [
+            "Volume + Accumulation",
+            "Volume Profile + Fib",
+            "Money Flow",
+            "Multibagger Quality",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 5,
+          "grade": "A++",
+          "confluenceScore": 188,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 244,
+            "deploy": 20752.2,
+            "riskRs": 997.96,
+            "rewardT1Rs": 1320.04
+          }
+        },
+        {
+          "generator": "confluence",
           "symbol": "KRYSTAL",
           "name": "Krystal Integrated Services Limited",
           "sector": "Equity",
@@ -298,7 +381,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 48% (mixed); 5-day volume > 20-day average (RVOL 0.62×); Up/down volume 3.47× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 602.1500244140625,
+          "ltp": 604.7000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -513,7 +596,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 63.1% (mixed); 5-day volume > 20-day average (RVOL 0.92×); Up/down volume 1.75× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 72.94999694824219,
+          "ltp": 74.9000015258789,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -575,41 +658,41 @@
         },
         {
           "generator": "confluence",
-          "symbol": "INDIQUBE",
-          "name": "Indiqube Spaces Limited",
+          "symbol": "SHANTI",
+          "name": "Shanti Overseas (India) Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 65/100): Delivery 88.9% (strong hands); 5-day volume > 20-day average (RVOL 0.09×); Up/down volume 2.17× — accumulation pressure",
+          "reason": "Accumulation (vol 65/100): Delivery 80.9% (strong hands); 5-day volume > 20-day average (RVOL 1.48×); Up/down volume 5.42× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 174.47999572753906,
-          "entry": 177.49,
-          "sl": 163.39,
-          "slPct": -7.9,
+          "ltp": 7.139999866485596,
+          "entry": 7.14,
+          "sl": 6.29,
+          "slPct": -11.9,
           "targets": [
             {
-              "price": 190.38,
-              "pct": 7.3,
-              "by": "2026-07-21",
+              "price": 7.98,
+              "pct": 11.8,
+              "by": "2026-07-22",
               "days": 6
             },
             {
-              "price": 200.04,
-              "pct": 12.7,
-              "by": "2026-07-29",
+              "price": 8.6,
+              "pct": 20.4,
+              "by": "2026-07-30",
               "days": 12
             },
             {
-              "price": 209.71,
-              "pct": 18.2,
-              "by": "2026-08-11",
+              "price": 9.23,
+              "pct": 29.3,
+              "by": "2026-08-12",
               "days": 21
             }
           ],
-          "rr": 0.91,
-          "rsi": 62.2,
+          "rr": 0.98,
+          "rsi": 63.5,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 3,
@@ -619,10 +702,10 @@
           "openedAt": "2026-07-13",
           "openTs": 1783915255,
           "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 190.38,
-          "t2": 200.04,
-          "t3": 209.71,
+          "lastSeen": "2026-07-16",
+          "t1": 7.98,
+          "t2": 8.6,
+          "t3": 9.23,
           "generators": [
             "Volume + Accumulation",
             "Money Flow",
@@ -638,10 +721,10 @@
           "plan": {
             "capital": 100000,
             "riskPct": 1,
-            "shares": 70,
-            "deploy": 12424.3,
-            "riskRs": 987,
-            "rewardT1Rs": 902.3
+            "shares": 1176,
+            "deploy": 8396.64,
+            "riskRs": 999.6,
+            "rewardT1Rs": 987.84
           }
         },
         {
@@ -655,7 +738,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 50.2% (mixed); 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 2.11× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 65.11000061035156,
+          "ltp": 64.23999786376953,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -726,7 +809,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 50/100): Delivery 47.9% (mixed); 5-day volume > 20-day average (RVOL 0.12×); Up/down volume 2.15× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 172.02000427246094,
+          "ltp": 174.8800048828125,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -797,7 +880,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 35.4% (mostly intraday); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 1.43× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 616.1500244140625,
+          "ltp": 611.5499877929688,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -859,41 +942,41 @@
         },
         {
           "generator": "confluence",
-          "symbol": "GKSL",
-          "name": "Gujarat Kidney And Super Speciality Limited",
+          "symbol": "ALGOQUANT",
+          "name": "Algoquant Fintech Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 83/100): Delivery 29.1% (mostly intraday); 5-day volume > 20-day average (RVOL 3.61×); 1-day volume 3.0× the 5-day average — surge",
+          "reason": "Accumulation (vol 47/100): Delivery 29% (mostly intraday); Up/down volume 1.47× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
-          "ltp": 132.67999267578125,
-          "entry": 134.83,
-          "sl": 125.9,
-          "slPct": -6.6,
+          "ltp": 60.779998779296875,
+          "entry": 60.48,
+          "sl": 55.95,
+          "slPct": -7.5,
           "targets": [
             {
-              "price": 144.82,
-              "pct": 7.4,
-              "by": "2026-07-21",
+              "price": 64.89,
+              "pct": 7.3,
+              "by": "2026-07-22",
               "days": 5
             },
             {
-              "price": 152.31,
-              "pct": 13,
-              "by": "2026-07-30",
+              "price": 68.2,
+              "pct": 12.8,
+              "by": "2026-07-31",
               "days": 12
             },
             {
-              "price": 159.8,
-              "pct": 18.5,
-              "by": "2026-08-12",
+              "price": 71.5,
+              "pct": 18.2,
+              "by": "2026-08-13",
               "days": 21
             }
           ],
-          "rr": 1.12,
-          "rsi": 62.9,
+          "rr": 0.97,
+          "rsi": 62.4,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 2,
@@ -904,9 +987,9 @@
           "openTs": 1784013085,
           "status": "open",
           "lastSeen": "2026-07-15",
-          "t1": 144.82,
-          "t2": 152.31,
-          "t3": 159.8,
+          "t1": 64.89,
+          "t2": 68.2,
+          "t3": 71.5,
           "generators": [
             "Volume + Accumulation",
             "Money Flow",
@@ -982,7 +1065,6 @@
           "t3": 98.04,
           "generators": [
             "Volume Profile + Fib",
-            "Money Flow",
             "Multibagger Quality"
           ],
           "genCount": 3,
@@ -995,10 +1077,10 @@
           "plan": {
             "capital": 100000,
             "riskPct": 1,
-            "shares": 243,
-            "deploy": 20499.48,
-            "riskRs": 996.3,
-            "rewardT1Rs": 1329.21
+            "shares": 220,
+            "deploy": 13305.6,
+            "riskRs": 996.6,
+            "rewardT1Rs": 970.2
           }
         },
         {
@@ -1012,7 +1094,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 62.4% (mixed); 5-day volume > 20-day average (RVOL 2.35×); 1-day volume 2.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 1407.4000244140625,
+          "ltp": 1406.0999755859375,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -1082,7 +1164,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 100% (strong hands); 5-day volume > 20-day average (RVOL 0.93×); Up/down volume 3.32× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 78,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -1139,6 +1221,76 @@
             "deploy": 13442.26,
             "riskRs": 997.1,
             "rewardT1Rs": 1328.34
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "AKASH",
+          "name": "Akash Infra-Projects Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 66 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 27,
+          "entry": 27.2,
+          "sl": 25.38,
+          "slPct": -6.7,
+          "targets": [
+            {
+              "price": 29.45,
+              "pct": 8.3,
+              "by": "2026-07-15",
+              "days": 2
+            },
+            {
+              "price": 31.14,
+              "pct": 14.5,
+              "by": "2026-07-20",
+              "days": 5
+            },
+            {
+              "price": 32.83,
+              "pct": 20.7,
+              "by": "2026-08-11",
+              "days": 21
+            }
+          ],
+          "rr": 1.24,
+          "rsi": 53.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 60.5,
+          "social": "⭐ TOP PICK (Grade A+) — AKASH\n2 signals agree: Volume Profile + Fib, Money Flow\n📦 Delivery 60.5% (strong hands accumulating)\nEntry ₹27.2 · SL ₹25.38 (-6.7%)\nT1 ₹29.45 (+8.3%) by 2026-07-15 · T2 +14.5% · T3 +20.7%\nPlan (₹1L, 1% risk): buy 549 sh · risk ₹999.18 · reward T1 ₹1235.25 · R:R 1:1.24\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#AKASH #swingtrading #nifty",
+          "id": "money_flow:AKASH",
+          "openedAt": "2026-07-13",
+          "openTs": 1783915255,
+          "status": "open",
+          "lastSeen": "2026-07-13",
+          "t1": 29.45,
+          "t2": 31.14,
+          "t3": 32.83,
+          "generators": [
+            "Volume Profile + Fib",
+            "Money Flow"
+          ],
+          "genCount": 2,
+          "grade": "A+",
+          "confluenceScore": 118,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": true,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 549,
+            "deploy": 14932.8,
+            "riskRs": 999.18,
+            "rewardT1Rs": 1235.25
           }
         }
       ]
@@ -1644,8 +1796,8 @@
         },
         {
           "generator": "fno",
-          "underlying": "TORNTPHARM",
-          "name": "Torrent Pharmaceuticals Ltd.",
+          "underlying": "ABCAPITAL",
+          "name": "Aditya Birla Capital Ltd.",
           "kind": "Stock",
           "direction": "BUY",
           "dirTone": "up",
@@ -3283,7 +3435,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 48% (mixed); 5-day volume > 20-day average (RVOL 0.62×); Up/down volume 3.47× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 602.1500244140625,
+          "ltp": 604.7000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -3334,7 +3486,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 63.1% (mixed); 5-day volume > 20-day average (RVOL 0.92×); Up/down volume 1.75× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 72.94999694824219,
+          "ltp": 74.9000015258789,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -3385,7 +3537,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 62.4% (mixed); 5-day volume > 20-day average (RVOL 2.35×); 1-day volume 2.0× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 1407.4000244140625,
+          "ltp": 1406.0999755859375,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -3436,7 +3588,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 83/100): Delivery 54.8% (mixed); 5-day volume > 20-day average (RVOL 1.48×); 1-day volume 1.3× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 25.450000762939453,
+          "ltp": 24.969999313354492,
           "entry": 26.25,
           "sl": 24.58,
           "slPct": -6.4,
@@ -3487,7 +3639,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 65/100): Delivery 50.2% (mixed); 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 2.11× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 65.11000061035156,
+          "ltp": 64.23999786376953,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -3529,57 +3681,6 @@
         },
         {
           "generator": "vol_accum",
-          "symbol": "INDIQUBE",
-          "name": "Indiqube Spaces Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 65/100): Delivery 88.9% (strong hands); 5-day volume > 20-day average (RVOL 0.09×); Up/down volume 2.17× — accumulation pressure",
-          "direction": "LONG",
-          "ltp": 174.47999572753906,
-          "entry": 177.49,
-          "sl": 163.39,
-          "slPct": -7.9,
-          "targets": [
-            {
-              "price": 190.38,
-              "pct": 7.3,
-              "by": "2026-07-21",
-              "days": 6
-            },
-            {
-              "price": 200.04,
-              "pct": 12.7,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 209.71,
-              "pct": 18.2,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 0.91,
-          "rsi": 62.2,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": 88.9,
-          "social": "INDIQUBE — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 88.9% (strong hands); 5-day volume > 20-day average (RVOL 0.09×); Up/down volume 2.17× — accumulation pressure\nLTP ₹177.49 · Entry ₹177.49 · SL ₹163.39 (-7.9%)\nT1 ₹190.38 (+7.3%) by 2026-07-21\nT2 ₹200.04 (+12.7%) · T3 ₹209.71 (+18.2%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #INDIQUBE #swingtrading #nifty",
-          "id": "vol_accum:INDIQUBE",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 190.38,
-          "t2": 200.04,
-          "t3": 209.71
-        },
-        {
-          "generator": "vol_accum",
           "symbol": "JAYKAY",
           "name": "Jaykay Enterprises Limited",
           "sector": "Equity",
@@ -3589,7 +3690,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 50/100): Delivery 47.9% (mixed); 5-day volume > 20-day average (RVOL 0.12×); Up/down volume 2.15× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 172.02000427246094,
+          "ltp": 174.8800048828125,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -3631,57 +3732,6 @@
         },
         {
           "generator": "vol_accum",
-          "symbol": "PNGSREVA",
-          "name": "PNGS Reva Diamond Jewellery Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 60/100): Delivery 46.4% (mixed); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 2.25× — accumulation pressure",
-          "direction": "LONG",
-          "ltp": 409.8999938964844,
-          "entry": 423.3,
-          "sl": 395.32,
-          "slPct": -6.6,
-          "targets": [
-            {
-              "price": 456.14,
-              "pct": 7.8,
-              "by": "2026-07-21",
-              "days": 6
-            },
-            {
-              "price": 480.77,
-              "pct": 13.6,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 505.39,
-              "pct": 19.4,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.17,
-          "rsi": 63.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 46.4,
-          "social": "PNGSREVA — Volume + Accumulation setup 📈\nAccumulation (vol 60/100): Delivery 46.4% (mixed); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 2.25× — accumulation pressure\nLTP ₹423.3 · Entry ₹423.3 · SL ₹395.32 (-6.6%)\nT1 ₹456.14 (+7.8%) by 2026-07-21\nT2 ₹480.77 (+13.6%) · T3 ₹505.39 (+19.4%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PNGSREVA #swingtrading #nifty",
-          "id": "vol_accum:PNGSREVA",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-13",
-          "t1": 456.14,
-          "t2": 480.77,
-          "t3": 505.39
-        },
-        {
-          "generator": "vol_accum",
           "symbol": "RAYMOND",
           "name": "Raymond Limited",
           "sector": "Equity",
@@ -3691,7 +3741,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 35.4% (mostly intraday); 5-day volume > 20-day average (RVOL 0.11×); Up/down volume 1.43× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 616.1500244140625,
+          "ltp": 611.5499877929688,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -3733,57 +3783,6 @@
         },
         {
           "generator": "vol_accum",
-          "symbol": "GKSL",
-          "name": "Gujarat Kidney And Super Speciality Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 83/100): Delivery 29.1% (mostly intraday); 5-day volume > 20-day average (RVOL 3.61×); 1-day volume 3.0× the 5-day average — surge",
-          "direction": "LONG",
-          "ltp": 132.67999267578125,
-          "entry": 134.83,
-          "sl": 125.9,
-          "slPct": -6.6,
-          "targets": [
-            {
-              "price": 144.82,
-              "pct": 7.4,
-              "by": "2026-07-21",
-              "days": 5
-            },
-            {
-              "price": 152.31,
-              "pct": 13,
-              "by": "2026-07-30",
-              "days": 12
-            },
-            {
-              "price": 159.8,
-              "pct": 18.5,
-              "by": "2026-08-12",
-              "days": 21
-            }
-          ],
-          "rr": 1.12,
-          "rsi": 62.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 29.1,
-          "social": "GKSL — Volume + Accumulation setup 📈\nAccumulation (vol 83/100): Delivery 29.1% (mostly intraday); 5-day volume > 20-day average (RVOL 3.61×); 1-day volume 3.0× the 5-day average — surge\nLTP ₹134.83 · Entry ₹134.83 · SL ₹125.9 (-6.6%)\nT1 ₹144.82 (+7.4%) by 2026-07-21\nT2 ₹152.31 (+13%) · T3 ₹159.8 (+18.5%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GKSL #swingtrading #nifty",
-          "id": "vol_accum:GKSL",
-          "openedAt": "2026-07-14",
-          "openTs": 1784013085,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 144.82,
-          "t2": 152.31,
-          "t3": 159.8
-        },
-        {
-          "generator": "vol_accum",
           "symbol": "SAHLIBHFI",
           "name": "Shalibhadra Finance Limited",
           "sector": "Equity",
@@ -3793,7 +3792,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 85/100): Delivery 100% (strong hands); 5-day volume > 20-day average (RVOL 0.93×); Up/down volume 3.32× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 78,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -3844,7 +3843,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 47/100): Delivery 54.4% (mixed); Up/down volume 4.35× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
-          "ltp": 997,
+          "ltp": 981.75,
           "entry": 978.2,
           "sl": 879.27,
           "slPct": -10.1,
@@ -3879,7 +3878,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784013085,
           "status": "open",
-          "lastSeen": "2026-07-15",
+          "lastSeen": "2026-07-16",
           "t1": 1065.47,
           "t2": 1130.92,
           "t3": 1196.38
@@ -3895,7 +3894,7 @@
           "label": "Volume + Accumulation",
           "reason": "Accumulation (vol 68/100): Delivery 29.4% (mostly intraday); 5-day volume > 20-day average (RVOL 1.95×); 1-day volume 1.7× the 5-day average — surge",
           "direction": "LONG",
-          "ltp": 617.5,
+          "ltp": 628,
           "entry": 607.3,
           "sl": 555.35,
           "slPct": -8.6,
@@ -3939,56 +3938,215 @@
         },
         {
           "generator": "vol_accum",
-          "symbol": "HARRMALAYA",
-          "name": "Harrisons  Malayalam Limited",
+          "symbol": "SHANTI",
+          "name": "Shanti Overseas (India) Limited",
           "sector": "Equity",
           "indices": [
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 61/100): Delivery 55.4% (mixed); 5-day volume > 20-day average (RVOL 4.5×); 1-day volume 3.5× the 5-day average — surge",
+          "reason": "Accumulation (vol 65/100): Delivery 80.9% (strong hands); 5-day volume > 20-day average (RVOL 1.48×); Up/down volume 5.42× — accumulation pressure",
           "direction": "LONG",
-          "ltp": 228,
-          "entry": 226.48,
-          "sl": 195.7,
-          "slPct": -13.6,
+          "ltp": 7.139999866485596,
+          "entry": 7.14,
+          "sl": 6.29,
+          "slPct": -11.9,
           "targets": [
             {
-              "price": 244.69,
-              "pct": 8,
-              "by": "2026-07-20",
-              "days": 4
+              "price": 7.98,
+              "pct": 11.8,
+              "by": "2026-07-22",
+              "days": 6
             },
             {
-              "price": 258.34,
-              "pct": 14.1,
+              "price": 8.6,
+              "pct": 20.4,
               "by": "2026-07-30",
               "days": 12
             },
             {
-              "price": 271.99,
-              "pct": 20.1,
+              "price": 9.23,
+              "pct": 29.3,
               "by": "2026-08-12",
               "days": 21
             }
           ],
-          "rr": 0.59,
-          "rsi": 67.4,
+          "rr": 0.98,
+          "rsi": 63.5,
           "confidence": 95,
           "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": 55.4,
-          "changePct": 2.37,
+          "backtestTrades": 2,
+          "delivery": 80.9,
+          "changePct": 0.85,
           "setupType": "Squeeze breakout",
-          "social": "HARRMALAYA — Volume + Accumulation setup 📈\nAccumulation (vol 61/100): Delivery 55.4% (mixed); 5-day volume > 20-day average (RVOL 4.5×); 1-day volume 3.5× the 5-day average — surge\nLTP ₹226.48 · Entry ₹226.48 · SL ₹195.7 (-13.6%)\nT1 ₹244.69 (+8%) by 2026-07-20\nT2 ₹258.34 (+14.1%) · T3 ₹271.99 (+20.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #HARRMALAYA #swingtrading #nifty",
-          "id": "vol_accum:HARRMALAYA",
+          "social": "SHANTI — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 80.9% (strong hands); 5-day volume > 20-day average (RVOL 1.48×); Up/down volume 5.42× — accumulation pressure\nLTP ₹7.14 · Entry ₹7.14 · SL ₹6.29 (-11.9%)\nT1 ₹7.98 (+11.8%) by 2026-07-22\nT2 ₹8.6 (+20.4%) · T3 ₹9.23 (+29.3%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SHANTI #swingtrading #nifty",
+          "id": "vol_accum:SHANTI",
           "openedAt": "2026-07-14",
           "openTs": 1784031642,
           "status": "open",
-          "lastSeen": "2026-07-14",
-          "t1": 244.69,
-          "t2": 258.34,
-          "t3": 271.99
+          "lastSeen": "2026-07-16",
+          "t1": 7.98,
+          "t2": 8.6,
+          "t3": 9.23
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "ALGOQUANT",
+          "name": "Algoquant Fintech Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 47/100): Delivery 29% (mostly intraday); Up/down volume 1.47× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 60.779998779296875,
+          "entry": 60.48,
+          "sl": 55.95,
+          "slPct": -7.5,
+          "targets": [
+            {
+              "price": 64.89,
+              "pct": 7.3,
+              "by": "2026-07-22",
+              "days": 5
+            },
+            {
+              "price": 68.2,
+              "pct": 12.8,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 71.5,
+              "pct": 18.2,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 0.97,
+          "rsi": 62.4,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 29,
+          "changePct": -1.37,
+          "setupType": "Squeeze breakout",
+          "social": "ALGOQUANT — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Delivery 29% (mostly intraday); Up/down volume 1.47× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹60.48 · Entry ₹60.48 · SL ₹55.95 (-7.5%)\nT1 ₹64.89 (+7.3%) by 2026-07-22\nT2 ₹68.2 (+12.8%) · T3 ₹71.5 (+18.2%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ALGOQUANT #swingtrading #nifty",
+          "id": "vol_accum:ALGOQUANT",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 64.89,
+          "t2": 68.2,
+          "t3": 71.5
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "NILKAMAL",
+          "name": "Nilkamal Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 65/100): Delivery 51.9% (mixed); 5-day volume > 20-day average (RVOL 0.06×); Up/down volume 1.42× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 1358.699951171875,
+          "entry": 1346,
+          "sl": 1269.82,
+          "slPct": -5.7,
+          "targets": [
+            {
+              "price": 1419.78,
+              "pct": 5.5,
+              "by": "2026-07-20",
+              "days": 3
+            },
+            {
+              "price": 1475.11,
+              "pct": 9.6,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 1530.45,
+              "pct": 13.7,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 0.97,
+          "rsi": 66.2,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": 51.9,
+          "changePct": -0.3,
+          "setupType": "Squeeze breakout",
+          "social": "NILKAMAL — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 51.9% (mixed); 5-day volume > 20-day average (RVOL 0.06×); Up/down volume 1.42× — accumulation pressure\nLTP ₹1346 · Entry ₹1346 · SL ₹1269.82 (-5.7%)\nT1 ₹1419.78 (+5.5%) by 2026-07-20\nT2 ₹1475.11 (+9.6%) · T3 ₹1530.45 (+13.7%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NILKAMAL #swingtrading #nifty",
+          "id": "vol_accum:NILKAMAL",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 1419.78,
+          "t2": 1475.11,
+          "t3": 1530.45
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "PDMJEPAPER",
+          "name": "Pudumjee Paper Products Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 65/100): Delivery 59.4% (mixed); 5-day volume > 20-day average (RVOL 0.04×); Up/down volume 2.61× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 84.5,
+          "entry": 85.05,
+          "sl": 80.96,
+          "slPct": -4.8,
+          "targets": [
+            {
+              "price": 90.46,
+              "pct": 6.4,
+              "by": "2026-07-22",
+              "days": 5
+            },
+            {
+              "price": 94.52,
+              "pct": 11.1,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 98.58,
+              "pct": 15.9,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.32,
+          "rsi": 54.7,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 59.4,
+          "changePct": -0.65,
+          "setupType": "Squeeze breakout",
+          "social": "PDMJEPAPER — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 59.4% (mixed); 5-day volume > 20-day average (RVOL 0.04×); Up/down volume 2.61× — accumulation pressure\nLTP ₹85.05 · Entry ₹85.05 · SL ₹80.96 (-4.8%)\nT1 ₹90.46 (+6.4%) by 2026-07-22\nT2 ₹94.52 (+11.1%) · T3 ₹98.58 (+15.9%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PDMJEPAPER #swingtrading #nifty",
+          "id": "vol_accum:PDMJEPAPER",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 90.46,
+          "t2": 94.52,
+          "t3": 98.58
         }
       ]
     },
@@ -4001,57 +4159,6 @@
       "signals": [
         {
           "generator": "vp_fib",
-          "symbol": "AARNAV",
-          "name": "Aarnav Fashions Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹24.69 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 26.3799991607666,
-          "entry": 24.97,
-          "sl": 23.03,
-          "slPct": -7.8,
-          "targets": [
-            {
-              "price": 27.56,
-              "pct": 10.4,
-              "by": "2026-06-26",
-              "days": 5
-            },
-            {
-              "price": 29.5,
-              "pct": 18.1,
-              "by": "2026-07-07",
-              "days": 12
-            },
-            {
-              "price": 31.44,
-              "pct": 25.9,
-              "by": "2026-07-20",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "delivery": 45.6,
-          "social": "AARNAV — Volume Profile + Fib setup 📈\nAt POC ₹24.69 + Fib confluence — institutional magnet zone\nLTP ₹24.97 · Entry ₹24.97 · SL ₹23.03 (-7.8%)\nT1 ₹27.56 (+10.4%) by 2026-06-26\nT2 ₹29.5 (+18.1%) · T3 ₹31.44 (+25.9%)\nSetup score 96/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARNAV #swingtrading #nifty",
-          "id": "vp_fib:AARNAV",
-          "openedAt": "2026-06-19",
-          "openTs": 1781836241,
-          "status": "open",
-          "lastSeen": "2026-06-19",
-          "t1": 27.56,
-          "t2": 29.5,
-          "t3": 31.44
-        },
-        {
-          "generator": "vp_fib",
           "symbol": "KRYSTAL",
           "name": "Krystal Integrated Services Limited",
           "sector": "Equity",
@@ -4061,7 +4168,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹612.46 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 602.1500244140625,
+          "ltp": 604.7000122070312,
           "entry": 608.5,
           "sl": 571.84,
           "slPct": -6,
@@ -4114,7 +4221,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹185.68 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 183.69000244140625,
+          "ltp": 184.07000732421875,
           "entry": 184.57,
           "sl": 180.78,
           "slPct": -2.1,
@@ -4156,57 +4263,6 @@
         },
         {
           "generator": "vp_fib",
-          "symbol": "RAJPALAYAM",
-          "name": "Rajapalayam Mills Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹835.76 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 834.0499877929688,
-          "entry": 832,
-          "sl": 784.38,
-          "slPct": -5.7,
-          "targets": [
-            {
-              "price": 888.7,
-              "pct": 6.8,
-              "by": "2026-07-21",
-              "days": 6
-            },
-            {
-              "price": 931.23,
-              "pct": 11.9,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 973.76,
-              "pct": 17,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.19,
-          "rsi": 56.4,
-          "confidence": 86,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "delivery": 71.4,
-          "social": "RAJPALAYAM — Volume Profile + Fib setup 📈\nAt POC ₹835.76 + Fib confluence — institutional magnet zone\nLTP ₹832 · Entry ₹832 · SL ₹784.38 (-5.7%)\nT1 ₹888.7 (+6.8%) by 2026-07-21\nT2 ₹931.23 (+11.9%) · T3 ₹973.76 (+17%)\nSetup score 91/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RAJPALAYAM #swingtrading #nifty",
-          "id": "vp_fib:RAJPALAYAM",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 888.7,
-          "t2": 931.23,
-          "t3": 973.76
-        },
-        {
-          "generator": "vp_fib",
           "symbol": "HBLENGINE",
           "name": "HBL Engineering Ltd.",
           "sector": "Capital Goods",
@@ -4218,7 +4274,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹796.87 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 752.4000244140625,
+          "ltp": 758.0499877929688,
           "entry": 804.4,
           "sl": 726.65,
           "slPct": -9.7,
@@ -4269,7 +4325,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹85.85 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 85.05000305175781,
+          "ltp": 84.5,
           "entry": 84.91,
           "sl": 80.8,
           "slPct": -4.8,
@@ -4308,59 +4364,6 @@
           "t1": 90.39,
           "t2": 94.5,
           "t3": 98.61
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "AKASH",
-          "name": "Akash Infra-Projects Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume Profile + Fib",
-          "reason": "At POC ₹26.89 + Fib confluence — institutional magnet zone",
-          "direction": "LONG",
-          "ltp": 27.200000762939453,
-          "entry": 26.94,
-          "sl": 25.23,
-          "slPct": -6.3,
-          "targets": [
-            {
-              "price": 29.22,
-              "pct": 8.5,
-              "by": "2026-07-16",
-              "days": 2
-            },
-            {
-              "price": 30.93,
-              "pct": 14.8,
-              "by": "2026-07-21",
-              "days": 5
-            },
-            {
-              "price": 32.64,
-              "pct": 21.2,
-              "by": "2026-08-12",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 50.9,
-          "confidence": 81,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 82.9,
-          "changePct": -0.96,
-          "setupType": "Accumulation",
-          "social": "AKASH — Volume Profile + Fib setup 📈\nAt POC ₹26.89 + Fib confluence — institutional magnet zone\nLTP ₹26.94 · Entry ₹26.94 · SL ₹25.23 (-6.3%)\nT1 ₹29.22 (+8.5%) by 2026-07-16\nT2 ₹30.93 (+14.8%) · T3 ₹32.64 (+21.2%)\nSetup score 81/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AKASH #swingtrading #nifty",
-          "id": "vp_fib:AKASH",
-          "openedAt": "2026-07-14",
-          "openTs": 1784031642,
-          "status": "open",
-          "lastSeen": "2026-07-14",
-          "t1": 29.22,
-          "t2": 30.93,
-          "t3": 32.64
         },
         {
           "generator": "vp_fib",
@@ -4425,7 +4428,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹794.44 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 761.0999755859375,
+          "ltp": 767.2999877929688,
           "entry": 792.85,
           "sl": 751.54,
           "slPct": -5.2,
@@ -4476,7 +4479,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹58.71 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 60.47999954223633,
+          "ltp": 60.779998779296875,
           "entry": 58.65,
           "sl": 55.59,
           "slPct": -5.2,
@@ -4529,7 +4532,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹757.55 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 764.75,
+          "ltp": 763,
           "entry": 761.35,
           "sl": 718.18,
           "slPct": -5.7,
@@ -4564,7 +4567,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784013085,
           "status": "open",
-          "lastSeen": "2026-07-14",
+          "lastSeen": "2026-07-16",
           "t1": 818.91,
           "t2": 862.08,
           "t3": 905.25
@@ -4580,7 +4583,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹148.67 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 142.19000244140625,
+          "ltp": 142.10000610351562,
           "entry": 148.11,
           "sl": 136.03,
           "slPct": -8.2,
@@ -4634,7 +4637,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹446.13 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 440.6499938964844,
+          "ltp": 438.3500061035156,
           "entry": 449.95,
           "sl": 413.73,
           "slPct": -8,
@@ -4685,7 +4688,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹167.34 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 170,
+          "ltp": 168.55999755859375,
           "entry": 168.7,
           "sl": 159.81,
           "slPct": -5.3,
@@ -4720,10 +4723,167 @@
           "openedAt": "2026-07-14",
           "openTs": 1784013085,
           "status": "open",
-          "lastSeen": "2026-07-14",
+          "lastSeen": "2026-07-16",
           "t1": 180.55,
           "t2": 189.44,
           "t3": 198.33
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "AKASH",
+          "name": "Akash Infra-Projects Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "At POC ₹26.89 + Fib confluence — institutional magnet zone",
+          "direction": "LONG",
+          "ltp": 27,
+          "entry": 26.94,
+          "sl": 25.23,
+          "slPct": -6.3,
+          "targets": [
+            {
+              "price": 29.22,
+              "pct": 8.5,
+              "by": "2026-07-16",
+              "days": 2
+            },
+            {
+              "price": 30.93,
+              "pct": 14.8,
+              "by": "2026-07-21",
+              "days": 5
+            },
+            {
+              "price": 32.64,
+              "pct": 21.2,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 50.9,
+          "confidence": 74,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 82.9,
+          "changePct": -0.96,
+          "setupType": "Accumulation",
+          "social": "AKASH — Volume Profile + Fib setup 📈\nAt POC ₹26.89 + Fib confluence — institutional magnet zone\nLTP ₹26.94 · Entry ₹26.94 · SL ₹25.23 (-6.3%)\nT1 ₹29.22 (+8.5%) by 2026-07-16\nT2 ₹30.93 (+14.8%) · T3 ₹32.64 (+21.2%)\nSetup score 81/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AKASH #swingtrading #nifty",
+          "id": "vp_fib:AKASH",
+          "openedAt": "2026-07-14",
+          "openTs": 1784031642,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 29.22,
+          "t2": 30.93,
+          "t3": 32.64
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "SOMANYCERA",
+          "name": "Somany Ceramics Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "At POC ₹526.34 + Fib confluence — institutional magnet zone",
+          "direction": "LONG",
+          "ltp": 530.0999755859375,
+          "entry": 528.75,
+          "sl": 499.83,
+          "slPct": -5.5,
+          "targets": [
+            {
+              "price": 567.3,
+              "pct": 7.3,
+              "by": "2026-07-21",
+              "days": 4
+            },
+            {
+              "price": 596.22,
+              "pct": 12.8,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 625.14,
+              "pct": 18.2,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 55.2,
+          "confidence": 74,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": 46.4,
+          "changePct": -1.21,
+          "setupType": "Momentum building",
+          "social": "SOMANYCERA — Volume Profile + Fib setup 📈\nAt POC ₹526.34 + Fib confluence — institutional magnet zone\nLTP ₹528.75 · Entry ₹528.75 · SL ₹499.83 (-5.5%)\nT1 ₹567.3 (+7.3%) by 2026-07-21\nT2 ₹596.22 (+12.8%) · T3 ₹625.14 (+18.2%)\nSetup score 74/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SOMANYCERA #swingtrading #nifty",
+          "id": "vp_fib:SOMANYCERA",
+          "openedAt": "2026-07-15",
+          "openTs": 1784113705,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 567.3,
+          "t2": 596.22,
+          "t3": 625.14
+        },
+        {
+          "generator": "vp_fib",
+          "symbol": "RAJPALAYAM",
+          "name": "Rajapalayam Mills Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume Profile + Fib",
+          "reason": "At POC ₹835.76 + Fib confluence — institutional magnet zone",
+          "direction": "LONG",
+          "ltp": 850,
+          "entry": 832,
+          "sl": 784.38,
+          "slPct": -5.7,
+          "targets": [
+            {
+              "price": 888.7,
+              "pct": 6.8,
+              "by": "2026-07-21",
+              "days": 6
+            },
+            {
+              "price": 931.23,
+              "pct": 11.9,
+              "by": "2026-07-29",
+              "days": 12
+            },
+            {
+              "price": 973.76,
+              "pct": 17,
+              "by": "2026-08-11",
+              "days": 21
+            }
+          ],
+          "rr": 1.19,
+          "rsi": 56.4,
+          "confidence": 72,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": 71.4,
+          "social": "RAJPALAYAM — Volume Profile + Fib setup 📈\nAt POC ₹835.76 + Fib confluence — institutional magnet zone\nLTP ₹832 · Entry ₹832 · SL ₹784.38 (-5.7%)\nT1 ₹888.7 (+6.8%) by 2026-07-21\nT2 ₹931.23 (+11.9%) · T3 ₹973.76 (+17%)\nSetup score 91/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RAJPALAYAM #swingtrading #nifty",
+          "id": "vp_fib:RAJPALAYAM",
+          "openedAt": "2026-07-13",
+          "openTs": 1783915255,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 888.7,
+          "t2": 931.23,
+          "t3": 973.76
         },
         {
           "generator": "vp_fib",
@@ -4736,7 +4896,7 @@
           "label": "Volume Profile + Fib",
           "reason": "At POC ₹104 + Fib confluence — institutional magnet zone",
           "direction": "LONG",
-          "ltp": 104.66999816894531,
+          "ltp": 105.48999786376953,
           "entry": 102.83,
           "sl": 95.06,
           "slPct": -7.6,
@@ -4847,7 +5007,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 602.1500244140625,
+          "ltp": 604.7000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -4898,7 +5058,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 1407.4000244140625,
+          "ltp": 1406.0999755859375,
           "entry": 1456.4,
           "sl": 1368.13,
           "slPct": -6.1,
@@ -4949,7 +5109,7 @@
           "label": "Money Flow",
           "reason": "MFI 76 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 72.94999694824219,
+          "ltp": 74.9000015258789,
           "entry": 76.26,
           "sl": 68.22,
           "slPct": -10.5,
@@ -5001,7 +5161,7 @@
           "label": "Money Flow",
           "reason": "MFI 72 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 336.3500061035156,
+          "ltp": 352.8500061035156,
           "entry": 346.25,
           "sl": 322.73,
           "slPct": -6.8,
@@ -5052,7 +5212,7 @@
           "label": "Money Flow",
           "reason": "MFI 66 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 27.200000762939453,
+          "ltp": 27,
           "entry": 27.2,
           "sl": 25.38,
           "slPct": -6.7,
@@ -5103,7 +5263,7 @@
           "label": "Money Flow",
           "reason": "MFI 71 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 65.11000061035156,
+          "ltp": 64.23999786376953,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -5154,7 +5314,7 @@
           "label": "Money Flow",
           "reason": "MFI 52 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 174.47999572753906,
+          "ltp": 173.3000030517578,
           "entry": 177.49,
           "sl": 163.39,
           "slPct": -7.9,
@@ -5205,7 +5365,7 @@
           "label": "Money Flow",
           "reason": "MFI 56 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 172.02000427246094,
+          "ltp": 174.8800048828125,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -5256,7 +5416,7 @@
           "label": "Money Flow",
           "reason": "MFI 70 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 616.1500244140625,
+          "ltp": 611.5499877929688,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -5298,57 +5458,6 @@
         },
         {
           "generator": "money_flow",
-          "symbol": "ALGOQUANT",
-          "name": "Algoquant Fintech Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 63 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 60.47999954223633,
-          "entry": 58.65,
-          "sl": 55.59,
-          "slPct": -5.2,
-          "targets": [
-            {
-              "price": 62.72,
-              "pct": 6.9,
-              "by": "2026-07-20",
-              "days": 5
-            },
-            {
-              "price": 65.78,
-              "pct": 12.2,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 68.84,
-              "pct": 17.4,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 20.8,
-          "social": "ALGOQUANT — Money Flow setup 📈\nMFI 63 rising + OBV up — money flowing in\nLTP ₹58.65 · Entry ₹58.65 · SL ₹55.59 (-5.2%)\nT1 ₹62.72 (+6.9%) by 2026-07-20\nT2 ₹65.78 (+12.2%) · T3 ₹68.84 (+17.4%)\nSetup score 80/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ALGOQUANT #swingtrading #nifty",
-          "id": "money_flow:ALGOQUANT",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 62.72,
-          "t2": 65.78,
-          "t3": 68.84
-        },
-        {
-          "generator": "money_flow",
           "symbol": "GKSL",
           "name": "Gujarat Kidney And Super Speciality Limited",
           "sector": "Equity",
@@ -5358,7 +5467,7 @@
           "label": "Money Flow",
           "reason": "MFI 67 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 132.67999267578125,
+          "ltp": 134.4199981689453,
           "entry": 133.11,
           "sl": 125.98,
           "slPct": -5.4,
@@ -5409,7 +5518,7 @@
           "label": "Money Flow",
           "reason": "MFI 78 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 78,
+          "ltp": 77.7699966430664,
           "entry": 79.54,
           "sl": 73.64,
           "slPct": -7.4,
@@ -5451,6 +5560,57 @@
         },
         {
           "generator": "money_flow",
+          "symbol": "ARIHANTSUP",
+          "name": "Arihant Superstructures Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 67 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 267.29998779296875,
+          "entry": 266.4,
+          "sl": 247.95,
+          "slPct": -6.9,
+          "targets": [
+            {
+              "price": 286.87,
+              "pct": 7.7,
+              "by": "2026-07-24",
+              "days": 8
+            },
+            {
+              "price": 302.22,
+              "pct": 13.4,
+              "by": "2026-07-29",
+              "days": 11
+            },
+            {
+              "price": 317.58,
+              "pct": 19.2,
+              "by": "2026-08-12",
+              "days": 21
+            }
+          ],
+          "rr": 1.11,
+          "rsi": 55.3,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": 64.7,
+          "social": "ARIHANTSUP — Money Flow setup 📈\nMFI 67 rising + OBV up — money flowing in\nLTP ₹266.4 · Entry ₹266.4 · SL ₹247.95 (-6.9%)\nT1 ₹286.87 (+7.7%) by 2026-07-24\nT2 ₹302.22 (+13.4%) · T3 ₹317.58 (+19.2%)\nSetup score 83/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ARIHANTSUP #swingtrading #nifty",
+          "id": "money_flow:ARIHANTSUP",
+          "openedAt": "2026-07-14",
+          "openTs": 1784013085,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 286.87,
+          "t2": 302.22,
+          "t3": 317.58
+        },
+        {
+          "generator": "money_flow",
           "symbol": "SHANTI",
           "name": "Shanti Overseas (India) Limited",
           "sector": "Equity",
@@ -5460,7 +5620,7 @@
           "label": "Money Flow",
           "reason": "MFI 79 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 7.239999771118164,
+          "ltp": 7.139999866485596,
           "entry": 7.14,
           "sl": 6.29,
           "slPct": -11.9,
@@ -5497,7 +5657,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784031642,
           "status": "open",
-          "lastSeen": "2026-07-15",
+          "lastSeen": "2026-07-16",
           "t1": 7.98,
           "t2": 8.6,
           "t3": 9.23
@@ -5513,7 +5673,7 @@
           "label": "Money Flow",
           "reason": "MFI 58 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 85.05000305175781,
+          "ltp": 84.5,
           "entry": 84.36,
           "sl": 80.26,
           "slPct": -4.9,
@@ -5628,7 +5788,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
           "direction": "LONG",
-          "ltp": 616.1500244140625,
+          "ltp": 611.5499877929688,
           "entry": 633.9,
           "sl": 586.15,
           "slPct": -7.5,
@@ -5679,7 +5839,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII stable, Pledge 0%",
           "direction": "LONG",
-          "ltp": 60.47999954223633,
+          "ltp": 60.779998779296875,
           "entry": 60.9,
           "sl": 55.94,
           "slPct": -8.1,
@@ -5730,7 +5890,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII stable, DII stable, Pledge 0%",
           "direction": "LONG",
-          "ltp": 85.05000305175781,
+          "ltp": 84.5,
           "entry": 85.05,
           "sl": 80.96,
           "slPct": -4.8,
@@ -5774,6 +5934,110 @@
         },
         {
           "generator": "multibagger",
+          "symbol": "SANATHAN",
+          "name": "Sanathan Textiles Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII down, DII up, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 449.3999938964844,
+          "entry": 449.5,
+          "sl": 425.93,
+          "slPct": -5.2,
+          "targets": [
+            {
+              "price": 480.93,
+              "pct": 7,
+              "by": "2026-07-23",
+              "days": 6
+            },
+            {
+              "price": 504.5,
+              "pct": 12.2,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 528.07,
+              "pct": 17.5,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 57.8,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 75,
+          "changePct": 2.16,
+          "setupType": "Squeeze breakout",
+          "social": "SANATHAN — Multibagger Quality setup 📈\nQuality: Promoter stable, FII down, DII up, Pledge 0%\nLTP ₹449.5 · Entry ₹449.5 · SL ₹425.93 (-5.2%)\nT1 ₹480.93 (+7%) by 2026-07-23\nT2 ₹504.5 (+12.2%) · T3 ₹528.07 (+17.5%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SANATHAN #swingtrading #nifty",
+          "id": "multibagger:SANATHAN",
+          "openedAt": "2026-07-15",
+          "openTs": 1784113705,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 480.93,
+          "t2": 504.5,
+          "t3": 528.07
+        },
+        {
+          "generator": "multibagger",
+          "symbol": "TANLA",
+          "name": "Tanla Platforms Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Multibagger Quality",
+          "reason": "Quality: Promoter stable, FII stable, DII up, Pledge 0%",
+          "direction": "LONG",
+          "ltp": 565.9000244140625,
+          "entry": 559.45,
+          "sl": 516.6,
+          "slPct": -7.7,
+          "targets": [
+            {
+              "price": 594.96,
+              "pct": 6.3,
+              "by": "2026-07-17",
+              "days": 4
+            },
+            {
+              "price": 621.59,
+              "pct": 11.1,
+              "by": "2026-07-22",
+              "days": 7
+            },
+            {
+              "price": 648.22,
+              "pct": 15.9,
+              "by": "2026-08-11",
+              "days": 21
+            }
+          ],
+          "rr": 0.83,
+          "rsi": 63.2,
+          "confidence": 83,
+          "accuracy": 80,
+          "backtestTrades": 5,
+          "delivery": 33.2,
+          "social": "TANLA — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII up, Pledge 0%\nLTP ₹559.45 · Entry ₹559.45 · SL ₹516.6 (-7.7%)\nT1 ₹594.96 (+6.3%) by 2026-07-17\nT2 ₹621.59 (+11.1%) · T3 ₹648.22 (+15.9%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TANLA #swingtrading #nifty",
+          "id": "multibagger:TANLA",
+          "openedAt": "2026-07-13",
+          "openTs": 1783915255,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 594.96,
+          "t2": 621.59,
+          "t3": 648.22
+        },
+        {
+          "generator": "multibagger",
           "symbol": "SIYSIL",
           "name": "Siyaram Silk Mills Limited",
           "sector": "Equity",
@@ -5783,7 +6047,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII down, DII stable, Pledge 0%",
           "direction": "LONG",
-          "ltp": 652.1500244140625,
+          "ltp": 640.1500244140625,
           "entry": 647.3,
           "sl": 600.65,
           "slPct": -7.2,
@@ -5837,7 +6101,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter up, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 761.0999755859375,
+          "ltp": 767.2999877929688,
           "entry": 792.85,
           "sl": 751.54,
           "slPct": -5.2,
@@ -5876,57 +6140,6 @@
           "t1": 840.98,
           "t2": 877.08,
           "t3": 913.18
-        },
-        {
-          "generator": "multibagger",
-          "symbol": "TANLA",
-          "name": "Tanla Platforms Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Multibagger Quality",
-          "reason": "Quality: Promoter stable, FII stable, DII up, Pledge 0%",
-          "direction": "LONG",
-          "ltp": 558.2999877929688,
-          "entry": 559.45,
-          "sl": 516.6,
-          "slPct": -7.7,
-          "targets": [
-            {
-              "price": 594.96,
-              "pct": 6.3,
-              "by": "2026-07-17",
-              "days": 4
-            },
-            {
-              "price": 621.59,
-              "pct": 11.1,
-              "by": "2026-07-22",
-              "days": 7
-            },
-            {
-              "price": 648.22,
-              "pct": 15.9,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 0.83,
-          "rsi": 63.2,
-          "confidence": 80,
-          "accuracy": 80,
-          "backtestTrades": 5,
-          "delivery": 33.2,
-          "social": "TANLA — Multibagger Quality setup 📈\nQuality: Promoter stable, FII stable, DII up, Pledge 0%\nLTP ₹559.45 · Entry ₹559.45 · SL ₹516.6 (-7.7%)\nT1 ₹594.96 (+6.3%) by 2026-07-17\nT2 ₹621.59 (+11.1%) · T3 ₹648.22 (+15.9%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TANLA #swingtrading #nifty",
-          "id": "multibagger:TANLA",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-13",
-          "t1": 594.96,
-          "t2": 621.59,
-          "t3": 648.22
         },
         {
           "generator": "multibagger",
@@ -5993,7 +6206,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII stable, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 7110,
+          "ltp": 7012.5,
           "entry": 7037,
           "sl": 6607.56,
           "slPct": -6.1,
@@ -6030,7 +6243,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784031642,
           "status": "open",
-          "lastSeen": "2026-07-14",
+          "lastSeen": "2026-07-16",
           "t1": 7551.38,
           "t2": 7937.17,
           "t3": 8322.95
@@ -6099,7 +6312,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 242.9199981689453,
+          "ltp": 241.5500030517578,
           "entry": 244.94,
           "sl": 231.84,
           "slPct": -5.3,
@@ -6134,7 +6347,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784013085,
           "status": "open",
-          "lastSeen": "2026-07-14",
+          "lastSeen": "2026-07-15",
           "t1": 259.11,
           "t2": 269.75,
           "t3": 280.38
@@ -6319,7 +6532,7 @@
           "label": "Multibagger Quality",
           "reason": "Quality: Promoter stable, FII up, DII down, Pledge 0%",
           "direction": "LONG",
-          "ltp": 306.1499938964844,
+          "ltp": 312.25,
           "entry": 303.1,
           "sl": 289.47,
           "slPct": -4.5,
@@ -6354,7 +6567,7 @@
           "openedAt": "2026-07-14",
           "openTs": 1784013085,
           "status": "open",
-          "lastSeen": "2026-07-14",
+          "lastSeen": "2026-07-16",
           "t1": 321.27,
           "t2": 334.9,
           "t3": 348.53
@@ -6368,57 +6581,6 @@
       "desc": "Bullish harmonic / chart-pattern breakout completing",
       "count": 15,
       "signals": [
-        {
-          "generator": "harmonic",
-          "symbol": "AARNAV",
-          "name": "Aarnav Fashions Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 26.3799991607666,
-          "entry": 24.97,
-          "sl": 23.03,
-          "slPct": -7.8,
-          "targets": [
-            {
-              "price": 27.56,
-              "pct": 10.4,
-              "by": "2026-06-26",
-              "days": 5
-            },
-            {
-              "price": 29.5,
-              "pct": 18.1,
-              "by": "2026-07-07",
-              "days": 12
-            },
-            {
-              "price": 31.44,
-              "pct": 25.9,
-              "by": "2026-07-20",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "delivery": 45.6,
-          "social": "AARNAV — Harmonic & Chart Patterns setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹24.97 · Entry ₹24.97 · SL ₹23.03 (-7.8%)\nT1 ₹27.56 (+10.4%) by 2026-06-26\nT2 ₹29.5 (+18.1%) · T3 ₹31.44 (+25.9%)\nSetup score 96/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARNAV #swingtrading #nifty",
-          "id": "harmonic:AARNAV",
-          "openedAt": "2026-06-19",
-          "openTs": 1781836241,
-          "status": "open",
-          "lastSeen": "2026-06-19",
-          "t1": 27.56,
-          "t2": 29.5,
-          "t3": 31.44
-        },
         {
           "generator": "harmonic",
           "symbol": "EMMBI",
@@ -6481,7 +6643,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 602.1500244140625,
+          "ltp": 604.7000122070312,
           "entry": 601.65,
           "sl": 571.87,
           "slPct": -4.9,
@@ -6532,7 +6694,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Morning Star — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 72.94999694824219,
+          "ltp": 74.9000015258789,
           "entry": 76.16,
           "sl": 67.98,
           "slPct": -10.7,
@@ -6583,7 +6745,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 25.450000762939453,
+          "ltp": 24.969999313354492,
           "entry": 26.25,
           "sl": 24.58,
           "slPct": -6.4,
@@ -6636,7 +6798,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish Engulfing — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 336.3500061035156,
+          "ltp": 352.8500061035156,
           "entry": 339.8,
           "sl": 319.34,
           "slPct": -6,
@@ -6687,7 +6849,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 65.11000061035156,
+          "ltp": 64.23999786376953,
           "entry": 67.39,
           "sl": 60.76,
           "slPct": -9.8,
@@ -6729,57 +6891,6 @@
         },
         {
           "generator": "harmonic",
-          "symbol": "INDIQUBE",
-          "name": "Indiqube Spaces Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 174.47999572753906,
-          "entry": 177.49,
-          "sl": 163.39,
-          "slPct": -7.9,
-          "targets": [
-            {
-              "price": 190.38,
-              "pct": 7.3,
-              "by": "2026-07-21",
-              "days": 6
-            },
-            {
-              "price": 200.04,
-              "pct": 12.7,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 209.71,
-              "pct": 18.2,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 0.91,
-          "rsi": 62.2,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": 88.9,
-          "social": "INDIQUBE — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone\nLTP ₹177.49 · Entry ₹177.49 · SL ₹163.39 (-7.9%)\nT1 ₹190.38 (+7.3%) by 2026-07-21\nT2 ₹200.04 (+12.7%) · T3 ₹209.71 (+18.2%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #INDIQUBE #swingtrading #nifty",
-          "id": "harmonic:INDIQUBE",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 190.38,
-          "t2": 200.04,
-          "t3": 209.71
-        },
-        {
-          "generator": "harmonic",
           "symbol": "JAYKAY",
           "name": "Jaykay Enterprises Limited",
           "sector": "Equity",
@@ -6789,7 +6900,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 172.02000427246094,
+          "ltp": 174.8800048828125,
           "entry": 185.8,
           "sl": 164.12,
           "slPct": -11.7,
@@ -6840,7 +6951,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 70.1500015258789,
+          "ltp": 72.5,
           "entry": 73.01,
           "sl": 66.43,
           "slPct": -9,
@@ -6882,57 +6993,6 @@
         },
         {
           "generator": "harmonic",
-          "symbol": "PNGSREVA",
-          "name": "PNGS Reva Diamond Jewellery Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 409.8999938964844,
-          "entry": 423.3,
-          "sl": 395.32,
-          "slPct": -6.6,
-          "targets": [
-            {
-              "price": 456.14,
-              "pct": 7.8,
-              "by": "2026-07-21",
-              "days": 6
-            },
-            {
-              "price": 480.77,
-              "pct": 13.6,
-              "by": "2026-07-29",
-              "days": 12
-            },
-            {
-              "price": 505.39,
-              "pct": 19.4,
-              "by": "2026-08-11",
-              "days": 21
-            }
-          ],
-          "rr": 1.17,
-          "rsi": 63.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 46.4,
-          "social": "PNGSREVA — Harmonic & Chart Patterns setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹423.3 · Entry ₹423.3 · SL ₹395.32 (-6.6%)\nT1 ₹456.14 (+7.8%) by 2026-07-21\nT2 ₹480.77 (+13.6%) · T3 ₹505.39 (+19.4%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PNGSREVA #swingtrading #nifty",
-          "id": "harmonic:PNGSREVA",
-          "openedAt": "2026-07-13",
-          "openTs": 1783915255,
-          "status": "open",
-          "lastSeen": "2026-07-13",
-          "t1": 456.14,
-          "t2": 480.77,
-          "t3": 505.39
-        },
-        {
-          "generator": "harmonic",
           "symbol": "TINNARUBR",
           "name": "Tinna Rubber and Infrastructure Limited",
           "sector": "Equity",
@@ -6942,7 +7002,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 997,
+          "ltp": 981.75,
           "entry": 976.35,
           "sl": 879.59,
           "slPct": -9.9,
@@ -6977,112 +7037,10 @@
           "openedAt": "2026-07-13",
           "openTs": 1783915255,
           "status": "open",
-          "lastSeen": "2026-07-15",
+          "lastSeen": "2026-07-16",
           "t1": 1060.46,
           "t2": 1123.55,
           "t3": 1186.63
-        },
-        {
-          "generator": "harmonic",
-          "symbol": "ALGOQUANT",
-          "name": "Algoquant Fintech Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 60.47999954223633,
-          "entry": 60.9,
-          "sl": 55.94,
-          "slPct": -8.1,
-          "targets": [
-            {
-              "price": 65.39,
-              "pct": 7.4,
-              "by": "2026-07-21",
-              "days": 5
-            },
-            {
-              "price": 68.75,
-              "pct": 12.9,
-              "by": "2026-07-30",
-              "days": 12
-            },
-            {
-              "price": 72.12,
-              "pct": 18.4,
-              "by": "2026-08-12",
-              "days": 21
-            }
-          ],
-          "rr": 0.9,
-          "rsi": 65.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 19.7,
-          "social": "ALGOQUANT — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Rounding Bottom — pattern breakout/continuation zone\nLTP ₹60.9 · Entry ₹60.9 · SL ₹55.94 (-8.1%)\nT1 ₹65.39 (+7.4%) by 2026-07-21\nT2 ₹68.75 (+12.9%) · T3 ₹72.12 (+18.4%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ALGOQUANT #swingtrading #nifty",
-          "id": "harmonic:ALGOQUANT",
-          "openedAt": "2026-07-14",
-          "openTs": 1784013085,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 65.39,
-          "t2": 68.75,
-          "t3": 72.12
-        },
-        {
-          "generator": "harmonic",
-          "symbol": "GKSL",
-          "name": "Gujarat Kidney And Super Speciality Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 132.67999267578125,
-          "entry": 134.83,
-          "sl": 125.9,
-          "slPct": -6.6,
-          "targets": [
-            {
-              "price": 144.82,
-              "pct": 7.4,
-              "by": "2026-07-21",
-              "days": 5
-            },
-            {
-              "price": 152.31,
-              "pct": 13,
-              "by": "2026-07-30",
-              "days": 12
-            },
-            {
-              "price": 159.8,
-              "pct": 18.5,
-              "by": "2026-08-12",
-              "days": 21
-            }
-          ],
-          "rr": 1.12,
-          "rsi": 62.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": 29.1,
-          "social": "GKSL — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹134.83 · Entry ₹134.83 · SL ₹125.9 (-6.6%)\nT1 ₹144.82 (+7.4%) by 2026-07-21\nT2 ₹152.31 (+13%) · T3 ₹159.8 (+18.5%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GKSL #swingtrading #nifty",
-          "id": "harmonic:GKSL",
-          "openedAt": "2026-07-14",
-          "openTs": 1784013085,
-          "status": "open",
-          "lastSeen": "2026-07-15",
-          "t1": 144.82,
-          "t2": 152.31,
-          "t3": 159.8
         },
         {
           "generator": "harmonic",
@@ -7095,7 +7053,7 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 7.239999771118164,
+          "ltp": 7.139999866485596,
           "entry": 7.14,
           "sl": 6.29,
           "slPct": -11.9,
@@ -7132,10 +7090,275 @@
           "openedAt": "2026-07-14",
           "openTs": 1784031642,
           "status": "open",
-          "lastSeen": "2026-07-15",
+          "lastSeen": "2026-07-16",
           "t1": 7.98,
           "t2": 8.6,
           "t3": 9.23
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "KOLTEPATIL",
+          "name": "Kolte - Patil Developers Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Falling Wedge — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 388.04998779296875,
+          "entry": 388.95,
+          "sl": 351.17,
+          "slPct": -9.7,
+          "targets": [
+            {
+              "price": 413.22,
+              "pct": 6.2,
+              "by": "2026-07-23",
+              "days": 6
+            },
+            {
+              "price": 431.42,
+              "pct": 10.9,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 449.62,
+              "pct": 15.6,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 0.64,
+          "rsi": 63.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": 51.1,
+          "changePct": 0.37,
+          "setupType": "Squeeze breakout",
+          "social": "KOLTEPATIL — Harmonic & Chart Patterns setup 📈\nBullish Falling Wedge — pattern breakout/continuation zone\nLTP ₹388.95 · Entry ₹388.95 · SL ₹351.17 (-9.7%)\nT1 ₹413.22 (+6.2%) by 2026-07-23\nT2 ₹431.42 (+10.9%) · T3 ₹449.62 (+15.6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KOLTEPATIL #swingtrading #nifty",
+          "id": "harmonic:KOLTEPATIL",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 413.22,
+          "t2": 431.42,
+          "t3": 449.62
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "PDMJEPAPER",
+          "name": "Pudumjee Paper Products Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Rounding Bottom — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 84.5,
+          "entry": 85.05,
+          "sl": 80.96,
+          "slPct": -4.8,
+          "targets": [
+            {
+              "price": 90.46,
+              "pct": 6.4,
+              "by": "2026-07-22",
+              "days": 5
+            },
+            {
+              "price": 94.52,
+              "pct": 11.1,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 98.58,
+              "pct": 15.9,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.32,
+          "rsi": 54.7,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 59.4,
+          "changePct": -0.65,
+          "setupType": "Squeeze breakout",
+          "social": "PDMJEPAPER — Harmonic & Chart Patterns setup 📈\nBullish Rounding Bottom — pattern breakout/continuation zone\nLTP ₹85.05 · Entry ₹85.05 · SL ₹80.96 (-4.8%)\nT1 ₹90.46 (+6.4%) by 2026-07-22\nT2 ₹94.52 (+11.1%) · T3 ₹98.58 (+15.9%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PDMJEPAPER #swingtrading #nifty",
+          "id": "harmonic:PDMJEPAPER",
+          "openedAt": "2026-07-15",
+          "openTs": 1784087950,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 90.46,
+          "t2": 94.52,
+          "t3": 98.58
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "ARIHANTSUP",
+          "name": "Arihant Superstructures Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Bullish Engulfing — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 267.29998779296875,
+          "entry": 265.9,
+          "sl": 249,
+          "slPct": -6.4,
+          "targets": [
+            {
+              "price": 285.85,
+              "pct": 7.5,
+              "by": "2026-07-27",
+              "days": 8
+            },
+            {
+              "price": 300.81,
+              "pct": 13.1,
+              "by": "2026-07-30",
+              "days": 11
+            },
+            {
+              "price": 315.78,
+              "pct": 18.8,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.18,
+          "rsi": 55.1,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": 82.9,
+          "changePct": 0.45,
+          "setupType": "Momentum building",
+          "social": "ARIHANTSUP — Harmonic & Chart Patterns setup 📈\nBullish Bullish Engulfing — pattern breakout/continuation zone\nLTP ₹265.9 · Entry ₹265.9 · SL ₹249 (-6.4%)\nT1 ₹285.85 (+7.5%) by 2026-07-27\nT2 ₹300.81 (+13.1%) · T3 ₹315.78 (+18.8%)\nSetup score 98/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ARIHANTSUP #swingtrading #nifty",
+          "id": "harmonic:ARIHANTSUP",
+          "openedAt": "2026-07-15",
+          "openTs": 1784113705,
+          "status": "open",
+          "lastSeen": "2026-07-15",
+          "t1": 285.85,
+          "t2": 300.81,
+          "t3": 315.78
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "SANATHAN",
+          "name": "Sanathan Textiles Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 449.3999938964844,
+          "entry": 449.5,
+          "sl": 425.93,
+          "slPct": -5.2,
+          "targets": [
+            {
+              "price": 480.93,
+              "pct": 7,
+              "by": "2026-07-23",
+              "days": 6
+            },
+            {
+              "price": 504.5,
+              "pct": 12.2,
+              "by": "2026-07-31",
+              "days": 12
+            },
+            {
+              "price": 528.07,
+              "pct": 17.5,
+              "by": "2026-08-13",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 57.8,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": 75,
+          "changePct": 2.16,
+          "setupType": "Squeeze breakout",
+          "social": "SANATHAN — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹449.5 · Entry ₹449.5 · SL ₹425.93 (-5.2%)\nT1 ₹480.93 (+7%) by 2026-07-23\nT2 ₹504.5 (+12.2%) · T3 ₹528.07 (+17.5%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SANATHAN #swingtrading #nifty",
+          "id": "harmonic:SANATHAN",
+          "openedAt": "2026-07-15",
+          "openTs": 1784113705,
+          "status": "open",
+          "lastSeen": "2026-07-16",
+          "t1": 480.93,
+          "t2": 504.5,
+          "t3": 528.07
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "CASTROLIND",
+          "name": "Castrol India Ltd.",
+          "sector": "Oil Gas & Consumable Fuels",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Bullish Engulfing — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 184.07000732421875,
+          "entry": 185.06,
+          "sl": 181.69,
+          "slPct": -1.8,
+          "targets": [
+            {
+              "price": 189.29,
+              "pct": 2.3,
+              "by": "2026-06-29",
+              "days": 6
+            },
+            {
+              "price": 192.46,
+              "pct": 4,
+              "by": "2026-07-07",
+              "days": 12
+            },
+            {
+              "price": 195.63,
+              "pct": 5.7,
+              "by": "2026-07-20",
+              "days": 21
+            }
+          ],
+          "rr": 1.25,
+          "rsi": 57.7,
+          "confidence": 94,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": 55.2,
+          "social": "CASTROLIND — Harmonic & Chart Patterns setup 📈\nBullish Bullish Engulfing — pattern breakout/continuation zone\nLTP ₹185.06 · Entry ₹185.06 · SL ₹181.69 (-1.8%)\nT1 ₹189.29 (+2.3%) by 2026-06-29\nT2 ₹192.46 (+4%) · T3 ₹195.63 (+5.7%)\nSetup score 82/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #CASTROLIND #swingtrading #nifty",
+          "id": "harmonic:CASTROLIND",
+          "openedAt": "2026-06-19",
+          "openTs": 1781851087,
+          "status": "open",
+          "lastSeen": "2026-06-22",
+          "t1": 189.29,
+          "t2": 192.46,
+          "t3": 195.63
         }
       ]
     },
