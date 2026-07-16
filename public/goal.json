@@ -3,11 +3,11 @@
   "deadline": "2026-07-19",
   "start": "2026-06-19",
   "daysLeft": 3,
-  "current": 64,
-  "decided": 222,
+  "current": 65.1,
+  "decided": 238,
   "reliable": true,
-  "open": 326,
-  "qualityBar": 61,
+  "open": 364,
+  "qualityBar": 62,
   "status": "below target — tightening selectivity (fewer, higher-quality signals)",
   "generators": [
     {
@@ -21,42 +21,49 @@
       "id": "fno",
       "winRate": null,
       "decided": 0,
-      "open": 37,
+      "open": 38,
+      "status": "building"
+    },
+    {
+      "id": "momentum",
+      "winRate": null,
+      "decided": 0,
+      "open": 31,
       "status": "building"
     },
     {
       "id": "vol_accum",
-      "winRate": 79.6,
+      "winRate": 80.4,
+      "decided": 51,
+      "open": 77,
+      "status": "ok"
+    },
+    {
+      "id": "vp_fib",
+      "winRate": 63.3,
+      "decided": 30,
+      "open": 53,
+      "status": "ok"
+    },
+    {
+      "id": "money_flow",
+      "winRate": 63.3,
+      "decided": 49,
+      "open": 72,
+      "status": "ok"
+    },
+    {
+      "id": "multibagger",
+      "winRate": 57.1,
       "decided": 49,
       "open": 71,
       "status": "ok"
     },
     {
-      "id": "vp_fib",
-      "winRate": 62.1,
-      "decided": 29,
-      "open": 57,
-      "status": "ok"
-    },
-    {
-      "id": "money_flow",
-      "winRate": 60,
-      "decided": 45,
-      "open": 70,
-      "status": "ok"
-    },
-    {
-      "id": "multibagger",
-      "winRate": 60,
-      "decided": 45,
-      "open": 69,
-      "status": "ok"
-    },
-    {
       "id": "harmonic",
-      "winRate": 57.4,
-      "decided": 54,
-      "open": 59,
+      "winRate": 61,
+      "decided": 59,
+      "open": 60,
       "status": "ok"
     },
     {
@@ -140,13 +147,13 @@
     },
     {
       "date": "2026-07-16",
-      "winRate": 64,
-      "decided": 222,
-      "open": 326,
-      "catchRate": 10,
-      "qualityBar": 61
+      "winRate": 65.1,
+      "decided": 238,
+      "open": 364,
+      "catchRate": 32.9,
+      "qualityBar": 62
     }
   ],
-  "generatedAt": "2026-07-16T03:45:49.215Z",
+  "generatedAt": "2026-07-16T07:27:35.689Z",
   "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
 }
