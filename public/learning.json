@@ -1,13 +1,13 @@
 {
-  "date": "2026-07-16",
-  "generatedAt": "2026-07-16T11:31:40.647Z",
-  "moversChecked": 34,
-  "caught": 20,
-  "missed": 14,
-  "catchRate": 58.8,
-  "catchableRate": 53.8,
-  "catchableMovers": 26,
-  "gapUpMovers": 8,
+  "date": "2026-07-17",
+  "generatedAt": "2026-07-17T04:33:26.320Z",
+  "moversChecked": 30,
+  "caught": 14,
+  "missed": 16,
+  "catchRate": 46.7,
+  "catchableRate": 85.7,
+  "catchableMovers": 7,
+  "gapUpMovers": 23,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
@@ -16,12 +16,16 @@
   "externalNote": "Groww + Dhan page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.",
   "reasonTally": [
     {
-      "reason": "not above rising N/N EMA yet",
-      "count": 8
+      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
+      "count": 15
     },
     {
       "reason": "no squeeze / breakout proximity",
-      "count": 8
+      "count": 10
+    },
+    {
+      "reason": "not above rising N/N EMA yet",
+      "count": 7
     },
     {
       "reason": "no prior up-volume accumulation",
@@ -32,101 +36,41 @@
       "count": 4
     },
     {
-      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
-      "count": 2
-    },
-    {
       "reason": "RSI already hot (>N) — excluded by gate",
-      "count": 1
-    },
-    {
-      "reason": "setup present but ranked below the cut — widen coverage",
-      "count": 1
+      "count": 2
     }
   ],
   "misses": [
     {
-      "symbol": "GRINDWELL",
-      "name": "Grindwell Norton Limited",
-      "changePct": 16.4,
-      "gapUp": false,
+      "symbol": "PIONRINV",
+      "name": "Pioneer Investcorp Limited",
+      "changePct": 17.9,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "LEXUS",
-      "name": "Lexus Granito (India) Limited",
-      "changePct": 10,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 5 below gate 32",
-        "no prior up-volume accumulation",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
       "symbol": "PFOCUS",
       "name": "Prime Focus Ltd.",
-      "changePct": 9.8,
+      "changePct": 8.9,
       "gapUp": true,
       "reasons": [
         "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "no prior up-volume accumulation",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "NITCO",
-      "name": "Nitco Limited",
-      "changePct": 7.8,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 23 below gate 32",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "ELGIRUBCO",
-      "name": "Elgi Rubber Company Limited",
-      "changePct": 7.8,
-      "gapUp": false,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "GNA",
-      "name": "GNA Axles Limited",
-      "changePct": 7.7,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "NARMADA",
-      "name": "Narmada Agrobase Limited",
-      "changePct": 7.2,
-      "gapUp": true,
-      "reasons": [
-        "gap-up open (news/event-driven — hard to pre-empt)",
-        "not above rising 20/50 EMA yet",
-        "pre-move score 25 below gate 32",
         "no squeeze / breakout proximity"
       ]
     },
     {
       "symbol": "AURUS",
       "name": "AURUS GEM CORPORATION LIMITED",
-      "changePct": 6.8,
-      "gapUp": false,
+      "changePct": 7.7,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "pre-move score 15 below gate 32",
         "no prior up-volume accumulation",
@@ -134,72 +78,154 @@
       ]
     },
     {
-      "symbol": "AMAGI",
-      "name": "Amagi Media Labs Limited",
-      "changePct": 6.7,
-      "gapUp": false,
+      "symbol": "NITCO",
+      "name": "Nitco Limited",
+      "changePct": 6.5,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "pre-move score 23 below gate 32",
         "no squeeze / breakout proximity"
       ]
     },
     {
       "symbol": "HSCL",
       "name": "Himadri Speciality Chemical Ltd.",
-      "changePct": 6,
-      "gapUp": false,
+      "changePct": 6.5,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "NIRAJISPAT",
-      "name": "Niraj Ispat Industries Limited",
-      "changePct": 5.8,
-      "gapUp": false,
+      "symbol": "BANSWRAS",
+      "name": "Banswara Syntex Limited",
+      "changePct": 6.3,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
+        "pre-move score 20 below gate 32",
+        "no prior up-volume accumulation",
+        "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "INGERRAND",
-      "name": "Ingersoll Rand (India) Limited",
-      "changePct": 5.6,
-      "gapUp": false,
+      "symbol": "MBAPL",
+      "name": "Madhya Bharat Agro Products Limited",
+      "changePct": 6.2,
+      "gapUp": true,
       "reasons": [
-        "no prior up-volume accumulation"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "AVALON",
-      "name": "Avalon Technologies Ltd.",
-      "changePct": 5.2,
-      "gapUp": false,
+      "symbol": "CURAA",
+      "name": "Cura Technologies Limited",
+      "changePct": 6.2,
+      "gapUp": true,
       "reasons": [
-        "not above rising 20/50 EMA yet"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "pre-move score 15 below gate 32",
+        "no prior up-volume accumulation",
+        "no squeeze / breakout proximity"
       ]
     },
     {
       "symbol": "IZMO",
       "name": "IZMO Limited",
-      "changePct": 5,
+      "changePct": 6.2,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)"
+      ]
+    },
+    {
+      "symbol": "AARNAV",
+      "name": "Aarnav Fashions Limited",
+      "changePct": 5.9,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "DALMIASUG",
+      "name": "Dalmia Bharat Sugar and Industries Limited",
+      "changePct": 5.8,
       "gapUp": false,
       "reasons": [
-        "setup present but ranked below the cut — widen coverage"
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "AARVI",
+      "name": "Aarvi Encon Limited",
+      "changePct": 5.6,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "AMIRCHAND",
+      "name": "Amir Chand Jagdish Kumar (Exports) Limited",
+      "changePct": 5.6,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "INGERRAND",
+      "name": "Ingersoll Rand (India) Limited",
+      "changePct": 5.5,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no prior up-volume accumulation"
+      ]
+    },
+    {
+      "symbol": "INDIANCARD",
+      "name": "Indian Card Clothing Company Limited",
+      "changePct": 5.5,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet"
+      ]
+    },
+    {
+      "symbol": "NIBL",
+      "name": "NRB Industrial Bearings Limited",
+      "changePct": 5.2,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate",
+        "no squeeze / breakout proximity"
       ]
     }
   ],
   "adjustments": [
-    "Below 85% (measured 63.7%) → alert-lane bar to 64 (Telegram leans tighter; board coverage unchanged)."
+    "Below 85% (measured 63.6%) → alert-lane bar to 65 (Telegram leans tighter; board coverage unchanged)."
   ],
   "tuning": {
     "minMoveScore": 32,
-    "qualityBar": 64
+    "qualityBar": 65
   },
   "goal": {
     "target": 85,
     "deadline": "2026-07-19",
-    "current": 63.7,
+    "current": 63.6,
     "status": "below target — tightening selectivity (fewer, higher-quality signals)"
   },
   "note": "Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such."
