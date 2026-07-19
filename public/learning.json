@@ -1,13 +1,13 @@
 {
-  "date": "2026-07-18",
-  "generatedAt": "2026-07-18T04:34:03.071Z",
-  "moversChecked": 29,
-  "caught": 20,
-  "missed": 9,
-  "catchRate": 69,
-  "catchableRate": 62.5,
-  "catchableMovers": 24,
-  "gapUpMovers": 5,
+  "date": "2026-07-19",
+  "generatedAt": "2026-07-19T03:48:37.062Z",
+  "moversChecked": 21,
+  "caught": 16,
+  "missed": 5,
+  "catchRate": 76.2,
+  "catchableRate": 70.6,
+  "catchableMovers": 17,
+  "gapUpMovers": 4,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
@@ -16,19 +16,15 @@
   "externalNote": "Groww + Dhan page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.",
   "reasonTally": [
     {
-      "reason": "no squeeze / breakout proximity",
-      "count": 5
+      "reason": "not above rising N/N EMA yet",
+      "count": 3
     },
     {
       "reason": "no prior up-volume accumulation",
       "count": 3
     },
     {
-      "reason": "RSI already hot (>N) — excluded by gate",
-      "count": 2
-    },
-    {
-      "reason": "not above rising N/N EMA yet",
+      "reason": "no squeeze / breakout proximity",
       "count": 2
     },
     {
@@ -36,55 +32,15 @@
       "count": 1
     },
     {
-      "reason": "setup present but ranked below the cut — widen coverage",
+      "reason": "RSI already hot (>N) — excluded by gate",
       "count": 1
     }
   ],
   "misses": [
     {
-      "symbol": "ELGIRUBCO",
-      "name": "Elgi Rubber Company Limited",
-      "changePct": 7.8,
-      "gapUp": false,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "GNA",
-      "name": "GNA Axles Limited",
-      "changePct": 7.7,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "AURUS",
-      "name": "AURUS GEM CORPORATION LIMITED",
-      "changePct": 6.8,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "pre-move score 15 below gate 32",
-        "no prior up-volume accumulation",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "AMAGI",
-      "name": "Amagi Media Labs Limited",
-      "changePct": 6.7,
-      "gapUp": false,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "NIRAJISPAT",
-      "name": "Niraj Ispat Industries Limited",
-      "changePct": 5.8,
+      "symbol": "SHADOWFAX",
+      "name": "Shadowfax Technologies Limited",
+      "changePct": 9.4,
       "gapUp": false,
       "reasons": [
         "not above rising 20/50 EMA yet",
@@ -92,11 +48,12 @@
       ]
     },
     {
-      "symbol": "INGERRAND",
-      "name": "Ingersoll Rand (India) Limited",
-      "changePct": 5.6,
+      "symbol": "CENTEXT",
+      "name": "Century Extrusions Limited",
+      "changePct": 6,
       "gapUp": false,
       "reasons": [
+        "not above rising 20/50 EMA yet",
         "no prior up-volume accumulation"
       ]
     },
@@ -110,21 +67,24 @@
       ]
     },
     {
+      "symbol": "SIKKO",
+      "name": "Sikko Industries Limited",
+      "changePct": 5.1,
+      "gapUp": false,
+      "reasons": [
+        "not above rising 20/50 EMA yet",
+        "pre-move score 5 below gate 32",
+        "no prior up-volume accumulation",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
       "symbol": "KALYANKJIL",
       "name": "Kalyan Jewellers India Ltd.",
       "changePct": 5.1,
       "gapUp": false,
       "reasons": [
         "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "IZMO",
-      "name": "IZMO Limited",
-      "changePct": 5,
-      "gapUp": false,
-      "reasons": [
-        "setup present but ranked below the cut — widen coverage"
       ]
     }
   ],
