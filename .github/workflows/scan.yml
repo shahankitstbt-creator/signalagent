@@ -70,7 +70,7 @@ jobs:
         run: |
           git config user.name "protrader-bot"
           git config user.email "bot@stocksbyvarsha.local"
-          git add public/ledger.json public/goal.json public/tuning.json public/tg_sent.json public/track_record.json public/board*.json public/learning.json public/news.json public/delivery.json public/delivery_history.json public/picks.json 2>/dev/null || true
+          git add public/ledger.json public/goal.json public/tuning.json public/tg_sent.json public/track_record.json public/board*.json public/learning.json public/news.json public/delivery.json public/delivery_history.json public/trade_book.json public/picks.json 2>/dev/null || true
           git commit -m "state $(date -u +%FT%RZ)" || echo "no state changes"
           git push || echo "push skipped"
       - name: Deploy to Vercel (tradingview project → stocksbyvarsha.vercel.app)

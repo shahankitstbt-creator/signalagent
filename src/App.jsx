@@ -10,6 +10,7 @@ import PicksPanel from './components/Panels/PicksPanel'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import AgentDashboard from './components/Agent/AgentDashboard'
 import SignalsBoard from './components/Agent/SignalsBoard'
+import TradingJournal from './components/Agent/TradingJournal'
 import { useChartStore } from './store/chartStore'
 import { useLayoutStore } from './store/layoutStore'
 import { useViewStore } from './store/viewStore'
@@ -24,6 +25,7 @@ export default function App() {
 
   // Signal board is home; content agent + chart are switchable views.
   if (view === 'board') return <ErrorBoundary><SignalsBoard /></ErrorBoundary>
+  if (view === 'journal') return <ErrorBoundary><TradingJournal /></ErrorBoundary>
   if (view === 'agent') return <ErrorBoundary><AgentDashboard /></ErrorBoundary>
 
   return (

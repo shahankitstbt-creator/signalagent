@@ -111,6 +111,10 @@ export default function SignalsBoard() {
         </div>
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
           {scanMsg && <span className="mono text-[10px] text-txt-sec w-full sm:w-auto text-right">{scanMsg}</span>}
+          <button onClick={() => setView('journal')} title="Trading Journal — ₹10L paper portfolio & performance"
+            className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover" style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
+            📓 Trading Journal
+          </button>
           <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
           <div className="flex rounded-lg border border-border overflow-hidden">
             {[['daily', 'Daily'], ['weekly', 'Weekly'], ['intraday', 'Intraday']].map(([k, lbl]) => (

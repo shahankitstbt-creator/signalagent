@@ -14,6 +14,7 @@ import { generateContent } from './contentEngine.mjs'
 import { GEN_META, runPriceGenerators, runMultibagger, horaSignals, assetBiasSignals, dailyBias } from './generators.mjs'
 import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
+import { syncTradeBook } from './tradebook.mjs'
 import { trackNews } from './news.mjs'
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
@@ -568,6 +569,9 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     }
     saveLedger(lg)
     console.log(`Ledger: logged ${logged} confluence/F&O picks for tracking`)
+
+    // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
+    try { syncTradeBook(lg, closedNow, todayISO, today.toISOString()) } catch (e) { console.log('Trade book skipped:', e.message) }
   }
 
   // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──
