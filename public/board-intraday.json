@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T14:26:12.875Z",
+  "generatedAt": "2026-07-23T15:34:49.123Z",
   "date": "2026-07-23",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -266,7 +266,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.9×); Up/down volume 2.07× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.89×); Up/down volume 2.08× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
           "ltp": 199.7,
           "entry": 199.7,
@@ -305,7 +305,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.07× (accumulation)"
+              "Up/down volume 2.08× (accumulation)"
             ],
             "strong": false
           },
@@ -591,6 +591,84 @@
         },
         {
           "generator": "confluence",
+          "symbol": "BAGFILMS",
+          "name": "B.A.G Films and Media Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.25×); Up/down volume 2.55× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 4.57,
+          "entry": 4.57,
+          "sl": 4.48,
+          "slPct": -2,
+          "targets": [
+            {
+              "price": 4.69,
+              "pct": 2.6,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 4.78,
+              "pct": 4.6,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 4.88,
+              "pct": 6.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 55.3,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": null,
+          "changePct": -0.22,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.02,
+            "rs50": 0.025,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A++) — BAGFILMS\n2 signals agree: Volume + Accumulation, Money Flow\n🕵️ Footprint 70/100: Stealth volume — buying while price still flat\nEntry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h · T2 +4.6% · T3 +6.8%\nPlan (₹1L, 1% risk): buy 11111 sh · risk ₹999.99 · reward T1 ₹1333.32 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#BAGFILMS #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Money Flow"
+          ],
+          "genCount": 2,
+          "grade": "A++",
+          "confluenceScore": 123,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "RANGE / NEUTRAL",
+          "vedicAligned": false,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 11111,
+            "deploy": 50777.27,
+            "riskRs": 999.99,
+            "rewardT1Rs": 1333.32
+          }
+        },
+        {
+          "generator": "confluence",
           "symbol": "EMAMILTD",
           "name": "Emami Ltd.",
           "sector": "Fast Moving Consumer Goods",
@@ -835,84 +913,6 @@
             "deploy": 47402.35,
             "riskRs": 998.22,
             "rewardT1Rs": 1330.96
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "BAGFILMS",
-          "name": "B.A.G Films and Media Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0.49×); Up/down volume 2.45× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
-          "direction": "LONG",
-          "ltp": 4.57,
-          "entry": 4.57,
-          "sl": 4.48,
-          "slPct": -2,
-          "targets": [
-            {
-              "price": 4.69,
-              "pct": 2.6,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 4.78,
-              "pct": 4.6,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 4.88,
-              "pct": 6.8,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 55.3,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 1,
-          "delivery": null,
-          "changePct": -0.22,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 62,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.02,
-            "rs50": 0.025,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A++) — BAGFILMS\n2 signals agree: Volume + Accumulation, Money Flow\n🕵️ Footprint 62/100: Stealth volume — buying while price still flat\nEntry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h · T2 +4.6% · T3 +6.8%\nPlan (₹1L, 1% risk): buy 11111 sh · risk ₹999.99 · reward T1 ₹1333.32 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#BAGFILMS #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Money Flow"
-          ],
-          "genCount": 2,
-          "grade": "A++",
-          "confluenceScore": 120,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "RANGE / NEUTRAL",
-          "vedicAligned": false,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 11111,
-            "deploy": 50777.27,
-            "riskRs": 999.99,
-            "rewardT1Rs": 1333.32
           }
         },
         {
@@ -2556,7 +2556,7 @@
             "NSE Equity"
           ],
           "label": "🚀 Momentum & Early Movers",
-          "reason": "About to break the 20-day high on 5.3× volume",
+          "reason": "About to break the 20-day high on 5.04× volume",
           "direction": "LONG",
           "ltp": 19.72,
           "entry": 19.72,
@@ -2595,7 +2595,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 5.81× (accumulation)"
+              "Up/down volume 5.74× (accumulation)"
             ],
             "strong": false
           },
@@ -2604,8 +2604,8 @@
             "rs50": 0.058,
             "leader": true
           },
-          "social": "RKDL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 5.3× volume\nLTP ₹19.72 · Entry ₹19.72 · SL ₹18.63 (-5.5%)\nT1 ₹20.56 (+4.3%) by ~6h\nT2 ₹21.2 (+7.5%) · T3 ₹21.83 (+10.7%)\nBacktested first-target hit ~0% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #RKDL #swingtrading #nifty",
-          "_momScore": 93,
+          "social": "RKDL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 5.04× volume\nLTP ₹19.72 · Entry ₹19.72 · SL ₹18.63 (-5.5%)\nT1 ₹20.56 (+4.3%) by ~6h\nT2 ₹21.2 (+7.5%) · T3 ₹21.83 (+10.7%)\nBacktested first-target hit ~0% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #RKDL #swingtrading #nifty",
+          "_momScore": 91,
           "movingNow": false
         },
         {
@@ -2738,67 +2738,6 @@
         },
         {
           "generator": "momentum",
-          "symbol": "ELPROINTL",
-          "name": "Elpro International Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
-          "direction": "LONG",
-          "ltp": 175.02,
-          "entry": 175.02,
-          "sl": 174.02,
-          "slPct": -0.6,
-          "targets": [
-            {
-              "price": 176.35,
-              "pct": 0.8,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 177.34,
-              "pct": 1.3,
-              "by": "~10h",
-              "days": 10
-            },
-            {
-              "price": 178.34,
-              "pct": 1.9,
-              "by": "~18h",
-              "days": 18
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 53.3,
-          "confidence": 40,
-          "accuracy": 40,
-          "backtestTrades": 5,
-          "delivery": null,
-          "changePct": 0,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 62,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.013,
-            "rs50": 0.011,
-            "leader": true
-          },
-          "social": "ELPROINTL — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹175.02 · Entry ₹175.02 · SL ₹174.02 (-0.6%)\nT1 ₹176.35 (+0.8%) by ~7h\nT2 ₹177.34 (+1.3%) · T3 ₹178.34 (+1.9%)\nBacktested first-target hit ~40% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ELPROINTL #swingtrading #nifty",
-          "_momScore": 73,
-          "movingNow": false
-        },
-        {
-          "generator": "momentum",
           "symbol": "LFIC",
           "name": "Lakshmi Finance & Industrial Corporation Limited",
           "sector": "Equity",
@@ -2867,7 +2806,7 @@
             "NSE Equity"
           ],
           "label": "🚀 Momentum & Early Movers",
-          "reason": "About to break the 20-day high on 3.23× volume",
+          "reason": "About to break the 20-day high on 3.01× volume",
           "direction": "LONG",
           "ltp": 6.54,
           "entry": 6.54,
@@ -2906,7 +2845,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 8.88× (accumulation)"
+              "Up/down volume 8.79× (accumulation)"
             ],
             "strong": false
           },
@@ -2915,8 +2854,69 @@
             "rs50": 0.084,
             "leader": true
           },
-          "social": "RADIOCITY — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 3.23× volume\nLTP ₹6.54 · Entry ₹6.54 · SL ₹6.36 (-2.8%)\nT1 ₹6.78 (+3.7%) by ~6h\nT2 ₹6.96 (+6.4%) · T3 ₹7.14 (+9.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RADIOCITY #swingtrading #nifty",
-          "_momScore": 72,
+          "social": "RADIOCITY — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 3.01× volume\nLTP ₹6.54 · Entry ₹6.54 · SL ₹6.36 (-2.8%)\nT1 ₹6.78 (+3.7%) by ~6h\nT2 ₹6.96 (+6.4%) · T3 ₹7.14 (+9.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RADIOCITY #swingtrading #nifty",
+          "_momScore": 71,
+          "movingNow": false
+        },
+        {
+          "generator": "momentum",
+          "symbol": "ELPROINTL",
+          "name": "Elpro International Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
+          "direction": "LONG",
+          "ltp": 175.02,
+          "entry": 175.02,
+          "sl": 174.02,
+          "slPct": -0.6,
+          "targets": [
+            {
+              "price": 176.35,
+              "pct": 0.8,
+              "by": "~7h",
+              "days": 7
+            },
+            {
+              "price": 177.34,
+              "pct": 1.3,
+              "by": "~10h",
+              "days": 10
+            },
+            {
+              "price": 178.34,
+              "pct": 1.9,
+              "by": "~18h",
+              "days": 18
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 53.3,
+          "confidence": 40,
+          "accuracy": 40,
+          "backtestTrades": 5,
+          "delivery": null,
+          "changePct": 0,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 62,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.013,
+            "rs50": 0.011,
+            "leader": true
+          },
+          "social": "ELPROINTL — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹175.02 · Entry ₹175.02 · SL ₹174.02 (-0.6%)\nT1 ₹176.35 (+0.8%) by ~7h\nT2 ₹177.34 (+1.3%) · T3 ₹178.34 (+1.9%)\nBacktested first-target hit ~40% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ELPROINTL #swingtrading #nifty",
+          "_momScore": 70,
           "movingNow": false
         },
         {
@@ -2995,7 +2995,7 @@
             "NSE Equity"
           ],
           "label": "🚀 Momentum & Early Movers",
-          "reason": "About to break the 20-day high on 1.85× volume",
+          "reason": "About to break the 20-day high on 1.84× volume",
           "direction": "LONG",
           "ltp": 210.52,
           "entry": 210.52,
@@ -3043,7 +3043,7 @@
             "rs50": 0.074,
             "leader": true
           },
-          "social": "KANPRPLA — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 1.85× volume\nLTP ₹210.52 · Entry ₹210.52 · SL ₹202.32 (-3.9%)\nT1 ₹218.18 (+3.6%) by ~6h\nT2 ₹223.93 (+6.4%) · T3 ₹229.67 (+9.1%)\nBacktested first-target hit ~0% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KANPRPLA #swingtrading #nifty",
+          "social": "KANPRPLA — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 1.84× volume\nLTP ₹210.52 · Entry ₹210.52 · SL ₹202.32 (-3.9%)\nT1 ₹218.18 (+3.6%) by ~6h\nT2 ₹223.93 (+6.4%) · T3 ₹229.67 (+9.1%)\nBacktested first-target hit ~0% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #KANPRPLA #swingtrading #nifty",
           "_momScore": 66,
           "movingNow": false
         },
@@ -3488,6 +3488,67 @@
             "leader": true
           },
           "social": "FIEMIND — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 1.3× volume\nLTP ₹2354.1 · Entry ₹2354.1 · SL ₹2325.68 (-1.2%)\nT1 ₹2392 (+1.6%) by ~4h\nT2 ₹2420.42 (+2.8%) · T3 ₹2448.85 (+4%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #FIEMIND #swingtrading #nifty",
+          "_momScore": 59,
+          "movingNow": false
+        },
+        {
+          "generator": "momentum",
+          "symbol": "BAGFILMS",
+          "name": "B.A.G Films and Media Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
+          "direction": "LONG",
+          "ltp": 4.57,
+          "entry": 4.57,
+          "sl": 4.48,
+          "slPct": -2,
+          "targets": [
+            {
+              "price": 4.69,
+              "pct": 2.6,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 4.78,
+              "pct": 4.6,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 4.88,
+              "pct": 6.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 55.3,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": null,
+          "changePct": -0.22,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.02,
+            "rs50": 0.025,
+            "leader": true
+          },
+          "social": "BAGFILMS — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹4.57 · Entry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h\nT2 ₹4.78 (+4.6%) · T3 ₹4.88 (+6.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BAGFILMS #swingtrading #nifty",
           "_momScore": 59,
           "movingNow": false
         },
@@ -4052,68 +4113,6 @@
           "social": "NUVOCO — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹361.85 · Entry ₹361.85 · SL ₹354.23 (-2.1%)\nT1 ₹372.01 (+2.8%) by ~3h\nT2 ₹379.63 (+4.9%) · T3 ₹387.24 (+7%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NUVOCO #swingtrading #nifty",
           "_momScore": 57,
           "movingNow": false
-        },
-        {
-          "generator": "momentum",
-          "symbol": "ASTRAMICRO",
-          "name": "Astra Microwave Products Ltd.",
-          "sector": "Capital Goods",
-          "indices": [
-            "NIFTY Total Market",
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
-          "direction": "LONG",
-          "ltp": 1783.1,
-          "entry": 1783.1,
-          "sl": 1739.39,
-          "slPct": -2.5,
-          "targets": [
-            {
-              "price": 1817.21,
-              "pct": 1.9,
-              "by": "~13h",
-              "days": 13
-            },
-            {
-              "price": 1842.79,
-              "pct": 3.3,
-              "by": "~16h",
-              "days": 16
-            },
-            {
-              "price": 1868.38,
-              "pct": 4.8,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 0.78,
-          "rsi": 63.6,
-          "confidence": 20,
-          "accuracy": 20,
-          "backtestTrades": 5,
-          "delivery": null,
-          "changePct": -0.39,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.037,
-            "rs50": 0.044,
-            "leader": true
-          },
-          "social": "ASTRAMICRO — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹1783.1 · Entry ₹1783.1 · SL ₹1739.39 (-2.5%)\nT1 ₹1817.21 (+1.9%) by ~13h\nT2 ₹1842.79 (+3.3%) · T3 ₹1868.38 (+4.8%)\nBacktested first-target hit ~20% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ASTRAMICRO #swingtrading #nifty",
-          "_momScore": 57,
-          "movingNow": false
         }
       ]
     },
@@ -4569,7 +4568,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0.49×); Up/down volume 2.45× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.25×); Up/down volume 2.55× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
           "ltp": 4.57,
           "entry": 4.57,
@@ -4604,7 +4603,7 @@
           "changePct": -0.22,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 62,
+            "score": 70,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
@@ -4617,7 +4616,7 @@
             "rs50": 0.025,
             "leader": true
           },
-          "social": "BAGFILMS — Volume + Accumulation setup 📈\nAccumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0.49×); Up/down volume 2.45× — accumulation pressure; Stealth accumulation — volume rising while price still flat\nLTP ₹4.57 · Entry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h\nT2 ₹4.78 (+4.6%) · T3 ₹4.88 (+6.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BAGFILMS #swingtrading #nifty"
+          "social": "BAGFILMS — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.25×); Up/down volume 2.55× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹4.57 · Entry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h\nT2 ₹4.78 (+4.6%) · T3 ₹4.88 (+6.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BAGFILMS #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -5167,7 +5166,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 100/100): 5-day volume > 20-day average (RVOL 3.23×); 1-day volume 1.4× the 5-day average — surge; Up/down volume 8.88× — accumulation pressure",
+          "reason": "Accumulation (vol 100/100): 5-day volume > 20-day average (RVOL 3.01×); 1-day volume 1.3× the 5-day average — surge; Up/down volume 8.79× — accumulation pressure",
           "direction": "LONG",
           "ltp": 6.54,
           "entry": 6.54,
@@ -5206,7 +5205,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 8.88× (accumulation)"
+              "Up/down volume 8.79× (accumulation)"
             ],
             "strong": false
           },
@@ -5215,7 +5214,7 @@
             "rs50": 0.084,
             "leader": true
           },
-          "social": "RADIOCITY — Volume + Accumulation setup 📈\nAccumulation (vol 100/100): 5-day volume > 20-day average (RVOL 3.23×); 1-day volume 1.4× the 5-day average — surge; Up/down volume 8.88× — accumulation pressure\nLTP ₹6.54 · Entry ₹6.54 · SL ₹6.36 (-2.8%)\nT1 ₹6.78 (+3.7%) by ~6h\nT2 ₹6.96 (+6.4%) · T3 ₹7.14 (+9.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RADIOCITY #swingtrading #nifty"
+          "social": "RADIOCITY — Volume + Accumulation setup 📈\nAccumulation (vol 100/100): 5-day volume > 20-day average (RVOL 3.01×); 1-day volume 1.3× the 5-day average — surge; Up/down volume 8.79× — accumulation pressure\nLTP ₹6.54 · Entry ₹6.54 · SL ₹6.36 (-2.8%)\nT1 ₹6.78 (+3.7%) by ~6h\nT2 ₹6.96 (+6.4%) · T3 ₹7.14 (+9.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #RADIOCITY #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -5474,7 +5473,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.9×); Up/down volume 2.07× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.89×); Up/down volume 2.08× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
           "ltp": 199.7,
           "entry": 199.7,
@@ -5513,7 +5512,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.07× (accumulation)"
+              "Up/down volume 2.08× (accumulation)"
             ],
             "strong": false
           },
@@ -5522,7 +5521,7 @@
             "rs50": 0.081,
             "leader": true
           },
-          "social": "KIRANVYPAR — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.9×); Up/down volume 2.07× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹199.7 · Entry ₹199.7 · SL ₹192.16 (-3.8%)\nT1 ₹208.17 (+4.2%) by ~16h\nT2 ₹214.52 (+7.4%) · T3 ₹220.87 (+10.6%)\nSetup score 89/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KIRANVYPAR #swingtrading #nifty"
+          "social": "KIRANVYPAR — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.89×); Up/down volume 2.08× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹199.7 · Entry ₹199.7 · SL ₹192.16 (-3.8%)\nT1 ₹208.17 (+4.2%) by ~16h\nT2 ₹214.52 (+7.4%) · T3 ₹220.87 (+10.6%)\nSetup score 89/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KIRANVYPAR #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -7065,7 +7064,7 @@
             "score": 30,
             "flags": [
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 1.65× (accumulation)"
+              "Up/down volume 1.64× (accumulation)"
             ],
             "weak": true
           },
@@ -7816,7 +7815,7 @@
             "NSE Equity"
           ],
           "label": "Money Flow",
-          "reason": "MFI 71 rising + OBV up — money flowing in",
+          "reason": "MFI 73 rising + OBV up — money flowing in",
           "direction": "LONG",
           "ltp": 4.57,
           "entry": 4.57,
@@ -7851,7 +7850,7 @@
           "changePct": -0.22,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 62,
+            "score": 70,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
@@ -7864,7 +7863,7 @@
             "rs50": 0.025,
             "leader": true
           },
-          "social": "BAGFILMS — Money Flow setup 📈\nMFI 71 rising + OBV up — money flowing in\nLTP ₹4.57 · Entry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h\nT2 ₹4.78 (+4.6%) · T3 ₹4.88 (+6.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BAGFILMS #swingtrading #nifty"
+          "social": "BAGFILMS — Money Flow setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹4.57 · Entry ₹4.57 · SL ₹4.48 (-2%)\nT1 ₹4.69 (+2.6%) by ~6h\nT2 ₹4.78 (+4.6%) · T3 ₹4.88 (+6.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BAGFILMS #swingtrading #nifty"
         },
         {
           "generator": "money_flow",
@@ -8273,7 +8272,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.07× (accumulation)"
+              "Up/down volume 2.08× (accumulation)"
             ],
             "strong": false
           },
@@ -10347,7 +10346,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 8.88× (accumulation)"
+              "Up/down volume 8.79× (accumulation)"
             ],
             "strong": false
           },
@@ -10654,7 +10653,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.07× (accumulation)"
+              "Up/down volume 2.08× (accumulation)"
             ],
             "strong": false
           },
@@ -11381,7 +11380,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Dashami · Shukla (waxing) · Shukla yoga · Karana Taitila · Moon Scorpio · Vishakha (Pada 4) · lord Jupiter. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Dashami · Shukla (waxing) · Shukla yoga · Karana Gara · Moon Scorpio · Vishakha (Pada 4) · lord Jupiter. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
