@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T03:51:08.002Z",
+  "generatedAt": "2026-07-26T04:49:35.901Z",
   "date": "2026-07-26",
   "timeframe": "daily",
   "label": "Daily",
@@ -9,7 +9,7 @@
       "win": 319,
       "loss": 322,
       "expired": 0,
-      "open": 725,
+      "open": 729,
       "returnSum": 224.90999999999963,
       "decided": 641,
       "winRate": 49.8,
@@ -20,7 +20,7 @@
         "win": 11,
         "loss": 18,
         "expired": 0,
-        "open": 48,
+        "open": 54,
         "returnSum": -31.15,
         "decided": 29,
         "winRate": 37.9,
@@ -30,7 +30,7 @@
         "win": 11,
         "loss": 15,
         "expired": 0,
-        "open": 56,
+        "open": 60,
         "returnSum": -6.340000000000002,
         "decided": 26,
         "winRate": 42.3,
@@ -50,7 +50,7 @@
         "win": 78,
         "loss": 46,
         "expired": 0,
-        "open": 122,
+        "open": 125,
         "returnSum": 237.4,
         "decided": 124,
         "winRate": 62.9,
@@ -90,7 +90,7 @@
         "win": 62,
         "loss": 71,
         "expired": 0,
-        "open": 107,
+        "open": 108,
         "returnSum": -10.259999999999946,
         "decided": 133,
         "winRate": 46.6,
@@ -143,7 +143,7 @@
     "current": 49.8,
     "decided": 641,
     "reliable": true,
-    "open": 725,
+    "open": 729,
     "qualityBar": 65,
     "status": "below target — tightening selectivity (fewer, higher-quality signals)",
     "generators": [
@@ -151,14 +151,14 @@
         "id": "confluence",
         "winRate": 37.9,
         "decided": 29,
-        "open": 48,
+        "open": 54,
         "status": "weak"
       },
       {
         "id": "fno",
         "winRate": 42.3,
         "decided": 26,
-        "open": 56,
+        "open": 60,
         "status": "weak"
       },
       {
@@ -172,7 +172,7 @@
         "id": "vol_accum",
         "winRate": 62.9,
         "decided": 124,
-        "open": 122,
+        "open": 125,
         "status": "ok"
       },
       {
@@ -200,7 +200,7 @@
         "id": "harmonic",
         "winRate": 46.6,
         "decided": 133,
-        "open": 107,
+        "open": 108,
         "status": "weak"
       },
       {
@@ -366,12 +366,12 @@
         "date": "2026-07-26",
         "winRate": 49.8,
         "decided": 641,
-        "open": 725,
-        "catchRate": 49.1,
+        "open": 729,
+        "catchRate": 52.7,
         "qualityBar": 65
       }
     ],
-    "generatedAt": "2026-07-26T03:51:08.002Z",
+    "generatedAt": "2026-07-26T04:49:35.901Z",
     "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
   },
   "generators": [
@@ -727,92 +727,6 @@
             "deploy": 7920.99,
             "riskRs": 997.92,
             "rewardT1Rs": 807.03
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "SURYALA",
-          "name": "Suryalata Spinning Mills Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 83/100): Delivery 82.8% (strong hands); 5-day volume > 20-day average (RVOL 7.09×); 1-day volume 3.4× the 5-day average — surge",
-          "direction": "LONG",
-          "ltp": 440,
-          "entry": 443.05,
-          "sl": 411.4,
-          "slPct": -7.1,
-          "targets": [
-            {
-              "price": 479.09,
-              "pct": 8.1,
-              "by": "2026-08-03",
-              "days": 6
-            },
-            {
-              "price": 506.12,
-              "pct": 14.2,
-              "by": "2026-08-11",
-              "days": 12
-            },
-            {
-              "price": 533.15,
-              "pct": 20.3,
-              "by": "2026-08-24",
-              "days": 21
-            }
-          ],
-          "rr": 1.14,
-          "rsi": 54.2,
-          "confidence": 77,
-          "accuracy": null,
-          "backtestTrades": 0,
-          "delivery": 82.8,
-          "changePct": 0,
-          "setupType": "Momentum building",
-          "footprint": {
-            "score": 68,
-            "flags": [
-              "Delivery% steadily high (~75.9%)",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.007,
-            "rs50": 0.234,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A++) — SURYALA\n2 signals agree: Volume + Accumulation, Money Flow + Nifty 50 Vedic bias bullish\n📦 Delivery 82.8% (strong hands accumulating)\n🕵️ Footprint 68/100: Delivery% steadily high (~75.9%)\nEntry ₹443.05 · SL ₹411.4 (-7.1%)\nT1 ₹479.09 (+8.1%) by 2026-08-03 · T2 +14.2% · T3 +20.3%\nPlan (₹1L, 1% risk): buy 31 sh · risk ₹981.15 · reward T1 ₹1117.24 · R:R 1:1.14\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#SURYALA #swingtrading #nifty",
-          "id": "vol_accum:SURYALA",
-          "openedAt": "2026-07-24",
-          "openTs": 1784864598,
-          "status": "open",
-          "lastSeen": "2026-07-26",
-          "t1": 479.09,
-          "t2": 506.12,
-          "t3": 533.15,
-          "generators": [
-            "Volume + Accumulation",
-            "Money Flow"
-          ],
-          "genCount": 2,
-          "grade": "A++",
-          "confluenceScore": 150,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "BUY / TEJI",
-          "vedicAligned": true,
-          "strongDeliv": true,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 31,
-            "deploy": 13734.55,
-            "riskRs": 981.15,
-            "rewardT1Rs": 1117.24
           }
         },
         {
@@ -1419,6 +1333,92 @@
             "deploy": 6251.52,
             "riskRs": 999.68,
             "rewardT1Rs": 711.04
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "SATIN",
+          "name": "Satin Creditcare Network Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 68 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 268.8699951171875,
+          "entry": 268.87,
+          "sl": 247.82,
+          "slPct": -7.8,
+          "targets": [
+            {
+              "price": 291.69,
+              "pct": 8.5,
+              "by": "2026-07-30",
+              "days": 4
+            },
+            {
+              "price": 308.8,
+              "pct": 14.9,
+              "by": "2026-08-04",
+              "days": 7
+            },
+            {
+              "price": 325.91,
+              "pct": 21.2,
+              "by": "2026-08-24",
+              "days": 21
+            }
+          ],
+          "rr": 1.08,
+          "rsi": 61.4,
+          "confidence": 71,
+          "accuracy": 71.4,
+          "backtestTrades": 7,
+          "delivery": 36.5,
+          "changePct": 4.92,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 50,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base",
+              "Up/down volume 3.25× (accumulation)"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": 0.17,
+            "rs50": 0.183,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A+) — SATIN\n2 signals agree: Money Flow, Multibagger Quality + Nifty 50 Vedic bias bullish\n📦 Delivery 36.5% (mostly intraday)\n🕵️ Footprint 50/100: Outperforming NIFTY (relative-strength leader)\nEntry ₹268.87 · SL ₹247.82 (-7.8%)\nT1 ₹291.69 (+8.5%) by 2026-07-30 · T2 +14.9% · T3 +21.2%\nPlan (₹1L, 1% risk): buy 47 sh · risk ₹989.35 · reward T1 ₹1072.54 · R:R 1:1.08\nBacktested ~71.4% (n=7). 📌 Educational only, not advice. Not SEBI-registered.\n#SATIN #swingtrading #nifty",
+          "id": "money_flow:SATIN",
+          "openedAt": "2026-07-25",
+          "openTs": 1784953762,
+          "status": "open",
+          "lastSeen": "2026-07-26",
+          "t1": 291.69,
+          "t2": 308.8,
+          "t3": 325.91,
+          "generators": [
+            "Money Flow",
+            "Multibagger Quality"
+          ],
+          "genCount": 2,
+          "grade": "A+",
+          "confluenceScore": 121,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY / TEJI",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 47,
+            "deploy": 12636.89,
+            "riskRs": 989.35,
+            "rewardT1Rs": 1072.54
           }
         }
       ]
@@ -4949,6 +4949,139 @@
         },
         {
           "generator": "vol_accum",
+          "symbol": "MPSLTD",
+          "name": "MPS Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 65/100): Delivery 17.4% (mostly intraday); 5-day volume > 20-day average (RVOL 2.83×); Up/down volume 24.18× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 2769.699951171875,
+          "entry": 2769.7,
+          "sl": 1993.81,
+          "slPct": -28,
+          "targets": [
+            {
+              "price": 2997.64,
+              "pct": 8.2,
+              "by": "2026-08-03",
+              "days": 6
+            },
+            {
+              "price": 3168.59,
+              "pct": 14.4,
+              "by": "2026-08-06",
+              "days": 9
+            },
+            {
+              "price": 3339.55,
+              "pct": 20.6,
+              "by": "2026-08-12",
+              "days": 13
+            }
+          ],
+          "rr": 0.29,
+          "rsi": 88.5,
+          "confidence": 83,
+          "accuracy": 83.3,
+          "backtestTrades": 6,
+          "delivery": 17.4,
+          "changePct": 4.8,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 38,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 24.18× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.532,
+            "rs50": 0.49,
+            "leader": true
+          },
+          "social": "MPSLTD — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): Delivery 17.4% (mostly intraday); 5-day volume > 20-day average (RVOL 2.83×); Up/down volume 24.18× — accumulation pressure\nLTP ₹2769.7 · Entry ₹2769.7 · SL ₹1993.81 (-28%)\nT1 ₹2997.64 (+8.2%) by 2026-08-03\nT2 ₹3168.59 (+14.4%) · T3 ₹3339.55 (+20.6%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #MPSLTD #swingtrading #nifty",
+          "id": "vol_accum:MPSLTD",
+          "openedAt": "2026-07-26",
+          "openTs": 1785041375,
+          "status": "open",
+          "lastSeen": "2026-07-26",
+          "t1": 2997.64,
+          "t2": 3168.59,
+          "t3": 3339.55
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "E2E",
+          "name": "E2E Networks Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 68/100): Delivery 38.2% (mostly intraday); 5-day volume > 20-day average (RVOL 5.42×); 1-day volume 4.5× the 5-day average — surge",
+          "direction": "LONG",
+          "ltp": 516.7000122070312,
+          "entry": 516.7,
+          "sl": 394.65,
+          "slPct": -23.6,
+          "targets": [
+            {
+              "price": 562.18,
+              "pct": 8.8,
+              "by": "2026-07-30",
+              "days": 4
+            },
+            {
+              "price": 596.29,
+              "pct": 15.4,
+              "by": "2026-08-06",
+              "days": 9
+            },
+            {
+              "price": 630.4,
+              "pct": 22,
+              "by": "2026-08-24",
+              "days": 21
+            }
+          ],
+          "rr": 0.37,
+          "rsi": 75,
+          "confidence": 82,
+          "accuracy": 81.8,
+          "backtestTrades": 11,
+          "delivery": 38.2,
+          "changePct": 5,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 60,
+            "flags": [
+              "Delivery% rising 46.9→79.4 over 8d (strong hands taking delivery)",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 2.48× (accumulation)"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.26,
+            "rs50": 0.637,
+            "leader": true
+          },
+          "social": "E2E — Volume + Accumulation setup 📈\nAccumulation (vol 68/100): Delivery 38.2% (mostly intraday); 5-day volume > 20-day average (RVOL 5.42×); 1-day volume 4.5× the 5-day average — surge\nLTP ₹516.7 · Entry ₹516.7 · SL ₹394.65 (-23.6%)\nT1 ₹562.18 (+8.8%) by 2026-07-30\nT2 ₹596.29 (+15.4%) · T3 ₹630.4 (+22%)\nBacktested first-target hit ~81.8% over 11 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #E2E #swingtrading #nifty",
+          "id": "vol_accum:E2E",
+          "openedAt": "2026-07-26",
+          "openTs": 1785041375,
+          "status": "open",
+          "lastSeen": "2026-07-26",
+          "t1": 562.18,
+          "t2": 596.29,
+          "t3": 630.4
+        },
+        {
+          "generator": "vol_accum",
           "symbol": "RUSHIL",
           "name": "Rushil Decor Limited",
           "sector": "Equity",
@@ -5012,6 +5145,79 @@
           "t1": 19.78,
           "t2": 21.29,
           "t3": 22.8
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "LAURUSLABS",
+          "name": "Laurus Labs Ltd.",
+          "sector": "Healthcare",
+          "indices": [
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NIFTY Pharma",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 50/100): Delivery 31.4% (mostly intraday); 1-day volume 2.1× the 5-day average — surge; Up/down volume 2.76× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 1601.199951171875,
+          "entry": 1601.2,
+          "sl": 1512.55,
+          "slPct": -5.5,
+          "targets": [
+            {
+              "price": 1679.74,
+              "pct": 4.9,
+              "by": "2026-08-03",
+              "days": 6
+            },
+            {
+              "price": 1738.64,
+              "pct": 8.6,
+              "by": "2026-08-11",
+              "days": 12
+            },
+            {
+              "price": 1797.54,
+              "pct": 12.3,
+              "by": "2026-08-24",
+              "days": 21
+            }
+          ],
+          "rr": 0.89,
+          "rsi": 66.3,
+          "confidence": 78,
+          "accuracy": 77.8,
+          "backtestTrades": 9,
+          "delivery": 31.4,
+          "changePct": 2.1,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 42,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.111,
+            "rs50": 0.189,
+            "leader": true
+          },
+          "social": "LAURUSLABS — Volume + Accumulation setup 📈\nAccumulation (vol 50/100): Delivery 31.4% (mostly intraday); 1-day volume 2.1× the 5-day average — surge; Up/down volume 2.76× — accumulation pressure\nLTP ₹1601.2 · Entry ₹1601.2 · SL ₹1512.55 (-5.5%)\nT1 ₹1679.74 (+4.9%) by 2026-08-03\nT2 ₹1738.64 (+8.6%) · T3 ₹1797.54 (+12.3%)\nBacktested first-target hit ~77.8% over 9 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #LAURUSLABS #swingtrading #nifty",
+          "id": "vol_accum:LAURUSLABS",
+          "openedAt": "2026-07-26",
+          "openTs": 1785041375,
+          "status": "open",
+          "lastSeen": "2026-07-26",
+          "t1": 1679.74,
+          "t2": 1738.64,
+          "t3": 1797.54
         },
         {
           "generator": "vol_accum",
@@ -5879,206 +6085,6 @@
           "t1": 179.89,
           "t2": 183.55,
           "t3": 187.2
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "SHREEJISPG",
-          "name": "Shreeji Shipping Global Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 47/100): Delivery 27.5% (mostly intraday); Up/down volume 5.41× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "direction": "LONG",
-          "ltp": 625.7999877929688,
-          "entry": 616.6,
-          "sl": 583.34,
-          "slPct": -5.4,
-          "targets": [
-            {
-              "price": 650.23,
-              "pct": 5.5,
-              "by": "2026-07-31",
-              "days": 5
-            },
-            {
-              "price": 675.45,
-              "pct": 9.5,
-              "by": "2026-08-11",
-              "days": 12
-            },
-            {
-              "price": 700.67,
-              "pct": 13.6,
-              "by": "2026-08-24",
-              "days": 21
-            }
-          ],
-          "rr": 1.01,
-          "rsi": 76.3,
-          "confidence": 86,
-          "accuracy": 85.7,
-          "backtestTrades": 7,
-          "delivery": 27.5,
-          "changePct": -1.52,
-          "setupType": "Breakout watch",
-          "footprint": {
-            "score": 38,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 5.41× (accumulation)"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.298,
-            "rs50": 0.463,
-            "leader": true
-          },
-          "social": "SHREEJISPG — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Delivery 27.5% (mostly intraday); Up/down volume 5.41× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹616.6 · Entry ₹616.6 · SL ₹583.34 (-5.4%)\nT1 ₹650.23 (+5.5%) by 2026-07-31\nT2 ₹675.45 (+9.5%) · T3 ₹700.67 (+13.6%)\nBacktested first-target hit ~85.7% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SHREEJISPG #swingtrading #nifty",
-          "id": "vol_accum:SHREEJISPG",
-          "openedAt": "2026-07-24",
-          "openTs": 1784864598,
-          "status": "open",
-          "lastSeen": "2026-07-26",
-          "t1": 650.23,
-          "t2": 675.45,
-          "t3": 700.67
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "TANLA",
-          "name": "Tanla Platforms Ltd.",
-          "sector": "Information Technology",
-          "indices": [
-            "NIFTY Total Market",
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 83/100): Delivery 10% (mostly intraday); 5-day volume > 20-day average (RVOL 13.5×); 1-day volume 4.6× the 5-day average — surge",
-          "direction": "LONG",
-          "ltp": 599.75,
-          "entry": 618.5,
-          "sl": 550.31,
-          "slPct": -11,
-          "targets": [
-            {
-              "price": 665.38,
-              "pct": 7.6,
-              "by": "2026-08-03",
-              "days": 6
-            },
-            {
-              "price": 700.54,
-              "pct": 13.3,
-              "by": "2026-08-06",
-              "days": 9
-            },
-            {
-              "price": 735.7,
-              "pct": 18.9,
-              "by": "2026-08-24",
-              "days": 21
-            }
-          ],
-          "rr": 0.69,
-          "rsi": 69,
-          "confidence": 83,
-          "accuracy": 83.3,
-          "backtestTrades": 6,
-          "delivery": 10,
-          "changePct": 0,
-          "setupType": "Accumulation",
-          "footprint": {
-            "score": 38,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 12.85× (accumulation)"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.206,
-            "rs50": 0.232,
-            "leader": true
-          },
-          "social": "TANLA — Volume + Accumulation setup 📈\nAccumulation (vol 83/100): Delivery 10% (mostly intraday); 5-day volume > 20-day average (RVOL 13.5×); 1-day volume 4.6× the 5-day average — surge\nLTP ₹618.5 · Entry ₹618.5 · SL ₹550.31 (-11%)\nT1 ₹665.38 (+7.6%) by 2026-08-03\nT2 ₹700.54 (+13.3%) · T3 ₹735.7 (+18.9%)\nBacktested first-target hit ~83.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TANLA #swingtrading #nifty",
-          "id": "vol_accum:TANLA",
-          "openedAt": "2026-07-24",
-          "openTs": 1784864598,
-          "status": "open",
-          "lastSeen": "2026-07-26",
-          "t1": 665.38,
-          "t2": 700.54,
-          "t3": 735.7
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "SURYALA",
-          "name": "Suryalata Spinning Mills Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 83/100): Delivery 82.8% (strong hands); 5-day volume > 20-day average (RVOL 7.09×); 1-day volume 3.4× the 5-day average — surge",
-          "direction": "LONG",
-          "ltp": 440,
-          "entry": 443.05,
-          "sl": 411.4,
-          "slPct": -7.1,
-          "targets": [
-            {
-              "price": 479.09,
-              "pct": 8.1,
-              "by": "2026-08-03",
-              "days": 6
-            },
-            {
-              "price": 506.12,
-              "pct": 14.2,
-              "by": "2026-08-11",
-              "days": 12
-            },
-            {
-              "price": 533.15,
-              "pct": 20.3,
-              "by": "2026-08-24",
-              "days": 21
-            }
-          ],
-          "rr": 1.14,
-          "rsi": 54.2,
-          "confidence": 77,
-          "accuracy": null,
-          "backtestTrades": 0,
-          "delivery": 82.8,
-          "changePct": 0,
-          "setupType": "Momentum building",
-          "footprint": {
-            "score": 68,
-            "flags": [
-              "Delivery% steadily high (~75.9%)",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.007,
-            "rs50": 0.234,
-            "leader": true
-          },
-          "social": "SURYALA — Volume + Accumulation setup 📈\nAccumulation (vol 83/100): Delivery 82.8% (strong hands); 5-day volume > 20-day average (RVOL 7.09×); 1-day volume 3.4× the 5-day average — surge\nLTP ₹443.05 · Entry ₹443.05 · SL ₹411.4 (-7.1%)\nT1 ₹479.09 (+8.1%) by 2026-08-03\nT2 ₹506.12 (+14.2%) · T3 ₹533.15 (+20.3%)\nSetup score 84/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SURYALA #swingtrading #nifty",
-          "id": "vol_accum:SURYALA",
-          "openedAt": "2026-07-24",
-          "openTs": 1784864598,
-          "status": "open",
-          "lastSeen": "2026-07-26",
-          "t1": 479.09,
-          "t2": 506.12,
-          "t3": 533.15
         }
       ]
     },
@@ -10389,6 +10395,72 @@
         },
         {
           "generator": "harmonic",
+          "symbol": "SGMART",
+          "name": "SG Mart Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 713.5499877929688,
+          "entry": 713.55,
+          "sl": 626.43,
+          "slPct": -12.2,
+          "targets": [
+            {
+              "price": 779.21,
+              "pct": 9.2,
+              "by": "2026-08-04",
+              "days": 7
+            },
+            {
+              "price": 828.46,
+              "pct": 16.1,
+              "by": "2026-08-11",
+              "days": 12
+            },
+            {
+              "price": 877.71,
+              "pct": 23,
+              "by": "2026-08-24",
+              "days": 21
+            }
+          ],
+          "rr": 0.75,
+          "rsi": 69.6,
+          "confidence": 75,
+          "accuracy": 75,
+          "backtestTrades": 8,
+          "delivery": 39.7,
+          "changePct": 5.77,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 38,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 4.63× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.218,
+            "rs50": 0.17,
+            "leader": true
+          },
+          "social": "SGMART — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹713.55 · Entry ₹713.55 · SL ₹626.43 (-12.2%)\nT1 ₹779.21 (+9.2%) by 2026-08-04\nT2 ₹828.46 (+16.1%) · T3 ₹877.71 (+23%)\nBacktested first-target hit ~75% over 8 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SGMART #swingtrading #nifty",
+          "id": "harmonic:SGMART",
+          "openedAt": "2026-07-26",
+          "openTs": 1785041375,
+          "status": "open",
+          "lastSeen": "2026-07-26",
+          "t1": 779.21,
+          "t2": 828.46,
+          "t3": 877.71
+        },
+        {
+          "generator": "harmonic",
           "symbol": "STLTECH",
           "name": "Sterlite Technologies Ltd.",
           "sector": "Telecommunication",
@@ -11390,71 +11462,6 @@
           "t1": 350.55,
           "t2": 357.08,
           "t3": 363.61
-        },
-        {
-          "generator": "harmonic",
-          "symbol": "TINNARUBR",
-          "name": "Tinna Rubber and Infrastructure Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 1098.8499755859375,
-          "entry": 1119.15,
-          "sl": 949.34,
-          "slPct": -15.2,
-          "targets": [
-            {
-              "price": 1257.23,
-              "pct": 12.3,
-              "by": "2026-07-31",
-              "days": 7
-            },
-            {
-              "price": 1360.79,
-              "pct": 21.6,
-              "by": "2026-08-05",
-              "days": 10
-            },
-            {
-              "price": 1464.35,
-              "pct": 30.8,
-              "by": "2026-08-20",
-              "days": 21
-            }
-          ],
-          "rr": 0.81,
-          "rsi": 69.1,
-          "confidence": 95,
-          "accuracy": 100,
-          "backtestTrades": 5,
-          "delivery": 11.5,
-          "changePct": -2.59,
-          "setupType": "Watch",
-          "footprint": {
-            "score": 20,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.156,
-            "rs50": 0.455,
-            "leader": true
-          },
-          "social": "TINNARUBR — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace — pattern breakout/continuation zone\nLTP ₹1119.15 · Entry ₹1119.15 · SL ₹949.34 (-15.2%)\nT1 ₹1257.23 (+12.3%) by 2026-07-31\nT2 ₹1360.79 (+21.6%) · T3 ₹1464.35 (+30.8%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #TINNARUBR #swingtrading #nifty",
-          "id": "harmonic:TINNARUBR",
-          "openedAt": "2026-07-22",
-          "openTs": 1784694844,
-          "status": "open",
-          "lastSeen": "2026-07-26",
-          "t1": 1257.23,
-          "t2": 1360.79,
-          "t3": 1464.35
         }
       ]
     },

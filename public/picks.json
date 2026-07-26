@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T03:51:08.002Z",
+  "generatedAt": "2026-07-26T04:49:35.901Z",
   "universe": 2068,
   "scanned": 2040,
   "candidates": 522,
@@ -567,43 +567,42 @@
       "expected": "Targets 3044.18 / 3241.04 / 3437.9 (9.4% / 16.5% / 23.6%), risk to 2584.84."
     },
     {
-      "symbol": "CORONA",
-      "name": "CORONA Remedies Ltd.",
-      "sector": "Healthcare",
+      "symbol": "TIJARIA",
+      "name": "Tijaria Polypipes Limited",
+      "sector": "Equity",
       "indices": [
-        "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 2113,
+      "price": 4.64,
       "direction": "LONG",
-      "changePct": 4.1,
+      "changePct": 7.66,
       "setupType": "Squeeze breakout",
-      "moveScore": 88,
-      "entry": 2113,
-      "sl": 2000.67,
-      "slPct": -5.3,
+      "moveScore": 90,
+      "entry": 4.64,
+      "sl": 4.07,
+      "slPct": -12.3,
       "targets": [
         {
-          "price": 2251.26,
-          "pct": 6.5,
-          "by": "2026-08-17"
+          "price": 5.33,
+          "pct": 14.9,
+          "by": "2026-07-27"
         },
         {
-          "price": 2354.96,
-          "pct": 11.5,
-          "by": "2026-08-20"
+          "price": 5.84,
+          "pct": 25.9,
+          "by": "2026-08-19"
         },
         {
-          "price": 2458.65,
-          "pct": 16.4,
+          "price": 6.36,
+          "pct": 37.1,
           "by": "2026-09-08"
         }
       ],
-      "rr": 1.23,
-      "rsi": 67.3,
-      "confidence": 94,
+      "rr": 1.21,
+      "rsi": 57.3,
+      "confidence": 95,
       "backtestHitRate": null,
-      "backtestTrades": 5,
+      "backtestTrades": 4,
       "criteria": [
         {
           "ok": true,
@@ -614,19 +613,19 @@
           "label": "Near 20-day breakout level"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 67.3 building toward breakout"
+          "ok": true,
+          "label": "RSI 57.3 building toward breakout"
         },
         {
           "ok": true,
           "label": "Accumulation — up-day volume dominates"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Higher lows (ascending base)"
         },
         {
@@ -635,15 +634,15 @@
         },
         {
           "ok": true,
-          "label": "FII up (1.38%)"
+          "label": "FII stable (0%)"
         },
         {
           "ok": true,
-          "label": "DII up (5.88%)"
+          "label": "DII stable (0%)"
         },
         {
           "ok": true,
-          "label": "Promoter stable"
+          "label": "Promoter up"
         },
         {
           "ok": true,
@@ -652,22 +651,22 @@
       ],
       "fundamentals": {
         "promoter": {
-          "cur": 69,
-          "prev": 69,
+          "cur": 36.14,
+          "prev": 36.07,
+          "delta": 0.07,
+          "status": "up"
+        },
+        "fii": {
+          "cur": 0,
+          "prev": 0,
           "delta": 0,
           "status": "stable"
         },
-        "fii": {
-          "cur": 3.63,
-          "prev": 2.25,
-          "delta": 1.38,
-          "status": "up"
-        },
         "dii": {
-          "cur": 12.9,
-          "prev": 7.02,
-          "delta": 5.88,
-          "status": "up"
+          "cur": 0,
+          "prev": 0,
+          "delta": 0,
+          "status": "stable"
         },
         "pledge": {
           "pct": 0,
@@ -676,8 +675,8 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA; Up/down volume 2.16× (accumulation); Positive 20-day momentum +12%; 1-day volume surge (2.25× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 2251.26 / 2354.96 / 2458.65 (6.5% / 11.5% / 16.4%), risk to 2000.67."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below); RSI 57 building (not overbought); Up/down volume 1.78× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (5× RVOL); 5-day volume > 20-day average",
+      "expected": "Targets 5.33 / 5.84 / 6.36 (14.9% / 25.9% / 37.1%), risk to 4.07."
     },
     {
       "symbol": "SATIN",
@@ -1239,6 +1238,78 @@
       },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 61 building (not overbought); Up/down volume 1.66× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 1-day volume surge (1.66× RVOL); 5-day volume > 20-day average",
       "expected": "Targets 417.73 / 437.6 / 457.46 (6.8% / 11.8% / 16.9%), risk to 370.85."
+    },
+    {
+      "symbol": "IIFLCAPS",
+      "name": "IIFL Capital Services Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 340.2,
+      "direction": "LONG",
+      "changePct": 0.18,
+      "setupType": "Squeeze breakout",
+      "moveScore": 87,
+      "entry": 340.2,
+      "sl": 331.14,
+      "slPct": -2.7,
+      "targets": [
+        {
+          "price": 349.26,
+          "pct": 2.7,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 356.05,
+          "pct": 4.7,
+          "by": "2026-08-07"
+        },
+        {
+          "price": 362.85,
+          "pct": 6.7,
+          "by": "2026-09-08"
+        }
+      ],
+      "rr": 1,
+      "rsi": 52.3,
+      "confidence": 84,
+      "backtestHitRate": 100,
+      "backtestTrades": 6,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": false,
+          "label": "RSI 52.3 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Higher lows (ascending base); Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 349.26 / 356.05 / 362.85 (2.7% / 4.7% / 6.7%), risk to 331.14."
     },
     {
       "symbol": "GOODYEAR",
@@ -1883,119 +1954,6 @@
       },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Higher lows (ascending base); Positive 20-day momentum +3%; Range contraction; Near 52-week high",
       "expected": "Targets 43504.67 / 44816.92 / 46129.17 (4.2% / 7.3% / 10.5%), risk to 40225.03."
-    },
-    {
-      "symbol": "IIFLCAPS",
-      "name": "IIFL Capital Services Ltd.",
-      "sector": "Financial Services",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 340.2,
-      "direction": "LONG",
-      "changePct": 0.18,
-      "setupType": "Squeeze breakout",
-      "moveScore": 87,
-      "entry": 340.2,
-      "sl": 331.14,
-      "slPct": -2.7,
-      "targets": [
-        {
-          "price": 349.26,
-          "pct": 2.7,
-          "by": "2026-08-04"
-        },
-        {
-          "price": 356.05,
-          "pct": 4.7,
-          "by": "2026-08-07"
-        },
-        {
-          "price": 362.85,
-          "pct": 6.7,
-          "by": "2026-09-08"
-        }
-      ],
-      "rr": 1,
-      "rsi": 52.3,
-      "confidence": 79,
-      "backtestHitRate": 100,
-      "backtestTrades": 6,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": false,
-          "label": "RSI 52.3 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": false,
-          "label": "FII down (-0.99%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-0.84%)"
-        },
-        {
-          "ok": false,
-          "label": "Promoter down"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 30.67,
-          "prev": 30.87,
-          "delta": -0.2,
-          "status": "down"
-        },
-        "fii": {
-          "cur": 15.34,
-          "prev": 16.33,
-          "delta": -0.99,
-          "status": "down"
-        },
-        "dii": {
-          "cur": 4.72,
-          "prev": 5.56,
-          "delta": -0.84,
-          "status": "down"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Higher lows (ascending base); Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 349.26 / 356.05 / 362.85 (2.7% / 4.7% / 6.7%), risk to 331.14."
     },
     {
       "symbol": "MEDANTA",
@@ -4175,77 +4133,6 @@
       "expected": "Targets 5518.8 / 5748.9 / 5979 (5.9% / 10.3% / 14.7%), risk to 4949.82."
     },
     {
-      "symbol": "TIJARIA",
-      "name": "Tijaria Polypipes Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 4.64,
-      "direction": "LONG",
-      "changePct": 7.66,
-      "setupType": "Squeeze breakout",
-      "moveScore": 90,
-      "entry": 4.64,
-      "sl": 4.07,
-      "slPct": -12.3,
-      "targets": [
-        {
-          "price": 5.33,
-          "pct": 14.9,
-          "by": "2026-07-27"
-        },
-        {
-          "price": 5.84,
-          "pct": 25.9,
-          "by": "2026-08-19"
-        },
-        {
-          "price": 6.36,
-          "pct": 37.1,
-          "by": "2026-09-08"
-        }
-      ],
-      "rr": 1.21,
-      "rsi": 57.3,
-      "confidence": 70,
-      "backtestHitRate": null,
-      "backtestTrades": 4,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": false,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 57.3 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below); RSI 57 building (not overbought); Up/down volume 1.78× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (5× RVOL); 5-day volume > 20-day average",
-      "expected": "Targets 5.33 / 5.84 / 6.36 (14.9% / 25.9% / 37.1%), risk to 4.07."
-    },
-    {
       "symbol": "WSTCSTPAPR",
       "name": "West Coast Paper Mills Limited",
       "sector": "Equity",
@@ -4387,6 +4274,78 @@
       "fundamentals": null,
       "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 62 building (not overbought); Up/down volume 2.28× (accumulation); Higher lows (ascending base); Positive 20-day momentum +17%; Near 52-week high",
       "expected": "Targets 234.18 / 249.75 / 265.31 (9.7% / 17% / 24.3%), risk to 197.86."
+    },
+    {
+      "symbol": "CORONA",
+      "name": "CORONA Remedies Ltd.",
+      "sector": "Healthcare",
+      "indices": [
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 2113,
+      "direction": "LONG",
+      "changePct": 4.1,
+      "setupType": "Squeeze breakout",
+      "moveScore": 88,
+      "entry": 2113,
+      "sl": 2000.67,
+      "slPct": -5.3,
+      "targets": [
+        {
+          "price": 2251.26,
+          "pct": 6.5,
+          "by": "2026-08-17"
+        },
+        {
+          "price": 2354.96,
+          "pct": 11.5,
+          "by": "2026-08-20"
+        },
+        {
+          "price": 2458.65,
+          "pct": 16.4,
+          "by": "2026-09-08"
+        }
+      ],
+      "rr": 1.23,
+      "rsi": 67.3,
+      "confidence": 69,
+      "backtestHitRate": null,
+      "backtestTrades": 5,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": false,
+          "label": "RSI 67.3 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": false,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA; Up/down volume 2.16× (accumulation); Positive 20-day momentum +12%; 1-day volume surge (2.25× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 2251.26 / 2354.96 / 2458.65 (6.5% / 11.5% / 16.4%), risk to 2000.67."
     },
     {
       "symbol": "ENTERO",
@@ -6686,9 +6645,44 @@
         {
           "ok": false,
           "label": "Harmonic up"
+        },
+        {
+          "ok": false,
+          "label": "FII n/a (?%)"
+        },
+        {
+          "ok": false,
+          "label": "DII n/a (?%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
         }
       ],
-      "fundamentals": null,
+      "fundamentals": {
+        "promoter": {
+          "cur": 75,
+          "prev": 75,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "status": "n/a"
+        },
+        "dii": {
+          "status": "n/a"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA; RSI 54 building (not overbought); Up/down volume 1.79× (accumulation); Positive 20-day momentum +4%; Range contraction",
       "expected": "Targets 140.29 / 149.37 / 158.45 (9.4% / 16.5% / 23.6%), risk to 118.79."
     },
