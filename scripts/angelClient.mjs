@@ -93,6 +93,36 @@ async function scripMaster() {
 const MONTHS = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 }
 const parseExpiry = e => { const m = /(\d{2})([A-Z]{3})(\d{4})/.exec(e || ''); return m ? new Date(Date.UTC(+m[3], MONTHS[m[2]], +m[1])) : null }
 
+// analyse ONE expiry: OI walls (max call/put strike), PCR over a strike window around ATM
+async function analyzeExpiry(opts, expiry, spot, step, half) {
+  const atm = Math.round(spot / step) * step
+  const strikes = []; for (let k = -half; k <= half; k++) strikes.push(atm + k * step)
+  const wanted = opts.filter(o => o.expiry === expiry && strikes.includes(Math.round(+o.strike / 100)))
+  const byToken = {}; wanted.forEach(o => { byToken[o.token] = { strike: Math.round(+o.strike / 100), type: o.symbol.endsWith('CE') ? 'CE' : 'PE' } })
+  const tokens = Object.keys(byToken).slice(0, 100)
+  if (!tokens.length) return null
+  const quotes = await quoteFull(tokens)
+  if (!quotes.length) return null
+  const rows = {}
+  for (const q of quotes) {
+    const m = byToken[String(q.symbolToken)]; if (!m) continue
+    const r = rows[m.strike] || (rows[m.strike] = { strike: m.strike })
+    r[m.type] = { oi: q.opnInterest || 0, ltp: q.ltp || 0 }
+  }
+  const list = Object.values(rows).sort((a, b) => a.strike - b.strike)
+  let ceOI = 0, peOI = 0, maxCE = { oi: 0 }, maxPE = { oi: 0 }
+  for (const r of list) {
+    const c = r.CE?.oi || 0, p = r.PE?.oi || 0; ceOI += c; peOI += p
+    if (c > maxCE.oi) maxCE = { strike: r.strike, oi: c }
+    if (p > maxPE.oi) maxPE = { strike: r.strike, oi: p }
+  }
+  return {
+    expiry, atm, pcr: ceOI ? +(peOI / ceOI).toFixed(2) : 0,
+    resistance: maxCE.strike, support: maxPE.strike, ceOI, peOI,
+    strikes: list.map(r => ({ strike: r.strike, ceOI: r.CE?.oi || 0, peOI: r.PE?.oi || 0 })),
+  }
+}
+
 export async function optionBuildup(index = 'NIFTY', step = 50) {
   try {
     const idTok = { NIFTY: ['NSE', 'Nifty 50', '99926000'], BANKNIFTY: ['NSE', 'Nifty Bank', '99926009'] }[index] || ['NSE', 'Nifty 50', '99926000']
@@ -104,33 +134,27 @@ export async function optionBuildup(index = 'NIFTY', step = 50) {
     const today = Date.now() - 864e5
     const expiries = [...new Set(opts.map(o => o.expiry))].map(e => [e, parseExpiry(e)]).filter(([, d]) => d && d.getTime() >= today).sort((a, b) => a[1] - b[1])
     if (!expiries.length) return { placeholder: true, reason: 'No upcoming expiry found in option master.' }
-    const expiry = expiries[0][0]
-    const atm = Math.round(spot / step) * step
-    const strikes = []; for (let k = -7; k <= 7; k++) strikes.push(atm + k * step)
-    const wanted = opts.filter(o => o.expiry === expiry && strikes.includes(Math.round(+o.strike / 100)))
-    const byToken = {}; wanted.forEach(o => { byToken[o.token] = { strike: Math.round(+o.strike / 100), type: o.symbol.endsWith('CE') ? 'CE' : 'PE' } })
-    const tokens = Object.keys(byToken).slice(0, 50)
-    const quotes = await quoteFull(tokens)
-    if (!quotes.length) return { placeholder: true, reason: 'Angel quote returned no data (market may be pre-open). Live OI activates in session hours.' }
-    const rows = {} // strike -> {ce, pe}
-    for (const q of quotes) {
-      const meta = byToken[String(q.symbolToken)]; if (!meta) continue
-      const r = rows[meta.strike] || (rows[meta.strike] = { strike: meta.strike })
-      r[meta.type] = { oi: q.opnInterest || 0, ltp: q.ltp || 0 }
+    const near = await analyzeExpiry(opts, expiries[0][0], spot, step, 7)
+    if (!near) return { placeholder: true, reason: 'Angel quote returned no data (market may be pre-open). Live OI activates in session hours.' }
+
+    // FAR-EXPIRY POSITIONING: where big money is building 1/3/6 months out (wider strike net,
+    // round far strikes) — reveals the medium-term range they're positioning for, well in advance.
+    const now = Date.now()
+    const picks = []
+    for (const td of [30, 90, 180]) {
+      let best = null, bd = 1e9
+      for (const [e, d] of expiries) { const days = (d - now) / 864e5; if (days > 20 && Math.abs(days - td) < bd) { bd = Math.abs(days - td); best = [e, Math.round(days)] } }
+      if (best && best[0] !== expiries[0][0] && !picks.find(p => p.e === best[0])) picks.push({ e: best[0], days: best[1] })
     }
-    const list = Object.values(rows).sort((a, b) => a.strike - b.strike)
-    let ceOI = 0, peOI = 0, maxCE = { oi: 0 }, maxPE = { oi: 0 }
-    for (const r of list) {
-      const c = r.CE?.oi || 0, p = r.PE?.oi || 0; ceOI += c; peOI += p
-      if (c > maxCE.oi) maxCE = { strike: r.strike, oi: c }
-      if (p > maxPE.oi) maxPE = { strike: r.strike, oi: p }
-    }
-    const pcr = ceOI ? +(peOI / ceOI).toFixed(2) : 0
+    const positioning = []
+    for (const p of picks) { const a = await analyzeExpiry(opts, p.e, spot, step * 2, 12); if (a) positioning.push({ ...a, daysOut: p.days }) }
+
+    const pcr = near.pcr
     const bias = pcr >= 1.15 ? 'Bullish lean (puts written below)' : pcr <= 0.8 ? 'Bearish lean (calls written above)' : 'Range / balanced'
     return {
-      placeholder: false, index, spot, atm, expiry, pcr,
-      resistance: maxCE.strike, support: maxPE.strike, ceOI, peOI, bias,
-      strikes: list.map(r => ({ strike: r.strike, ceOI: r.CE?.oi || 0, peOI: r.PE?.oi || 0 })),
+      placeholder: false, index, spot, atm: near.atm, expiry: near.expiry, pcr,
+      resistance: near.resistance, support: near.support, ceOI: near.ceOI, peOI: near.peOI, bias,
+      strikes: near.strikes, positioning,
     }
   } catch (e) { return { placeholder: true, reason: 'Option build-up error: ' + e.message } }
 }

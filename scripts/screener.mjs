@@ -647,21 +647,31 @@ async function indexDirectional(o, bu, inst, breadthN, idxSym) {
     if (rsi > 68 && near20High) { D -= 1; why.push(`RSI ${rsi.toFixed(0)} at 20-day high — stretched (distribution risk)`) }
     if (rsi < 35 && near20Low) { D += 1; why.push(`RSI ${rsi.toFixed(0)} at 20-day low — oversold bounce zone`) }
   }
-  why.push(`OI walls: resistance ${o.resistance} (max call OI) · support ${o.support} (max put OI)`)
+  why.push(`OI walls (${o.expiry}): resistance ${o.resistance} (max call OI) · support ${o.support} (max put OI)`)
+  // FAR-EXPIRY: where big money is building 1/3/6 months out (advance positioning)
+  const far = (o.positioning || [])
+  for (const p of far) why.push(`📅 ~${p.daysOut}d out (${String(p.expiry).slice(0, 5)}): big call OI ${p.resistance} · put floor ${p.support} · PCR ${p.pcr} — medium-term ${p.pcr >= 1.15 ? 'support building' : p.pcr <= 0.8 ? 'cap building' : 'range'}`)
+  const farthest = far[far.length - 1]
 
   const dir = D <= -3 ? 'BEARISH' : D >= 3 ? 'BULLISH' : 'NEUTRAL'
   const conviction = Math.min(95, 50 + Math.abs(D) * 7)
   const grade = Math.abs(D) >= 6 ? 'A++' : Math.abs(D) >= 4 ? 'A+' : Math.abs(D) >= 3 ? 'A' : 'B'
   const r = x => Math.round(x)
   let optionPlay, entry = spot, sl, targets, dirTone
+  const farExpiry = farthest?.expiry
   if (dir === 'BEARISH') {
     dirTone = 'down'
-    optionPlay = `Buy ${idxSym} ${atm} PE (${o.expiry}) — slightly ITM for positional`
-    sl = r(Math.max(o.resistance, spot * 1.008)); targets = [r(spot * 0.99), r(spot * 0.975), r(spot * 0.96)]
+    optionPlay = `Buy ${idxSym} ${atm} PE (${o.expiry} for the move; ${farExpiry || o.expiry} monthly for positional)`
+    sl = r(Math.max(o.resistance, spot * 1.008))
+    // T3 = far-expiry put floor if it's below the measured move (big-money downside target)
+    const t3 = farthest && farthest.support < spot * 0.96 ? farthest.support : r(spot * 0.96)
+    targets = [r(spot * 0.99), r(spot * 0.975), t3]
   } else if (dir === 'BULLISH') {
     dirTone = 'up'
-    optionPlay = `Buy ${idxSym} ${atm} CE (${o.expiry}) — slightly ITM for positional`
-    sl = r(Math.min(o.support, spot * 0.992)); targets = [r(spot * 1.01), r(spot * 1.025), r(spot * 1.04)]
+    optionPlay = `Buy ${idxSym} ${atm} CE (${o.expiry} for the move; ${farExpiry || o.expiry} monthly for positional)`
+    sl = r(Math.min(o.support, spot * 0.992))
+    const t3 = farthest && farthest.resistance > spot * 1.04 ? farthest.resistance : r(spot * 1.04)
+    targets = [r(spot * 1.01), r(spot * 1.025), t3]
   } else {
     dirTone = 'flat'
     optionPlay = `No directional edge — range ${o.support}–${o.resistance}. Wait for a break or sell premium.`
@@ -670,7 +680,8 @@ async function indexDirectional(o, bu, inst, breadthN, idxSym) {
   return {
     direction: dir, dirTone, D, grade, conviction, optionPlay, spot, entry, sl, targets,
     resistance: o.resistance, support: o.support, rsi: rsi != null ? +rsi.toFixed(0) : null,
-    note: 'ATM option ≈ 0.5 delta → premium moves ~half the index points. Enter on confirmation / at next open.',
+    positioning: far.map(p => ({ expiry: p.expiry, daysOut: p.daysOut, resistance: p.resistance, support: p.support, pcr: p.pcr })),
+    note: 'ATM option ≈ 0.5 delta → premium moves ~half the index points. Far expiry shows where big money is building. Enter on confirmation / at next open.',
     reasons: why,
   }
 }

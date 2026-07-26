@@ -14,7 +14,7 @@ export const GEN_META = [
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
   { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
   { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
-  { id: 'vp_fib', label: 'Volume Profile + Fib', color: '#D97706', desc: 'Price at a high-volume node (POC) coinciding with a Fib level' },
+  { id: 'vp_fib', label: '📐 VP + Fib + VWAP', color: '#D97706', desc: 'The confluence combo — Volume Profile POC + a key Fibonacci level + VWAP fair-value stacked in one zone = institutional magnet for a fast, high-odds reaction (triple stack = strongest)' },
   { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
   { id: 'multibagger', label: 'Multibagger Quality', color: '#7C3AED', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
   { id: 'harmonic', label: 'Harmonic & Chart Patterns', color: '#EA580C', desc: 'Bullish harmonic / chart-pattern breakout completing' },
@@ -33,6 +33,17 @@ function mfi(d, len = 14) {
   return out
 }
 function obv(d) { const { c, v } = d; let o = 0; const out = [0]; for (let i = 1; i < c.length; i++) { o += c[i] > c[i - 1] ? v[i] : c[i] < c[i - 1] ? -v[i] : 0; out.push(o) } return out }
+// rolling VWAP (typical-price × volume, cumulative over the last `len` bars) + σ bands.
+// On intraday bars this approximates session VWAP; on daily it's an anchored fair-value line.
+function vwapBands(d, len = 40) {
+  const { h, l, c, v } = d, n = c.length
+  let pv = 0, vv = 0; const tps = []
+  for (let i = Math.max(0, n - len); i < n; i++) { const tp = (h[i] + l[i] + c[i]) / 3; pv += tp * v[i]; vv += v[i]; tps.push({ tp, v: v[i] }) }
+  const vw = vv ? pv / vv : c[n - 1]
+  const varr = tps.reduce((a, x) => a + x.v * (x.tp - vw) ** 2, 0) / (vv || 1)
+  const sd = Math.sqrt(varr)
+  return { vwap: vw, upper: vw + sd, lower: vw - sd, sd }
+}
 function volProfile(d, bins = 50) {
   const { h, l, v } = d; const hi = Math.max(...h), lo = Math.min(...l), bs = (hi - lo) / bins || 1
   const acc = new Array(bins).fill(0)
@@ -86,13 +97,28 @@ const STOCK_GENS = {
     if (dlv) sig = [`Delivery ${dlv.pct}% (${dlv.pct >= 65 ? 'strong hands' : dlv.pct >= 45 ? 'mixed' : 'mostly intraday'})`, ...sig].slice(0, 3)
     return mk(M.vol_accum, st, a, `Accumulation (vol ${V.volScore}/100): ${sig.join('; ')}`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
   },
+  // Volume Profile + Fibonacci + VWAP — the confluence combo. When the POC (highest-volume
+  // price), a key Fib level, and VWAP fair-value all stack within a tight band, it's an
+  // institutional magnet: price reacts sharply → high-odds, quick trade. Triple = strongest.
   vp_fib: ({ st, d, a, addDays }) => {
-    const vp = volProfile(d); const swingLo = Math.min(...d.l.slice(-40)), swingHi = Math.max(...d.h.slice(-40))
-    const fibs = [0.382, 0.5, 0.618, 0.786].map(f => swingHi - (swingHi - swingLo) * f)
-    const nearPOC = Math.abs(a.price - vp.poc) / a.price < 0.012
-    const nearFib = fibs.some(fp => Math.abs(a.price - fp) / a.price < 0.012)
-    return nearPOC && nearFib && a.emaStack
-      ? mk(M.vp_fib, st, a, `At POC ₹${round(vp.poc)} + Fib confluence — institutional magnet zone`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays) : null
+    const vp = volProfile(d)
+    const vb = vwapBands(d, 40)
+    const swingLo = Math.min(...d.l.slice(-40)), swingHi = Math.max(...d.h.slice(-40))
+    const fibLabels = [[0.382, '38.2%'], [0.5, '50%'], [0.618, '61.8%'], [0.786, '78.6%']]
+    const fibs = fibLabels.map(([f, lbl]) => [swingHi - (swingHi - swingLo) * f, lbl])
+    const near = (x, tol = 0.012) => Math.abs(a.price - x) / a.price < tol
+    const nearPOC = near(vp.poc)
+    const fibHit = fibs.find(([fp]) => near(fp))
+    const nearVWAP = near(vb.vwap, 0.01) || (a.price >= vb.lower && a.price <= vb.vwap)  // at/reclaiming VWAP from below
+    if (!(nearPOC && fibHit && a.bullish)) return null                                  // VP + Fib is the base
+    const triple = nearVWAP
+    const reason = triple
+      ? `Triple confluence: POC ₹${round(vp.poc)} + ${fibHit[1]} Fib + VWAP ₹${round(vb.vwap)} stacked — institutional magnet, high-odds reaction`
+      : `POC ₹${round(vp.poc)} + ${fibHit[1]} Fib confluence (VWAP ₹${round(vb.vwap)})`
+    const card = mk(M.vp_fib, st, a, reason, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
+    card.vwap = round(vb.vwap); card.poc = round(vp.poc); card.fib = fibHit[1]; card.triple = triple
+    if (triple) card.confidence = Math.min(95, (card.confidence || 60) + 8)             // triple stack = stronger
+    return card
   },
   money_flow: ({ st, d, a, addDays }) => {
     const m = mfi(d), ob = obv(d), i = d.c.length - 1

@@ -754,7 +754,7 @@ function Directional({ d, sym }) {
       )}
       {d.reasons?.length > 0 && (
         <ul className="mt-1.5 space-y-0.5 mono text-[10px] text-txt-sec list-disc list-inside">
-          {d.reasons.slice(0, 5).map((r, i) => <li key={i}>{r}</li>)}
+          {d.reasons.slice(0, 8).map((r, i) => <li key={i}>{r}</li>)}
         </ul>
       )}
       {d.note && <div className="mono text-[9px] text-txt-muted mt-1 italic">{d.note}</div>}
