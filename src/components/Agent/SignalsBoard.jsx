@@ -90,6 +90,7 @@ export default function SignalsBoard() {
   const topWin = tr?.topGenerator?.winRate
   const genTR = tr?.generators?.[active?.id]
   const goal = board?.goal
+  const regime = board?.regime
 
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
@@ -106,6 +107,14 @@ export default function SignalsBoard() {
             <div className="mono text-[10px] mt-1">
               <span className="px-2 py-0.5 rounded-full text-white" style={{ background: 'linear-gradient(90deg,#2962FF,#7C3AED)' }}>🎯 Goal {goal.target}% by {goal.deadline} · {goal.daysLeft}d left</span>
               <span className="ml-2 text-txt-sec">now <b className={goal.reliable && goal.current >= goal.target ? 'text-green' : 'text-txt-sec'}>{goal.current != null ? goal.current + '%' : '—'}</b>{goal.decided ? ` (${goal.decided} closed${goal.reliable ? '' : ' — building'})` : ''} · {goal.status}</span>
+            </div>
+          )}
+          {regime?.available && (
+            <div className="mono text-[10px] mt-1" title={(regime.reasons || []).join(' · ')}>
+              <span className="px-2 py-0.5 rounded-full text-white font-bold" style={{ background: regime.bias === 'bearish' ? '#F23645' : regime.bias === 'bullish' ? '#0E9F6E' : '#8896a6' }}>
+                {regime.bias === 'bearish' ? '🔻' : regime.bias === 'bullish' ? '🔺' : '⏸'} MARKET REGIME: {regime.bias.toUpperCase()}
+              </span>
+              <span className="ml-2 text-txt-sec">{regime.reasons?.[0]}{regime.fii?.futIdxNet != null ? ` · FII idx-fut net ${regime.fii.futIdxNet > 0 ? '+' : ''}${Math.round(regime.fii.futIdxNet / 1000)}k` : ''}</span>
             </div>
           )}
         </div>
@@ -723,6 +732,36 @@ function Stat({ k, v, tone }) {
 }
 
 // astro / option / timing tabs — richer info cards in a roomy grid
+function Directional({ d, sym }) {
+  const up = d.direction === 'BULLISH', down = d.direction === 'BEARISH'
+  const bg = up ? 'rgba(14,159,110,0.12)' : down ? 'rgba(242,54,69,0.12)' : 'rgba(255,214,0,0.10)'
+  const bd = up ? '#0E9F6E' : down ? '#F23645' : '#FFD600'
+  return (
+    <div className="mt-2 rounded-lg p-2" style={{ background: bg, border: `1px solid ${bd}` }}>
+      <div className="flex items-center gap-2">
+        <span className="mono text-xs font-bold" style={{ color: bd }}>{up ? '🔺 BULLISH' : down ? '🔻 BEARISH' : '⏸ NEUTRAL'}</span>
+        {d.grade && <span className="mono text-[9px] px-1.5 rounded text-white" style={{ background: bd }}>{d.grade}</span>}
+        <span className="mono text-[10px] text-txt-muted ml-auto">conviction {d.conviction}%</span>
+      </div>
+      <div className="mono text-[11px] font-bold text-txt mt-1">{d.optionPlay}</div>
+      {d.direction !== 'NEUTRAL' && (
+        <div className="grid grid-cols-4 gap-1 mt-1.5 mono text-[10px]">
+          <div><div className="text-txt-muted">Entry</div><div className="text-txt font-bold">{d.entry}</div></div>
+          <div><div className="text-txt-muted">Stop</div><div className="text-red font-bold">{d.sl}</div></div>
+          <div><div className="text-txt-muted">T1 / T2</div><div className="text-green font-bold">{d.targets?.[0]} / {d.targets?.[1]}</div></div>
+          <div><div className="text-txt-muted">T3</div><div className="text-green font-bold">{d.targets?.[2]}</div></div>
+        </div>
+      )}
+      {d.reasons?.length > 0 && (
+        <ul className="mt-1.5 space-y-0.5 mono text-[10px] text-txt-sec list-disc list-inside">
+          {d.reasons.slice(0, 5).map((r, i) => <li key={i}>{r}</li>)}
+        </ul>
+      )}
+      {d.note && <div className="mono text-[9px] text-txt-muted mt-1 italic">{d.note}</div>}
+    </div>
+  )
+}
+
 function InfoList({ signals, color, setView }) {
   return (
     <div className="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
@@ -745,6 +784,7 @@ function InfoCard({ s, color, setView }) {
       </div>
       {s.name && <div className="mono text-[10px] text-txt-muted mt-0.5">{s.name}</div>}
       <div className="mono text-[11px] text-txt-sec mt-1.5 leading-snug">{s.reason}</div>
+      {s.directional && <Directional d={s.directional} sym={s.symbol} />}
       {s.lines && (
         <div className="mt-2 space-y-0.5 border-t border-border pt-1.5">
           {s.lines.map((l, i) => (

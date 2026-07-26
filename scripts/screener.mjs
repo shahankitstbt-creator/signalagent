@@ -15,6 +15,7 @@ import { GEN_META, runPriceGenerators, runMultibagger, horaSignals, assetBiasSig
 import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { syncTradeBook } from './tradebook.mjs'
+import { institutionalBias } from './institutional.mjs'
 import { trackNews } from './news.mjs'
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
@@ -473,8 +474,15 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     } catch (e) { console.log('News skipped:', e.message) }
   }
 
+  // ── INSTITUTIONAL FOOTPRINT: FII/DII positioning → market regime (drives index direction) ──
+  let inst = null
+  if (isDaily) {
+    try { inst = await institutionalBias(today); console.log(`Regime: ${inst.bias.toUpperCase()} (score ${inst.score}) — ${inst.reasons?.[0] || 'FII data'}`) }
+    catch (e) { console.log('Institutional data skipped:', e.message) }
+  }
+
   // ── SIGNAL BOARD (grouped by generator) ──
-  const board = await buildBoard(scored, finalists, addDays, today, newsMap)
+  const board = await buildBoard(scored, finalists, addDays, today, newsMap, inst)
   const todayTs = Math.floor(today.getTime() / 1000)
   const todayISO = today.toISOString().slice(0, 10)
 
@@ -582,7 +590,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const boardJson = JSON.stringify({
     generatedAt: today.toISOString(), date: todayISO, timeframe: tf, label: cfg.label,
     note: `${cfg.label} signals. Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).`,
-    trackRecord: tr, goal, generators: board,
+    trackRecord: tr, goal, regime: inst, generators: board,
   }, null, 2)
   writeFileSync(`public/board-${tf}.json`, boardJson)
   if (isDaily) writeFileSync('public/board.json', boardJson)
@@ -607,7 +615,67 @@ function buildWhy(s, sc) {
 
 // Group every generator's signals into board columns. Astro = real ephemeris
 // (5 methods × Nifty/Gold) + Hora timing; option = live Angel One OI snapshot.
-async function buildBoard(scored, finalists, addDays, today, newsMap = {}) {
+// ── INDEX DIRECTIONAL ENGINE — reads the smart-money footprint (FII positioning +
+// option-chain OI dynamics + PCR + breadth + price structure) to call the index BOTH
+// ways (CE for up, PE for down) with a concrete options play, entry, SL and targets.
+// This is what lets us anticipate a NIFTY top/fall or a bounce BEFORE the move. ──
+async function indexDirectional(o, bu, inst, breadthN, idxSym) {
+  if (!o || o.placeholder) return null
+  const spot = o.spot, atm = o.atm
+  const ysym = idxSym === 'BANKNIFTY' ? '%5ENSEBANK' : '%5ENSEI'
+  let rsi = null, near20High = false, near20Low = false, chg = 0
+  try {
+    const dd = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${ysym}?interval=1d&range=3mo`)
+    const q = dd?.chart?.result?.[0]?.indicators?.quote?.[0]
+    const c = q?.close?.filter(x => x != null), hi = q?.high?.filter(x => x != null), lo = q?.low?.filter(x => x != null)
+    if (c && c.length > 20) {
+      const rs = rsiSeries(c); rsi = rs[rs.length - 1]
+      chg = ((c.at(-1) - c.at(-2)) / c.at(-2)) * 100
+      near20High = (Math.max(...hi.slice(-20)) - c.at(-1)) / c.at(-1) < 0.01
+      near20Low = (c.at(-1) - Math.min(...lo.slice(-20))) / c.at(-1) < 0.01
+    }
+  } catch {}
+
+  let D = 0; const why = []
+  if (inst?.available) { D += inst.score; if (inst.reasons?.[0]) why.push('FII: ' + inst.reasons[0]) }
+  if (bu?.net === 'down') { D -= 2; why.push('Options: ' + bu.label) }
+  else if (bu?.net === 'up') { D += 2; why.push('Options: ' + bu.label) }
+  if (o.pcr >= 1.2) { D += 1; why.push(`PCR ${o.pcr} — puts written (support below)`) }
+  else if (o.pcr <= 0.8) { D -= 1; why.push(`PCR ${o.pcr} — calls written (resistance above)`) }
+  if (breadthN) { if (breadthN.advPct >= 60) { D += 1; why.push(`Breadth ${breadthN.advPct}% advancing`) } else if (breadthN.advPct <= 40) { D -= 1; why.push(`Breadth weak — ${breadthN.advPct}% advancing`) } }
+  if (rsi != null) {
+    if (rsi > 68 && near20High) { D -= 1; why.push(`RSI ${rsi.toFixed(0)} at 20-day high — stretched (distribution risk)`) }
+    if (rsi < 35 && near20Low) { D += 1; why.push(`RSI ${rsi.toFixed(0)} at 20-day low — oversold bounce zone`) }
+  }
+  why.push(`OI walls: resistance ${o.resistance} (max call OI) · support ${o.support} (max put OI)`)
+
+  const dir = D <= -3 ? 'BEARISH' : D >= 3 ? 'BULLISH' : 'NEUTRAL'
+  const conviction = Math.min(95, 50 + Math.abs(D) * 7)
+  const grade = Math.abs(D) >= 6 ? 'A++' : Math.abs(D) >= 4 ? 'A+' : Math.abs(D) >= 3 ? 'A' : 'B'
+  const r = x => Math.round(x)
+  let optionPlay, entry = spot, sl, targets, dirTone
+  if (dir === 'BEARISH') {
+    dirTone = 'down'
+    optionPlay = `Buy ${idxSym} ${atm} PE (${o.expiry}) — slightly ITM for positional`
+    sl = r(Math.max(o.resistance, spot * 1.008)); targets = [r(spot * 0.99), r(spot * 0.975), r(spot * 0.96)]
+  } else if (dir === 'BULLISH') {
+    dirTone = 'up'
+    optionPlay = `Buy ${idxSym} ${atm} CE (${o.expiry}) — slightly ITM for positional`
+    sl = r(Math.min(o.support, spot * 0.992)); targets = [r(spot * 1.01), r(spot * 1.025), r(spot * 1.04)]
+  } else {
+    dirTone = 'flat'
+    optionPlay = `No directional edge — range ${o.support}–${o.resistance}. Wait for a break or sell premium.`
+    sl = null; targets = [o.support, o.resistance]
+  }
+  return {
+    direction: dir, dirTone, D, grade, conviction, optionPlay, spot, entry, sl, targets,
+    resistance: o.resistance, support: o.support, rsi: rsi != null ? +rsi.toFixed(0) : null,
+    note: 'ATM option ≈ 0.5 delta → premium moves ~half the index points. Enter on confirmation / at next open.',
+    reasons: why,
+  }
+}
+
+async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst = null) {
   const byGen = {}; for (const g of GEN_META) byGen[g.id] = []
   for (const st of scored) { if (!st._d) continue; for (const sg of runPriceGenerators(st, st._d, st, addDays)) byGen[sg.generator]?.push(sg) }
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
@@ -625,8 +693,13 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}) {
   // OI history is diffed scan-to-scan to label long/short/writing build-up.
   const oiHist = loadOIHist()
   const optCards = []
-  for (const [idx, step, nm] of [['NIFTY', 50, 'Nifty Option Chain'], ['BANKNIFTY', 100, 'Bank Nifty Option Chain']]) {
-    optCards.push(optionCard(await optionBuildup(idx, step), idx, nm, oiHist, today))
+  const breadthMap = computeBreadth(scored)
+  for (const [idx, step, nm, bkey] of [['NIFTY', 50, 'Nifty Option Chain', 'NIFTY 50'], ['BANKNIFTY', 100, 'Bank Nifty Option Chain', 'NIFTY Bank']]) {
+    const o = await optionBuildup(idx, step)
+    const card = optionCard(o, idx, nm, oiHist, today)
+    // attach the two-sided directional trade (CE/PE + entry/SL/targets) from the footprint
+    try { card.directional = await indexDirectional(o, card._bu, inst, breadthMap[bkey], idx) } catch {}
+    optCards.push(card)
   }
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
@@ -652,7 +725,7 @@ function optionCard(o, sym = 'NIFTY', name = 'Nifty Option Chain', hist = [], to
     ...bu.lines,
   ]
   return {
-    ...base, bias: o.bias, biasTone, buildup: bu.label,
+    ...base, bias: o.bias, biasTone, buildup: bu.label, _bu: bu,
     spot: o.spot, atm: o.atm, expiry: o.expiry, pcr: o.pcr, support: o.support, resistance: o.resistance,
     reason: `Spot ${o.spot} · ATM ${o.atm} · exp ${o.expiry}. PCR ${o.pcr} → ${o.bias}. Walls: R ${o.resistance} / S ${o.support}. Build-up: ${bu.label}.`,
     lines,
