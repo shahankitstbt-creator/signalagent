@@ -16,6 +16,7 @@ import { optionBuildup } from './angelClient.mjs'
 import { loadLedger, saveLedger, openOrUpdate, evaluate, trackRecord } from './ledger.mjs'
 import { syncTradeBook } from './tradebook.mjs'
 import { institutionalBias } from './institutional.mjs'
+import { mtfDesk } from './mtf.mjs'
 import { trackNews } from './news.mjs'
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
@@ -564,6 +565,31 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
+  // ── 🎯 SMART-MONEY DESK: multi-timeframe (15m→1D) confluence for NIFTY/BankNifty/Gold + top
+  // F&O stocks. Indices also carry live option OI positioning + far-expiry accumulation + FII regime.
+  // Runs on daily AND intraday so the 15m/35m reads stay live during market hours. ──
+  if (isDaily || tf === 'intraday') {
+    const deskCol = board.find(g => g.id === 'option_buildup')
+    const ySym = s => s === 'NIFTY' ? '%5ENSEI' : s === 'BANKNIFTY' ? '%5ENSEBANK' : s === 'GOLD' ? 'GC=F' : s + '.NS'
+    const desk = []
+    const optBySym = {}; for (const c of (deskCol?.signals || [])) optBySym[c.symbol] = c   // option cards w/ .directional
+    for (const [sym, nm] of [['NIFTY', 'Nifty 50'], ['BANKNIFTY', 'Bank Nifty'], ['GOLD', 'Gold (COMEX)']]) {
+      try {
+        const m = await mtfDesk(sym, ySym(sym), { addBiz })
+        const oc = optBySym[sym]
+        desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
+      } catch (e) { console.log('desk', sym, 'skipped:', e.message) }
+    }
+    // top F&O-eligible stocks by pre-move score
+    const fnoStocks = scored.filter(s => fnoLots[s.symbol] && s.bullish && s._d).sort((a, b) => (b.moveScore || 0) - (a.moveScore || 0)).slice(0, 12)
+    for (const s of fnoStocks) {
+      try { const m = await mtfDesk(s.symbol, s.symbol + '.NS', { addBiz }); desk.push({ generator: 'option_buildup', isDesk: true, symbol: s.symbol, name: s.name, kind: 'F&O Stock', mtf: m, footprint: s._footprint || null, spot: m.spot, aligned: m.aligned, lot: fnoLots[s.symbol] || null }) }
+      catch {}
+    }
+    if (deskCol) { deskCol.signals = desk; deskCol.count = desk.length }
+    console.log(`Desk: ${desk.length} instruments across ${Object.keys((await import('./mtf.mjs')).TF_MIN).length} timeframes`)
+  }
+
   // LOG the confluence + F&O Stock picks (the ones we alert on) into the ledger too, so
   // their own tabs earn a REAL measured track record. They open now and are evaluated on
   // the next daily run (like every other signal). Excluded from `overall` in trackRecord().
@@ -579,7 +605,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     console.log(`Ledger: logged ${logged} confluence/F&O picks for tracking`)
 
     // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
-    try { syncTradeBook(lg, closedNow, todayISO, today.toISOString()) } catch (e) { console.log('Trade book skipped:', e.message) }
+    try { syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }
   }
 
   // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──

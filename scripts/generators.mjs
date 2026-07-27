@@ -20,7 +20,7 @@ export const GEN_META = [
   { id: 'harmonic', label: 'Harmonic & Chart Patterns', color: '#EA580C', desc: 'Bullish harmonic / chart-pattern breakout completing' },
   { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#9333EA', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP — real positions, traditional reading (no edge claim)' },
   { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#DB2777', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
-  { id: 'option_buildup', label: 'Option Chain Build-Up', color: '#DC2626', desc: 'Live NIFTY/BANKNIFTY option OI via Angel One — PCR, support/resistance' },
+  { id: 'option_buildup', label: '🎯 Smart-Money Desk', color: '#DC2626', desc: 'NIFTY · BankNifty · Gold · top F&O stocks — multi-timeframe (15m→1D) confluence of Volume Profile + Fib + VWAP + price action + live option OI positioning + far-expiry accumulation, with entry / SL / targets / dates per timeframe' },
 ]
 // id → meta lookup (robust against reordering — never index GEN_META by position)
 const M = Object.fromEntries(GEN_META.map(g => [g.id, g]))

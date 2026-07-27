@@ -23,13 +23,16 @@ export function loadBook() {
 const save = b => { b.updatedAt = new Date().toISOString(); try { writeFileSync(PATH, JSON.stringify(b, null, 2)) } catch {} }
 const gradeRank = s => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[s.grade] || (s.generator === 'momentum' ? 2 : 2)
 
-// position sizing — the engine decides quantity from risk (entry→SL) + deploy caps
-function sizeTrade(sig) {
+// position sizing — the engine decides quantity from risk (entry→SL) + deploy caps.
+// F&O-eligible symbols are booked as F&O (lot-sized, leveraged) rather than cash.
+function sizeTrade(sig, fnoLots = {}) {
   const entry = sig.entry, sl = sig.sl
   if (!entry || !sl || entry <= sl) return null
   const riskAmt = CAPITAL * RISK_PCT / 100
   const maxDeploy = CAPITAL * MAX_DEPLOY_PCT / 100
   const riskPerShare = entry - sl
+  const lotFromMap = fnoLots[sig.symbol] || fnoLots[sig.underlying]
+  if (lotFromMap && !sig.lot) sig = { ...sig, lot: lotFromMap }
   const isFno = sig.generator === 'fno' || !!sig.optionPlay || !!sig.lot
   if (isFno && sig.lot) {
     const lotSize = sig.lot
@@ -60,7 +63,7 @@ function failReason(c, pos) {
 }
 
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
-export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString()) {
+export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
 
@@ -116,7 +119,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
     if (openSyms.has(sym)) continue                                     // already holding this stock
-    const size = sizeTrade(s)
+    const size = sizeTrade(s, fnoLots)
     if (!size || size.invested > b.cash) continue
     openSyms.add(sym)
     b.cash -= size.invested

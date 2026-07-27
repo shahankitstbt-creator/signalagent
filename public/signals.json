@@ -1,61 +1,77 @@
 {
-  "generatedAt": "2026-07-26T06:21:04.882Z",
+  "generatedAt": "2026-07-27T13:15:17.980Z",
   "minAccuracy": 60,
   "logics": [
     {
       "id": "gap_go",
       "name": "Gap-Up & Go",
       "desc": "Opens >1.2% above prior close and holds green",
-      "accuracy": 63.9,
-      "trades": 61,
-      "active": false
+      "accuracy": 64.1,
+      "trades": 103,
+      "active": true
     },
     {
       "id": "rsi60_cross",
       "name": "RSI-60 Cross",
       "desc": "RSI crosses up through 60 (momentum), not overbought",
-      "accuracy": 62.1,
-      "trades": 375,
-      "active": true
-    },
-    {
-      "id": "combo_trend_pullback",
-      "name": "Trend Pullback (confluence)",
-      "desc": "Strong uptrend + pullback to 20 EMA + RSI turning up",
-      "accuracy": 61.8,
-      "trades": 131,
-      "active": true
-    },
-    {
-      "id": "ma20_pullback",
-      "name": "MA20 Pullback",
-      "desc": "Uptrend pullback to rising 20 EMA, bullish close",
-      "accuracy": 61.3,
-      "trades": 728,
+      "accuracy": 62.6,
+      "trades": 559,
       "active": true
     },
     {
       "id": "combo_pocket_pivot",
       "name": "Pocket Pivot (confluence)",
       "desc": "Up-volume surge off rising 50 EMA in uptrend",
-      "accuracy": 59.8,
-      "trades": 194,
+      "accuracy": 62.6,
+      "trades": 302,
+      "active": true
+    },
+    {
+      "id": "ma20_pullback",
+      "name": "MA20 Pullback",
+      "desc": "Uptrend pullback to rising 20 EMA, bullish close",
+      "accuracy": 62.2,
+      "trades": 1030,
+      "active": true
+    },
+    {
+      "id": "combo_breakout_momo",
+      "name": "Breakout + Momentum (confluence)",
+      "desc": "20-day breakout + strong RSI + uptrend",
+      "accuracy": 60.7,
+      "trades": 300,
+      "active": true
+    },
+    {
+      "id": "combo_trend_pullback",
+      "name": "Trend Pullback (confluence)",
+      "desc": "Strong uptrend + pullback to 20 EMA + RSI turning up",
+      "accuracy": 59.9,
+      "trades": 177,
+      "active": false
+    },
+    {
+      "id": "ema_stack",
+      "name": "EMA Stack Momentum",
+      "desc": "Price>20>50>200 EMA all rising",
+      "accuracy": 57.7,
+      "trades": 310,
       "active": false
     },
     {
       "id": "nr7_break",
       "name": "NR7 Breakout",
       "desc": "Narrowest range of 7 then breakout",
-      "accuracy": 58.7,
-      "trades": 344,
+      "accuracy": 57.6,
+      "trades": 533,
       "active": false
     },
     {
-      "id": "inside_break",
-      "name": "Inside-Bar Breakout",
-      "desc": "Inside bar then close breaks its high",
-      "accuracy": 58.5,
-      "trades": 258,
+      "id": "donchian_break",
+      "name": "Donchian-20 Breakout",
+      "desc": "Close above prior 20-bar high (Turtle)",
+      "accuracy": 57.5,
+      "trades": 742,
       "active": false
     },
     {
@@ -63,124 +79,364 @@
       "name": "MACD Bull Cross",
       "desc": "MACD crosses above signal, price above 50 EMA",
       "accuracy": 56.9,
-      "trades": 174,
+      "trades": 262,
       "active": false
     },
     {
-      "id": "combo_breakout_momo",
-      "name": "Breakout + Momentum (confluence)",
-      "desc": "20-day breakout + strong RSI + uptrend",
-      "accuracy": 56.7,
-      "trades": 194,
-      "active": false
-    },
-    {
-      "id": "donchian_break",
-      "name": "Donchian-20 Breakout",
-      "desc": "Close above prior 20-bar high (Turtle)",
-      "accuracy": 56,
-      "trades": 495,
-      "active": false
-    },
-    {
-      "id": "ema_stack",
-      "name": "EMA Stack Momentum",
-      "desc": "Price>20>50>200 EMA all rising",
-      "accuracy": 54,
-      "trades": 202,
-      "active": false
-    },
-    {
-      "id": "golden_trend",
-      "name": "Golden-Trend Entry",
-      "desc": "50>200 EMA, price>20 EMA, RSI building",
-      "accuracy": 53.6,
-      "trades": 151,
-      "active": false
-    },
-    {
-      "id": "high52_break",
-      "name": "52-Week High Break",
-      "desc": "Close above prior 250-bar high",
-      "accuracy": 51.1,
-      "trades": 174,
+      "id": "inside_break",
+      "name": "Inside-Bar Breakout",
+      "desc": "Inside bar then close breaks its high",
+      "accuracy": 56.1,
+      "trades": 385,
       "active": false
     },
     {
       "id": "squeeze_break",
       "name": "Squeeze Breakout",
       "desc": "BB-width coiled, then breaks 20-day high",
-      "accuracy": 50.3,
-      "trades": 157,
+      "accuracy": 55.9,
+      "trades": 247,
       "active": false
     },
     {
-      "id": "combo_strong",
-      "name": "Full Confluence",
-      "desc": "EMA stack + MACD>signal + RSI 50-65 + near 20-day high",
-      "accuracy": 48.6,
-      "trades": 37,
+      "id": "high52_break",
+      "name": "52-Week High Break",
+      "desc": "Close above prior 250-bar high",
+      "accuracy": 55.2,
+      "trades": 268,
       "active": false
     },
     {
       "id": "combo_squeeze_trend",
       "name": "Squeeze + Trend (confluence)",
       "desc": "Coiled volatility inside an uptrend breaking 10-day high",
-      "accuracy": 37.5,
-      "trades": 24,
+      "accuracy": 54.2,
+      "trades": 48,
+      "active": false
+    },
+    {
+      "id": "golden_trend",
+      "name": "Golden-Trend Entry",
+      "desc": "50>200 EMA, price>20 EMA, RSI building",
+      "accuracy": 53.7,
+      "trades": 214,
+      "active": false
+    },
+    {
+      "id": "combo_strong",
+      "name": "Full Confluence",
+      "desc": "EMA stack + MACD>signal + RSI 50-65 + near 20-day high",
+      "accuracy": 46.9,
+      "trades": 49,
       "active": false
     }
   ],
-  "activeLogics": 3,
-  "count": 4,
+  "activeLogics": 5,
+  "count": 28,
   "note": "Live signals only from strategies that backtested >=60% (target reached before stop) across the NSE universe. Accuracy is measured, not guaranteed.",
   "signals": [
     {
-      "symbol": "ADANIENT",
-      "name": "Adani Enterprises Ltd.",
-      "sector": "Metals & Mining",
+      "symbol": "BAJFINANCE",
+      "name": "Bajaj Finance Ltd.",
+      "sector": "Financial Services",
       "indices": [
         "NIFTY 50",
         "NIFTY 100",
         "NIFTY 200",
         "NIFTY 500",
         "NIFTY Total Market",
-        "NIFTY Metal"
+        "NIFTY Financial Services"
       ],
-      "logic": "Trend Pullback (confluence)",
-      "logicId": "combo_trend_pullback",
+      "logic": "Gap-Up & Go",
+      "logicId": "gap_go",
       "direction": "LONG",
-      "confidence": 61.8,
-      "accuracy": 61.8,
-      "backtestTrades": 131,
-      "price": 3026.4,
-      "entry": 3026.4,
-      "sl": 2909.86,
-      "slPct": -3.9,
+      "confidence": 64.1,
+      "accuracy": 64.1,
+      "backtestTrades": 103,
+      "price": 1048.3,
+      "entry": 1048.3,
+      "sl": 996.28,
+      "slPct": -5,
       "targets": [
         {
-          "price": 3181.79,
-          "pct": 5.1,
-          "by": "2026-08-01"
+          "price": 1098.45,
+          "pct": 4.8,
+          "by": "2026-08-05"
         },
         {
-          "price": 3298.32,
-          "pct": 9,
-          "by": "2026-08-13"
+          "price": 1136.07,
+          "pct": 8.4,
+          "by": "2026-08-14"
         },
         {
-          "price": 3414.86,
-          "pct": 12.8,
-          "by": "2026-08-27"
+          "price": 1173.68,
+          "pct": 12,
+          "by": "2026-08-28"
         }
       ],
-      "rr": 1.33,
-      "rsi": 45.4,
-      "why": "Trend Pullback (confluence) — Strong uptrend + pullback to 20 EMA + RSI turning up"
+      "rr": 0.96,
+      "rsi": 58.9,
+      "why": "Gap-Up & Go — Opens >1.2% above prior close and holds green"
     },
     {
-      "symbol": "CIPLA",
-      "name": "Cipla Ltd.",
+      "symbol": "INDIGO",
+      "name": "InterGlobe Aviation Ltd.",
+      "sector": "Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "Gap-Up & Go",
+      "logicId": "gap_go",
+      "direction": "LONG",
+      "confidence": 64.1,
+      "accuracy": 64.1,
+      "backtestTrades": 103,
+      "price": 5230,
+      "entry": 5230,
+      "sl": 4857.44,
+      "slPct": -7.1,
+      "targets": [
+        {
+          "price": 5515.63,
+          "pct": 5.5,
+          "by": "2026-08-07"
+        },
+        {
+          "price": 5729.85,
+          "pct": 9.6,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 5944.07,
+          "pct": 13.7,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.77,
+      "rsi": 54.2,
+      "why": "Gap-Up & Go — Opens >1.2% above prior close and holds green"
+    },
+    {
+      "symbol": "SHRIRAMFIN",
+      "name": "Shriram Finance Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Financial Services"
+      ],
+      "logic": "Gap-Up & Go",
+      "logicId": "gap_go",
+      "direction": "LONG",
+      "confidence": 64.1,
+      "accuracy": 64.1,
+      "backtestTrades": 103,
+      "price": 1038.2,
+      "entry": 1038.2,
+      "sl": 986.56,
+      "slPct": -5,
+      "targets": [
+        {
+          "price": 1101.57,
+          "pct": 6.1,
+          "by": "2026-08-02"
+        },
+        {
+          "price": 1149.09,
+          "pct": 10.7,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 1196.62,
+          "pct": 15.3,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.23,
+      "rsi": 53.2,
+      "why": "Gap-Up & Go — Opens >1.2% above prior close and holds green"
+    },
+    {
+      "symbol": "BPCL",
+      "name": "Bharat Petroleum Corporation Ltd.",
+      "sector": "Oil Gas & Consumable Fuels",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Commodities"
+      ],
+      "logic": "Gap-Up & Go",
+      "logicId": "gap_go",
+      "direction": "LONG",
+      "confidence": 64.1,
+      "accuracy": 64.1,
+      "backtestTrades": 103,
+      "price": 316.25,
+      "entry": 316.25,
+      "sl": 303.46,
+      "slPct": -4,
+      "targets": [
+        {
+          "price": 332.62,
+          "pct": 5.2,
+          "by": "2026-07-31"
+        },
+        {
+          "price": 344.89,
+          "pct": 9.1,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 357.17,
+          "pct": 12.9,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.28,
+      "rsi": 56.6,
+      "why": "Gap-Up & Go — Opens >1.2% above prior close and holds green"
+    },
+    {
+      "symbol": "BAJAJFINSV",
+      "name": "Bajaj Finserv Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Financial Services"
+      ],
+      "logic": "RSI-60 Cross",
+      "logicId": "rsi60_cross",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 559,
+      "price": 1913,
+      "entry": 1913,
+      "sl": 1830.82,
+      "slPct": -4.3,
+      "targets": [
+        {
+          "price": 1992.78,
+          "pct": 4.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2052.62,
+          "pct": 7.3,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2112.45,
+          "pct": 10.4,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.97,
+      "rsi": 61.3,
+      "why": "RSI-60 Cross — RSI crosses up through 60 (momentum), not overbought"
+    },
+    {
+      "symbol": "EICHERMOT",
+      "name": "Eicher Motors Ltd.",
+      "sector": "Automobile and Auto Components",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Auto"
+      ],
+      "logic": "RSI-60 Cross",
+      "logicId": "rsi60_cross",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 559,
+      "price": 7769.5,
+      "entry": 7769.5,
+      "sl": 7446.1,
+      "slPct": -4.2,
+      "targets": [
+        {
+          "price": 8088.47,
+          "pct": 4.1,
+          "by": "2026-08-08"
+        },
+        {
+          "price": 8327.71,
+          "pct": 7.2,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 8566.94,
+          "pct": 10.3,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.99,
+      "rsi": 62.9,
+      "why": "RSI-60 Cross — RSI crosses up through 60 (momentum), not overbought"
+    },
+    {
+      "symbol": "ETERNAL",
+      "name": "Eternal Ltd.",
+      "sector": "Consumer Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "RSI-60 Cross",
+      "logicId": "rsi60_cross",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 559,
+      "price": 295.85,
+      "entry": 295.85,
+      "sl": 273.62,
+      "slPct": -7.5,
+      "targets": [
+        {
+          "price": 315.13,
+          "pct": 6.5,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 329.6,
+          "pct": 11.4,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 344.06,
+          "pct": 16.3,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.87,
+      "rsi": 64.2,
+      "why": "RSI-60 Cross — RSI crosses up through 60 (momentum), not overbought"
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Ltd.",
       "sector": "Healthcare",
       "indices": [
         "NIFTY 50",
@@ -190,40 +446,381 @@
         "NIFTY Total Market",
         "NIFTY Pharma"
       ],
-      "logic": "Trend Pullback (confluence)",
-      "logicId": "combo_trend_pullback",
+      "logic": "RSI-60 Cross",
+      "logicId": "rsi60_cross",
       "direction": "LONG",
-      "confidence": 61.8,
-      "accuracy": 61.8,
-      "backtestTrades": 131,
-      "price": 1410.6,
-      "entry": 1410.6,
-      "sl": 1359.56,
-      "slPct": -3.6,
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 559,
+      "price": 1973.7,
+      "entry": 1973.7,
+      "sl": 1918.98,
+      "slPct": -2.8,
       "targets": [
         {
-          "price": 1476.01,
-          "pct": 4.6,
+          "price": 2035.91,
+          "pct": 3.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2082.57,
+          "pct": 5.5,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2129.23,
+          "pct": 7.9,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.14,
+      "rsi": 65.8,
+      "why": "RSI-60 Cross — RSI crosses up through 60 (momentum), not overbought"
+    },
+    {
+      "symbol": "TCS",
+      "name": "Tata Consultancy Services Ltd.",
+      "sector": "Information Technology",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY IT"
+      ],
+      "logic": "RSI-60 Cross",
+      "logicId": "rsi60_cross",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 559,
+      "price": 2295.6,
+      "entry": 2295.6,
+      "sl": 2181.93,
+      "slPct": -5,
+      "targets": [
+        {
+          "price": 2412.26,
+          "pct": 5.1,
+          "by": "2026-08-02"
+        },
+        {
+          "price": 2499.76,
+          "pct": 8.9,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2587.26,
+          "pct": 12.7,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.03,
+      "rsi": 62.8,
+      "why": "RSI-60 Cross — RSI crosses up through 60 (momentum), not overbought"
+    },
+    {
+      "symbol": "SBILIFE",
+      "name": "SBI Life Insurance Company Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Financial Services"
+      ],
+      "logic": "Pocket Pivot (confluence)",
+      "logicId": "combo_pocket_pivot",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 302,
+      "price": 1866.8,
+      "entry": 1866.8,
+      "sl": 1789.01,
+      "slPct": -4.2,
+      "targets": [
+        {
+          "price": 1946.75,
+          "pct": 4.3,
           "by": "2026-08-01"
         },
         {
-          "price": 1525.06,
-          "pct": 8.1,
-          "by": "2026-08-13"
+          "price": 2006.71,
+          "pct": 7.5,
+          "by": "2026-08-14"
         },
         {
-          "price": 1574.12,
-          "pct": 11.6,
-          "by": "2026-08-27"
+          "price": 2066.67,
+          "pct": 10.7,
+          "by": "2026-08-28"
         }
       ],
-      "rr": 1.28,
-      "rsi": 46.4,
-      "why": "Trend Pullback (confluence) — Strong uptrend + pullback to 20 EMA + RSI turning up"
+      "rr": 1.03,
+      "rsi": 59.2,
+      "why": "Pocket Pivot (confluence) — Up-volume surge off rising 50 EMA in uptrend"
     },
     {
-      "symbol": "SBIN",
-      "name": "State Bank of India",
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Ltd.",
+      "sector": "Healthcare",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Pharma"
+      ],
+      "logic": "Pocket Pivot (confluence)",
+      "logicId": "combo_pocket_pivot",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 302,
+      "price": 1973.7,
+      "entry": 1973.7,
+      "sl": 1918.98,
+      "slPct": -2.8,
+      "targets": [
+        {
+          "price": 2035.91,
+          "pct": 3.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2082.57,
+          "pct": 5.5,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2129.23,
+          "pct": 7.9,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.14,
+      "rsi": 65.8,
+      "why": "Pocket Pivot (confluence) — Up-volume surge off rising 50 EMA in uptrend"
+    },
+    {
+      "symbol": "BAJAJHLDNG",
+      "name": "Bajaj Holdings & Investment Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "Pocket Pivot (confluence)",
+      "logicId": "combo_pocket_pivot",
+      "direction": "LONG",
+      "confidence": 62.6,
+      "accuracy": 62.6,
+      "backtestTrades": 302,
+      "price": 10810,
+      "entry": 10810,
+      "sl": 10232.92,
+      "slPct": -5.3,
+      "targets": [
+        {
+          "price": 11330.82,
+          "pct": 4.8,
+          "by": "2026-08-15"
+        },
+        {
+          "price": 11721.44,
+          "pct": 8.4,
+          "by": "2026-08-18"
+        },
+        {
+          "price": 12112.05,
+          "pct": 12,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.9,
+      "rsi": 57.9,
+      "why": "Pocket Pivot (confluence) — Up-volume surge off rising 50 EMA in uptrend"
+    },
+    {
+      "symbol": "APOLLOHOSP",
+      "name": "Apollo Hospitals Enterprise Ltd.",
+      "sector": "Healthcare",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 8843.5,
+      "entry": 8843.5,
+      "sl": 8651.36,
+      "slPct": -2.2,
+      "targets": [
+        {
+          "price": 9099.69,
+          "pct": 2.9,
+          "by": "2026-08-07"
+        },
+        {
+          "price": 9291.84,
+          "pct": 5.1,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 9483.98,
+          "pct": 7.2,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 56.9,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "BAJFINANCE",
+      "name": "Bajaj Finance Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Financial Services"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1048.3,
+      "entry": 1048.3,
+      "sl": 996.28,
+      "slPct": -5,
+      "targets": [
+        {
+          "price": 1098.45,
+          "pct": 4.8,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 1136.07,
+          "pct": 8.4,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 1173.68,
+          "pct": 12,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.96,
+      "rsi": 58.9,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "BAJAJFINSV",
+      "name": "Bajaj Finserv Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Financial Services"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1913,
+      "entry": 1913,
+      "sl": 1830.82,
+      "slPct": -4.3,
+      "targets": [
+        {
+          "price": 1992.78,
+          "pct": 4.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2052.62,
+          "pct": 7.3,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2112.45,
+          "pct": 10.4,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.97,
+      "rsi": 61.3,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "ETERNAL",
+      "name": "Eternal Ltd.",
+      "sector": "Consumer Services",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 295.85,
+      "entry": 295.85,
+      "sl": 273.62,
+      "slPct": -7.5,
+      "targets": [
+        {
+          "price": 315.13,
+          "pct": 6.5,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 329.6,
+          "pct": 11.4,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 344.06,
+          "pct": 16.3,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.87,
+      "rsi": 64.2,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "ICICIBANK",
+      "name": "ICICI Bank Ltd.",
       "sector": "Financial Services",
       "indices": [
         "NIFTY 50",
@@ -232,39 +829,124 @@
         "NIFTY 500",
         "NIFTY Total Market",
         "NIFTY Bank",
-        "NIFTY PSU Bank",
         "NIFTY Financial Services"
       ],
-      "logic": "Trend Pullback (confluence)",
-      "logicId": "combo_trend_pullback",
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
       "direction": "LONG",
-      "confidence": 61.8,
-      "accuracy": 61.8,
-      "backtestTrades": 131,
-      "price": 1015,
-      "entry": 1015,
-      "sl": 985.19,
-      "slPct": -2.9,
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1445.7,
+      "entry": 1445.7,
+      "sl": 1408.37,
+      "slPct": -2.6,
       "targets": [
         {
-          "price": 1054.74,
-          "pct": 3.9,
-          "by": "2026-08-04"
+          "price": 1495.47,
+          "pct": 3.4,
+          "by": "2026-08-01"
         },
         {
-          "price": 1084.55,
-          "pct": 6.9,
-          "by": "2026-08-07"
+          "price": 1532.79,
+          "pct": 6,
+          "by": "2026-08-14"
         },
         {
-          "price": 1114.35,
-          "pct": 9.8,
-          "by": "2026-08-27"
+          "price": 1570.12,
+          "pct": 8.6,
+          "by": "2026-08-28"
         }
       ],
       "rr": 1.33,
-      "rsi": 45.3,
-      "why": "Trend Pullback (confluence) — Strong uptrend + pullback to 20 EMA + RSI turning up"
+      "rsi": 64.6,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "M&M",
+      "name": "Mahindra & Mahindra Ltd.",
+      "sector": "Automobile and Auto Components",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Auto"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 3238.6,
+      "entry": 3238.6,
+      "sl": 3120.61,
+      "slPct": -3.6,
+      "targets": [
+        {
+          "price": 3383.47,
+          "pct": 4.5,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 3492.12,
+          "pct": 7.8,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 3600.77,
+          "pct": 11.2,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.23,
+      "rsi": 58,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "NESTLEIND",
+      "name": "Nestle India Ltd.",
+      "sector": "Fast Moving Consumer Goods",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY FMCG"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1446.1,
+      "entry": 1446.1,
+      "sl": 1398.02,
+      "slPct": -3.3,
+      "targets": [
+        {
+          "price": 1510.21,
+          "pct": 4.4,
+          "by": "2026-08-01"
+        },
+        {
+          "price": 1558.29,
+          "pct": 7.8,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 1606.38,
+          "pct": 11.1,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 52.5,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
     },
     {
       "symbol": "SBILIFE",
@@ -281,33 +963,374 @@
       "logic": "MA20 Pullback",
       "logicId": "ma20_pullback",
       "direction": "LONG",
-      "confidence": 61.3,
-      "accuracy": 61.3,
-      "backtestTrades": 728,
-      "price": 1858.6,
-      "entry": 1858.6,
-      "sl": 1788.92,
-      "slPct": -3.7,
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1866.8,
+      "entry": 1866.8,
+      "sl": 1789.01,
+      "slPct": -4.2,
       "targets": [
         {
-          "price": 1939.39,
+          "price": 1946.75,
           "pct": 4.3,
+          "by": "2026-08-01"
+        },
+        {
+          "price": 2006.71,
+          "pct": 7.5,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2066.67,
+          "pct": 10.7,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.03,
+      "rsi": 59.2,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Ltd.",
+      "sector": "Healthcare",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Pharma"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 1973.7,
+      "entry": 1973.7,
+      "sl": 1918.98,
+      "slPct": -2.8,
+      "targets": [
+        {
+          "price": 2035.91,
+          "pct": 3.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2082.57,
+          "pct": 5.5,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2129.23,
+          "pct": 7.9,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.14,
+      "rsi": 65.8,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "TITAN",
+      "name": "Titan Company Ltd.",
+      "sector": "Consumer Durables",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 4740.1,
+      "entry": 4740.1,
+      "sl": 4588.93,
+      "slPct": -3.2,
+      "targets": [
+        {
+          "price": 4891.81,
+          "pct": 3.2,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 5005.58,
+          "pct": 5.6,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 5119.36,
+          "pct": 8,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1,
+      "rsi": 71.5,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "ULTRACEMCO",
+      "name": "UltraTech Cement Ltd.",
+      "sector": "Construction Materials",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Commodities"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 11881,
+      "entry": 11881,
+      "sl": 11545.04,
+      "slPct": -2.8,
+      "targets": [
+        {
+          "price": 12328.95,
+          "pct": 3.8,
+          "by": "2026-08-07"
+        },
+        {
+          "price": 12664.92,
+          "pct": 6.6,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 13000.88,
+          "pct": 9.4,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 57.1,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "BAJAJHLDNG",
+      "name": "Bajaj Holdings & Investment Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 10810,
+      "entry": 10810,
+      "sl": 10232.92,
+      "slPct": -5.3,
+      "targets": [
+        {
+          "price": 11330.82,
+          "pct": 4.8,
+          "by": "2026-08-15"
+        },
+        {
+          "price": 11721.44,
+          "pct": 8.4,
+          "by": "2026-08-18"
+        },
+        {
+          "price": 12112.05,
+          "pct": 12,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.9,
+      "rsi": 57.9,
+      "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "BPCL",
+      "name": "Bharat Petroleum Corporation Ltd.",
+      "sector": "Oil Gas & Consumable Fuels",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Commodities"
+      ],
+      "logic": "MA20 Pullback",
+      "logicId": "ma20_pullback",
+      "direction": "LONG",
+      "confidence": 62.2,
+      "accuracy": 62.2,
+      "backtestTrades": 1030,
+      "price": 316.25,
+      "entry": 316.25,
+      "sl": 303.46,
+      "slPct": -4,
+      "targets": [
+        {
+          "price": 332.62,
+          "pct": 5.2,
           "by": "2026-07-31"
         },
         {
-          "price": 1999.98,
-          "pct": 7.6,
-          "by": "2026-08-13"
+          "price": 344.89,
+          "pct": 9.1,
+          "by": "2026-08-14"
         },
         {
-          "price": 2060.58,
-          "pct": 10.9,
-          "by": "2026-08-27"
+          "price": 357.17,
+          "pct": 12.9,
+          "by": "2026-08-28"
         }
       ],
-      "rr": 1.16,
-      "rsi": 57.8,
+      "rr": 1.28,
+      "rsi": 56.6,
       "why": "MA20 Pullback — Uptrend pullback to rising 20 EMA, bullish close"
+    },
+    {
+      "symbol": "HCLTECH",
+      "name": "HCL Technologies Ltd.",
+      "sector": "Information Technology",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY IT"
+      ],
+      "logic": "Breakout + Momentum (confluence)",
+      "logicId": "combo_breakout_momo",
+      "direction": "LONG",
+      "confidence": 60.7,
+      "accuracy": 60.7,
+      "backtestTrades": 300,
+      "price": 1295.9,
+      "entry": 1295.9,
+      "sl": 1193.19,
+      "slPct": -7.9,
+      "targets": [
+        {
+          "price": 1364.99,
+          "pct": 5.3,
+          "by": "2026-08-03"
+        },
+        {
+          "price": 1416.81,
+          "pct": 9.3,
+          "by": "2026-08-06"
+        },
+        {
+          "price": 1468.62,
+          "pct": 13.3,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 0.67,
+      "rsi": 70.4,
+      "why": "Breakout + Momentum (confluence) — 20-day breakout + strong RSI + uptrend"
+    },
+    {
+      "symbol": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Ltd.",
+      "sector": "Healthcare",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Pharma"
+      ],
+      "logic": "Breakout + Momentum (confluence)",
+      "logicId": "combo_breakout_momo",
+      "direction": "LONG",
+      "confidence": 60.7,
+      "accuracy": 60.7,
+      "backtestTrades": 300,
+      "price": 1973.7,
+      "entry": 1973.7,
+      "sl": 1918.98,
+      "slPct": -2.8,
+      "targets": [
+        {
+          "price": 2035.91,
+          "pct": 3.2,
+          "by": "2026-08-05"
+        },
+        {
+          "price": 2082.57,
+          "pct": 5.5,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 2129.23,
+          "pct": 7.9,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1.14,
+      "rsi": 65.8,
+      "why": "Breakout + Momentum (confluence) — 20-day breakout + strong RSI + uptrend"
+    },
+    {
+      "symbol": "TITAN",
+      "name": "Titan Company Ltd.",
+      "sector": "Consumer Durables",
+      "indices": [
+        "NIFTY 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market"
+      ],
+      "logic": "Breakout + Momentum (confluence)",
+      "logicId": "combo_breakout_momo",
+      "direction": "LONG",
+      "confidence": 60.7,
+      "accuracy": 60.7,
+      "backtestTrades": 300,
+      "price": 4740.1,
+      "entry": 4740.1,
+      "sl": 4588.93,
+      "slPct": -3.2,
+      "targets": [
+        {
+          "price": 4891.81,
+          "pct": 3.2,
+          "by": "2026-08-04"
+        },
+        {
+          "price": 5005.58,
+          "pct": 5.6,
+          "by": "2026-08-14"
+        },
+        {
+          "price": 5119.36,
+          "pct": 8,
+          "by": "2026-08-28"
+        }
+      ],
+      "rr": 1,
+      "rsi": 71.5,
+      "why": "Breakout + Momentum (confluence) — 20-day breakout + strong RSI + uptrend"
     }
   ]
 }

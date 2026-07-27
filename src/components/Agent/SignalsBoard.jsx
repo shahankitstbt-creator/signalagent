@@ -769,7 +769,57 @@ function InfoList({ signals, color, setView }) {
     </div>
   )
 }
+const dirColor = d => /LONG|BULLISH/.test(d) ? '#0E9F6E' : /SHORT|BEARISH/.test(d) ? '#F23645' : '#8896a6'
+function DeskCard({ s, color, setView }) {
+  const openSymbol = useChartStore(st => st.openSymbol)
+  const m = s.mtf || {}
+  const chart = () => { const sym = s.symbol === 'NIFTY' ? '^NSEI' : s.symbol === 'GOLD' ? 'GC=F' : s.symbol === 'BANKNIFTY' ? '^NSEBANK' : s.symbol + '.NS'; openSymbol(s.symbol === 'NIFTY' || s.symbol === 'GOLD' || s.symbol === 'BANKNIFTY' ? 'indices' : 'stocks', sym); setView('chart') }
+  const d = s.directional
+  return (
+    <div className="rounded-lg border border-border bg-bg-card p-3 elev" style={{ borderLeft: `3px solid ${dirColor(m.aligned || '')}` }}>
+      <div className="flex items-center gap-2">
+        <button onClick={chart} className="mono text-sm font-bold text-txt hover:text-accent">{s.symbol}</button>
+        {s.kind && <span className="mono text-[9px] px-1.5 rounded" style={{ background: tint(color, 0.15), color }}>{s.kind}</span>}
+        <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white font-bold ml-auto" style={{ background: dirColor(m.aligned || '') }}>{m.aligned || '—'} ({m.longs}L/{m.shorts}S)</span>
+      </div>
+      {s.spot != null && <div className="mono text-[10px] text-txt-muted mt-0.5">{s.name} · spot {s.spot}</div>}
+
+      {/* index: live option positioning + far-expiry accumulation */}
+      {d && <Directional d={d} sym={s.symbol} />}
+      {s.footprint && !s.footprint.weak && <div className="mt-1.5 mono text-[10px] text-green">🕵️ Footprint {s.footprint.score}: {s.footprint.flags?.[0]}</div>}
+
+      {/* multi-timeframe confluence table */}
+      {m.timeframes?.length > 0 && (
+        <div className="mt-2 overflow-x-auto border-t border-border pt-1.5">
+          <table className="w-full mono text-[10px] border-collapse">
+            <thead><tr className="text-txt-muted uppercase">
+              {['TF', 'Dir', 'Entry', 'SL', 'T1', 'T2', 'T3', 'By', 'R:R', 'Why'].map((h, i) => <th key={i} className={`px-1.5 py-1 ${[2, 3, 4, 5, 6, 8].includes(i) ? 'text-right' : 'text-left'}`}>{h}</th>)}
+            </tr></thead>
+            <tbody>
+              {m.timeframes.map((r, i) => (
+                <tr key={i} className="border-t border-border/50">
+                  <td className="px-1.5 py-1 font-bold">{r.tf}</td>
+                  <td className="px-1.5 py-1 font-bold" style={{ color: dirColor(r.dir) }}>{r.dir === 'LONG' ? '▲' : r.dir === 'SHORT' ? '▼' : '–'} {r.dir}</td>
+                  <td className="px-1.5 py-1 text-right">{r.entry}</td>
+                  <td className="px-1.5 py-1 text-right text-red">{r.sl ?? '—'}</td>
+                  <td className="px-1.5 py-1 text-right text-green">{r.targets?.[0] ?? '—'}</td>
+                  <td className="px-1.5 py-1 text-right text-green">{r.targets?.[1] ?? '—'}</td>
+                  <td className="px-1.5 py-1 text-right text-green">{r.targets?.[2] ?? '—'}</td>
+                  <td className="px-1.5 py-1 text-txt-muted">{r.etaDates?.[0] ?? '—'}</td>
+                  <td className="px-1.5 py-1 text-right">{r.rr ? '1:' + r.rr : '—'}</td>
+                  <td className="px-1.5 py-1 text-txt-sec max-w-[180px] truncate" title={r.reason}>{r.reason}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
 function InfoCard({ s, color, setView }) {
+  if (s.isDesk) return <DeskCard s={s} color={color} setView={setView} />
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
   const copy = () => { navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
