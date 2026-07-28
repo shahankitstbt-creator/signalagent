@@ -14,7 +14,7 @@ const RISK_PCT = 1                    // risk ~1% of capital per trade (₹10k)
 const MAX_DEPLOY_PCT = 4              // ≤4% of capital per position → a diversified ~25-name book
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of capital
-const MAX_OPEN = 25                   // realistic concurrent-position cap for ₹10L
+const MAX_OPEN = 30                   // concurrent-position cap for ₹10L (room for F&O + options)
 
 export function loadBook() {
   try { const b = JSON.parse(readFileSync(PATH, 'utf8')); b.open ||= {}; b.closed ||= []; return b }
@@ -27,9 +27,18 @@ const gradeRank = s => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[s.grade] 
 // F&O-eligible symbols are booked as F&O (lot-sized, leveraged) rather than cash.
 function sizeTrade(sig, fnoLots = {}) {
   const entry = sig.entry, sl = sig.sl
-  if (!entry || !sl || entry <= sl) return null
+  if (!entry || !sl) return null
   const riskAmt = CAPITAL * RISK_PCT / 100
   const maxDeploy = CAPITAL * MAX_DEPLOY_PCT / 100
+  // OPTION BUY (CE/PE) — defined risk = premium paid; size by a premium budget (limited-risk edge)
+  if (sig.optType && sig.lot && sig.entryPremium) {
+    const lot = sig.lot, prem = sig.entryPremium, perLot = prem * lot
+    if (perLot > CAPITAL * FNO_MAX_MARGIN_PCT / 100) return null
+    const lots = Math.max(1, Math.floor(Math.min(riskAmt * 1.5, maxDeploy) / perLot))
+    const qty = lots * lot
+    return { kind: 'OPT', optType: sig.optType, qty, lots, lotSize: lot, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
+  }
+  if (entry <= sl) return null   // long cash/futures guard (shorts are taken via options above)
   const riskPerShare = entry - sl
   const lotFromMap = fnoLots[sig.symbol] || fnoLots[sig.underlying]
   if (lotFromMap && !sig.lot) sig = { ...sig, lot: lotFromMap }
@@ -48,6 +57,17 @@ function sizeTrade(sig, fnoLots = {}) {
   if (qty * entry > maxDeploy) qty = Math.floor(maxDeploy / entry)
   if (qty < 1) return null
   return { kind: 'CASH', qty, lots: null, lotSize: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
+}
+
+// P&L for a position at a given underlying exit price. Long options use an ATM premium model
+// (~0.5 delta; premium can't go below 0, so loss is capped at the premium paid — the built-in hedge).
+function pnlFor(pos, exitPrice, bearish) {
+  if (pos.kind === 'OPT') {
+    const moveFav = bearish ? (pos.entryPrice - exitPrice) : (exitPrice - pos.entryPrice)
+    const exitPrem = Math.max(0, pos.entryPremium + 0.5 * moveFav)
+    return Math.round((exitPrem - pos.entryPremium) * pos.qty)
+  }
+  return Math.round((exitPrice - pos.entryPrice) * pos.qty * (bearish ? -1 : 1))
 }
 
 function failReason(c, pos) {
@@ -76,18 +96,18 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   for (const id of Object.keys(b.open)) {
     const pos = b.open[id]
     const live = ledger.active[id]
+    const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH'
+    const dir = bearish ? -1 : 1
     if (live && live.status === 'open') {                       // still open → mark to market
       pos.ltp = live.ltp ?? pos.ltp
-      const dir = pos.direction === 'SHORT' ? -1 : 1
-      pos.unrealizedPnl = Math.round((pos.ltp - pos.entryPrice) * pos.qty * dir)
+      pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish)
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       continue
     }
     const c = closedById[id]                                    // closed → realise P&L + journal
     const exitPrice = c?.closePrice ?? pos.ltp ?? pos.entryPrice
     const result = (c?.result || 'expired').toUpperCase()
-    const dir = pos.direction === 'SHORT' ? -1 : 1
-    const pnl = Math.round((exitPrice - pos.entryPrice) * pos.qty * dir)
+    const pnl = pnlFor(pos, exitPrice, bearish)
     const maxT = c?.maxTarget || 0
     const predBy = (maxT > 0 && pos.targets?.[maxT - 1]?.by) || pos.targets?.[0]?.by || null
     const exitDate = c?.closedAt || todayISO
@@ -126,6 +146,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     b.open[s.id] = {
       id: s.id, symbol: s.symbol || s.underlying, name: s.name || null, generator: s.generator, gen: s.label || s.generator,
       kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null,
+      optType: size.optType || null, entryPremium: size.entryPremium || null, optionPlay: s.optionPlay || null,
       qty: size.qty, lots: size.lots, lotSize: size.lotSize, notional: size.notional,
       entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,
       entryDate: s.openedAt, entryAt: nowISO, ltp: s.ltp ?? s.entry,

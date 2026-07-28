@@ -81,7 +81,9 @@ function Tile({ label, value, sub, tone }) {
 }
 
 function KindTag({ s }) {
-  return <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold text-white ${s.kind === 'FNO' ? 'bg-accent-purple' : 'bg-accent-primary'}`}>{s.kind === 'FNO' ? 'F&O' : 'CASH'}</span>
+  const label = s.kind === 'OPT' ? (s.optType || 'OPT') : s.kind === 'FNO' ? 'F&O' : 'CASH'
+  const bg = s.kind === 'OPT' ? (s.optType === 'PE' ? 'bg-red' : 'bg-green') : s.kind === 'FNO' ? 'bg-accent-purple' : 'bg-accent-primary'
+  return <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold text-white ${bg}`}>{label}</span>
 }
 
 function OpenTable({ rows }) {

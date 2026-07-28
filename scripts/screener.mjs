@@ -493,6 +493,10 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const ledger = loadLedger()
     const barsBySymbol = {}
     for (const st of scored) if (st._d) barsBySymbol[st.symbol] = { time: st._d.time, h: st._d.h, l: st._d.l, c: st._d.c }
+    // index daily bars so index-option (NIFTY/BANKNIFTY/GOLD) trades can be evaluated
+    for (const [sym, ys] of [['NIFTY', '%5ENSEI'], ['BANKNIFTY', '%5ENSEBANK'], ['GOLD', 'GC=F']]) {
+      try { const dd = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${ys}?interval=1d&range=6mo`); const r = dd?.chart?.result?.[0]; const q = r?.indicators?.quote?.[0]; if (r?.timestamp && q) barsBySymbol[sym] = { time: r.timestamp, h: q.high, l: q.low, c: q.close } } catch {}
+    }
     for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
     closedNow = evaluate(ledger, barsBySymbol, todayISO, todayTs)
     for (const g of board) if (LEDGER_GENS.has(g.id)) {
@@ -601,8 +605,25 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       if (s.kind !== 'Stock' || !s.entry || !s.sl || !Array.isArray(s.targets) || !s.targets[0]?.price) continue
       try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {}
     }
+    // INDEX OPTION trades — the desk's directional call becomes a real CE/PE trade in the journal.
+    // Buying the option = defined risk (premium) = the built-in hedge.
+    const LOT = { NIFTY: 75, BANKNIFTY: 35 }
+    for (const card of (board.find(g => g.id === 'option_buildup')?.signals || [])) {
+      const d = card.directional, lot = LOT[card.symbol]
+      if (!d || d.direction === 'NEUTRAL' || !lot || !d.sl || !Array.isArray(d.targets)) continue
+      const spot = d.spot || d.entry
+      try {
+        openOrUpdate(lg, {
+          generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',
+          direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE',
+          entry: d.entry, sl: d.sl, ltp: d.entry, lot, entryPremium: Math.round(spot * 0.009),
+          targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })),
+          confidence: d.conviction, grade: d.grade, optionPlay: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay, setupType: 'Index directional',
+        }, todayISO, todayTs); logged++
+      } catch {}
+    }
     saveLedger(lg)
-    console.log(`Ledger: logged ${logged} confluence/F&O picks for tracking`)
+    console.log(`Ledger: logged ${logged} confluence/F&O/option picks for tracking`)
 
     // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
     try { syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }

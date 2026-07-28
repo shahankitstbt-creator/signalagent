@@ -37,15 +37,19 @@ export function evaluate(ledger, barsBySymbol, todayISO, todayTs) {
     const s = ledger.active[id]
     if (s.status !== 'open') continue
     const b = barsBySymbol[s.symbol]
+    const short = s.direction === 'SHORT' || s.direction === 'BEARISH'
     if (b && b.time && b.time.length) {
       s.ltp = b.c[b.c.length - 1]
       let res = null
       for (let i = 0; i < b.time.length; i++) {
         if (b.time[i] <= s.openTs) continue
-        if (b.l[i] <= s.sl) { res = { result: 'loss', ts: b.time[i], price: s.sl }; break }
-        if (b.h[i] >= s.t1) {
-          let mt = 1; if (b.h[i] >= s.t3) mt = 3; else if (b.h[i] >= s.t2) mt = 2
-          res = { result: 'win', ts: b.time[i], price: s.t1, maxTarget: mt }; break
+        if (short) {
+          // SHORT / PE: stop is ABOVE, targets are BELOW
+          if (b.h[i] >= s.sl) { res = { result: 'loss', ts: b.time[i], price: s.sl }; break }
+          if (b.l[i] <= s.t1) { let mt = 1; if (b.l[i] <= s.t3) mt = 3; else if (b.l[i] <= s.t2) mt = 2; res = { result: 'win', ts: b.time[i], price: s.t1, maxTarget: mt }; break }
+        } else {
+          if (b.l[i] <= s.sl) { res = { result: 'loss', ts: b.time[i], price: s.sl }; break }
+          if (b.h[i] >= s.t1) { let mt = 1; if (b.h[i] >= s.t3) mt = 3; else if (b.h[i] >= s.t2) mt = 2; res = { result: 'win', ts: b.time[i], price: s.t1, maxTarget: mt }; break }
         }
       }
       if (!res && (todayTs - s.openTs) / 86400 > EXPIRE_DAYS) res = { result: 'expired', ts: todayTs, price: s.ltp }
@@ -61,7 +65,9 @@ function close(ledger, id, res, todayISO) {
   s.status = 'closed'; s.result = res.result; s.closedAt = todayISO
   s.closePrice = res.price; s.maxTarget = res.maxTarget || 0
   s.daysHeld = Math.max(1, Math.round((res.ts - s.openTs) / 86400))
-  s.returnPct = +(((res.price - s.entry) / s.entry) * 100).toFixed(2)
+  const short = s.direction === 'SHORT' || s.direction === 'BEARISH'
+  // signed return on the UNDERLYING (short profits when price falls)
+  s.returnPct = +((((res.price - s.entry) / s.entry) * 100) * (short ? -1 : 1)).toFixed(2)
   ledger.history.push({ id, generator: s.generator, symbol: s.symbol, result: s.result, openedAt: s.openedAt, closedAt: s.closedAt, daysHeld: s.daysHeld, returnPct: s.returnPct, maxTarget: s.maxTarget, confidence: s.confidence })
   const snap = { ...s }
   delete ledger.active[id]
