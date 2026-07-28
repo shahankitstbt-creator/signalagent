@@ -128,12 +128,17 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   }
   if (b.closed.length > 4000) b.closed = b.closed.slice(-4000)
 
-  // 2) OPEN new trades from TODAY's signals (priority: grade → footprint → confidence), within capacity
+  // 2) OPEN new trades. F&O + OPTIONS get PRIORITY and a protected capital sleeve so they're never
+  // crowded out by cash. Cash positions are capped at 65% of capital; the rest is reserved for F&O/options.
+  const CASH_CAP = CAPITAL * 0.65
+  const isFO = s => !!s.optType || s.generator === 'fno' || !!s.lot || !!fnoLots[s.symbol] || !!fnoLots[s.underlying]
+  const catRank = s => s.optType ? 3 : isFO(s) ? 2 : 1                  // options > F&O > cash
   const seen = new Set([...Object.keys(b.open), ...b.closed.map(t => t.id)])
   const openSyms = new Set(Object.values(b.open).map(p => p.symbol))    // one position per underlying
+  let cashInvested = Object.values(b.open).filter(p => p.kind === 'CASH').reduce((a, p) => a + p.invested, 0)
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
-    .sort((a, z) => gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
+    .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
   let opened = 0
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
@@ -141,6 +146,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (openSyms.has(sym)) continue                                     // already holding this stock
     const size = sizeTrade(s, fnoLots)
     if (!size || size.invested > b.cash) continue
+    if (size.kind === 'CASH' && cashInvested + size.invested > CASH_CAP) continue   // protect the F&O/option sleeve
+    if (size.kind === 'CASH') cashInvested += size.invested
     openSyms.add(sym)
     b.cash -= size.invested
     b.open[s.id] = {
