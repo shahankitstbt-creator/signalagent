@@ -29,7 +29,7 @@ export default function TradingJournal() {
       <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border bg-bg-panel flex items-center gap-3 flex-wrap">
         <button onClick={() => setView('board')} className="mono text-xs text-txt-sec hover:text-accent">← Board</button>
         <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">📓 Trading Journal</div>
-        <span className="mono text-[10px] text-txt-muted">₹10L paper portfolio · every high-conviction signal taken · sizing by risk · aim 5–7%/mo</span>
+        <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O/options · every high-conviction signal taken · sizing by risk · aim 5–7%/mo</span>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent ml-auto">⟳</button>
       </div>
 
@@ -38,14 +38,15 @@ export default function TradingJournal() {
       {book && (
         <>
           {/* stat tiles */}
-          <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-px bg-border border-b border-border">
-            <Tile label="Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} />
+          <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px bg-border border-b border-border">
+            <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} />
             <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} />
+            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} />}
+            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
-            <Tile label="Realised" value={inr(st.realizedPnl)} sub={`${sign(st.realizedPct)}%`} tone={pctCls(st.realizedPnl)} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
-            <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash`} />
-            <Tile label="Profit factor" value={st.profitFactor != null ? st.profitFactor : '—'} sub={st.onTimeWinRate != null ? `${st.onTimeWinRate}% hit on time` : 'building'} />
+            <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} />
+            <Tile label="Profit factor" value={st.profitFactor != null ? st.profitFactor : '—'} sub={st.onTimeWinRate != null ? `${st.onTimeWinRate}% on time` : 'building'} />
           </div>
 
           {/* tabs */}
