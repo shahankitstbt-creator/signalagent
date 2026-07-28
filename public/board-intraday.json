@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-28T16:47:34.376Z",
+  "generatedAt": "2026-07-28T17:59:39.687Z",
   "date": "2026-07-28",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -6977,6 +6977,69 @@
         },
         {
           "generator": "vp_fib",
+          "symbol": "SBGLP",
+          "name": "Suratwwala Business Group Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "📐 VP + Fib + VWAP",
+          "reason": "Triple confluence: POC ₹25 + 50% Fib + VWAP ₹25.32 stacked — institutional magnet, high-odds reaction",
+          "direction": "LONG",
+          "ltp": 25.14,
+          "entry": 25.14,
+          "sl": 24.32,
+          "slPct": -3.3,
+          "targets": [
+            {
+              "price": 26.23,
+              "pct": 4.3,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 27.04,
+              "pct": 7.6,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 27.86,
+              "pct": 10.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 49.6,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": -1.37,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 50,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Volatility coiled in a tight base",
+              "Up/down volume 2.47× (accumulation)"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": -0.016,
+            "rs50": 0.022,
+            "leader": false
+          },
+          "social": "SBGLP — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹25 + 50% Fib + VWAP ₹25.32 stacked — institutional magnet, high-odds reaction\nLTP ₹25.14 · Entry ₹25.14 · SL ₹24.32 (-3.3%)\nT1 ₹26.23 (+4.3%) by ~6h\nT2 ₹27.04 (+7.6%) · T3 ₹27.86 (+10.8%)\nSetup score 87/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SBGLP #swingtrading #nifty",
+          "vwap": 25.32,
+          "poc": 25,
+          "fib": "50%",
+          "triple": true
+        },
+        {
+          "generator": "vp_fib",
           "symbol": "SGIL",
           "name": "Synergy Green Industries Limited",
           "sector": "Equity",
@@ -7869,68 +7932,6 @@
           "poc": 1772.6,
           "fib": "38.2%",
           "triple": true
-        },
-        {
-          "generator": "vp_fib",
-          "symbol": "ANDHRAPAP",
-          "name": "ANDHRA PAPER LIMITED",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "📐 VP + Fib + VWAP",
-          "reason": "POC ₹62.91 + 38.2% Fib confluence (VWAP ₹61.18)",
-          "direction": "LONG",
-          "ltp": 62.89,
-          "entry": 62.89,
-          "sl": 61.85,
-          "slPct": -1.7,
-          "targets": [
-            {
-              "price": 64.28,
-              "pct": 2.2,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 65.32,
-              "pct": 3.9,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 66.36,
-              "pct": 5.5,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 56.7,
-          "confidence": 85,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": 0.03,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 32,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.007,
-            "rs50": 0.046,
-            "leader": true
-          },
-          "social": "ANDHRAPAP — 📐 VP + Fib + VWAP setup 📈\nPOC ₹62.91 + 38.2% Fib confluence (VWAP ₹61.18)\nLTP ₹62.89 · Entry ₹62.89 · SL ₹61.85 (-1.7%)\nT1 ₹64.28 (+2.2%) by ~6h\nT2 ₹65.32 (+3.9%) · T3 ₹66.36 (+5.5%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ANDHRAPAP #swingtrading #nifty",
-          "vwap": 61.18,
-          "poc": 62.91,
-          "fib": "38.2%",
-          "triple": false
         }
       ]
     },
@@ -9331,7 +9332,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 3.72× (accumulation)"
+              "Up/down volume 5.37× (accumulation)"
             ],
             "strong": false
           },
@@ -13703,73 +13704,97 @@
           "name": "Gold (COMEX)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4041.7,
+            "spot": 4029.2,
             "aligned": "SHORT",
-            "net": -7,
+            "net": -10,
             "longs": 0,
-            "shorts": 7,
+            "shorts": 10,
             "timeframes": [
               {
                 "tf": "15m",
-                "dir": "NEUTRAL",
-                "score": 1,
-                "entry": 4041.7,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
-                "poc": 4080.08,
-                "vah": 4116.59,
-                "val": 4040.86,
-                "vwap": 4032.44,
-                "rsi": 58,
-                "fib": "38.2%",
-                "reason": "above VWAP · below POC 4080.08 · at 38.2% Fib 4038.6"
+                "dir": "SHORT",
+                "score": -6,
+                "entry": 4029.7,
+                "sl": 4040.08,
+                "targets": [
+                  4015.85,
+                  4005.47,
+                  3995.08
+                ],
+                "etaDates": [
+                  "2026-07-29",
+                  "2026-07-29",
+                  "2026-07-29"
+                ],
+                "rr": 1.33,
+                "poc": 4042.91,
+                "vah": 4082.36,
+                "val": 4016.19,
+                "vwap": 4031.42,
+                "rsi": 44,
+                "fib": "50%",
+                "reason": "falling EMA stack · below VWAP · below POC 4042.91 · lower highs"
               },
               {
                 "tf": "35m",
-                "dir": "NEUTRAL",
-                "score": -1,
-                "entry": 4041.7,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
+                "dir": "SHORT",
+                "score": -6,
+                "entry": 4029.2,
+                "sl": 4045.32,
+                "targets": [
+                  4007.7,
+                  3991.58,
+                  3975.45
+                ],
+                "etaDates": [
+                  "2026-07-29",
+                  "2026-07-29",
+                  "2026-07-29"
+                ],
+                "rr": 1.33,
                 "poc": 4049.32,
                 "vah": 4096.71,
-                "val": 4041.68,
-                "vwap": 4042.51,
-                "rsi": 50,
-                "fib": "61.8%",
-                "reason": "below VWAP · below POC 4049.32 · higher lows · at 61.8% Fib 4043.42"
+                "val": 4038.62,
+                "vwap": 4039.25,
+                "rsi": 41,
+                "fib": "78.6%",
+                "reason": "falling EMA stack · below VWAP · below POC 4049.32 · lower highs"
               },
               {
                 "tf": "45m",
-                "dir": "NEUTRAL",
-                "score": -1,
-                "entry": 4041.7,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
+                "dir": "SHORT",
+                "score": -4,
+                "entry": 4029.7,
+                "sl": 4047.85,
+                "targets": [
+                  4005.5,
+                  3987.36,
+                  3969.21
+                ],
+                "etaDates": [
+                  "2026-07-29",
+                  "2026-07-29",
+                  "2026-07-29"
+                ],
+                "rr": 1.33,
                 "poc": 4053.18,
                 "vah": 4103.27,
                 "val": 4027.13,
-                "vwap": 4054.97,
-                "rsi": 47,
-                "fib": "61.8%",
-                "reason": "below VWAP · below POC 4053.18 · higher lows · at 61.8% Fib 4047.73"
+                "vwap": 4052.41,
+                "rsi": 40,
+                "fib": "78.6%",
+                "reason": "falling EMA stack · below VWAP · below POC 4053.18 · higher lows"
               },
               {
                 "tf": "75m",
                 "dir": "SHORT",
-                "score": -4,
-                "entry": 4041.7,
-                "sl": 4064.63,
+                "score": -5,
+                "entry": 4029.7,
+                "sl": 4052.59,
                 "targets": [
-                  4011.13,
-                  3988.2,
-                  3965.27
+                  3999.17,
+                  3976.28,
+                  3953.39
                 ],
                 "etaDates": [
                   "2026-07-29",
@@ -13780,21 +13805,21 @@
                 "poc": 4048.96,
                 "vah": 4098.46,
                 "val": 4004.68,
-                "vwap": 4062.8,
-                "rsi": 44,
+                "vwap": 4060.28,
+                "rsi": 40,
                 "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 4048.96 · higher lows"
+                "reason": "falling EMA stack · below VWAP · below POC 4048.96 · at 78.6% Fib 4034.25"
               },
               {
                 "tf": "90m",
                 "dir": "SHORT",
                 "score": -4,
-                "entry": 4041.7,
-                "sl": 4068.03,
+                "entry": 4029.7,
+                "sl": 4056.12,
                 "targets": [
-                  4006.6,
-                  3980.27,
-                  3953.94
+                  3994.48,
+                  3968.06,
+                  3941.65
                 ],
                 "etaDates": [
                   "2026-07-29",
@@ -13805,21 +13830,21 @@
                 "poc": 4059.38,
                 "vah": 4098.46,
                 "val": 4015.1,
-                "vwap": 4062.15,
-                "rsi": 43,
+                "vwap": 4060.87,
+                "rsi": 39,
                 "fib": "78.6%",
                 "reason": "falling EMA stack · below VWAP · below POC 4059.38 · higher lows"
               },
               {
                 "tf": "1h",
                 "dir": "SHORT",
-                "score": -3,
-                "entry": 4041.7,
-                "sl": 4061.43,
+                "score": -5,
+                "entry": 4029.7,
+                "sl": 4050.05,
                 "targets": [
-                  4015.39,
-                  3995.66,
-                  3975.93
+                  4002.56,
+                  3982.21,
+                  3961.85
                 ],
                 "etaDates": [
                   "2026-07-29",
@@ -13830,21 +13855,21 @@
                 "poc": 4053.53,
                 "vah": 4097.44,
                 "val": 4018.86,
-                "vwap": 4059.55,
-                "rsi": 45,
+                "vwap": 4056.69,
+                "rsi": 40,
                 "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 4053.53 · higher lows"
+                "reason": "falling EMA stack · below VWAP · below POC 4053.53 · at 78.6% Fib 4032.89"
               },
               {
                 "tf": "2h",
                 "dir": "SHORT",
                 "score": -5,
-                "entry": 4041.7,
-                "sl": 4071.48,
+                "entry": 4029.7,
+                "sl": 4058.92,
                 "targets": [
-                  4001.99,
-                  3972.21,
-                  3942.43
+                  3990.73,
+                  3961.51,
+                  3932.29
                 ],
                 "etaDates": [
                   "2026-07-29",
@@ -13855,21 +13880,21 @@
                 "poc": 4069.8,
                 "vah": 4103.67,
                 "val": 4004.68,
-                "vwap": 4062.24,
-                "rsi": 43,
+                "vwap": 4059.99,
+                "rsi": 39,
                 "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 4069.8 · at 78.6% Fib 4034.88"
+                "reason": "falling EMA stack · below VWAP · below POC 4069.8 · at 78.6% Fib 4034.25"
               },
               {
                 "tf": "3h",
                 "dir": "SHORT",
-                "score": -5,
-                "entry": 4041.7,
-                "sl": 4077.99,
+                "score": -6,
+                "entry": 4029.7,
+                "sl": 4067.18,
                 "targets": [
-                  3993.31,
-                  3957.02,
-                  3920.72
+                  3979.72,
+                  3942.24,
+                  3904.76
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -13877,24 +13902,24 @@
                   "2026-08-03"
                 ],
                 "rr": 1.33,
-                "poc": 4056.19,
-                "vah": 4117.96,
-                "val": 4000.92,
-                "vwap": 4078.58,
-                "rsi": 42,
+                "poc": 4049.69,
+                "vah": 4124.46,
+                "val": 4013.92,
+                "vwap": 4076.15,
+                "rsi": 39,
                 "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 4056.19 · at 78.6% Fib 4045.4"
+                "reason": "falling EMA stack · below VWAP · below POC 4049.69 · lower highs"
               },
               {
                 "tf": "4h",
                 "dir": "SHORT",
-                "score": -5,
-                "entry": 4041.7,
-                "sl": 4085.09,
+                "score": -6,
+                "entry": 4029.7,
+                "sl": 4074.72,
                 "targets": [
-                  3983.85,
-                  3940.46,
-                  3897.07
+                  3969.67,
+                  3924.65,
+                  3879.64
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -13904,22 +13929,22 @@
                 "rr": 1.33,
                 "poc": 4061.85,
                 "vah": 4145.88,
-                "val": 4000.22,
-                "vwap": 4070.5,
-                "rsi": 43,
-                "fib": "61.8%",
-                "reason": "falling EMA stack · below VWAP · below POC 4061.85 · at 61.8% Fib 4057.13"
+                "val": 4011.42,
+                "vwap": 4069.55,
+                "rsi": 41,
+                "fib": "78.6%",
+                "reason": "falling EMA stack · below VWAP · below POC 4061.85 · lower highs"
               },
               {
                 "tf": "1D",
                 "dir": "SHORT",
                 "score": -6,
-                "entry": 4041.7,
-                "sl": 4151.08,
+                "entry": 4029.2,
+                "sl": 4138.58,
                 "targets": [
-                  3895.86,
-                  3786.49,
-                  3677.11
+                  3883.36,
+                  3773.99,
+                  3664.61
                 ],
                 "etaDates": [
                   "2026-07-31",
@@ -13930,15 +13955,15 @@
                 "poc": 5281.76,
                 "vah": 5342.65,
                 "val": 4409.02,
-                "vwap": 4079.33,
-                "rsi": 44,
+                "vwap": 4072.02,
+                "rsi": 43,
                 "fib": "78.6%",
                 "reason": "falling EMA stack · below VWAP · below POC 5281.76 · lower highs"
               }
             ]
           },
           "directional": null,
-          "spot": 4041.7,
+          "spot": 4029.2,
           "aligned": "SHORT"
         },
         {
@@ -14412,13 +14437,13 @@
               {
                 "tf": "3h",
                 "dir": "LONG",
-                "score": 5,
+                "score": 6,
                 "entry": 7425,
-                "sl": 7287.08,
+                "sl": 7294.83,
                 "targets": [
-                  7608.89,
-                  7746.81,
-                  7884.73
+                  7598.57,
+                  7728.74,
+                  7858.91
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -14426,13 +14451,13 @@
                   "2026-08-03"
                 ],
                 "rr": 1.33,
-                "poc": 6744.63,
-                "vah": 6979,
-                "val": 6479,
-                "vwap": 7169.08,
-                "rsi": 61,
+                "poc": 6786.43,
+                "vah": 6963.6,
+                "val": 6480.41,
+                "vwap": 7167.17,
+                "rsi": 66,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 6744.63"
+                "reason": "rising EMA stack · above VWAP · above POC 6786.43 · higher lows"
               },
               {
                 "tf": "4h",
@@ -15729,11 +15754,11 @@
                 "dir": "SHORT",
                 "score": -3,
                 "entry": 3116.2,
-                "sl": 3162.19,
+                "sl": 3161.93,
                 "targets": [
-                  3054.88,
-                  3008.89,
-                  2962.89
+                  3055.23,
+                  3009.5,
+                  2963.76
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -15741,13 +15766,13 @@
                   "2026-08-03"
                 ],
                 "rr": 1.33,
-                "poc": 3147.47,
+                "poc": 3129.76,
                 "vah": 3246,
-                "val": 2956.97,
-                "vwap": 3143.48,
+                "val": 2945.15,
+                "vwap": 3144.45,
                 "rsi": 48,
                 "fib": "61.8%",
-                "reason": "falling EMA stack · below VWAP · below POC 3147.47 · higher lows"
+                "reason": "falling EMA stack · below VWAP · below POC 3129.76 · higher lows"
               },
               {
                 "tf": "4h",
@@ -16474,7 +16499,7 @@
                 "poc": 111.9,
                 "vah": 112.7,
                 "val": 105.61,
-                "vwap": 111.22,
+                "vwap": 111.24,
                 "rsi": 60,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · below POC 111.9 · lower highs"
@@ -16482,27 +16507,27 @@
               {
                 "tf": "2h",
                 "dir": "LONG",
-                "score": 4,
+                "score": 6,
                 "entry": 111.65,
-                "sl": 110.28,
+                "sl": 110.17,
                 "targets": [
-                  113.47,
-                  114.84,
-                  116.2
+                  113.63,
+                  115.11,
+                  116.59
                 ],
                 "etaDates": [
                   "2026-07-29",
                   "2026-07-30",
                   "2026-07-31"
                 ],
-                "rr": 1.33,
-                "poc": 106.09,
+                "rr": 1.34,
+                "poc": 105.45,
                 "vah": 110.45,
-                "val": 104.32,
-                "vwap": 109.87,
-                "rsi": 62,
+                "val": 104.64,
+                "vwap": 109.65,
+                "rsi": 63,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 106.09 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 105.45 · higher lows"
               },
               {
                 "tf": "3h",
@@ -16512,8 +16537,8 @@
                 "sl": 109.76,
                 "targets": [
                   114.17,
-                  116.06,
-                  117.96
+                  116.05,
+                  117.94
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -16521,24 +16546,24 @@
                   "2026-08-03"
                 ],
                 "rr": 1.33,
-                "poc": 108.96,
+                "poc": 106.84,
                 "vah": 112.15,
                 "val": 104.08,
-                "vwap": 108.01,
-                "rsi": 63,
+                "vwap": 108.09,
+                "rsi": 64,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 108.96"
+                "reason": "rising EMA stack · above VWAP · above POC 106.84"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
                 "score": 6,
                 "entry": 111.65,
-                "sl": 109.27,
+                "sl": 109.23,
                 "targets": [
-                  114.82,
-                  117.21,
-                  119.59
+                  114.87,
+                  117.29,
+                  119.7
                 ],
                 "etaDates": [
                   "2026-07-30",
@@ -16549,8 +16574,8 @@
                 "poc": 109.06,
                 "vah": 112.23,
                 "val": 103.93,
-                "vwap": 107.77,
-                "rsi": 62,
+                "vwap": 107.85,
+                "rsi": 63,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 109.06 · higher lows"
               },
