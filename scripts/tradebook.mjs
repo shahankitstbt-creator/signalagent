@@ -144,9 +144,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
 
   // 2) OPEN new trades. Two separate pools: cash trades draw the ₹10L cash sleeve, F&O + options
   // draw the dedicated ₹10L F&O sleeve — so F&O/options can never be crowded out by cash.
-  const catRank = s => s.optType ? 3 : (s.generator === 'fno' || s.lot || fnoLots[s.symbol] || fnoLots[s.underlying]) ? 2 : 1
-  const seen = new Set([...Object.keys(b.open), ...b.closed.map(t => t.id)])
-  const openSyms = new Set(Object.values(b.open).map(p => p.symbol))    // one position per underlying
+  const isIdxOpt = s => s.optType && (s.symbol === 'NIFTY' || s.symbol === 'BANKNIFTY')
+  const catRank = s => isIdxOpt(s) ? 4 : s.optType ? 3 : (s.generator === 'fno' || s.lot || fnoLots[s.symbol] || fnoLots[s.underlying]) ? 2 : 1
+  // only block ids already OPEN — NOT closed ones (a symbol must be re-tradable after its trade closes;
+  // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
+  const seen = new Set(Object.keys(b.open))
+  const openSyms = new Set(Object.values(b.open).map(p => p.symbol))    // one live position per underlying
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
