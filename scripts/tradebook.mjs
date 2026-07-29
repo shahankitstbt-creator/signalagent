@@ -19,7 +19,7 @@ const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of the F&O sleeve
 const STOCK_OPT_PREM_PCT = 0.035    // est. monthly ATM stock-option premium ≈ 3.5% of spot (higher IV than index)
-const MAX_OPEN = 40                   // concurrent positions across both sleeves
+const MAX_OPEN = 70                   // concurrent positions across both sleeves (options are cheap → many fit the F&O sleeve)
 
 export function loadBook() {
   let b
