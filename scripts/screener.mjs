@@ -609,16 +609,29 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     // Buying the option = defined risk (premium) = the built-in hedge.
     const LOT = { NIFTY: 75, BANKNIFTY: 35 }
     for (const card of (board.find(g => g.id === 'option_buildup')?.signals || [])) {
-      const d = card.directional, lot = LOT[card.symbol]
-      if (!d || d.direction === 'NEUTRAL' || !lot || !d.sl || !Array.isArray(d.targets)) continue
-      const spot = d.spot || d.entry
+      const lot = LOT[card.symbol]; if (!lot) continue
+      const d = card.directional
+      let trade = null
+      if (d && d.direction !== 'NEUTRAL' && d.sl && Array.isArray(d.targets)) {
+        // preferred: live option-OI + FII + far-month directional
+        const spot = d.spot || d.entry
+        trade = { direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE', entry: d.entry, sl: d.sl, spot, targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })), conviction: d.conviction, grade: d.grade, play: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay }
+      } else {
+        // FALLBACK (Angel OI down): trade the MULTI-TIMEFRAME alignment (price action + FII + far-month)
+        const m = card.mtf
+        if (m && Math.abs(m.net) >= 3) {
+          const bull = m.net > 0
+          const row = (m.timeframes || []).find(r => r.tf === '1D' && r.dir !== 'NEUTRAL') || (m.timeframes || []).find(r => r.dir === (bull ? 'LONG' : 'SHORT') && r.targets)
+          if (row && row.sl && row.targets) trade = { direction: bull ? 'BULLISH' : 'BEARISH', optType: bull ? 'CE' : 'PE', entry: row.entry, sl: row.sl, spot: card.spot || row.entry, targets: row.targets.map((p, i) => ({ price: p, pct: round(((p - row.entry) / row.entry) * 100, 1), by: (row.etaDates && row.etaDates[i]) || addBiz((i + 1) * 3) })), conviction: Math.min(90, 55 + Math.abs(m.net) * 4), grade: Math.abs(m.net) >= 6 ? 'A+' : 'A', play: `Buy ${card.symbol} ${bull ? 'CE' : 'PE'} — multi-TF ${m.aligned}`, reason: `Multi-timeframe ${m.aligned} (${m.longs}L/${m.shorts}S across 10 TFs)` }
+        }
+      }
+      if (!trade) continue
       try {
         openOrUpdate(lg, {
           generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',
-          direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE',
-          entry: d.entry, sl: d.sl, ltp: d.entry, lot, entryPremium: Math.round(spot * 0.009),
-          targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })),
-          confidence: d.conviction, grade: d.grade, optionPlay: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay, setupType: 'Index directional',
+          direction: trade.direction, optType: trade.optType, entry: trade.entry, sl: trade.sl, ltp: trade.entry, lot,
+          entryPremium: Math.round((trade.spot || trade.entry) * 0.009), targets: trade.targets,
+          confidence: trade.conviction, grade: trade.grade, optionPlay: trade.play, reason: trade.reason, setupType: 'Index directional',
         }, todayISO, todayTs); logged++
       } catch {}
     }
