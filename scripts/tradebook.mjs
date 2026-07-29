@@ -18,6 +18,7 @@ const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per posi
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of the F&O sleeve
+const STOCK_OPT_PREM_PCT = 0.035    // est. monthly ATM stock-option premium ≈ 3.5% of spot (higher IV than index)
 const MAX_OPEN = 40                   // concurrent positions across both sleeves
 
 export function loadBook() {
@@ -54,14 +55,15 @@ function sizeTrade(sig, fnoLots = {}) {
   if (lotFromMap && !sig.lot) sig = { ...sig, lot: lotFromMap }
   const isFno = sig.generator === 'fno' || !!sig.optionPlay || !!sig.lot
   if (isFno && sig.lot) {
-    if (entry <= sl) return null
-    const lotSize = sig.lot, riskPerShare = entry - sl
-    const oneLotMargin = lotSize * entry * FNO_MARGIN
-    if (oneLotMargin > foMax) return null
-    let lots = Math.max(1, Math.floor(foRisk / (riskPerShare * lotSize)))
-    if (lots * oneLotMargin > foDeploy) lots = Math.max(1, Math.floor(foDeploy / oneLotMargin))
-    const qty = lots * lotSize, notional = qty * entry
-    return { kind: 'FNO', sleeve: 'FO', qty, lots, lotSize, invested: Math.round(notional * FNO_MARGIN), notional: Math.round(notional) }
+    // F&O STOCK → buy a defined-risk ATM stock OPTION (CE for long, PE for short) — leverage + capped loss
+    const lotSize = sig.lot
+    const optType = (sig.direction === 'SHORT' || sig.direction === 'BEARISH') ? 'PE' : 'CE'
+    const prem = Math.round(entry * STOCK_OPT_PREM_PCT)                 // est. monthly ATM stock-option premium
+    const perLot = prem * lotSize
+    if (!prem || perLot > foMax) return null
+    const lots = Math.max(1, Math.floor(Math.min(foRisk * 2, foDeploy) / perLot))
+    const qty = lots * lotSize
+    return { kind: 'OPT', sleeve: 'FO', optType, stockOption: true, qty, lots, lotSize, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
   }
   if (entry <= sl) return null   // long cash guard
   const riskAmt = CAP_CASH * RISK_PCT / 100, maxDeploy = CAP_CASH * MAX_DEPLOY_PCT / 100, riskPerShare = entry - sl

@@ -684,7 +684,9 @@ async function indexDirectional(o, bu, inst, breadthN, idxSym) {
   } catch {}
 
   let D = 0; const why = []
-  if (inst?.available) { D += inst.score; if (inst.reasons?.[0]) why.push('FII: ' + inst.reasons[0]) }
+  // FII positioning matters but must NOT alone override the tape + far-month build (FIIs are often
+  // structurally short futures as a cash hedge) → cap its contribution to ±2.
+  if (inst?.available) { D += Math.max(-2, Math.min(2, inst.score)); if (inst.reasons?.[0]) why.push('FII: ' + inst.reasons[0]) }
   if (bu?.net === 'down') { D -= 2; why.push('Options: ' + bu.label) }
   else if (bu?.net === 'up') { D += 2; why.push('Options: ' + bu.label) }
   if (o.pcr >= 1.2) { D += 1; why.push(`PCR ${o.pcr} — puts written (support below)`) }
@@ -699,6 +701,11 @@ async function indexDirectional(o, bu, inst, breadthN, idxSym) {
   const far = (o.positioning || [])
   for (const p of far) why.push(`📅 ~${p.daysOut}d out (${String(p.expiry).slice(0, 5)}): big call OI ${p.resistance} · put floor ${p.support} · PCR ${p.pcr} — medium-term ${p.pcr >= 1.15 ? 'support building' : p.pcr <= 0.8 ? 'cap building' : 'range'}`)
   const farthest = far[far.length - 1]
+  // FAR-MONTH SMART MONEY drives medium-term bias: heavy put-writing = floor (bullish), call-writing = cap (bearish)
+  if (farthest) {
+    if (farthest.pcr >= 1.3) { D += 1; why.push(`Far-month smart money building a FLOOR — put-writing PCR ${farthest.pcr} at ${farthest.support} (medium-term bullish)`) }
+    else if (farthest.pcr <= 0.8) { D -= 1; why.push(`Far-month smart money CAPPING upside — call-writing PCR ${farthest.pcr} at ${farthest.resistance} (medium-term bearish)`) }
+  }
 
   const dir = D <= -3 ? 'BEARISH' : D >= 3 ? 'BULLISH' : 'NEUTRAL'
   const conviction = Math.min(95, 50 + Math.abs(D) * 7)
