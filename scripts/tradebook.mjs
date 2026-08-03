@@ -75,10 +75,17 @@ function sizeTrade(sig, fnoLots = {}) {
 
 // P&L for a position at a given underlying exit price. Long options use an ATM premium model
 // (~0.5 delta; premium can't go below 0, so loss is capped at the premium paid — the built-in hedge).
-function pnlFor(pos, exitPrice, bearish) {
+const daysBetween = (a, b) => { const d = (Date.parse(b) - Date.parse(a)) / 86400000; return isNaN(d) ? 0 : Math.max(0, Math.round(d)) }
+const DTE0 = 20   // ~trading days to monthly expiry at entry (paper model)
+function pnlFor(pos, exitPrice, bearish, daysHeld = 0) {
   if (pos.kind === 'OPT') {
+    // Realistic-ish ATM option: premium = decaying time-value (THETA, √time) + intrinsic (delta≈0.55).
+    // A flat/adverse held option BLEEDS premium (theta); only a real favourable move pays.
     const moveFav = bearish ? (pos.entryPrice - exitPrice) : (exitPrice - pos.entryPrice)
-    const exitPrem = Math.max(0, pos.entryPremium + 0.5 * moveFav)
+    const held = Math.min(Math.max(0, daysHeld), DTE0)
+    const timeValue = pos.entryPremium * Math.sqrt((DTE0 - held) / DTE0)   // theta decay
+    const intrinsicGain = 0.55 * moveFav                                   // delta on the move
+    const exitPrem = Math.max(0, timeValue + intrinsicGain)
     return Math.round((exitPrem - pos.entryPremium) * pos.qty)
   }
   return Math.round((exitPrice - pos.entryPrice) * pos.qty * (bearish ? -1 : 1))
@@ -114,14 +121,14 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const dir = bearish ? -1 : 1
     if (live && live.status === 'open') {                       // still open → mark to market
       pos.ltp = live.ltp ?? pos.ltp
-      pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish)
+      pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, daysBetween(pos.entryDate, todayISO))
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       continue
     }
     const c = closedById[id]                                    // closed → realise P&L + journal
     const exitPrice = c?.closePrice ?? pos.ltp ?? pos.entryPrice
     const result = (c?.result || 'expired').toUpperCase()
-    const pnl = pnlFor(pos, exitPrice, bearish)
+    const pnl = pnlFor(pos, exitPrice, bearish, c?.daysHeld ?? daysBetween(pos.entryDate, c?.closedAt || todayISO))
     const maxT = c?.maxTarget || 0
     const predBy = (maxT > 0 && pos.targets?.[maxT - 1]?.by) || pos.targets?.[0]?.by || null
     const exitDate = c?.closedAt || todayISO

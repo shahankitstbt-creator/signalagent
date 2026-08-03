@@ -63,6 +63,13 @@ jobs:
             echo "MORNING ~08:37-10:07 IST — FULL daily board (scan ALL NSE) + self-improve on yesterday's completed session"
             node scripts/screener.mjs --full --top 80 --improve
           else
+            # SELF-HEAL: if GitHub dropped the morning daily cron, the daily board is stale — run daily now
+            TODAY=$(date -u +%F)
+            BOARD_DATE=$(node -e "try{process.stdout.write(String(require('./public/board.json').date||''))}catch(e){process.stdout.write('')}")
+            if [ "$BOARD_DATE" != "$TODAY" ] && [ "$H" -ge 4 ]; then
+              echo "SELF-HEAL — daily board stale ($BOARD_DATE != $TODAY) → running DAILY to refresh"
+              node scripts/screener.mjs --full --top 80 --improve
+            fi
             echo "LIVE — intraday scan of the FULL NSE universe + real-time Telegram alerts"
             node scripts/screener.mjs --tf intraday --full
           fi
