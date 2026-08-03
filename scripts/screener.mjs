@@ -605,41 +605,28 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       if (s.kind !== 'Stock' || !s.entry || !s.sl || !Array.isArray(s.targets) || !s.targets[0]?.price) continue
       try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {}
     }
-    // INDEX OPTION trades — the desk's directional call becomes a real CE/PE trade in the journal.
-    // Buying the option = defined risk (premium) = the built-in hedge.
-    const LOT = { NIFTY: 75, BANKNIFTY: 35 }
-    for (const card of (board.find(g => g.id === 'option_buildup')?.signals || [])) {
-      const lot = LOT[card.symbol]; if (!lot) continue
-      const d = card.directional
-      let trade = null
-      if (d && d.direction !== 'NEUTRAL' && d.sl && Array.isArray(d.targets)) {
-        // preferred: live option-OI + FII + far-month directional
-        const spot = d.spot || d.entry
-        trade = { direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE', entry: d.entry, sl: d.sl, spot, targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })), conviction: d.conviction, grade: d.grade, play: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay }
-      } else {
-        // FALLBACK (Angel OI down): trade the MULTI-TIMEFRAME alignment (price action + FII + far-month)
-        const m = card.mtf
-        if (m && Math.abs(m.net) >= 3) {
-          const bull = m.net > 0
-          const row = (m.timeframes || []).find(r => r.tf === '1D' && r.dir !== 'NEUTRAL') || (m.timeframes || []).find(r => r.dir === (bull ? 'LONG' : 'SHORT') && r.targets)
-          if (row && row.sl && row.targets) trade = { direction: bull ? 'BULLISH' : 'BEARISH', optType: bull ? 'CE' : 'PE', entry: row.entry, sl: row.sl, spot: card.spot || row.entry, targets: row.targets.map((p, i) => ({ price: p, pct: round(((p - row.entry) / row.entry) * 100, 1), by: (row.etaDates && row.etaDates[i]) || addBiz((i + 1) * 3) })), conviction: Math.min(90, 55 + Math.abs(m.net) * 4), grade: Math.abs(m.net) >= 6 ? 'A+' : 'A', play: `Buy ${card.symbol} ${bull ? 'CE' : 'PE'} — multi-TF ${m.aligned}`, reason: `Multi-timeframe ${m.aligned} (${m.longs}L/${m.shorts}S across 10 TFs)` }
-        }
-      }
-      if (!trade) continue
-      try {
-        openOrUpdate(lg, {
-          generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',
-          direction: trade.direction, optType: trade.optType, entry: trade.entry, sl: trade.sl, ltp: trade.entry, lot,
-          entryPremium: Math.round((trade.spot || trade.entry) * 0.009), targets: trade.targets,
-          confidence: trade.conviction, grade: trade.grade, optionPlay: trade.play, reason: trade.reason, setupType: 'Index directional',
-        }, todayISO, todayTs); logged++
-      } catch {}
-    }
+    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs)
     saveLedger(lg)
     console.log(`Ledger: logged ${logged} confluence/F&O/option picks for tracking`)
 
     // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
     try { syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }
+  } else if (tf === 'intraday') {
+    // INTRADAY REFRESH: keep the journal LIVE during market hours — mark open positions to the
+    // current price and take fresh intraday signals, WITHOUT running win/loss evaluation (that stays
+    // on daily bars so intraday wicks don't prematurely close swing trades).
+    const lg = loadLedger()
+    const px = {}
+    for (const st of scored) if (st._d) px[st.symbol] = st._d.c.at(-1)
+    for (const c of (board.find(g => g.id === 'option_buildup')?.signals || [])) if (c.spot) px[c.symbol] = c.spot
+    for (const s of Object.values(lg.active)) if (px[s.symbol] != null) s.ltp = px[s.symbol]   // mark-to-market
+    let logged = 0
+    for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) { try { openOrUpdate(lg, card, todayISO, todayTs); logged++ } catch {} }
+    for (const s of (board.find(g => g.id === 'fno')?.signals || [])) { if (s.kind !== 'Stock' || !s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {} }
+    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs)
+    saveLedger(lg)
+    try { syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
+    console.log(`Intraday refresh: ${logged} signals logged, book marked-to-market`)
   }
 
   // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──
@@ -671,6 +658,39 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
 function buildWhy(s, sc) {
   const reasons = sc.criteria.filter(c => c.ok).map(c => c.label)
   return reasons.join('; ')
+}
+
+// Log the desk's index directional as CE/PE trades in the ledger (used by daily + intraday).
+// Prefers live option-OI/FII/far-month direction; falls back to multi-TF alignment when OI is down.
+function logIndexOptions(lg, board, addBiz, todayISO, todayTs) {
+  const LOT = { NIFTY: 75, BANKNIFTY: 35 }
+  let n = 0
+  for (const card of (board.find(g => g.id === 'option_buildup')?.signals || [])) {
+    const lot = LOT[card.symbol]; if (!lot) continue
+    const d = card.directional
+    let trade = null
+    if (d && d.direction !== 'NEUTRAL' && d.sl && Array.isArray(d.targets)) {
+      const spot = d.spot || d.entry
+      trade = { direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE', entry: d.entry, sl: d.sl, spot, targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })), conviction: d.conviction, grade: d.grade, play: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay }
+    } else {
+      const m = card.mtf
+      if (m && Math.abs(m.net) >= 3) {
+        const bull = m.net > 0
+        const row = (m.timeframes || []).find(r => r.tf === '1D' && r.dir !== 'NEUTRAL') || (m.timeframes || []).find(r => r.dir === (bull ? 'LONG' : 'SHORT') && r.targets)
+        if (row && row.sl && row.targets) trade = { direction: bull ? 'BULLISH' : 'BEARISH', optType: bull ? 'CE' : 'PE', entry: row.entry, sl: row.sl, spot: card.spot || row.entry, targets: row.targets.map((p, i) => ({ price: p, pct: round(((p - row.entry) / row.entry) * 100, 1), by: (row.etaDates && row.etaDates[i]) || addBiz((i + 1) * 3) })), conviction: Math.min(90, 55 + Math.abs(m.net) * 4), grade: Math.abs(m.net) >= 6 ? 'A+' : 'A', play: `Buy ${card.symbol} ${bull ? 'CE' : 'PE'} — multi-TF ${m.aligned}`, reason: `Multi-timeframe ${m.aligned} (${m.longs}L/${m.shorts}S across 10 TFs)` }
+      }
+    }
+    if (!trade) continue
+    try {
+      openOrUpdate(lg, {
+        generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',
+        direction: trade.direction, optType: trade.optType, entry: trade.entry, sl: trade.sl, ltp: trade.entry, lot,
+        entryPremium: Math.round((trade.spot || trade.entry) * 0.009), targets: trade.targets,
+        confidence: trade.conviction, grade: trade.grade, optionPlay: trade.play, reason: trade.reason, setupType: 'Index directional',
+      }, todayISO, todayTs); n++
+    } catch {}
+  }
+  return n
 }
 
 // Group every generator's signals into board columns. Astro = real ephemeris
