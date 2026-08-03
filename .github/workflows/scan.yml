@@ -3,10 +3,12 @@ name: ProTrader scans (cloud cron)
 # 24x7 cloud scanner + real-time Telegram alerts. Times UTC; IST = UTC + 5:30.
 on:
   schedule:
-    # Every 30 min during LIVE market ~09:00–23:00 IST, Mon–Fri. Uses OFF-PEAK
-    # minutes (:07/:37, not :00/:30) because GitHub drops far more top-of-hour runs.
-    - cron: '7 3-17 * * 1-5'       # :07 of hours 03–17 UTC (≈08:37…22:37 IST)
-    - cron: '37 3-17 * * 1-5'      # :37 of hours 03–17 UTC (≈09:07…23:07 IST)
+    # Public repo → Actions is FREE, so we run DENSE for near-real-time updates. GitHub still drops
+    # some scheduled runs (best-effort), so density + self-heal + the Vercel daily cron (backup)
+    # together keep it fully automatic with no manual steps. Times UTC; IST = UTC + 5:30.
+    - cron: '2,17,32,47 3-10 * * 1-5'   # EVERY 15 MIN during live market (≈08:32–16:00 IST)
+    - cron: '7,37 10-16 * * 1-5'        # every 30 min after-market (≈16:07–22:07 IST)
+    - cron: '2 12 * * 1-5'              # post-market daily close + weekly + self-improve (~17:32 IST)
   workflow_dispatch:               # manual (Actions tab or in-app ScanNow)
     inputs:
       tf:
@@ -56,18 +58,16 @@ jobs:
               *)        node scripts/screener.mjs --full --top 80 --improve ;;
             esac
           elif [ "$H" -eq 12 ] && [ "$MIN" -lt 25 ]; then
-            echo "POST-MARKET ~17:30 IST — full daily + weekly + self-improvement"
+            echo "POST-MARKET ~17:30 IST — full daily close + weekly + self-improvement"
             node scripts/screener.mjs --full --top 80 --improve
             node scripts/screener.mjs --tf weekly --full
-          elif [ "$H" -ge 3 ] && [ "$H" -le 4 ]; then
-            echo "MORNING ~08:37-10:07 IST — FULL daily board (scan ALL NSE) + self-improve on yesterday's completed session"
-            node scripts/screener.mjs --full --top 80 --improve
           else
-            # SELF-HEAL: if GitHub dropped the morning daily cron, the daily board is stale — run daily now
+            # DAILY board refreshes ONCE/day automatically: the first market-hours run that finds a
+            # stale board (date != today) runs the full daily; every other run is a live intraday scan.
             TODAY=$(date -u +%F)
             BOARD_DATE=$(node -e "try{process.stdout.write(String(require('./public/board.json').date||''))}catch(e){process.stdout.write('')}")
             if [ "$BOARD_DATE" != "$TODAY" ] && [ "$H" -ge 4 ]; then
-              echo "SELF-HEAL — daily board stale ($BOARD_DATE != $TODAY) → running DAILY to refresh"
+              echo "AUTO DAILY — board stale ($BOARD_DATE != $TODAY) → full daily + self-improve"
               node scripts/screener.mjs --full --top 80 --improve
             fi
             echo "LIVE — intraday scan of the FULL NSE universe + real-time Telegram alerts"
