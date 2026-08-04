@@ -594,10 +594,19 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     console.log(`Desk: ${desk.length} instruments across ${Object.keys((await import('./mtf.mjs')).TF_MIN).length} timeframes`)
   }
 
-  // ── 🇺🇸 US STOCKS: scan US large-caps (daily only) ──
+  // ── 🇺🇸 US STOCKS + US INDICES: separate tabs (daily + intraday), never mixed with Indian cards ──
   if (isDaily) {
     try { const us = await buildUsBoard(addDays); const usCol = board.find(g => g.id === 'us_stocks'); if (usCol) { usCol.signals = us; usCol.count = us.length } }
     catch (e) { console.log('US scan skipped:', e.message) }
+  }
+  if (isDaily || tf === 'intraday') {
+    try {
+      const usIdx = []
+      for (const [sym, nm, ys] of [['S&P 500', 'S&P 500', '%5EGSPC'], ['NASDAQ 100', 'Nasdaq 100', '%5ENDX'], ['DOW', 'Dow Jones', '%5EDJI']]) {
+        const m = await mtfDesk(sym, ys, { addBiz }); usIdx.push({ generator: 'us_index', isDesk: true, symbol: sym, name: nm, mtf: m, spot: m.spot, aligned: m.aligned, ccy: '$' })
+      }
+      const c = board.find(g => g.id === 'us_index'); if (c) { c.signals = usIdx; c.count = usIdx.length }
+    } catch (e) { console.log('US index desk skipped:', e.message) }
   }
 
   // LOG the confluence + F&O Stock picks (the ones we alert on) into the ledger too, so
