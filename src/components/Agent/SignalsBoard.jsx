@@ -261,15 +261,15 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
               </div>
             )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-2">
-              <Field label="Entry" value={`₹${s.entry}`} />
-              <Field label="Stop loss" value={`₹${s.sl} (${s.slPct}%)`} tone="text-red" />
+              <Field label="Entry" value={`${s.ccy || '₹'}${s.entry}`} />
+              <Field label="Stop loss" value={`${s.ccy || '₹'}${s.sl} (${s.slPct}%)`} tone="text-red" />
               <Field label="R:R" value={`1:${s.rr}`} />
               {s.delivery != null
                 ? <Field label="NSE Delivery" value={`${s.delivery}%`} tone={s.delivery >= 60 ? 'text-green' : 'text-txt-sec'} />
                 : <Field label={s.accuracy != null ? `Backtested (n=${s.backtestTrades})` : 'Setup score'} value={s.accuracy != null ? `~${s.accuracy}%` : `${s.confidence}/100`} tone="text-cyan" />}
             </div>
             <div className="grid grid-cols-3 gap-3 mb-3">
-              {t.map((x, k) => <Field key={k} label={`Target ${k + 1} · by ${x.by}`} value={`₹${x.price} (+${x.pct}%)`} tone="text-green" />)}
+              {t.map((x, k) => <Field key={k} label={`Target ${k + 1} · by ${x.by}`} value={`${s.ccy || '₹'}${x.price} (+${x.pct}%)`} tone="text-green" />)}
             </div>
             <div className="flex gap-2">
               <button onClick={copy} className="mono text-[11px] px-3 py-1.5 rounded-lg text-white" style={{ background: color }}>{copied ? '✓ Copied caption' : '📋 Copy social post'}</button>

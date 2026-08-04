@@ -19,6 +19,8 @@ const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of the F&O sleeve
 const STOCK_OPT_PREM_PCT = 0.035    // est. monthly ATM stock-option premium ≈ 3.5% of spot (higher IV than index)
+const BOOK_AT_PCT = 40              // book 50% of a position once it's up this much
+const TRAIL_EXIT_PCT = 10          // after partial book, exit the runner if it gives back to this
 const MAX_OPEN = 70                   // concurrent positions across both sleeves (options are cheap → many fit the F&O sleeve)
 
 export function loadBook() {
@@ -120,9 +122,29 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH'
     const dir = bearish ? -1 : 1
     if (live && live.status === 'open') {                       // still open → mark to market
+      const held = daysBetween(pos.entryDate, todayISO)
       pos.ltp = live.ltp ?? pos.ltp
-      pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, daysBetween(pos.entryDate, todayISO))
+      pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held)
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
+      pos.peakPct = Math.max(pos.peakPct ?? 0, pos.unrealizedPct)
+      // PARTIAL BOOK: lock 50% once up +40%, then let the rest run risk-free
+      if (!pos.partialBooked && pos.unrealizedPct >= BOOK_AT_PCT && pos.qty >= 2) {
+        const halfQty = Math.floor(pos.qty / 2)
+        const perUnit = pnlFor({ ...pos, qty: 1 }, pos.ltp, bearish, held)
+        const bookedPnl = Math.round(perUnit * halfQty)
+        const bookedInv = Math.round(pos.invested * halfQty / pos.qty)
+        if (pos.sleeve === 'FO') b.cashFO += bookedInv + bookedPnl; else b.cashCash += bookedInv + bookedPnl
+        b.closed.push({ ...pos, qty: halfQty, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (50%) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        pos.qty -= halfQty; pos.invested -= bookedInv; pos.partialBooked = true
+        pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
+      }
+      // TRAILING PROFIT-STOP on the runner: after partial book, exit if it gives back to +10%
+      if (pos.partialBooked && pos.unrealizedPct <= TRAIL_EXIT_PCT) {
+        const pnl = pnlFor(pos, pos.ltp, bearish, held)
+        if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+        b.closed.push({ ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        delete b.open[id]
+      }
       continue
     }
     const c = closedById[id]                                    // closed → realise P&L + journal

@@ -88,9 +88,9 @@ async function buildUniverse(full) {
   return [...map.values()].map(s => ({ ...s, indices: [...s.indices] }))
 }
 
-// ── Yahoo OHLCV ──
-async function ohlcv(symbol, interval = '1d', range = '1y') {
-  const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}.NS?interval=${interval}&range=${range}`)
+// ── Yahoo OHLCV (suffix '.NS' for NSE; '' for US-listed) ──
+async function ohlcv(symbol, interval = '1d', range = '1y', suffix = '.NS') {
+  const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}${suffix}?interval=${interval}&range=${range}`)
   const r = d?.chart?.result?.[0]; if (!r?.timestamp) return null
   const q = r.indicators.quote[0], t = r.timestamp
   const o = [], h = [], l = [], c = [], v = [], time = []
@@ -594,6 +594,12 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     console.log(`Desk: ${desk.length} instruments across ${Object.keys((await import('./mtf.mjs')).TF_MIN).length} timeframes`)
   }
 
+  // ── 🇺🇸 US STOCKS: scan US large-caps (daily only) ──
+  if (isDaily) {
+    try { const us = await buildUsBoard(addDays); const usCol = board.find(g => g.id === 'us_stocks'); if (usCol) { usCol.signals = us; usCol.count = us.length } }
+    catch (e) { console.log('US scan skipped:', e.message) }
+  }
+
   // LOG the confluence + F&O Stock picks (the ones we alert on) into the ledger too, so
   // their own tabs earn a REAL measured track record. They open now and are evaluated on
   // the next daily run (like every other signal). Excluded from `overall` in trackRecord().
@@ -658,6 +664,28 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
 function buildWhy(s, sc) {
   const reasons = sc.criteria.filter(c => c.ok).map(c => c.label)
   return reasons.join('; ')
+}
+
+// ── 🇺🇸 US-LISTED STOCKS: same pre-move engine on NYSE/Nasdaq large-caps (prices in $) ──
+const US_UNIVERSE = 'AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO BRK-B LLY JPM V UNH XOM MA COST HD PG JNJ ABBV NFLX BAC CRM CVX KO AMD PEP TMO WMT MRK CSCO ACN LIN MCD ABT ORCL DHR ADBE WFC TXN GE PM INTC INTU VZ QCOM CAT AMGN IBM NOW UBER BA GS SBUX BLK PLTR MU DELL SHOP PANW SNOW COIN MSTR SMCI ARM MRVL DIS PYPL BABA NKE F GM T PFE'.split(' ')
+async function buildUsBoard(addDays) {
+  const scored = (await pool(US_UNIVERSE.map(s => ({ symbol: s })), 8, async (st) => {
+    const d = await ohlcv(st.symbol, '1d', '1y', '')
+    if (!d) return null
+    try { const a = analyze(d); return { ...st, ...a, _d: d } } catch { return null }
+  })).filter(Boolean)
+  const cand = scored.filter(s => s.bullish && s.moveScore >= 35 && s.rr >= 1).sort((a, b) => (b.moveScore || 0) - (a.moveScore || 0)).slice(0, 20)
+  const pct = (s, x) => round(((x - s.entry) / s.entry) * 100, 1)
+  console.log(`US: ${scored.length} scanned, ${cand.length} signals`)
+  return cand.map(s => ({
+    generator: 'us_stocks', symbol: s.symbol, name: s.symbol, ccy: '$', direction: 'LONG', dirTone: 'up',
+    ltp: s.price, entry: s.entry, sl: s.sl, slPct: pct(s, s.sl),
+    targets: [0, 1, 2].map(i => ({ price: s.targets[i], pct: pct(s, s.targets[i]), by: addDays((s.etaDays || [])[i] || (i + 1) * 6) })),
+    rr: s.rr, rsi: s.rsi, confidence: Math.round(s.moveScore), moveScore: s.moveScore, changePct: s.changePct, setupType: s.setupType,
+    reason: `${s.setupType} — ${(s.precursors || []).slice(0, 2).join('; ') || 'pre-move setup'}`,
+    accuracy: s.bt?.trades >= 4 ? s.bt.hitRate : null, backtestTrades: s.bt?.trades,
+    social: `🇺🇸 ${s.symbol} — ${s.setupType}\nEntry $${s.entry} · SL $${s.sl} (${pct(s, s.sl)}%)\nT1 $${s.targets[0]} (+${pct(s, s.targets[0])}%) · T2 $${s.targets[1]} · T3 $${s.targets[2]}\n📌 Educational only, not advice.`,
+  }))
 }
 
 // Log the desk's index directional as CE/PE trades in the ledger (used by daily + intraday).
