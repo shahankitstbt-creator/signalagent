@@ -7,6 +7,13 @@ import { useNewFlags, useIsNew, isFresh } from '../../store/newFlags'
 import Ltp from './Ltp'
 import HitPopups from '../Alerts/HitPopups'
 
+// short tab labels so the nav bar wraps cleanly instead of scrolling
+const SHORT = {
+  confluence: '⭐ Top Picks', fno: '📊 F&O', momentum: '🚀 Momentum', us_stocks: '🇺🇸 US Stocks',
+  us_index: '🇺🇸 US Idx', vol_accum: '📈 Volume', vp_fib: '📐 VP·Fib·VWAP', money_flow: '💧 Money Flow',
+  multibagger: '💎 Multibagger', harmonic: '🔺 Harmonic', vedic_astro: '🔯 Vedic', astro_timing: '🕐 Hora',
+  option_buildup: '🎯 Desk',
+}
 const sigKey = (s, gid) => (s.generator || gid) + ':' + (s.symbol || s.underlying)
 // board date, set once per render so NewTag can flag anything generated TODAY (server-authoritative,
 // works all day) — not just the fragile 2h client-side "seen since last visit" window.
@@ -148,20 +155,20 @@ export default function SignalsBoard() {
       </div>
       {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
-      {/* nav tabs — one per generator (the card title is the tab) */}
-      <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border overflow-x-auto">
+      {/* nav tabs — short labels, WRAP to multiple rows (no horizontal scrolling) */}
+      <div className="shrink-0 flex flex-wrap gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
         {gens.map((g, i) => {
           const on = i === tab
           return (
-            <button key={g.id} onClick={() => setTab(i)}
-              className="mono text-xs whitespace-nowrap px-3 py-2 rounded-t-lg border-b-2 transition-colors"
+            <button key={g.id} onClick={() => setTab(i)} title={g.label}
+              className="mono text-[11px] whitespace-nowrap px-2.5 py-1.5 rounded-t-lg border-b-2 transition-colors"
               style={on
                 ? { color: g.color, borderBottomColor: g.color, background: tint(g.color, 0.10), fontWeight: 700 }
                 : { color: 'var(--color-txt-sec)', borderBottomColor: 'transparent' }}>
-              {g.label}
-              <span className="ml-1.5 px-1.5 rounded-full text-[10px]" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
-              {newPerTab[i] > 0 && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold bg-green text-white">+{newPerTab[i]}</span>}
-              {g.id === topId && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#FF6D00' }} title={`Highest measured accuracy: ${topWin}%`}>★ TOP ACCURATE {topWin}%</span>}
+              {SHORT[g.id] || g.label}
+              <span className="ml-1 px-1.5 rounded-full text-[10px]" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+              {newPerTab[i] > 0 && <span className="ml-1 px-1 rounded-full text-[9px] font-bold bg-green text-white">+{newPerTab[i]}</span>}
+              {g.id === topId && <span className="ml-1 px-1 rounded-full text-[9px] font-bold text-white" style={{ background: '#FF6D00' }} title={`Highest measured accuracy: ${topWin}%`}>★{topWin}%</span>}
             </button>
           )
         })}

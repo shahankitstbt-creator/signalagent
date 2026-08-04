@@ -675,15 +675,42 @@ function buildWhy(s, sc) {
   return reasons.join('; ')
 }
 
-// ── 🇺🇸 US-LISTED STOCKS: same pre-move engine on NYSE/Nasdaq large-caps (prices in $) ──
-const US_UNIVERSE = 'AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO BRK-B LLY JPM V UNH XOM MA COST HD PG JNJ ABBV NFLX BAC CRM CVX KO AMD PEP TMO WMT MRK CSCO ACN LIN MCD ABT ORCL DHR ADBE WFC TXN GE PM INTC INTU VZ QCOM CAT AMGN IBM NOW UBER BA GS SBUX BLK PLTR MU DELL SHOP PANW SNOW COIN MSTR SMCI ARM MRVL DIS PYPL BABA NKE F GM T PFE'.split(' ')
+// ── 🇺🇸 US-LISTED STOCKS: the ENTIRE US common-stock market (NYSE/Nasdaq/AMEX), prices in $ ──
+const US_CAP = 3200   // bound the daily run (covers essentially all liquid US common stocks)
+async function buildUsUniverse() {
+  const out = new Map()
+  const add = (sym) => {
+    if (!sym) return
+    let s = sym.trim().toUpperCase()
+    if (/^[A-Z]{1,5}$/.test(s)) out.set(s, s)                       // plain common stock
+    else if (/^[A-Z]{1,4}\.[A-Z]$/.test(s)) out.set(s.replace('.', '-'), s.replace('.', '-'))  // class shares → Yahoo '-'
+  }
+  try {
+    const t = await getText('https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt', 2)
+    for (const ln of (t || '').trim().split(/\r?\n/).slice(1)) { const c = ln.split('|'); if (c.length < 7 || /File Creation/.test(ln)) continue; if (c[3] === 'Y' || c[6] === 'Y') continue; add(c[0]) }  // skip Test Issue + ETF
+  } catch {}
+  try {
+    const t = await getText('https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt', 2)
+    for (const ln of (t || '').trim().split(/\r?\n/).slice(1)) { const c = ln.split('|'); if (c.length < 7 || /File Creation/.test(ln)) continue; if (c[4] === 'Y' || c[6] === 'Y') continue; add(c[0]) }  // skip ETF + Test Issue
+  } catch {}
+  return [...out.keys()]
+}
+const US_MEGACAP = 'AAPL MSFT NVDA AMZN GOOGL GOOG META TSLA AVGO BRK-B LLY JPM V UNH XOM MA COST HD PG JNJ ABBV NFLX BAC CRM CVX KO AMD PEP TMO WMT MRK CSCO ACN LIN MCD ABT ORCL DHR ADBE WFC TXN GE PM INTC INTU VZ QCOM CAT AMGN IBM NOW UBER BA GS SBUX BLK PLTR MU DELL SHOP PANW SNOW COIN MSTR SMCI ARM MRVL DIS PYPL BABA NKE F GM T PFE'.split(' ')
 async function buildUsBoard(addDays) {
-  const scored = (await pool(US_UNIVERSE.map(s => ({ symbol: s })), 8, async (st) => {
+  const full = await buildUsUniverse()
+  const total = full.length
+  const set = new Set(US_MEGACAP)
+  // megacaps FIRST (guarantees the biggest names), then the rest of the market, capped for runtime
+  let uni = [...US_MEGACAP, ...full.filter(s => !set.has(s))]
+  if (!total) uni = US_MEGACAP
+  if (uni.length > US_CAP) uni = uni.slice(0, US_CAP)
+  console.log(`US universe: ${total} common stocks (scanning ${uni.length}, megacaps first)`)
+  const scored = (await pool(uni.map(s => ({ symbol: s })), 8, async (st) => {
     const d = await ohlcv(st.symbol, '1d', '1y', '')
     if (!d) return null
     try { const a = analyze(d); return { ...st, ...a, _d: d } } catch { return null }
   })).filter(Boolean)
-  const cand = scored.filter(s => s.bullish && s.moveScore >= 35 && s.rr >= 1).sort((a, b) => (b.moveScore || 0) - (a.moveScore || 0)).slice(0, 20)
+  const cand = scored.filter(s => s.bullish && s.moveScore >= 35 && s.rr >= 1).sort((a, b) => (b.moveScore || 0) - (a.moveScore || 0)).slice(0, 30)
   const pct = (s, x) => round(((x - s.entry) / s.entry) * 100, 1)
   console.log(`US: ${scored.length} scanned, ${cand.length} signals`)
   return cand.map(s => ({
