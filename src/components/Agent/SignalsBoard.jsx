@@ -15,6 +15,21 @@ const SHORT = {
   option_buildup: '🎯 Desk',
 }
 const sigKey = (s, gid) => (s.generator || gid) + ':' + (s.symbol || s.underlying)
+// search + sort applied to any tab's signals
+const SORTS = {
+  default: null,
+  strength: (a, b) => (b._momScore ?? b.confluenceScore ?? b.confidence ?? b.moveScore ?? 0) - (a._momScore ?? a.confluenceScore ?? a.confidence ?? a.moveScore ?? 0),
+  change: (a, b) => (b.changePct ?? -1e9) - (a.changePct ?? -1e9),
+  rr: (a, b) => (b.rr ?? 0) - (a.rr ?? 0),
+  symbol: (a, b) => String(a.symbol || a.underlying || '').localeCompare(String(b.symbol || b.underlying || '')),
+}
+function applyView(signals, q, sortBy) {
+  let r = signals || []
+  if (q && q.trim()) { const s = q.trim().toLowerCase(); r = r.filter(x => (`${x.symbol || ''} ${x.underlying || ''} ${x.name || ''} ${x.sector || ''}`).toLowerCase().includes(s)) }
+  const cmp = SORTS[sortBy]
+  if (cmp) r = [...r].sort(cmp)
+  return r
+}
 // board date, set once per render so NewTag can flag anything generated TODAY (server-authoritative,
 // works all day) — not just the fragile 2h client-side "seen since last visit" window.
 let BOARD_DATE = null
@@ -39,6 +54,8 @@ export default function SignalsBoard() {
   const [tf, setTf] = useState('daily')
   const [scanMsg, setScanMsg] = useState(null)
   const [scanning, setScanning] = useState(false)
+  const [search, setSearch] = useState('')
+  const [sortBy, setSortBy] = useState('default')
   const setView = useViewStore(s => s.setView)
 
   const scanNow = async () => {
@@ -94,6 +111,7 @@ export default function SignalsBoard() {
   const newCount = gens.reduce((n, g) => n + (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length, 0)
   const newPerTab = tabs.map(g => (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length)
   const active = tabs[tab] || tabs[0]
+  const rows = applyView(active?.signals, search, sortBy)
   const tr = board?.trackRecord
   const o = tr?.overall
   const topId = tr?.topGenerator?.id           // most-accurate tab (measured, reliable sample)
@@ -189,23 +207,33 @@ export default function SignalsBoard() {
               ? <span className="ml-auto shrink-0 px-2 py-0.5 rounded-full" style={{ background: tint(active.color, 0.12) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
               : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}
           </div>
-          {active.signals.length === 0
-            ? <div className="p-8 mono text-sm text-txt-muted text-center">No signals in this generator today.</div>
+          {/* search + sort — applies to the active tab */}
+          <div className="px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap bg-bg-panel">
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search symbol / name…"
+              className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-44" />
+            <span className="mono text-[10px] text-txt-muted">Sort:</span>
+            {[['default', 'Default'], ['strength', 'Strength'], ['change', 'Change %'], ['rr', 'R:R'], ['symbol', 'A–Z']].map(([k, lbl]) => (
+              <button key={k} onClick={() => setSortBy(k)} className={`mono text-[10px] px-2 py-1 rounded ${sortBy === k ? 'text-white font-bold' : 'text-txt-sec bg-bg-card'}`} style={sortBy === k ? { background: active.color } : {}}>{lbl}</button>
+            ))}
+            {(search || sortBy !== 'default') && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
+          </div>
+          {rows.length === 0
+            ? <div className="p-8 mono text-sm text-txt-muted text-center">{search ? `No matches for "${search}" in this tab.` : 'No signals in this generator today.'}</div>
             : active.id === 'fno'
-              ? <FnoTable signals={active.signals} color={active.color} setView={setView} />
+              ? <FnoTable signals={rows} color={active.color} setView={setView} />
             : active.id === 'confluence'
-              ? <ConfluenceTable signals={active.signals} color={active.color} setView={setView} />
+              ? <ConfluenceTable signals={rows} color={active.color} setView={setView} />
             : active.id === 'vedic_astro'
-              ? <><AssetBiasTable signals={active.signals} color={active.color} />
+              ? <><AssetBiasTable signals={rows} color={active.color} />
                   {horaGen?.signals?.length > 0 && <><div className="px-5 pt-4 pb-1 mono text-xs font-bold" style={{ color: active.color }}>🕐 Hora & Rahu-Kaal Timing</div><HoraTable signals={horaGen.signals} color={active.color} /></>}</>
               : active.id === 'astro_timing'
-                ? <HoraTable signals={active.signals} color={active.color} />
-                : isTrade(active.signals[0])
+                ? <HoraTable signals={rows} color={active.color} />
+                : isTrade(rows[0])
                   ? <>
-                      <div className="hidden md:block"><TradeTable signals={active.signals} color={active.color} setView={setView} /></div>
-                      <div className="md:hidden"><TradeCards signals={active.signals} color={active.color} setView={setView} /></div>
+                      <div className="hidden md:block"><TradeTable signals={rows} color={active.color} setView={setView} /></div>
+                      <div className="md:hidden"><TradeCards signals={rows} color={active.color} setView={setView} /></div>
                     </>
-                  : <InfoList signals={active.signals} color={active.color} setView={setView} />}
+                  : <InfoList signals={rows} color={active.color} setView={setView} />}
         </div>
       )}
     </div>
@@ -214,7 +242,7 @@ export default function SignalsBoard() {
 
 function TradeTable({ signals, color, setView }) {
   const [open, setOpen] = useState(-1)
-  const rows = [...signals].sort((a, b) => (b._momScore ?? b.confidence ?? 0) - (a._momScore ?? a.confidence ?? 0))
+  const rows = signals   // ordering handled by the board's search/sort
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead>

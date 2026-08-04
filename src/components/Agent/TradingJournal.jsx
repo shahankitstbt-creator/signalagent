@@ -12,6 +12,9 @@ export default function TradingJournal() {
   const [book, setBook] = useState(null)
   const [err, setErr] = useState(null)
   const [tab, setTab] = useState('open')
+  const [q, setQ] = useState('')
+  const [kind, setKind] = useState('all')       // all | CASH | FNO | OPT
+  const [sortBy, setSortBy] = useState('recent') // recent | pnl | symbol | ret
 
   const load = () => fetch('/trade_book.json?t=' + Date.now(), { cache: 'no-store' })
     .then(async r => { const t = await r.text(); if (!r.ok || t.trim().startsWith('<')) throw new Error('Journal builds with the next daily scan — check back shortly.'); return JSON.parse(t) })
@@ -19,8 +22,21 @@ export default function TradingJournal() {
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [])
 
   const st = book?.stats
-  const open = Object.values(book?.open || {}).sort((a, b) => (b.entryDate || '').localeCompare(a.entryDate || ''))
-  const closed = [...(book?.closed || [])].reverse()
+  // search + kind filter + sort, shared by both tabs
+  const view = (arr, closedTab) => {
+    let r = arr
+    if (kind !== 'all') r = r.filter(p => kind === 'OPT' ? p.kind === 'OPT' : kind === 'FNO' ? (p.kind === 'FNO' || p.kind === 'OPT') : p.kind === 'CASH')
+    if (q.trim()) { const s = q.trim().toLowerCase(); r = r.filter(p => (`${p.symbol || ''} ${p.name || ''}`).toLowerCase().includes(s)) }
+    const cmp = {
+      recent: (a, b) => (closedTab ? (b.exitDate || '') : (b.entryDate || '')).localeCompare(closedTab ? (a.exitDate || '') : (a.entryDate || '')),
+      pnl: (a, b) => ((closedTab ? b.realizedPnl : b.unrealizedPnl) || 0) - ((closedTab ? a.realizedPnl : a.unrealizedPnl) || 0),
+      ret: (a, b) => ((closedTab ? b.realizedPct : b.unrealizedPct) || 0) - ((closedTab ? a.realizedPct : a.unrealizedPct) || 0),
+      symbol: (a, b) => String(a.symbol || '').localeCompare(String(b.symbol || '')),
+    }[sortBy]
+    return cmp ? [...r].sort(cmp) : r
+  }
+  const open = view(Object.values(book?.open || {}), false)
+  const closed = view([...(book?.closed || [])], true)
   const thisMonth = st?.monthly?.[st.monthly.length - 1]
 
   return (
@@ -56,6 +72,21 @@ export default function TradingJournal() {
                 className={`mono text-xs px-3 py-2 rounded-t-lg border-b-2 ${tab === k ? 'text-accent border-accent font-bold' : 'text-txt-sec border-transparent'}`}
                 style={tab === k ? { background: 'rgba(41,98,255,0.08)' } : {}}>{lbl}</button>
             ))}
+          </div>
+
+          {/* search + filter + sort */}
+          <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap bg-bg-panel">
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="🔍 Search symbol…"
+              className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-40" />
+            <span className="mono text-[10px] text-txt-muted ml-1">Type:</span>
+            {[['all', 'All'], ['CASH', 'Cash'], ['FNO', 'F&O'], ['OPT', 'Options']].map(([k, lbl]) => (
+              <button key={k} onClick={() => setKind(k)} className={`mono text-[10px] px-2 py-1 rounded ${kind === k ? 'bg-accent-primary text-white font-bold' : 'text-txt-sec bg-bg-card'}`}>{lbl}</button>
+            ))}
+            <span className="mono text-[10px] text-txt-muted ml-1">Sort:</span>
+            {[['recent', 'Recent'], ['pnl', 'P&L ₹'], ['ret', 'Return %'], ['symbol', 'A–Z']].map(([k, lbl]) => (
+              <button key={k} onClick={() => setSortBy(k)} className={`mono text-[10px] px-2 py-1 rounded ${sortBy === k ? 'bg-accent-primary text-white font-bold' : 'text-txt-sec bg-bg-card'}`}>{lbl}</button>
+            ))}
+            <span className="mono text-[10px] text-txt-muted ml-auto">{(tab === 'open' ? open : closed).length} shown</span>
           </div>
 
           <div className="flex-1 overflow-auto">
