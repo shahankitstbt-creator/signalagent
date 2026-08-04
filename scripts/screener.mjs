@@ -676,7 +676,7 @@ function buildWhy(s, sc) {
 }
 
 // ── 🇺🇸 US-LISTED STOCKS: the ENTIRE US common-stock market (NYSE/Nasdaq/AMEX), prices in $ ──
-const US_CAP = 3200   // bound the daily run (covers essentially all liquid US common stocks)
+const US_CAP = 8000   // effectively the ENTIRE US common-stock market (megacaps scanned first)
 async function buildUsUniverse() {
   const out = new Map()
   const add = (sym) => {
@@ -710,14 +710,24 @@ async function buildUsBoard(addDays) {
     if (!d) return null
     try { const a = analyze(d); return { ...st, ...a, _d: d } } catch { return null }
   })).filter(Boolean)
-  const cand = scored.filter(s => s.bullish && s.moveScore >= 35 && s.rr >= 1).sort((a, b) => (b.moveScore || 0) - (a.moveScore || 0)).slice(0, 30)
+  // HIGHEST-PROBABILITY LONG setups (short & medium term): pre-move OR healthy momentum-with-room.
+  // Not extended/parabolic (skip if already ran too far or overbought — no chasing).
+  const prob = s => Math.round(0.5 * (s.moveScore || 0) + 0.3 * (s.bt?.trades >= 4 ? s.bt.hitRate : 55) + 0.2 * (s.vol?.volScore || 0))
+  const cand = scored.filter(s => {
+    if (!s.bullish || s.rr < 0.8) return false
+    if (s.rsi > 80 || (s.changePct || 0) > 12) return false            // too extended — don't chase
+    const preMove = s.moveScore >= 30
+    const momentum = (s.vol?.rvol || 0) >= 1.5 && (s.changePct || 0) >= 1 && s.emaStack
+    return preMove || momentum
+  }).map(s => ({ ...s, _prob: prob(s) })).sort((a, b) => b._prob - a._prob).slice(0, 40)
   const pct = (s, x) => round(((x - s.entry) / s.entry) * 100, 1)
   console.log(`US: ${scored.length} scanned, ${cand.length} signals`)
   return cand.map(s => ({
     generator: 'us_stocks', symbol: s.symbol, name: s.symbol, ccy: '$', direction: 'LONG', dirTone: 'up',
     ltp: s.price, entry: s.entry, sl: s.sl, slPct: pct(s, s.sl),
     targets: [0, 1, 2].map(i => ({ price: s.targets[i], pct: pct(s, s.targets[i]), by: addDays((s.etaDays || [])[i] || (i + 1) * 6) })),
-    rr: s.rr, rsi: s.rsi, confidence: Math.round(s.moveScore), moveScore: s.moveScore, changePct: s.changePct, setupType: s.setupType,
+    rr: s.rr, rsi: s.rsi, confidence: s._prob, moveScore: s.moveScore, changePct: s.changePct, setupType: s.setupType,
+    horizon: (s.etaDays?.[0] || 6) <= 7 ? 'Short-term' : 'Medium-term',
     reason: `${s.setupType} — ${(s.precursors || []).slice(0, 2).join('; ') || 'pre-move setup'}`,
     accuracy: s.bt?.trades >= 4 ? s.bt.hitRate : null, backtestTrades: s.bt?.trades,
     social: `🇺🇸 ${s.symbol} — ${s.setupType}\nEntry $${s.entry} · SL $${s.sl} (${pct(s, s.sl)}%)\nT1 $${s.targets[0]} (+${pct(s, s.targets[0])}%) · T2 $${s.targets[1]} · T3 $${s.targets[2]}\n📌 Educational only, not advice.`,
