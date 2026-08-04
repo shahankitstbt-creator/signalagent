@@ -4,9 +4,9 @@
   "start": "2026-06-19",
   "daysLeft": 0,
   "current": 58.5,
-  "decided": 1173,
+  "decided": 1174,
   "reliable": true,
-  "open": 1060,
+  "open": 1063,
   "qualityBar": 65,
   "status": "below target — tightening selectivity (fewer, higher-quality signals)",
   "generators": [
@@ -14,25 +14,32 @@
       "id": "confluence",
       "winRate": 54.8,
       "decided": 73,
-      "open": 62,
+      "open": 72,
       "status": "weak"
     },
     {
       "id": "fno",
       "winRate": 70.4,
       "decided": 81,
-      "open": 84,
+      "open": 85,
       "status": "ok"
     },
     {
       "id": "momentum",
       "winRate": 72.9,
       "decided": 170,
-      "open": 260,
+      "open": 261,
       "status": "ok"
     },
     {
       "id": "us_stocks",
+      "winRate": null,
+      "decided": 0,
+      "open": 0,
+      "status": "building"
+    },
+    {
+      "id": "us_index",
       "winRate": null,
       "decided": 0,
       "open": 0,
@@ -47,8 +54,8 @@
     },
     {
       "id": "vp_fib",
-      "winRate": 50,
-      "decided": 170,
+      "winRate": 50.3,
+      "decided": 171,
       "open": 196,
       "status": "weak"
     },
@@ -63,7 +70,7 @@
       "id": "multibagger",
       "winRate": 53.3,
       "decided": 210,
-      "open": 106,
+      "open": 108,
       "status": "weak"
     },
     {
@@ -283,12 +290,12 @@
     {
       "date": "2026-08-04",
       "winRate": 58.5,
-      "decided": 1173,
-      "open": 1060,
-      "catchRate": 32.4,
+      "decided": 1174,
+      "open": 1063,
+      "catchRate": 34.7,
       "qualityBar": 65
     }
   ],
-  "generatedAt": "2026-08-04T07:14:51.665Z",
+  "generatedAt": "2026-08-04T07:19:59.758Z",
   "note": "Goal: 85% measured win-rate by 2026-07-19. \"Accuracy\" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee."
 }
