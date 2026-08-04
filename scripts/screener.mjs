@@ -713,9 +713,13 @@ async function buildUsBoard(addDays) {
   // HIGHEST-PROBABILITY LONG setups (short & medium term): pre-move OR healthy momentum-with-room.
   // Not extended/parabolic (skip if already ran too far or overbought — no chasing).
   const prob = s => Math.round(0.5 * (s.moveScore || 0) + 0.3 * (s.bt?.trades >= 4 ? s.bt.hitRate : 55) + 0.2 * (s.vol?.volScore || 0))
+  // LIQUIDITY gate — avg $ volume over ~20 days; keeps real, tradeable names (no micro-cap junk)
+  const dollarVol = s => { const v = s._d?.v || [], c = s._d?.c || []; const n = Math.min(20, v.length); if (!n) return 0; let sum = 0; for (let i = v.length - n; i < v.length; i++) sum += (v[i] || 0) * (c[i] || 0); return sum / n }
+  const MIN_DVOL = 25e6, MIN_PX = 3
   const cand = scored.filter(s => {
     if (!s.bullish || s.rr < 0.8) return false
-    if (s.rsi > 80 || (s.changePct || 0) > 12) return false            // too extended — don't chase
+    if ((s.price || 0) < MIN_PX || dollarVol(s) < MIN_DVOL) return false  // liquid, tradeable only
+    if (s.rsi > 80 || (s.changePct || 0) > 12) return false               // too extended — don't chase
     const preMove = s.moveScore >= 30
     const momentum = (s.vol?.rvol || 0) >= 1.5 && (s.changePct || 0) >= 1 && s.emaStack
     return preMove || momentum
