@@ -18,6 +18,20 @@ import { syncTradeBook } from './tradebook.mjs'
 import { institutionalBias } from './institutional.mjs'
 import { mtfDesk } from './mtf.mjs'
 import { trackNews } from './news.mjs'
+import { env } from './env.mjs'
+
+// SPOT price for FX/metals (Gold=XAU/USD, Silver=XAG/USD) via TwelveData — GC=F/SI=F are FUTURES
+// (a ~1-1.5% basis over spot), so we show true SPOT for gold/silver.
+async function spotPrice(pair) {
+  try { const k = env().TWELVE_DATA_KEY; if (!k) return null; const d = await getJSON(`https://api.twelvedata.com/price?symbol=${encodeURIComponent(pair)}&apikey=${k}`); const p = parseFloat(d?.price); return isFinite(p) && p > 0 ? p : null } catch { return null }
+}
+// shift every price field of an mtf desk result by `delta` (futures→spot conversion)
+function shiftDeskPrices(m, delta) {
+  if (!delta || !m) return
+  const adj = x => x == null ? x : round(x - delta, 2)
+  m.spot = adj(m.spot)
+  for (const r of (m.timeframes || [])) { r.entry = adj(r.entry); r.sl = adj(r.sl); if (Array.isArray(r.targets)) r.targets = r.targets.map(adj); r.poc = adj(r.poc); r.vah = adj(r.vah); r.val = adj(r.val); r.vwap = adj(r.vwap) }
+}
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
 import { notifyNewSignals, notifyClosures } from './telegram.mjs'
@@ -564,7 +578,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
 
   // ── 📊 FUTURES & OPTIONS: F&O-eligible instruments (stocks/index/commodity) with lot + options play ──
   const fnoLots = await fetchFnoLots()
-  const fno = buildFno(board, dbAssets, fnoLots, scored, addDays)
+  const fno = await buildFno(board, dbAssets, fnoLots, scored, addDays)
   const fnoCol = board.find(g => g.id === 'fno')
   if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
@@ -577,9 +591,11 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const ySym = s => s === 'NIFTY' ? '%5ENSEI' : s === 'BANKNIFTY' ? '%5ENSEBANK' : s === 'GOLD' ? 'GC=F' : s + '.NS'
     const desk = []
     const optBySym = {}; for (const c of (deskCol?.signals || [])) optBySym[c.symbol] = c   // option cards w/ .directional
-    for (const [sym, nm] of [['NIFTY', 'Nifty 50'], ['BANKNIFTY', 'Bank Nifty'], ['GOLD', 'Gold (COMEX)']]) {
+    for (const [sym, nm] of [['NIFTY', 'Nifty 50'], ['BANKNIFTY', 'Bank Nifty'], ['GOLD', 'Gold (Spot XAU/USD)']]) {
       try {
         const m = await mtfDesk(sym, ySym(sym), { addBiz })
+        // Gold: convert COMEX-futures (GC=F) levels to true SPOT (XAU/USD) by the live basis
+        if (sym === 'GOLD') { const spot = await spotPrice('XAU/USD'); if (spot && m.spot) shiftDeskPrices(m, m.spot - spot) }
         const oc = optBySym[sym]
         desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
       } catch (e) { console.log('desk', sym, 'skipped:', e.message) }
@@ -939,7 +955,7 @@ function loadOIHist() { try { return JSON.parse(readFileSync('public/oi_history.
 function saveOIHist(hist) { try { writeFileSync('public/oi_history.json', JSON.stringify(hist.slice(-400))) } catch {} }
 
 // Build the F&O tab: index (option-chain), commodity (astro), and F&O-eligible stock setups.
-function buildFno(board, dbAssets, fnoLots, scored, addDays) {
+async function buildFno(board, dbAssets, fnoLots, scored, addDays) {
   const out = []
   const col = id => board.find(g => g.id === id)
   const lotOf = sym => fnoLots[sym] || null
@@ -954,13 +970,14 @@ function buildFno(board, dbAssets, fnoLots, scored, addDays) {
     const reason = `PCR ${o.pcr} → ${o.bias}. Support ${o.support} / Resistance ${o.resistance} · ATM ${o.atm} · exp ${o.expiry}.`
     out.push({ generator: 'fno', underlying: o.symbol, name: o.name, kind: 'Index', direction: dir, dirTone: dir === 'BUY' ? 'up' : dir === 'SELL' ? 'down' : 'flat', spot: o.spot, lot: lotOf(o.symbol), grade: dir === 'RANGE' ? 'B' : 'A', optionPlay: play, pcr: o.pcr, support: o.support, resistance: o.resistance, reason, social: social(o.symbol, 'Index', dir, reason, play), rank: 100 })
   }
-  // 2) COMMODITY F&O — from Vedic bias (GOLD / SILVER)
+  // 2) COMMODITY F&O — from Vedic bias (GOLD / SILVER); spot = true XAU/XAG (not futures)
+  const spots = { GOLD: await spotPrice('XAU/USD'), SILVER: await spotPrice('XAG/USD') }
   for (const cid of ['GOLD', 'SILVER']) {
     const a = dbAssets[cid]; if (!a) continue
     const dir = a.tone === 'up' ? 'BUY' : a.tone === 'down' ? 'SELL' : 'RANGE'
     const play = optionPlay(dir, null)
     const reason = `Vedic daily bias ${a.score > 0 ? '+' : ''}${a.score} (${a.label}). Tradition — pair with MCX structure + volume.`
-    out.push({ generator: 'fno', underlying: cid, name: a.name || cid, kind: 'Commodity', direction: dir, dirTone: a.tone, spot: null, lot: lotOf(cid), grade: 'B', optionPlay: play, reason, social: social(cid, 'Commodity', dir, reason, play), rank: 90 })
+    out.push({ generator: 'fno', underlying: cid, name: a.name || cid, kind: 'Commodity', direction: dir, dirTone: a.tone, spot: spots[cid] ? round(spots[cid]) : null, lot: lotOf(cid), grade: 'B', optionPlay: play, reason, social: social(cid, 'Commodity', dir, reason, play), rank: 90 })
   }
   // 3) STOCK F&O — confluence first, then strong single-generator picks; F&O-eligible only
   const seen = new Set()

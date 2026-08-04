@@ -3,7 +3,10 @@ import { create } from 'zustand'
 // live LTP polling for the currently-viewed signals (during market hours).
 // True per-second-per-symbol isn't possible on free data (rate limits) — this
 // refreshes visible prices every few seconds, which is effectively real-time.
-const YMAP = { NIFTY: '^NSEI', BANKNIFTY: '^NSEBANK', FINNIFTY: '^CNXFIN', MIDCPNIFTY: '^NSEMDCP50', SENSEX: '^BSESN', GOLD: 'GC=F', SILVER: 'SI=F' }
+// GOLD/SILVER intentionally omitted: Yahoo only serves FUTURES (GC=F/SI=F) which carry a basis over
+// spot; the server sets true spot (XAU/XAG via TwelveData), so we let those cells show the server value.
+const YMAP = { NIFTY: '^NSEI', BANKNIFTY: '^NSEBANK', FINNIFTY: '^CNXFIN', MIDCPNIFTY: '^NSEMDCP50', SENSEX: '^BSESN' }
+const SKIP_LIVE = new Set(['GOLD', 'SILVER'])
 const yTicker = sym => YMAP[sym] || (sym + '.NS')
 
 // Indian market live window (IST 09:15–23:30 Mon–Fri: equity + MCX commodities)
@@ -20,7 +23,7 @@ export const useLiveLtp = create((set, get) => ({
   live: false,
   symbols: [],
   start(symbols) {
-    set({ symbols: (symbols || []).filter(Boolean).slice(0, 50) })
+    set({ symbols: (symbols || []).filter(s => s && !SKIP_LIVE.has(s)).slice(0, 50) })
     if (!timer) { get().tick(); timer = setInterval(() => get().tick(), 5000) }
   },
   stop() { if (timer) { clearInterval(timer); timer = null } set({ live: false }) },
