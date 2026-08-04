@@ -11,7 +11,7 @@ import HitPopups from '../Alerts/HitPopups'
 const SHORT = {
   confluence: '⭐ Top Picks', fno: '📊 F&O', momentum: '🚀 Momentum', us_stocks: '🇺🇸 US Stocks',
   us_index: '🇺🇸 US Idx', vol_accum: '📈 Volume', vp_fib: '📐 VP·Fib·VWAP', money_flow: '💧 Money Flow',
-  multibagger: '💎 Multibagger', harmonic: '🔺 Harmonic', vedic_astro: '🔯 Vedic', astro_timing: '🕐 Hora',
+  multibagger: '💎 Multibagger', harmonic: '🔺 Harmonic', vedic_astro: '🔯 Vedic + Hora', astro_timing: '🕐 Hora',
   option_buildup: '🎯 Desk',
 }
 const sigKey = (s, gid) => (s.generator || gid) + ':' + (s.symbol || s.underlying)
@@ -74,13 +74,16 @@ export default function SignalsBoard() {
   // live LTP ticker for the currently-viewed tab's symbols (market hours only)
   const startLive = useLiveLtp(s => s.start)
   const liveOn = useLiveLtp(s => s.live)
+  const gens = board?.generators || []
+  // Hora is folded into the Vedic tab → not its own tab
+  const tabs = gens.filter(g => g.id !== 'astro_timing')
+  const horaGen = gens.find(g => g.id === 'astro_timing')
   useEffect(() => {
-    const sigs = board?.generators?.[tab]?.signals || []
+    const sigs = tabs[tab]?.signals || []
     const syms = [...new Set(sigs.map(s => s.symbol || s.underlying).filter(Boolean))]
     if (syms.length) startLive(syms)
   }, [board, tab, startLive])
 
-  const gens = board?.generators || []
   const total = gens.reduce((a, g) => a + g.count, 0)
   // track NEW signals across all tabs (badge + header count)
   BOARD_DATE = board?.date || BOARD_DATE
@@ -89,8 +92,8 @@ export default function SignalsBoard() {
   const allKeys = gens.flatMap(g => (g.signals || []).map(s => sigKey(s, g.id)))
   useEffect(() => { if (gens.length) ingest(allKeys) }, [board])
   const newCount = gens.reduce((n, g) => n + (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length, 0)
-  const newPerTab = gens.map(g => (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length)
-  const active = gens[tab] || gens[0]
+  const newPerTab = tabs.map(g => (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length)
+  const active = tabs[tab] || tabs[0]
   const tr = board?.trackRecord
   const o = tr?.overall
   const topId = tr?.topGenerator?.id           // most-accurate tab (measured, reliable sample)
@@ -155,9 +158,9 @@ export default function SignalsBoard() {
       </div>
       {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
-      {/* nav tabs — short labels, WRAP to multiple rows (no horizontal scrolling) */}
-      <div className="shrink-0 flex flex-wrap gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
-        {gens.map((g, i) => {
+      {/* nav tabs — short labels, single row (scrolls sideways if needed) */}
+      <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border overflow-x-auto whitespace-nowrap">
+        {tabs.map((g, i) => {
           const on = i === tab
           return (
             <button key={g.id} onClick={() => setTab(i)} title={g.label}
@@ -193,7 +196,8 @@ export default function SignalsBoard() {
             : active.id === 'confluence'
               ? <ConfluenceTable signals={active.signals} color={active.color} setView={setView} />
             : active.id === 'vedic_astro'
-              ? <AssetBiasTable signals={active.signals} color={active.color} />
+              ? <><AssetBiasTable signals={active.signals} color={active.color} />
+                  {horaGen?.signals?.length > 0 && <><div className="px-5 pt-4 pb-1 mono text-xs font-bold" style={{ color: active.color }}>🕐 Hora & Rahu-Kaal Timing</div><HoraTable signals={horaGen.signals} color={active.color} /></>}</>
               : active.id === 'astro_timing'
                 ? <HoraTable signals={active.signals} color={active.color} />
                 : isTrade(active.signals[0])

@@ -9,20 +9,22 @@ import { detectPatterns } from './patterns.mjs'
 const round = (x, d = 2) => x == null ? null : +(+x).toFixed(d)
 const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i = 1; i < a.length; i++) o.push(a[i] * k + o[i - 1] * (1 - k)); return o }
 
+// NOTE: tab order follows this array. astro_timing (Hora) is folded into the Vedic tab in the UI
+// (not its own tab). Money Flow → US Stocks → US Indices are kept last, in that order.
 export const GEN_META = [
   { id: 'confluence', label: '⭐ Top Confluence Picks', color: '#2962FF', desc: 'Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan' },
+  { id: 'option_buildup', label: '🎯 Smart-Money Desk', color: '#DC2626', desc: 'NIFTY · BankNifty · Gold · top F&O stocks — multi-timeframe (15m→1D) confluence of Volume Profile + Fib + VWAP + price action + live option OI positioning + far-expiry accumulation, with entry / SL / targets / dates per timeframe' },
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
   { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
-  { id: 'us_stocks', label: '🇺🇸 US Stocks', color: '#1D4ED8', desc: 'US-listed large-caps (NYSE/Nasdaq) — the same pre-move engine (volume accumulation, breakout, momentum) with entry / SL / targets in $' },
-  { id: 'us_index', label: '🇺🇸 US Indices', color: '#0EA5E9', desc: 'S&P 500 · Nasdaq 100 · Dow — multi-timeframe (15m→1D) directional confluence (Volume Profile + Fib + VWAP + price action) with entry / SL / targets per timeframe' },
-  { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'vp_fib', label: '📐 VP + Fib + VWAP', color: '#D97706', desc: 'The confluence combo — Volume Profile POC + a key Fibonacci level + VWAP fair-value stacked in one zone = institutional magnet for a fast, high-odds reaction (triple stack = strongest)' },
-  { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
+  { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'multibagger', label: 'Multibagger Quality', color: '#7C3AED', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
   { id: 'harmonic', label: 'Harmonic & Chart Patterns', color: '#EA580C', desc: 'Bullish harmonic / chart-pattern breakout completing' },
-  { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#9333EA', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP — real positions, traditional reading (no edge claim)' },
+  { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#9333EA', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP + Hora/Rahu-Kaal timing — real positions, traditional reading (no edge claim)' },
   { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#DB2777', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
-  { id: 'option_buildup', label: '🎯 Smart-Money Desk', color: '#DC2626', desc: 'NIFTY · BankNifty · Gold · top F&O stocks — multi-timeframe (15m→1D) confluence of Volume Profile + Fib + VWAP + price action + live option OI positioning + far-expiry accumulation, with entry / SL / targets / dates per timeframe' },
+  { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
+  { id: 'us_stocks', label: '🇺🇸 US Stocks', color: '#1D4ED8', desc: 'US-listed common stocks (entire NYSE/Nasdaq/AMEX market) — the same pre-move engine (volume accumulation, breakout, momentum) with entry / SL / targets in $' },
+  { id: 'us_index', label: '🇺🇸 US Indices', color: '#0EA5E9', desc: 'S&P 500 · Nasdaq 100 · Dow — multi-timeframe (15m→1D) directional confluence (Volume Profile + Fib + VWAP + price action) with entry / SL / targets per timeframe' },
 ]
 // id → meta lookup (robust against reordering — never index GEN_META by position)
 const M = Object.fromEntries(GEN_META.map(g => [g.id, g]))
