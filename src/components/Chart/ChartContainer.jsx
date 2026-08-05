@@ -68,6 +68,7 @@ export default function ChartContainer({ paneIndex = null }) {
   const ovMap = useRef(new Map())
   const zonePrim = useRef(null)
   const sigZone = useRef(null)
+  const gexZone = useRef(null)
   const sigLines = useRef([])
   const gexLines = useRef([])
   const drawPrim = useRef(null)
@@ -90,6 +91,7 @@ export default function ChartContainer({ paneIndex = null }) {
     c.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } })
     zonePrim.current = new ZonePrimitive()
     sigZone.current = new ZonePrimitive()
+    gexZone.current = new ZonePrimitive()
     drawPrim.current = new DrawingPrimitive()
     chart.current = c
 
@@ -137,6 +139,7 @@ export default function ChartContainer({ paneIndex = null }) {
     candle.current = makePriceSeries(c, useChartSettings.getState())
     candle.current.attachPrimitive(zonePrim.current)
     candle.current.attachPrimitive(sigZone.current)
+    candle.current.attachPrimitive(gexZone.current)
     candle.current.attachPrimitive(drawPrim.current)
     dataKey.current = '' // force data effect to setData onto the new series
   }, [settings.chartType])
@@ -247,14 +250,25 @@ export default function ChartContainer({ paneIndex = null }) {
     gexLines.current.forEach(pl => { try { cs.removePriceLine(pl) } catch {} })
     gexLines.current = []
     const g = gexMap[{ '^NSEI': 'NIFTY', '^NSEBANK': 'BANKNIFTY' }[symbol]]
-    if (!g) return
-    const add = (price, color, title, w = 1, style = 0) => { if (price == null) return; try { gexLines.current.push(cs.createPriceLine({ price, color, title, lineWidth: w, lineStyle: style })) } catch {} }
+    if (!g) { try { gexZone.current?.setZones([]) } catch {}; return }
+    const add = (price, color, title, w = 1, style = 0) => { if (price == null) return; try { gexLines.current.push(cs.createPriceLine({ price, color, title, lineWidth: w, lineStyle: style, axisLabelVisible: true })) } catch {} }
+    // key levels as labeled lines
     add(g.gammaFlip, '#FFD600', `⚡ GAMMA FLIP ${g.gammaFlip} · ${g.regime}`, 2, 2)
-    add(g.callWall, '#F23645', `🧱 CALL WALL ${g.callWall}`, 2, 0)
-    add(g.putWall, '#0E9F6E', `🧱 PUT WALL ${g.putWall}`, 2, 0)
+    add(g.callWall, '#F23645', `🧱 CALL WALL ${g.callWall} — resistance`, 3, 0)
+    add(g.putWall, '#0E9F6E', `🧱 PUT WALL ${g.putWall} — support`, 3, 0)
     for (const r of (g.strikes || [])) {
-      if (r.k === g.callWall || r.k === g.putWall || r.strength < 35) continue
-      add(r.k, r.role === 'RES' ? 'rgba(242,54,69,0.55)' : 'rgba(14,159,110,0.55)', `${r.k} ${r.role} ${r.strength}`, 1, 1)
+      if (r.k === g.callWall || r.k === g.putWall || r.strength < 40) continue
+      add(r.k, r.role === 'RES' ? 'rgba(242,54,69,0.5)' : 'rgba(14,159,110,0.5)', `${r.k} ${r.role === 'RES' ? 'Resistance' : 'Support'} ${r.strength}`, 1, 1)
+    }
+    // shaded zones (like the reference): overhead resistance, downside cushion, locked range
+    const t1 = bars[0]?.time, t2 = bars.at(-1)?.time
+    if (t1 && t2) {
+      const cw = g.callWall, pw = g.putWall, fl = g.gammaFlip, z = []
+      z.push({ time1: t1, time2: t2, price1: cw, price2: cw * 1.006, fill: 'rgba(242,54,69,0.12)', border: 'rgba(242,54,69,0.5)', label: `Overhead resistance (call wall ${cw})` })
+      z.push({ time1: t1, time2: t2, price1: pw * 0.994, price2: pw, fill: 'rgba(14,159,110,0.12)', border: 'rgba(14,159,110,0.5)', label: `Downside cushion (put wall ${pw})` })
+      const lo = Math.min(pw, cw, fl), hi = Math.max(pw, cw, fl)
+      if (hi > lo) z.push({ time1: t1, time2: t2, price1: lo, price2: hi, fill: 'rgba(124,58,237,0.06)', border: 'rgba(124,58,237,0.3)', label: `Locked range ${lo}–${hi} · ${g.regime}` })
+      try { gexZone.current?.setZones(z) } catch {}
     }
   }, [gexMap, symbol, bars, settings.chartType])
 

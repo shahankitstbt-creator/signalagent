@@ -1,5 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useViewStore } from '../../store/viewStore'
+
+// column-header sorting for the journal tables
+const JACC = {
+  symbol: r => r.symbol || '', qty: r => r.qty, entry: r => r.entryPrice, entryDate: r => r.entryDate,
+  ltp: r => r.ltp, unreal: r => r.unrealizedPct, sl: r => r.sl, t1: r => r.targets?.[0]?.price, grade: r => r.grade || '',
+  exit: r => r.exitPrice, exitDate: r => r.exitDate, held: r => r.daysHeld, result: r => r.result || '', pnl: r => r.realizedPnl, ret: r => r.realizedPct,
+}
+function useColSort(rows) {
+  const [key, setKey] = useState(null), [dir, setDir] = useState('desc')
+  const toggle = k => { if (key === k) setDir(d => d === 'asc' ? 'desc' : 'asc'); else { setKey(k); setDir('desc') } }
+  const sorted = useMemo(() => { if (!key) return rows; const g = JACC[key] || (r => r[key]); return [...rows].sort((a, b) => { const av = g(a), bv = g(b); let c; if (typeof av === 'string' || typeof bv === 'string') c = String(av || '').localeCompare(String(bv || '')); else c = (av ?? -Infinity) - (bv ?? -Infinity); return dir === 'asc' ? c : -c }) }, [rows, key, dir])
+  return { sorted, key, dir, toggle }
+}
+function JTh({ label, k, s, cls = '' }) {
+  return <th onClick={() => k && s.toggle(k)} className={`${cls} ${k ? 'cursor-pointer select-none hover:text-txt' : ''}`} title={k ? 'Click to sort' : ''}>{label}{k ? <span className="text-[8px] opacity-60">{s.key === k ? (s.dir === 'asc' ? ' ▲' : ' ▼') : ' ↕'}</span> : ''}</th>
+}
 
 const inr = n => n == null ? '—' : '₹' + Math.round(n).toLocaleString('en-IN')
 const pctCls = v => v > 0 ? 'text-green' : v < 0 ? 'text-red' : 'text-txt-sec'
@@ -118,13 +134,18 @@ function KindTag({ s }) {
   return <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold text-white ${bg}`}>{label}</span>
 }
 
-function OpenTable({ rows }) {
+function OpenTable({ rows: raw }) {
+  const s = useColSort(raw)
+  const rows = s.sorted
   if (!rows.length) return <Empty msg="No open paper positions yet — they open as new high-conviction signals fire." />
+  const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
-        {['Symbol', '', 'Dir', 'Qty', 'Entry', 'Entry date', 'LTP', 'Unrealised', 'SL', 'T1', 'Grade', 'Setup'].map((h, i) =>
-          <th key={i} className={`px-3 py-2 font-semibold ${[3, 4, 6, 7, 8, 9].includes(i) ? 'text-right' : 'text-left'}`}>{h}</th>)}
+        <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><JTh label="Dir" k="result" s={s} cls={L} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Entry date" k="entryDate" s={s} cls={L} />
+        <JTh label="LTP" k="ltp" s={s} cls={R} /><JTh label="Unrealised" k="unreal" s={s} cls={R} /><JTh label="SL" k="sl" s={s} cls={R} />
+        <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Grade" k="grade" s={s} cls={L} /><th className={L}>Setup</th>
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (
@@ -148,13 +169,18 @@ function OpenTable({ rows }) {
   )
 }
 
-function ClosedTable({ rows }) {
+function ClosedTable({ rows: raw }) {
+  const s = useColSort(raw)
+  const rows = s.sorted
   if (!rows.length) return <Empty msg="No closed trades yet — outcomes journal here as targets/stops are hit." />
+  const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
-        {['Symbol', '', 'Dir', 'Qty', 'Entry', 'Exit', 'Held', 'Result', 'P&L', 'Target / on time', 'Notes'].map((h, i) =>
-          <th key={i} className={`px-3 py-2 font-semibold ${[3, 4, 5, 8].includes(i) ? 'text-right' : 'text-left'}`}>{h}</th>)}
+        <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><th className={L}>Dir</th>
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Exit" k="exit" s={s} cls={R} />
+        <JTh label="Held" k="held" s={s} cls={L} /><JTh label="Result" k="result" s={s} cls={L} /><JTh label="P&L" k="pnl" s={s} cls={R} />
+        <th className={L}>Target / on time</th><th className={L}>Notes</th>
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useViewStore } from '../../store/viewStore'
 import { useChartStore } from '../../store/chartStore'
 import { useHitAlerts } from '../../store/hitAlerts'
@@ -23,6 +23,29 @@ const SORTS = {
   rr: (a, b) => (b.rr ?? 0) - (a.rr ?? 0),
   symbol: (a, b) => String(a.symbol || a.underlying || '').localeCompare(String(b.symbol || b.underlying || '')),
 }
+// column-header sorting for any table
+const ACC = {
+  symbol: r => r.symbol || r.underlying || '', ltp: r => r.ltp ?? r.spot, entry: r => r.entry, sl: r => r.sl,
+  t1: r => r.targets?.[0]?.price, t2: r => r.targets?.[1]?.price, t3: r => r.targets?.[2]?.price,
+  conf: r => r.confidence ?? r.moveScore ?? 0, rr: r => r.rr, change: r => r.changePct, grade: r => r.grade || '',
+  spot: r => r.spot ?? r.ltp, lot: r => r.lot, delivery: r => r.delivery,
+}
+function useSortable(rows, initialKey = null) {
+  const [key, setKey] = useState(initialKey)
+  const [dir, setDir] = useState('desc')
+  const toggle = k => { if (key === k) setDir(d => d === 'asc' ? 'desc' : 'asc'); else { setKey(k); setDir('desc') } }
+  const sorted = useMemo(() => {
+    if (!key) return rows
+    const g = ACC[key] || (r => r[key])
+    return [...rows].sort((a, b) => { const av = g(a), bv = g(b); let c; if (typeof av === 'string' || typeof bv === 'string') c = String(av || '').localeCompare(String(bv || '')); else c = (av ?? -Infinity) - (bv ?? -Infinity); return dir === 'asc' ? c : -c })
+  }, [rows, key, dir])
+  return { sorted, key, dir, toggle }
+}
+function Sth({ label, k, s, cls = '' }) {
+  const active = s.key === k
+  return <th onClick={() => s.toggle(k)} className={`${cls} cursor-pointer select-none hover:text-txt`} title="Click to sort">{label}<span className="text-[8px] opacity-60">{active ? (s.dir === 'asc' ? ' ▲' : ' ▼') : ' ↕'}</span></th>
+}
+
 function applyView(signals, q, sortBy) {
   let r = signals || []
   if (q && q.trim()) { const s = q.trim().toLowerCase(); r = r.filter(x => (`${x.symbol || ''} ${x.underlying || ''} ${x.name || ''} ${x.sector || ''}`).toLowerCase().includes(s)) }
@@ -244,13 +267,23 @@ export default function SignalsBoard() {
 
 function TradeTable({ signals, color, setView }) {
   const [open, setOpen] = useState(-1)
-  const rows = signals   // ordering handled by the board's search/sort
+  const s = useSortable(signals)
+  const rows = s.sorted
+  const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead>
         <tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
-          {['Symbol', 'Signal', 'LTP', 'Entry', 'Stop', 'T1', 'T2', 'T3', 'Conf', '']
-            .map((h, i) => <th key={i} className={`px-3 py-2 font-semibold ${i >= 2 && i <= 8 ? 'text-right' : 'text-left'}`}>{h}</th>)}
+          <Sth label="Symbol" k="symbol" s={s} cls={L} />
+          <th className={L}>Signal</th>
+          <Sth label="LTP" k="ltp" s={s} cls={R} />
+          <Sth label="Entry" k="entry" s={s} cls={R} />
+          <Sth label="Stop" k="sl" s={s} cls={R} />
+          <Sth label="T1" k="t1" s={s} cls={R} />
+          <Sth label="T2" k="t2" s={s} cls={R} />
+          <Sth label="T3" k="t3" s={s} cls={R} />
+          <Sth label="Conf" k="conf" s={s} cls={R} />
+          <th className={R}></th>
         </tr>
       </thead>
       <tbody>
@@ -330,13 +363,21 @@ function Field({ label, value, tone }) {
 const dirCls = t => t === 'up' ? 'bg-green' : t === 'down' ? 'bg-red' : 'bg-yellow'
 function FnoTable({ signals, color, setView }) {
   const [open, setOpen] = useState(0)
-  const rows = signals   // ordering handled by the board's search/sort
+  const s = useSortable(signals)
+  const rows = s.sorted
   if (!rows.length) return <div className="p-8 mono text-sm text-txt-muted text-center">No F&O setups right now — appears with the scan.</div>
+  const H = 'px-3 py-2 text-left font-semibold'
   return (
     <>
       <table className="hidden md:table w-full mono text-xs border-collapse">
         <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
-          {['Underlying', 'Type', 'Signal', 'Spot/LTP', 'Lot', 'Suggested options play', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}
+          <Sth label="Underlying" k="symbol" s={s} cls={H} />
+          <th className={H}>Type</th>
+          <th className={H}>Signal</th>
+          <Sth label="Spot/LTP" k="spot" s={s} cls={H} />
+          <Sth label="Lot" k="lot" s={s} cls={H} />
+          <th className={H}>Suggested options play</th>
+          <th className={H}></th>
         </tr></thead>
         <tbody>{rows.map((s, i) => <FnoRow key={s.underlying + i} s={s} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} setView={setView} />)}</tbody>
       </table>
@@ -405,17 +446,27 @@ function FnoCard({ s, color }) {
 const gradeBg = g => g === 'A++' ? '#0E9F6E' : g === 'A+' ? '#0E7FA3' : '#2962FF'
 function ConfluenceTable({ signals, color, setView }) {
   const [open, setOpen] = useState(0)
-  const rows = signals   // ordering handled by the board's search/sort
+  const s = useSortable(signals)
+  const rows = s.sorted
   if (!rows.length) return (
     <div className="p-8 mono text-sm text-txt-muted text-center max-w-xl mx-auto">
       No 2-generator confluence today — the market didn't give a high-conviction overlap.<br />The individual generator tabs still have setups. Confluence picks appear when ≥2 engines agree on the same stock.
     </div>
   )
+  const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
     <>
       <table className="hidden md:table w-full mono text-xs border-collapse">
         <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
-          {['Stock', 'Grade', 'Agree', 'LTP', 'Entry', 'Stop', 'T1', 'Conf', ''].map((h, i) => <th key={i} className={`px-3 py-2 font-semibold ${i >= 3 && i <= 7 ? 'text-right' : 'text-left'}`}>{h}</th>)}
+          <Sth label="Stock" k="symbol" s={s} cls={L} />
+          <Sth label="Grade" k="grade" s={s} cls={L} />
+          <th className={L}>Agree</th>
+          <Sth label="LTP" k="ltp" s={s} cls={R} />
+          <Sth label="Entry" k="entry" s={s} cls={R} />
+          <Sth label="Stop" k="sl" s={s} cls={R} />
+          <Sth label="T1" k="t1" s={s} cls={R} />
+          <Sth label="Conf" k="conf" s={s} cls={R} />
+          <th className={R}></th>
         </tr></thead>
         <tbody>{rows.map((s, i) => <ConfRow key={s.symbol + i} s={s} color={color} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} setView={setView} />)}</tbody>
       </table>

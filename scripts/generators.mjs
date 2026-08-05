@@ -14,7 +14,6 @@ const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i 
 export const GEN_META = [
   { id: 'confluence', label: '⭐ Top Confluence Picks', color: '#2962FF', desc: 'Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan' },
   { id: 'option_buildup', label: '🎯 Smart-Money Desk', color: '#DC2626', desc: 'NIFTY · BankNifty · Gold · top F&O stocks — multi-timeframe (15m→1D) confluence of Volume Profile + Fib + VWAP + price action + live option OI positioning + far-expiry accumulation, with entry / SL / targets / dates per timeframe' },
-  { id: 'gex', label: '🧲 Gamma / Dealer Map', color: '#7C3AED', desc: 'NIFTY & BankNifty gamma-exposure (SpotGamma-style): regime (NEG/POS gamma), gamma flip, call/put walls, locked range and per-strike dealer strength — the levels price is drawn to or accelerates through. Also drawn on the chart.' },
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
   { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
   { id: 'vp_fib', label: '📐 VP + Fib + VWAP', color: '#D97706', desc: 'The confluence combo — Volume Profile POC + a key Fibonacci level + VWAP fair-value stacked in one zone = institutional magnet for a fast, high-odds reaction (triple stack = strongest)' },
@@ -26,6 +25,7 @@ export const GEN_META = [
   { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
   { id: 'us_stocks', label: '🇺🇸 US Stocks', color: '#1D4ED8', desc: 'US-listed common stocks (entire NYSE/Nasdaq/AMEX market) — the same pre-move engine (volume accumulation, breakout, momentum) with entry / SL / targets in $' },
   { id: 'us_index', label: '🇺🇸 US Indices', color: '#0EA5E9', desc: 'S&P 500 · Nasdaq 100 · Dow — multi-timeframe (15m→1D) directional confluence (Volume Profile + Fib + VWAP + price action) with entry / SL / targets per timeframe' },
+  { id: 'gex', label: '🧲 Gamma / Dealer Map', color: '#7C3AED', desc: 'NIFTY & BankNifty gamma-exposure (SpotGamma-style): regime (NEG/POS gamma), gamma flip, call/put walls, locked range and per-strike dealer strength — the levels price is drawn to or accelerates through. Also drawn on the chart.' },
 ]
 // id → meta lookup (robust against reordering — never index GEN_META by position)
 const M = Object.fromEntries(GEN_META.map(g => [g.id, g]))
