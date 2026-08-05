@@ -58,6 +58,7 @@ export default function ChartContainer({ paneIndex = null }) {
   const [menu, setMenu] = useState(null) // right-click context menu {x,y,price}
   const [plus, setPlus] = useState(null) // price-scale + button {y, price}
   const [plusOpen, setPlusOpen] = useState(false)
+  const [gexMap, setGexMap] = useState({})   // GEX levels for NIFTY/BankNifty from the board
 
   const wrap = useRef(null)
   const mainDiv = useRef(null)
@@ -68,6 +69,7 @@ export default function ChartContainer({ paneIndex = null }) {
   const zonePrim = useRef(null)
   const sigZone = useRef(null)
   const sigLines = useRef([])
+  const gexLines = useRef([])
   const drawPrim = useRef(null)
   const keyRef = useRef(drawKey)
   keyRef.current = drawKey
@@ -229,6 +231,32 @@ export default function ChartContainer({ paneIndex = null }) {
   }, [signals, selected, bars, settings.chartType])
 
   useEffect(() => { drawPrim.current?.setShapes(shapes || []) }, [shapes])
+
+  // ── GEX / DEALER LEVELS overlay for NIFTY & BankNifty (gamma flip, call/put walls, dealer strikes) ──
+  useEffect(() => {
+    let stop = false
+    const load = () => fetch('/board.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).then(b => {
+      if (stop) return
+      const m = {}; for (const c of (b.generators?.find(g => g.id === 'option_buildup')?.signals || [])) if (c.gex) m[c.symbol] = c.gex
+      setGexMap(m)
+    }).catch(() => {})
+    load(); const id = setInterval(load, 60000); return () => { stop = true; clearInterval(id) }
+  }, [])
+  useEffect(() => {
+    const cs = candle.current; if (!cs) return
+    gexLines.current.forEach(pl => { try { cs.removePriceLine(pl) } catch {} })
+    gexLines.current = []
+    const g = gexMap[{ '^NSEI': 'NIFTY', '^NSEBANK': 'BANKNIFTY' }[symbol]]
+    if (!g) return
+    const add = (price, color, title, w = 1, style = 0) => { if (price == null) return; try { gexLines.current.push(cs.createPriceLine({ price, color, title, lineWidth: w, lineStyle: style })) } catch {} }
+    add(g.gammaFlip, '#FFD600', `⚡ GAMMA FLIP ${g.gammaFlip} · ${g.regime}`, 2, 2)
+    add(g.callWall, '#F23645', `🧱 CALL WALL ${g.callWall}`, 2, 0)
+    add(g.putWall, '#0E9F6E', `🧱 PUT WALL ${g.putWall}`, 2, 0)
+    for (const r of (g.strikes || [])) {
+      if (r.k === g.callWall || r.k === g.putWall || r.strength < 35) continue
+      add(r.k, r.role === 'RES' ? 'rgba(242,54,69,0.55)' : 'rgba(14,159,110,0.55)', `${r.k} ${r.role} ${r.strength}`, 1, 1)
+    }
+  }, [gexMap, symbol, bars, settings.chartType])
 
   const onReset = () => { try { chart.current.timeScale().fitContent(); chart.current.priceScale('right').applyOptions({ autoScale: true }) } catch {} }
   const onScreenshot = () => { try { const cv = chart.current.takeScreenshot(); const a = document.createElement('a'); a.href = cv.toDataURL('image/png'); a.download = `${symbol}.png`; a.click() } catch {} }
