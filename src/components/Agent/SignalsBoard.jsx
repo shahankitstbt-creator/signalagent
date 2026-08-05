@@ -330,7 +330,7 @@ function Field({ label, value, tone }) {
 const dirCls = t => t === 'up' ? 'bg-green' : t === 'down' ? 'bg-red' : 'bg-yellow'
 function FnoTable({ signals, color, setView }) {
   const [open, setOpen] = useState(0)
-  const rows = [...signals].sort((a, b) => (b.rank ?? 0) - (a.rank ?? 0))
+  const rows = signals   // ordering handled by the board's search/sort
   if (!rows.length) return <div className="p-8 mono text-sm text-txt-muted text-center">No F&O setups right now — appears with the scan.</div>
   return (
     <>
@@ -405,7 +405,7 @@ function FnoCard({ s, color }) {
 const gradeBg = g => g === 'A++' ? '#0E9F6E' : g === 'A+' ? '#0E7FA3' : '#2962FF'
 function ConfluenceTable({ signals, color, setView }) {
   const [open, setOpen] = useState(0)
-  const rows = [...signals].sort((a, b) => (b.confluenceScore ?? 0) - (a.confluenceScore ?? 0))
+  const rows = signals   // ordering handled by the board's search/sort
   if (!rows.length) return (
     <div className="p-8 mono text-sm text-txt-muted text-center max-w-xl mx-auto">
       No 2-generator confluence today — the market didn't give a high-conviction overlap.<br />The individual generator tabs still have setups. Confluence picks appear when ≥2 engines agree on the same stock.
