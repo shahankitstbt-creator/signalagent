@@ -237,7 +237,7 @@ export default function ChartContainer({ paneIndex = null }) {
     let stop = false
     const load = () => fetch('/board.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).then(b => {
       if (stop) return
-      const m = {}; for (const c of (b.generators?.find(g => g.id === 'option_buildup')?.signals || [])) if (c.gex) m[c.symbol] = c.gex
+      const m = {}; for (const c of (b.generators?.find(g => g.id === 'gex')?.signals || [])) if (c.gex) m[c.symbol] = c.gex
       setGexMap(m)
     }).catch(() => {})
     load(); const id = setInterval(load, 60000); return () => { stop = true; clearInterval(id) }

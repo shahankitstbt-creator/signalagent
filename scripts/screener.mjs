@@ -597,7 +597,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
         // Gold: convert COMEX-futures (GC=F) levels to true SPOT (XAU/USD) by the live basis
         if (sym === 'GOLD') { const spot = await spotPrice('XAU/USD'); if (spot && m.spot) shiftDeskPrices(m, m.spot - spot) }
         const oc = optBySym[sym]
-        desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, gex: oc?.gex || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
+        desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
       } catch (e) { console.log('desk', sym, 'skipped:', e.message) }
     }
     // top F&O-eligible stocks by pre-move score
@@ -608,6 +608,11 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     }
     if (deskCol) { deskCol.signals = desk; deskCol.count = desk.length }
     console.log(`Desk: ${desk.length} instruments across ${Object.keys((await import('./mtf.mjs')).TF_MIN).length} timeframes`)
+
+    // ── 🧲 GAMMA / DEALER MAP — its OWN tab (NIFTY & BankNifty), not merged into the Desk ──
+    const gexCards = []
+    for (const sym of ['NIFTY', 'BANKNIFTY']) { const g = optBySym[sym]?.gex; if (g) gexCards.push({ generator: 'gex', isGex: true, symbol: sym, name: sym === 'NIFTY' ? 'Nifty 50' : 'Bank Nifty', gex: g, spot: g.spot }) }
+    const gexCol = board.find(g => g.id === 'gex'); if (gexCol) { gexCol.signals = gexCards; gexCol.count = gexCards.length }
   }
 
   // ── 🇺🇸 US STOCKS + US INDICES: separate tabs (daily + intraday), never mixed with Indian cards ──

@@ -12,7 +12,7 @@ const SHORT = {
   confluence: '⭐ Top Picks', fno: '📊 F&O', momentum: '🚀 Momentum', us_stocks: '🇺🇸 US Stocks',
   us_index: '🇺🇸 US Idx', vol_accum: '📈 Volume', vp_fib: '📐 VP·Fib·VWAP', money_flow: '💧 Money Flow',
   multibagger: '💎 Multibagger', harmonic: '🔺 Harmonic', vedic_astro: '🔯 Vedic + Hora', astro_timing: '🕐 Hora',
-  option_buildup: '🎯 Desk',
+  option_buildup: '🎯 Desk', gex: '🧲 Gamma Map',
 }
 const sigKey = (s, gid) => (s.generator || gid) + ':' + (s.symbol || s.underlying)
 // search + sort applied to any tab's signals
@@ -226,7 +226,9 @@ export default function SignalsBoard() {
             : active.id === 'vedic_astro'
               ? <><AssetBiasTable signals={rows} color={active.color} />
                   {horaGen?.signals?.length > 0 && <><div className="px-5 pt-4 pb-1 mono text-xs font-bold" style={{ color: active.color }}>🕐 Hora & Rahu-Kaal Timing</div><HoraTable signals={horaGen.signals} color={active.color} /></>}</>
-              : active.id === 'astro_timing'
+              : active.id === 'gex'
+              ? <div className="grid gap-3 p-4 md:grid-cols-2">{rows.map((s, i) => <GexCard key={s.symbol + i} s={s} color={active.color} setView={setView} />)}</div>
+            : active.id === 'astro_timing'
                 ? <HoraTable signals={rows} color={active.color} />
                 : isTrade(rows[0])
                   ? <>
@@ -848,6 +850,20 @@ function GexPanel({ g }) {
     </div>
   )
 }
+function GexCard({ s, color, setView }) {
+  const openSymbol = useChartStore(st => st.openSymbol)
+  const chart = () => { openSymbol('indices', s.symbol === 'NIFTY' ? '^NSEI' : '^NSEBANK'); setView('chart') }
+  return (
+    <div className="rounded-lg border border-border bg-bg-card p-3 elev" style={{ borderLeft: `3px solid ${color}` }}>
+      <div className="flex items-center gap-2">
+        <button onClick={chart} className="mono text-sm font-bold text-txt hover:text-accent">{s.symbol}</button>
+        <span className="mono text-[10px] text-txt-muted">{s.name} · spot {s.spot}</span>
+        <button onClick={chart} className="mono text-[10px] px-2 py-0.5 rounded border border-border hover:border-accent ml-auto">📈 Levels on chart</button>
+      </div>
+      {s.gex ? <GexPanel g={s.gex} /> : <div className="mono text-[11px] text-txt-muted mt-2">Gamma map builds from live option OI (market hours).</div>}
+    </div>
+  )
+}
 function DeskCard({ s, color, setView }) {
   const openSymbol = useChartStore(st => st.openSymbol)
   const m = s.mtf || {}
@@ -864,7 +880,6 @@ function DeskCard({ s, color, setView }) {
 
       {/* index: live option positioning + far-expiry accumulation */}
       {d && <Directional d={d} sym={s.symbol} />}
-      {s.gex && <GexPanel g={s.gex} />}
       {s.footprint && !s.footprint.weak && <div className="mt-1.5 mono text-[10px] text-green">🕵️ Footprint {s.footprint.score}: {s.footprint.flags?.[0]}</div>}
 
       {/* multi-timeframe confluence table */}
