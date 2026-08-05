@@ -809,6 +809,45 @@ function InfoList({ signals, color, setView }) {
   )
 }
 const dirColor = d => /LONG|BULLISH/.test(d) ? '#0E9F6E' : /SHORT|BEARISH/.test(d) ? '#F23645' : '#8896a6'
+// Gamma Exposure / dealer-positioning dashboard (SpotGamma-style): regime, walls, gamma flip,
+// locked range, and per-strike dealer strength (support below / resistance above) — the levels
+// price is drawn to or accelerates through, on ANY timeframe.
+function GexPanel({ g }) {
+  const neg = g.regime === 'NEG GAMMA'
+  return (
+    <div className="mt-2 rounded-lg p-2 border" style={{ background: 'rgba(124,58,237,0.08)', borderColor: '#7C3AED' }}>
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="mono text-[11px] font-bold" style={{ color: '#A78BFA' }}>🧲 GAMMA / DEALER MAP</span>
+        <span className="mono text-[9px] px-1.5 rounded-full text-white font-bold" style={{ background: neg ? '#F23645' : '#0E9F6E' }}>{g.regime}{neg ? ' 🔴' : ' 🟢'}</span>
+        <span className="mono text-[9px] px-1.5 rounded-full text-white" style={{ background: dirColor(g.bias) }}>{g.bias}</span>
+        <span className="mono text-[9px] text-txt-muted ml-auto">exp {g.expiry} · PCR {g.pcr}</span>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-2 mono text-[10px]">
+        <div><div className="text-txt-muted">Gamma Flip</div><div className="font-bold text-yellow">{g.gammaFlip}</div></div>
+        <div><div className="text-txt-muted">Call Wall (res)</div><div className="font-bold text-red">{g.callWall}</div></div>
+        <div><div className="text-txt-muted">Put Wall (sup)</div><div className="font-bold text-green">{g.putWall}</div></div>
+        <div><div className="text-txt-muted">Locked Range</div><div className="font-bold text-txt">{g.lockedLow}–{g.lockedHigh}</div></div>
+      </div>
+      {/* per-strike dealer strength — green support below spot, red resistance above */}
+      <div className="mt-2 space-y-0.5">
+        {[...(g.strikes || [])].sort((a, b) => b.k - a.k).map((r, i) => {
+          const res = r.role === 'RES'
+          const above = r.k >= g.spot
+          return (
+            <div key={i} className="flex items-center gap-2">
+              <span className={`mono text-[10px] w-14 text-right ${Math.abs(r.k - g.spot) < 25 ? 'font-bold text-cyan' : 'text-txt-sec'}`}>{r.k}{Math.abs(r.k - g.spot) < 25 ? ' ◄spot' : ''}</span>
+              <div className="flex-1 h-2.5 rounded-sm bg-bg-base overflow-hidden">
+                <div className="h-full rounded-sm" style={{ width: r.strength + '%', background: res ? '#F23645' : '#0E9F6E' }} />
+              </div>
+              <span className="mono text-[9px] w-8" style={{ color: res ? '#F23645' : '#0E9F6E' }}>{res ? 'RES' : 'SUP'}</span>
+            </div>
+          )
+        })}
+      </div>
+      <div className="mono text-[9px] text-txt-muted mt-1.5 italic">{g.note}</div>
+    </div>
+  )
+}
 function DeskCard({ s, color, setView }) {
   const openSymbol = useChartStore(st => st.openSymbol)
   const m = s.mtf || {}
@@ -825,6 +864,7 @@ function DeskCard({ s, color, setView }) {
 
       {/* index: live option positioning + far-expiry accumulation */}
       {d && <Directional d={d} sym={s.symbol} />}
+      {s.gex && <GexPanel g={s.gex} />}
       {s.footprint && !s.footprint.weak && <div className="mt-1.5 mono text-[10px] text-green">🕵️ Footprint {s.footprint.score}: {s.footprint.flags?.[0]}</div>}
 
       {/* multi-timeframe confluence table */}

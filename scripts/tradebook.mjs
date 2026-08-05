@@ -138,11 +138,15 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         pos.qty -= halfQty; pos.invested -= bookedInv; pos.partialBooked = true
         pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       }
-      // TRAILING PROFIT-STOP on the runner: after partial book, exit if it gives back to +10%
-      if (pos.partialBooked && pos.unrealizedPct <= TRAIL_EXIT_PCT) {
+      // After partial book, protect the runner. SOLID signals (A++/A+) → SL to COST-TO-COST
+      // (breakeven, exit only if it comes back to entry) so a strong move can run free; weaker
+      // signals lock a +10% trailing floor.
+      const solid = pos.grade === 'A++' || pos.grade === 'A+'
+      const floor = solid ? 0 : TRAIL_EXIT_PCT
+      if (pos.partialBooked && pos.unrealizedPct <= floor) {
         const pnl = pnlFor(pos, pos.ltp, bearish, held)
         if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
-        b.closed.push({ ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        b.closed.push({ ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
         delete b.open[id]
       }
       continue

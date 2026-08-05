@@ -597,7 +597,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
         // Gold: convert COMEX-futures (GC=F) levels to true SPOT (XAU/USD) by the live basis
         if (sym === 'GOLD') { const spot = await spotPrice('XAU/USD'); if (spot && m.spot) shiftDeskPrices(m, m.spot - spot) }
         const oc = optBySym[sym]
-        desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
+        desk.push({ generator: 'option_buildup', isDesk: true, symbol: sym, name: nm, mtf: m, directional: oc?.directional || null, gex: oc?.gex || null, spot: m.spot ?? oc?.spot ?? null, aligned: m.aligned })
       } catch (e) { console.log('desk', sym, 'skipped:', e.message) }
     }
     // top F&O-eligible stocks by pre-move score
@@ -867,6 +867,31 @@ async function indexDirectional(o, bu, inst, breadthN, idxSym) {
   }
 }
 
+// ── GAMMA EXPOSURE (GEX) / DEALER POSITIONING — reads the option chain like SpotGamma: where
+// dealers must hedge, so it maps the levels price gravitates to / accelerates through in advance.
+// Gamma flip = regime line (below = dealers amplify moves; above = dealers pin/range). Call Wall =
+// resistance magnet, Put Wall = support cushion. Works on any chart timeframe (levels are absolute). ──
+function computeGex(o) {
+  if (!o || o.placeholder || !o.strikes?.length) return null
+  const S = [...o.strikes].sort((a, b) => a.strike - b.strike)
+  const rows = S.map(r => ({ k: r.strike, ce: r.ceOI || 0, pe: r.peOI || 0, net: (r.ceOI || 0) - (r.peOI || 0) }))
+  let cum = 0, prev = 0, flip = null
+  for (const r of rows) { cum += r.net; if (prev < 0 && cum >= 0) flip = r.k; prev = cum }   // cum-net-gamma zero cross
+  if (flip == null) flip = o.atm
+  const spot = o.spot, callWall = o.resistance, putWall = o.support
+  const regime = spot < flip ? 'NEG GAMMA' : 'POS GAMMA'
+  const bias = o.pcr >= 1.1 ? 'LONG BIAS' : o.pcr <= 0.85 ? 'SHORT BIAS' : 'NEUTRAL'
+  const maxAbs = Math.max(...rows.map(r => Math.abs(r.net)), 1)
+  const strikes = rows.filter(r => Math.abs(r.k - o.atm) <= 300).map(r => ({ k: r.k, net: Math.round(r.net), role: r.net > 0 ? 'RES' : 'SUP', strength: Math.round(Math.abs(r.net) / maxAbs * 100) }))
+  return {
+    spot, atm: o.atm, expiry: o.expiry, pcr: o.pcr, regime, bias, gammaFlip: flip, callWall, putWall,
+    lockedLow: Math.min(putWall, callWall, flip), lockedHigh: Math.max(putWall, callWall, flip), strikes,
+    note: regime === 'NEG GAMMA'
+      ? 'Below gamma flip → dealers AMPLIFY moves (trend/volatile). Break of a wall accelerates; expect follow-through.'
+      : 'Above gamma flip → dealers SUPPRESS moves (pin/range) toward high-gamma strikes; fade extremes.',
+  }
+}
+
 async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst = null) {
   const byGen = {}; for (const g of GEN_META) byGen[g.id] = []
   for (const st of scored) { if (!st._d) continue; for (const sg of runPriceGenerators(st, st._d, st, addDays)) byGen[sg.generator]?.push(sg) }
@@ -891,6 +916,7 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
     const card = optionCard(o, idx, nm, oiHist, today)
     // attach the two-sided directional trade (CE/PE + entry/SL/targets) from the footprint
     try { card.directional = await indexDirectional(o, card._bu, inst, breadthMap[bkey], idx) } catch {}
+    try { card.gex = computeGex(o) } catch {}   // gamma-exposure / dealer-positioning map
     optCards.push(card)
   }
   saveOIHist(oiHist)
