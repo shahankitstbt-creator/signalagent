@@ -784,8 +784,9 @@ function detectReversal(d) {
   if (rsi <= 35 && c[i] < e20 * 0.97 && (sweepLow || hammer || bullEngulf)) {
     const sl = Math.min(l[i], swingLow) - 0.3 * atr, risk = c[i] - sl
     const conf = Math.min(92, 55 + (sweepLow ? 20 : 0) + (hammer || bullEngulf ? 10 : 0) + (rsi <= 25 ? 10 : 0))
-    return { direction: 'LONG', side: 'Oversold bounce', entry: R(c[i]), sl: R(sl), rsi, conf,
+    return { direction: 'LONG', side: 'Oversold bounce', entry: R(c[i]), sl: R(sl), rsi, conf, atr, mean: R(e20),
       targets: [R(c[i] + 1.5 * risk), R(c[i] + 2.5 * risk), R(Math.max(c[i] + 4 * risk, swingHigh))],
+      play: `LONG the bounce: buy at ₹${R(c[i])} on this reversal candle's close (F&O: buy ATM CALL). SL ₹${R(sl)} — just below the swept low, so if it breaks again you're out small. Book 50% at T1, move SL to cost, let the rest run to the mean ₹${R(e20)} / prior swing.`,
       reason: `Oversold RSI ${rsi.toFixed(0)}, ${((c[i] - e20) / e20 * 100).toFixed(0)}% below mean${sweepLow ? ' · sell-side liquidity swept (SL hunt)' : ''}${hammer ? ' · hammer' : bullEngulf ? ' · bullish engulfing' : ''}` }
   }
   // BEARISH: overbought + buy-side liquidity sweep / shooting star / bearish engulfing
@@ -795,8 +796,9 @@ function detectReversal(d) {
   if (rsi >= 70 && c[i] > e20 * 1.03 && (sweepHigh || star || bearEngulf)) {
     const sl = Math.max(h[i], swingHigh) + 0.3 * atr, risk = sl - c[i]
     const conf = Math.min(92, 55 + (sweepHigh ? 20 : 0) + (star || bearEngulf ? 10 : 0) + (rsi >= 78 ? 10 : 0))
-    return { direction: 'SHORT', side: 'Overbought fade', entry: R(c[i]), sl: R(sl), rsi, conf,
+    return { direction: 'SHORT', side: 'Overbought fade', entry: R(c[i]), sl: R(sl), rsi, conf, atr, mean: R(e20),
       targets: [R(c[i] - 1.5 * risk), R(c[i] - 2.5 * risk), R(Math.min(c[i] - 4 * risk, swingLow))],
+      play: `SHORT the fade: sell at ₹${R(c[i])} on this rejection candle's close — or buy the ATM PUT (defined risk). SL ₹${R(sl)} — just above the swept high (bull-trap wick). Book 50% at T1, move SL to cost, let the rest cool off to the mean ₹${R(e20)} / prior support.`,
       reason: `Overbought RSI ${rsi.toFixed(0)}, ${((c[i] - e20) / e20 * 100).toFixed(0)}% above mean${sweepHigh ? ' · buy-side liquidity swept (bull trap)' : ''}${star ? ' · shooting star' : bearEngulf ? ' · bearish engulfing' : ''}` }
   }
   return null
@@ -810,12 +812,15 @@ function buildReversal(scored, fnoLots, addBiz) {
     if (dv < 3e7 || c.at(-1) < 20) continue                       // liquid, tradeable only
     const r = detectReversal(d); if (!r) continue
     const short = r.direction === 'SHORT', entry = r.entry
-    const eta = [3, 6, 10]
+    // ATR-velocity ETA: bars-to-target = distance / expected daily progress → smart target dates
+    const dpt = Math.max((r.atr || entry * 0.02) * 0.55, entry * 0.004)
+    const eta = r.targets.map(t => Math.max(1, Math.round(Math.abs(t - entry) / dpt)))
+    for (let k = 1; k < eta.length; k++) if (eta[k] <= eta[k - 1]) eta[k] = eta[k - 1] + 2
     cards.push({
       generator: 'reversal', symbol: st.symbol, name: st.name, sector: st.sector, indices: st.indices,
-      direction: r.direction, dirTone: short ? 'down' : 'up', side: r.side, setupType: r.side,
+      direction: r.direction, dirTone: short ? 'down' : 'up', side: r.side, setupType: r.side, play: r.play,
       ltp: entry, entry, sl: r.sl, slPct: R(((short ? entry - r.sl : r.sl - entry) / entry) * 100),
-      targets: r.targets.map((t, i) => ({ price: t, pct: R(((short ? entry - t : t - entry) / entry) * 100), by: addBiz(eta[i]) })),
+      targets: r.targets.map((t, i) => ({ price: t, pct: R(((short ? entry - t : t - entry) / entry) * 100), by: addBiz(eta[i]), days: eta[i] })),
       rsi: R(r.rsi, 0), confidence: r.conf, grade: r.conf >= 80 ? 'A+' : r.conf >= 65 ? 'A' : 'B',
       rr: R(Math.abs(r.targets[0] - entry) / Math.abs(entry - r.sl), 2),
       reason: r.reason, lot: fnoLots[st.symbol] || null, fno: !!fnoLots[st.symbol],

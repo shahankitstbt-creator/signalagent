@@ -328,6 +328,7 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
         <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}>
           <td colSpan={10} className="px-5 py-3">
             <div className="text-txt-sec mb-2">{s.reason}</div>
+            {s.play && <div className="text-[11px] text-txt mb-2 p-2 rounded-lg" style={{ background: tint(color, 0.08), borderLeft: `2px solid ${color}` }}>🎯 <b>How to play:</b> {s.play}</div>}
             {s.footprint && !s.footprint.weak && (
               <div className="mb-2 p-2 rounded-lg" style={{ background: tint('#0E9F6E', 0.08) }}>
                 <div className="text-[10px] font-bold text-green uppercase">🕵️ Smart-Money Footprint · {s.footprint.score}/100{s.rs?.leader ? ' · RS leader vs NIFTY' : ''}</div>
