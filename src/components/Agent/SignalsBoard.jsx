@@ -79,6 +79,7 @@ export default function SignalsBoard() {
   const [scanning, setScanning] = useState(false)
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('default')
+  const [navCollapsed, setNavCollapsed] = useState(false)
   const setView = useViewStore(s => s.setView)
 
   const scanNow = async () => {
@@ -169,6 +170,7 @@ export default function SignalsBoard() {
             </div>
           )}
         </div>
+        <GlobalSearch gens={gens} tabs={tabs} onJump={(idx, sym) => { if (idx >= 0) setTab(idx); setSearch(sym); setNavCollapsed(false) }} />
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
           {scanMsg && <span className="mono text-[10px] text-txt-sec w-full sm:w-auto text-right">{scanMsg}</span>}
           <button onClick={() => setView('journal')} title="Trading Journal — ₹10L paper portfolio & performance"
@@ -199,27 +201,40 @@ export default function SignalsBoard() {
       </div>
       {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
-      {/* body: vertical tab nav (left) + content (right) — clearer than a cramped horizontal row */}
+      {/* body: vertical tab nav (left, distinct + collapsible) + content (right) */}
       <div className="flex-1 flex min-h-0 overflow-hidden">
-        <nav className="w-40 sm:w-48 shrink-0 bg-bg-panel border-r border-border overflow-y-auto py-1">
+        <nav className={`${navCollapsed ? 'w-12' : 'w-44 sm:w-52'} shrink-0 overflow-y-auto transition-all duration-150 border-r-2`}
+          style={{ background: 'var(--color-bg-base)', borderRightColor: 'var(--color-accent-primary)', boxShadow: 'inset -8px 0 14px -10px rgba(0,0,0,0.6)' }}>
+          <button onClick={() => setNavCollapsed(c => !c)} title={navCollapsed ? 'Expand' : 'Collapse'}
+            className="w-full px-3 py-2 text-txt-muted hover:text-accent text-left mono text-xs border-b border-border sticky top-0 z-10" style={{ background: 'var(--color-bg-base)' }}>
+            {navCollapsed ? '»' : '« Menu'}
+          </button>
           {tabs.map((g, i) => {
             const on = i === tab
+            const gt = tr?.generators?.[g.id]
+            const wr = gt && gt.decided >= 10 ? gt.winRate : null
+            const icon = (SHORT[g.id] || g.label).split(' ')[0]
             return (
-              <button key={g.id} onClick={() => setTab(i)} title={g.desc}
-                className="w-full text-left mono text-[11px] px-3 py-2 flex items-center gap-1.5 border-l-2 transition-colors hover:bg-bg-card"
+              <button key={g.id} onClick={() => setTab(i)} title={`${g.label}${wr != null ? ` · ${wr}% win` : ''}`}
+                className="w-full text-left mono px-2.5 py-2 flex items-center gap-1.5 border-l-[3px] transition-colors hover:bg-bg-card"
                 style={on
-                  ? { color: g.color, borderLeftColor: g.color, background: tint(g.color, 0.12), fontWeight: 700 }
+                  ? { color: g.color, borderLeftColor: g.color, background: tint(g.color, 0.14), fontWeight: 700 }
                   : { color: 'var(--color-txt-sec)', borderLeftColor: 'transparent' }}>
-                <span className="truncate flex-1">{SHORT[g.id] || g.label}</span>
-                <span className="px-1.5 rounded-full text-[10px] shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
-                {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}
-                {g.id === topId && <span className="px-1 rounded-full text-[9px] font-bold text-white shrink-0" style={{ background: '#FF6D00' }} title={`Top measured accuracy ${topWin}%`}>★</span>}
+                {navCollapsed
+                  ? <span className="text-sm mx-auto relative">{icon}{g.count > 0 && <span className="absolute -top-1 -right-2 text-[7px] px-0.5 rounded-full bg-bg-card text-txt-muted">{g.count}</span>}</span>
+                  : <>
+                    <span className="truncate flex-1 text-[11px]">{SHORT[g.id] || g.label}</span>
+                    {wr != null && <span className="text-[9px] px-1 rounded font-bold shrink-0" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}%</span>}
+                    <span className="px-1.5 rounded-full text-[10px] shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+                    {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}
+                    {g.id === topId && <span className="text-[9px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
+                  </>}
               </button>
             )
           })}
         </nav>
 
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden" style={{ background: 'var(--color-bg-panel)' }}>
           {loading && !board && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
           {err && <div className="p-4 mono text-sm text-yellow">{err}</div>}
           {active && (
@@ -267,6 +282,61 @@ export default function SignalsBoard() {
   )
 }
 
+// GLOBAL search — finds a stock across ALL tabs; if it's not in any list, runs a fresh on-demand
+// analysis via /api/analyze and shows the engine's view (matches-engine → tradeable signal).
+function GlobalSearch({ gens, tabs, onJump }) {
+  const [q, setQ] = useState('')
+  const [res, setRes] = useState(null)
+  const run = async () => {
+    const query = q.trim(); if (!query) return
+    const seen = new Set(), matches = []
+    for (const g of gens) for (const s of (g.signals || [])) {
+      const sym = String(s.symbol || s.underlying || '')
+      if (sym.toUpperCase().includes(query.toUpperCase())) { const k = g.id + sym; if (!seen.has(k)) { seen.add(k); matches.push({ sym, tab: g.label, color: g.color, tabIdx: tabs.findIndex(t => t.id === g.id) }) } }
+    }
+    if (matches.length) { setRes({ matches, query }); return }
+    setRes({ loading: true, query })
+    try { const r = await fetch('/api/analyze?symbol=' + encodeURIComponent(query)).then(r => r.json()); setRes({ analysis: r, query }) }
+    catch { setRes({ analysis: { found: false, message: 'Analysis failed — try again in a moment.' }, query }) }
+  }
+  return (
+    <div className="relative">
+      <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === 'Enter' && run()}
+        placeholder="🔎 Search ANY stock (analyses it if not listed)…"
+        className="mono text-[11px] px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-56 sm:w-72" />
+      {res && (
+        <div className="absolute z-40 mt-1 right-0 w-[26rem] max-w-[92vw] rounded-lg border border-border bg-bg-panel elev p-3 max-h-[75vh] overflow-y-auto">
+          <div className="flex justify-between items-center mono text-[10px] text-txt-muted mb-1.5"><span>Results for "{res.query}"</span><button onClick={() => { setRes(null); setQ('') }} className="hover:text-txt">✕</button></div>
+          {res.matches ? <>
+            <div className="mono text-[11px] text-green mb-1">Found in {res.matches.length} signal list(s) — click to open:</div>
+            {res.matches.map((m, i) => <button key={i} onClick={() => { onJump(m.tabIdx, m.sym); setRes(null); setQ('') }} className="w-full text-left mono text-xs px-2 py-1.5 rounded hover:bg-bg-card flex justify-between"><span className="font-bold" style={{ color: m.color }}>{m.sym}</span><span className="text-txt-muted">{m.tab} →</span></button>)}
+          </> : res.loading ? <div className="mono text-xs text-txt-sec py-3">Analysing <b>{res.query}</b>… fetching data & running the engine.</div>
+            : res.analysis && <AnalyzeResult a={res.analysis} />}
+        </div>
+      )}
+    </div>
+  )
+}
+function AnalyzeResult({ a }) {
+  if (!a.found) return <div className="mono text-xs text-yellow py-2">{a.message || 'Not found.'}</div>
+  const dc = a.direction === 'LONG' ? '#0E9F6E' : a.direction === 'SHORT' ? '#F23645' : '#8896a6'
+  return (
+    <div className="mono text-[11px] space-y-1.5">
+      <div className="flex items-center gap-2"><span className="font-bold text-sm text-txt">{a.symbol}</span><span className="text-txt-muted truncate">{a.name}</span><span className="ml-auto px-2 py-0.5 rounded-full text-white font-bold shrink-0" style={{ background: dc }}>{a.direction}</span></div>
+      <div className="text-txt-sec">Not in today's signals — here's a fresh read:</div>
+      <div className="grid grid-cols-4 gap-1">
+        <div><div className="text-txt-muted">Price</div><div className="font-bold">{a.ccy}{a.price}</div></div>
+        <div><div className="text-txt-muted">Trend</div><div>{a.trend}</div></div>
+        <div><div className="text-txt-muted">RSI</div><div>{a.rsi}</div></div>
+        <div><div className="text-txt-muted">vs mean</div><div>{a.distFromMean >= 0 ? '+' : ''}{a.distFromMean}%</div></div>
+      </div>
+      <div className="font-bold" style={{ color: dc }}>{a.setup} {a.matchesEngine ? '· ✅ matches our engine' : '· ⚪ no edge right now'}</div>
+      {a.targets && <div className="grid grid-cols-4 gap-1"><div><div className="text-txt-muted">Entry</div><div>{a.ccy}{a.entry}</div></div><div><div className="text-txt-muted">SL</div><div className="text-red">{a.ccy}{a.sl}</div></div><div className="col-span-2"><div className="text-txt-muted">Targets</div><div className="text-green">{a.targets.map(t => a.ccy + t).join(' · ')}</div></div></div>}
+      <div className="text-txt p-2 rounded-lg bg-bg-base">🎯 {a.play}</div>
+      <div className="text-[9px] text-txt-muted">Fresh Yahoo data · educational only, not advice.</div>
+    </div>
+  )
+}
 function TradeTable({ signals, color, setView }) {
   const [open, setOpen] = useState(-1)
   const s = useSortable(signals)
@@ -318,9 +388,9 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
         <td className="px-3 py-2 text-right">{s.entry}</td>
         <td className="px-3 py-2 text-right text-red">{s.sl}</td>
-        <td className="px-3 py-2 text-right text-green">{t[0]?.price}</td>
-        <td className="px-3 py-2 text-right text-green">{t[1]?.price}</td>
-        <td className="px-3 py-2 text-right text-green">{t[2]?.price}</td>
+        <td className="px-3 py-2 text-right text-green">{t?.[0]?.price}{t?.[0]?.pct != null && <span className="text-[9px] text-txt-muted"> +{t[0].pct}%</span>}<div className="text-[9px] text-txt-muted">{t?.[0]?.by || ''}</div></td>
+        <td className="px-3 py-2 text-right text-green">{t?.[1]?.price}<div className="text-[9px] text-txt-muted">{t?.[1]?.by || ''}</div></td>
+        <td className="px-3 py-2 text-right text-green">{t?.[2]?.price}<div className="text-[9px] text-txt-muted">{t?.[2]?.by || ''}</div></td>
         <td className={`px-3 py-2 text-right font-bold ${confColor(s.confidence)}`}>{s.confidence}%</td>
         <td className="px-3 py-2 text-right">
           <button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button>
