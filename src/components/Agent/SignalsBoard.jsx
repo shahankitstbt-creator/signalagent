@@ -286,32 +286,43 @@ export default function SignalsBoard() {
 // analysis via /api/analyze and shows the engine's view (matches-engine → tradeable signal).
 function GlobalSearch({ gens, tabs, onJump }) {
   const [q, setQ] = useState('')
-  const [res, setRes] = useState(null)
-  const run = async () => {
-    const query = q.trim(); if (!query) return
-    const seen = new Set(), matches = []
+  const [analysis, setAnalysis] = useState(null)   // { loading } | { result }
+  const [openList, setOpenList] = useState(false)
+  const query = q.trim()
+  // LIVE matches across every tab as you type (no API, instant)
+  const matches = useMemo(() => {
+    if (!query) return []
+    const Q = query.toUpperCase(), seen = new Set(), out = []
     for (const g of gens) for (const s of (g.signals || [])) {
       const sym = String(s.symbol || s.underlying || '')
-      if (sym.toUpperCase().includes(query.toUpperCase())) { const k = g.id + sym; if (!seen.has(k)) { seen.add(k); matches.push({ sym, tab: g.label, color: g.color, tabIdx: tabs.findIndex(t => t.id === g.id) }) } }
+      if (sym.toUpperCase().includes(Q)) { const k = g.id + sym; if (!seen.has(k)) { seen.add(k); out.push({ sym, tab: g.label, color: g.color, tabIdx: tabs.findIndex(t => t.id === g.id) }) } }
     }
-    if (matches.length) { setRes({ matches, query }); return }
-    setRes({ loading: true, query })
-    try { const r = await fetch('/api/analyze?symbol=' + encodeURIComponent(query)).then(r => r.json()); setRes({ analysis: r, query }) }
-    catch { setRes({ analysis: { found: false, message: 'Analysis failed — try again in a moment.' }, query }) }
+    return out.slice(0, 25)
+  }, [query, gens, tabs])
+  const analyze = async () => {
+    setAnalysis({ loading: true })
+    try { const r = await fetch('/api/analyze?symbol=' + encodeURIComponent(query)).then(r => r.json()); setAnalysis({ result: r }) }
+    catch { setAnalysis({ result: { found: false, message: 'Analysis failed — try again in a moment.' } }) }
   }
+  const show = openList && query.length > 0
   return (
     <div className="relative">
-      <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === 'Enter' && run()}
-        placeholder="🔎 Search ANY stock (analyses it if not listed)…"
+      <input value={q} onFocus={() => setOpenList(true)} onChange={e => { setQ(e.target.value); setAnalysis(null); setOpenList(true) }}
+        placeholder="🔎 Search any stock…"
         className="mono text-[11px] px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-56 sm:w-72" />
-      {res && (
-        <div className="absolute z-40 mt-1 right-0 w-[26rem] max-w-[92vw] rounded-lg border border-border bg-bg-panel elev p-3 max-h-[75vh] overflow-y-auto">
-          <div className="flex justify-between items-center mono text-[10px] text-txt-muted mb-1.5"><span>Results for "{res.query}"</span><button onClick={() => { setRes(null); setQ('') }} className="hover:text-txt">✕</button></div>
-          {res.matches ? <>
-            <div className="mono text-[11px] text-green mb-1">Found in {res.matches.length} signal list(s) — click to open:</div>
-            {res.matches.map((m, i) => <button key={i} onClick={() => { onJump(m.tabIdx, m.sym); setRes(null); setQ('') }} className="w-full text-left mono text-xs px-2 py-1.5 rounded hover:bg-bg-card flex justify-between"><span className="font-bold" style={{ color: m.color }}>{m.sym}</span><span className="text-txt-muted">{m.tab} →</span></button>)}
-          </> : res.loading ? <div className="mono text-xs text-txt-sec py-3">Analysing <b>{res.query}</b>… fetching data & running the engine.</div>
-            : res.analysis && <AnalyzeResult a={res.analysis} />}
+      {show && (
+        <div className="absolute z-40 mt-1 right-0 w-[26rem] max-w-[92vw] rounded-xl border border-border glass elev-lg p-3 max-h-[75vh] overflow-y-auto">
+          <div className="flex justify-between items-center mono text-[10px] text-txt-muted mb-1.5"><span>"{query}"</span><button onClick={() => { setQ(''); setAnalysis(null); setOpenList(false) }} className="hover:text-txt">✕</button></div>
+          {matches.length > 0 ? <>
+            <div className="mono text-[11px] text-green mb-1">In {matches.length} list{matches.length > 1 ? 's' : ''} — click to open:</div>
+            {matches.map((m, i) => <button key={i} onClick={() => { onJump(m.tabIdx, m.sym); setOpenList(false); setQ('') }} className="w-full text-left mono text-xs px-2 py-1.5 rounded-lg hover:bg-bg-card flex justify-between items-center"><span className="font-bold" style={{ color: m.color }}>{m.sym}</span><span className="text-txt-muted">{m.tab} →</span></button>)}
+          </> : analysis?.loading ? <div className="mono text-xs text-txt-sec py-3">Analysing <b>{query}</b>… fetching fresh data & running the engine.</div>
+            : analysis?.result ? <AnalyzeResult a={analysis.result} />
+              : <div className="py-1">
+                <div className="mono text-[11px] text-txt-sec mb-2">No signal for "<b>{query}</b>" in any tab.</div>
+                <button onClick={analyze} className="btn-primary mono text-[11px] px-3 py-1.5 font-bold">🔬 Analyse "{query.toUpperCase()}" with fresh data →</button>
+                <div className="mono text-[9px] text-txt-muted mt-1.5">Runs our engine on live Yahoo data. Indian → NSE symbol; US → ticker.</div>
+              </div>}
         </div>
       )}
     </div>
@@ -345,7 +356,7 @@ function TradeTable({ signals, color, setView }) {
   return (
     <table className="w-full mono text-xs border-collapse">
       <thead>
-        <tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+        <tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Symbol" k="symbol" s={s} cls={L} />
           <th className={L}>Signal</th>
           <Sth label="LTP" k="ltp" s={s} cls={R} />
@@ -443,7 +454,7 @@ function FnoTable({ signals, color, setView }) {
   return (
     <>
       <table className="hidden md:table w-full mono text-xs border-collapse">
-        <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+        <thead><tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Underlying" k="symbol" s={s} cls={H} />
           <th className={H}>Type</th>
           <th className={H}>Signal</th>
@@ -530,7 +541,7 @@ function ConfluenceTable({ signals, color, setView }) {
   return (
     <>
       <table className="hidden md:table w-full mono text-xs border-collapse">
-        <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
+        <thead><tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Stock" k="symbol" s={s} cls={L} />
           <Sth label="Grade" k="grade" s={s} cls={L} />
           <th className={L}>Agree</th>

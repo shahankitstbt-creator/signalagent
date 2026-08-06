@@ -20,8 +20,8 @@
   --color-txt-muted: #97A3BA;   /* muted / placeholder */
   --color-bull: #10A56E;
   --color-bear: #E5384A;
-  --font-mono: "Roboto Mono", ui-monospace, monospace;
-  --font-sans: "Roboto", "Inter", system-ui, sans-serif;
+  --font-mono: "Inter", system-ui, sans-serif;   /* clean sans everywhere; numbers stay tabular via .mono */
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -76,7 +76,10 @@ body {
 .btn-primary { background: linear-gradient(90deg, #3B6BFF, #6D5BFF); color: #fff; border-radius: 12px; transition: filter .15s ease, transform .15s ease; }
 .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/* '.mono' now means clean Inter with TABULAR numbers (aligned columns) — not a code monospace look */
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+body { letter-spacing: -0.006em; }
+h1, h2, h3, .font-bold { letter-spacing: -0.015em; }
 
 /* dark-mode awareness (viewer / OS) — stays elegant on dark too */
 @media (prefers-color-scheme: dark) {
