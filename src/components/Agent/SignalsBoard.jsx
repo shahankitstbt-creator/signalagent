@@ -199,31 +199,31 @@ export default function SignalsBoard() {
       </div>
       {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
-      {/* nav tabs — short labels, single row (scrolls sideways if needed) */}
-      <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border overflow-x-auto whitespace-nowrap">
-        {tabs.map((g, i) => {
-          const on = i === tab
-          return (
-            <button key={g.id} onClick={() => setTab(i)} title={g.label}
-              className="mono text-[11px] whitespace-nowrap px-2.5 py-1.5 rounded-t-lg border-b-2 transition-colors"
-              style={on
-                ? { color: g.color, borderBottomColor: g.color, background: tint(g.color, 0.10), fontWeight: 700 }
-                : { color: 'var(--color-txt-sec)', borderBottomColor: 'transparent' }}>
-              {SHORT[g.id] || g.label}
-              <span className="ml-1 px-1.5 rounded-full text-[10px]" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
-              {newPerTab[i] > 0 && <span className="ml-1 px-1 rounded-full text-[9px] font-bold bg-green text-white">+{newPerTab[i]}</span>}
-              {g.id === topId && <span className="ml-1 px-1 rounded-full text-[9px] font-bold text-white" style={{ background: '#FF6D00' }} title={`Highest measured accuracy: ${topWin}%`}>★{topWin}%</span>}
-            </button>
-          )
-        })}
-      </div>
+      {/* body: vertical tab nav (left) + content (right) — clearer than a cramped horizontal row */}
+      <div className="flex-1 flex min-h-0 overflow-hidden">
+        <nav className="w-40 sm:w-48 shrink-0 bg-bg-panel border-r border-border overflow-y-auto py-1">
+          {tabs.map((g, i) => {
+            const on = i === tab
+            return (
+              <button key={g.id} onClick={() => setTab(i)} title={g.desc}
+                className="w-full text-left mono text-[11px] px-3 py-2 flex items-center gap-1.5 border-l-2 transition-colors hover:bg-bg-card"
+                style={on
+                  ? { color: g.color, borderLeftColor: g.color, background: tint(g.color, 0.12), fontWeight: 700 }
+                  : { color: 'var(--color-txt-sec)', borderLeftColor: 'transparent' }}>
+                <span className="truncate flex-1">{SHORT[g.id] || g.label}</span>
+                <span className="px-1.5 rounded-full text-[10px] shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+                {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}
+                {g.id === topId && <span className="px-1 rounded-full text-[9px] font-bold text-white shrink-0" style={{ background: '#FF6D00' }} title={`Top measured accuracy ${topWin}%`}>★</span>}
+              </button>
+            )
+          })}
+        </nav>
 
-      {loading && !board && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
-      {err && <div className="p-4 mono text-sm text-yellow">{err}</div>}
-
-      {/* active tab content */}
-      {active && (
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          {loading && !board && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
+          {err && <div className="p-4 mono text-sm text-yellow">{err}</div>}
+          {active && (
+            <div className="flex-1 overflow-y-auto">
           <div className="px-5 py-2.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap" style={{ background: tint(active.color, 0.05) }}>
             <span><span className="font-bold" style={{ color: active.color }}>{active.label}</span> — {active.desc}</span>
             {genTR && (genTR.decided > 0
@@ -259,8 +259,10 @@ export default function SignalsBoard() {
                       <div className="md:hidden"><TradeCards signals={rows} color={active.color} setView={setView} /></div>
                     </>
                   : <InfoList signals={rows} color={active.color} setView={setView} />}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }
