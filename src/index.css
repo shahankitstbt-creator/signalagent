@@ -1,47 +1,99 @@
 @import "tailwindcss";
 
-/* Light, clean, elegant theme. Roboto typography. Green=BUY, Red=SELL. */
+/* ProTrader OS — premium light theme. Clean, glassy, futuristic. Green=BUY, Red=SELL. */
 @theme {
-  --color-bg-base: #F4F6FB;     /* app background — soft cool white */
+  --color-bg-base: #EDF1F9;     /* app background — soft cool */
   --color-bg-panel: #FFFFFF;    /* panels / columns */
   --color-bg-card: #FFFFFF;     /* cards */
-  --color-border: #E4E9F2;      /* hairline borders */
-  --color-accent: #2962FF;      /* primary blue */
-  --color-green: #0E9F6E;       /* BUY / bullish */
-  --color-red: #E02424;         /* SELL / bearish */
-  --color-yellow: #C2840A;      /* warning / TP (readable on white) */
+  --color-border: #E3E8F2;      /* hairline borders */
+  --color-accent: #3B6BFF;      /* primary blue */
+  --color-accent-primary: #3B6BFF;
+  --color-green: #10A56E;       /* BUY / bullish */
+  --color-red: #E5384A;         /* SELL / bearish */
+  --color-yellow: #C2840A;      /* warning / TP */
   --color-purple: #7C3AED;
   --color-orange: #E8590C;
-  --color-cyan: #0E7FA3;        /* darkened for white bg */
+  --color-cyan: #0E7FA3;
   --color-gold: #B8860B;
-  --color-txt: #1B2436;         /* primary text — near-ink */
-  --color-txt-sec: #5C6B82;     /* secondary */
-  --color-txt-muted: #9AA7BC;   /* muted / placeholder */
-  --color-bull: #0E9F6E;        /* candle up */
-  --color-bear: #E02424;        /* candle down */
+  --color-txt: #16203A;         /* primary text */
+  --color-txt-sec: #5A6A85;     /* secondary */
+  --color-txt-muted: #97A3BA;   /* muted / placeholder */
+  --color-bull: #10A56E;
+  --color-bear: #E5384A;
   --font-mono: "Roboto Mono", ui-monospace, monospace;
-  --font-sans: "Roboto", system-ui, sans-serif;
+  --font-sans: "Roboto", "Inter", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
-  background: var(--color-bg-base);
   color: var(--color-txt);
   font-family: var(--font-sans);
   font-size: 13px;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  background:
+    radial-gradient(1100px 560px at 100% -8%, rgba(59,107,255,.08), transparent 58%),
+    radial-gradient(900px 520px at -6% 108%, rgba(124,58,237,.06), transparent 60%),
+    var(--color-bg-base);
 }
-::-webkit-scrollbar { width: 9px; height: 9px; }
+
+/* refined thin scrollbars */
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #CBD5E6; border-radius: 5px; }
+::-webkit-scrollbar-thumb { background: #CAD4E6; border-radius: 6px; }
 ::-webkit-scrollbar-thumb:hover { background: #AEBBD2; }
-/* soft, layered elevation for the light theme */
-.elev { box-shadow: 0 1px 2px rgba(20,30,55,.04), 0 2px 6px rgba(20,30,55,.05); }
-.elev-lg { box-shadow: 0 2px 4px rgba(20,30,55,.05), 0 8px 24px rgba(20,30,55,.08); }
-.card-hover { transition: box-shadow .15s ease, transform .15s ease; }
-.card-hover:hover { box-shadow: 0 4px 12px rgba(20,30,55,.10); transform: translateY(-1px); }
-.brand-grad { background: linear-gradient(90deg, #2962FF, #7C3AED 55%, #DB2777); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* elevation — soft, layered, modern */
+.elev { box-shadow: 0 1px 2px rgba(22,32,58,.04), 0 4px 14px rgba(22,32,58,.06); }
+.elev-lg { box-shadow: 0 4px 10px rgba(22,32,58,.06), 0 18px 46px rgba(22,32,58,.12); }
+.card-hover { transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
+.card-hover:hover { box-shadow: 0 8px 22px rgba(22,32,58,.12); transform: translateY(-2px); }
+
+/* glassmorphism for chrome (header / sidebar / overlays) */
+.glass {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* elegant card surface */
+.card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; }
+
+/* gradient brand text */
+.brand-grad { background: linear-gradient(90deg, #3B6BFF, #7C3AED 55%, #DB2777); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* KPI stat tile — gradient wash, futuristic */
+.kpi { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--color-border); background: var(--color-bg-card); }
+.kpi::before { content: ""; position: absolute; inset: 0; opacity: .10; background: var(--kpi-grad, linear-gradient(135deg, #3B6BFF, #7C3AED)); pointer-events: none; }
+.kpi > * { position: relative; }
+
+/* pill / chip */
+.pill { border-radius: 999px; font-weight: 600; }
+
+/* primary gradient button */
+.btn-primary { background: linear-gradient(90deg, #3B6BFF, #6D5BFF); color: #fff; border-radius: 12px; transition: filter .15s ease, transform .15s ease; }
+.btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* dark-mode awareness (viewer / OS) — stays elegant on dark too */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-base: #0B1020; --color-bg-panel: #121A2E; --color-bg-card: #16203A;
+    --color-border: #243250; --color-txt: #E6ECF7; --color-txt-sec: #93A2BE; --color-txt-muted: #5E6E8C;
+  }
+  :root:not([data-theme="light"]) body { background:
+    radial-gradient(1100px 560px at 100% -8%, rgba(59,107,255,.16), transparent 58%),
+    radial-gradient(900px 520px at -6% 108%, rgba(124,58,237,.13), transparent 60%),
+    var(--color-bg-base); }
+  :root:not([data-theme="light"]) .glass { background: rgba(18,26,46,.72); }
+  :root:not([data-theme="light"]) ::-webkit-scrollbar-thumb { background: #2C3B5C; }
+}
+:root[data-theme="dark"] {
+  --color-bg-base: #0B1020; --color-bg-panel: #121A2E; --color-bg-card: #16203A;
+  --color-border: #243250; --color-txt: #E6ECF7; --color-txt-sec: #93A2BE; --color-txt-muted: #5E6E8C;
+}
+:root[data-theme="dark"] .glass { background: rgba(18,26,46,.72); }
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2C3B5C; }

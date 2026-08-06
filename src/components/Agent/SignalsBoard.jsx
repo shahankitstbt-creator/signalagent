@@ -148,7 +148,7 @@ export default function SignalsBoard() {
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
       <HitPopups />
       {/* header */}
-      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border bg-bg-panel flex items-center gap-2 sm:gap-4 flex-wrap elev">
+      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border glass flex items-center gap-2 sm:gap-4 flex-wrap elev z-20">
         <div>
           <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
           <div className="mono text-[10px] sm:text-[11px] text-txt-sec">

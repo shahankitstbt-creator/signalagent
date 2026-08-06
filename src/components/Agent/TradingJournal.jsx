@@ -63,7 +63,7 @@ export default function TradingJournal() {
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
       {/* header */}
-      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border bg-bg-panel flex items-center gap-3 flex-wrap">
+      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border glass flex items-center gap-3 flex-wrap z-20">
         <button onClick={() => setView('board')} className="mono text-xs text-txt-sec hover:text-accent">← Board</button>
         <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">📓 Trading Journal</div>
         <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O/options · every high-conviction signal taken · sizing by risk · aim 5–7%/mo</span>
@@ -75,11 +75,11 @@ export default function TradingJournal() {
       {book && (
         <>
           {/* stat tiles */}
-          <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-px bg-border border-b border-border">
-            <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} />
-            <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} />
-            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} />}
-            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} />}
+          <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-3 p-3 border-b border-border">
+            <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} grad="linear-gradient(135deg,#3B6BFF,#7C3AED)" />
+            <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} />
+            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" />}
+            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
             <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} />
@@ -123,12 +123,12 @@ export default function TradingJournal() {
   )
 }
 
-function Tile({ label, value, sub, tone }) {
+function Tile({ label, value, sub, tone, grad }) {
   return (
-    <div className="bg-bg-panel px-3 py-2">
-      <div className="text-[10px] text-txt-muted uppercase tracking-wide">{label}</div>
-      <div className={`mono text-sm sm:text-base font-bold ${tone || 'text-txt'}`}>{value}</div>
-      {sub && <div className="text-[10px] text-txt-sec">{sub}</div>}
+    <div className="kpi elev card-hover px-3.5 py-3" style={grad ? { '--kpi-grad': grad } : {}}>
+      <div className="text-[10px] text-txt-muted uppercase tracking-wide font-semibold">{label}</div>
+      <div className={`mono text-base sm:text-lg font-bold ${tone || 'text-txt'}`}>{value}</div>
+      {sub && <div className="text-[10px] text-txt-sec mt-0.5">{sub}</div>}
     </div>
   )
 }
