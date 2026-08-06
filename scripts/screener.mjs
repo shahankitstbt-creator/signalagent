@@ -645,9 +645,11 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       if (s.kind !== 'Stock' || !s.entry || !s.sl || !Array.isArray(s.targets) || !s.targets[0]?.price) continue
       try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {}
     }
+    // reversal picks (built after the main ledger loop) — log so they book (F&O shorts → PE)
+    for (const s of (revCol?.signals || [])) { if (!s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, s, todayISO, todayTs); logged++ } catch {} }
     logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
     saveLedger(lg)
-    console.log(`Ledger: logged ${logged} confluence/F&O/option picks for tracking`)
+    console.log(`Ledger: logged ${logged} confluence/F&O/option/reversal picks for tracking`)
 
     // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
     try { syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }
@@ -814,7 +816,8 @@ function buildReversal(scored, fnoLots, addBiz) {
       direction: r.direction, dirTone: short ? 'down' : 'up', side: r.side, setupType: r.side,
       ltp: entry, entry, sl: r.sl, slPct: R(((short ? entry - r.sl : r.sl - entry) / entry) * 100),
       targets: r.targets.map((t, i) => ({ price: t, pct: R(((short ? entry - t : t - entry) / entry) * 100), by: addBiz(eta[i]) })),
-      rsi: R(r.rsi, 0), confidence: r.conf, rr: R(Math.abs(r.targets[0] - entry) / Math.abs(entry - r.sl), 2),
+      rsi: R(r.rsi, 0), confidence: r.conf, grade: r.conf >= 80 ? 'A+' : r.conf >= 65 ? 'A' : 'B',
+      rr: R(Math.abs(r.targets[0] - entry) / Math.abs(entry - r.sl), 2),
       reason: r.reason, lot: fnoLots[st.symbol] || null, fno: !!fnoLots[st.symbol],
       social: `🔄 ${st.symbol} — ${r.side} (${r.direction})\n${r.reason}\nEntry ₹${entry} · SL ₹${r.sl}\n📌 Educational only, not advice.`,
     })
