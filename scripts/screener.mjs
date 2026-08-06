@@ -38,7 +38,7 @@ import { notifyNewSignals, notifyClosures } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
-const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum'])                                        // ALSO tracked in the ledger
+const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal'])                            // ALSO tracked in the ledger
 
 // timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
 const TF = {
@@ -581,6 +581,10 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const fno = await buildFno(board, dbAssets, fnoLots, scored, addDays)
   const fnoCol = board.find(g => g.id === 'fno')
   if (fnoCol) { fnoCol.signals = fno.slice(0, 40); fnoCol.count = fnoCol.signals.length }
+
+  // ── 🔄 REVERSAL / MEAN-REVERSION (two-sided: oversold-bounce longs + overbought-fade shorts) ──
+  const revCol = board.find(g => g.id === 'reversal')
+  if (revCol) { const rev = buildReversal(scored, fnoLots, addBiz); revCol.signals = rev; revCol.count = rev.length; console.log(`Reversal: ${rev.length} setups (${rev.filter(r => r.direction === 'SHORT').length} short / ${rev.filter(r => r.direction === 'LONG').length} long)`) }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
   // ── 🎯 SMART-MONEY DESK: multi-timeframe (15m→1D) confluence for NIFTY/BankNifty/Gold + top
@@ -757,6 +761,65 @@ async function buildUsBoard(addDays) {
     accuracy: s.bt?.trades >= 4 ? s.bt.hitRate : null, backtestTrades: s.bt?.trades,
     social: `🇺🇸 ${s.symbol} — ${s.setupType}\nEntry $${s.entry} · SL $${s.sl} (${pct(s, s.sl)}%)\nT1 $${s.targets[0]} (+${pct(s, s.targets[0])}%) · T2 $${s.targets[1]} · T3 $${s.targets[2]}\n📌 Educational only, not advice.`,
   }))
+}
+
+// ── 🔄 REVERSAL / MEAN-REVERSION — the OPPOSITE of the momentum core: fade extremes after the
+// SL-hunt. LONG oversold bottoms (sell-side liquidity swept), SHORT overbought tops (buy-side swept).
+function detectReversal(d) {
+  const { o, h, l, c } = d, n = c.length, i = n - 1
+  if (n < 40) return null
+  const rsi = rsiSeries(c)[i] ?? 50
+  const atr = atrSeries(h, l, c)[i] || c[i] * 0.02
+  const e20 = emaSeries(c, 20)[i]
+  const swingLow = Math.min(...l.slice(-22, -2)), swingHigh = Math.max(...h.slice(-22, -2))
+  const body = Math.abs(c[i] - o[i]) || atr * 0.05
+  const lowerWick = Math.min(o[i], c[i]) - l[i], upperWick = h[i] - Math.max(o[i], c[i])
+  const R = (x, dp = 2) => +(+x).toFixed(dp)
+  // BULLISH: oversold + sell-side liquidity sweep / hammer / bullish engulfing
+  const sweepLow = l[i] < swingLow && c[i] > swingLow
+  const hammer = lowerWick > body * 1.5 && c[i] > (h[i] + l[i]) / 2
+  const bullEngulf = c[i] > o[i] && c[i - 1] < o[i - 1] && c[i] >= o[i - 1] && o[i] <= c[i - 1]
+  if (rsi <= 35 && c[i] < e20 * 0.97 && (sweepLow || hammer || bullEngulf)) {
+    const sl = Math.min(l[i], swingLow) - 0.3 * atr, risk = c[i] - sl
+    const conf = Math.min(92, 55 + (sweepLow ? 20 : 0) + (hammer || bullEngulf ? 10 : 0) + (rsi <= 25 ? 10 : 0))
+    return { direction: 'LONG', side: 'Oversold bounce', entry: R(c[i]), sl: R(sl), rsi, conf,
+      targets: [R(c[i] + 1.5 * risk), R(c[i] + 2.5 * risk), R(Math.max(c[i] + 4 * risk, swingHigh))],
+      reason: `Oversold RSI ${rsi.toFixed(0)}, ${((c[i] - e20) / e20 * 100).toFixed(0)}% below mean${sweepLow ? ' · sell-side liquidity swept (SL hunt)' : ''}${hammer ? ' · hammer' : bullEngulf ? ' · bullish engulfing' : ''}` }
+  }
+  // BEARISH: overbought + buy-side liquidity sweep / shooting star / bearish engulfing
+  const sweepHigh = h[i] > swingHigh && c[i] < swingHigh
+  const star = upperWick > body * 1.5 && c[i] < (h[i] + l[i]) / 2
+  const bearEngulf = c[i] < o[i] && c[i - 1] > o[i - 1] && c[i] <= o[i - 1] && o[i] >= c[i - 1]
+  if (rsi >= 70 && c[i] > e20 * 1.03 && (sweepHigh || star || bearEngulf)) {
+    const sl = Math.max(h[i], swingHigh) + 0.3 * atr, risk = sl - c[i]
+    const conf = Math.min(92, 55 + (sweepHigh ? 20 : 0) + (star || bearEngulf ? 10 : 0) + (rsi >= 78 ? 10 : 0))
+    return { direction: 'SHORT', side: 'Overbought fade', entry: R(c[i]), sl: R(sl), rsi, conf,
+      targets: [R(c[i] - 1.5 * risk), R(c[i] - 2.5 * risk), R(Math.min(c[i] - 4 * risk, swingLow))],
+      reason: `Overbought RSI ${rsi.toFixed(0)}, ${((c[i] - e20) / e20 * 100).toFixed(0)}% above mean${sweepHigh ? ' · buy-side liquidity swept (bull trap)' : ''}${star ? ' · shooting star' : bearEngulf ? ' · bearish engulfing' : ''}` }
+  }
+  return null
+}
+function buildReversal(scored, fnoLots, addBiz) {
+  const R = (x, dp = 1) => x == null ? null : +(+x).toFixed(dp)
+  const cards = []
+  for (const st of scored) {
+    const d = st._d; if (!d || d.c.length < 40) continue
+    const v = d.v, c = d.c, nn = Math.min(20, v.length); let dv = 0; for (let k = v.length - nn; k < v.length; k++) dv += (v[k] || 0) * (c[k] || 0); dv /= nn
+    if (dv < 3e7 || c.at(-1) < 20) continue                       // liquid, tradeable only
+    const r = detectReversal(d); if (!r) continue
+    const short = r.direction === 'SHORT', entry = r.entry
+    const eta = [3, 6, 10]
+    cards.push({
+      generator: 'reversal', symbol: st.symbol, name: st.name, sector: st.sector, indices: st.indices,
+      direction: r.direction, dirTone: short ? 'down' : 'up', side: r.side, setupType: r.side,
+      ltp: entry, entry, sl: r.sl, slPct: R(((short ? entry - r.sl : r.sl - entry) / entry) * 100),
+      targets: r.targets.map((t, i) => ({ price: t, pct: R(((short ? entry - t : t - entry) / entry) * 100), by: addBiz(eta[i]) })),
+      rsi: R(r.rsi, 0), confidence: r.conf, rr: R(Math.abs(r.targets[0] - entry) / Math.abs(entry - r.sl), 2),
+      reason: r.reason, lot: fnoLots[st.symbol] || null, fno: !!fnoLots[st.symbol],
+      social: `🔄 ${st.symbol} — ${r.side} (${r.direction})\n${r.reason}\nEntry ₹${entry} · SL ₹${r.sl}\n📌 Educational only, not advice.`,
+    })
+  }
+  return cards.sort((a, b) => b.confidence - a.confidence).slice(0, 30)
 }
 
 // Log the desk's index directional as CE/PE trades in the ledger (used by daily + intraday).

@@ -9,7 +9,7 @@ import HitPopups from '../Alerts/HitPopups'
 
 // short tab labels so the nav bar wraps cleanly instead of scrolling
 const SHORT = {
-  confluence: '⭐ Top Picks', fno: '📊 F&O', momentum: '🚀 Momentum', us_stocks: '🇺🇸 US Stocks',
+  confluence: '⭐ Top Picks', fno: '📊 F&O', momentum: '🚀 Momentum', reversal: '🔄 Reversal', us_stocks: '🇺🇸 US Stocks',
   us_index: '🇺🇸 US Idx', vol_accum: '📈 Volume', vp_fib: '📐 VP·Fib·VWAP', money_flow: '💧 Money Flow',
   multibagger: '💎 Multibagger', harmonic: '🔺 Harmonic', vedic_astro: '🔯 Vedic + Hora', astro_timing: '🕐 Hora',
   option_buildup: '🎯 Desk', gex: '🧲 Gamma Map',
