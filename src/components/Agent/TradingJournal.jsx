@@ -18,6 +18,11 @@ function JTh({ label, k, s, cls = '' }) {
 }
 
 const inr = n => n == null ? '—' : '₹' + Math.round(n).toLocaleString('en-IN')
+// options are priced by PREMIUM, not the underlying — show the premium and keep the underlying as a hint
+const isOpt = p => p.kind === 'OPT'
+const entryPx = p => isOpt(p) ? p.entryPremium : p.entryPrice
+const curPx = p => isOpt(p) ? Math.round((p.entryPremium || 0) + (p.unrealizedPnl || 0) / (p.qty || 1)) : p.ltp
+const exitPx = p => isOpt(p) ? Math.round((p.entryPremium || 0) + (p.realizedPnl || 0) / (p.qty || 1)) : p.exitPrice
 const pctCls = v => v > 0 ? 'text-green' : v < 0 ? 'text-red' : 'text-txt-sec'
 const sign = v => (v > 0 ? '+' : '') + v
 const dt = s => { if (!s) return '—'; const d = new Date(s); return isNaN(d) ? s : d.toISOString().slice(0, 10) }
@@ -154,9 +159,9 @@ function OpenTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? <span className="text-txt-muted"> ({s.lots}L)</span> : ''}</td>
-            <td className="px-3 py-2 text-right">₹{s.entryPrice}</td>
+            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
             <td className="px-3 py-2 text-txt-sec">{s.entryDate}</td>
-            <td className="px-3 py-2 text-right text-txt-sec">₹{s.ltp}</td>
+            <td className="px-3 py-2 text-right text-txt-sec">₹{curPx(s)}</td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.unrealizedPnl)}`}>{inr(s.unrealizedPnl)}<span className="text-[10px]"> ({sign(s.unrealizedPct)}%)</span></td>
             <td className="px-3 py-2 text-right text-red">₹{s.sl}</td>
             <td className="px-3 py-2 text-right text-green">₹{s.targets?.[0]?.price}</td>
@@ -189,8 +194,8 @@ function ClosedTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? ` (${s.lots}L)` : ''}</td>
-            <td className="px-3 py-2 text-right">₹{s.entryPrice}<div className="text-[10px] text-txt-muted">{s.entryDate}</div></td>
-            <td className="px-3 py-2 text-right">₹{s.exitPrice}<div className="text-[10px] text-txt-muted">{s.exitDate}</div></td>
+            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted">{s.entryDate}</div></td>
+            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted">{s.exitDate}</div></td>
             <td className="px-3 py-2 text-right text-txt-sec">{s.daysHeld != null ? `${s.daysHeld}d` : '—'}</td>
             <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${s.result === 'WIN' ? 'bg-green' : s.result === 'LOSS' ? 'bg-red' : 'bg-yellow'}`}>{s.result === 'WIN' ? '🎯 WIN' : s.result === 'LOSS' ? '🔴 LOSS' : '⏳ EXPIRED'}</span></td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.realizedPnl)}`}>{inr(s.realizedPnl)}<div className="text-[10px]">{sign(s.realizedPct)}%</div></td>

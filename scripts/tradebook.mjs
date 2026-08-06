@@ -127,23 +127,28 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held)
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       pos.peakPct = Math.max(pos.peakPct ?? 0, pos.unrealizedPct)
-      // PARTIAL BOOK: lock 50% once up +40%, then let the rest run risk-free
-      if (!pos.partialBooked && pos.unrealizedPct >= BOOK_AT_PCT && pos.qty >= 2) {
-        const halfQty = Math.floor(pos.qty / 2)
+      // PARTIAL BOOK 50% at +40% — but F&O trades in WHOLE LOTS, so only if ≥2 lots (you can't
+      // book half of a single lot). Cash can book any share count.
+      const isLot = !!(pos.lotSize && pos.lots)
+      const canPartial = isLot ? pos.lots >= 2 : pos.qty >= 2
+      if (!pos.partialBooked && pos.unrealizedPct >= BOOK_AT_PCT && canPartial) {
+        const bookLots = isLot ? Math.floor(pos.lots / 2) : 0
+        const halfQty = isLot ? bookLots * pos.lotSize : Math.floor(pos.qty / 2)
         const perUnit = pnlFor({ ...pos, qty: 1 }, pos.ltp, bearish, held)
         const bookedPnl = Math.round(perUnit * halfQty)
         const bookedInv = Math.round(pos.invested * halfQty / pos.qty)
         if (pos.sleeve === 'FO') b.cashFO += bookedInv + bookedPnl; else b.cashCash += bookedInv + bookedPnl
-        b.closed.push({ ...pos, qty: halfQty, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (50%) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
-        pos.qty -= halfQty; pos.invested -= bookedInv; pos.partialBooked = true
+        b.closed.push({ ...pos, qty: halfQty, lots: isLot ? bookLots : null, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (${isLot ? bookLots + ' lot' + (bookLots > 1 ? 's' : '') : '50%'}) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        pos.qty -= halfQty; if (isLot) pos.lots -= bookLots; pos.invested -= bookedInv; pos.partialBooked = true
         pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       }
-      // After partial book, protect the runner. SOLID signals (A++/A+) → SL to COST-TO-COST
-      // (breakeven, exit only if it comes back to entry) so a strong move can run free; weaker
-      // signals lock a +10% trailing floor.
+      // SL management. After a partial book, OR for a SINGLE lot that already peaked ≥+40% (can't
+      // split it), protect it: SOLID signals (A++/A+) → SL to COST-TO-COST (breakeven, exit only if
+      // it returns to entry) so a strong move runs free; weaker signals lock a +10% trailing floor.
       const solid = pos.grade === 'A++' || pos.grade === 'A+'
       const floor = solid ? 0 : TRAIL_EXIT_PCT
-      if (pos.partialBooked && pos.unrealizedPct <= floor) {
+      const manage = pos.partialBooked || (isLot && pos.lots === 1 && (pos.peakPct ?? 0) >= BOOK_AT_PCT)
+      if (manage && pos.unrealizedPct <= floor) {
         const pnl = pnlFor(pos, pos.ltp, bearish, held)
         if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
         b.closed.push({ ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })

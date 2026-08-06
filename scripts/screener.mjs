@@ -641,7 +641,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       if (s.kind !== 'Stock' || !s.entry || !s.sl || !Array.isArray(s.targets) || !s.targets[0]?.price) continue
       try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {}
     }
-    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs)
+    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
     saveLedger(lg)
     console.log(`Ledger: logged ${logged} confluence/F&O/option picks for tracking`)
 
@@ -659,7 +659,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     let logged = 0
     for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) { try { openOrUpdate(lg, card, todayISO, todayTs); logged++ } catch {} }
     for (const s of (board.find(g => g.id === 'fno')?.signals || [])) { if (s.kind !== 'Stock' || !s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {} }
-    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs)
+    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
     saveLedger(lg)
     try { syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
     console.log(`Intraday refresh: ${logged} signals logged, book marked-to-market`)
@@ -761,11 +761,11 @@ async function buildUsBoard(addDays) {
 
 // Log the desk's index directional as CE/PE trades in the ledger (used by daily + intraday).
 // Prefers live option-OI/FII/far-month direction; falls back to multi-TF alignment when OI is down.
-function logIndexOptions(lg, board, addBiz, todayISO, todayTs) {
-  const LOT = { NIFTY: 75, BANKNIFTY: 35 }
+function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
+  const LOT = sym => fnoLots[sym] || ({ NIFTY: 65, BANKNIFTY: 30 })[sym]
   let n = 0
   for (const card of (board.find(g => g.id === 'option_buildup')?.signals || [])) {
-    const lot = LOT[card.symbol]; if (!lot) continue
+    const lot = LOT(card.symbol); if (!lot) continue
     const d = card.directional
     let trade = null
     if (d && d.direction !== 'NEUTRAL' && d.sl && Array.isArray(d.targets)) {
