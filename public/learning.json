@@ -1,13 +1,13 @@
 {
-  "date": "2026-08-05",
-  "generatedAt": "2026-08-05T12:09:42.065Z",
-  "moversChecked": 101,
-  "caught": 45,
+  "date": "2026-08-06",
+  "generatedAt": "2026-08-06T05:57:12.091Z",
+  "moversChecked": 114,
+  "caught": 47,
   "missed": 40,
-  "catchRate": 44.6,
-  "catchableRate": 40.5,
-  "catchableMovers": 84,
-  "gapUpMovers": 17,
+  "catchRate": 41.2,
+  "catchableRate": 42.4,
+  "catchableMovers": 33,
+  "gapUpMovers": 81,
   "sources": [
     "Own NSE-universe gainers (≥5% today)",
     "Groww top-gainers (cross-check)",
@@ -16,144 +16,159 @@
   "externalNote": "Groww + Dhan page(s) reachable (JS-rendered, not parsed) — cross-checked against own NSE-universe gainers as ground truth.",
   "reasonTally": [
     {
-      "reason": "not above rising N/N EMA yet",
-      "count": 19
+      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
+      "count": 37
     },
     {
       "reason": "no prior up-volume accumulation",
       "count": 17
     },
     {
+      "reason": "not above rising N/N EMA yet",
+      "count": 16
+    },
+    {
       "reason": "no squeeze / breakout proximity",
-      "count": 13
+      "count": 15
     },
     {
       "reason": "RSI already hot (>N) — excluded by gate",
       "count": 11
     },
     {
-      "reason": "setup present but ranked below the cut — widen coverage",
-      "count": 4
-    },
-    {
       "reason": "pre-move score N below gate N",
-      "count": 4
-    },
-    {
-      "reason": "gap-up open (news/event-driven — hard to pre-empt)",
-      "count": 3
+      "count": 6
     }
   ],
   "misses": [
     {
-      "symbol": "SUDEEPPHRM",
-      "name": "Sudeep Pharma Ltd.",
-      "changePct": 10,
-      "gapUp": false,
+      "symbol": "ELANTAS",
+      "name": "Elantas Beck India Limited",
+      "changePct": 27.9,
+      "gapUp": true,
       "reasons": [
-        "setup present but ranked below the cut — widen coverage"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "RSDFIN",
-      "name": "RSD Finance Limited",
-      "changePct": 10,
-      "gapUp": false,
+      "symbol": "UEL",
+      "name": "Ujaas Energy Limited",
+      "changePct": 21,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "RSI already hot (>68) — excluded by gate"
       ]
     },
     {
-      "symbol": "MOLDTECH",
-      "name": "Mold-Tek Technologies Limited",
-      "changePct": 9.9,
-      "gapUp": false,
+      "symbol": "HAVISHA",
+      "name": "Sri Havisha Hospitality and Infrastructure Limited",
+      "changePct": 15.4,
+      "gapUp": true,
       "reasons": [
-        "no squeeze / breakout proximity"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "no prior up-volume accumulation"
+      ]
+    },
+    {
+      "symbol": "TOTAL",
+      "name": "Total Transport Systems Limited",
+      "changePct": 12.3,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "BATLIBOI",
+      "name": "Batliboi Limited",
+      "changePct": 10.8,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "BOSCH-HCIL",
+      "name": "BOSCH HOME COMFORT INDIA LIMITED",
+      "changePct": 10.5,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "RSI already hot (>68) — excluded by gate"
       ]
     },
     {
       "symbol": "MMP",
       "name": "MMP Industries Limited",
-      "changePct": 9.4,
-      "gapUp": false,
+      "changePct": 10.4,
+      "gapUp": true,
       "reasons": [
-        "setup present but ranked below the cut — widen coverage"
+        "gap-up open (news/event-driven — hard to pre-empt)"
+      ]
+    },
+    {
+      "symbol": "DIACABS",
+      "name": "Diamond Power Infrastructure Ltd.",
+      "changePct": 10.2,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "UFBL",
+      "name": "United Foodbrands Limited",
+      "changePct": 10.2,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
       "symbol": "MUTHOOTCAP",
       "name": "Muthoot Capital Services Limited",
-      "changePct": 9,
-      "gapUp": false,
+      "changePct": 10.1,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "RSI already hot (>68) — excluded by gate"
       ]
     },
     {
-      "symbol": "HINDCOPPER",
-      "name": "Hindustan Copper Ltd.",
-      "changePct": 8.4,
-      "gapUp": false,
+      "symbol": "SUDEEPPHRM",
+      "name": "Sudeep Pharma Ltd.",
+      "changePct": 10,
+      "gapUp": true,
       "reasons": [
-        "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
-      "symbol": "WESTLIFE",
-      "name": "Westlife Foodworld Ltd.",
-      "changePct": 8.2,
-      "gapUp": false,
+      "symbol": "DVL",
+      "name": "Dhunseri Ventures Limited",
+      "changePct": 9.9,
+      "gapUp": true,
       "reasons": [
-        "no prior up-volume accumulation"
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
-      "symbol": "SANGHVIMOV",
-      "name": "Sanghvi Movers Limited",
-      "changePct": 8.1,
-      "gapUp": false,
+      "symbol": "YUKEN",
+      "name": "Yuken India Limited",
+      "changePct": 9.6,
+      "gapUp": true,
       "reasons": [
-        "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "VSSL",
-      "name": "Vardhman Special Steels Limited",
-      "changePct": 8.1,
-      "gapUp": false,
-      "reasons": [
-        "no prior up-volume accumulation",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "SIGIND",
-      "name": "Signet Industries Limited",
-      "changePct": 7.8,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "CAPILLARY",
-      "name": "Capillary Technologies India Ltd.",
-      "changePct": 7.7,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "LASA",
-      "name": "Lasa Supergenerics Limited",
-      "changePct": 7.7,
-      "gapUp": false,
-      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "pre-move score 15 below gate 30",
         "no prior up-volume accumulation",
@@ -161,28 +176,22 @@
       ]
     },
     {
-      "symbol": "RRIL",
-      "name": "RRIL Limited",
-      "changePct": 7.6,
-      "gapUp": false,
+      "symbol": "VCL",
+      "name": "Vaxtex Cotfab Limited",
+      "changePct": 9.4,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "FIEMIND",
-      "name": "Fiem Industries Ltd",
-      "changePct": 7.5,
-      "gapUp": false,
-      "reasons": [
+        "pre-move score 27 below gate 30",
+        "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "OLAELEC",
-      "name": "Ola Electric Mobility Ltd.",
-      "changePct": 7.4,
+      "symbol": "ICDSLTD",
+      "name": "ICDS Limited",
+      "changePct": 9.2,
       "gapUp": false,
       "reasons": [
         "not above rising 20/50 EMA yet",
@@ -190,85 +199,43 @@
       ]
     },
     {
-      "symbol": "ELGIRUBCO",
-      "name": "Elgi Rubber Company Limited",
-      "changePct": 7.2,
-      "gapUp": false,
+      "symbol": "SICAGEN",
+      "name": "Sicagen India Limited",
+      "changePct": 9.1,
+      "gapUp": true,
       "reasons": [
-        "setup present but ranked below the cut — widen coverage"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "no prior up-volume accumulation"
       ]
     },
     {
       "symbol": "ADVANCE",
       "name": "Advance Agrolife Limited",
-      "changePct": 7.2,
-      "gapUp": false,
+      "changePct": 8.8,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "RSI already hot (>68) — excluded by gate",
         "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "CNL",
-      "name": "Creative Newtech Limited",
-      "changePct": 7.2,
-      "gapUp": false,
+      "symbol": "PANAMAPET",
+      "name": "Panama Petrochem Limited",
+      "changePct": 8.7,
+      "gapUp": true,
       "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "RICOAUTO",
-      "name": "Rico Auto Industries Limited",
-      "changePct": 6.9,
-      "gapUp": false,
-      "reasons": [
-        "no squeeze / breakout proximity"
-      ]
-    },
-    {
-      "symbol": "ENGINERSIN",
-      "name": "Engineers India Ltd.",
-      "changePct": 6.8,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "ARTEMISMED",
-      "name": "Artemis Medicare Services Limited",
-      "changePct": 6.8,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "HBSL",
-      "name": "HB Stockholdings Limited",
-      "changePct": 6.8,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet"
-      ]
-    },
-    {
-      "symbol": "RGL",
-      "name": "Renaissance Global Limited",
-      "changePct": 6.7,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet"
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
       "symbol": "SANSERA",
       "name": "Sansera Engineering Ltd.",
-      "changePct": 6.7,
-      "gapUp": false,
+      "changePct": 8.7,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "no prior up-volume accumulation",
         "RSI already hot (>68) — excluded by gate"
       ]
@@ -276,9 +243,10 @@
     {
       "symbol": "KHAICHEM",
       "name": "Khaitan Chemicals & Fertilizers Limited",
-      "changePct": 6.7,
-      "gapUp": false,
+      "changePct": 8.2,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "pre-move score 15 below gate 30",
         "no prior up-volume accumulation",
@@ -286,89 +254,152 @@
       ]
     },
     {
-      "symbol": "HAVISHA",
-      "name": "Sri Havisha Hospitality and Infrastructure Limited",
-      "changePct": 6.6,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet",
-        "no prior up-volume accumulation"
-      ]
-    },
-    {
-      "symbol": "TDPOWERSYS",
-      "name": "TD Power Systems Ltd.",
-      "changePct": 6.6,
-      "gapUp": false,
-      "reasons": [
-        "not above rising 20/50 EMA yet"
-      ]
-    },
-    {
-      "symbol": "GODIGIT",
-      "name": "Go Digit General Insurance Ltd.",
-      "changePct": 6.5,
+      "symbol": "CAPILLARY",
+      "name": "Capillary Technologies India Ltd.",
+      "changePct": 8.1,
       "gapUp": true,
       "reasons": [
         "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
-        "pre-move score 10 below gate 30",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "PARASPETRO",
+      "name": "Paras Petrofils Limited",
+      "changePct": 8,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "RSI already hot (>68) — excluded by gate",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "AGARWALEYE",
+      "name": "Dr. Agarwal's Health Care Ltd.",
+      "changePct": 7.9,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)"
+      ]
+    },
+    {
+      "symbol": "JGCHEM",
+      "name": "J.G.Chemicals Limited",
+      "changePct": 7.7,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "DDEVPLSTIK",
+      "name": "Ddev Plastiks Industries Limited",
+      "changePct": 7.6,
+      "gapUp": false,
+      "reasons": [
         "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "NRBBEARING",
-      "name": "NRB Bearing Limited",
-      "changePct": 6.5,
-      "gapUp": false,
+      "symbol": "DUCON",
+      "name": "Ducon Infratechnologies Limited",
+      "changePct": 7.6,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
         "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "DVL",
-      "name": "Dhunseri Ventures Limited",
-      "changePct": 6.3,
-      "gapUp": false,
+      "symbol": "FIEMIND",
+      "name": "Fiem Industries Ltd",
+      "changePct": 7.3,
+      "gapUp": true,
       "reasons": [
-        "setup present but ranked below the cut — widen coverage"
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "TAINWALCHM",
-      "name": "Tainwala Chemical and Plastic (I) Limited",
-      "changePct": 6.3,
-      "gapUp": false,
+      "symbol": "SUDARSCHEM",
+      "name": "Sudarshan Chemical Industries Ltd.",
+      "changePct": 7.3,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "WAAREEINDO",
+      "name": "Indosolar Limited",
+      "changePct": 7.2,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
+        "pre-move score 15 below gate 30",
         "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "IOLCP",
-      "name": "IOL Chemicals and Pharmaceuticals Limited",
-      "changePct": 6.3,
-      "gapUp": false,
+      "symbol": "GARFIBRES",
+      "name": "Garware Technical Fibres Limited",
+      "changePct": 7.1,
+      "gapUp": true,
       "reasons": [
-        "no squeeze / breakout proximity"
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
-      "symbol": "SEPC",
-      "name": "SEPC Limited",
-      "changePct": 6.2,
-      "gapUp": false,
+      "symbol": "STLTECH",
+      "name": "Sterlite Technologies Ltd.",
+      "changePct": 7.1,
+      "gapUp": true,
       "reasons": [
-        "not above rising 20/50 EMA yet",
+        "gap-up open (news/event-driven — hard to pre-empt)"
+      ]
+    },
+    {
+      "symbol": "SUNDRMFAST",
+      "name": "Sundram Fasteners Limited",
+      "changePct": 7.1,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no prior up-volume accumulation",
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "RPPL",
+      "name": "Rajshree Polypack Limited",
+      "changePct": 6.9,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "SILLYMONKS",
-      "name": "Silly Monks Entertainment Limited",
-      "changePct": 6,
+      "symbol": "SHAILY",
+      "name": "Shaily Engineering Plastics Ltd.",
+      "changePct": 6.6,
+      "gapUp": false,
+      "reasons": [
+        "RSI already hot (>68) — excluded by gate"
+      ]
+    },
+    {
+      "symbol": "RAMCOSYS",
+      "name": "Ramco Systems Limited",
+      "changePct": 6.6,
       "gapUp": true,
       "reasons": [
         "gap-up open (news/event-driven — hard to pre-empt)",
@@ -379,66 +410,62 @@
       ]
     },
     {
-      "symbol": "CUPID",
-      "name": "Cupid Ltd.",
-      "changePct": 5.9,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "VIVIDHA",
-      "name": "Visagar Polytex Limited",
-      "changePct": 5.9,
+      "symbol": "BANSALWIRE",
+      "name": "Bansal Wire Industries Limited",
+      "changePct": 6.5,
       "gapUp": true,
       "reasons": [
         "gap-up open (news/event-driven — hard to pre-empt)",
-        "not above rising 20/50 EMA yet"
+        "not above rising 20/50 EMA yet",
+        "no prior up-volume accumulation"
       ]
     },
     {
-      "symbol": "BLSE",
-      "name": "BLS E-Services Limited",
-      "changePct": 5.9,
-      "gapUp": false,
+      "symbol": "SHAHALLOYS",
+      "name": "Shah Alloys Limited",
+      "changePct": 6.5,
+      "gapUp": true,
       "reasons": [
-        "RSI already hot (>68) — excluded by gate"
-      ]
-    },
-    {
-      "symbol": "RSL",
-      "name": "Rajputana Stainless Limited",
-      "changePct": 5.9,
-      "gapUp": false,
-      "reasons": [
-        "RSI already hot (>68) — excluded by gate",
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "not above rising 20/50 EMA yet",
+        "pre-move score 15 below gate 30",
+        "no prior up-volume accumulation",
         "no squeeze / breakout proximity"
       ]
     },
     {
-      "symbol": "BOSCH-HCIL",
-      "name": "BOSCH HOME COMFORT INDIA LIMITED",
-      "changePct": 5.9,
-      "gapUp": false,
+      "symbol": "WELCORP",
+      "name": "Welspun Corp Ltd.",
+      "changePct": 6.5,
+      "gapUp": true,
       "reasons": [
-        "not above rising 20/50 EMA yet",
-        "RSI already hot (>68) — excluded by gate"
+        "gap-up open (news/event-driven — hard to pre-empt)"
       ]
     },
     {
-      "symbol": "KANSAINER",
-      "name": "Kansai Nerolac Paints Ltd.",
-      "changePct": 5.8,
-      "gapUp": false,
+      "symbol": "TGBHOTELS",
+      "name": "TGB Banquets And Hotels Limited",
+      "changePct": 6.3,
+      "gapUp": true,
       "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
+        "no squeeze / breakout proximity"
+      ]
+    },
+    {
+      "symbol": "POKARNA",
+      "name": "Pokarna Limited",
+      "changePct": 6.1,
+      "gapUp": true,
+      "reasons": [
+        "gap-up open (news/event-driven — hard to pre-empt)",
         "not above rising 20/50 EMA yet",
         "no prior up-volume accumulation"
       ]
     }
   ],
   "adjustments": [
-    "Below 85% (measured 60.4%) → alert-lane bar to 65 (Telegram leans tighter; board coverage unchanged)."
+    "Below 85% (measured 61.2%) → alert-lane bar to 65 (Telegram leans tighter; board coverage unchanged)."
   ],
   "tuning": {
     "minMoveScore": 30,
@@ -447,7 +474,7 @@
   "goal": {
     "target": 85,
     "deadline": "2026-07-19",
-    "current": 60.4,
+    "current": 61.2,
     "status": "below target — tightening selectivity (fewer, higher-quality signals)"
   },
   "note": "Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such."
