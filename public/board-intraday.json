@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T13:07:49.765Z",
+  "generatedAt": "2026-08-07T13:25:24.109Z",
   "date": "2026-08-07",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -749,7 +749,7 @@
           "grade": "A++",
           "confluenceScore": 146,
           "vedicAsset": "Nifty IT",
-          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicLabel": "RANGE / NEUTRAL",
           "vedicAligned": false,
           "strongDeliv": false,
           "plan": {
@@ -759,89 +759,6 @@
             "deploy": 51239.1,
             "riskRs": 936.1,
             "rewardT1Rs": 1001.55
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "AJANTPHARM",
-          "name": "Ajanta Pharmaceuticals Ltd.",
-          "sector": "Healthcare",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Midcap 150",
-            "NIFTY Pharma",
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 67/100): Up/down volume 2.92× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
-          "direction": "LONG",
-          "ltp": 3489.2,
-          "entry": 3489.2,
-          "sl": 3450.72,
-          "slPct": -1.1,
-          "targets": [
-            {
-              "price": 3533,
-              "pct": 1.3,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 3565.85,
-              "pct": 2.2,
-              "by": "~10h",
-              "days": 10
-            },
-            {
-              "price": 3598.7,
-              "pct": 3.1,
-              "by": "~20h",
-              "days": 20
-            }
-          ],
-          "rr": 1.14,
-          "rsi": 55.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": -0.17,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.021,
-            "rs50": 0.014,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A++) — AJANTPHARM\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty Pharma Vedic bias bullish\n🕵️ Footprint 70/100: Stealth volume — buying while price still flat\nEntry ₹3489.2 · SL ₹3450.72 (-1.1%)\nT1 ₹3533 (+1.3%) by ~7h · T2 +2.2% · T3 +3.1%\nPlan (₹1L, 1% risk): buy 25 sh · risk ₹962 · reward T1 ₹1095 · R:R 1:1.14\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#AJANTPHARM #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Harmonic & Chart Patterns"
-          ],
-          "genCount": 2,
-          "grade": "A++",
-          "confluenceScore": 138,
-          "vedicAsset": "Nifty Pharma",
-          "vedicLabel": "BUY / TEJI",
-          "vedicAligned": true,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 25,
-            "deploy": 87230,
-            "riskRs": 962,
-            "rewardT1Rs": 1095
           }
         },
         {
@@ -1002,6 +919,90 @@
             "deploy": 57777,
             "riskRs": 946.65,
             "rewardT1Rs": 1126.65
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "GRASIM",
+          "name": "Grasim Industries Ltd.",
+          "sector": "Construction Materials",
+          "indices": [
+            "NIFTY 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY Commodities",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 4.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 3323,
+          "entry": 3323,
+          "sl": 3198.48,
+          "slPct": -3.7,
+          "targets": [
+            {
+              "price": 3380.23,
+              "pct": 1.7,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 3423.15,
+              "pct": 3,
+              "by": "~8h",
+              "days": 8
+            },
+            {
+              "price": 3466.07,
+              "pct": 4.3,
+              "by": "~12h",
+              "days": 12
+            }
+          ],
+          "rr": 0.46,
+          "rsi": 71.3,
+          "confidence": 95,
+          "accuracy": 100,
+          "backtestTrades": 5,
+          "delivery": null,
+          "changePct": -0.12,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 58,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 4.29× (accumulation)"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": 0.067,
+            "rs50": 0.054,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A+) — GRASIM\n2 signals agree: Volume + Accumulation, Harmonic & Chart Patterns + Nifty 50 Vedic bias bullish\n🕵️ Footprint 58/100: Stealth volume — buying while price still flat\nEntry ₹3323 · SL ₹3198.48 (-3.7%)\nT1 ₹3380.23 (+1.7%) by ~5h · T2 +3% · T3 +4.3%\nPlan (₹1L, 1% risk): buy 8 sh · risk ₹996.16 · reward T1 ₹457.84 · R:R 1:0.46\nBacktested ~100% (n=5). 📌 Educational only, not advice. Not SEBI-registered.\n#GRASIM #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Harmonic & Chart Patterns"
+          ],
+          "genCount": 2,
+          "grade": "A+",
+          "confluenceScore": 135,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 8,
+            "deploy": 26584,
+            "riskRs": 996.16,
+            "rewardT1Rs": 457.84
           }
         }
       ]
@@ -1575,7 +1576,7 @@
           "name": "Gold (Spot XAU/USD)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4350.47,
+            "spot": 4352.18,
             "aligned": "LONG",
             "net": 10,
             "longs": 10,
@@ -1584,13 +1585,13 @@
               {
                 "tf": "15m",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4350.47,
-                "sl": 4332.12,
+                "score": 5,
+                "entry": 4352.18,
+                "sl": 4334.15,
                 "targets": [
-                  4374.93,
-                  4393.28,
-                  4411.63
+                  4376.23,
+                  4394.26,
+                  4412.29
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1598,24 +1599,24 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4258.01,
-                "vah": 4290.12,
-                "val": 4229.68,
-                "vwap": 4306.03,
-                "rsi": 72,
+                "poc": 4269.32,
+                "vah": 4301.43,
+                "val": 4237.21,
+                "vwap": 4321.3,
+                "rsi": 65,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4324.64 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4324.64 · at 38.2% Fib 4388.75"
               },
               {
                 "tf": "35m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4325.73,
+                "entry": 4352.18,
+                "sl": 4327.95,
                 "targets": [
-                  4383.45,
-                  4408.19,
-                  4432.92
+                  4384.49,
+                  4408.73,
+                  4432.96
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1623,11 +1624,11 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4253.7,
-                "vah": 4329.84,
-                "val": 4087.99,
-                "vwap": 4272.64,
-                "rsi": 81,
+                "poc": 4265.01,
+                "vah": 4341.15,
+                "val": 4090.34,
+                "vwap": 4289.23,
+                "rsi": 74,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4320.33 · higher lows"
               },
@@ -1635,12 +1636,12 @@
                 "tf": "45m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4321.84,
+                "entry": 4352.18,
+                "sl": 4325.2,
                 "targets": [
-                  4388.64,
-                  4417.27,
-                  4445.9
+                  4388.15,
+                  4415.13,
+                  4442.11
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1648,11 +1649,11 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4047.68,
-                "vah": 4249.22,
-                "val": 4007.37,
-                "vwap": 4268.78,
-                "rsi": 79,
+                "poc": 4058.99,
+                "vah": 4260.53,
+                "val": 4018.68,
+                "vwap": 4282.1,
+                "rsi": 77,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4114.31 · higher lows"
               },
@@ -1660,12 +1661,12 @@
                 "tf": "75m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4314.08,
+                "entry": 4352.18,
+                "sl": 4315.79,
                 "targets": [
-                  4399,
-                  4435.39,
-                  4471.78
+                  4400.71,
+                  4437.1,
+                  4473.49
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1673,11 +1674,11 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4053.71,
-                "vah": 4175.32,
-                "val": 3942.67,
-                "vwap": 4250.82,
-                "rsi": 76,
+                "poc": 4065.02,
+                "vah": 4197.2,
+                "val": 3953.98,
+                "vwap": 4263.33,
+                "rsi": 75,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4120.34 · higher lows"
               },
@@ -1685,12 +1686,12 @@
                 "tf": "90m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4312.32,
+                "entry": 4352.18,
+                "sl": 4314.03,
                 "targets": [
-                  4401.34,
-                  4439.49,
-                  4477.65
+                  4403.05,
+                  4441.2,
+                  4479.36
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1698,24 +1699,24 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4032.56,
-                "vah": 4122.44,
-                "val": 3942.67,
-                "vwap": 4233.98,
-                "rsi": 79,
+                "poc": 4043.87,
+                "vah": 4133.75,
+                "val": 3953.98,
+                "vwap": 4246.55,
+                "rsi": 78,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4099.19 · higher lows"
               },
               {
                 "tf": "1h",
                 "dir": "LONG",
-                "score": 4,
-                "entry": 4350.47,
-                "sl": 4319.71,
+                "score": 6,
+                "entry": 4352.18,
+                "sl": 4321.64,
                 "targets": [
-                  4391.49,
-                  4422.25,
-                  4453.01
+                  4392.9,
+                  4423.43,
+                  4453.97
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1723,24 +1724,24 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4055.29,
-                "vah": 4235.96,
-                "val": 4004.33,
-                "vwap": 4270.32,
-                "rsi": 76,
+                "poc": 4061.31,
+                "vah": 4248.88,
+                "val": 4020.13,
+                "vwap": 4283.76,
+                "rsi": 70,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4121.92 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4116.63 · higher lows"
               },
               {
                 "tf": "2h",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4306.38,
+                "entry": 4352.18,
+                "sl": 4311.06,
                 "targets": [
-                  4409.26,
-                  4453.35,
-                  4497.44
+                  4407.01,
+                  4448.14,
+                  4489.26
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1748,11 +1749,11 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 4027.83,
-                "vah": 4097.54,
-                "val": 3958.12,
-                "vwap": 4203.03,
-                "rsi": 77,
+                "poc": 4039.14,
+                "vah": 4108.85,
+                "val": 3969.43,
+                "vwap": 4216.92,
+                "rsi": 76,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4094.46 · higher lows"
               },
@@ -1760,12 +1761,12 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4298.59,
+                "entry": 4352.18,
+                "sl": 4298.37,
                 "targets": [
-                  4419.65,
-                  4471.53,
-                  4523.41
+                  4423.93,
+                  4477.74,
+                  4531.55
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1773,11 +1774,11 @@
                   "2026-08-13"
                 ],
                 "rr": 1.33,
-                "poc": 4019.56,
-                "vah": 4084.09,
-                "val": 3943.3,
-                "vwap": 4164.25,
-                "rsi": 77,
+                "poc": 4030.87,
+                "vah": 4095.4,
+                "val": 3954.61,
+                "vwap": 4177.19,
+                "rsi": 74,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4086.19 · higher lows"
               },
@@ -1785,12 +1786,12 @@
                 "tf": "4h",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4350.47,
-                "sl": 4289.28,
+                "entry": 4352.18,
+                "sl": 4290.99,
                 "targets": [
-                  4432.06,
-                  4493.26,
-                  4554.45
+                  4433.77,
+                  4494.97,
+                  4556.16
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1798,11 +1799,11 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 3996.1,
-                "vah": 4095.82,
-                "val": 3955.03,
-                "vwap": 4141.14,
-                "rsi": 78,
+                "poc": 4007.41,
+                "vah": 4107.13,
+                "val": 3966.34,
+                "vwap": 4153.6,
+                "rsi": 77,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4062.73 · higher lows"
               },
@@ -1810,12 +1811,12 @@
                 "tf": "1D",
                 "dir": "LONG",
                 "score": 2,
-                "entry": 4350.47,
-                "sl": 4225.77,
+                "entry": 4352.18,
+                "sl": 4227.48,
                 "targets": [
-                  4516.74,
-                  4641.43,
-                  4766.13
+                  4518.45,
+                  4643.14,
+                  4767.84
                 ],
                 "etaDates": [
                   "2026-08-12",
@@ -1823,10 +1824,10 @@
                   "2026-08-18"
                 ],
                 "rr": 1.33,
-                "poc": 4362.68,
-                "vah": 4870.09,
-                "val": 3936.46,
-                "vwap": 4126.84,
+                "poc": 4373.99,
+                "vah": 4881.4,
+                "val": 3947.77,
+                "vwap": 4141.7,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "above VWAP · below POC 4429.31 · higher lows"
@@ -1834,7 +1835,7 @@
             ]
           },
           "directional": null,
-          "spot": 4350.47,
+          "spot": 4352.18,
           "aligned": "LONG"
         },
         {
@@ -5173,14 +5174,14 @@
           "underlying": "GOLD",
           "name": "Gold",
           "kind": "Commodity",
-          "direction": "RANGE",
-          "dirTone": "flat",
-          "spot": 4349.53,
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 4351.61,
           "lot": null,
           "grade": "B",
-          "optionPlay": "Range — sell strangle",
-          "reason": "Vedic daily bias +3 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — GOLD (Commodity) RANGE\nVedic daily bias +3 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.\n👉 Range — sell strangle\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
+          "optionPlay": "Buy ATM Call / long futures",
+          "reason": "Vedic daily bias +47 (BUY / TEJI). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +47 (BUY / TEJI). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
           "rank": 90
         },
         {
@@ -5188,14 +5189,14 @@
           "underlying": "SILVER",
           "name": "Silver",
           "kind": "Commodity",
-          "direction": "BUY",
-          "dirTone": "up",
+          "direction": "RANGE",
+          "dirTone": "flat",
           "spot": null,
           "lot": null,
           "grade": "B",
-          "optionPlay": "Buy ATM Call / long futures",
-          "reason": "Vedic daily bias +23 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — SILVER (Commodity) BUY\nVedic daily bias +23 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
+          "optionPlay": "Range — sell strangle",
+          "reason": "Vedic daily bias +7 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — SILVER (Commodity) RANGE\nVedic daily bias +7 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.\n👉 Range — sell strangle\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
           "rank": 90
         },
         {
@@ -5323,6 +5324,48 @@
           "reason": "Accumulation (vol 65/100): 5-day volume > 20-day average (RVOL 0.15×); Up/down volume 2.23× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "social": "📊 F&O — LTM (Stock) BUY\nAccumulation (vol 65/100): 5-day volume > 20-day average (RVOL 0.15×); Up/down volume 2.23× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\n👉 Buy 4700 CE (ATM) or 4600 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ltm #options",
           "rank": 83
+        },
+        {
+          "generator": "fno",
+          "underlying": "GRASIM",
+          "name": "Grasim Industries Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 3323,
+          "lot": 250,
+          "grade": "A+",
+          "confidence": 95,
+          "delivery": null,
+          "entry": 3323,
+          "sl": 3198.48,
+          "slPct": -3.7,
+          "targets": [
+            {
+              "price": 3380.23,
+              "pct": 1.7,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 3423.15,
+              "pct": 3,
+              "by": "~8h",
+              "days": 8
+            },
+            {
+              "price": 3466.07,
+              "pct": 4.3,
+              "by": "~12h",
+              "days": 12
+            }
+          ],
+          "rr": 0.46,
+          "optionPlay": "Buy 3300 CE (ATM) or 3200 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 250 sh ≈ ₹8,30,750 notional",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 4.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "social": "📊 F&O — GRASIM (Stock) BUY\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.19×); Up/down volume 4.29× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\n👉 Buy 3300 CE (ATM) or 3200 CE (ITM) — near expiry; or long futures · 1 lot = 250 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #grasim #options",
+          "rank": 82
         },
         {
           "generator": "fno",
@@ -5952,48 +5995,6 @@
           "setupType": "Squeeze breakout",
           "rsi": 53.3,
           "social": "📊 F&O — BHARTIARTL (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.9% below)\n👉 Buy 1950 CE (ATM) or 1900 CE (ITM) — near expiry; or long futures · 1 lot = 475 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #bhartiartl #options",
-          "rank": 57
-        },
-        {
-          "generator": "fno",
-          "underlying": "GRASIM",
-          "name": "Grasim Industries Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 3323,
-          "lot": 250,
-          "grade": "A+",
-          "confidence": 85,
-          "delivery": null,
-          "entry": 3323,
-          "sl": 3198.48,
-          "slPct": -3.7,
-          "targets": [
-            {
-              "price": 3380.23,
-              "pct": 1.7,
-              "by": "~5h"
-            },
-            {
-              "price": 3423.15,
-              "pct": 3,
-              "by": "~8h"
-            },
-            {
-              "price": 3466.07,
-              "pct": 4.3,
-              "by": "~12h"
-            }
-          ],
-          "rr": 0.46,
-          "optionPlay": "Buy 3300 CE (ATM) or 3200 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 250 sh ≈ ₹8,30,750 notional",
-          "reason": "Breakout watch: Hugging 20-day high (0.8% below); Above rising 20 & 50 EMA",
-          "changePct": -0.12,
-          "setupType": "Breakout watch",
-          "rsi": 71.3,
-          "social": "📊 F&O — GRASIM (Stock) BUY\nBreakout watch: Hugging 20-day high (0.8% below); Above rising 20 & 50 EMA\n👉 Buy 3300 CE (ATM) or 3200 CE (ITM) — near expiry; or long futures · 1 lot = 250 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #grasim #options",
           "rank": 57
         },
         {
@@ -14313,7 +14314,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Dashami · Krishna (waning) · Dhruva yoga · Karana Vanija · Moon Taurus · Krittika (Pada 4) · lord Sun. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Dashami · Krishna (waning) · Dhruva yoga · Karana Vanija · Moon Taurus · Rohini (Pada 1) · lord Moon. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
@@ -14325,7 +14326,7 @@
           "score": 19,
           "label": "BUY ON DIP",
           "biasTone": "up",
-          "navaTara": "Mitra (pos 8)",
+          "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -14395,13 +14396,13 @@
           "bullCount": 6,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Mitra (pos 8) — supportive star",
+            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
             "Krishna paksha (waning Moon)"
           ],
-          "social": "🔮 Nifty 50 — Vedic daily bias +19 (BUY ON DIP)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 2:53 PM–3:58 PM Mercury, 6:07 PM–7:12 PM Jupiter, 9:58 PM–10:53 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
+          "social": "🔮 Nifty 50 — Vedic daily bias +19 (BUY ON DIP)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 2:53 PM–3:58 PM Mercury, 6:07 PM–7:12 PM Jupiter, 9:58 PM–10:53 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14409,11 +14410,11 @@
           "isAssetBias": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty",
-          "score": 28,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Sadhaka (pos 6)",
-          "navaBad": false,
+          "score": -16,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vadha (pos 7)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "6:17 AM–7:22 AM",
@@ -14506,14 +14507,14 @@
           "bullCount": 10,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
+            "Nava Tara Vadha (pos 7) from natal Vishakha — danger/avoid",
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Bank Nifty — Vedic daily bias +28 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
+          "social": "🔮 Bank Nifty — Vedic daily bias -16 (SELL ON RISE / MANDI)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14521,11 +14522,11 @@
           "isAssetBias": true,
           "symbol": "SENSEX",
           "name": "Sensex",
-          "score": -25,
-          "label": "SELL ON RISE / MANDI",
-          "biasTone": "down",
-          "navaTara": "Vadha (pos 7)",
-          "navaBad": true,
+          "score": 19,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
+          "navaTara": "Mitra (pos 8)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "7:22 AM–8:26 AM",
@@ -14594,13 +14595,13 @@
           "bullCount": 6,
           "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Mitra (pos 8) — supportive star",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
-            "Nava Tara Vadha (pos 7) from natal Shatabhisha — danger/avoid",
             "Krishna paksha (waning Moon)"
           ],
-          "social": "🔮 Sensex — Vedic daily bias -25 (SELL ON RISE / MANDI)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 2:53 PM–3:58 PM Mercury, 6:07 PM–7:12 PM Jupiter, 9:58 PM–10:53 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
+          "social": "🔮 Sensex — Vedic daily bias +19 (BUY ON DIP)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 2:53 PM–3:58 PM Mercury, 6:07 PM–7:12 PM Jupiter, 9:58 PM–10:53 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14608,11 +14609,11 @@
           "isAssetBias": true,
           "symbol": "GOLD",
           "name": "Gold",
-          "score": 3,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Pratyak (pos 5)",
-          "navaBad": true,
+          "score": 47,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Sadhaka (pos 6)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "6:17 AM–7:22 AM",
@@ -14723,15 +14724,15 @@
           "bullCount": 13,
           "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Jupiter strong in Cancer",
             "Moon strong in Taurus"
           ],
           "reasonsBear": [
-            "Nava Tara Pratyak (pos 5) from natal Pushya — danger/avoid",
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Gold — Vedic daily bias +3 (RANGE / NEUTRAL)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 12:44 PM–1:49 PM Sun, 1:49 PM–2:53 PM Venus\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
+          "social": "🔮 Gold — Vedic daily bias +47 (BUY / TEJI)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 12:44 PM–1:49 PM Sun, 1:49 PM–2:53 PM Venus\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14739,10 +14740,10 @@
           "isAssetBias": true,
           "symbol": "SILVER",
           "name": "Silver",
-          "score": 23,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Param Mitra (pos 9)",
+          "score": 7,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -14851,7 +14852,6 @@
           "bullCount": 10,
           "bearCount": 8,
           "reasonsBull": [
-            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Moon strong in Taurus",
             "Jupiter strong in Cancer"
           ],
@@ -14859,7 +14859,7 @@
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Silver — Vedic daily bias +23 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 1:49 PM–2:53 PM Venus, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 12:44 PM–1:49 PM Sun, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
+          "social": "🔮 Silver — Vedic daily bias +7 (RANGE / NEUTRAL)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 1:49 PM–2:53 PM Venus, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 12:44 PM–1:49 PM Sun, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14867,10 +14867,10 @@
           "isAssetBias": true,
           "symbol": "NIFTYFMCG",
           "name": "Nifty FMCG",
-          "score": 35,
+          "score": 19,
           "label": "BUY ON DIP",
           "biasTone": "up",
-          "navaTara": "Param Mitra (pos 9)",
+          "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -14964,7 +14964,6 @@
           "bullCount": 10,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Moon strong in Taurus",
             "Jupiter strong in Cancer"
           ],
@@ -14972,7 +14971,7 @@
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Nifty FMCG — Vedic daily bias +35 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 1:49 PM–2:53 PM Venus, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
+          "social": "🔮 Nifty FMCG — Vedic daily bias +19 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 8:26 AM–9:31 AM Moon, 1:49 PM–2:53 PM Venus, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14980,11 +14979,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYMETAL",
           "name": "Nifty Metal",
-          "score": 15,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Sampat (pos 2)",
-          "navaBad": false,
+          "score": -29,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vipat (pos 3)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "12:44 PM–1:49 PM",
@@ -15069,13 +15068,13 @@
           "bullCount": 7,
           "bearCount": 7,
           "reasonsBull": [
-            "Nava Tara Sampat (pos 2) — supportive star",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
+            "Nava Tara Vipat (pos 3) from natal Bharani — danger/avoid",
             "Krishna paksha (waning Moon)"
           ],
-          "social": "🔮 Nifty Metal — Vedic daily bias +15 (BUY ON DIP)\nBullish windows (IST): 12:44 PM–1:49 PM Sun, 6:07 PM–7:12 PM Jupiter, 7:12 PM–8:07 PM Mars, 8:07 PM–9:02 PM Sun\nBearish windows: 7:22 AM–8:26 AM Mercury, 9:31 AM–10:35 AM Saturn, 2:53 PM–3:58 PM Mercury, 5:02 PM–6:07 PM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
+          "social": "🔮 Nifty Metal — Vedic daily bias -29 (SELL ON RISE / MANDI)\nBullish windows (IST): 12:44 PM–1:49 PM Sun, 6:07 PM–7:12 PM Jupiter, 7:12 PM–8:07 PM Mars, 8:07 PM–9:02 PM Sun\nBearish windows: 7:22 AM–8:26 AM Mercury, 9:31 AM–10:35 AM Saturn, 2:53 PM–3:58 PM Mercury, 5:02 PM–6:07 PM Saturn\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15083,11 +15082,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYPHARMA",
           "name": "Nifty Pharma",
-          "score": 42,
-          "label": "BUY / TEJI",
-          "biasTone": "up",
-          "navaTara": "Kshema (pos 4)",
-          "navaBad": false,
+          "score": -2,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Pratyak (pos 5)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "7:22 AM–8:26 AM",
@@ -15180,14 +15179,14 @@
           "bullCount": 10,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Kshema (pos 4) — supportive star",
             "Jupiter strong in Cancer",
             "Moon strong in Taurus"
           ],
           "reasonsBear": [
+            "Nava Tara Pratyak (pos 5) from natal Ashlesha — danger/avoid",
             "Krishna paksha (waning Moon)"
           ],
-          "social": "🔮 Nifty Pharma — Vedic daily bias +42 (BUY / TEJI)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 8:26 AM–9:31 AM Moon, 2:53 PM–3:58 PM Mercury, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
+          "social": "🔮 Nifty Pharma — Vedic daily bias -2 (RANGE / NEUTRAL)\nBullish windows (IST): 7:22 AM–8:26 AM Mercury, 8:26 AM–9:31 AM Moon, 2:53 PM–3:58 PM Mercury, 3:58 PM–5:02 PM Moon\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15195,11 +15194,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYIT",
           "name": "Nifty IT",
-          "score": -31,
-          "label": "SELL ON RISE / MANDI",
-          "biasTone": "down",
-          "navaTara": "Vadha (pos 7)",
-          "navaBad": true,
+          "score": 13,
+          "label": "RANGE / NEUTRAL",
+          "biasTone": "flat",
+          "navaTara": "Mitra (pos 8)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "6:17 AM–7:22 AM",
@@ -15279,13 +15278,14 @@
           ],
           "bullCount": 8,
           "bearCount": 5,
-          "reasonsBull": [],
+          "reasonsBull": [
+            "Nava Tara Mitra (pos 8) — supportive star"
+          ],
           "reasonsBear": [
-            "Nava Tara Vadha (pos 7) from natal Ardra — danger/avoid",
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Nifty IT — Vedic daily bias -31 (SELL ON RISE / MANDI)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
+          "social": "🔮 Nifty IT — Vedic daily bias +13 (RANGE / NEUTRAL)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15296,7 +15296,7 @@
           "score": 29,
           "label": "BUY ON DIP",
           "biasTone": "up",
-          "navaTara": "Mitra (pos 8)",
+          "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
           "bullWindows": [
             {
@@ -15380,13 +15380,13 @@
           "bullCount": 10,
           "bearCount": 3,
           "reasonsBull": [
-            "Nava Tara Mitra (pos 8) — supportive star"
+            "Nava Tara Param Mitra (pos 9) — supportive star"
           ],
           "reasonsBear": [
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Nifty Auto — Vedic daily bias +29 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 11:49 PM–12:44 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
+          "social": "🔮 Nifty Auto — Vedic daily bias +29 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 11:49 PM–12:44 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15394,11 +15394,11 @@
           "isAssetBias": true,
           "symbol": "NIFTYFIN",
           "name": "Nifty Financial",
-          "score": 28,
-          "label": "BUY ON DIP",
-          "biasTone": "up",
-          "navaTara": "Sadhaka (pos 6)",
-          "navaBad": false,
+          "score": -16,
+          "label": "SELL ON RISE / MANDI",
+          "biasTone": "down",
+          "navaTara": "Vadha (pos 7)",
+          "navaBad": true,
           "bullWindows": [
             {
               "time": "6:17 AM–7:22 AM",
@@ -15491,14 +15491,14 @@
           "bullCount": 10,
           "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [
+            "Nava Tara Vadha (pos 7) from natal Vishakha — danger/avoid",
             "Krishna paksha (waning Moon)",
             "Venus weak in Virgo"
           ],
-          "social": "🔮 Nifty Financial — Vedic daily bias +28 (BUY ON DIP)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
+          "social": "🔮 Nifty Financial — Vedic daily bias -16 (SELL ON RISE / MANDI)\nBullish windows (IST): 6:17 AM–7:22 AM Venus, 7:22 AM–8:26 AM Mercury, 1:49 PM–2:53 PM Venus, 2:53 PM–3:58 PM Mercury\nBearish windows: 9:31 AM–10:35 AM Saturn, 5:02 PM–6:07 PM Saturn, 7:12 PM–8:07 PM Mars, 11:49 PM–12:44 AM Saturn\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
         }
       ]
     },
@@ -15506,7 +15506,7 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Friday · ☀ 6:17 AM–7:12 PM · Rahu Kaal 11:08 AM–12:44 PM (avoid fresh entries) · Moon Taurus · Krittika (Pada 4) · lord Sun",
+      "desc": "Friday · ☀ 6:17 AM–7:12 PM · Rahu Kaal 11:08 AM–12:44 PM (avoid fresh entries) · Moon Taurus · Rohini (Pada 1) · lord Moon",
       "count": 24,
       "signals": [
         {
