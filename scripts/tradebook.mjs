@@ -24,7 +24,8 @@ const DAILY_TAKE = 1.8               // CASH: book at +1.8% (inside the 1–2% a
 const DAILY_STOP = 1.2               // CASH: cut at −1.2%
 const DAILY_TAKE_OPT = 18            // OPTION: book at +18% premium (leverage → contributes the daily 1–2%)
 const DAILY_STOP_OPT = 12            // OPTION: cut at −12% premium
-const DAILY_MAX_OPEN = 8             // few, high-conviction names at a time (cash / F&O / options)
+const DAILY_MAX_OPEN = 10            // concurrent daily names (cash / F&O / options)
+const DAILY_POS_PCT = 8             // deploy ~8% of the ₹10L daily pool per position (so ~₹8L works, not idle)
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -87,6 +88,30 @@ function sizeTrade(sig, fnoLots = {}) {
   if (qty * entry > maxDeploy) qty = Math.floor(maxDeploy / entry)
   if (qty < 1) return null
   return { kind: 'CASH', sleeve: 'CASH', qty, lots: null, lotSize: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
+}
+
+// Daily-Income sizing — deploy a meaningful slice (~8%) of the ₹10L daily pool per position so the
+// sleeve can realistically reach 1–2%/day. Takes cash, F&O stocks (as ATM options), or index options.
+// Loss stays capped at the premium for options (built-in hedge).
+function sizeDaily(sig, fnoLots = {}) {
+  const entry = sig.entry, sl = sig.sl
+  if (!entry || !sl) return null
+  const target = CAP_DAILY * DAILY_POS_PCT / 100                     // ~₹80k target deploy per position
+  const lot = sig.lot || fnoLots[sig.symbol] || fnoLots[sig.underlying]
+  const bearish = sig.direction === 'SHORT' || sig.direction === 'BEARISH'
+  if ((sig.optType && sig.entryPremium) || lot) {                    // OPTION (index option, or F&O stock → ATM option)
+    const optType = sig.optType || (bearish ? 'PE' : 'CE')
+    const lotSize = sig.lot || lot
+    const prem = sig.entryPremium || Math.round(entry * STOCK_OPT_PREM_PCT)
+    const perLot = prem * lotSize
+    if (!prem || !lotSize || !perLot) return null
+    const lots = Math.max(1, Math.round(target / perLot))
+    const qty = lots * lotSize
+    return { kind: 'OPT', optType, qty, lots, lotSize, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
+  }
+  if (entry <= sl) return null                                        // cash long only
+  const qty = Math.max(1, Math.floor(target / entry))
+  return { kind: 'CASH', optType: null, qty, lots: null, lotSize: null, entryPremium: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
 }
 
 // P&L for a position at a given underlying exit price. Long options use an ATM premium model
@@ -273,7 +298,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (dailySyms.has(sym)) continue
     const key = 'daily:' + s.id
     if (b.open[key]) continue
-    const size = sizeTrade(s, fnoLots)                                  // cash / F&O-option / index-option, shorts → PE
+    const size = sizeDaily(s, fnoLots)                                  // cash / F&O-option / index-option, shorts → PE; ~8% of pool
     if (!size) continue
     if (size.invested > b.cashDaily) continue
     b.cashDaily -= size.invested
