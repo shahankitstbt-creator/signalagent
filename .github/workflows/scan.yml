@@ -79,7 +79,12 @@ jobs:
           git config user.email "bot@stocksbyvarsha.local"
           git add public/ledger.json public/goal.json public/tuning.json public/tg_sent.json public/track_record.json public/board*.json public/learning.json public/news.json public/delivery.json public/delivery_history.json public/trade_book.json public/fii_history.json public/oi_history.json public/picks.json 2>/dev/null || true
           git commit -m "state $(date -u +%FT%RZ)" || echo "no state changes"
-          git push || echo "push skipped"
+          # CRITICAL: never LOSE dedup/book state to a push race — rebase on latest, then push, retry.
+          # If this silently failed, the next scan would re-open positions & re-send Telegram (duplicates).
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push && { echo "state pushed"; break; }
+            echo "push race — retry $i"; sleep 4
+          done
       - name: Deploy to Vercel (tradingview project → stocksbyvarsha.vercel.app)
         run: |
           npx --yes vercel@latest link --yes --project tradingview --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}

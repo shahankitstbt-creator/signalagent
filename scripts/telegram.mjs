@@ -179,8 +179,10 @@ export async function notifyTradeEvents(entered, exited, dateStr) {
     if (res.skipped) { stop = true; return }
     if (res.ok) { sent[key] = dateStr; n++; await new Promise(r => setTimeout(r, 1100)) }
   }
-  for (const p of (exited || [])) { if (stop) break; await send('tbexit:' + p.id + ':' + (p.exitAt || p.exitDate || '') + ':' + (p.partial ? 'p' : (p.maxTarget ?? 'f')), formatExit(p, dateStr)) }
-  for (const p of (entered || [])) { if (stop) break; await send('tbentry:' + p.id + ':' + (p.entryAt || p.entryDate || ''), formatEntry(p, dateStr)) }
+  // DATE-stable keys (not run timestamps): a position alerts at most ONCE on entry and ONCE per
+  // exit-per-day, even if a scan race briefly rolls back state and re-derives the same trade.
+  for (const p of (exited || [])) { if (stop) break; await send('tbexit:' + p.id + ':' + (p.exitDate || '') + ':' + (p.partial ? 'p' : (p.result || 'f')), formatExit(p, dateStr)) }
+  for (const p of (entered || [])) { if (stop) break; await send('tbentry:' + p.id + ':' + (p.entryDate || ''), formatEntry(p, dateStr)) }
   saveSent(sent)
   if (n) console.log(`Telegram: ${n} trade entry/exit alerts`)
 }
