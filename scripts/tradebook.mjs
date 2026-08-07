@@ -18,11 +18,13 @@ const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
 // ── Daily Income sleeve (separate ₹10L, 30-day monitor) — aims for a small, consistent
 // 1–2% booked per day: take the best LONG momentum setups, book fast at +target / cut fast,
 // square off if not resolved. This is an HONEST experiment, NOT a guaranteed daily return. ──
-const DAILY_TAKE = 1.8               // book the whole position at +1.8% (inside the 1–2% aim)
-const DAILY_STOP = 1.2               // cut the position at −1.2%
-const DAILY_DEPLOY_PCT = 22          // up to 22% of the daily sleeve per position (concentrated)
-const DAILY_RISK_PCT = 1.2           // risk ~1.2% of the daily sleeve per trade
-const DAILY_MAX_OPEN = 8             // few, high-conviction names at a time
+// exits are return-on-invested (works for cash AND leveraged options). Cash moves ~1:1 with price;
+// options swing far more per rupee, so they get wider take/stop bands.
+const DAILY_TAKE = 1.8               // CASH: book at +1.8% (inside the 1–2% aim)
+const DAILY_STOP = 1.2               // CASH: cut at −1.2%
+const DAILY_TAKE_OPT = 18            // OPTION: book at +18% premium (leverage → contributes the daily 1–2%)
+const DAILY_STOP_OPT = 12            // OPTION: cut at −12% premium
+const DAILY_MAX_OPEN = 8             // few, high-conviction names at a time (cash / F&O / options)
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -132,23 +134,26 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   for (const id of Object.keys(b.open)) {
     const pos = b.open[id]
 
-    // ── DAILY INCOME sleeve: fast scalp exits (book +target / cut −stop / square off EOD) ──
+    // ── DAILY INCOME sleeve (cash / F&O / options): fast scalp exits by return-on-invested —
+    //    book at +take / cut −stop / square off EOD. P&L via pnlFor so options price on premium. ──
     if (pos.sleeve === 'DAILY') {
       const live = ledger.active[id.slice(6)]          // strip "daily:" prefix → base signal id
+      const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH'
       const held = daysBetween(pos.entryDate, todayISO)
       const ltp = live?.ltp ?? pos.ltp ?? pos.entryPrice
-      const chgPct = +(((ltp - pos.entryPrice) / pos.entryPrice) * 100).toFixed(2)
-      let exitPrice = ltp, result = null, why = null
-      if (chgPct >= DAILY_TAKE) { exitPrice = +(pos.entryPrice * (1 + DAILY_TAKE / 100)).toFixed(2); result = 'WIN'; why = `Booked +${DAILY_TAKE}% daily target` }
-      else if (chgPct <= -DAILY_STOP) { exitPrice = +(pos.entryPrice * (1 - DAILY_STOP / 100)).toFixed(2); result = 'LOSS'; why = `Cut at −${DAILY_STOP}% daily stop` }
-      else if (held >= 1) { result = chgPct >= 0 ? 'WIN' : 'LOSS'; why = `Squared off same-day at ${chgPct >= 0 ? '+' : ''}${chgPct}%` }
+      const pnl = pnlFor(pos, ltp, bearish, held)
+      const retPct = pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0
+      const take = pos.kind === 'OPT' ? DAILY_TAKE_OPT : DAILY_TAKE
+      const stop = pos.kind === 'OPT' ? DAILY_STOP_OPT : DAILY_STOP
+      let result = null, why = null
+      if (retPct >= take) { result = 'WIN'; why = `Booked +${retPct}% (daily target)` }
+      else if (retPct <= -stop) { result = 'LOSS'; why = `Cut at ${retPct}% (daily stop)` }
+      else if (held >= 1) { result = retPct >= 0 ? 'WIN' : 'LOSS'; why = `Squared off same-day at ${retPct >= 0 ? '+' : ''}${retPct}%` }
       if (!result) {                                    // same session, still running → mark to market
-        pos.ltp = ltp; pos.unrealizedPnl = Math.round((ltp - pos.entryPrice) * pos.qty)
-        pos.unrealizedPct = chgPct; continue
+        pos.ltp = ltp; pos.unrealizedPnl = pnl; pos.unrealizedPct = retPct; continue
       }
-      const pnl = Math.round((exitPrice - pos.entryPrice) * pos.qty)
       b.cashDaily += pos.invested + pnl
-      const rec = { ...pos, exitPrice, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      const rec = { ...pos, exitPrice: ltp, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: retPct, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
       b.closed.push(rec); exited.push(rec); delete b.open[id]
       continue
     }
@@ -263,31 +268,28 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   let dailyOpened = 0
   for (const s of cands) {
     if (dailyOpenCount0 + dailyOpened >= DAILY_MAX_OPEN) break
-    const dir = s.direction || 'LONG'
-    if (dir !== 'LONG' && dir !== 'BULLISH') continue                   // daily sleeve = long cash only
-    if (!s.entry || !s.sl || s.entry <= s.sl) continue
+    if (!s.entry || !s.sl) continue
     const sym = s.symbol || s.underlying
     if (dailySyms.has(sym)) continue
     const key = 'daily:' + s.id
     if (b.open[key]) continue
-    const riskAmt = CAP_DAILY * DAILY_RISK_PCT / 100, maxDeploy = CAP_DAILY * DAILY_DEPLOY_PCT / 100
-    let qty = Math.floor(riskAmt / (s.entry - s.sl))
-    if (qty * s.entry > maxDeploy) qty = Math.floor(maxDeploy / s.entry)
-    if (qty < 1) continue
-    const invested = Math.round(qty * s.entry)
-    if (invested > b.cashDaily) continue
-    b.cashDaily -= invested
+    const size = sizeTrade(s, fnoLots)                                  // cash / F&O-option / index-option, shorts → PE
+    if (!size) continue
+    if (size.invested > b.cashDaily) continue
+    b.cashDaily -= size.invested
     if (!b.dailyStartedAt) b.dailyStartedAt = todayISO
     dailySyms.add(sym)
     b.open[key] = {
       sleeve: 'DAILY', id: key, baseId: s.id, symbol: sym, name: s.name || null,
-      generator: s.generator, gen: s.label || s.generator, kind: 'CASH', direction: 'LONG',
-      grade: s.grade || null, qty, lots: null, lotSize: null, notional: invested,
-      entryPrice: s.entry, sl: s.sl, targets: s.targets, invested,
+      generator: s.generator, gen: s.label || s.generator,
+      kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null,
+      optType: size.optType || null, entryPremium: size.entryPremium || null, optionPlay: s.optionPlay || null,
+      qty: size.qty, lots: size.lots, lotSize: size.lotSize, notional: size.notional,
+      entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,
       entryDate: todayISO, entryAt: nowISO, ltp: s.ltp ?? s.entry,
-      dailyTake: DAILY_TAKE, dailyStop: DAILY_STOP,
+      dailyTake: size.kind === 'OPT' ? DAILY_TAKE_OPT : DAILY_TAKE, dailyStop: size.kind === 'OPT' ? DAILY_STOP_OPT : DAILY_STOP,
       footprint: s.footprint || null, delivery: s.delivery ?? null, rr: s.rr ?? null,
-      reason: s.reason || s.setupType || 'Daily-income scalp — best long setup',
+      reason: s.reason || s.setupType || 'Daily-income scalp',
       unrealizedPnl: 0, unrealizedPct: 0,
     }
     entered.push(b.open[key]); dailyOpened++
