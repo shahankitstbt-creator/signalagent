@@ -46,7 +46,11 @@ export default function TradingJournal() {
   // search + kind filter + sort, shared by both tabs
   const view = (arr, closedTab) => {
     let r = arr
-    if (kind !== 'all') r = r.filter(p => kind === 'OPT' ? p.kind === 'OPT' : kind === 'FNO' ? (p.kind === 'FNO' || p.kind === 'OPT') : p.kind === 'CASH')
+    if (kind !== 'all') r = r.filter(p =>
+      kind === 'DAILY' ? p.sleeve === 'DAILY'
+        : kind === 'OPT' ? p.kind === 'OPT'
+          : kind === 'FNO' ? (p.kind === 'FNO' || p.kind === 'OPT') && p.sleeve !== 'DAILY'
+            : /* CASH */ p.kind === 'CASH' && p.sleeve !== 'DAILY')
     if (q.trim()) { const s = q.trim().toLowerCase(); r = r.filter(p => (`${p.symbol || ''} ${p.name || ''}`).toLowerCase().includes(s)) }
     const cmp = {
       recent: (a, b) => (closedTab ? (b.exitDate || '') : (b.entryDate || '')).localeCompare(closedTab ? (a.exitDate || '') : (a.entryDate || '')),
@@ -66,7 +70,7 @@ export default function TradingJournal() {
       <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border glass flex items-center gap-3 flex-wrap z-20">
         <button onClick={() => setView('board')} className="mono text-xs text-txt-sec hover:text-accent">← Board</button>
         <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">📓 Trading Journal</div>
-        <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O/options · every high-conviction signal taken · sizing by risk · aim 5–7%/mo</span>
+        <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income · every high-conviction signal taken · sizing by risk</span>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent ml-auto">⟳</button>
       </div>
 
@@ -80,6 +84,7 @@ export default function TradingJournal() {
             <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} />
             {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" />}
             {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" />}
+            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysInBand}/${st.dailySleeve.monitor.tradingDays}d in 1–2%` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
             <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} />
@@ -100,7 +105,7 @@ export default function TradingJournal() {
             <input value={q} onChange={e => setQ(e.target.value)} placeholder="🔍 Search symbol…"
               className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-40" />
             <span className="mono text-[10px] text-txt-muted ml-1">Type:</span>
-            {[['all', 'All'], ['CASH', 'Cash'], ['FNO', 'F&O'], ['OPT', 'Options']].map(([k, lbl]) => (
+            {[['all', 'All'], ['CASH', 'Cash'], ['FNO', 'F&O'], ['OPT', 'Options'], ['DAILY', '⚡ Daily']].map(([k, lbl]) => (
               <button key={k} onClick={() => setKind(k)} className={`mono text-[10px] px-2 py-1 rounded ${kind === k ? 'bg-accent-primary text-white font-bold' : 'text-txt-sec bg-bg-card'}`}>{lbl}</button>
             ))}
             <span className="mono text-[10px] text-txt-muted ml-1">Sort:</span>
@@ -134,6 +139,7 @@ function Tile({ label, value, sub, tone, grad }) {
 }
 
 function KindTag({ s }) {
+  if (s.sleeve === 'DAILY') return <span className="px-1.5 py-0.5 rounded text-[9px] font-bold text-white" style={{ background: 'linear-gradient(90deg,#22D3EE,#8B5CF6)' }}>⚡ DAILY</span>
   const label = s.kind === 'OPT' ? (s.optType || 'OPT') : s.kind === 'FNO' ? 'F&O' : 'CASH'
   const bg = s.kind === 'OPT' ? (s.optType === 'PE' ? 'bg-red' : 'bg-green') : s.kind === 'FNO' ? 'bg-accent-purple' : 'bg-accent-primary'
   return <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold text-white ${bg}`}>{label}</span>
