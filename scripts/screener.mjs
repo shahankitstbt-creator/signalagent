@@ -34,7 +34,7 @@ function shiftDeskPrices(m, delta) {
 }
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
-import { notifyNewSignals, notifyClosures, notifyTradeEvents } from './telegram.mjs'
+import { notifyTradeEvents } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
@@ -671,10 +671,11 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     console.log(`Intraday refresh: ${logged} signals logged, book marked-to-market`)
   }
 
-  // ── TELEGRAM: trade ENTRY/EXIT alerts (the moment the book opens/closes) + closures + pre-move ──
+  // ── TELEGRAM: ONLY trade ENTRY/EXIT alerts, fired the moment the book opens/closes a position.
+  //    Each event is de-duped via tg_sent.json (keyed by position id + entry/exit timestamp), so a
+  //    position alerts exactly once on entry and once on exit — never a repeat.
+  //    Signal-level pre-move + target/SL alerts are intentionally OFF (user wants entry/exit only, no dupes).
   try { if (tb) await notifyTradeEvents(tb._entered, tb._exited, todayISO) } catch (e) { console.log('Telegram trade events skipped:', e.message) }
-  try { await notifyNewSignals({ generators: board }, todayISO) } catch (e) { console.log('Telegram skipped:', e.message) }
-  try { await notifyClosures(closedNow, todayISO) } catch (e) { console.log('Telegram updates skipped:', e.message) }
 
   // ── write the timeframe board (board-daily/weekly/intraday.json); daily also writes board.json ──
   const boardJson = JSON.stringify({
