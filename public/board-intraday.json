@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T10:03:48.674Z",
+  "generatedAt": "2026-08-07T10:08:52.718Z",
   "date": "2026-08-07",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -258,6 +258,85 @@
             "deploy": 97752.5,
             "riskRs": 999.96,
             "rewardT1Rs": 1333.28
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "GYFTR",
+          "name": "Gyftr Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.51× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "direction": "LONG",
+          "ltp": 164.89,
+          "entry": 164.89,
+          "sl": 160.42,
+          "slPct": -2.7,
+          "targets": [
+            {
+              "price": 170.71,
+              "pct": 3.5,
+              "by": "~4h",
+              "days": 4
+            },
+            {
+              "price": 175.07,
+              "pct": 6.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 179.43,
+              "pct": 8.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.3,
+          "rsi": 66.2,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": null,
+          "changePct": 1.78,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 62,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.04,
+            "rs50": 0.087,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A++) — GYFTR\n3 signals agree: Volume + Accumulation, Harmonic & Chart Patterns, Money Flow + Nifty 50 Vedic bias bullish\n🕵️ Footprint 62/100: Stealth volume — buying while price still flat\nEntry ₹164.89 · SL ₹160.42 (-2.7%)\nT1 ₹170.71 (+3.5%) by ~4h · T2 +6.2% · T3 +8.8%\nPlan (₹1L, 1% risk): buy 223 sh · risk ₹996.81 · reward T1 ₹1297.86 · R:R 1:1.3\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#GYFTR #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Harmonic & Chart Patterns",
+            "Money Flow"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 165,
+          "vedicAsset": "Nifty 50",
+          "vedicLabel": "BUY ON DIP",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 223,
+            "deploy": 36770.47,
+            "riskRs": 996.81,
+            "rewardT1Rs": 1297.86
           }
         },
         {
@@ -594,91 +673,6 @@
         },
         {
           "generator": "confluence",
-          "symbol": "LTM",
-          "name": "LTM Ltd.",
-          "sector": "Information Technology",
-          "indices": [
-            "NIFTY Next 50",
-            "NIFTY 100",
-            "NIFTY 200",
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY IT",
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 100/100): 5-day volume > 20-day average (RVOL 4.09×); 1-day volume 1.7× the 5-day average — surge; Up/down volume 2.24× — accumulation pressure",
-          "direction": "LONG",
-          "ltp": 4675.3,
-          "entry": 4675.3,
-          "sl": 4539.16,
-          "slPct": -2.9,
-          "targets": [
-            {
-              "price": 4770.71,
-              "pct": 2,
-              "by": "~3h",
-              "days": 3
-            },
-            {
-              "price": 4842.26,
-              "pct": 3.6,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 4913.81,
-              "pct": 5.1,
-              "by": "~10h",
-              "days": 10
-            }
-          ],
-          "rr": 0.7,
-          "rsi": 67.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.7,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.028,
-            "rs50": 0.044,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A++) — LTM\n3 signals agree: Volume + Accumulation, Harmonic & Chart Patterns, Money Flow\n🕵️ Footprint 70/100: Stealth volume — buying while price still flat\nEntry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h · T2 +3.6% · T3 +5.1%\nPlan (₹1L, 1% risk): buy 7 sh · risk ₹952.98 · reward T1 ₹667.87 · R:R 1:0.7\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#LTM #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Harmonic & Chart Patterns",
-            "Money Flow"
-          ],
-          "genCount": 3,
-          "grade": "A++",
-          "confluenceScore": 153,
-          "vedicAsset": "Nifty IT",
-          "vedicLabel": "SELL ON RISE / MANDI",
-          "vedicAligned": false,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 7,
-            "deploy": 32727.1,
-            "riskRs": 952.98,
-            "rewardT1Rs": 667.87
-          }
-        },
-        {
-          "generator": "confluence",
           "symbol": "JSWENERGY",
           "name": "JSW Energy Ltd.",
           "sector": "Power",
@@ -763,6 +757,90 @@
             "deploy": 100570,
             "riskRs": 998.58,
             "rewardT1Rs": 1076.9
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "LTM",
+          "name": "LTM Ltd.",
+          "sector": "Information Technology",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY IT",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 68/100): 5-day volume > 20-day average (RVOL 4.95×); 1-day volume 3.6× the 5-day average — surge; Up/down volume 1.73× — accumulation pressure",
+          "direction": "LONG",
+          "ltp": 4675.3,
+          "entry": 4675.3,
+          "sl": 4539.16,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 4770.71,
+              "pct": 2,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 4842.26,
+              "pct": 3.6,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 4913.81,
+              "pct": 5.1,
+              "by": "~10h",
+              "days": 10
+            }
+          ],
+          "rr": 0.7,
+          "rsi": 67.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0.7,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 42,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.028,
+            "rs50": 0.044,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A++) — LTM\n3 signals agree: Volume + Accumulation, Harmonic & Chart Patterns, Money Flow\n🕵️ Footprint 42/100: Outperforming NIFTY (relative-strength leader)\nEntry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h · T2 +3.6% · T3 +5.1%\nPlan (₹1L, 1% risk): buy 7 sh · risk ₹952.98 · reward T1 ₹667.87 · R:R 1:0.7\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#LTM #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Harmonic & Chart Patterns",
+            "Money Flow"
+          ],
+          "genCount": 3,
+          "grade": "A++",
+          "confluenceScore": 143,
+          "vedicAsset": "Nifty IT",
+          "vedicLabel": "SELL ON RISE / MANDI",
+          "vedicAligned": false,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 7,
+            "deploy": 32727.1,
+            "riskRs": 952.98,
+            "rewardT1Rs": 667.87
           }
         },
         {
@@ -928,85 +1006,6 @@
             "deploy": 72934.4,
             "riskRs": 987.52,
             "rewardT1Rs": 979.84
-          }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "PRUDENT",
-          "name": "Prudent Corporate Advisory Services Ltd.",
-          "sector": "Financial Services",
-          "indices": [
-            "NIFTY Total Market",
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 1.34×); Up/down volume 1.55× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "direction": "LONG",
-          "ltp": 3410,
-          "entry": 3410,
-          "sl": 3300.28,
-          "slPct": -3.2,
-          "targets": [
-            {
-              "price": 3487.17,
-              "pct": 2.3,
-              "by": "~4h",
-              "days": 4
-            },
-            {
-              "price": 3545.05,
-              "pct": 4,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 3602.92,
-              "pct": 5.7,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 0.7,
-          "rsi": 69.1,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 1.1,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.017,
-            "rs50": 0.068,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A++) — PRUDENT\n2 signals agree: Volume + Accumulation, Money Flow + Nifty Financial Vedic bias bullish\n🕵️ Footprint 70/100: Stealth volume — buying while price still flat\nEntry ₹3410 · SL ₹3300.28 (-3.2%)\nT1 ₹3487.17 (+2.3%) by ~4h · T2 +4% · T3 +5.7%\nPlan (₹1L, 1% risk): buy 9 sh · risk ₹987.48 · reward T1 ₹694.53 · R:R 1:0.7\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#PRUDENT #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Money Flow"
-          ],
-          "genCount": 2,
-          "grade": "A++",
-          "confluenceScore": 138,
-          "vedicAsset": "Nifty Financial",
-          "vedicLabel": "BUY ON DIP",
-          "vedicAligned": true,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 9,
-            "deploy": 30690,
-            "riskRs": 987.48,
-            "rewardT1Rs": 694.53
           }
         }
       ]
@@ -1204,11 +1203,11 @@
                 "dir": "LONG",
                 "score": 3,
                 "entry": 24570.65,
-                "sl": 24356.69,
+                "sl": 24363.56,
                 "targets": [
-                  24855.93,
-                  25069.9,
-                  25283.86
+                  24846.77,
+                  25053.86,
+                  25260.95
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1220,7 +1219,7 @@
                 "vah": 22248.08,
                 "val": 22183.3,
                 "vwap": 24570.65,
-                "rsi": 60,
+                "rsi": 61,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · below VWAP · above POC 22215.69"
               },
@@ -1254,7 +1253,7 @@
           "directional": {
             "direction": "NEUTRAL",
             "dirTone": "flat",
-            "D": 1,
+            "D": -1,
             "grade": "B",
             "conviction": 57,
             "optionPlay": "No directional edge — range 24600–24600. Wait for a break or sell premium.",
@@ -1274,7 +1273,7 @@
                 "daysOut": 32,
                 "resistance": 25000,
                 "support": 24500,
-                "pcr": 0.52
+                "pcr": 0.51
               },
               {
                 "expiry": "27OCT2026",
@@ -1293,10 +1292,9 @@
             ],
             "note": "ATM option ≈ 0.5 delta → premium moves ~half the index points. Far expiry shows where big money is building. Enter on confirmation / at next open.",
             "reasons": [
-              "Options: Call short-covering (bullish) · Put unwinding",
               "PCR 0.79 — calls written (resistance above)",
               "OI walls (11AUG2026): resistance 24600 (max call OI) · support 24600 (max put OI)",
-              "📅 ~32d out (08SEP): big call OI 25000 · put floor 24500 · PCR 0.52 — medium-term cap building",
+              "📅 ~32d out (08SEP): big call OI 25000 · put floor 24500 · PCR 0.51 — medium-term cap building",
               "📅 ~81d out (27OCT): big call OI 25500 · put floor 23500 · PCR 1.25 — medium-term support building",
               "📅 ~144d out (29DEC): big call OI 25000 · put floor 24000 · PCR 1.2 — medium-term support building"
             ]
@@ -1472,13 +1470,13 @@
               {
                 "tf": "4h",
                 "dir": "LONG",
-                "score": 3,
+                "score": 2,
                 "entry": 57746.45,
-                "sl": 57091.07,
+                "sl": 57118.6,
                 "targets": [
-                  58620.29,
-                  59275.68,
-                  59931.06
+                  58583.58,
+                  59211.43,
+                  59839.28
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1490,9 +1488,9 @@
                 "vah": 50175.86,
                 "val": 49957.15,
                 "vwap": 57746.45,
-                "rsi": 54,
+                "rsi": 53,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · below VWAP · above POC 50066.5 · higher lows"
+                "reason": "rising EMA stack · below VWAP · above POC 50066.5 · at 38.2% Fib 57616.78"
               },
               {
                 "tf": "1D",
@@ -1524,7 +1522,7 @@
           "directional": {
             "direction": "NEUTRAL",
             "dirTone": "flat",
-            "D": -1,
+            "D": 1,
             "grade": "B",
             "conviction": 57,
             "optionPlay": "No directional edge — range 58000–58000. Wait for a break or sell premium.",
@@ -1551,7 +1549,7 @@
                 "daysOut": 81,
                 "resistance": 58000,
                 "support": 57000,
-                "pcr": 6
+                "pcr": 6.01
               },
               {
                 "expiry": "29DEC2026",
@@ -1563,10 +1561,9 @@
             ],
             "note": "ATM option ≈ 0.5 delta → premium moves ~half the index points. Far expiry shows where big money is building. Enter on confirmation / at next open.",
             "reasons": [
-              "Options: Call unwinding · Put build-up (bearish)",
               "OI walls (25AUG2026): resistance 58000 (max call OI) · support 58000 (max put OI)",
               "📅 ~53d out (29SEP): big call OI 58000 · put floor 58000 · PCR 1.5 — medium-term support building",
-              "📅 ~81d out (27OCT): big call OI 58000 · put floor 57000 · PCR 6 — medium-term support building",
+              "📅 ~81d out (27OCT): big call OI 58000 · put floor 57000 · PCR 6.01 — medium-term support building",
               "📅 ~144d out (29DEC): big call OI 60000 · put floor 57000 · PCR 1.38 — medium-term support building",
               "Far-month smart money building a FLOOR — put-writing PCR 1.38 at 57000 (medium-term bullish)"
             ]
@@ -1581,7 +1578,7 @@
           "name": "Gold (Spot XAU/USD)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4315.93,
+            "spot": 4313.51,
             "aligned": "LONG",
             "net": 10,
             "longs": 10,
@@ -1590,13 +1587,13 @@
               {
                 "tf": "15m",
                 "dir": "LONG",
-                "score": 4,
-                "entry": 4315.93,
-                "sl": 4303.06,
+                "score": 6,
+                "entry": 4313.51,
+                "sl": 4300.54,
                 "targets": [
-                  4333.09,
-                  4345.96,
-                  4358.84
+                  4330.8,
+                  4343.77,
+                  4356.74
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1604,24 +1601,24 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4263.5,
-                "vah": 4277.1,
-                "val": 4235.07,
-                "vwap": 4278.55,
-                "rsi": 74,
+                "poc": 4260.71,
+                "vah": 4279.25,
+                "val": 4234.75,
+                "vwap": 4278.73,
+                "rsi": 72,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4324.47 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4322 · higher lows"
               },
               {
                 "tf": "35m",
                 "dir": "LONG",
-                "score": 4,
-                "entry": 4315.93,
-                "sl": 4296.09,
+                "score": 6,
+                "entry": 4313.51,
+                "sl": 4293.19,
                 "targets": [
-                  4342.38,
-                  4362.22,
-                  4382.06
+                  4340.61,
+                  4360.93,
+                  4381.25
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1629,24 +1626,24 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4254.08,
-                "vah": 4319.13,
-                "val": 4089.56,
-                "vwap": 4259.38,
-                "rsi": 75,
+                "poc": 4261.42,
+                "vah": 4318.81,
+                "val": 4089.24,
+                "vwap": 4259.78,
+                "rsi": 71,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4315.05 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4322.71 · higher lows"
               },
               {
                 "tf": "45m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4315.93,
-                "sl": 4292.58,
+                "entry": 4313.51,
+                "sl": 4290.1,
                 "targets": [
-                  4347.07,
-                  4370.42,
-                  4393.77
+                  4344.72,
+                  4368.13,
+                  4391.54
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1654,11 +1651,11 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 4055.12,
-                "vah": 4250.26,
-                "val": 4013.03,
-                "vwap": 4260.34,
-                "rsi": 75,
+                "poc": 4054.8,
+                "vah": 4249.94,
+                "val": 4012.71,
+                "vwap": 4260.22,
+                "rsi": 74,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4116.09 · higher lows"
               },
@@ -1666,12 +1663,12 @@
                 "tf": "75m",
                 "dir": "LONG",
                 "score": 6,
-                "entry": 4315.93,
-                "sl": 4286.29,
+                "entry": 4313.51,
+                "sl": 4283.85,
                 "targets": [
-                  4355.45,
-                  4385.08,
-                  4414.72
+                  4353.05,
+                  4382.71,
+                  4412.37
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1679,10 +1676,10 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4045.67,
-                "vah": 4161.54,
-                "val": 3948.33,
-                "vwap": 4243.97,
+                "poc": 4045.35,
+                "vah": 4161.22,
+                "val": 3948.01,
+                "vwap": 4243.78,
                 "rsi": 71,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4106.64 · higher lows"
@@ -1691,12 +1688,12 @@
                 "tf": "90m",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4315.93,
-                "sl": 4282.35,
+                "entry": 4313.51,
+                "sl": 4279.92,
                 "targets": [
-                  4360.71,
-                  4394.29,
-                  4427.88
+                  4358.29,
+                  4391.88,
+                  4425.47
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1704,10 +1701,10 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4045.67,
-                "vah": 4115.19,
-                "val": 3957.6,
-                "vwap": 4227.76,
+                "poc": 4045.35,
+                "vah": 4124.14,
+                "val": 3957.28,
+                "vwap": 4227.58,
                 "rsi": 74,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4106.64 · higher lows"
@@ -1716,12 +1713,12 @@
                 "tf": "1h",
                 "dir": "LONG",
                 "score": 6,
-                "entry": 4315.93,
-                "sl": 4289.13,
+                "entry": 4313.51,
+                "sl": 4286.68,
                 "targets": [
-                  4351.67,
-                  4378.47,
-                  4405.28
+                  4349.28,
+                  4376.1,
+                  4402.93
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1729,10 +1726,10 @@
                   "2026-08-11"
                 ],
                 "rr": 1.33,
-                "poc": 4054.09,
-                "vah": 4204.96,
-                "val": 3992.93,
-                "vwap": 4263.27,
+                "poc": 4053.77,
+                "vah": 4204.64,
+                "val": 3992.61,
+                "vwap": 4263.09,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4115.06 · higher lows"
@@ -1741,12 +1738,12 @@
                 "tf": "2h",
                 "dir": "LONG",
                 "score": 6,
-                "entry": 4315.93,
-                "sl": 4278.74,
+                "entry": 4313.51,
+                "sl": 4276.3,
                 "targets": [
-                  4365.51,
-                  4402.7,
-                  4439.89
+                  4363.12,
+                  4400.33,
+                  4437.54
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -1754,10 +1751,10 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 4030.52,
-                "vah": 4101.49,
-                "val": 3959.56,
-                "vwap": 4196.77,
+                "poc": 4030.2,
+                "vah": 4101.17,
+                "val": 3959.24,
+                "vwap": 4196.59,
                 "rsi": 72,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4091.49 · higher lows"
@@ -1766,12 +1763,12 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4315.93,
-                "sl": 4267.76,
+                "entry": 4313.51,
+                "sl": 4265.02,
                 "targets": [
-                  4380.16,
-                  4428.33,
-                  4476.5
+                  4378.16,
+                  4426.65,
+                  4475.13
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1779,24 +1776,24 @@
                   "2026-08-13"
                 ],
                 "rr": 1.33,
-                "poc": 4021.95,
-                "vah": 4089.73,
-                "val": 3954.17,
-                "vwap": 4157.47,
-                "rsi": 74,
+                "poc": 3990.34,
+                "vah": 4089.41,
+                "val": 3953.85,
+                "vwap": 4157.63,
+                "rsi": 73,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4082.92 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4051.63 · higher lows"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4315.93,
-                "sl": 4259.01,
+                "entry": 4313.51,
+                "sl": 4256.59,
                 "targets": [
-                  4391.83,
-                  4448.75,
-                  4505.68
+                  4389.4,
+                  4446.33,
+                  4503.25
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -1804,10 +1801,10 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 3995.3,
-                "vah": 4096.16,
-                "val": 3958.13,
-                "vwap": 4131.61,
+                "poc": 3994.98,
+                "vah": 4095.84,
+                "val": 3957.81,
+                "vwap": 4131.42,
                 "rsi": 75,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4056.27 · higher lows"
@@ -1816,12 +1813,12 @@
                 "tf": "1D",
                 "dir": "LONG",
                 "score": 2,
-                "entry": 4315.93,
-                "sl": 4196.82,
+                "entry": 4313.51,
+                "sl": 4194.4,
                 "targets": [
-                  4474.74,
-                  4593.84,
-                  4712.95
+                  4472.32,
+                  4591.42,
+                  4710.53
                 ],
                 "etaDates": [
                   "2026-08-12",
@@ -1829,18 +1826,18 @@
                   "2026-08-18"
                 ],
                 "rr": 1.33,
-                "poc": 5220.79,
-                "vah": 5281.68,
-                "val": 4307.46,
-                "vwap": 4081.94,
-                "rsi": 67,
+                "poc": 5220.47,
+                "vah": 5281.36,
+                "val": 4307.14,
+                "vwap": 4082.24,
+                "rsi": 66,
                 "fib": "38.2%",
                 "reason": "above VWAP · below POC 5281.76 · higher lows"
               }
             ]
           },
           "directional": null,
-          "spot": 4315.93,
+          "spot": 4313.51,
           "aligned": "LONG"
         },
         {
@@ -2012,11 +2009,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 3500,
-                "sl": 3442.81,
+                "sl": 3442.66,
                 "targets": [
-                  3576.26,
-                  3633.45,
-                  3690.65
+                  3576.45,
+                  3633.79,
+                  3691.12
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -2025,10 +2022,10 @@
                 ],
                 "rr": 1.33,
                 "poc": 3134.47,
-                "vah": 3262.78,
-                "val": 3036.36,
-                "vwap": 3331.16,
-                "rsi": 69,
+                "vah": 3277.88,
+                "val": 3051.45,
+                "vwap": 3331.81,
+                "rsi": 70,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3134.47 · higher lows"
               },
@@ -2037,11 +2034,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 3500,
-                "sl": 3425.58,
+                "sl": 3425.53,
                 "targets": [
-                  3599.23,
-                  3673.66,
-                  3748.08
+                  3599.3,
+                  3673.77,
+                  3748.24
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -2052,7 +2049,7 @@
                 "poc": 3134.47,
                 "vah": 3232.59,
                 "val": 3006.17,
-                "vwap": 3289.48,
+                "vwap": 3291.65,
                 "rsi": 69,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3134.47 · higher lows"
@@ -2062,11 +2059,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 3500,
-                "sl": 3412.7,
+                "sl": 3410.87,
                 "targets": [
-                  3616.4,
-                  3703.7,
-                  3791.01
+                  3618.84,
+                  3707.97,
+                  3797.11
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -2074,13 +2071,13 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 3134.47,
+                "poc": 3119.38,
                 "vah": 3232.59,
                 "val": 3006.17,
-                "vwap": 3249.17,
-                "rsi": 69,
+                "vwap": 3248.51,
+                "rsi": 70,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 3134.47 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 3119.38 · higher lows"
               },
               {
                 "tf": "1D",
@@ -2312,13 +2309,13 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 913.6,
-                "vah": 966.66,
-                "val": 865.16,
-                "vwap": 873.56,
-                "rsi": 52,
+                "poc": 918.21,
+                "vah": 962.05,
+                "val": 860.54,
+                "vwap": 874.16,
+                "rsi": 53,
                 "fib": "50%",
-                "reason": "above VWAP · below POC 913.6 · at 50% Fib 884.92"
+                "reason": "above VWAP · below POC 918.21 · at 50% Fib 884.92"
               },
               {
                 "tf": "4h",
@@ -2417,8 +2414,8 @@
                 "rr": 1.33,
                 "poc": 4703.57,
                 "vah": 4719.9,
-                "val": 4545.74,
-                "vwap": 4612.13,
+                "val": 4534.85,
+                "vwap": 4611.02,
                 "rsi": 72,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · below POC 4703.57 · higher lows"
@@ -2443,7 +2440,7 @@
                 "poc": 4699.26,
                 "vah": 4719.9,
                 "val": 4571.26,
-                "vwap": 4588.97,
+                "vwap": 4588.88,
                 "rsi": 69,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · below POC 4699.26 · higher lows"
@@ -2493,7 +2490,7 @@
                 "poc": 4109.51,
                 "vah": 4362.6,
                 "val": 3528.9,
-                "vwap": 4559.95,
+                "vwap": 4559.87,
                 "rsi": 65,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4109.51 · higher lows"
@@ -2518,7 +2515,7 @@
                 "poc": 3841.54,
                 "vah": 4273.27,
                 "val": 3588.45,
-                "vwap": 4509.56,
+                "vwap": 4509.45,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3841.54 · higher lows"
@@ -2543,7 +2540,7 @@
                 "poc": 4081.51,
                 "vah": 4469.55,
                 "val": 3768.57,
-                "vwap": 4605.07,
+                "vwap": 4600.79,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4081.51 · higher lows"
@@ -2566,9 +2563,9 @@
                 ],
                 "rr": 1.33,
                 "poc": 3841.54,
-                "vah": 4273.27,
+                "vah": 4243.5,
                 "val": 3677.77,
-                "vwap": 4470.21,
+                "vwap": 4466.36,
                 "rsi": 67,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3841.54 · higher lows"
@@ -2593,7 +2590,7 @@
                 "poc": 4020.19,
                 "vah": 4332.82,
                 "val": 3796.87,
-                "vwap": 4392.35,
+                "vwap": 4387.77,
                 "rsi": 67,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4020.19 · higher lows"
@@ -2618,7 +2615,7 @@
                 "poc": 4046.63,
                 "vah": 4376.09,
                 "val": 3779.92,
-                "vwap": 4265.67,
+                "vwap": 4260.91,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4046.63 · higher lows"
@@ -2651,13 +2648,12 @@
             ]
           },
           "footprint": {
-            "score": 70,
+            "score": 42,
             "flags": [
-              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base"
             ],
-            "strong": true
+            "weak": true
           },
           "spot": 4658.1,
           "aligned": "LONG",
@@ -2832,11 +2828,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 4441,
-                "sl": 4375.12,
+                "sl": 4372.22,
                 "targets": [
-                  4528.83,
-                  4594.71,
-                  4660.58
+                  4532.71,
+                  4601.5,
+                  4670.28
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -2847,8 +2843,8 @@
                 "poc": 3489.5,
                 "vah": 3951.4,
                 "val": 3266,
-                "vwap": 4182.66,
-                "rsi": 72,
+                "vwap": 4178.17,
+                "rsi": 73,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3489.5 · higher lows"
               },
@@ -2857,11 +2853,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 4441,
-                "sl": 4355.79,
+                "sl": 4353.74,
                 "targets": [
-                  4554.61,
-                  4639.81,
-                  4725.02
+                  4557.34,
+                  4644.6,
+                  4731.85
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -2870,23 +2866,23 @@
                 ],
                 "rr": 1.33,
                 "poc": 3458.63,
-                "vah": 3720,
+                "vah": 3750.75,
                 "val": 3258.75,
-                "vwap": 4042.5,
-                "rsi": 78,
+                "vwap": 4056.55,
+                "rsi": 75,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3458.63 · higher lows"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
-                "score": 3,
+                "score": 4,
                 "entry": 4441,
-                "sl": 4334.62,
+                "sl": 4337.62,
                 "targets": [
-                  4582.84,
-                  4689.22,
-                  4795.61
+                  4578.84,
+                  4682.22,
+                  4785.6
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -2894,24 +2890,24 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 3489.38,
+                "poc": 3427.88,
                 "vah": 3750.75,
                 "val": 3289.5,
-                "vwap": 3998.27,
-                "rsi": 78,
+                "vwap": 3994.55,
+                "rsi": 77,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 3489.38 · RSI 78 overbought"
+                "reason": "rising EMA stack · above VWAP · above POC 3427.88 · higher lows"
               },
               {
                 "tf": "1D",
                 "dir": "LONG",
                 "score": 4,
                 "entry": 4440.9,
-                "sl": 4289.07,
+                "sl": 4293.14,
                 "targets": [
-                  4643.33,
-                  4795.16,
-                  4946.98
+                  4637.92,
+                  4785.68,
+                  4933.44
                 ],
                 "etaDates": [
                   "2026-08-12",
@@ -2921,8 +2917,8 @@
                 "rr": 1.33,
                 "poc": 3489.38,
                 "vah": 3812.25,
-                "val": 3351,
-                "vwap": 3764.2,
+                "val": 3320.25,
+                "vwap": 3815.34,
                 "rsi": 77,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 3489.38 · higher lows"
@@ -2988,8 +2984,8 @@
                 "sl": 379.64,
                 "targets": [
                   383.98,
-                  385.83,
-                  387.69
+                  385.84,
+                  387.7
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -3158,13 +3154,13 @@
               {
                 "tf": "4h",
                 "dir": "LONG",
-                "score": 2,
+                "score": 3,
                 "entry": 381.5,
-                "sl": 375.03,
+                "sl": 375.19,
                 "targets": [
-                  390.13,
-                  396.6,
-                  403.07
+                  389.91,
+                  396.22,
+                  402.53
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -3173,10 +3169,10 @@
                 ],
                 "rr": 1.33,
                 "poc": 378.9,
-                "vah": 423.72,
+                "vah": 421.29,
                 "val": 372.84,
-                "vwap": 378.14,
-                "rsi": 53,
+                "vwap": 378.22,
+                "rsi": 55,
                 "fib": "38.2%",
                 "reason": "above VWAP · above POC 378.9 · at 38.2% Fib 380.36"
               },
@@ -3219,285 +3215,6 @@
           "spot": 380.55,
           "aligned": "LONG",
           "lot": 1450
-        },
-        {
-          "generator": "option_buildup",
-          "isDesk": true,
-          "symbol": "LAURUSLABS",
-          "name": "Laurus Labs Ltd.",
-          "kind": "F&O Stock",
-          "mtf": {
-            "symbol": "LAURUSLABS",
-            "spot": 1844.3,
-            "aligned": "LONG",
-            "net": 10,
-            "longs": 10,
-            "shorts": 0,
-            "timeframes": [
-              {
-                "tf": "15m",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1847.2,
-                "targets": [
-                  1862.6,
-                  1869.19,
-                  1875.79
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-10"
-                ],
-                "rr": 1.33,
-                "poc": 1845.26,
-                "vah": 1854.54,
-                "val": 1819.47,
-                "vwap": 1842.78,
-                "rsi": 62,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1845.26 · higher lows"
-              },
-              {
-                "tf": "35m",
-                "dir": "LONG",
-                "score": 5,
-                "entry": 1853.8,
-                "sl": 1842.55,
-                "targets": [
-                  1868.8,
-                  1880.06,
-                  1891.31
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-10"
-                ],
-                "rr": 1.33,
-                "poc": 1845.71,
-                "vah": 1854.92,
-                "val": 1831.47,
-                "vwap": 1842.67,
-                "rsi": 63,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1845.71 · at 38.2% Fib 1842.24"
-              },
-              {
-                "tf": "45m",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1840.56,
-                "targets": [
-                  1871.46,
-                  1884.7,
-                  1897.95
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-10"
-                ],
-                "rr": 1.33,
-                "poc": 1844,
-                "vah": 1856.6,
-                "val": 1596.12,
-                "vwap": 1838.11,
-                "rsi": 62,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1844 · higher lows"
-              },
-              {
-                "tf": "75m",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1834.55,
-                "targets": [
-                  1879.47,
-                  1898.73,
-                  1917.98
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-11"
-                ],
-                "rr": 1.33,
-                "poc": 1527.42,
-                "vah": 1720.75,
-                "val": 1438.6,
-                "vwap": 1815.64,
-                "rsi": 65,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1527.42 · higher lows"
-              },
-              {
-                "tf": "90m",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1833.12,
-                "targets": [
-                  1881.37,
-                  1902.04,
-                  1922.72
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-11",
-                  "2026-08-11"
-                ],
-                "rr": 1.33,
-                "poc": 1503.5,
-                "vah": 1625.48,
-                "val": 1343,
-                "vwap": 1786.91,
-                "rsi": 69,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1503.5 · higher lows"
-              },
-              {
-                "tf": "1h",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1839.04,
-                "targets": [
-                  1873.48,
-                  1888.24,
-                  1903
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-11"
-                ],
-                "rr": 1.33,
-                "poc": 1841.29,
-                "vah": 1856.6,
-                "val": 1570.86,
-                "vwap": 1832.59,
-                "rsi": 66,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1841.29 · higher lows"
-              },
-              {
-                "tf": "2h",
-                "dir": "LONG",
-                "score": 6,
-                "entry": 1853.8,
-                "sl": 1828.16,
-                "targets": [
-                  1887.98,
-                  1913.62,
-                  1939.26
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-11",
-                  "2026-08-12"
-                ],
-                "rr": 1.33,
-                "poc": 1503.5,
-                "vah": 1599.8,
-                "val": 1368.68,
-                "vwap": 1751.13,
-                "rsi": 72,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1503.5 · higher lows"
-              },
-              {
-                "tf": "3h",
-                "dir": "LONG",
-                "score": 4,
-                "entry": 1853.8,
-                "sl": 1820.26,
-                "targets": [
-                  1898.53,
-                  1932.07,
-                  1965.62
-                ],
-                "etaDates": [
-                  "2026-08-11",
-                  "2026-08-12",
-                  "2026-08-13"
-                ],
-                "rr": 1.33,
-                "poc": 1383.72,
-                "vah": 1605.68,
-                "val": 1258.26,
-                "vwap": 1713.59,
-                "rsi": 75,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1383.72 · higher lows"
-              },
-              {
-                "tf": "4h",
-                "dir": "LONG",
-                "score": 4,
-                "entry": 1853.8,
-                "sl": 1814.74,
-                "targets": [
-                  1905.88,
-                  1944.94,
-                  1984
-                ],
-                "etaDates": [
-                  "2026-08-11",
-                  "2026-08-13",
-                  "2026-08-14"
-                ],
-                "rr": 1.33,
-                "poc": 1378.17,
-                "vah": 1634.07,
-                "val": 1122.27,
-                "vwap": 1676.41,
-                "rsi": 81,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1378.17 · higher lows"
-              },
-              {
-                "tf": "1D",
-                "dir": "LONG",
-                "score": 4,
-                "entry": 1844.3,
-                "sl": 1782.8,
-                "targets": [
-                  1926.3,
-                  1987.8,
-                  2049.29
-                ],
-                "etaDates": [
-                  "2026-08-12",
-                  "2026-08-14",
-                  "2026-08-18"
-                ],
-                "rr": 1.33,
-                "poc": 1047.01,
-                "vah": 1410.74,
-                "val": 941.42,
-                "vwap": 1576.95,
-                "rsi": 79,
-                "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1047.01 · higher lows"
-              }
-            ]
-          },
-          "footprint": {
-            "score": 60,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "spot": 1844.3,
-          "aligned": "LONG",
-          "lot": 850
         },
         {
           "generator": "option_buildup",
@@ -3668,11 +3385,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 2485,
-                "sl": 2426.95,
+                "sl": 2428,
                 "targets": [
-                  2562.4,
-                  2620.45,
-                  2678.49
+                  2561,
+                  2617.99,
+                  2674.99
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -3681,10 +3398,10 @@
                 ],
                 "rr": 1.33,
                 "poc": 2333.01,
-                "vah": 2393.99,
-                "val": 2225.11,
-                "vwap": 2360.78,
-                "rsi": 63,
+                "vah": 2422.14,
+                "val": 2243.87,
+                "vwap": 2362.97,
+                "rsi": 62,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 2333.01 · higher lows"
               },
@@ -3693,11 +3410,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 2485,
-                "sl": 2410.92,
+                "sl": 2408.87,
                 "targets": [
-                  2583.78,
-                  2657.86,
-                  2731.94
+                  2586.51,
+                  2662.65,
+                  2738.78
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -3705,24 +3422,24 @@
                   "2026-08-13"
                 ],
                 "rr": 1.33,
-                "poc": 2296.71,
+                "poc": 2329.22,
                 "vah": 2399.66,
                 "val": 2215.42,
-                "vwap": 2363.3,
-                "rsi": 62,
+                "vwap": 2365.93,
+                "rsi": 63,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 2296.71 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 2329.22 · higher lows"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
                 "score": 6,
                 "entry": 2485,
-                "sl": 2392.56,
+                "sl": 2396.15,
                 "targets": [
-                  2608.25,
-                  2700.69,
-                  2793.13
+                  2603.46,
+                  2692.31,
+                  2781.15
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -3730,13 +3447,13 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 2285.37,
-                "vah": 2417.05,
-                "val": 2199.5,
-                "vwap": 2356.46,
-                "rsi": 62,
+                "poc": 2343.47,
+                "vah": 2417.49,
+                "val": 2201.12,
+                "vwap": 2359.07,
+                "rsi": 61,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 2285.37 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 2343.47 · higher lows"
               },
               {
                 "tf": "1D",
@@ -3777,6 +3494,284 @@
           "spot": 2475,
           "aligned": "LONG",
           "lot": 275
+        },
+        {
+          "generator": "option_buildup",
+          "isDesk": true,
+          "symbol": "OFSS",
+          "name": "Oracle Financial Services Software Ltd.",
+          "kind": "F&O Stock",
+          "mtf": {
+            "symbol": "OFSS",
+            "spot": 11805,
+            "aligned": "LONG",
+            "net": 10,
+            "longs": 10,
+            "shorts": 0,
+            "timeframes": [
+              {
+                "tf": "15m",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11728.63,
+                "targets": [
+                  11897.49,
+                  11969.87,
+                  12042.24
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-10",
+                  "2026-08-10"
+                ],
+                "rr": 1.33,
+                "poc": 11753.99,
+                "vah": 11842.45,
+                "val": 11311.67,
+                "vwap": 11718.18,
+                "rsi": 61,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11753.99 · higher lows"
+              },
+              {
+                "tf": "35m",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11690.12,
+                "targets": [
+                  11948.84,
+                  12059.72,
+                  12170.59
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-10",
+                  "2026-08-10"
+                ],
+                "rr": 1.33,
+                "poc": 11740.64,
+                "vah": 11803.38,
+                "val": 11570.35,
+                "vwap": 11689.11,
+                "rsi": 63,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11740.64 · higher lows"
+              },
+              {
+                "tf": "45m",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11672.59,
+                "targets": [
+                  11972.22,
+                  12100.63,
+                  12229.04
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-10",
+                  "2026-08-10"
+                ],
+                "rr": 1.33,
+                "poc": 11689.94,
+                "vah": 11866.25,
+                "val": 10858.75,
+                "vwap": 11646.61,
+                "rsi": 60,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11689.94 · higher lows"
+              },
+              {
+                "tf": "75m",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11626.64,
+                "targets": [
+                  12033.48,
+                  12207.84,
+                  12382.2
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-10",
+                  "2026-08-11"
+                ],
+                "rr": 1.33,
+                "poc": 11682.79,
+                "vah": 11863.65,
+                "val": 10830.15,
+                "vwap": 11504.08,
+                "rsi": 65,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11682.79 · higher lows"
+              },
+              {
+                "tf": "90m",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11603.36,
+                "targets": [
+                  12064.51,
+                  12262.15,
+                  12459.79
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-11",
+                  "2026-08-11"
+                ],
+                "rr": 1.33,
+                "poc": 10939.31,
+                "vah": 11754.38,
+                "val": 10549.5,
+                "vwap": 11451.22,
+                "rsi": 63,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 10939.31 · higher lows"
+              },
+              {
+                "tf": "1h",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11649.29,
+                "targets": [
+                  12003.28,
+                  12154.98,
+                  12306.69
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-10",
+                  "2026-08-11"
+                ],
+                "rr": 1.33,
+                "poc": 11689.94,
+                "vah": 11866.25,
+                "val": 10808.38,
+                "vwap": 11540.21,
+                "rsi": 62,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11689.94 · higher lows"
+              },
+              {
+                "tf": "2h",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11541.27,
+                "targets": [
+                  12147.3,
+                  12407.03,
+                  12666.76
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-11",
+                  "2026-08-12"
+                ],
+                "rr": 1.33,
+                "poc": 10909.59,
+                "vah": 11894.08,
+                "val": 10508.5,
+                "vwap": 10929.48,
+                "rsi": 62,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 10909.59 · higher lows"
+              },
+              {
+                "tf": "3h",
+                "dir": "LONG",
+                "score": 5,
+                "entry": 11801,
+                "sl": 11470.66,
+                "targets": [
+                  12241.45,
+                  12571.8,
+                  12902.14
+                ],
+                "etaDates": [
+                  "2026-08-11",
+                  "2026-08-12",
+                  "2026-08-13"
+                ],
+                "rr": 1.33,
+                "poc": 11012.79,
+                "vah": 11884.02,
+                "val": 9892.63,
+                "vwap": 11058.03,
+                "rsi": 63,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 11012.79"
+              },
+              {
+                "tf": "4h",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11801,
+                "sl": 11374.04,
+                "targets": [
+                  12370.28,
+                  12797.23,
+                  13224.19
+                ],
+                "etaDates": [
+                  "2026-08-11",
+                  "2026-08-13",
+                  "2026-08-14"
+                ],
+                "rr": 1.33,
+                "poc": 9671.02,
+                "vah": 11827.85,
+                "val": 9184,
+                "vwap": 11132.9,
+                "rsi": 60,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 9671.02 · higher lows"
+              },
+              {
+                "tf": "1D",
+                "dir": "LONG",
+                "score": 6,
+                "entry": 11805,
+                "sl": 11212.84,
+                "targets": [
+                  12594.54,
+                  13186.7,
+                  13778.86
+                ],
+                "etaDates": [
+                  "2026-08-12",
+                  "2026-08-14",
+                  "2026-08-18"
+                ],
+                "rr": 1.33,
+                "poc": 9609.39,
+                "vah": 11979,
+                "val": 7957.85,
+                "vwap": 10934.98,
+                "rsi": 63,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 9609.39 · higher lows"
+              }
+            ]
+          },
+          "footprint": {
+            "score": 32,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "spot": 11805,
+          "aligned": "LONG",
+          "lot": 100
         },
         {
           "generator": "option_buildup",
@@ -4001,13 +3996,13 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 1033.85,
-                "vah": 1085.18,
-                "val": 975.66,
-                "vwap": 1054.68,
-                "rsi": 53,
+                "poc": 1029.09,
+                "vah": 1086.13,
+                "val": 972.06,
+                "vwap": 1057.74,
+                "rsi": 52,
                 "fib": "61.8%",
-                "reason": "below VWAP · above POC 1033.85 · higher lows"
+                "reason": "below VWAP · above POC 1029.09 · higher lows"
               },
               {
                 "tf": "1D",
@@ -4021,7 +4016,7 @@
                 "poc": 1034.74,
                 "vah": 1122.32,
                 "val": 772,
-                "vwap": 1054.76,
+                "vwap": 1053.27,
                 "rsi": 51,
                 "fib": "50%",
                 "reason": "below VWAP · above POC 1034.74 · higher lows"
@@ -4208,13 +4203,13 @@
               {
                 "tf": "2h",
                 "dir": "LONG",
-                "score": 2,
+                "score": 4,
                 "entry": 2715,
-                "sl": 2668.68,
+                "sl": 2672.41,
                 "targets": [
-                  2776.77,
-                  2823.09,
-                  2869.41
+                  2771.79,
+                  2814.37,
+                  2856.96
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -4222,13 +4217,13 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 3056.41,
-                "vah": 3152.4,
-                "val": 2724.14,
-                "vwap": 2668.21,
-                "rsi": 55,
+                "poc": 2701.99,
+                "vah": 2975.19,
+                "val": 2576.47,
+                "vwap": 2671.63,
+                "rsi": 56,
                 "fib": "38.2%",
-                "reason": "above VWAP · below POC 3056.41 · higher lows · at 38.2% Fib 2698.46"
+                "reason": "above VWAP · above POC 2701.99 · higher lows · at 38.2% Fib 2698.46"
               },
               {
                 "tf": "3h",
@@ -4239,13 +4234,13 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 3100.15,
+                "poc": 3081.9,
                 "vah": 3273.55,
                 "val": 2853.74,
-                "vwap": 2693.52,
-                "rsi": 53,
+                "vwap": 2699.09,
+                "rsi": 51,
                 "fib": "50%",
-                "reason": "above VWAP · below POC 3100.15 · higher lows · at 50% Fib 2704.85"
+                "reason": "above VWAP · below POC 3081.9 · higher lows · at 50% Fib 2704.85"
               },
               {
                 "tf": "4h",
@@ -4256,13 +4251,13 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 3096.62,
-                "vah": 3532.02,
-                "val": 2959.78,
-                "vwap": 2721.1,
-                "rsi": 48,
+                "poc": 3121.5,
+                "vah": 3507.14,
+                "val": 2984.66,
+                "vwap": 2723.17,
+                "rsi": 49,
                 "fib": "61.8%",
-                "reason": "below VWAP · below POC 3096.62 · higher lows · at 61.8% Fib 2702.39"
+                "reason": "below VWAP · below POC 3121.5 · higher lows · at 61.8% Fib 2702.39"
               },
               {
                 "tf": "1D",
@@ -4487,7 +4482,7 @@
                 "poc": 318.41,
                 "vah": 366.43,
                 "val": 312.25,
-                "vwap": 363.49,
+                "vwap": 363.64,
                 "rsi": 58,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 318.41 · higher lows"
@@ -4512,7 +4507,7 @@
                 "poc": 318.41,
                 "vah": 349.19,
                 "val": 292.55,
-                "vwap": 356.96,
+                "vwap": 357.03,
                 "rsi": 61,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 318.41 · higher lows"
@@ -4520,13 +4515,13 @@
               {
                 "tf": "4h",
                 "dir": "LONG",
-                "score": 5,
+                "score": 6,
                 "entry": 368.15,
-                "sl": 355.45,
+                "sl": 355.53,
                 "targets": [
-                  385.08,
-                  397.78,
-                  410.48
+                  384.98,
+                  397.59,
+                  410.21
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -4534,24 +4529,24 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 321.7,
-                "vah": 364.2,
-                "val": 289.4,
-                "vwap": 353.81,
-                "rsi": 61,
+                "poc": 322.93,
+                "vah": 364.55,
+                "val": 287.96,
+                "vwap": 354.59,
+                "rsi": 62,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 321.7"
+                "reason": "rising EMA stack · above VWAP · above POC 322.93 · higher lows"
               },
               {
                 "tf": "1D",
                 "dir": "LONG",
                 "score": 5,
                 "entry": 366.75,
-                "sl": 350.13,
+                "sl": 350.12,
                 "targets": [
-                  388.91,
-                  405.53,
-                  422.15
+                  388.92,
+                  405.55,
+                  422.17
                 ],
                 "etaDates": [
                   "2026-08-12",
@@ -4561,9 +4556,9 @@
                 "rr": 1.33,
                 "poc": 308.23,
                 "vah": 333.81,
-                "val": 269.02,
-                "vwap": 343.42,
-                "rsi": 65,
+                "val": 265.61,
+                "vwap": 344.98,
+                "rsi": 64,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 308.23"
               }
@@ -4800,11 +4795,11 @@
                 "dir": "LONG",
                 "score": 6,
                 "entry": 1143.9,
-                "sl": 1102.93,
+                "sl": 1101.07,
                 "targets": [
-                  1198.53,
-                  1239.5,
-                  1280.47
+                  1201.01,
+                  1243.84,
+                  1286.67
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -4812,13 +4807,13 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 1067.72,
-                "vah": 1125.2,
-                "val": 968.45,
-                "vwap": 1095.15,
-                "rsi": 62,
+                "poc": 1056.25,
+                "vah": 1124.81,
+                "val": 966.6,
+                "vwap": 1100.58,
+                "rsi": 61,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1067.72 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 1056.25 · higher lows"
               },
               {
                 "tf": "1D",
@@ -4862,27 +4857,27 @@
         {
           "generator": "option_buildup",
           "isDesk": true,
-          "symbol": "DRREDDY",
-          "name": "Dr. Reddy's Laboratories Ltd.",
+          "symbol": "PNB",
+          "name": "Punjab National Bank",
           "kind": "F&O Stock",
           "mtf": {
-            "symbol": "DRREDDY",
-            "spot": 1172,
-            "aligned": "LEAN LONG",
-            "net": 2,
-            "longs": 5,
-            "shorts": 3,
+            "symbol": "PNB",
+            "spot": 114.81,
+            "aligned": "LONG",
+            "net": 10,
+            "longs": 10,
+            "shorts": 0,
             "timeframes": [
               {
                 "tf": "15m",
                 "dir": "LONG",
-                "score": 2,
-                "entry": 1168.6,
-                "sl": 1165.37,
+                "score": 6,
+                "entry": 114.8,
+                "sl": 114.29,
                 "targets": [
-                  1172.91,
-                  1176.14,
-                  1179.38
+                  115.48,
+                  115.98,
+                  116.49
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -4890,24 +4885,24 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 1168.21,
-                "vah": 1175.9,
-                "val": 1159.5,
-                "vwap": 1168.82,
-                "rsi": 56,
-                "fib": "50%",
-                "reason": "below VWAP · above POC 1168.21 · higher lows · at 50% Fib 1168.05"
+                "poc": 113.84,
+                "vah": 115.23,
+                "val": 113.12,
+                "vwap": 114.43,
+                "rsi": 62,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 113.84 · higher lows"
               },
               {
                 "tf": "35m",
                 "dir": "LONG",
-                "score": 5,
-                "entry": 1168.6,
-                "sl": 1162.77,
+                "score": 6,
+                "entry": 114.8,
+                "sl": 114.07,
                 "targets": [
-                  1176.38,
-                  1182.21,
-                  1188.04
+                  115.77,
+                  116.5,
+                  117.23
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -4915,24 +4910,24 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 1166.4,
-                "vah": 1173.04,
-                "val": 1161.66,
-                "vwap": 1167.94,
-                "rsi": 53,
-                "fib": "50%",
-                "reason": "rising EMA stack · above VWAP · above POC 1166.4 · higher lows"
+                "poc": 113.83,
+                "vah": 114.8,
+                "val": 113.6,
+                "vwap": 114.25,
+                "rsi": 62,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 113.83 · higher lows"
               },
               {
                 "tf": "45m",
                 "dir": "LONG",
-                "score": 5,
-                "entry": 1168.6,
-                "sl": 1161.4,
+                "score": 6,
+                "entry": 114.8,
+                "sl": 113.98,
                 "targets": [
-                  1178.2,
-                  1185.4,
-                  1192.6
+                  115.89,
+                  116.7,
+                  117.52
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -4940,108 +4935,124 @@
                   "2026-08-10"
                 ],
                 "rr": 1.33,
-                "poc": 1165.42,
-                "vah": 1214.97,
-                "val": 1126.89,
-                "vwap": 1167.69,
-                "rsi": 53,
-                "fib": "50%",
-                "reason": "rising EMA stack · above VWAP · above POC 1165.42 · higher lows"
+                "poc": 111.44,
+                "vah": 114.26,
+                "val": 109.43,
+                "vwap": 114.1,
+                "rsi": 62,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 111.44 · higher lows"
               },
               {
                 "tf": "75m",
                 "dir": "LONG",
-                "score": 2,
-                "entry": 1168.6,
-                "sl": 1158.1,
+                "score": 6,
+                "entry": 114.8,
+                "sl": 113.81,
                 "targets": [
-                  1182.6,
-                  1193.09,
-                  1203.59
+                  116.13,
+                  117.12,
+                  118.12
                 ],
                 "etaDates": [
                   "2026-08-10",
                   "2026-08-10",
                   "2026-08-11"
                 ],
-                "rr": 1.33,
-                "poc": 1238.27,
-                "vah": 1312.68,
-                "val": 1101.2,
-                "vwap": 1160.98,
-                "rsi": 53,
+                "rr": 1.34,
+                "poc": 111.8,
+                "vah": 114.97,
+                "val": 106.03,
+                "vwap": 113.21,
+                "rsi": 62,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · below POC 1238.27 · at 38.2% Fib 1161.66"
+                "reason": "rising EMA stack · above VWAP · above POC 111.8 · higher lows"
               },
               {
                 "tf": "90m",
-                "dir": "NEUTRAL",
-                "score": 0,
-                "entry": 1168.6,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
-                "poc": 1238.27,
-                "vah": 1414.5,
-                "val": 1179.52,
-                "vwap": 1157.2,
-                "rsi": 53,
+                "dir": "LONG",
+                "score": 6,
+                "entry": 114.8,
+                "sl": 113.65,
+                "targets": [
+                  116.34,
+                  117.49,
+                  118.64
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-11",
+                  "2026-08-11"
+                ],
+                "rr": 1.34,
+                "poc": 108.83,
+                "vah": 112.36,
+                "val": 104.92,
+                "vwap": 112.94,
+                "rsi": 64,
                 "fib": "38.2%",
-                "reason": "above VWAP · below POC 1238.27 · at 38.2% Fib 1161.09"
+                "reason": "rising EMA stack · above VWAP · above POC 108.83 · higher lows"
               },
               {
                 "tf": "1h",
                 "dir": "LONG",
-                "score": 5,
-                "entry": 1168.6,
-                "sl": 1160.57,
+                "score": 6,
+                "entry": 114.8,
+                "sl": 114,
                 "targets": [
-                  1179.3,
-                  1187.33,
-                  1195.36
+                  115.87,
+                  116.68,
+                  117.48
                 ],
                 "etaDates": [
                   "2026-08-10",
                   "2026-08-10",
                   "2026-08-11"
                 ],
-                "rr": 1.33,
-                "poc": 1168.13,
-                "vah": 1242.1,
-                "val": 1129.38,
-                "vwap": 1165.74,
-                "rsi": 53,
+                "rr": 1.34,
+                "poc": 111.8,
+                "vah": 115.34,
+                "val": 106.41,
+                "vwap": 113.77,
+                "rsi": 64,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 1168.13 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 111.8 · higher lows"
               },
               {
                 "tf": "2h",
-                "dir": "NEUTRAL",
-                "score": 0,
-                "entry": 1168.6,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
-                "poc": 1238.27,
-                "vah": 1414.5,
-                "val": 1203.02,
-                "vwap": 1157.29,
-                "rsi": 53,
+                "dir": "LONG",
+                "score": 5,
+                "entry": 114.8,
+                "sl": 113.53,
+                "targets": [
+                  116.49,
+                  117.76,
+                  119.03
+                ],
+                "etaDates": [
+                  "2026-08-10",
+                  "2026-08-11",
+                  "2026-08-12"
+                ],
+                "rr": 1.33,
+                "poc": 109.2,
+                "vah": 111.25,
+                "val": 104.54,
+                "vwap": 112.34,
+                "rsi": 66,
                 "fib": "38.2%",
-                "reason": "above VWAP · below POC 1238.27 · at 38.2% Fib 1161.09"
+                "reason": "rising EMA stack · above VWAP · above POC 109.2"
               },
               {
                 "tf": "3h",
-                "dir": "SHORT",
-                "score": -3,
-                "entry": 1168.6,
-                "sl": 1187.82,
+                "dir": "LONG",
+                "score": 6,
+                "entry": 114.8,
+                "sl": 113.17,
                 "targets": [
-                  1142.97,
-                  1123.75,
-                  1104.53
+                  116.97,
+                  118.59,
+                  120.22
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -5049,24 +5060,24 @@
                   "2026-08-13"
                 ],
                 "rr": 1.33,
-                "poc": 1285.26,
-                "vah": 1359.67,
-                "val": 1218.69,
-                "vwap": 1173.95,
-                "rsi": 48,
-                "fib": "50%",
-                "reason": "below VWAP · below POC 1285.26 · lower highs · at 50% Fib 1167.75"
+                "poc": 109.25,
+                "vah": 111.56,
+                "val": 104.01,
+                "vwap": 110.78,
+                "rsi": 67,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 109.25 · higher lows"
               },
               {
                 "tf": "4h",
-                "dir": "SHORT",
-                "score": -5,
-                "entry": 1168.6,
-                "sl": 1192.45,
+                "dir": "LONG",
+                "score": 6,
+                "entry": 114.8,
+                "sl": 112.76,
                 "targets": [
-                  1136.8,
-                  1112.94,
-                  1089.09
+                  117.52,
+                  119.56,
+                  121.6
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -5074,24 +5085,24 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 1324.43,
-                "vah": 1359.67,
-                "val": 1218.69,
-                "vwap": 1206.08,
-                "rsi": 45,
-                "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 1324.43 · lower highs"
+                "poc": 108.96,
+                "vah": 112.58,
+                "val": 104.08,
+                "vwap": 109.31,
+                "rsi": 66,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 108.96 · higher lows"
               },
               {
                 "tf": "1D",
-                "dir": "SHORT",
-                "score": -5,
-                "entry": 1172,
-                "sl": 1210.36,
+                "dir": "LONG",
+                "score": 6,
+                "entry": 114.81,
+                "sl": 111.9,
                 "targets": [
-                  1120.85,
-                  1082.49,
-                  1044.13
+                  118.69,
+                  121.6,
+                  124.51
                 ],
                 "etaDates": [
                   "2026-08-12",
@@ -5099,27 +5110,27 @@
                   "2026-08-18"
                 ],
                 "rr": 1.33,
-                "poc": 1285.42,
-                "vah": 1344.27,
-                "val": 1210.87,
-                "vwap": 1251.37,
-                "rsi": 38,
-                "fib": "78.6%",
-                "reason": "falling EMA stack · below VWAP · below POC 1285.42 · at 78.6% Fib 1168.17"
+                "poc": 108.12,
+                "vah": 120.49,
+                "val": 99.42,
+                "vwap": 108.62,
+                "rsi": 68,
+                "fib": "38.2%",
+                "reason": "rising EMA stack · above VWAP · above POC 108.12 · higher lows"
               }
             ]
           },
           "footprint": {
-            "score": 30,
+            "score": 32,
             "flags": [
-              "Volatility coiled in a tight base",
-              "Up/down volume 4.84× (accumulation)"
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
             ],
             "weak": true
           },
-          "spot": 1172,
-          "aligned": "LEAN LONG",
-          "lot": 625
+          "spot": 114.81,
+          "aligned": "LONG",
+          "lot": 8000
         }
       ]
     },
@@ -5173,7 +5184,7 @@
           "kind": "Commodity",
           "direction": "RANGE",
           "dirTone": "flat",
-          "spot": 4315.93,
+          "spot": 4313.32,
           "lot": null,
           "grade": "B",
           "optionPlay": "Range — sell strangle",
@@ -5282,48 +5293,6 @@
         },
         {
           "generator": "fno",
-          "underlying": "LTM",
-          "name": "LTM Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 4675.3,
-          "lot": 150,
-          "grade": "A++",
-          "confidence": 95,
-          "delivery": null,
-          "entry": 4675.3,
-          "sl": 4539.16,
-          "slPct": -2.9,
-          "targets": [
-            {
-              "price": 4770.71,
-              "pct": 2,
-              "by": "~3h",
-              "days": 3
-            },
-            {
-              "price": 4842.26,
-              "pct": 3.6,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 4913.81,
-              "pct": 5.1,
-              "by": "~10h",
-              "days": 10
-            }
-          ],
-          "rr": 0.7,
-          "optionPlay": "Buy 4700 CE (ATM) or 4600 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 150 sh ≈ ₹7,01,295 notional",
-          "reason": "Accumulation (vol 100/100): 5-day volume > 20-day average (RVOL 4.09×); 1-day volume 1.7× the 5-day average — surge; Up/down volume 2.24× — accumulation pressure",
-          "social": "📊 F&O — LTM (Stock) BUY\nAccumulation (vol 100/100): 5-day volume > 20-day average (RVOL 4.09×); 1-day volume 1.7× the 5-day average — surge; Up/down volume 2.24× — accumulation pressure\n👉 Buy 4700 CE (ATM) or 4600 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ltm #options",
-          "rank": 83
-        },
-        {
-          "generator": "fno",
           "underlying": "JSWENERGY",
           "name": "JSW Energy Ltd.",
           "kind": "Stock",
@@ -5362,6 +5331,48 @@
           "futures": "1 lot = 1075 sh ≈ ₹6,07,375 notional",
           "reason": "Triple confluence: POC ₹563.89 + 38.2% Fib + VWAP ₹562.79 stacked — institutional magnet, high-odds reaction",
           "social": "📊 F&O — JSWENERGY (Stock) BUY\nTriple confluence: POC ₹563.89 + 38.2% Fib + VWAP ₹562.79 stacked — institutional magnet, high-odds reaction\n👉 Buy 560 CE (ATM) or 540 CE (ITM) — near expiry; or long futures · 1 lot = 1075 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #jswenergy #options",
+          "rank": 83
+        },
+        {
+          "generator": "fno",
+          "underlying": "LTM",
+          "name": "LTM Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 4675.3,
+          "lot": 150,
+          "grade": "A++",
+          "confidence": 95,
+          "delivery": null,
+          "entry": 4675.3,
+          "sl": 4539.16,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 4770.71,
+              "pct": 2,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 4842.26,
+              "pct": 3.6,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 4913.81,
+              "pct": 5.1,
+              "by": "~10h",
+              "days": 10
+            }
+          ],
+          "rr": 0.7,
+          "optionPlay": "Buy 4700 CE (ATM) or 4600 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 150 sh ≈ ₹7,01,295 notional",
+          "reason": "Accumulation (vol 68/100): 5-day volume > 20-day average (RVOL 4.95×); 1-day volume 3.6× the 5-day average — surge; Up/down volume 1.73× — accumulation pressure",
+          "social": "📊 F&O — LTM (Stock) BUY\nAccumulation (vol 68/100): 5-day volume > 20-day average (RVOL 4.95×); 1-day volume 3.6× the 5-day average — surge; Up/down volume 1.73× — accumulation pressure\n👉 Buy 4700 CE (ATM) or 4600 CE (ITM) — near expiry; or long futures · 1 lot = 150 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #ltm #options",
           "rank": 83
         },
         {
@@ -5450,48 +5461,6 @@
         },
         {
           "generator": "fno",
-          "underlying": "DRREDDY",
-          "name": "Dr. Reddy's Laboratories Ltd.",
-          "kind": "Stock",
-          "direction": "BUY",
-          "dirTone": "up",
-          "spot": 1168.6,
-          "lot": 625,
-          "grade": "A+",
-          "confidence": 97,
-          "delivery": null,
-          "entry": 1168.6,
-          "sl": 1160.57,
-          "slPct": -0.7,
-          "targets": [
-            {
-              "price": 1179.3,
-              "pct": 0.9,
-              "by": "~3h"
-            },
-            {
-              "price": 1187.33,
-              "pct": 1.6,
-              "by": "~11h"
-            },
-            {
-              "price": 1195.36,
-              "pct": 2.3,
-              "by": "~19h"
-            }
-          ],
-          "rr": 1.33,
-          "optionPlay": "Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures",
-          "futures": "1 lot = 625 sh ≈ ₹7,30,375 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below)",
-          "changePct": 0.1,
-          "setupType": "Squeeze breakout",
-          "rsi": 52.7,
-          "social": "📊 F&O — DRREDDY (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below)\n👉 Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #drreddy #options",
-          "rank": 59.4
-        },
-        {
-          "generator": "fno",
           "underlying": "PNB",
           "name": "Punjab National Bank",
           "kind": "Stock",
@@ -5549,17 +5518,17 @@
           "slPct": -1.2,
           "targets": [
             {
-              "price": 1374.42,
+              "price": 1374.43,
               "pct": 1.6,
               "by": "~9h"
             },
             {
-              "price": 1390.79,
+              "price": 1390.8,
               "pct": 2.8,
               "by": "~12h"
             },
             {
-              "price": 1407.16,
+              "price": 1407.18,
               "pct": 4,
               "by": "~16h"
             }
@@ -5909,6 +5878,48 @@
           "rsi": 60.9,
           "social": "📊 F&O — POWERINDIA (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.2% below)\n👉 Buy 32600 CE (ATM) or 32500 CE (ITM) — near expiry; or long futures · 1 lot = 25 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #powerindia #options",
           "rank": 58.4
+        },
+        {
+          "generator": "fno",
+          "underlying": "DRREDDY",
+          "name": "Dr. Reddy's Laboratories Ltd.",
+          "kind": "Stock",
+          "direction": "BUY",
+          "dirTone": "up",
+          "spot": 1168.6,
+          "lot": 625,
+          "grade": "A+",
+          "confidence": 90,
+          "delivery": null,
+          "entry": 1168.6,
+          "sl": 1161.1,
+          "slPct": -0.6,
+          "targets": [
+            {
+              "price": 1178.57,
+              "pct": 0.9,
+              "by": "~3h"
+            },
+            {
+              "price": 1186.05,
+              "pct": 1.5,
+              "by": "~11h"
+            },
+            {
+              "price": 1193.53,
+              "pct": 2.1,
+              "by": "~19h"
+            }
+          ],
+          "rr": 1.33,
+          "optionPlay": "Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures",
+          "futures": "1 lot = 625 sh ≈ ₹7,30,375 notional",
+          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below)",
+          "changePct": 0,
+          "setupType": "Squeeze breakout",
+          "rsi": 52.7,
+          "social": "📊 F&O — DRREDDY (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below)\n👉 Buy 1150 CE (ATM) or 1100 CE (ITM) — near expiry; or long futures · 1 lot = 625 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #drreddy #options",
+          "rank": 58
         },
         {
           "generator": "fno",
@@ -6343,21 +6354,21 @@
           "confidence": 78,
           "delivery": null,
           "entry": 3327,
-          "sl": 3176.9,
+          "sl": 3176.87,
           "slPct": -4.5,
           "targets": [
             {
-              "price": 3388.01,
+              "price": 3388.28,
               "pct": 1.8,
               "by": "~5h"
             },
             {
-              "price": 3433.77,
+              "price": 3434.24,
               "pct": 3.2,
               "by": "~8h"
             },
             {
-              "price": 3479.54,
+              "price": 3480.21,
               "pct": 4.6,
               "by": "~12h"
             }
@@ -6431,12 +6442,12 @@
           "slPct": -1.6,
           "targets": [
             {
-              "price": 146.06,
+              "price": 146.07,
               "pct": 1.2,
               "by": "~4h"
             },
             {
-              "price": 147.38,
+              "price": 147.39,
               "pct": 2.1,
               "by": "~7h"
             },
@@ -6786,7 +6797,7 @@
             "NSE Equity"
           ],
           "label": "🚀 Momentum & Early Movers",
-          "reason": "About to break the 20-day high on 10.83× volume",
+          "reason": "About to break the 20-day high on 11.43× volume",
           "direction": "LONG",
           "ltp": 180,
           "entry": 180,
@@ -6825,7 +6836,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 11.15× (accumulation)"
+              "Up/down volume 7.45× (accumulation)"
             ],
             "strong": false
           },
@@ -6834,8 +6845,8 @@
             "rs50": 0.003,
             "leader": true
           },
-          "social": "ELPROINTL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 10.83× volume\nLTP ₹180 · Entry ₹180 · SL ₹178.6 (-0.8%)\nT1 ₹181.45 (+0.8%) by ~10h\nT2 ₹182.54 (+1.4%) · T3 ₹183.63 (+2%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ELPROINTL #swingtrading #nifty",
-          "_momScore": 113,
+          "social": "ELPROINTL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 11.43× volume\nLTP ₹180 · Entry ₹180 · SL ₹178.6 (-0.8%)\nT1 ₹181.45 (+0.8%) by ~10h\nT2 ₹182.54 (+1.4%) · T3 ₹183.63 (+2%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ELPROINTL #swingtrading #nifty",
+          "_momScore": 117,
           "movingNow": false
         },
         {
@@ -7035,73 +7046,6 @@
         },
         {
           "generator": "momentum",
-          "symbol": "LTM",
-          "name": "LTM Ltd.",
-          "sector": "Information Technology",
-          "indices": [
-            "NIFTY Next 50",
-            "NIFTY 100",
-            "NIFTY 200",
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY IT",
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
-          "direction": "LONG",
-          "ltp": 4675.3,
-          "entry": 4675.3,
-          "sl": 4539.16,
-          "slPct": -2.9,
-          "targets": [
-            {
-              "price": 4770.71,
-              "pct": 2,
-              "by": "~3h",
-              "days": 3
-            },
-            {
-              "price": 4842.26,
-              "pct": 3.6,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 4913.81,
-              "pct": 5.1,
-              "by": "~10h",
-              "days": 10
-            }
-          ],
-          "rr": 0.7,
-          "rsi": 67.5,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.7,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.028,
-            "rs50": 0.044,
-            "leader": true
-          },
-          "social": "LTM — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty",
-          "_momScore": 85,
-          "movingNow": false
-        },
-        {
-          "generator": "momentum",
           "symbol": "NATCAPSUQ",
           "name": "Natural Capsules Limited",
           "sector": "Equity",
@@ -7159,6 +7103,72 @@
           },
           "social": "NATCAPSUQ — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 4.4× volume\nLTP ₹156.5 · Entry ₹156.5 · SL ₹150.84 (-3.6%)\nT1 ₹164.05 (+4.8%) by ~3h\nT2 ₹169.71 (+8.4%) · T3 ₹175.37 (+12.1%)\nBacktested first-target hit ~33.3% over 6 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #NATCAPSUQ #swingtrading #nifty",
           "_momScore": 83,
+          "movingNow": false
+        },
+        {
+          "generator": "momentum",
+          "symbol": "LTM",
+          "name": "LTM Ltd.",
+          "sector": "Information Technology",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY IT",
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "About to break the 20-day high on 4.95× volume",
+          "direction": "LONG",
+          "ltp": 4675.3,
+          "entry": 4675.3,
+          "sl": 4539.16,
+          "slPct": -2.9,
+          "targets": [
+            {
+              "price": 4770.71,
+              "pct": 2,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 4842.26,
+              "pct": 3.6,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 4913.81,
+              "pct": 5.1,
+              "by": "~10h",
+              "days": 10
+            }
+          ],
+          "rr": 0.7,
+          "rsi": 67.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0.7,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 42,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.028,
+            "rs50": 0.044,
+            "leader": true
+          },
+          "social": "LTM — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 4.95× volume\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty",
+          "_momScore": 79,
           "movingNow": false
         },
         {
@@ -7384,13 +7394,13 @@
           "slPct": -1.6,
           "targets": [
             {
-              "price": 146.06,
+              "price": 146.07,
               "pct": 1.2,
               "by": "~4h",
               "days": 4
             },
             {
-              "price": 147.38,
+              "price": 147.39,
               "pct": 2.1,
               "by": "~7h",
               "days": 7
@@ -7423,7 +7433,7 @@
             "rs50": 0.034,
             "leader": true
           },
-          "social": "BANKINDIA — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 5.82× volume\nLTP ₹144.31 · Entry ₹144.31 · SL ₹141.96 (-1.6%)\nT1 ₹146.06 (+1.2%) by ~4h\nT2 ₹147.38 (+2.1%) · T3 ₹148.7 (+3%)\nBacktested first-target hit ~57.1% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BANKINDIA #swingtrading #nifty",
+          "social": "BANKINDIA — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 5.82× volume\nLTP ₹144.31 · Entry ₹144.31 · SL ₹141.96 (-1.6%)\nT1 ₹146.07 (+1.2%) by ~4h\nT2 ₹147.39 (+2.1%) · T3 ₹148.7 (+3%)\nBacktested first-target hit ~57.1% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #BANKINDIA #swingtrading #nifty",
           "_momScore": 76,
           "movingNow": false
         },
@@ -7510,26 +7520,26 @@
           "slPct": -2.4,
           "targets": [
             {
-              "price": 121.98,
-              "pct": 2.5,
+              "price": 122.03,
+              "pct": 2.6,
               "by": "~6h",
               "days": 6
             },
             {
-              "price": 124.23,
-              "pct": 4.4,
+              "price": 124.32,
+              "pct": 4.5,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 126.48,
-              "pct": 6.3,
+              "price": 126.6,
+              "pct": 6.4,
               "by": "~21h",
               "days": 21
             }
           ],
-          "rr": 1.04,
-          "rsi": 59.7,
+          "rr": 1.06,
+          "rsi": 59.8,
           "confidence": 25,
           "accuracy": 25,
           "backtestTrades": 4,
@@ -7541,7 +7551,7 @@
             "flags": [
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base",
-              "Up/down volume 1.74× (accumulation)"
+              "Up/down volume 2.41× (accumulation)"
             ],
             "strong": false
           },
@@ -7550,7 +7560,7 @@
             "rs50": 0.006,
             "leader": true
           },
-          "social": "UCAL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 3.46× volume\nLTP ₹118.99 · Entry ₹118.99 · SL ₹116.12 (-2.4%)\nT1 ₹121.98 (+2.5%) by ~6h\nT2 ₹124.23 (+4.4%) · T3 ₹126.48 (+6.3%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #UCAL #swingtrading #nifty",
+          "social": "UCAL — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 3.46× volume\nLTP ₹118.99 · Entry ₹118.99 · SL ₹116.12 (-2.4%)\nT1 ₹122.03 (+2.6%) by ~6h\nT2 ₹124.32 (+4.5%) · T3 ₹126.6 (+6.4%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #UCAL #swingtrading #nifty",
           "_momScore": 76,
           "movingNow": false
         },
@@ -7638,19 +7648,19 @@
           "slPct": -3.1,
           "targets": [
             {
-              "price": 91.31,
+              "price": 91.32,
               "pct": 2.5,
               "by": "~5h",
               "days": 5
             },
             {
-              "price": 92.96,
-              "pct": 4.3,
+              "price": 92.98,
+              "pct": 4.4,
               "by": "~8h",
               "days": 8
             },
             {
-              "price": 94.62,
+              "price": 94.64,
               "pct": 6.2,
               "by": "~21h",
               "days": 21
@@ -7678,7 +7688,7 @@
             "rs50": 0.049,
             "leader": true
           },
-          "social": "ANDHRSUGAR — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹89.1 · Entry ₹89.1 · SL ₹86.38 (-3.1%)\nT1 ₹91.31 (+2.5%) by ~5h\nT2 ₹92.96 (+4.3%) · T3 ₹94.62 (+6.2%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ANDHRSUGAR #swingtrading #nifty",
+          "social": "ANDHRSUGAR — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹89.1 · Entry ₹89.1 · SL ₹86.38 (-3.1%)\nT1 ₹91.32 (+2.5%) by ~5h\nT2 ₹92.98 (+4.4%) · T3 ₹94.64 (+6.2%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ANDHRSUGAR #swingtrading #nifty",
           "_momScore": 75,
           "movingNow": false
         },
@@ -7898,23 +7908,23 @@
           "direction": "LONG",
           "ltp": 3327,
           "entry": 3327,
-          "sl": 3176.9,
+          "sl": 3176.87,
           "slPct": -4.5,
           "targets": [
             {
-              "price": 3388.01,
+              "price": 3388.28,
               "pct": 1.8,
               "by": "~5h",
               "days": 5
             },
             {
-              "price": 3433.77,
+              "price": 3434.24,
               "pct": 3.2,
               "by": "~8h",
               "days": 8
             },
             {
-              "price": 3479.54,
+              "price": 3480.21,
               "pct": 4.6,
               "by": "~12h",
               "days": 12
@@ -7941,7 +7951,7 @@
             "rs50": 0.055,
             "leader": true
           },
-          "social": "GRASIM — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 4.72× volume\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.9 (-4.5%)\nT1 ₹3388.01 (+1.8%) by ~5h\nT2 ₹3433.77 (+3.2%) · T3 ₹3479.54 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty",
+          "social": "GRASIM — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 4.72× volume\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.87 (-4.5%)\nT1 ₹3388.28 (+1.8%) by ~5h\nT2 ₹3434.24 (+3.2%) · T3 ₹3480.21 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty",
           "_momScore": 70,
           "movingNow": false
         },
@@ -8059,7 +8069,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Volatility coiled in a tight base",
-              "Up/down volume 1.89× (accumulation)"
+              "Up/down volume 1.81× (accumulation)"
             ],
             "strong": false
           },
@@ -8203,74 +8213,6 @@
         },
         {
           "generator": "momentum",
-          "symbol": "LAURUSLABS",
-          "name": "Laurus Labs Ltd.",
-          "sector": "Healthcare",
-          "indices": [
-            "NIFTY 200",
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Midcap 100",
-            "NIFTY Midcap 150",
-            "NIFTY Pharma",
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
-          "direction": "LONG",
-          "ltp": 1853.8,
-          "entry": 1853.8,
-          "sl": 1831.23,
-          "slPct": -1.2,
-          "targets": [
-            {
-              "price": 1873.48,
-              "pct": 1.1,
-              "by": "~3h",
-              "days": 3
-            },
-            {
-              "price": 1888.24,
-              "pct": 1.9,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 1903,
-              "pct": 2.7,
-              "by": "~19h",
-              "days": 19
-            }
-          ],
-          "rr": 0.87,
-          "rsi": 65.6,
-          "confidence": 60,
-          "accuracy": 60,
-          "backtestTrades": 5,
-          "delivery": null,
-          "changePct": 0.17,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 60,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.005,
-            "rs50": 0.026,
-            "leader": true
-          },
-          "social": "LAURUSLABS — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹1853.8 · Entry ₹1853.8 · SL ₹1831.23 (-1.2%)\nT1 ₹1873.48 (+1.1%) by ~3h\nT2 ₹1888.24 (+1.9%) · T3 ₹1903 (+2.7%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #LAURUSLABS #swingtrading #nifty",
-          "_momScore": 68,
-          "movingNow": false
-        },
-        {
-          "generator": "momentum",
           "symbol": "FIBERWEB",
           "name": "Fiberweb (India) Limited",
           "sector": "Equity",
@@ -8327,6 +8269,73 @@
           },
           "social": "FIBERWEB — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 3.68× volume\nLTP ₹29.7 · Entry ₹29.7 · SL ₹28.92 (-2.6%)\nT1 ₹30.71 (+3.4%) by ~6h\nT2 ₹31.47 (+6%) · T3 ₹32.23 (+8.5%)\nSetup score 86/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #FIBERWEB #swingtrading #nifty",
           "_momScore": 68,
+          "movingNow": false
+        },
+        {
+          "generator": "momentum",
+          "symbol": "PNB",
+          "name": "Punjab National Bank",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY Next 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY Bank",
+            "NIFTY PSU Bank",
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "About to break the 20-day high on 4.18× volume",
+          "direction": "LONG",
+          "ltp": 114.8,
+          "entry": 114.8,
+          "sl": 113.55,
+          "slPct": -1.1,
+          "targets": [
+            {
+              "price": 115.87,
+              "pct": 0.9,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 116.68,
+              "pct": 1.6,
+              "by": "~8h",
+              "days": 8
+            },
+            {
+              "price": 117.48,
+              "pct": 2.3,
+              "by": "~11h",
+              "days": 11
+            }
+          ],
+          "rr": 0.86,
+          "rsi": 64.1,
+          "confidence": 71,
+          "accuracy": 71.4,
+          "backtestTrades": 7,
+          "delivery": null,
+          "changePct": -0.03,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 32,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.011,
+            "rs50": 0.018,
+            "leader": true
+          },
+          "social": "PNB — 🚀 Momentum & Early Movers setup 📈\nAbout to break the 20-day high on 4.18× volume\nLTP ₹114.8 · Entry ₹114.8 · SL ₹113.55 (-1.1%)\nT1 ₹115.87 (+0.9%) by ~5h\nT2 ₹116.68 (+1.6%) · T3 ₹117.48 (+2.3%)\nBacktested first-target hit ~71.4% over 7 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #PNB #swingtrading #nifty",
+          "_momScore": 67,
           "movingNow": false
         }
       ]
@@ -8714,19 +8723,19 @@
           "slPct": -1.2,
           "targets": [
             {
-              "price": 1374.42,
+              "price": 1374.43,
               "pct": 1.6,
               "by": "~9h",
               "days": 9
             },
             {
-              "price": 1390.79,
+              "price": 1390.8,
               "pct": 2.8,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 1407.16,
+              "price": 1407.18,
               "pct": 4,
               "by": "~16h",
               "days": 16
@@ -8753,7 +8762,7 @@
             "rs50": -0.005,
             "leader": false
           },
-          "social": "HCLTECH — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹1348.85 + 38.2% Fib + VWAP ₹1349.3 stacked — institutional magnet, high-odds reaction\nLTP ₹1352.6 · Entry ₹1352.6 · SL ₹1336.23 (-1.2%)\nT1 ₹1374.42 (+1.6%) by ~9h\nT2 ₹1390.79 (+2.8%) · T3 ₹1407.16 (+4%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #HCLTECH #swingtrading #nifty",
+          "social": "HCLTECH — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹1348.85 + 38.2% Fib + VWAP ₹1349.3 stacked — institutional magnet, high-odds reaction\nLTP ₹1352.6 · Entry ₹1352.6 · SL ₹1336.23 (-1.2%)\nT1 ₹1374.43 (+1.6%) by ~9h\nT2 ₹1390.8 (+2.8%) · T3 ₹1407.18 (+4%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #HCLTECH #swingtrading #nifty",
           "vwap": 1349.3,
           "poc": 1348.85,
           "fib": "38.2%",
@@ -9372,26 +9381,26 @@
           "slPct": -2.4,
           "targets": [
             {
-              "price": 138.41,
+              "price": 138.42,
               "pct": 2.6,
               "by": "~6h",
               "days": 6
             },
             {
-              "price": 141.08,
+              "price": 141.1,
               "pct": 4.6,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 143.74,
+              "price": 143.77,
               "pct": 6.6,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.11,
-          "rsi": 56.4,
+          "rsi": 56.3,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 1,
@@ -9411,7 +9420,7 @@
             "rs50": -0.02,
             "leader": false
           },
-          "social": "AARON — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹135.27 + 38.2% Fib + VWAP ₹133.89 stacked — institutional magnet, high-odds reaction\nLTP ₹134.86 · Entry ₹134.86 · SL ₹131.64 (-2.4%)\nT1 ₹138.41 (+2.6%) by ~6h\nT2 ₹141.08 (+4.6%) · T3 ₹143.74 (+6.6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARON #swingtrading #nifty",
+          "social": "AARON — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹135.27 + 38.2% Fib + VWAP ₹133.89 stacked — institutional magnet, high-odds reaction\nLTP ₹134.86 · Entry ₹134.86 · SL ₹131.64 (-2.4%)\nT1 ₹138.42 (+2.6%) by ~6h\nT2 ₹141.1 (+4.6%) · T3 ₹143.77 (+6.6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARON #swingtrading #nifty",
           "vwap": 133.89,
           "poc": 135.27,
           "fib": "38.2%",
@@ -9562,8 +9571,8 @@
             {
               "price": 4.69,
               "pct": 2,
-              "by": "~2h",
-              "days": 2
+              "by": "~6h",
+              "days": 6
             },
             {
               "price": 4.77,
@@ -9582,7 +9591,7 @@
           "rsi": 54.6,
           "confidence": 95,
           "accuracy": null,
-          "backtestTrades": 3,
+          "backtestTrades": 2,
           "delivery": null,
           "changePct": 0.22,
           "setupType": "Squeeze breakout",
@@ -9599,7 +9608,7 @@
             "rs50": -0.016,
             "leader": false
           },
-          "social": "KAMOPAINTS — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹4.59 + 38.2% Fib + VWAP ₹4.58 stacked — institutional magnet, high-odds reaction\nLTP ₹4.6 · Entry ₹4.6 · SL ₹4.53 (-1.5%)\nT1 ₹4.69 (+2%) by ~2h\nT2 ₹4.77 (+3.7%) · T3 ₹4.84 (+5.2%)\nSetup score 90/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KAMOPAINTS #swingtrading #nifty",
+          "social": "KAMOPAINTS — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹4.59 + 38.2% Fib + VWAP ₹4.58 stacked — institutional magnet, high-odds reaction\nLTP ₹4.6 · Entry ₹4.6 · SL ₹4.53 (-1.5%)\nT1 ₹4.69 (+2%) by ~6h\nT2 ₹4.77 (+3.7%) · T3 ₹4.84 (+5.2%)\nSetup score 90/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KAMOPAINTS #swingtrading #nifty",
           "vwap": 4.58,
           "poc": 4.59,
           "fib": "38.2%",
@@ -9653,7 +9662,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Volatility coiled in a tight base",
-              "Up/down volume 1.89× (accumulation)"
+              "Up/down volume 1.81× (accumulation)"
             ],
             "strong": false
           },
@@ -9800,7 +9809,7 @@
             "NSE Equity"
           ],
           "label": "📐 VP + Fib + VWAP",
-          "reason": "Triple confluence: POC ₹44.75 + 38.2% Fib + VWAP ₹44.66 stacked — institutional magnet, high-odds reaction",
+          "reason": "Triple confluence: POC ₹44.57 + 38.2% Fib + VWAP ₹44.58 stacked — institutional magnet, high-odds reaction",
           "direction": "LONG",
           "ltp": 44.81,
           "entry": 44.81,
@@ -9835,10 +9844,9 @@
           "changePct": 0,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 30,
+            "score": 12,
             "flags": [
-              "Volatility coiled in a tight base",
-              "Up/down volume 15.38× (accumulation)"
+              "Volatility coiled in a tight base"
             ],
             "weak": true
           },
@@ -9847,9 +9855,9 @@
             "rs50": -0.009,
             "leader": false
           },
-          "social": "ROML — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹44.75 + 38.2% Fib + VWAP ₹44.66 stacked — institutional magnet, high-odds reaction\nLTP ₹44.81 · Entry ₹44.81 · SL ₹44.09 (-1.6%)\nT1 ₹45.77 (+2.1%) by ~6h\nT2 ₹46.48 (+3.7%) · T3 ₹47.2 (+5.3%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ROML #swingtrading #nifty",
-          "vwap": 44.66,
-          "poc": 44.75,
+          "social": "ROML — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹44.57 + 38.2% Fib + VWAP ₹44.58 stacked — institutional magnet, high-odds reaction\nLTP ₹44.81 · Entry ₹44.81 · SL ₹44.09 (-1.6%)\nT1 ₹45.77 (+2.1%) by ~6h\nT2 ₹46.48 (+3.7%) · T3 ₹47.2 (+5.3%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ROML #swingtrading #nifty",
+          "vwap": 44.58,
+          "poc": 44.57,
           "fib": "38.2%",
           "triple": true
         },
@@ -10200,7 +10208,7 @@
               "days": 12
             },
             {
-              "price": 19.31,
+              "price": 19.3,
               "pct": 9,
               "by": "~21h",
               "days": 21
@@ -10226,7 +10234,7 @@
             "rs50": 0,
             "leader": false
           },
-          "social": "BRNL — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹17.71 + 61.8% Fib + VWAP ₹17.65 stacked — institutional magnet, high-odds reaction\nLTP ₹17.71 · Entry ₹17.71 · SL ₹17.23 (-2.7%)\nT1 ₹18.35 (+3.6%) by ~6h\nT2 ₹18.83 (+6.3%) · T3 ₹19.31 (+9%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BRNL #swingtrading #nifty",
+          "social": "BRNL — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹17.71 + 61.8% Fib + VWAP ₹17.65 stacked — institutional magnet, high-odds reaction\nLTP ₹17.71 · Entry ₹17.71 · SL ₹17.23 (-2.7%)\nT1 ₹18.35 (+3.6%) by ~6h\nT2 ₹18.83 (+6.3%) · T3 ₹19.3 (+9%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #BRNL #swingtrading #nifty",
           "vwap": 17.65,
           "poc": 17.71,
           "fib": "61.8%",
@@ -10424,7 +10432,7 @@
             "NSE Equity"
           ],
           "label": "📐 VP + Fib + VWAP",
-          "reason": "Triple confluence: POC ₹29.02 + 38.2% Fib + VWAP ₹28.84 stacked — institutional magnet, high-odds reaction",
+          "reason": "Triple confluence: POC ₹29.02 + 38.2% Fib + VWAP ₹28.83 stacked — institutional magnet, high-odds reaction",
           "direction": "LONG",
           "ltp": 29.05,
           "entry": 29.05,
@@ -10471,8 +10479,8 @@
             "rs50": 0.03,
             "leader": true
           },
-          "social": "PFS — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹29.02 + 38.2% Fib + VWAP ₹28.84 stacked — institutional magnet, high-odds reaction\nLTP ₹29.05 · Entry ₹29.05 · SL ₹28.45 (-2.1%)\nT1 ₹29.6 (+1.9%) by ~6h\nT2 ₹30.01 (+3.3%) · T3 ₹30.42 (+4.7%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PFS #swingtrading #nifty",
-          "vwap": 28.84,
+          "social": "PFS — 📐 VP + Fib + VWAP setup 📈\nTriple confluence: POC ₹29.02 + 38.2% Fib + VWAP ₹28.83 stacked — institutional magnet, high-odds reaction\nLTP ₹29.05 · Entry ₹29.05 · SL ₹28.45 (-2.1%)\nT1 ₹29.6 (+1.9%) by ~6h\nT2 ₹30.01 (+3.3%) · T3 ₹30.42 (+4.7%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PFS #swingtrading #nifty",
+          "vwap": 28.83,
           "poc": 29.02,
           "fib": "38.2%",
           "triple": true
@@ -10632,23 +10640,23 @@
           "direction": "LONG",
           "ltp": 3327,
           "entry": 3327,
-          "sl": 3176.9,
+          "sl": 3176.87,
           "slPct": -4.5,
           "targets": [
             {
-              "price": 3388.01,
+              "price": 3388.28,
               "pct": 1.8,
               "by": "~5h",
               "days": 5
             },
             {
-              "price": 3433.77,
+              "price": 3434.24,
               "pct": 3.2,
               "by": "~8h",
               "days": 8
             },
             {
-              "price": 3479.54,
+              "price": 3480.21,
               "pct": 4.6,
               "by": "~12h",
               "days": 12
@@ -10675,7 +10683,7 @@
             "rs50": 0.055,
             "leader": true
           },
-          "social": "GRASIM — Volume + Accumulation setup 📈\nAccumulation (vol 83/100): 5-day volume > 20-day average (RVOL 4.72×); 1-day volume 3.7× the 5-day average — surge; Up/down volume 2.86× — accumulation pressure\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.9 (-4.5%)\nT1 ₹3388.01 (+1.8%) by ~5h\nT2 ₹3433.77 (+3.2%) · T3 ₹3479.54 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty"
+          "social": "GRASIM — Volume + Accumulation setup 📈\nAccumulation (vol 83/100): 5-day volume > 20-day average (RVOL 4.72×); 1-day volume 3.7× the 5-day average — surge; Up/down volume 2.86× — accumulation pressure\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.87 (-4.5%)\nT1 ₹3388.28 (+1.8%) by ~5h\nT2 ₹3434.24 (+3.2%) · T3 ₹3480.21 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -10700,19 +10708,19 @@
           "slPct": -1.2,
           "targets": [
             {
-              "price": 1374.42,
+              "price": 1374.43,
               "pct": 1.6,
               "by": "~9h",
               "days": 9
             },
             {
-              "price": 1390.79,
+              "price": 1390.8,
               "pct": 2.8,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 1407.16,
+              "price": 1407.18,
               "pct": 4,
               "by": "~16h",
               "days": 16
@@ -10739,7 +10747,7 @@
             "rs50": -0.005,
             "leader": false
           },
-          "social": "HCLTECH — Volume + Accumulation setup 📈\nAccumulation (vol 37/100): Up/down volume 1.31× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹1352.6 · Entry ₹1352.6 · SL ₹1336.23 (-1.2%)\nT1 ₹1374.42 (+1.6%) by ~9h\nT2 ₹1390.79 (+2.8%) · T3 ₹1407.16 (+4%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #HCLTECH #swingtrading #nifty"
+          "social": "HCLTECH — Volume + Accumulation setup 📈\nAccumulation (vol 37/100): Up/down volume 1.31× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹1352.6 · Entry ₹1352.6 · SL ₹1336.23 (-1.2%)\nT1 ₹1374.43 (+1.6%) by ~9h\nT2 ₹1390.8 (+2.8%) · T3 ₹1407.18 (+4%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #HCLTECH #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -10886,7 +10894,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 100/100): 5-day volume > 20-day average (RVOL 4.09×); 1-day volume 1.7× the 5-day average — surge; Up/down volume 2.24× — accumulation pressure",
+          "reason": "Accumulation (vol 68/100): 5-day volume > 20-day average (RVOL 4.95×); 1-day volume 3.6× the 5-day average — surge; Up/down volume 1.73× — accumulation pressure",
           "direction": "LONG",
           "ltp": 4675.3,
           "entry": 4675.3,
@@ -10921,20 +10929,19 @@
           "changePct": 0.7,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 70,
+            "score": 42,
             "flags": [
-              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base"
             ],
-            "strong": true
+            "weak": true
           },
           "rs": {
             "rs20": 0.028,
             "rs50": 0.044,
             "leader": true
           },
-          "social": "LTM — Volume + Accumulation setup 📈\nAccumulation (vol 100/100): 5-day volume > 20-day average (RVOL 4.09×); 1-day volume 1.7× the 5-day average — surge; Up/down volume 2.24× — accumulation pressure\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty"
+          "social": "LTM — Volume + Accumulation setup 📈\nAccumulation (vol 68/100): 5-day volume > 20-day average (RVOL 4.95×); 1-day volume 3.6× the 5-day average — surge; Up/down volume 1.73× — accumulation pressure\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -11063,6 +11070,71 @@
             "leader": false
           },
           "social": "JSWENERGY — Volume + Accumulation setup 📈\nAccumulation (vol 46/100): 5-day volume > 20-day average (RVOL 3.27×); 1-day volume 2.8× the 5-day average — surge; OBV rising — on-balance volume confirms net inflow\nLTP ₹565 · Entry ₹565 · SL ₹559.39 (-1%)\nT1 ₹571.05 (+1.1%) by ~7h\nT2 ₹575.59 (+1.9%) · T3 ₹580.13 (+2.7%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #JSWENERGY #swingtrading #nifty"
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "LGEINDIA",
+          "name": "LG Electronics India Ltd.",
+          "sector": "Consumer Durables",
+          "indices": [
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Midcap 100",
+            "NIFTY Midcap 150",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 42/100): Up/down volume 2.34× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
+          "direction": "LONG",
+          "ltp": 1586.5,
+          "entry": 1586.5,
+          "sl": 1571.33,
+          "slPct": -1,
+          "targets": [
+            {
+              "price": 1606.73,
+              "pct": 1.3,
+              "by": "~5h",
+              "days": 5
+            },
+            {
+              "price": 1621.9,
+              "pct": 2.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 1637.07,
+              "pct": 3.2,
+              "by": "~20h",
+              "days": 20
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 60.8,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 1,
+          "delivery": null,
+          "changePct": 0.28,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 62,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.011,
+            "rs50": 0.031,
+            "leader": true
+          },
+          "social": "LGEINDIA — Volume + Accumulation setup 📈\nAccumulation (vol 42/100): Up/down volume 2.34× — accumulation pressure; Stealth accumulation — volume rising while price still flat\nLTP ₹1586.5 · Entry ₹1586.5 · SL ₹1571.33 (-1%)\nT1 ₹1606.73 (+1.3%) by ~5h\nT2 ₹1621.9 (+2.2%) · T3 ₹1637.07 (+3.2%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LGEINDIA #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -11557,6 +11629,65 @@
         },
         {
           "generator": "vol_accum",
+          "symbol": "EUROBOND",
+          "name": "Euro Panel Products Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.14×); Up/down volume 1.99× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 165,
+          "entry": 165,
+          "sl": 160.51,
+          "slPct": -2.7,
+          "targets": [
+            {
+              "price": 169.92,
+              "pct": 3,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 173.61,
+              "pct": 5.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 177.29,
+              "pct": 7.4,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.09,
+          "rsi": 56.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": null,
+          "changePct": 0,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.015,
+            "rs50": 0.016,
+            "leader": true
+          },
+          "social": "EUROBOND — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.14×); Up/down volume 1.99× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹165 · Entry ₹165 · SL ₹160.51 (-2.7%)\nT1 ₹169.92 (+3%) by ~6h\nT2 ₹173.61 (+5.2%) · T3 ₹177.29 (+7.4%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EUROBOND #swingtrading #nifty"
+        },
+        {
+          "generator": "vol_accum",
           "symbol": "EXPLEOSOL",
           "name": "Expleo Solutions Limited",
           "sector": "Equity",
@@ -11622,7 +11753,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 47/100): Up/down volume 3.14× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow",
+          "reason": "Accumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.51× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
           "direction": "LONG",
           "ltp": 164.89,
           "entry": 164.89,
@@ -11657,20 +11788,20 @@
           "changePct": 1.78,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 50,
+            "score": 62,
             "flags": [
+              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base",
-              "Up/down volume 3.14× (accumulation)"
+              "Volatility coiled in a tight base"
             ],
-            "strong": false
+            "strong": true
           },
           "rs": {
             "rs20": 0.04,
             "rs50": 0.087,
             "leader": true
           },
-          "social": "GYFTR — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Up/down volume 3.14× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow\nLTP ₹164.89 · Entry ₹164.89 · SL ₹160.42 (-2.7%)\nT1 ₹170.71 (+3.5%) by ~4h\nT2 ₹175.07 (+6.2%) · T3 ₹179.43 (+8.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GYFTR #swingtrading #nifty"
+          "social": "GYFTR — Volume + Accumulation setup 📈\nAccumulation (vol 70/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 1.51× — accumulation pressure; Stealth accumulation — volume rising while price still flat\nLTP ₹164.89 · Entry ₹164.89 · SL ₹160.42 (-2.7%)\nT1 ₹170.71 (+3.5%) by ~4h\nT2 ₹175.07 (+6.2%) · T3 ₹179.43 (+8.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GYFTR #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -11740,7 +11871,7 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.09× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.24× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
           "direction": "LONG",
           "ltp": 560.85,
           "entry": 560.85,
@@ -11779,7 +11910,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Volatility coiled in a tight base",
-              "Up/down volume 2.09× (accumulation)"
+              "Up/down volume 2.24× (accumulation)"
             ],
             "strong": false
           },
@@ -11788,123 +11919,7 @@
             "rs50": 0.038,
             "leader": false
           },
-          "social": "KRSNAA — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.09× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹560.85 · Entry ₹560.85 · SL ₹552.96 (-1.4%)\nT1 ₹571.37 (+1.9%) by ~3h\nT2 ₹579.26 (+3.3%) · T3 ₹587.15 (+4.7%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KRSNAA #swingtrading #nifty"
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "LUMAXIND",
-          "name": "Lumax Industries Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0.41×); Up/down volume 1.31× — accumulation pressure; Stealth accumulation — volume rising while price still flat",
-          "direction": "LONG",
-          "ltp": 5790,
-          "entry": 5790,
-          "sl": 5701.72,
-          "slPct": -1.5,
-          "targets": [
-            {
-              "price": 5907.71,
-              "pct": 2,
-              "by": "~4h",
-              "days": 4
-            },
-            {
-              "price": 5995.99,
-              "pct": 3.6,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 6084.27,
-              "pct": 5.1,
-              "by": "~11h",
-              "days": 11
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.3,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.1,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 32,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Volatility coiled in a tight base"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": -0.001,
-            "rs50": 0.112,
-            "leader": false
-          },
-          "social": "LUMAXIND — Volume + Accumulation setup 📈\nAccumulation (vol 60/100): 5-day volume > 20-day average (RVOL 0.41×); Up/down volume 1.31× — accumulation pressure; Stealth accumulation — volume rising while price still flat\nLTP ₹5790 · Entry ₹5790 · SL ₹5701.72 (-1.5%)\nT1 ₹5907.71 (+2%) by ~4h\nT2 ₹5995.99 (+3.6%) · T3 ₹6084.27 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LUMAXIND #swingtrading #nifty"
-        },
-        {
-          "generator": "vol_accum",
-          "symbol": "MTNL",
-          "name": "Mahanagar Telephone Nigam Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 47/100): Up/down volume 1.83× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow",
-          "direction": "LONG",
-          "ltp": 27.75,
-          "entry": 27.75,
-          "sl": 27.47,
-          "slPct": -1,
-          "targets": [
-            {
-              "price": 28.12,
-              "pct": 1.3,
-              "by": "~11h",
-              "days": 11
-            },
-            {
-              "price": 28.39,
-              "pct": 2.3,
-              "by": "~14h",
-              "days": 14
-            },
-            {
-              "price": 28.67,
-              "pct": 3.3,
-              "by": "~18h",
-              "days": 18
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 53.2,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": -0.29,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 30,
-            "flags": [
-              "Volatility coiled in a tight base",
-              "Up/down volume 1.83× (accumulation)"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": -0.013,
-            "rs50": 0.007,
-            "leader": false
-          },
-          "social": "MTNL — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Up/down volume 1.83× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow\nLTP ₹27.75 · Entry ₹27.75 · SL ₹27.47 (-1%)\nT1 ₹28.12 (+1.3%) by ~11h\nT2 ₹28.39 (+2.3%) · T3 ₹28.67 (+3.3%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #MTNL #swingtrading #nifty"
+          "social": "KRSNAA — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.24× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹560.85 · Entry ₹560.85 · SL ₹552.96 (-1.4%)\nT1 ₹571.37 (+1.9%) by ~3h\nT2 ₹579.26 (+3.3%) · T3 ₹587.15 (+4.7%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KRSNAA #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -12141,64 +12156,6 @@
         },
         {
           "generator": "vol_accum",
-          "symbol": "ROML",
-          "name": "Raj Oil Mills Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 65/100): 1-day volume 1.4× the 5-day average — surge; Up/down volume 15.38× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
-          "direction": "LONG",
-          "ltp": 44.81,
-          "entry": 44.81,
-          "sl": 44.09,
-          "slPct": -1.6,
-          "targets": [
-            {
-              "price": 45.77,
-              "pct": 2.1,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 46.48,
-              "pct": 3.7,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 47.2,
-              "pct": 5.3,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 50.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": 0,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 30,
-            "flags": [
-              "Volatility coiled in a tight base",
-              "Up/down volume 15.38× (accumulation)"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.011,
-            "rs50": -0.009,
-            "leader": false
-          },
-          "social": "ROML — Volume + Accumulation setup 📈\nAccumulation (vol 65/100): 1-day volume 1.4× the 5-day average — surge; Up/down volume 15.38× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹44.81 · Entry ₹44.81 · SL ₹44.09 (-1.6%)\nT1 ₹45.77 (+2.1%) by ~6h\nT2 ₹46.48 (+3.7%) · T3 ₹47.2 (+5.3%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #ROML #swingtrading #nifty"
-        },
-        {
-          "generator": "vol_accum",
           "symbol": "SEAMECLTD",
           "name": "Seamec Limited",
           "sector": "Equity",
@@ -12431,6 +12388,64 @@
             "leader": true
           },
           "social": "STARPAPER — Volume + Accumulation setup 📈\nAccumulation (vol 70/100): 5-day volume > 20-day average (RVOL 1.06×); Up/down volume 3.58× — accumulation pressure; Stealth accumulation — volume rising while price still flat\nLTP ₹152.5 · Entry ₹152.5 · SL ₹150.94 (-1%)\nT1 ₹154.58 (+1.4%) by ~24h\nT2 ₹156.14 (+2.4%) · T3 ₹157.71 (+3.4%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #STARPAPER #swingtrading #nifty"
+        },
+        {
+          "generator": "vol_accum",
+          "symbol": "SUYOG",
+          "name": "Suyog Telematics Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.3×); Up/down volume 4.13× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+          "direction": "LONG",
+          "ltp": 878.3,
+          "entry": 878.3,
+          "sl": 842.36,
+          "slPct": -4.1,
+          "targets": [
+            {
+              "price": 904.66,
+              "pct": 3,
+              "by": "~4h",
+              "days": 4
+            },
+            {
+              "price": 924.44,
+              "pct": 5.3,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 944.21,
+              "pct": 7.5,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 0.73,
+          "rsi": 61.2,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": -0.75,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 38,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Up/down volume 4.13× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.033,
+            "rs50": -0.01,
+            "leader": false
+          },
+          "social": "SUYOG — Volume + Accumulation setup 📈\nAccumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0.3×); Up/down volume 4.13× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)\nLTP ₹878.3 · Entry ₹878.3 · SL ₹842.36 (-4.1%)\nT1 ₹904.66 (+3%) by ~4h\nT2 ₹924.44 (+5.3%) · T3 ₹944.21 (+7.5%)\nSetup score 97/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SUYOG #swingtrading #nifty"
         }
       ]
     },
@@ -12468,23 +12483,23 @@
           "direction": "LONG",
           "ltp": 3327,
           "entry": 3327,
-          "sl": 3176.9,
+          "sl": 3176.87,
           "slPct": -4.5,
           "targets": [
             {
-              "price": 3388.01,
+              "price": 3388.28,
               "pct": 1.8,
               "by": "~5h",
               "days": 5
             },
             {
-              "price": 3433.77,
+              "price": 3434.24,
               "pct": 3.2,
               "by": "~8h",
               "days": 8
             },
             {
-              "price": 3479.54,
+              "price": 3480.21,
               "pct": 4.6,
               "by": "~12h",
               "days": 12
@@ -12511,7 +12526,7 @@
             "rs50": 0.055,
             "leader": true
           },
-          "social": "GRASIM — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.9 (-4.5%)\nT1 ₹3388.01 (+1.8%) by ~5h\nT2 ₹3433.77 (+3.2%) · T3 ₹3479.54 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty"
+          "social": "GRASIM — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹3327 · Entry ₹3327 · SL ₹3176.87 (-4.5%)\nT1 ₹3388.28 (+1.8%) by ~5h\nT2 ₹3434.24 (+3.2%) · T3 ₹3480.21 (+4.6%)\nBacktested first-target hit ~100% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #GRASIM #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -12693,13 +12708,12 @@
           "changePct": 0.7,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 70,
+            "score": 42,
             "flags": [
-              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base"
             ],
-            "strong": true
+            "weak": true
           },
           "rs": {
             "rs20": 0.028,
@@ -12822,19 +12836,20 @@
           "changePct": 0.28,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 42,
+            "score": 62,
             "flags": [
+              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base"
             ],
-            "weak": true
+            "strong": true
           },
           "rs": {
             "rs20": 0.011,
             "rs50": 0.031,
             "leader": true
           },
-          "social": "LGEINDIA — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹1586.5 · Entry ₹1586.5 · SL ₹1571.33 (-1%)\nT1 ₹1606.73 (+1.3%) by ~5h\nT2 ₹1621.9 (+2.2%) · T3 ₹1637.07 (+3.2%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LGEINDIA #swingtrading #nifty"
+          "social": "LGEINDIA — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹1586.5 · Entry ₹1586.5 · SL ₹1571.33 (-1%)\nT1 ₹1606.73 (+1.3%) by ~5h\nT2 ₹1621.9 (+2.2%) · T3 ₹1637.07 (+3.2%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LGEINDIA #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -13465,26 +13480,26 @@
           "slPct": -2.4,
           "targets": [
             {
-              "price": 138.41,
+              "price": 138.42,
               "pct": 2.6,
               "by": "~6h",
               "days": 6
             },
             {
-              "price": 141.08,
+              "price": 141.1,
               "pct": 4.6,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 143.74,
+              "price": 143.77,
               "pct": 6.6,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.11,
-          "rsi": 56.4,
+          "rsi": 56.3,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 1,
@@ -13504,7 +13519,7 @@
             "rs50": -0.02,
             "leader": false
           },
-          "social": "AARON — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹134.86 · Entry ₹134.86 · SL ₹131.64 (-2.4%)\nT1 ₹138.41 (+2.6%) by ~6h\nT2 ₹141.08 (+4.6%) · T3 ₹143.74 (+6.6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARON #swingtrading #nifty"
+          "social": "AARON — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹134.86 · Entry ₹134.86 · SL ₹131.64 (-2.4%)\nT1 ₹138.42 (+2.6%) by ~6h\nT2 ₹141.1 (+4.6%) · T3 ₹143.77 (+6.6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AARON #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -13783,13 +13798,13 @@
           "changePct": 1.78,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 50,
+            "score": 62,
             "flags": [
+              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base",
-              "Up/down volume 3.14× (accumulation)"
+              "Volatility coiled in a tight base"
             ],
-            "strong": false
+            "strong": true
           },
           "rs": {
             "rs20": 0.04,
@@ -13964,7 +13979,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Volatility coiled in a tight base",
-              "Up/down volume 2.09× (accumulation)"
+              "Up/down volume 2.24× (accumulation)"
             ],
             "strong": false
           },
@@ -13974,64 +13989,6 @@
             "leader": false
           },
           "social": "KRSNAA — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone\nLTP ₹560.85 · Entry ₹560.85 · SL ₹552.96 (-1.4%)\nT1 ₹571.37 (+1.9%) by ~3h\nT2 ₹579.26 (+3.3%) · T3 ₹587.15 (+4.7%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KRSNAA #swingtrading #nifty"
-        },
-        {
-          "generator": "harmonic",
-          "symbol": "LUMAXIND",
-          "name": "Lumax Industries Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Harmonic & Chart Patterns",
-          "reason": "Bullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone",
-          "direction": "LONG",
-          "ltp": 5790,
-          "entry": 5790,
-          "sl": 5701.72,
-          "slPct": -1.5,
-          "targets": [
-            {
-              "price": 5907.71,
-              "pct": 2,
-              "by": "~4h",
-              "days": 4
-            },
-            {
-              "price": 5995.99,
-              "pct": 3.6,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 6084.27,
-              "pct": 5.1,
-              "by": "~11h",
-              "days": 11
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.3,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.1,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 32,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Volatility coiled in a tight base"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": -0.001,
-            "rs50": 0.112,
-            "leader": false
-          },
-          "social": "LUMAXIND — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone\nLTP ₹5790 · Entry ₹5790 · SL ₹5701.72 (-1.5%)\nT1 ₹5907.71 (+2%) by ~4h\nT2 ₹5995.99 (+3.6%) · T3 ₹6084.27 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LUMAXIND #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -14081,7 +14038,7 @@
             "flags": [
               "Stealth volume — buying while price still flat",
               "Volatility coiled in a tight base",
-              "Up/down volume 1.89× (accumulation)"
+              "Up/down volume 1.81× (accumulation)"
             ],
             "strong": false
           },
@@ -14266,6 +14223,65 @@
             "leader": true
           },
           "social": "SIL — Harmonic & Chart Patterns setup 📈\nBullish Morning Star — pattern breakout/continuation zone\nLTP ₹17.17 · Entry ₹17.17 · SL ₹16.86 (-1.8%)\nT1 ₹17.58 (+2.4%) by ~11h\nT2 ₹17.89 (+4.2%) · T3 ₹18.2 (+6%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SIL #swingtrading #nifty"
+        },
+        {
+          "generator": "harmonic",
+          "symbol": "SIRCA",
+          "name": "Sirca Paints India Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Harmonic & Chart Patterns",
+          "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
+          "direction": "LONG",
+          "ltp": 449.9,
+          "entry": 449.9,
+          "sl": 444.18,
+          "slPct": -1.3,
+          "targets": [
+            {
+              "price": 457.52,
+              "pct": 1.7,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 463.24,
+              "pct": 3,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 468.96,
+              "pct": 4.2,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.33,
+          "rsi": 62.5,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0.87,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 62,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.028,
+            "rs50": 0.104,
+            "leader": true
+          },
+          "social": "SIRCA — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹449.9 · Entry ₹449.9 · SL ₹444.18 (-1.3%)\nT1 ₹457.52 (+1.7%) by ~3h\nT2 ₹463.24 (+3%) · T3 ₹468.96 (+4.2%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SIRCA #swingtrading #nifty"
         }
       ]
     },
@@ -15868,7 +15884,7 @@
             "NSE Equity"
           ],
           "label": "Money Flow",
-          "reason": "MFI 71 rising + OBV up — money flowing in",
+          "reason": "MFI 65 rising + OBV up — money flowing in",
           "direction": "LONG",
           "ltp": 4675.3,
           "entry": 4675.3,
@@ -15903,20 +15919,19 @@
           "changePct": 0.7,
           "setupType": "Squeeze breakout",
           "footprint": {
-            "score": 70,
+            "score": 42,
             "flags": [
-              "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base"
             ],
-            "strong": true
+            "weak": true
           },
           "rs": {
             "rs20": 0.028,
             "rs50": 0.044,
             "leader": true
           },
-          "social": "LTM — Money Flow setup 📈\nMFI 71 rising + OBV up — money flowing in\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty"
+          "social": "LTM — Money Flow setup 📈\nMFI 65 rising + OBV up — money flowing in\nLTP ₹4675.3 · Entry ₹4675.3 · SL ₹4539.16 (-2.9%)\nT1 ₹4770.71 (+2%) by ~3h\nT2 ₹4842.26 (+3.6%) · T3 ₹4913.81 (+5.1%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LTM #swingtrading #nifty"
         },
         {
           "generator": "money_flow",
@@ -16411,6 +16426,124 @@
         },
         {
           "generator": "money_flow",
+          "symbol": "EUROBOND",
+          "name": "Euro Panel Products Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 67 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 165,
+          "entry": 165,
+          "sl": 160.51,
+          "slPct": -2.7,
+          "targets": [
+            {
+              "price": 169.92,
+              "pct": 3,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 173.61,
+              "pct": 5.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 177.29,
+              "pct": 7.4,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.09,
+          "rsi": 56.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": null,
+          "changePct": 0,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.015,
+            "rs50": 0.016,
+            "leader": true
+          },
+          "social": "EUROBOND — Money Flow setup 📈\nMFI 67 rising + OBV up — money flowing in\nLTP ₹165 · Entry ₹165 · SL ₹160.51 (-2.7%)\nT1 ₹169.92 (+3%) by ~6h\nT2 ₹173.61 (+5.2%) · T3 ₹177.29 (+7.4%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EUROBOND #swingtrading #nifty"
+        },
+        {
+          "generator": "money_flow",
+          "symbol": "GYFTR",
+          "name": "Gyftr Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 54 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 164.89,
+          "entry": 164.89,
+          "sl": 160.42,
+          "slPct": -2.7,
+          "targets": [
+            {
+              "price": 170.71,
+              "pct": 3.5,
+              "by": "~4h",
+              "days": 4
+            },
+            {
+              "price": 175.07,
+              "pct": 6.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 179.43,
+              "pct": 8.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.3,
+          "rsi": 66.2,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 2,
+          "delivery": null,
+          "changePct": 1.78,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 62,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.04,
+            "rs50": 0.087,
+            "leader": true
+          },
+          "social": "GYFTR — Money Flow setup 📈\nMFI 54 rising + OBV up — money flowing in\nLTP ₹164.89 · Entry ₹164.89 · SL ₹160.42 (-2.7%)\nT1 ₹170.71 (+3.5%) by ~4h\nT2 ₹175.07 (+6.2%) · T3 ₹179.43 (+8.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GYFTR #swingtrading #nifty"
+        },
+        {
+          "generator": "money_flow",
           "symbol": "NELCAST",
           "name": "Nelcast Limited",
           "sector": "Equity",
@@ -16691,7 +16824,7 @@
             "flags": [
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base",
-              "Up/down volume 2.06× (accumulation)"
+              "Up/down volume 2.53× (accumulation)"
             ],
             "strong": false
           },
@@ -17019,23 +17152,23 @@
           "direction": "LONG",
           "ltp": 361.9,
           "entry": 361.9,
-          "sl": 355.27,
+          "sl": 355.24,
           "slPct": -1.8,
           "targets": [
             {
-              "price": 370.74,
-              "pct": 2.4,
+              "price": 370.78,
+              "pct": 2.5,
               "by": "~6h",
               "days": 6
             },
             {
-              "price": 377.37,
+              "price": 377.43,
               "pct": 4.3,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 384,
+              "price": 384.09,
               "pct": 6.1,
               "by": "~21h",
               "days": 21
@@ -17063,7 +17196,66 @@
             "rs50": 0.021,
             "leader": true
           },
-          "social": "PDSL — Money Flow setup 📈\nMFI 62 rising + OBV up — money flowing in\nLTP ₹361.9 · Entry ₹361.9 · SL ₹355.27 (-1.8%)\nT1 ₹370.74 (+2.4%) by ~6h\nT2 ₹377.37 (+4.3%) · T3 ₹384 (+6.1%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PDSL #swingtrading #nifty"
+          "social": "PDSL — Money Flow setup 📈\nMFI 62 rising + OBV up — money flowing in\nLTP ₹361.9 · Entry ₹361.9 · SL ₹355.24 (-1.8%)\nT1 ₹370.78 (+2.5%) by ~6h\nT2 ₹377.43 (+4.3%) · T3 ₹384.09 (+6.1%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #PDSL #swingtrading #nifty"
+        },
+        {
+          "generator": "money_flow",
+          "symbol": "LAXMICOT",
+          "name": "Laxmi Cotspin Limited",
+          "sector": "Equity",
+          "indices": [
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 64 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 14.9,
+          "entry": 14.9,
+          "sl": 14.33,
+          "slPct": -3.8,
+          "targets": [
+            {
+              "price": 15.51,
+              "pct": 4.1,
+              "by": "~2h",
+              "days": 2
+            },
+            {
+              "price": 15.97,
+              "pct": 7.2,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 16.42,
+              "pct": 10.2,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 1.07,
+          "rsi": 57.5,
+          "confidence": 91,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0.88,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 48,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Dip-volume drying up, rally-volume expanding"
+            ],
+            "strong": false
+          },
+          "rs": {
+            "rs20": 0.03,
+            "rs50": 0.042,
+            "leader": true
+          },
+          "social": "LAXMICOT — Money Flow setup 📈\nMFI 64 rising + OBV up — money flowing in\nLTP ₹14.9 · Entry ₹14.9 · SL ₹14.33 (-3.8%)\nT1 ₹15.51 (+4.1%) by ~2h\nT2 ₹15.97 (+7.2%) · T3 ₹16.42 (+10.2%)\nSetup score 91/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #LAXMICOT #swingtrading #nifty"
         },
         {
           "generator": "money_flow",
@@ -17207,8 +17399,8 @@
             {
               "price": 4.69,
               "pct": 2,
-              "by": "~2h",
-              "days": 2
+              "by": "~6h",
+              "days": 6
             },
             {
               "price": 4.77,
@@ -17227,7 +17419,7 @@
           "rsi": 54.6,
           "confidence": 90,
           "accuracy": null,
-          "backtestTrades": 3,
+          "backtestTrades": 2,
           "delivery": null,
           "changePct": 0.22,
           "setupType": "Squeeze breakout",
@@ -17244,7 +17436,7 @@
             "rs50": -0.016,
             "leader": false
           },
-          "social": "KAMOPAINTS — Money Flow setup 📈\nMFI 63 rising + OBV up — money flowing in\nLTP ₹4.6 · Entry ₹4.6 · SL ₹4.53 (-1.5%)\nT1 ₹4.69 (+2%) by ~2h\nT2 ₹4.77 (+3.7%) · T3 ₹4.84 (+5.2%)\nSetup score 90/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KAMOPAINTS #swingtrading #nifty"
+          "social": "KAMOPAINTS — Money Flow setup 📈\nMFI 63 rising + OBV up — money flowing in\nLTP ₹4.6 · Entry ₹4.6 · SL ₹4.53 (-1.5%)\nT1 ₹4.69 (+2%) by ~6h\nT2 ₹4.77 (+3.7%) · T3 ₹4.84 (+5.2%)\nSetup score 90/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KAMOPAINTS #swingtrading #nifty"
         },
         {
           "generator": "money_flow",
@@ -17420,194 +17612,6 @@
             "leader": false
           },
           "social": "SPORTKING — Money Flow setup 📈\nMFI 62 rising + OBV up — money flowing in\nLTP ₹214.34 · Entry ₹214.34 · SL ₹208.92 (-2.5%)\nT1 ₹221.56 (+3.4%) by ~7h\nT2 ₹226.98 (+5.9%) · T3 ₹232.39 (+8.4%)\nSetup score 90/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #SPORTKING #swingtrading #nifty"
-        },
-        {
-          "generator": "money_flow",
-          "symbol": "NESTLEIND",
-          "name": "Nestle India Ltd.",
-          "sector": "Fast Moving Consumer Goods",
-          "indices": [
-            "NIFTY 50",
-            "NIFTY 100",
-            "NIFTY 200",
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY FMCG",
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 71 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 1537,
-          "entry": 1537,
-          "sl": 1519.06,
-          "slPct": -1.2,
-          "targets": [
-            {
-              "price": 1560.92,
-              "pct": 1.6,
-              "by": "~5h",
-              "days": 5
-            },
-            {
-              "price": 1578.86,
-              "pct": 2.7,
-              "by": "~8h",
-              "days": 8
-            },
-            {
-              "price": 1596.8,
-              "pct": 3.9,
-              "by": "~12h",
-              "days": 12
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 56.3,
-          "confidence": 88,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.04,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 50,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base",
-              "Up/down volume 2.23× (accumulation)"
-            ],
-            "strong": false
-          },
-          "rs": {
-            "rs20": 0.046,
-            "rs50": 0.004,
-            "leader": true
-          },
-          "social": "NESTLEIND — Money Flow setup 📈\nMFI 71 rising + OBV up — money flowing in\nLTP ₹1537 · Entry ₹1537 · SL ₹1519.06 (-1.2%)\nT1 ₹1560.92 (+1.6%) by ~5h\nT2 ₹1578.86 (+2.7%) · T3 ₹1596.8 (+3.9%)\nSetup score 88/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NESTLEIND #swingtrading #nifty"
-        },
-        {
-          "generator": "money_flow",
-          "symbol": "KEI",
-          "name": "KEI Industries Ltd.",
-          "sector": "Capital Goods",
-          "indices": [
-            "NIFTY 200",
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Midcap 100",
-            "NIFTY Midcap 150",
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 73 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 5588.4,
-          "entry": 5588.4,
-          "sl": 5505.59,
-          "slPct": -1.5,
-          "targets": [
-            {
-              "price": 5698.81,
-              "pct": 2,
-              "by": "~6h",
-              "days": 6
-            },
-            {
-              "price": 5781.62,
-              "pct": 3.5,
-              "by": "~9h",
-              "days": 9
-            },
-            {
-              "price": 5864.43,
-              "pct": 4.9,
-              "by": "~13h",
-              "days": 13
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 67.1,
-          "confidence": 88,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": 0.19,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 42,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.041,
-            "rs50": 0.138,
-            "leader": true
-          },
-          "social": "KEI — Money Flow setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹5588.4 · Entry ₹5588.4 · SL ₹5505.59 (-1.5%)\nT1 ₹5698.81 (+2%) by ~6h\nT2 ₹5781.62 (+3.5%) · T3 ₹5864.43 (+4.9%)\nSetup score 88/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KEI #swingtrading #nifty"
-        },
-        {
-          "generator": "money_flow",
-          "symbol": "DECCANCE",
-          "name": "Deccan Cements Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 57 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 579.9,
-          "entry": 579.9,
-          "sl": 572.46,
-          "slPct": -1.3,
-          "targets": [
-            {
-              "price": 589.82,
-              "pct": 1.7,
-              "by": "~2h",
-              "days": 2
-            },
-            {
-              "price": 597.25,
-              "pct": 3,
-              "by": "~5h",
-              "days": 5
-            },
-            {
-              "price": 604.69,
-              "pct": 4.3,
-              "by": "~9h",
-              "days": 9
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 57.4,
-          "confidence": 87,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": 0.33,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.014,
-            "rs50": 0.041,
-            "leader": true
-          },
-          "social": "DECCANCE — Money Flow setup 📈\nMFI 57 rising + OBV up — money flowing in\nLTP ₹579.9 · Entry ₹579.9 · SL ₹572.46 (-1.3%)\nT1 ₹589.82 (+1.7%) by ~2h\nT2 ₹597.25 (+3%) · T3 ₹604.69 (+4.3%)\nSetup score 87/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #DECCANCE #swingtrading #nifty"
         }
       ]
     },
@@ -17635,9 +17639,9 @@
             "symbol": "S&P 500",
             "spot": 7709.96,
             "aligned": "LONG",
-            "net": 6,
+            "net": 7,
             "longs": 8,
-            "shorts": 2,
+            "shorts": 1,
             "timeframes": [
               {
                 "tf": "15m",
@@ -17659,35 +17663,27 @@
                 "poc": 7739.71,
                 "vah": 7793.68,
                 "val": 7481.84,
-                "vwap": 7723.16,
+                "vwap": 7723.07,
                 "rsi": 46,
                 "fib": "78.6%",
                 "reason": "falling EMA stack · below VWAP · below POC 7739.71 · lower highs"
               },
               {
                 "tf": "35m",
-                "dir": "SHORT",
-                "score": -2,
+                "dir": "NEUTRAL",
+                "score": 0,
                 "entry": 7709.96,
-                "sl": 7735.1,
-                "targets": [
-                  7676.44,
-                  7651.3,
-                  7626.16
-                ],
-                "etaDates": [
-                  "2026-08-10",
-                  "2026-08-10",
-                  "2026-08-10"
-                ],
-                "rr": 1.33,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
                 "poc": 7749.37,
                 "vah": 7793.68,
                 "val": 7596.76,
-                "vwap": 7710.19,
+                "vwap": 7708.75,
                 "rsi": 52,
                 "fib": "38.2%",
-                "reason": "below VWAP · below POC 7749.37 · at 38.2% Fib 7713.74"
+                "reason": "above VWAP · below POC 7749.37 · at 38.2% Fib 7713.74"
               },
               {
                 "tf": "45m",
@@ -17709,7 +17705,7 @@
                 "poc": 7427.86,
                 "vah": 7577.79,
                 "val": 7385.88,
-                "vwap": 7673.32,
+                "vwap": 7671.06,
                 "rsi": 56,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 7427.86 · at 38.2% Fib 7667.58"
@@ -17734,7 +17730,7 @@
                 "poc": 7512.71,
                 "vah": 7568.91,
                 "val": 7394.08,
-                "vwap": 7563.03,
+                "vwap": 7559.94,
                 "rsi": 64,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 7512.71"
@@ -17759,7 +17755,7 @@
                 "poc": 7500.22,
                 "vah": 7568.91,
                 "val": 7394.08,
-                "vwap": 7535.57,
+                "vwap": 7532.68,
                 "rsi": 66,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 7500.22"
@@ -17784,7 +17780,7 @@
                 "poc": 7511.82,
                 "vah": 7577.79,
                 "val": 7397.88,
-                "vwap": 7636.79,
+                "vwap": 7623.4,
                 "rsi": 60,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 7511.82"
@@ -17794,11 +17790,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 7709.96,
-                "sl": 7652.96,
+                "sl": 7654.18,
                 "targets": [
-                  7785.95,
-                  7842.95,
-                  7899.95
+                  7784.33,
+                  7840.11,
+                  7895.88
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -17806,13 +17802,13 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 7522.71,
+                "poc": 7508.82,
                 "vah": 7571.35,
                 "val": 7376.81,
-                "vwap": 7524.16,
-                "rsi": 68,
+                "vwap": 7509.01,
+                "rsi": 67,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 7522.71 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 7508.82 · lower highs"
               },
               {
                 "tf": "3h",
@@ -17834,7 +17830,7 @@
                 "poc": 7527.92,
                 "vah": 7587.93,
                 "val": 7365.04,
-                "vwap": 7517.18,
+                "vwap": 7509.04,
                 "rsi": 68,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 7527.92 · lower highs"
@@ -17844,11 +17840,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 7709.96,
-                "sl": 7621,
+                "sl": 7619.94,
                 "targets": [
-                  7828.57,
-                  7917.53,
-                  8006.49
+                  7829.98,
+                  7920,
+                  8010.01
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -17856,13 +17852,13 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 7516.79,
+                "poc": 7553.71,
                 "vah": 7646,
                 "val": 7202.97,
-                "vwap": 7521.74,
-                "rsi": 68,
+                "vwap": 7511.25,
+                "rsi": 67,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 7516.79 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 7553.71 · lower highs"
               },
               {
                 "tf": "1D",
@@ -17904,8 +17900,8 @@
             "symbol": "NASDAQ 100",
             "spot": 29373.33,
             "aligned": "LONG",
-            "net": 5,
-            "longs": 7,
+            "net": 4,
+            "longs": 6,
             "shorts": 2,
             "timeframes": [
               {
@@ -18053,13 +18049,13 @@
               {
                 "tf": "2h",
                 "dir": "LONG",
-                "score": 2,
+                "score": 5,
                 "entry": 29373.33,
-                "sl": 29000,
+                "sl": 29009.43,
                 "targets": [
-                  29871.12,
-                  30244.46,
-                  30617.8
+                  29858.54,
+                  30222.44,
+                  30586.34
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -18067,13 +18063,13 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 29640.58,
-                "vah": 30222.34,
-                "val": 28521.83,
-                "vwap": 28552.62,
+                "poc": 29372.08,
+                "vah": 30043.34,
+                "val": 28342.83,
+                "vwap": 28525.68,
                 "rsi": 61,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · below POC 29640.58 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 29372.08"
               },
               {
                 "tf": "3h",
@@ -18092,38 +18088,30 @@
                   "2026-08-13"
                 ],
                 "rr": 1.33,
-                "poc": 29314.28,
-                "vah": 30479.65,
-                "val": 28708.28,
+                "poc": 29313.99,
+                "vah": 30479.59,
+                "val": 28707.88,
                 "vwap": 28675.58,
                 "rsi": 60,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 29314.28 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 29313.99 · lower highs"
               },
               {
                 "tf": "4h",
-                "dir": "LONG",
-                "score": 2,
+                "dir": "NEUTRAL",
+                "score": 0,
                 "entry": 29373.33,
-                "sl": 28776.24,
-                "targets": [
-                  30169.47,
-                  30766.56,
-                  31363.66
-                ],
-                "etaDates": [
-                  "2026-08-11",
-                  "2026-08-13",
-                  "2026-08-14"
-                ],
-                "rr": 1.33,
-                "poc": 29274.8,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
+                "poc": 29472.74,
                 "vah": 30759.34,
-                "val": 27988.2,
-                "vwap": 28862.87,
+                "val": 27790.26,
+                "vwap": 28827.98,
                 "rsi": 58,
                 "fib": "38.2%",
-                "reason": "above VWAP · above POC 29274.8 · lower highs"
+                "reason": "above VWAP · below POC 29472.74 · lower highs"
               },
               {
                 "tf": "1D",
@@ -18214,7 +18202,7 @@
                 "poc": 54503.88,
                 "vah": 54744.33,
                 "val": 53026.82,
-                "vwap": 54073.29,
+                "vwap": 54057.19,
                 "rsi": 42,
                 "fib": "50%",
                 "reason": "below VWAP · below POC 54503.88 · lower highs · at 50% Fib 53839.15"
@@ -18314,7 +18302,7 @@
                 "poc": 52462.71,
                 "vah": 52903.02,
                 "val": 51862.29,
-                "vwap": 53505.81,
+                "vwap": 53384.94,
                 "rsi": 52,
                 "fib": "38.2%",
                 "reason": "above VWAP · above POC 52462.71 · at 38.2% Fib 53694.59"
@@ -18324,11 +18312,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 53885.1,
-                "sl": 53455.66,
+                "sl": 53459.82,
                 "targets": [
-                  54457.69,
-                  54887.13,
-                  55316.56
+                  54452.14,
+                  54877.42,
+                  55302.7
                 ],
                 "etaDates": [
                   "2026-08-10",
@@ -18336,13 +18324,13 @@
                   "2026-08-12"
                 ],
                 "rr": 1.33,
-                "poc": 52266.26,
+                "poc": 52387.14,
                 "vah": 53051.99,
                 "val": 51601.41,
-                "vwap": 52854.83,
+                "vwap": 52730.95,
                 "rsi": 61,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 52266.26 · lower highs"
+                "reason": "rising EMA stack · above VWAP · above POC 52387.14 · lower highs"
               },
               {
                 "tf": "3h",
@@ -18364,7 +18352,7 @@
                 "poc": 52407.36,
                 "vah": 53085.83,
                 "val": 50221.16,
-                "vwap": 52698.66,
+                "vwap": 52627.89,
                 "rsi": 61,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 52407.36 · lower highs"
@@ -18374,11 +18362,11 @@
                 "dir": "LONG",
                 "score": 4,
                 "entry": 53885.1,
-                "sl": 53205.12,
+                "sl": 53201.15,
                 "targets": [
-                  54791.74,
-                  55471.72,
-                  56151.7
+                  54797.04,
+                  55480.99,
+                  56164.95
                 ],
                 "etaDates": [
                   "2026-08-11",
@@ -18389,7 +18377,7 @@
                 "poc": 52443.65,
                 "vah": 53049.09,
                 "val": 49416.45,
-                "vwap": 52668.14,
+                "vwap": 52577.2,
                 "rsi": 62,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 52443.65 · lower highs"
@@ -18454,81 +18442,81 @@
             "strikes": [
               {
                 "k": 24250,
-                "net": -2576340,
+                "net": -2457845,
                 "role": "SUP",
                 "strength": 28
               },
               {
                 "k": 24300,
-                "net": -5244850,
+                "net": -5349760,
                 "role": "SUP",
-                "strength": 57
+                "strength": 61
               },
               {
                 "k": 24350,
-                "net": -2016625,
+                "net": -1904890,
                 "role": "SUP",
                 "strength": 22
               },
               {
                 "k": 24400,
-                "net": -4545515,
+                "net": -4345055,
                 "role": "SUP",
                 "strength": 49
               },
               {
                 "k": 24450,
-                "net": -2304835,
+                "net": -2016365,
                 "role": "SUP",
-                "strength": 25
+                "strength": 23
               },
               {
                 "k": 24500,
-                "net": -4058600,
+                "net": -3993080,
                 "role": "SUP",
-                "strength": 44
+                "strength": 45
               },
               {
                 "k": 24550,
-                "net": -369265,
+                "net": -120120,
                 "role": "SUP",
-                "strength": 4
+                "strength": 1
               },
               {
                 "k": 24600,
-                "net": 4590560,
+                "net": 4452110,
                 "role": "RES",
                 "strength": 50
               },
               {
                 "k": 24650,
-                "net": 4868630,
+                "net": 4336930,
                 "role": "RES",
-                "strength": 53
+                "strength": 49
               },
               {
                 "k": 24700,
-                "net": 8737560,
+                "net": 8290425,
                 "role": "RES",
-                "strength": 95
+                "strength": 94
               },
               {
                 "k": 24750,
-                "net": 4004195,
+                "net": 3775590,
                 "role": "RES",
-                "strength": 44
+                "strength": 43
               },
               {
                 "k": 24800,
-                "net": 9200685,
+                "net": 8833825,
                 "role": "RES",
                 "strength": 100
               },
               {
                 "k": 24850,
-                "net": 3129360,
+                "net": 3067415,
                 "role": "RES",
-                "strength": 34
+                "strength": 35
               }
             ],
             "note": "Below gamma flip → dealers AMPLIFY moves (trend/volatile). Break of a wall accelerates; expect follow-through."
@@ -18555,43 +18543,43 @@
             "strikes": [
               {
                 "k": 57400,
-                "net": -33240,
+                "net": -32670,
                 "role": "SUP",
                 "strength": 5
               },
               {
                 "k": 57500,
-                "net": -73890,
+                "net": -75960,
                 "role": "SUP",
                 "strength": 12
               },
               {
                 "k": 57600,
-                "net": -3150,
+                "net": -3750,
                 "role": "SUP",
-                "strength": 0
+                "strength": 1
               },
               {
                 "k": 57700,
-                "net": 45990,
+                "net": 46200,
                 "role": "RES",
                 "strength": 7
               },
               {
                 "k": 57800,
-                "net": 141180,
+                "net": 136620,
                 "role": "RES",
                 "strength": 22
               },
               {
                 "k": 57900,
-                "net": 49560,
+                "net": 48870,
                 "role": "RES",
                 "strength": 8
               },
               {
                 "k": 58000,
-                "net": 632880,
+                "net": 633750,
                 "role": "RES",
                 "strength": 100
               }
