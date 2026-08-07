@@ -6,6 +6,7 @@ import { useLiveLtp } from '../../store/liveLtp'
 import { useNewFlags, useIsNew, isFresh } from '../../store/newFlags'
 import Ltp from './Ltp'
 import HitPopups from '../Alerts/HitPopups'
+import { getTheme, toggleTheme } from '../../store/theme'
 
 // short tab labels so the nav bar wraps cleanly instead of scrolling
 const SHORT = {
@@ -68,6 +69,82 @@ const confColor = c => c >= 80 ? 'text-green' : c >= 65 ? 'text-cyan' : c >= 50 
 const tint = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})` }
 const isTrade = s => s && s.entry != null && Array.isArray(s.targets) && !s.isAstro && !s.isOption && !s.placeholder
 
+// KPI hero — portfolio summary tiles (mockup layout). Each tile glows with its own accent.
+function KpiTile({ label, value, sub, subTone, glow }) {
+  return (
+    <div className="kpi p-4 sm:p-[18px]" style={{ '--kpi-grad': `radial-gradient(160px 110px at 100% 0%, ${glow}, transparent 70%)` }}>
+      <div className="mono text-[10.5px] uppercase tracking-wide text-txt-sec font-semibold">{label}</div>
+      <div className="mono text-2xl sm:text-[27px] font-bold mt-2 leading-none">{value}</div>
+      {sub && <div className={`mono text-[11.5px] font-semibold mt-2 ${subTone || 'text-txt-sec'}`}>{sub}</div>}
+    </div>
+  )
+}
+// compact INR: ₹1.23L / ₹45.6k (signed)
+function inr(n) {
+  if (n == null || isNaN(n)) return '—'
+  const s = n < 0 ? '−' : '+', a = Math.abs(n)
+  if (a >= 1e5) return `${s}₹${(a / 1e5).toFixed(2)}L`
+  if (a >= 1e3) return `${s}₹${(a / 1e3).toFixed(1)}k`
+  return `${s}₹${a.toFixed(0)}`
+}
+const MAX_OPEN = 70
+function KpiHero({ book, o, total, newCount, gensCount, active }) {
+  // MAIN portfolio (₹20L swing book: cash + F&O). Daily-income sleeve shown separately below.
+  const mainCap = book ? (book.cashSleeve?.capital || 0) + (book.foSleeve?.capital || 0) : 2000000
+  const mainEq = book ? (book.cashSleeve?.equity || 0) + (book.foSleeve?.equity || 0) : null
+  const mainPnl = mainEq != null ? mainEq - mainCap : null
+  const mainPct = mainPnl != null ? +((mainPnl / mainCap) * 100).toFixed(2) : null
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <KpiTile glow="#22E39A" label="Portfolio win rate"
+        value={book?.closedCount ? `${book.winRate}%` : '—'}
+        sub={book?.closedCount ? `${book.wins}W / ${book.losses}L · ${book.closedCount} closed` : 'builds as trades close'}
+        subTone={book?.closedCount && book.winRate >= 55 ? 'text-green' : 'text-txt-sec'} />
+      <KpiTile glow="#22D3EE" label="Open positions"
+        value={book ? `${book.open}` : '—'}
+        sub={book ? `of ${MAX_OPEN} · ${book.cashSleeve?.open ?? 0} cash · ${book.foSleeve?.open ?? 0} F&O` : 'paper book'} />
+      <KpiTile glow="#8B5CF6" label="Net P&L · ₹20L book"
+        value={mainPnl != null ? inr(mainPnl) : '—'}
+        sub={mainPct != null ? `${mainPct >= 0 ? '+' : ''}${mainPct}% · realized ${book.realizedPct >= 0 ? '+' : ''}${book.realizedPct}%` : 'cash + F&O sleeves'}
+        subTone={mainPnl >= 0 ? 'text-green' : 'text-red'} />
+      <KpiTile glow={active?.color || '#4F7DFF'} label="Signals today"
+        value={total}
+        sub={`${gensCount} desks${newCount > 0 ? ` · ${newCount} new` : ''} · signals ${o?.decided ? o.winRate + '%' : '—'}`}
+        subTone={newCount > 0 ? 'text-green' : 'text-txt-sec'} />
+    </div>
+  )
+}
+// Daily-Income sleeve — the separate ₹10L experiment aiming for a consistent 1–2%/day, monitored 30 days.
+function DailyStrip({ d }) {
+  if (!d) return null
+  const m = d.monitor || {}
+  const pnl = d.equity - d.capital
+  const cell = (label, val, tone) => (
+    <div className="flex flex-col">
+      <span className="mono text-[9.5px] uppercase tracking-wide text-txt-muted">{label}</span>
+      <span className={`mono text-sm font-bold ${tone || ''}`}>{val}</span>
+    </div>
+  )
+  return (
+    <div className="card elev p-4 sm:p-5" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-cyan) 10%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
+      <div className="flex items-center gap-2 flex-wrap mb-3">
+        <span className="mono text-[13px] font-bold">⚡ Daily-Income Sleeve</span>
+        <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-cyan) 18%, transparent)', color: 'var(--color-cyan)' }}>₹10L · aims 1–2%/day</span>
+        <span className="mono text-[10px] text-txt-muted">30-day experiment{d.startedAt ? ` · since ${d.startedAt}` : ''}</span>
+        <span className="mono text-[10px] text-txt-muted ml-auto">Not a guarantee — honestly monitored</span>
+      </div>
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+        {cell('Sleeve equity', inr(d.equity).replace('+', ''), '')}
+        {cell('Net P&L', inr(pnl), pnl >= 0 ? 'text-green' : 'text-red')}
+        {cell('Return', `${d.pct >= 0 ? '+' : ''}${d.pct}%`, d.pct >= 0 ? 'text-green' : 'text-red')}
+        {cell('Open now', d.open, '')}
+        {cell('Avg/day', m.avgDayPct != null ? `${m.avgDayPct >= 0 ? '+' : ''}${m.avgDayPct}%` : '—', m.avgDayPct >= 1 ? 'text-green' : '')}
+        {cell('Days in 1–2%', `${m.daysInBand ?? 0}/${m.tradingDays ?? 0}`, (m.daysInBand ?? 0) > 0 ? 'text-green' : '')}
+      </div>
+    </div>
+  )
+}
+
 export default function SignalsBoard() {
   const [board, setBoard] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -80,6 +157,8 @@ export default function SignalsBoard() {
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('default')
   const [navCollapsed, setNavCollapsed] = useState(false)
+  const [theme, setTheme] = useState(getTheme())
+  const [book, setBook] = useState(null)   // real paper-portfolio stats from trade_book.json
   const setView = useViewStore(s => s.setView)
 
   const scanNow = async () => {
@@ -111,6 +190,11 @@ export default function SignalsBoard() {
       .catch(e => { setErr(e.message); setBoard(null); setLoading(false) })
   }
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [tf])
+  // real paper-portfolio stats (the ₹10L+₹10L book) — for the KPI hero; independent of timeframe
+  useEffect(() => {
+    const f = () => fetch('/trade_book.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).then(t => setBook(t?.stats || null)).catch(() => {})
+    f(); const id = setInterval(f, 60000); return () => clearInterval(id)
+  }, [])
   useEffect(() => { if (alertsOn) startAlerts() }, [alertsOn, startAlerts])
   // live LTP ticker for the currently-viewed tab's symbols (market hours only)
   const startLive = useLiveLtp(s => s.start)
@@ -148,132 +232,154 @@ export default function SignalsBoard() {
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
       <HitPopups />
       {/* header */}
-      <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border glass flex items-center gap-2 sm:gap-4 flex-wrap elev z-20">
-        <div>
-          <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">◆ ProTrader Signal Board</div>
-          <div className="mono text-[10px] sm:text-[11px] text-txt-sec">
-            {total} signals · {gens.length} generators{board?.date ? ` · ${board.date}` : ''} · {liveOn ? <span className="text-green font-bold">● LTP live</span> : <span className="text-txt-muted">○ prices at scan</span>}{newCount > 0 && <span className="ml-2 px-2 py-0.5 rounded-full bg-green text-white font-bold text-[10px]">🟢 {newCount} NEW</span>}
-            {o && <span className="ml-2 text-txt-muted">📊 {o.decided ? <>track record <b className={o.winRate >= 80 ? 'text-green' : 'text-txt'}>{o.winRate}%</b> ({o.win}/{o.decided}) · {o.open} open</> : <>{o.open} open · accuracy builds as trades close</>}</span>}
+      <div className="shrink-0 border-b border-border glass elev z-20">
+        {/* tier 1 — brand · centered search · action cluster */}
+        <div className="px-3 sm:px-5 py-2.5 flex items-center gap-3">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <div className="w-9 h-9 rounded-xl grid place-items-center text-white font-black text-lg shrink-0"
+              style={{ background: 'linear-gradient(135deg,#22D3EE,#8B5CF6)', boxShadow: '0 0 16px rgba(34,211,238,.35)' }}>◆</div>
+            <div className="hidden md:block leading-tight">
+              <div className="mono text-[15px] font-bold brand-grad tracking-tight">ProTrader</div>
+              <div className="mono text-[10px] text-txt-muted">Signal Board{board?.date ? ` · ${board.date}` : ''}</div>
+            </div>
           </div>
-          {goal && (
-            <div className="mono text-[10px] mt-1">
-              <span className="px-2 py-0.5 rounded-full text-white" style={{ background: 'linear-gradient(90deg,#2962FF,#7C3AED)' }}>🎯 Goal {goal.target}% by {goal.deadline} · {goal.daysLeft}d left</span>
-              <span className="ml-2 text-txt-sec">now <b className={goal.reliable && goal.current >= goal.target ? 'text-green' : 'text-txt-sec'}>{goal.current != null ? goal.current + '%' : '—'}</b>{goal.decided ? ` (${goal.decided} closed${goal.reliable ? '' : ' — building'})` : ''} · {goal.status}</span>
-            </div>
-          )}
-          {regime?.available && (
-            <div className="mono text-[10px] mt-1" title={(regime.reasons || []).join(' · ')}>
-              <span className="px-2 py-0.5 rounded-full text-white font-bold" style={{ background: regime.bias === 'bearish' ? '#F23645' : regime.bias === 'bullish' ? '#0E9F6E' : '#8896a6' }}>
-                {regime.bias === 'bearish' ? '🔻' : regime.bias === 'bullish' ? '🔺' : '⏸'} MARKET REGIME: {regime.bias.toUpperCase()}
-              </span>
-              <span className="ml-2 text-txt-sec">{regime.reasons?.[0]}{regime.fii?.futIdxNet != null ? ` · FII idx-fut net ${regime.fii.futIdxNet > 0 ? '+' : ''}${Math.round(regime.fii.futIdxNet / 1000)}k` : ''}</span>
-            </div>
-          )}
+
+          {/* central search — grows and centers */}
+          <div className="flex-1 flex justify-center px-1 sm:px-3">
+            <GlobalSearch gens={gens} tabs={tabs} onJump={(idx, sym) => { if (idx >= 0) setTab(idx); setSearch(sym); setNavCollapsed(false) }} />
+          </div>
+
+          {/* action cluster — top right */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button onClick={() => setView('journal')} title="Trading Journal — ₹20L paper portfolio & performance"
+              className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
+              📓 <span className="hidden lg:inline">Journal</span>
+            </button>
+            <span className="hdiv hidden sm:block" />
+            <button onClick={load} className="ibtn" title="Refresh board">⟳</button>
+            <button onClick={scanNow} disabled={scanning} className="ibtn" title="Run a fresh scan now">{scanning ? '⏳' : '🔄'}</button>
+            <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()} className={`ibtn ${alertsOn ? 'on' : ''}`} title={alertsOn ? 'Alerts on' : 'Alerts off'}>{alertsOn ? '🔔' : '🔕'}</button>
+            <button onClick={() => setModal('news')} className="ibtn" title="Market news">📰</button>
+            <button onClick={() => setModal('learning')} className="ibtn" title="Self-improvement log">🧠</button>
+            <button onClick={() => setTheme(toggleTheme())} className="ibtn" title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}>{theme === 'dark' ? '☀️' : '🌙'}</button>
+            <span className="hdiv hidden sm:block" />
+            <button onClick={() => setView('agent')} className="ibtn" title="Content agent">📣</button>
+            <button onClick={() => setView('chart')} className="ibtn" title="Charts">📈</button>
+          </div>
         </div>
-        <GlobalSearch gens={gens} tabs={tabs} onJump={(idx, sym) => { if (idx >= 0) setTab(idx); setSearch(sym); setNavCollapsed(false) }} />
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
-          {scanMsg && <span className="mono text-[10px] text-txt-sec w-full sm:w-auto text-right">{scanMsg}</span>}
-          <button onClick={() => setView('journal')} title="Trading Journal — ₹10L paper portfolio & performance"
-            className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover" style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
-            📓 Trading Journal
-          </button>
-          <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent">⟳</button>
+
+        {/* tier 2 — context strip: timeframe · status · regime · goal */}
+        <div className="px-3 sm:px-5 py-1.5 border-t border-border flex items-center gap-2 flex-wrap mono text-[10px]">
           <div className="flex rounded-lg border border-border overflow-hidden">
             {[['daily', 'Daily'], ['weekly', 'Weekly'], ['intraday', 'Intraday']].map(([k, lbl]) => (
-              <button key={k} onClick={() => { setTf(k); setTab(0) }}
-                className={`mono text-[11px] px-2.5 py-1.5 ${tf === k ? 'text-white' : 'text-txt-sec hover:text-txt'}`}
+              <button key={k} onClick={() => { setTf(k); setTab(0) }} className={`px-2.5 py-1 ${tf === k ? 'text-white' : 'text-txt-sec hover:text-txt'}`}
                 style={tf === k ? { background: 'linear-gradient(90deg,#2962FF,#7C3AED)' } : {}}>{lbl}</button>
             ))}
           </div>
-          <button onClick={scanNow} disabled={scanning} title="Run a fresh scan now"
-            className="mono text-[11px] px-3 py-1.5 rounded-lg border border-green text-green hover:bg-green/10 card-hover disabled:opacity-50 font-bold">
-            {scanning ? '⏳ Scanning…' : '🔄 ScanNow'}
-          </button>
-          <button onClick={() => setModal('learning')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Self-improvement log">🧠</button>
-          <button onClick={() => setModal('news')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover" title="Market news">📰</button>
-          <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()}
-            className={`mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg border card-hover ${alertsOn ? 'border-green text-green' : 'border-border text-txt-sec hover:border-accent'}`}>
-            {alertsOn ? '🔔 On' : '🔕'}
-          </button>
-          <button onClick={() => setView('agent')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📣</button>
-          <button onClick={() => setView('chart')} className="mono text-xs px-2.5 sm:px-3 py-1.5 rounded-lg bg-bg-card border border-border hover:border-accent card-hover">📈</button>
+          <span className="text-txt-muted">{total} signals · {gens.length} desks · {liveOn ? <span className="text-green font-bold">● LTP live</span> : <span className="text-txt-muted">○ prices at scan</span>}</span>
+          {newCount > 0 && <span className="px-2 py-0.5 rounded-full bg-green text-white font-bold">🟢 {newCount} NEW</span>}
+          {scanMsg && <span className="text-txt-sec">{scanMsg}</span>}
+          <div className="ml-auto flex items-center gap-2 flex-wrap justify-end">
+            {regime?.available && (
+              <span title={(regime.reasons || []).join(' · ')} className="px-2 py-0.5 rounded-full text-white font-bold" style={{ background: regime.bias === 'bearish' ? '#F23645' : regime.bias === 'bullish' ? '#0E9F6E' : '#8896a6' }}>
+                {regime.bias === 'bearish' ? '🔻' : regime.bias === 'bullish' ? '🔺' : '⏸'} {regime.bias.toUpperCase()}
+              </span>
+            )}
+            {goal && (
+              <span className="px-2 py-0.5 rounded-full text-white" style={{ background: 'linear-gradient(90deg,#2962FF,#7C3AED)' }} title={goal.status}>
+                🎯 {goal.current != null ? goal.current + '%' : '—'} / {goal.target}% goal
+              </span>
+            )}
+            {o?.decided ? <span className="text-txt-muted">signals {o.winRate}% ({o.win}/{o.decided}) · {o.open} tracked open</span> : null}
+          </div>
         </div>
       </div>
       {modal && <InsightModal kind={modal} onClose={() => setModal(null)} />}
 
       {/* body: vertical tab nav (left, distinct + collapsible) + content (right) */}
       <div className="flex-1 flex min-h-0 overflow-hidden">
-        <nav className={`${navCollapsed ? 'w-12' : 'w-44 sm:w-52'} shrink-0 overflow-y-auto transition-all duration-150 border-r-2`}
-          style={{ background: 'var(--color-bg-base)', borderRightColor: 'var(--color-accent-primary)', boxShadow: 'inset -8px 0 14px -10px rgba(0,0,0,0.6)' }}>
-          <button onClick={() => setNavCollapsed(c => !c)} title={navCollapsed ? 'Expand' : 'Collapse'}
-            className="w-full px-3 py-2 text-txt-muted hover:text-accent text-left mono text-xs border-b border-border sticky top-0 z-10" style={{ background: 'var(--color-bg-base)' }}>
-            {navCollapsed ? '»' : '« Menu'}
+        <nav className={`${navCollapsed ? 'w-14' : 'w-56'} shrink-0 overflow-y-auto transition-all duration-150 border-r border-border flex flex-col py-2`}
+          style={{ background: 'var(--color-bg-panel)' }}>
+          <button onClick={() => setNavCollapsed(c => !c)} title={navCollapsed ? 'Expand menu' : 'Collapse menu'}
+            className="navitem text-txt-muted hover:text-accent font-semibold mb-1">
+            <span className="text-base w-5 text-center shrink-0">{navCollapsed ? '»' : '«'}</span>
+            {!navCollapsed && <span className="flex-1 text-[11px]">Collapse menu</span>}
           </button>
+          {!navCollapsed && <div className="navsec">Signal Desks</div>}
           {tabs.map((g, i) => {
             const on = i === tab
             const gt = tr?.generators?.[g.id]
             const wr = gt && gt.decided >= 10 ? gt.winRate : null
             const icon = (SHORT[g.id] || g.label).split(' ')[0]
+            const label = (SHORT[g.id] || g.label).replace(/^\S+\s/, '')
             return (
               <button key={g.id} onClick={() => setTab(i)} title={`${g.label}${wr != null ? ` · ${wr}% win` : ''}`}
-                className="w-full text-left mono px-2.5 py-2 flex items-center gap-1.5 border-l-[3px] transition-colors hover:bg-bg-card"
-                style={on
-                  ? { color: g.color, borderLeftColor: g.color, background: tint(g.color, 0.14), fontWeight: 700 }
-                  : { color: 'var(--color-txt-sec)', borderLeftColor: 'transparent' }}>
+                className="navitem" style={on ? { background: tint(g.color, 0.14), color: g.color, fontWeight: 700 } : {}}>
+                {on && <span className="navbar-accent" style={{ background: g.color }} />}
                 {navCollapsed
-                  ? <span className="text-sm mx-auto relative">{icon}{g.count > 0 && <span className="absolute -top-1 -right-2 text-[7px] px-0.5 rounded-full bg-bg-card text-txt-muted">{g.count}</span>}</span>
+                  ? <span className="mx-auto relative text-base">{icon}{g.count > 0 && <span className="absolute -top-1.5 -right-2.5 text-[8px] font-bold px-1 rounded-full" style={{ background: on ? g.color : 'var(--color-bg-card)', color: on ? '#fff' : 'var(--color-txt-muted)' }}>{g.count}</span>}</span>
                   : <>
-                    <span className="truncate flex-1 text-[11px]">{SHORT[g.id] || g.label}</span>
-                    {wr != null && <span className="text-[9px] px-1 rounded font-bold shrink-0" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}%</span>}
-                    <span className="px-1.5 rounded-full text-[10px] shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+                    <span className="text-base w-5 text-center shrink-0">{icon}</span>
+                    <span className="flex-1 truncate text-[12px]">{label}</span>
+                    {wr != null && <span className="text-[9px] font-bold shrink-0" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}%</span>}
+                    <span className="px-1.5 rounded-full text-[10px] font-semibold shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
                     {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}
-                    {g.id === topId && <span className="text-[9px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
+                    {g.id === topId && <span className="text-[10px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
                   </>}
               </button>
             )
           })}
         </nav>
 
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden" style={{ background: 'var(--color-bg-panel)' }}>
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden" style={{ background: 'var(--color-bg-base)' }}>
           {loading && !board && <div className="p-4 mono text-sm text-txt-sec">Loading board…</div>}
           {err && <div className="p-4 mono text-sm text-yellow">{err}</div>}
           {active && (
             <div className="flex-1 overflow-y-auto">
-          <div className="px-5 py-2.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap" style={{ background: tint(active.color, 0.05) }}>
-            <span><span className="font-bold" style={{ color: active.color }}>{active.label}</span> — {active.desc}</span>
-            {genTR && (genTR.decided > 0
-              ? <span className="ml-auto shrink-0 px-2 py-0.5 rounded-full" style={{ background: tint(active.color, 0.12) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
-              : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}
-          </div>
-          {/* search + sort — applies to the active tab */}
-          <div className="px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap bg-bg-panel">
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search symbol / name…"
-              className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-44" />
-            <span className="mono text-[10px] text-txt-muted">Sort:</span>
-            {[['default', 'Default'], ['strength', 'Strength'], ['change', 'Change %'], ['rr', 'R:R'], ['symbol', 'A–Z']].map(([k, lbl]) => (
-              <button key={k} onClick={() => setSortBy(k)} className={`mono text-[10px] px-2 py-1 rounded ${sortBy === k ? 'text-white font-bold' : 'text-txt-sec bg-bg-card'}`} style={sortBy === k ? { background: active.color } : {}}>{lbl}</button>
-            ))}
-            {(search || sortBy !== 'default') && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
-          </div>
-          {rows.length === 0
-            ? <div className="p-8 mono text-sm text-txt-muted text-center">{search ? `No matches for "${search}" in this tab.` : 'No signals in this generator today.'}</div>
-            : active.id === 'fno'
-              ? <FnoTable signals={rows} color={active.color} setView={setView} />
-            : active.id === 'confluence'
-              ? <ConfluenceTable signals={rows} color={active.color} setView={setView} />
-            : active.id === 'vedic_astro'
-              ? <><AssetBiasTable signals={rows} color={active.color} />
-                  {horaGen?.signals?.length > 0 && <><div className="px-5 pt-4 pb-1 mono text-xs font-bold" style={{ color: active.color }}>🕐 Hora & Rahu-Kaal Timing</div><HoraTable signals={horaGen.signals} color={active.color} /></>}</>
-              : active.id === 'gex'
-              ? <div className="grid gap-3 p-4 md:grid-cols-2">{rows.map((s, i) => <GexCard key={s.symbol + i} s={s} color={active.color} setView={setView} />)}</div>
-            : active.id === 'astro_timing'
-                ? <HoraTable signals={rows} color={active.color} />
-                : isTrade(rows[0])
-                  ? <>
-                      <div className="hidden md:block"><TradeTable signals={rows} color={active.color} setView={setView} /></div>
-                      <div className="md:hidden"><TradeCards signals={rows} color={active.color} setView={setView} /></div>
-                    </>
-                  : <InfoList signals={rows} color={active.color} setView={setView} />}
+              <div className="p-3 sm:p-5 flex flex-col gap-4 sm:gap-5">
+                {/* KPI hero — portfolio summary above the detail (mockup layout) */}
+                <KpiHero book={book} o={o} total={total} newCount={newCount} gensCount={gens.length} active={active} />
+                <DailyStrip d={book?.dailySleeve} />
+
+                {/* panel card wrapping the active desk's header + search + table */}
+                <div className="card elev data-panel">
+                  <div className="px-4 sm:px-5 py-3.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap rounded-t-2xl" style={{ background: tint(active.color, 0.06) }}>
+                    <span className="text-[13px]"><span className="font-bold" style={{ color: active.color }}>{active.label}</span> <span className="text-txt-muted">— {active.desc}</span></span>
+                    {genTR && (genTR.decided > 0
+                      ? <span className="ml-auto shrink-0 px-2.5 py-1 rounded-full" style={{ background: tint(active.color, 0.14) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
+                      : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}
+                  </div>
+                  {/* search + sort — applies to the active tab */}
+                  <div className="px-4 sm:px-5 py-2.5 border-b border-border flex items-center gap-2 flex-wrap">
+                    <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search symbol / name…"
+                      className="mono text-xs px-3 py-1.5 rounded-lg bg-bg-base border border-border focus:border-accent outline-none w-44" />
+                    <span className="mono text-[10px] text-txt-muted">Sort:</span>
+                    {[['default', 'Default'], ['strength', 'Strength'], ['change', 'Change %'], ['rr', 'R:R'], ['symbol', 'A–Z']].map(([k, lbl]) => (
+                      <button key={k} onClick={() => setSortBy(k)} className={`mono text-[10px] px-2.5 py-1 rounded-full ${sortBy === k ? 'text-white font-bold' : 'text-txt-sec bg-bg-base border border-border'}`} style={sortBy === k ? { background: active.color } : {}}>{lbl}</button>
+                    ))}
+                    {(search || sortBy !== 'default') && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
+                  </div>
+                  {rows.length === 0
+                    ? <div className="p-10 mono text-sm text-txt-muted text-center">{search ? `No matches for "${search}" in this tab.` : 'No signals in this generator today.'}</div>
+                    : active.id === 'fno'
+                      ? <FnoTable signals={rows} color={active.color} setView={setView} />
+                    : active.id === 'confluence'
+                      ? <ConfluenceTable signals={rows} color={active.color} setView={setView} />
+                    : active.id === 'vedic_astro'
+                      ? <><AssetBiasTable signals={rows} color={active.color} />
+                          {horaGen?.signals?.length > 0 && <><div className="px-5 pt-4 pb-1 mono text-xs font-bold" style={{ color: active.color }}>🕐 Hora & Rahu-Kaal Timing</div><HoraTable signals={horaGen.signals} color={active.color} /></>}</>
+                      : active.id === 'gex'
+                      ? <div className="grid gap-3 p-4 md:grid-cols-2">{rows.map((s, i) => <GexCard key={s.symbol + i} s={s} color={active.color} setView={setView} />)}</div>
+                    : active.id === 'astro_timing'
+                        ? <HoraTable signals={rows} color={active.color} />
+                        : isTrade(rows[0])
+                          ? <>
+                              <div className="hidden md:block"><TradeTable signals={rows} color={active.color} setView={setView} /></div>
+                              <div className="md:hidden"><TradeCards signals={rows} color={active.color} setView={setView} /></div>
+                            </>
+                          : <InfoList signals={rows} color={active.color} setView={setView} />}
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -306,12 +412,12 @@ function GlobalSearch({ gens, tabs, onJump }) {
   }
   const show = openList && query.length > 0
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-xl">
       <input value={q} onFocus={() => setOpenList(true)} onChange={e => { setQ(e.target.value); setAnalysis(null); setOpenList(true) }}
-        placeholder="🔎 Search any stock…"
-        className="mono text-[11px] px-3 py-1.5 rounded-lg bg-bg-card border border-border focus:border-accent outline-none w-56 sm:w-72" />
+        placeholder="🔎 Search any stock — RELIANCE, TITAN, AAPL… we analyse it live"
+        className="mono text-xs px-3.5 py-2 rounded-xl bg-bg-base border border-border focus:border-accent outline-none w-full" />
       {show && (
-        <div className="absolute z-40 mt-1 right-0 w-[26rem] max-w-[92vw] rounded-xl border border-border glass elev-lg p-3 max-h-[75vh] overflow-y-auto">
+        <div className="absolute z-40 mt-1.5 left-0 right-0 rounded-xl border border-border glass elev-lg p-3 max-h-[75vh] overflow-y-auto">
           <div className="flex justify-between items-center mono text-[10px] text-txt-muted mb-1.5"><span>"{query}"</span><button onClick={() => { setQ(''); setAnalysis(null); setOpenList(false) }} className="hover:text-txt">✕</button></div>
           {matches.length > 0 ? <>
             <div className="mono text-[11px] text-green mb-1">In {matches.length} list{matches.length > 1 ? 's' : ''} — click to open:</div>
@@ -354,7 +460,7 @@ function TradeTable({ signals, color, setView }) {
   const rows = s.sorted
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
-    <table className="w-full mono text-xs border-collapse">
+    <table className="w-full mono text-xs border-collapse stbl">
       <thead>
         <tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Symbol" k="symbol" s={s} cls={L} />
@@ -395,16 +501,16 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
           {s.footprint && !s.footprint.weak && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#0E9F6E' }} title={s.footprint.flags?.join(' · ')}>🕵️ FOOTPRINT {s.footprint.score}</span>}
           {s.news && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white bg-accent-primary" title={`${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`}>📰 NEWS</span>}
           <span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
-        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
+        <td className="px-3 py-2"><span className={`tpill ${isBuy ? 'tpill-buy' : 'tpill-sell'}`}>{isBuy ? 'BUY' : 'SELL'}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
-        <td className="px-3 py-2 text-right">{s.entry}</td>
+        <td className="px-3 py-2 text-right font-semibold">{s.entry}</td>
         <td className="px-3 py-2 text-right text-red">{s.sl}</td>
         <td className="px-3 py-2 text-right text-green">{t?.[0]?.price}{t?.[0]?.pct != null && <span className="text-[9px] text-txt-muted"> +{t[0].pct}%</span>}<div className="text-[9px] text-txt-muted">{t?.[0]?.by || ''}</div></td>
         <td className="px-3 py-2 text-right text-green">{t?.[1]?.price}<div className="text-[9px] text-txt-muted">{t?.[1]?.by || ''}</div></td>
         <td className="px-3 py-2 text-right text-green">{t?.[2]?.price}<div className="text-[9px] text-txt-muted">{t?.[2]?.by || ''}</div></td>
-        <td className={`px-3 py-2 text-right font-bold ${confColor(s.confidence)}`}>{s.confidence}%</td>
+        <td className="px-3 py-2 text-right"><div className={`font-bold ${confColor(s.confidence)}`}>{s.confidence}%</div><span className="confbar mt-1"><i style={{ width: Math.min(100, Math.max(4, s.confidence || 0)) + '%' }} /></span></td>
         <td className="px-3 py-2 text-right">
-          <button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button>
+          <button onClick={copy} className="px-2 py-1 rounded-lg text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button>
         </td>
       </tr>
       {open && (
@@ -453,7 +559,7 @@ function FnoTable({ signals, color, setView }) {
   const H = 'px-3 py-2 text-left font-semibold'
   return (
     <>
-      <table className="hidden md:table w-full mono text-xs border-collapse">
+      <table className="hidden md:table w-full mono text-xs border-collapse stbl">
         <thead><tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Underlying" k="symbol" s={s} cls={H} />
           <th className={H}>Type</th>
@@ -497,7 +603,7 @@ function FnoRow({ s, color, open, onToggle }) {
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
         <td className="px-3 py-2 font-bold text-txt">{s.underlying}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2 text-txt-sec">{s.kind}</td>
-        <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
+        <td className="px-3 py-2"><span className={`tpill text-white ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.underlying} base={s.spot} /></td>
         <td className="px-3 py-2 text-txt-sec">{s.lot ?? '—'}</td>
         <td className="px-3 py-2 text-[11px]" style={{ color: '#7C3AED' }}>{s.optionPlay}</td>
@@ -540,7 +646,7 @@ function ConfluenceTable({ signals, color, setView }) {
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
     <>
-      <table className="hidden md:table w-full mono text-xs border-collapse">
+      <table className="hidden md:table w-full mono text-xs border-collapse stbl">
         <thead><tr className="sticky top-0 z-10 text-txt-sec text-[10px] uppercase tracking-wide border-b-2" style={{ background: 'var(--color-bg-panel)', borderColor: tint(color, 0.35) }}>
           <Sth label="Stock" k="symbol" s={s} cls={L} />
           <Sth label="Grade" k="grade" s={s} cls={L} />
@@ -587,13 +693,13 @@ function ConfRow({ s, color, open, onToggle, setView }) {
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
         <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
-        <td className="px-3 py-2"><span className="px-2 py-0.5 rounded text-white text-[10px] font-bold" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
+        <td className="px-3 py-2"><span className="tpill text-white" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
         <td className="px-3 py-2 text-accent font-bold">{s.genCount}×</td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
-        <td className="px-3 py-2 text-right">{s.entry}</td>
+        <td className="px-3 py-2 text-right font-semibold">{s.entry}</td>
         <td className="px-3 py-2 text-right text-red">{s.sl}</td>
         <td className="px-3 py-2 text-right text-green">{s.targets[0]?.price}</td>
-        <td className={`px-3 py-2 text-right font-bold ${confColor(s.confidence)}`}>{s.confidence}%</td>
+        <td className="px-3 py-2 text-right"><div className={`font-bold ${confColor(s.confidence)}`}>{s.confidence}%</div><span className="confbar mt-1"><i style={{ width: Math.min(100, Math.max(4, s.confidence || 0)) + '%' }} /></span></td>
         <td className="px-3 py-2 text-right"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
       </tr>
       {open && (
@@ -684,7 +790,7 @@ function AssetBiasTable({ signals, color }) {
   const rows = [...signals].sort((a, b) => b.score - a.score)
   return (
     <>
-      <table className="hidden md:table w-full mono text-xs border-collapse">
+      <table className="hidden md:table w-full mono text-xs border-collapse stbl">
         <thead><tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
           {['Asset', 'Daily bias', '▲ Bullish windows', '▼ Bearish windows', 'Nava Tara', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}
         </tr></thead>
@@ -755,7 +861,7 @@ function VedicTable({ signals, color }) {
   return (
     <>
       {/* desktop */}
-      <table className="hidden md:table w-full mono text-xs border-collapse">
+      <table className="hidden md:table w-full mono text-xs border-collapse stbl">
         <thead>
           <tr className="text-txt-sec text-[10px] uppercase tracking-wide" style={{ background: tint(color, 0.06) }}>
             {['Market', 'Method', 'View', 'Conviction', 'Best entry (IST)', 'Avoid', 'Favoured days ahead', ''].map((h, i) => <th key={i} className="px-3 py-2 text-left font-semibold">{h}</th>)}

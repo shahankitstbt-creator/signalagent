@@ -129,6 +129,62 @@ function formatUpdate(s, dateStr) {
   return L.join('\n')
 }
 
+// ── TRADE-BOOK entry/exit alerts — fire the moment the paper engine opens or closes a position ──
+function formatEntry(p, dateStr) {
+  const buy = !(p.direction === 'SHORT' || p.direction === 'BEARISH')
+  const dot = buy ? '🟢' : '🔴'
+  const sleeve = p.sleeve === 'DAILY' ? '⚡ DAILY INCOME' : p.sleeve === 'FO' ? 'F&O' : 'CASH'
+  const t = p.targets || []
+  const L = []
+  L.push('📈 *STOCKSBYVARSHA — ENTRY*')
+  L.push('━━━━━━━━━━━━━━━━━━')
+  L.push(`${dot} *ENTERED ${buy ? 'LONG' : 'SHORT'} — ${p.symbol}*  ·  ${sleeve}${p.grade ? '  ·  ' + p.grade : ''}`)
+  if (p.kind === 'OPT' && p.optType) L.push(`👉 Buy ${p.optType} · ${p.lots} lot${p.lots > 1 ? 's' : ''} × ${p.lotSize} @ ₹${p.entryPremium} prem`)
+  L.push(`📍 Entry: ₹${p.entryPrice}`)
+  if (p.sl != null) L.push(`🛑 SL: ₹${p.sl}`)
+  t.slice(0, 3).forEach((x, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${x.price}${x.pct != null ? ` (+${x.pct}%)` : ''}${x.by ? ` by ${x.by}` : ''}`))
+  if (p.sleeve === 'DAILY') L.push(`⚡ Daily plan: book +${p.dailyTake}% / cut −${p.dailyStop}% · square off EOD`)
+  const meta = []
+  if (p.qty) meta.push(`Qty ${p.qty}`)
+  if (p.invested) meta.push(`₹${p.invested.toLocaleString('en-IN')}`)
+  if (p.rr) meta.push(`R:R 1:${p.rr}`)
+  if (meta.length) L.push(`📦 ${meta.join('  ·  ')}`)
+  if (p.reason) L.push(`💡 ${p.reason}`)
+  L.push(`🕐 ${dateStr} IST · 📌 _Educational only, not advice. Not SEBI-registered._`)
+  return L.join('\n')
+}
+function formatExit(p, dateStr) {
+  const win = p.result === 'WIN'
+  const dot = win ? '🎯' : p.result === 'LOSS' ? '🔴' : '⚪'
+  const sleeve = p.sleeve === 'DAILY' ? '⚡ DAILY INCOME' : p.sleeve === 'FO' ? 'F&O' : 'CASH'
+  const head = p.partial ? 'PARTIAL BOOK' : win ? 'EXIT — WIN' : p.result === 'LOSS' ? 'EXIT — LOSS' : 'EXIT'
+  const pnl = p.realizedPnl || 0
+  const L = []
+  L.push('📈 *STOCKSBYVARSHA — EXIT*')
+  L.push('━━━━━━━━━━━━━━━━━━')
+  L.push(`${dot} *${head} — ${p.symbol}*  ·  ${sleeve}`)
+  L.push(`Entry ₹${p.entryPrice} → Exit ₹${p.exitPrice}`)
+  L.push(`${pnl >= 0 ? '🟢' : '🔴'} P&L: ₹${pnl.toLocaleString('en-IN')} (${p.realizedPct >= 0 ? '+' : ''}${p.realizedPct}%)${p.daysHeld != null ? `  ·  held ${p.daysHeld}d` : ''}`)
+  if (p.expectationMatch) L.push(`📝 ${p.expectationMatch}`)
+  L.push(`🕐 ${dateStr} IST · 📌 _Educational only, not advice._`)
+  return L.join('\n')
+}
+export async function notifyTradeEvents(entered, exited, dateStr) {
+  if (!E.TELEGRAM_BOT_TOKEN || !E.TELEGRAM_CHAT_ID) return
+  const sent = loadSent()
+  let n = 0, stop = false
+  const send = async (key, text) => {
+    if (sent[key]) return
+    const res = await sendTelegram(text)
+    if (res.skipped) { stop = true; return }
+    if (res.ok) { sent[key] = dateStr; n++; await new Promise(r => setTimeout(r, 1100)) }
+  }
+  for (const p of (exited || [])) { if (stop) break; await send('tbexit:' + p.id + ':' + (p.exitAt || p.exitDate || '') + ':' + (p.partial ? 'p' : (p.maxTarget ?? 'f')), formatExit(p, dateStr)) }
+  for (const p of (entered || [])) { if (stop) break; await send('tbentry:' + p.id + ':' + (p.entryAt || p.entryDate || ''), formatEntry(p, dateStr)) }
+  saveSent(sent)
+  if (n) console.log(`Telegram: ${n} trade entry/exit alerts`)
+}
+
 // CLI: send a sample of the current board's top signal to verify format/delivery
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('telegram.mjs')) {
   const b = JSON.parse(readFileSync('public/board.json', 'utf8'))

@@ -1,27 +1,37 @@
 @import "tailwindcss";
 
-/* ProTrader OS — premium light theme. Clean, glassy, futuristic. Green=BUY, Red=SELL. */
+/* ProTrader OS — "Obsidian" theme. Dark-first futuristic terminal (default),
+   with a fully-designed light variant under [data-theme="light"].
+   Green = BUY / bullish · Red = SELL / bearish · cyan+violet = brand accent. */
 @theme {
-  --color-bg-base: #EDF1F9;     /* app background — soft cool */
-  --color-bg-panel: #FFFFFF;    /* panels / columns */
-  --color-bg-card: #FFFFFF;     /* cards */
-  --color-border: #E3E8F2;      /* hairline borders */
-  --color-accent: #3B6BFF;      /* primary blue */
-  --color-accent-primary: #3B6BFF;
-  --color-green: #10A56E;       /* BUY / bullish */
-  --color-red: #E5384A;         /* SELL / bearish */
-  --color-yellow: #C2840A;      /* warning / TP */
-  --color-purple: #7C3AED;
-  --color-orange: #E8590C;
-  --color-cyan: #0E7FA3;
-  --color-gold: #B8860B;
-  --color-txt: #16203A;         /* primary text */
-  --color-txt-sec: #5A6A85;     /* secondary */
-  --color-txt-muted: #97A3BA;   /* muted / placeholder */
-  --color-bull: #10A56E;
-  --color-bear: #E5384A;
+  /* ---- default = OBSIDIAN DARK ---- */
+  --color-bg-base: #070B15;     /* app background — near-black navy */
+  --color-bg-panel: #0C1220;    /* content / columns */
+  --color-bg-card: #121B2E;     /* cards / rows */
+  --color-border: #1E2A44;      /* hairline borders */
+  --color-accent: #4F7DFF;      /* primary blue */
+  --color-accent-primary: #4F7DFF;
+  --color-green: #22E39A;       /* BUY / bullish */
+  --color-red: #FF4D6D;         /* SELL / bearish */
+  --color-yellow: #FFC24B;      /* warning / TP */
+  --color-purple: #8B5CF6;
+  --color-orange: #FF8A3D;
+  --color-cyan: #22D3EE;
+  --color-gold: #E0A32B;
+  --color-txt: #EAF1FF;         /* primary text */
+  --color-txt-sec: #8DA0C6;     /* secondary */
+  --color-txt-muted: #566384;   /* muted / placeholder */
+  --color-bull: #22E39A;
+  --color-bear: #FF4D6D;
   --font-mono: "Inter", system-ui, sans-serif;   /* clean sans everywhere; numbers stay tabular via .mono */
   --font-sans: "Inter", system-ui, sans-serif;
+}
+
+/* glow tints reused by chrome + kpis (kept out of @theme so they don't emit utilities) */
+:root {
+  --glow-c: rgba(34,211,238,.28);
+  --glow-v: rgba(139,92,246,.30);
+  --grid: rgba(120,150,210,.045);
 }
 
 * { box-sizing: border-box; }
@@ -33,70 +43,129 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  letter-spacing: -0.006em;
   background:
-    radial-gradient(1100px 560px at 100% -8%, rgba(59,107,255,.08), transparent 58%),
-    radial-gradient(900px 520px at -6% 108%, rgba(124,58,237,.06), transparent 60%),
+    radial-gradient(900px 520px at 100% -8%, var(--glow-c), transparent 60%),
+    radial-gradient(820px 500px at -6% 108%, var(--glow-v), transparent 60%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
     var(--color-bg-base);
+  background-size: auto, auto, 46px 46px, 46px 46px, auto;
+  background-attachment: fixed;
 }
 
 /* refined thin scrollbars */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #CAD4E6; border-radius: 6px; }
-::-webkit-scrollbar-thumb:hover { background: #AEBBD2; }
+::-webkit-scrollbar-thumb { background: #2C3B5C; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #3A4E76; }
 
-/* elevation — soft, layered, modern */
-.elev { box-shadow: 0 1px 2px rgba(22,32,58,.04), 0 4px 14px rgba(22,32,58,.06); }
-.elev-lg { box-shadow: 0 4px 10px rgba(22,32,58,.06), 0 18px 46px rgba(22,32,58,.12); }
+/* elevation — deep, layered (dark) */
+.elev { box-shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.40); }
+.elev-lg { box-shadow: 0 8px 24px rgba(0,0,0,.45), 0 24px 60px rgba(0,0,0,.55); }
 .card-hover { transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
-.card-hover:hover { box-shadow: 0 8px 22px rgba(22,32,58,.12); transform: translateY(-2px); }
+.card-hover:hover { box-shadow: 0 10px 26px rgba(0,0,0,.5); transform: translateY(-2px); }
 
 /* glassmorphism for chrome (header / sidebar / overlays) */
 .glass {
-  background: rgba(255,255,255,.72);
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  background: color-mix(in srgb, var(--color-bg-panel) 62%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
 }
 
 /* elegant card surface */
 .card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; }
 
-/* gradient brand text */
-.brand-grad { background: linear-gradient(90deg, #3B6BFF, #7C3AED 55%, #DB2777); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+/* gradient brand text — cyan → violet */
+.brand-grad { background: linear-gradient(90deg, #22D3EE, #6E8BFF 48%, #B06BFF); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* KPI stat tile — gradient wash, futuristic */
-.kpi { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--color-border); background: var(--color-bg-card); }
-.kpi::before { content: ""; position: absolute; inset: 0; opacity: .10; background: var(--kpi-grad, linear-gradient(135deg, #3B6BFF, #7C3AED)); pointer-events: none; }
+/* KPI stat tile — gradient wash + glow, futuristic */
+.kpi { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--color-border); background: var(--color-bg-card); box-shadow: 0 8px 30px rgba(0,0,0,.28); }
+.kpi::before { content: ""; position: absolute; inset: 0; opacity: .14; background: var(--kpi-grad, radial-gradient(160px 110px at 100% 0%, var(--color-cyan), transparent 70%)); pointer-events: none; }
 .kpi > * { position: relative; }
 
 /* pill / chip */
 .pill { border-radius: 999px; font-weight: 600; }
 
-/* primary gradient button */
-.btn-primary { background: linear-gradient(90deg, #3B6BFF, #6D5BFF); color: #fff; border-radius: 12px; transition: filter .15s ease, transform .15s ease; }
+/* primary gradient button — cyan → violet, glows in dark */
+.btn-primary { background: linear-gradient(90deg, var(--color-cyan), var(--color-purple)); color: #04121a; border-radius: 12px; font-weight: 700; box-shadow: 0 0 18px var(--glow-c); transition: filter .15s ease, transform .15s ease; }
 .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
-/* '.mono' now means clean Inter with TABULAR numbers (aligned columns) — not a code monospace look */
+/* '.mono' = clean Inter with TABULAR numbers (aligned columns) — not a code monospace look */
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-body { letter-spacing: -0.006em; }
 h1, h2, h3, .font-bold { letter-spacing: -0.015em; }
 
-/* dark-mode awareness (viewer / OS) — stays elegant on dark too */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-bg-base: #0B1020; --color-bg-panel: #121A2E; --color-bg-card: #16203A;
-    --color-border: #243250; --color-txt: #E6ECF7; --color-txt-sec: #93A2BE; --color-txt-muted: #5E6E8C;
-  }
-  :root:not([data-theme="light"]) body { background:
-    radial-gradient(1100px 560px at 100% -8%, rgba(59,107,255,.16), transparent 58%),
-    radial-gradient(900px 520px at -6% 108%, rgba(124,58,237,.13), transparent 60%),
-    var(--color-bg-base); }
-  :root:not([data-theme="light"]) .glass { background: rgba(18,26,46,.72); }
-  :root:not([data-theme="light"]) ::-webkit-scrollbar-thumb { background: #2C3B5C; }
+/* ── Spacious data tables (mockup layout) ──
+   Direct-child combinators ONLY, so nested compact tables (Desk MTF grid) are untouched.
+   Higher specificity than Tailwind's single-class px-/py- utilities, so it wins. */
+table.stbl > thead > tr > th { padding: 13px 18px; font-size: 10.5px; }
+table.stbl > tbody > tr > td { padding: 14px 18px; }
+table.stbl > tbody > tr { transition: background .12s ease; }
+
+/* pill badge (BUY/SELL, grade) — rounded, roomy */
+.tpill { border-radius: 999px; padding: 4px 11px; font-size: 10.5px; font-weight: 700; line-height: 1.4; display: inline-block; }
+/* soft tinted pill variants (state color from the accent, not a flat block) */
+.tpill-buy  { color: var(--color-green); background: color-mix(in srgb, var(--color-green) 16%, transparent); }
+.tpill-sell { color: var(--color-red);   background: color-mix(in srgb, var(--color-red) 16%, transparent); }
+
+/* confidence bar */
+.confbar { width: 72px; height: 6px; border-radius: 999px; background: color-mix(in srgb, var(--color-txt-muted) 30%, transparent); overflow: hidden; display: inline-block; vertical-align: middle; }
+.confbar > i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--color-cyan), var(--color-purple)); }
+
+/* uniform header icon button */
+.ibtn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--color-border); background: var(--color-bg-card);
+  color: var(--color-txt-sec); display: grid; place-items: center; font-size: 14px; cursor: pointer; transition: color .14s, border-color .14s, background .14s; }
+.ibtn:hover { color: var(--color-txt); border-color: var(--color-accent); }
+.ibtn.on { color: var(--color-green); border-color: var(--color-green); background: color-mix(in srgb, var(--color-green) 12%, transparent); }
+.ibtn:disabled { opacity: .5; cursor: default; }
+.hdiv { width: 1px; height: 22px; background: var(--color-border); margin: 0 3px; flex: none; }
+
+/* sidebar nav item (rail) */
+.navitem { position: relative; display: flex; align-items: center; gap: 10px; margin: 2px 8px; padding: 9px 11px; border-radius: 11px;
+  cursor: pointer; color: var(--color-txt-sec); font-weight: 500; transition: background .12s, color .12s; text-align: left; width: calc(100% - 16px); }
+.navitem:hover { background: color-mix(in srgb, var(--color-txt-muted) 12%, transparent); color: var(--color-txt); }
+.navitem .navbar-accent { position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; }
+.navsec { font-size: 9.5px; text-transform: uppercase; letter-spacing: .11em; color: var(--color-txt-muted); font-weight: 700; padding: 14px 18px 6px; }
+
+/* keyboard focus visibility */
+:focus-visible { outline: 2px solid var(--color-cyan); outline-offset: 1px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-hover, .btn-primary { transition: none; }
 }
-:root[data-theme="dark"] {
-  --color-bg-base: #0B1020; --color-bg-panel: #121A2E; --color-bg-card: #16203A;
-  --color-border: #243250; --color-txt: #E6ECF7; --color-txt-sec: #93A2BE; --color-txt-muted: #5E6E8C;
+
+/* ══════════════════════════════════════════════════════════
+   LIGHT VARIANT — applied when the viewer toggles to light.
+   (Dark is the default identity; this is the airy alternative.)
+   ══════════════════════════════════════════════════════════ */
+:root[data-theme="light"] {
+  --color-bg-base: #EEF2FA;
+  --color-bg-panel: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-border: #DEE5F2;
+  --color-accent: #2F5BEA;
+  --color-accent-primary: #2F5BEA;
+  --color-green: #0BA574;
+  --color-red: #E23B4C;
+  --color-yellow: #C2840A;
+  --color-purple: #7C3AED;
+  --color-orange: #E8590C;
+  --color-cyan: #0891A6;
+  --color-gold: #B8860B;
+  --color-txt: #0C1428;
+  --color-txt-sec: #4C5C7A;
+  --color-txt-muted: #8493AE;
+  --color-bull: #0BA574;
+  --color-bear: #E23B4C;
+  --glow-c: rgba(8,145,166,.14);
+  --glow-v: rgba(124,58,237,.12);
+  --grid: rgba(30,60,120,.035);
 }
-:root[data-theme="dark"] .glass { background: rgba(18,26,46,.72); }
-:root[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #2C3B5C; }
+:root[data-theme="light"] .glass { background: rgba(255,255,255,.74); }
+:root[data-theme="light"] ::-webkit-scrollbar-thumb { background: #CAD4E6; }
+:root[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #AEBBD2; }
+:root[data-theme="light"] .elev { box-shadow: 0 1px 2px rgba(16,26,46,.04), 0 8px 24px rgba(16,26,46,.06); }
+:root[data-theme="light"] .elev-lg { box-shadow: 0 12px 40px rgba(16,26,46,.12); }
+:root[data-theme="light"] .card-hover:hover { box-shadow: 0 10px 26px rgba(16,26,46,.12); }
+:root[data-theme="light"] .kpi { box-shadow: 0 1px 2px rgba(16,26,46,.04), 0 8px 24px rgba(16,26,46,.06); }
+:root[data-theme="light"] .btn-primary { color: #fff; box-shadow: 0 4px 14px rgba(47,91,234,.28); }

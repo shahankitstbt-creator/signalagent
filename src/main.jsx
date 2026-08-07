@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { restore, initPersistence } from './store/persist'
+import { initTheme } from './store/theme'
 
+initTheme()
 restore()
 initPersistence()
 

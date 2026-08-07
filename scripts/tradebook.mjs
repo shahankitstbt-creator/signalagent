@@ -9,11 +9,20 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 
 const PATH = 'public/trade_book.json'
-// TWO capital pools: ₹10L for cash/equity, a SEPARATE ₹10L dedicated to F&O + options.
+// THREE capital pools: ₹10L cash/equity, ₹10L F&O+options, ₹10L "Daily Income" (experiment).
 const CAP_CASH = 1000000
 const CAP_FO = 1000000
-export const CAPITAL = CAP_CASH + CAP_FO
+const CAP_DAILY = 1000000
+export const CAPITAL = CAP_CASH + CAP_FO + CAP_DAILY
 const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
+// ── Daily Income sleeve (separate ₹10L, 30-day monitor) — aims for a small, consistent
+// 1–2% booked per day: take the best LONG momentum setups, book fast at +target / cut fast,
+// square off if not resolved. This is an HONEST experiment, NOT a guaranteed daily return. ──
+const DAILY_TAKE = 1.8               // book the whole position at +1.8% (inside the 1–2% aim)
+const DAILY_STOP = 1.2               // cut the position at −1.2%
+const DAILY_DEPLOY_PCT = 22          // up to 22% of the daily sleeve per position (concentrated)
+const DAILY_RISK_PCT = 1.2           // risk ~1.2% of the daily sleeve per trade
+const DAILY_MAX_OPEN = 8             // few, high-conviction names at a time
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -27,12 +36,15 @@ export function loadBook() {
   let b
   try { b = JSON.parse(readFileSync(PATH, 'utf8')); b.open ||= {}; b.closed ||= [] }
   catch { b = { startedAt: null, open: {}, closed: [], updatedAt: null } }
-  // migrate to two-pool model (keeps the existing cash book, adds a fresh ₹10L F&O sleeve)
+  // migrate to three-pool model (cash + F&O + daily-income sleeves)
   b.capitalCash ??= CAP_CASH
   b.capitalFO ??= CAP_FO
-  b.capitalStart = b.capitalCash + b.capitalFO
+  b.capitalDaily ??= CAP_DAILY
+  b.capitalStart = b.capitalCash + b.capitalFO + b.capitalDaily
   if (b.cashCash == null) b.cashCash = b.cash != null ? b.cash : CAP_CASH   // existing single pool → cash sleeve
-  if (b.cashFO == null) b.cashFO = CAP_FO                                    // brand-new F&O money
+  if (b.cashFO == null) b.cashFO = CAP_FO                                    // F&O money
+  if (b.cashDaily == null) b.cashDaily = CAP_DAILY                          // brand-new daily-income money
+  b.dailyStartedAt ??= null                                                 // set when the first daily trade opens
   delete b.cash
   return b
 }
@@ -109,6 +121,7 @@ function failReason(c, pos) {
 export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
+  const entered = [], exited = []   // events THIS run → Telegram entry/exit alerts
 
   // index close info (this run's closures + full history summaries)
   const closedById = {}
@@ -118,6 +131,28 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // 1) UPDATE / CLOSE booked positions
   for (const id of Object.keys(b.open)) {
     const pos = b.open[id]
+
+    // ── DAILY INCOME sleeve: fast scalp exits (book +target / cut −stop / square off EOD) ──
+    if (pos.sleeve === 'DAILY') {
+      const live = ledger.active[id.slice(6)]          // strip "daily:" prefix → base signal id
+      const held = daysBetween(pos.entryDate, todayISO)
+      const ltp = live?.ltp ?? pos.ltp ?? pos.entryPrice
+      const chgPct = +(((ltp - pos.entryPrice) / pos.entryPrice) * 100).toFixed(2)
+      let exitPrice = ltp, result = null, why = null
+      if (chgPct >= DAILY_TAKE) { exitPrice = +(pos.entryPrice * (1 + DAILY_TAKE / 100)).toFixed(2); result = 'WIN'; why = `Booked +${DAILY_TAKE}% daily target` }
+      else if (chgPct <= -DAILY_STOP) { exitPrice = +(pos.entryPrice * (1 - DAILY_STOP / 100)).toFixed(2); result = 'LOSS'; why = `Cut at −${DAILY_STOP}% daily stop` }
+      else if (held >= 1) { result = chgPct >= 0 ? 'WIN' : 'LOSS'; why = `Squared off same-day at ${chgPct >= 0 ? '+' : ''}${chgPct}%` }
+      if (!result) {                                    // same session, still running → mark to market
+        pos.ltp = ltp; pos.unrealizedPnl = Math.round((ltp - pos.entryPrice) * pos.qty)
+        pos.unrealizedPct = chgPct; continue
+      }
+      const pnl = Math.round((exitPrice - pos.entryPrice) * pos.qty)
+      b.cashDaily += pos.invested + pnl
+      const rec = { ...pos, exitPrice, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      b.closed.push(rec); exited.push(rec); delete b.open[id]
+      continue
+    }
+
     const live = ledger.active[id]
     const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH'
     const dir = bearish ? -1 : 1
@@ -138,7 +173,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         const bookedPnl = Math.round(perUnit * halfQty)
         const bookedInv = Math.round(pos.invested * halfQty / pos.qty)
         if (pos.sleeve === 'FO') b.cashFO += bookedInv + bookedPnl; else b.cashCash += bookedInv + bookedPnl
-        b.closed.push({ ...pos, qty: halfQty, lots: isLot ? bookLots : null, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (${isLot ? bookLots + ' lot' + (bookLots > 1 ? 's' : '') : '50%'}) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        const pRec = { ...pos, qty: halfQty, lots: isLot ? bookLots : null, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (${isLot ? bookLots + ' lot' + (bookLots > 1 ? 's' : '') : '50%'}) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
+        b.closed.push(pRec); exited.push(pRec)
         pos.qty -= halfQty; if (isLot) pos.lots -= bookLots; pos.invested -= bookedInv; pos.partialBooked = true
         pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       }
@@ -151,7 +187,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       if (manage && pos.unrealizedPct <= floor) {
         const pnl = pnlFor(pos, pos.ltp, bearish, held)
         if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
-        b.closed.push({ ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined })
+        const trRec = { ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
+        b.closed.push(trRec); exited.push(trRec)
         delete b.open[id]
       }
       continue
@@ -168,14 +205,15 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       ? `Hit T${maxT || 1}${hitOnTime === false ? ' — later than predicted' : hitOnTime ? ' — on/ahead of predicted date' : ''}`
       : result === 'LOSS' ? 'Stopped out before reaching any target' : 'Expired without hitting target or stop'
     if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
-    b.closed.push({
+    const fRec = {
       ...pos, exitPrice, exitDate, exitAt: nowISO, result, maxTarget: maxT,
       realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0,
       priceMovePct: +(((exitPrice - pos.entryPrice) / pos.entryPrice) * 100 * dir).toFixed(2),
       daysHeld: c?.daysHeld ?? null, targetPredictedBy: predBy, hitOnTime, expectationMatch,
       failureReason: result === 'WIN' ? null : failReason(c, pos),
       unrealizedPnl: undefined, unrealizedPct: undefined,
-    })
+    }
+    b.closed.push(fRec); exited.push(fRec)
     delete b.open[id]
   }
   if (b.closed.length > 4000) b.closed = b.closed.slice(-4000)
@@ -187,7 +225,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // only block ids already OPEN — NOT closed ones (a symbol must be re-tradable after its trade closes;
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
-  const openSyms = new Set(Object.values(b.open).map(p => p.symbol))    // one live position per underlying
+  const openSyms = new Set(Object.values(b.open).filter(p => p.sleeve !== 'DAILY').map(p => p.symbol))    // one live cash/F&O position per underlying (daily sleeve tracked separately)
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
@@ -214,43 +252,117 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       reason: s.reason || s.setupType || (Array.isArray(s.precursors) ? s.precursors[0] : null) || null,
       unrealizedPnl: 0, unrealizedPct: 0,
     }
+    entered.push(b.open[s.id])
     opened++
+  }
+
+  // 2b) DAILY INCOME sleeve — separate ₹10L. Take the best LONG cash setups, size from the daily
+  //     pool; fast scalp exits (+target / −stop / square-off) are handled in the update loop above.
+  const dailyOpenCount0 = Object.keys(b.open).filter(k => k.startsWith('daily:')).length
+  const dailySyms = new Set(Object.values(b.open).filter(p => p.sleeve === 'DAILY').map(p => p.symbol))
+  let dailyOpened = 0
+  for (const s of cands) {
+    if (dailyOpenCount0 + dailyOpened >= DAILY_MAX_OPEN) break
+    const dir = s.direction || 'LONG'
+    if (dir !== 'LONG' && dir !== 'BULLISH') continue                   // daily sleeve = long cash only
+    if (!s.entry || !s.sl || s.entry <= s.sl) continue
+    const sym = s.symbol || s.underlying
+    if (dailySyms.has(sym)) continue
+    const key = 'daily:' + s.id
+    if (b.open[key]) continue
+    const riskAmt = CAP_DAILY * DAILY_RISK_PCT / 100, maxDeploy = CAP_DAILY * DAILY_DEPLOY_PCT / 100
+    let qty = Math.floor(riskAmt / (s.entry - s.sl))
+    if (qty * s.entry > maxDeploy) qty = Math.floor(maxDeploy / s.entry)
+    if (qty < 1) continue
+    const invested = Math.round(qty * s.entry)
+    if (invested > b.cashDaily) continue
+    b.cashDaily -= invested
+    if (!b.dailyStartedAt) b.dailyStartedAt = todayISO
+    dailySyms.add(sym)
+    b.open[key] = {
+      sleeve: 'DAILY', id: key, baseId: s.id, symbol: sym, name: s.name || null,
+      generator: s.generator, gen: s.label || s.generator, kind: 'CASH', direction: 'LONG',
+      grade: s.grade || null, qty, lots: null, lotSize: null, notional: invested,
+      entryPrice: s.entry, sl: s.sl, targets: s.targets, invested,
+      entryDate: todayISO, entryAt: nowISO, ltp: s.ltp ?? s.entry,
+      dailyTake: DAILY_TAKE, dailyStop: DAILY_STOP,
+      footprint: s.footprint || null, delivery: s.delivery ?? null, rr: s.rr ?? null,
+      reason: s.reason || s.setupType || 'Daily-income scalp — best long setup',
+      unrealizedPnl: 0, unrealizedPct: 0,
+    }
+    entered.push(b.open[key]); dailyOpened++
   }
 
   computeStats(b)
   save(b)
-  console.log(`Trade book: +${opened} new trades · ${Object.keys(b.open).length} open · ${b.closed.length} closed · equity ₹${b.equity.toLocaleString('en-IN')} (${b.stats.totalPct >= 0 ? '+' : ''}${b.stats.totalPct}%)`)
+  Object.defineProperty(b, '_entered', { value: entered, enumerable: false })
+  Object.defineProperty(b, '_exited', { value: exited, enumerable: false })
+  console.log(`Trade book: +${opened} main +${dailyOpened} daily · ${Object.keys(b.open).length} open · ${b.closed.length} closed · equity ₹${b.equity.toLocaleString('en-IN')} (${b.stats.totalPct >= 0 ? '+' : ''}${b.stats.totalPct}%)`)
   return b
+}
+
+// Daily-income 30-day monitor: realised P&L grouped by day, % of the ₹10L sleeve, and how many
+// days actually landed in the 1–2% aim. Honest scoreboard for the experiment.
+function dailyMonitor(b, dailyClosed) {
+  const byDay = {}
+  for (const t of dailyClosed) { const d = t.exitDate; if (!d) continue; (byDay[d] ||= { pnl: 0, trades: 0, wins: 0 }); byDay[d].pnl += t.realizedPnl; byDay[d].trades++; if (t.result === 'WIN') byDay[d].wins++ }
+  const days = Object.entries(byDay).sort().map(([date, v]) => ({ date, pnl: Math.round(v.pnl), pct: +((v.pnl / b.capitalDaily) * 100).toFixed(2), trades: v.trades, wins: v.wins }))
+  const last30 = days.slice(-30)
+  const n = last30.length
+  return {
+    log: last30, tradingDays: n,
+    daysPositive: last30.filter(d => d.pct > 0).length,
+    daysInBand: last30.filter(d => d.pct >= 1 && d.pct <= 2).length,
+    daysHitMin: last30.filter(d => d.pct >= 1).length,
+    avgDayPct: n ? +(last30.reduce((a, d) => a + d.pct, 0) / n).toFixed(2) : null,
+    targetBand: [1, 2],
+  }
 }
 
 function computeStats(b) {
   const open = Object.values(b.open)
   const investedOpen = open.reduce((a, p) => a + (p.invested || 0), 0)
   const unrealized = open.reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
-  b.equity = Math.round(b.cashCash + b.cashFO + investedOpen + unrealized)
+  b.equity = Math.round(b.cashCash + b.cashFO + b.cashDaily + investedOpen + unrealized)
   // per-sleeve equity
-  const foOpen = open.filter(p => p.sleeve === 'FO'), cashOpen = open.filter(p => p.sleeve !== 'FO')
+  const foOpen = open.filter(p => p.sleeve === 'FO'), cashOpen = open.filter(p => p.sleeve !== 'FO' && p.sleeve !== 'DAILY')
   const foVal = foOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
   const cashVal = cashOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
   const foClosedPnl = b.closed.filter(t => t.sleeve === 'FO').reduce((a, t) => a + t.realizedPnl, 0)
-  const cashClosedPnl = b.closed.filter(t => t.sleeve !== 'FO').reduce((a, t) => a + t.realizedPnl, 0)
-  const wins = b.closed.filter(t => t.result === 'WIN'), losses = b.closed.filter(t => t.result === 'LOSS')
+  const cashClosedPnl = b.closed.filter(t => t.sleeve !== 'FO' && t.sleeve !== 'DAILY').reduce((a, t) => a + t.realizedPnl, 0)
+  // MAIN portfolio = cash + F&O (the ₹20L swing book). Daily-income sleeve is tracked separately.
+  const mainClosed = b.closed.filter(t => t.sleeve !== 'DAILY')
+  const mainCapital = b.capitalCash + b.capitalFO
+  const wins = mainClosed.filter(t => t.result === 'WIN'), losses = mainClosed.filter(t => t.result === 'LOSS')
   const decided = wins.length + losses.length
-  const realized = b.closed.reduce((a, t) => a + t.realizedPnl, 0)
+  const realized = mainClosed.reduce((a, t) => a + t.realizedPnl, 0)
   const grossWin = wins.reduce((a, t) => a + t.realizedPnl, 0)
   const grossLoss = Math.abs(losses.reduce((a, t) => a + t.realizedPnl, 0))
   const onTimeWins = wins.filter(t => t.hitOnTime === true).length
-  // monthly realised P&L vs the 5–7% aim
+  // monthly realised P&L (main sleeves) vs the 5–7% aim
   const monthly = {}
-  for (const t of b.closed) { const m = (t.exitDate || '').slice(0, 7); if (!m) continue; (monthly[m] ||= { pnl: 0, trades: 0 }); monthly[m].pnl += t.realizedPnl; monthly[m].trades++ }
-  const months = Object.entries(monthly).sort().map(([month, v]) => ({ month, pnl: Math.round(v.pnl), pct: +((v.pnl / b.capitalStart) * 100).toFixed(2), trades: v.trades }))
+  for (const t of mainClosed) { const m = (t.exitDate || '').slice(0, 7); if (!m) continue; (monthly[m] ||= { pnl: 0, trades: 0 }); monthly[m].pnl += t.realizedPnl; monthly[m].trades++ }
+  const months = Object.entries(monthly).sort().map(([month, v]) => ({ month, pnl: Math.round(v.pnl), pct: +((v.pnl / mainCapital) * 100).toFixed(2), trades: v.trades }))
+  // DAILY-INCOME sleeve (separate ₹10L, 30-day experiment)
+  const dailyOpen = open.filter(p => p.sleeve === 'DAILY')
+  const dailyVal = dailyOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
+  const dailyClosed = b.closed.filter(t => t.sleeve === 'DAILY')
+  const dWins = dailyClosed.filter(t => t.result === 'WIN').length
   b.stats = {
-    equity: b.equity, cash: Math.round(b.cashCash + b.cashFO), investedOpen,
+    equity: b.equity, cash: Math.round(b.cashCash + b.cashFO + b.cashDaily), investedOpen,
     cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl) },
     foSleeve: { capital: b.capitalFO, cash: Math.round(b.cashFO), equity: Math.round(b.cashFO + foVal), pct: +(((b.cashFO + foVal - b.capitalFO) / b.capitalFO) * 100).toFixed(2), open: foOpen.length, closedPnl: Math.round(foClosedPnl) },
-    open: open.length, closedCount: b.closed.length, wins: wins.length, losses: losses.length,
+    dailySleeve: {
+      capital: b.capitalDaily, cash: Math.round(b.cashDaily), equity: Math.round(b.cashDaily + dailyVal),
+      pct: +(((b.cashDaily + dailyVal - b.capitalDaily) / b.capitalDaily) * 100).toFixed(2),
+      open: dailyOpen.length, closedCount: dailyClosed.length,
+      winRate: dailyClosed.length ? +((dWins / dailyClosed.length) * 100).toFixed(1) : null,
+      closedPnl: Math.round(dailyClosed.reduce((a, t) => a + t.realizedPnl, 0)),
+      startedAt: b.dailyStartedAt, monitor: dailyMonitor(b, dailyClosed),
+    },
+    open: cashOpen.length + foOpen.length, closedCount: mainClosed.length, wins: wins.length, losses: losses.length,
     winRate: decided ? +((wins.length / decided) * 100).toFixed(1) : null,
-    realizedPnl: Math.round(realized), realizedPct: +((realized / b.capitalStart) * 100).toFixed(2),
+    realizedPnl: Math.round(realized), realizedPct: +((realized / mainCapital) * 100).toFixed(2),
     unrealizedPnl: Math.round(unrealized),
     totalPct: +(((b.equity - b.capitalStart) / b.capitalStart) * 100).toFixed(2),
     profitFactor: grossLoss ? +(grossWin / grossLoss).toFixed(2) : (grossWin ? null : null),

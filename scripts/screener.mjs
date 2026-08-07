@@ -34,7 +34,7 @@ function shiftDeskPrices(m, delta) {
 }
 import { fetchDelivery, loadDelivHistory, updateDelivHistory, deliveryFootprint } from './delivery.mjs'
 import { fetchFnoLots, optionPlay, atmStrike } from './fno.mjs'
-import { notifyNewSignals, notifyClosures } from './telegram.mjs'
+import { notifyNewSignals, notifyClosures, notifyTradeEvents } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
@@ -502,7 +502,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const todayISO = today.toISOString().slice(0, 10)
 
   // ── LEDGER (DAILY only): track every signal to win/loss/expired; closed signals leave the board ──
-  let tr = null, goal = null, closedNow = []
+  let tr = null, goal = null, closedNow = [], tb = null
   if (isDaily) {
     const ledger = loadLedger()
     const barsBySymbol = {}
@@ -651,8 +651,8 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     saveLedger(lg)
     console.log(`Ledger: logged ${logged} confluence/F&O/option/reversal picks for tracking`)
 
-    // ── TRADE BOOK: take every high-conviction signal as a ₹10L paper trade + journal it ──
-    try { syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }
+    // ── TRADE BOOK: take every high-conviction signal as a paper trade + journal it ──
+    try { tb = syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book skipped:', e.message) }
   } else if (tf === 'intraday') {
     // INTRADAY REFRESH: keep the journal LIVE during market hours — mark open positions to the
     // current price and take fresh intraday signals, WITHOUT running win/loss evaluation (that stays
@@ -667,11 +667,12 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     for (const s of (board.find(g => g.id === 'fno')?.signals || [])) { if (s.kind !== 'Stock' || !s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {} }
     logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
     saveLedger(lg)
-    try { syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
+    try { tb = syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
     console.log(`Intraday refresh: ${logged} signals logged, book marked-to-market`)
   }
 
-  // ── TELEGRAM: highest-conviction PRE-MOVE entries + target/SL update alerts (no duplicates) ──
+  // ── TELEGRAM: trade ENTRY/EXIT alerts (the moment the book opens/closes) + closures + pre-move ──
+  try { if (tb) await notifyTradeEvents(tb._entered, tb._exited, todayISO) } catch (e) { console.log('Telegram trade events skipped:', e.message) }
   try { await notifyNewSignals({ generators: board }, todayISO) } catch (e) { console.log('Telegram skipped:', e.message) }
   try { await notifyClosures(closedNow, todayISO) } catch (e) { console.log('Telegram updates skipped:', e.message) }
 
