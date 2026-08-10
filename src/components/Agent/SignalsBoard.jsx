@@ -314,13 +314,13 @@ export default function SignalsBoard() {
             const label = (SHORT[g.id] || g.label).replace(/^\S+\s/, '')
             return (
               <button key={g.id} onClick={() => setTab(i)} title={`${g.label}${wr != null ? ` · ${wr}% win` : ''}`}
-                className="navitem" style={on ? { background: tint(g.color, 0.14), color: g.color, fontWeight: 700 } : {}}>
+                className="navitem" style={on ? { background: tint(g.color, 0.16), color: 'var(--color-txt)', fontWeight: 700 } : { color: 'var(--color-txt-sec)' }}>
                 {on && <span className="navbar-accent" style={{ background: g.color }} />}
                 {navCollapsed
                   ? <span className="mx-auto relative text-base">{icon}{g.count > 0 && <span className="absolute -top-1.5 -right-2.5 text-[8px] font-bold px-1 rounded-full" style={{ background: on ? g.color : 'var(--color-bg-card)', color: on ? '#fff' : 'var(--color-txt-muted)' }}>{g.count}</span>}</span>
                   : <>
                     <span className="text-base w-5 text-center shrink-0">{icon}</span>
-                    <span className="flex-1 truncate text-[12px]">{label}</span>
+                    <span className="flex-1 truncate text-[12.5px] font-medium">{label}</span>
                     {wr != null && <span className="text-[9px] font-bold shrink-0" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}%</span>}
                     <span className="px-1.5 rounded-full text-[10px] font-semibold shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
                     {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}

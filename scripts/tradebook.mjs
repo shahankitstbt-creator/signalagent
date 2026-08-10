@@ -139,6 +139,13 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
   const entered = [], exited = []   // events THIS run → Telegram entry/exit alerts
+  // Banked realised P&L per sleeve — survives closed-array slicing; cash is DERIVED from it below
+  // (cash = capital + bankedRealised − deployed) so incremental drift is impossible. Migrate once.
+  if (!b.realizedTotal) {
+    b.realizedTotal = { CASH: 0, FO: 0, DAILY: 0 }
+    for (const t of b.closed) { const sl = t.sleeve || 'CASH'; b.realizedTotal[sl] = (b.realizedTotal[sl] || 0) + (t.realizedPnl || 0) }
+  }
+  const bankRealised = (sleeve, pnl) => { b.realizedTotal[sleeve] = (b.realizedTotal[sleeve] || 0) + pnl }
 
   // index close info (this run's closures + full history summaries)
   const closedById = {}
@@ -167,7 +174,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       if (!result) {                                    // same session, still running → mark to market
         pos.ltp = ltp; pos.unrealizedPnl = pnl; pos.unrealizedPct = retPct; continue
       }
-      b.cashDaily += pos.invested + pnl
+      b.cashDaily += pos.invested + pnl; bankRealised('DAILY', pnl)
       const rec = { ...pos, exitPrice: ltp, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: retPct, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
       b.closed.push(rec); exited.push(rec); delete b.open[id]
       continue
@@ -193,6 +200,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         const bookedPnl = Math.round(perUnit * halfQty)
         const bookedInv = Math.round(pos.invested * halfQty / pos.qty)
         if (pos.sleeve === 'FO') b.cashFO += bookedInv + bookedPnl; else b.cashCash += bookedInv + bookedPnl
+        bankRealised(pos.sleeve, bookedPnl)
         const pRec = { ...pos, qty: halfQty, lots: isLot ? bookLots : null, invested: bookedInv, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: 'WIN', partial: true, maxTarget: 0, realizedPnl: bookedPnl, realizedPct: bookedInv ? +((bookedPnl / bookedInv) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Partial book (${isLot ? bookLots + ' lot' + (bookLots > 1 ? 's' : '') : '50%'}) at +${pos.unrealizedPct}% — rest trailed`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
         b.closed.push(pRec); exited.push(pRec)
         pos.qty -= halfQty; if (isLot) pos.lots -= bookLots; pos.invested -= bookedInv; pos.partialBooked = true
@@ -207,6 +215,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       if (manage && pos.unrealizedPct <= floor) {
         const pnl = pnlFor(pos, pos.ltp, bearish, held)
         if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+    bankRealised(pos.sleeve, pnl)
         const trRec = { ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
         b.closed.push(trRec); exited.push(trRec)
         delete b.open[id]
@@ -225,6 +234,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       ? `Hit T${maxT || 1}${hitOnTime === false ? ' — later than predicted' : hitOnTime ? ' — on/ahead of predicted date' : ''}`
       : result === 'LOSS' ? 'Stopped out before reaching any target' : 'Expired without hitting target or stop'
     if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+    bankRealised(pos.sleeve, pnl)
     const fRec = {
       ...pos, exitPrice, exitDate, exitAt: nowISO, result, maxTarget: maxT,
       realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0,
@@ -254,6 +264,11 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const CAPOF = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
   const deployed = { CASH: 0, FO: 0, DAILY: 0 }
   for (const p of Object.values(b.open)) deployed[p.sleeve] = (deployed[p.sleeve] || 0) + (p.invested || 0)
+  // DERIVE cash from the invariant (capital + banked realised − deployed) — self-heals any drift,
+  // slicing-safe, and guarantees cash + deployed − realised == capital exactly, every run.
+  b.cashCash = Math.round(b.capitalCash + (b.realizedTotal.CASH || 0) - (deployed.CASH || 0))
+  b.cashFO = Math.round(b.capitalFO + (b.realizedTotal.FO || 0) - (deployed.FO || 0))
+  b.cashDaily = Math.round(b.capitalDaily + (b.realizedTotal.DAILY || 0) - (deployed.DAILY || 0))
   let opened = 0
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
