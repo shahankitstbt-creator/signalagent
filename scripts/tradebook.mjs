@@ -52,6 +52,9 @@ export function loadBook() {
   if (b.cashDaily == null) b.cashDaily = CAP_DAILY                          // brand-new daily-income money
   b.dailyStartedAt ??= null                                                 // set when the first daily trade opens
   delete b.cash
+  // NORMALISE: any legacy open position without a sleeve is the original CASH book. Guarantees every
+  // position belongs to exactly one sleeve, so deployment/cash grouping can never leak (was inflating cash equity).
+  for (const p of Object.values(b.open)) if (p && !p.sleeve) p.sleeve = 'CASH'
   return b
 }
 const save = b => { b.updatedAt = new Date().toISOString(); try { writeFileSync(PATH, JSON.stringify(b, null, 2)) } catch {} }

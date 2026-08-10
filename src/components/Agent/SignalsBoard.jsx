@@ -298,7 +298,7 @@ export default function SignalsBoard() {
 
       {/* body: vertical tab nav (left, distinct + collapsible) + content (right) */}
       <div className="flex-1 flex min-h-0 overflow-hidden">
-        <nav className={`${navCollapsed ? 'w-14' : 'w-56'} shrink-0 overflow-y-auto transition-all duration-150 border-r border-border flex flex-col py-2`}
+        <nav className={`${navCollapsed ? 'w-14' : 'w-64'} shrink-0 overflow-y-auto transition-all duration-150 border-r border-border flex flex-col py-2`}
           style={{ background: 'var(--color-bg-panel)' }}>
           <button onClick={() => setNavCollapsed(c => !c)} title={navCollapsed ? 'Expand menu' : 'Collapse menu'}
             className="navitem text-txt-muted hover:text-accent font-semibold mb-1">
@@ -318,14 +318,20 @@ export default function SignalsBoard() {
                 {on && <span className="navbar-accent" style={{ background: g.color }} />}
                 {navCollapsed
                   ? <span className="mx-auto relative text-base">{icon}{g.count > 0 && <span className="absolute -top-1.5 -right-2.5 text-[8px] font-bold px-1 rounded-full" style={{ background: on ? g.color : 'var(--color-bg-card)', color: on ? '#fff' : 'var(--color-txt-muted)' }}>{g.count}</span>}</span>
-                  : <>
-                    <span className="text-base w-5 text-center shrink-0">{icon}</span>
-                    <span className="flex-1 truncate text-[12.5px] font-medium">{label}</span>
-                    {wr != null && <span className="text-[9px] font-bold shrink-0" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}%</span>}
-                    <span className="px-1.5 rounded-full text-[10px] font-semibold shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
-                    {newPerTab[i] > 0 && <span className="px-1 rounded-full text-[9px] font-bold bg-green text-white shrink-0">+{newPerTab[i]}</span>}
-                    {g.id === topId && <span className="text-[10px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
-                  </>}
+                  : <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base w-5 text-center shrink-0">{icon}</span>
+                        <span className="flex-1 truncate text-[13px] font-semibold">{label}</span>
+                        <span className="px-1.5 rounded-full text-[10px] font-semibold shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }}>{g.count}</span>
+                      </div>
+                      {(wr != null || newPerTab[i] > 0 || g.id === topId) && (
+                        <div className="flex items-center gap-2 mt-1 pl-7 text-[9px]">
+                          {wr != null && <span className="font-bold" style={{ color: wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="measured win-rate">{wr}% win</span>}
+                          {newPerTab[i] > 0 && <span className="px-1 rounded-full font-bold bg-green text-white">+{newPerTab[i]} new</span>}
+                          {g.id === topId && <span style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★ top</span>}
+                        </div>
+                      )}
+                    </div>}
               </button>
             )
           })}
