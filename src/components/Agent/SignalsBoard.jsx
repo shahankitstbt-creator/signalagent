@@ -321,10 +321,9 @@ export default function SignalsBoard() {
                   : <>
                       <span className="text-base w-5 text-center shrink-0">{icon}</span>
                       <span className="flex-1 min-w-0 truncate text-[12.5px] font-medium">{label}</span>
-                      <span className="w-8 text-right text-[9px] font-bold tabular-nums shrink-0" style={{ color: wr == null ? 'transparent' : wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title={wr != null ? 'measured win-rate' : ''}>{wr != null ? Math.round(wr) + '%' : '–'}</span>
-                      <span className="w-7 text-center px-1 rounded-full text-[10px] font-semibold shrink-0" style={on ? { background: g.color, color: '#fff' } : { background: 'var(--color-bg-card)', color: 'var(--color-txt-muted)' }} title="signals today">{g.count}</span>
-                      <span className="w-7 text-right text-[9px] font-bold shrink-0 text-green" title={newPerTab[i] > 0 ? `${newPerTab[i]} new today` : ''}>{newPerTab[i] > 0 ? '+' + newPerTab[i] : ''}</span>
                       {g.id === topId && <span className="text-[10px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
+                      <span className="w-11 text-right text-[10px] font-bold tabular-nums shrink-0" style={{ color: wr == null ? 'var(--color-txt-muted)' : wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="confidence (measured win-rate)">{wr != null ? Math.round(wr) + '%' : '—'}</span>
+                      {newPerTab[i] > 0 && <span className="px-1.5 rounded-full text-[9px] font-bold shrink-0 bg-green text-white" title={`${newPerTab[i]} new today`}>+{newPerTab[i]}</span>}
                     </>}
               </button>
             )
