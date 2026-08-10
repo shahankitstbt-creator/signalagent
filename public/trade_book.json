@@ -2678,13 +2678,13 @@
       "invested": 96939,
       "entryDate": "2026-08-10",
       "entryAt": "2026-08-10T09:36:48.981Z",
-      "ltp": 4324.51,
+      "ltp": 4345.75,
       "footprint": null,
       "delivery": null,
       "rr": 1.3,
       "reason": "LONG trend — price above 20 & 50 EMA, near 20-day high (ATR-based SL/targets)",
-      "unrealizedPnl": -1799,
-      "unrealizedPct": -1.86,
+      "unrealizedPnl": -1332,
+      "unrealizedPct": -1.37,
       "peakPct": 0
     },
     "fno:SILVER": {
@@ -3179,7 +3179,7 @@
       ],
       "invested": 99853,
       "entryDate": "2026-08-10",
-      "entryAt": "2026-08-10T14:02:23.774Z",
+      "entryAt": "2026-08-10T15:12:27.395Z",
       "ltp": 172.4499969482422,
       "dailyTake": 1.5,
       "structuralSL": 174.37,
@@ -3240,7 +3240,7 @@
       ],
       "invested": 99891,
       "entryDate": "2026-08-10",
-      "entryAt": "2026-08-10T14:02:23.774Z",
+      "entryAt": "2026-08-10T15:12:27.395Z",
       "ltp": 1854,
       "dailyTake": 1.5,
       "structuralSL": 1545.92,
@@ -3300,7 +3300,7 @@
       ],
       "invested": 99818,
       "entryDate": "2026-08-10",
-      "entryAt": "2026-08-10T14:02:23.774Z",
+      "entryAt": "2026-08-10T15:12:27.395Z",
       "ltp": 1810,
       "dailyTake": 1.5,
       "structuralSL": 1418,
@@ -10264,13 +10264,218 @@
       "daysHeld": 0,
       "expectationMatch": "Booked +5.17% (target)",
       "failureReason": null
+    },
+    {
+      "sleeve": "DAILY",
+      "id": "daily:confluence:SAIL",
+      "baseId": "confluence:SAIL",
+      "symbol": "SAIL",
+      "name": "Steel Authority of India Ltd.",
+      "generator": "confluence",
+      "gen": "Volume + Accumulation",
+      "kind": "CASH",
+      "direction": "LONG",
+      "grade": "A++",
+      "optType": null,
+      "entryPremium": null,
+      "optionPlay": null,
+      "qty": 557,
+      "lots": null,
+      "lotSize": null,
+      "notional": 99853,
+      "entryPrice": 179.27,
+      "sl": 174.37,
+      "targets": [
+        {
+          "price": 182.05,
+          "pct": 1.6,
+          "by": "~5h",
+          "days": 5
+        },
+        {
+          "price": 184.14,
+          "pct": 2.7,
+          "by": "~12h",
+          "days": 12
+        },
+        {
+          "price": 186.23,
+          "pct": 3.9,
+          "by": "~21h",
+          "days": 21
+        }
+      ],
+      "invested": 99853,
+      "entryDate": "2026-08-10",
+      "entryAt": "2026-08-10T14:02:23.774Z",
+      "ltp": 172.4499969482422,
+      "dailyTake": 1.5,
+      "structuralSL": 174.37,
+      "footprint": {
+        "score": 60,
+        "flags": [
+          "Stealth volume — buying while price still flat",
+          "Outperforming NIFTY (relative-strength leader)",
+          "Volatility coiled in a tight base"
+        ],
+        "strong": true
+      },
+      "delivery": null,
+      "rr": 0.57,
+      "reason": "Accumulation (vol 67/100): Up/down volume 1.47× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
+      "exitPrice": 172.4499969482422,
+      "exitDate": "2026-08-10",
+      "exitAt": "2026-08-10T15:12:27.395Z",
+      "result": "LOSS",
+      "maxTarget": 0,
+      "realizedPnl": -3799,
+      "realizedPct": -3.8,
+      "daysHeld": 0,
+      "expectationMatch": "Stopped at -3.8% (tight intraday stop)",
+      "failureReason": "Stopped at -3.8% (tight intraday stop)"
+    },
+    {
+      "sleeve": "DAILY",
+      "id": "daily:confluence:LAURUSLABS",
+      "baseId": "confluence:LAURUSLABS",
+      "symbol": "LAURUSLABS",
+      "name": "Laurus Labs Ltd.",
+      "generator": "confluence",
+      "gen": "Volume + Accumulation",
+      "kind": "CASH",
+      "direction": "LONG",
+      "grade": "A+",
+      "optType": null,
+      "entryPremium": null,
+      "optionPlay": null,
+      "qty": 55,
+      "lots": null,
+      "lotSize": null,
+      "notional": 99891,
+      "entryPrice": 1816.2,
+      "sl": 1545.92,
+      "targets": [
+        {
+          "price": 1906.02,
+          "pct": 4.9,
+          "by": "2026-08-07",
+          "days": 5
+        },
+        {
+          "price": 1973.39,
+          "pct": 8.7,
+          "by": "2026-08-12",
+          "days": 8
+        },
+        {
+          "price": 2040.76,
+          "pct": 12.4,
+          "by": "2026-08-31",
+          "days": 21
+        }
+      ],
+      "invested": 99891,
+      "entryDate": "2026-08-10",
+      "entryAt": "2026-08-10T14:02:23.774Z",
+      "ltp": 1854,
+      "dailyTake": 1.5,
+      "structuralSL": 1545.92,
+      "footprint": {
+        "score": 38,
+        "flags": [
+          "Outperforming NIFTY (relative-strength leader)",
+          "Up/down volume 3.15× (accumulation)"
+        ],
+        "weak": true
+      },
+      "delivery": 48.5,
+      "rr": 0.33,
+      "reason": "Accumulation (vol 65/100): Delivery 48.5% (mixed); 5-day volume > 20-day average (RVOL 1.09×); Up/down volume 3.15× — accumulation pressure",
+      "exitPrice": 1854,
+      "exitDate": "2026-08-10",
+      "exitAt": "2026-08-10T15:12:27.395Z",
+      "result": "WIN",
+      "maxTarget": 1,
+      "realizedPnl": 2079,
+      "realizedPct": 2.08,
+      "daysHeld": 0,
+      "expectationMatch": "Booked +2.08% (target)",
+      "failureReason": null
+    },
+    {
+      "sleeve": "DAILY",
+      "id": "daily:money_flow:COFORGE",
+      "baseId": "money_flow:COFORGE",
+      "symbol": "COFORGE",
+      "name": "Coforge Ltd.",
+      "generator": "money_flow",
+      "gen": "Money Flow",
+      "kind": "CASH",
+      "direction": "LONG",
+      "grade": null,
+      "optType": null,
+      "entryPremium": null,
+      "optionPlay": null,
+      "qty": 58,
+      "lots": null,
+      "lotSize": null,
+      "notional": 99818,
+      "entryPrice": 1721,
+      "sl": 1418,
+      "targets": [
+        {
+          "price": 1841.03,
+          "pct": 7,
+          "by": "2026-08-07",
+          "days": 5
+        },
+        {
+          "price": 1931.06,
+          "pct": 12.2,
+          "by": "2026-08-18",
+          "days": 12
+        },
+        {
+          "price": 2021.08,
+          "pct": 17.4,
+          "by": "2026-08-31",
+          "days": 21
+        }
+      ],
+      "invested": 99818,
+      "entryDate": "2026-08-10",
+      "entryAt": "2026-08-10T14:02:23.774Z",
+      "ltp": 1810,
+      "dailyTake": 1.5,
+      "structuralSL": 1418,
+      "footprint": {
+        "score": 38,
+        "flags": [
+          "Outperforming NIFTY (relative-strength leader)",
+          "Up/down volume 2.38× (accumulation)"
+        ],
+        "weak": true
+      },
+      "delivery": 43.8,
+      "rr": 0.4,
+      "reason": "MFI 76 rising + OBV up — money flowing in",
+      "exitPrice": 1810,
+      "exitDate": "2026-08-10",
+      "exitAt": "2026-08-10T15:12:27.395Z",
+      "result": "WIN",
+      "maxTarget": 1,
+      "realizedPnl": 5162,
+      "realizedPct": 5.17,
+      "daysHeld": 0,
+      "expectationMatch": "Booked +5.17% (target)",
+      "failureReason": null
     }
   ],
-  "updatedAt": "2026-08-10T14:02:43.806Z",
-  "equity": 3072139,
+  "updatedAt": "2026-08-10T15:12:47.264Z",
+  "equity": 3076048,
   "stats": {
-    "equity": 3072139,
-    "cash": 443874,
+    "equity": 3076048,
+    "cash": 447316,
     "investedOpen": 2686575,
     "cashSleeve": {
       "capital": 1000000,
@@ -10293,47 +10498,47 @@
     "foSleeve": {
       "capital": 1000000,
       "cash": 154544,
-      "equity": 1013694,
-      "pct": 1.37,
+      "equity": 1014161,
+      "pct": 1.42,
       "open": 27,
       "closedPnl": 56935,
       "goal": {
         "type": "monthly",
         "min": 10,
         "max": 15,
-        "mtdPct": 2.09,
-        "mtdPnl": 20921,
+        "mtdPct": 2.14,
+        "mtdPnl": 21388,
         "expectMin": 3.33,
-        "projected": 6.3,
+        "projected": 6.4,
         "status": "behind"
       }
     },
     "dailySleeve": {
       "capital": 1000000,
-      "cash": 231482,
-      "equity": 1019118,
-      "pct": 1.91,
+      "cash": 234924,
+      "equity": 1022560,
+      "pct": 2.26,
       "open": 8,
-      "closedCount": 15,
+      "closedCount": 18,
       "winRate": 66.7,
-      "closedPnl": 17210,
+      "closedPnl": 20652,
       "startedAt": "2026-08-10",
       "targetInr": 10000,
       "monitor": {
         "log": [
           {
             "date": "2026-08-10",
-            "pnl": 17210,
-            "pct": 1.72,
-            "trades": 15,
-            "wins": 10
+            "pnl": 20652,
+            "pct": 2.07,
+            "trades": 18,
+            "wins": 12
           }
         ],
         "tradingDays": 1,
         "daysPositive": 1,
-        "daysInBand": 1,
+        "daysInBand": 0,
         "daysHitMin": 1,
-        "avgDayPct": 1.72,
+        "avgDayPct": 2.07,
         "targetBand": [
           1,
           2
@@ -10342,7 +10547,7 @@
       "goal": {
         "type": "daily",
         "targetInr": 10000,
-        "todayPnl": 19118,
+        "todayPnl": 22560,
         "status": "hit"
       }
     },
@@ -10353,8 +10558,8 @@
     "winRate": 62.6,
     "realizedPnl": 113239,
     "realizedPct": 5.66,
-    "unrealizedPnl": -58310,
-    "totalPct": 2.4,
+    "unrealizedPnl": -57843,
+    "totalPct": 2.53,
     "profitFactor": 1.53,
     "avgWinPct": 24.86,
     "avgLossPct": -20.09,
@@ -10383,11 +10588,11 @@
   "cashCash": 57848,
   "cashFO": 154544,
   "capitalDaily": 1000000,
-  "cashDaily": 231482,
+  "cashDaily": 234924,
   "dailyStartedAt": "2026-08-10",
   "realizedTotal": {
     "CASH": 56304,
     "FO": 56935,
-    "DAILY": 17210
+    "DAILY": 20652
   }
 }
