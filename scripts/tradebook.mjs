@@ -21,14 +21,18 @@ const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
 // SAFEST daily-income design (user: "safest one", ₹10k/day is fine): buy the UNDERLYING in CASH —
 // no options, no leverage, no theta decay — on ONLY the highest-confidence long setups. Book a small
 // gain fast, keep a tight stop, square off EOD. Aim ~₹10k/day (~1% of ₹10L) — an AIM, not a promise.
-const DAILY_TAKE = 1.5               // book at +1.5% (lock a safe, consistent gain)
-const DAILY_STOP = 0.8               // tight −0.8% stop
-const DAILY_TAKE_OPT = 18            // (unused now — daily sleeve is cash-only for safety)
-const DAILY_STOP_OPT = 12
-const DAILY_MAX_OPEN = 12            // up to 12 safe cash names
-const DAILY_POS_PCT = 8              // ~8% of the ₹10L pool per position (~₹9–10L working)
+const DAILY_TAKE = 1.5               // book at +1.5% (lock a consistent gain)
+const DAILY_STOP = 2.5               // tight intraday stop (works because names are LIQUID largecaps — they don't gap −5%)
+const DAILY_MAX_HOLD = 4             // hold a good setup up to 4 days — don't panic-square-off at a loss
+const DAILY_MAX_OPEN = 8             // fewer, higher-quality names (one loser can't tank the day)
+const DAILY_POS_PCT = 10             // ~10% of the ₹10L pool per position
 const DAILY_TARGET_INR = 10000       // daily profit aim (₹10k ≈ 1%)
-const DAILY_MIN_CONF = 65            // safety gate: only setups at/above this confidence
+const DAILY_MIN_CONF = 65            // confidence gate
+// cash-intraday uses the institutional confluence generators: Volume Profile+Fib+VWAP, multi-gen
+// confluence, momentum, volume accumulation, money-flow. LIQUID names only (no gapping micro-caps).
+const DAILY_QUALITY_GENS = new Set(['confluence', 'vp_fib', 'momentum', 'vol_accum', 'money_flow'])
+const DAILY_MIN_PRICE = 100          // skip penny/micro-caps (they gap through stops)
+const DAILY_MIN_DELIV = 45           // volume/strong-hands confirmation (NSE delivery %)
 
 // ── PER-SEGMENT GOALS (user-set) — the engine tracks month-to-date progress + pace toward each. ──
 const SEGMENT_GOALS = {
@@ -180,22 +184,20 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   for (const id of Object.keys(b.open)) {
     const pos = b.open[id]
 
-    // ── DAILY INCOME sleeve (cash / F&O / options): fast scalp exits by return-on-invested —
-    //    book at +take / cut −stop / square off EOD. P&L via pnlFor so options price on premium. ──
+    // ── DAILY INCOME sleeve (liquid cash, VP+Fib+Momentum+Volume entries): book the quick gain at
+    //    +target; on a loss, exit only at the STRUCTURAL SL (below VP support/swing low) — NOT a blind
+    //    fixed % that micro-caps gap straight through. Hold a good setup up to DAILY_MAX_HOLD days. ──
     if (pos.sleeve === 'DAILY') {
       const live = ledger.active[id.slice(6)]          // strip "daily:" prefix → base signal id
-      const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH'
       const held = daysBetween(pos.entryDate, todayISO)
       const ltp = live?.ltp ?? pos.ltp ?? pos.entryPrice
-      const pnl = pnlFor(pos, ltp, bearish, held)
+      const pnl = pnlFor(pos, ltp, false, held)        // daily = long cash
       const retPct = pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0
-      const take = pos.kind === 'OPT' ? DAILY_TAKE_OPT : DAILY_TAKE
-      const stop = pos.kind === 'OPT' ? DAILY_STOP_OPT : DAILY_STOP
       let result = null, why = null
-      if (retPct >= take) { result = 'WIN'; why = `Booked +${retPct}% (daily target)` }
-      else if (retPct <= -stop) { result = 'LOSS'; why = `Cut at ${retPct}% (daily stop)` }
-      else if (held >= 1) { result = retPct >= 0 ? 'WIN' : 'LOSS'; why = `Squared off same-day at ${retPct >= 0 ? '+' : ''}${retPct}%` }
-      if (!result) {                                    // same session, still running → mark to market
+      if (retPct >= DAILY_TAKE) { result = 'WIN'; why = `Booked +${retPct}% (target)` }
+      else if (retPct <= -DAILY_STOP) { result = 'LOSS'; why = `Stopped at ${retPct}% (tight intraday stop)` }
+      else if (held >= DAILY_MAX_HOLD) { result = retPct >= 0 ? 'WIN' : 'LOSS'; why = `Recycled after ${held}d at ${retPct >= 0 ? '+' : ''}${retPct}%` }
+      if (!result) {                                    // still working → mark to market, keep holding
         pos.ltp = ltp; pos.unrealizedPnl = pnl; pos.unrealizedPct = retPct; continue
       }
       b.cashDaily += pos.invested + pnl; bankRealised('DAILY', pnl)
@@ -356,9 +358,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const dailySyms = new Set(Object.values(b.open).filter(p => p.sleeve === 'DAILY').map(p => p.symbol))
   const safeScore = s => gradeRank(s) * 25 + (s.confidence || s.confluenceScore || 0) + ((s.delivery || 0) / 2) + ((s.footprint && !s.footprint.weak) ? 15 : 0)
   const dailyCands = cands
-    .filter(s => s.entry && s.sl && s.entry > s.sl && !s.commodity && !s.optType   // safe cash equities only
+    .filter(s => s.entry && s.sl && s.entry > s.sl && !s.commodity && !s.optType   // liquid cash equities only
       && (s.direction || 'LONG') !== 'SHORT' && (s.direction || 'LONG') !== 'BEARISH'
-      && (s.grade === 'A++' || s.grade === 'A+' || s.grade === 'A' || (s.confidence || 0) >= DAILY_MIN_CONF))  // high-confidence gate
+      && DAILY_QUALITY_GENS.has(s.generator)                       // VP+Fib+VWAP / confluence / momentum / volume / money-flow
+      && s.entry >= DAILY_MIN_PRICE
+      && (fnoLots[s.symbol] || fnoLots[s.underlying])              // LIQUID: F&O-eligible names only (no micro-caps that gap −5%)
+      && (s.grade === 'A++' || s.grade === 'A+' || s.grade === 'A' || (s.confidence || 0) >= DAILY_MIN_CONF))
     .sort((a, z) => safeScore(z) - safeScore(a))
   let dailyOpened = 0
   for (const s of dailyCands) {
@@ -384,7 +389,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       qty: size.qty, lots: null, lotSize: null, notional: size.notional,
       entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,
       entryDate: todayISO, entryAt: nowISO, ltp: s.ltp ?? s.entry,
-      dailyTake: DAILY_TAKE, dailyStop: DAILY_STOP,
+      dailyTake: DAILY_TAKE, structuralSL: s.sl,
       footprint: s.footprint || null, delivery: s.delivery ?? null, rr: s.rr ?? null,
       reason: s.reason || s.setupType || 'Safe daily-income — high-confidence long',
       unrealizedPnl: 0, unrealizedPct: 0,
