@@ -1203,8 +1203,10 @@ async function fetchExternalGainers() {
 }
 
 // the daily missed-mover review → public/learning.json (+ bounded auto-tuning)
-// the accuracy goal the user set: 85% by one month out (2026-07-19)
-const GOAL = { target: 85, start: '2026-06-19', deadline: '2026-07-19' }
+// Accuracy aim the user set: work toward 80%+ measured win-rate, CONTINUOUS (rolling 30-day horizon so
+// the self-improvement never "expires"). 80% is an aspiration the engine climbs toward by tightening
+// selectivity daily — NOT a guarantee; the number shown is always the real, measured win-rate.
+const GOAL = { target: 80, start: '2026-06-19' }
 
 async function runSelfImprovement(scored, board, today, ledger, externalNote, tr) {
   const tuning = loadTuning()
@@ -1235,14 +1237,15 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
 
   // ── ACCURACY GOAL: track measured win-rate vs 85% target; adapt selectivity daily ──
   const dateStr = today.toISOString().slice(0, 10)
+  const deadline = new Date(today.getTime() + 30 * 86400000).toISOString().slice(0, 10)   // rolling 30-day horizon
   const measured = tr?.overall?.winRate ?? null
   const decided = tr?.overall?.decided ?? 0
   tuning.qualityBar ??= 0
   // Alert-path selectivity signal (advisory — the BOARD is no longer filtered by this; it only
   // informs how tight the A++/Telegram lane should lean). Track it, but never starve coverage.
   if (decided >= 15 && measured != null) {
-    if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(65, Math.max(50, tuning.qualityBar + 1)); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → alert-lane bar to ${tuning.qualityBar} (Telegram leans tighter; board coverage unchanged).`) }
-    else if (measured > GOAL.target) { tuning.qualityBar = Math.max(45, tuning.qualityBar - 1); adjustments.push(`Above target → eased alert-lane bar to ${tuning.qualityBar}.`) }
+    if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(80, Math.max(50, tuning.qualityBar + (measured < GOAL.target - 15 ? 2 : 1))); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → selectivity bar to ${tuning.qualityBar} (fewer, higher-quality signals; climbs faster when far below).`) }
+    else if (measured > GOAL.target) { tuning.qualityBar = Math.max(45, tuning.qualityBar - 1); adjustments.push(`Above ${GOAL.target}% target → eased selectivity bar to ${tuning.qualityBar} (room for a little more coverage).`) }
   }
   tuning.history = (tuning.history || []).concat([{ date: dateStr, movers: movers.length, caught: caught.length, missed: missed.length, catchRate, catchableRate, gapUpMovers, minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar }]).slice(-90)
   saveTuning(tuning)
@@ -1252,7 +1255,7 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
     id, winRate: g.winRate, decided: g.decided, open: g.open,
     status: g.decided >= 10 ? (g.winRate >= GOAL.target ? 'proven' : g.winRate >= 55 ? 'ok' : 'weak') : 'building',
   }))
-  const daysLeft = Math.max(0, Math.round((new Date(GOAL.deadline) - today) / 86400000))
+  const daysLeft = Math.max(0, Math.round((new Date(deadline) - today) / 86400000))
   const RELIABLE = 20                                            // need ~20 closed trades for a trustworthy read
   const reliable = decided >= RELIABLE
   const status = measured == null ? 'building track record — no trades have closed yet'
@@ -1264,10 +1267,10 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
   try { goal = JSON.parse(readFileSync('public/goal.json', 'utf8')) } catch {}
   const trajectory = (goal.trajectory || []).filter(t => t.date !== dateStr).concat([{ date: dateStr, winRate: measured, decided, open: tr?.overall?.open || 0, catchRate, qualityBar: tuning.qualityBar }]).slice(-120)
   goal = {
-    target: GOAL.target, deadline: GOAL.deadline, start: GOAL.start, daysLeft,
+    target: GOAL.target, deadline: deadline, start: GOAL.start, daysLeft,
     current: measured, decided, reliable, open: tr?.overall?.open || 0, qualityBar: tuning.qualityBar,
     status, generators: genQuality, trajectory, generatedAt: today.toISOString(),
-    note: `Goal: ${GOAL.target}% measured win-rate by ${GOAL.deadline}. "Accuracy" = closed signals that hit the first target before the stop — it is null until trades resolve, then it is the REAL number (never inflated). The engine raises selectivity daily to climb toward target; this means fewer, higher-quality signals. 85% is an aspiration the system works toward honestly, not a guarantee.`,
+    note: `Aim: climb toward ${GOAL.target}%+ measured win-rate (continuous, rolling ${deadline}). "Accuracy" = closed signals that hit the first target before the stop — null until trades resolve, then the REAL number (never inflated). The engine raises selectivity daily → fewer, higher-quality signals. ${GOAL.target}% is an honest aspiration the system works toward, NOT a guarantee — no system can promise it.`,
   }
   writeFileSync('public/goal.json', JSON.stringify(goal, null, 2))
 
@@ -1277,7 +1280,7 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
     catchableRate, catchableMovers: catchable.length, gapUpMovers,
     sources: ['Own NSE-universe gainers (≥5% today)', 'Groww top-gainers (cross-check)', 'Dhan top-gainers (cross-check)'],
     externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar },
-    goal: { target: GOAL.target, deadline: GOAL.deadline, current: measured, status },
+    goal: { target: GOAL.target, deadline: deadline, current: measured, status },
     note: 'Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such.',
   }, null, 2))
   console.log(`Self-improve: ${movers.length} movers (${gapUpMovers} news gap-ups), caught ${caught.length} (${catchRate ?? '–'}% all / ${catchableRate ?? '–'}% catchable), missed ${missed.length} · goal ${measured ?? '–'}%/${GOAL.target}% (${daysLeft}d) → learning.json`)
