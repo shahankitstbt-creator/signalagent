@@ -31,6 +31,8 @@ const tm = s => { if (!s) return ''; const d = new Date(s); return isNaN(d) ? ''
 const _ist = iso => { const ms = Date.parse(iso); return isNaN(ms) ? null : new Date(ms + 5.5 * 3600 * 1000) }
 const dIST = (iso, fb) => { const d = _ist(iso); return d ? d.toISOString().slice(0, 10) : (fb || '—') }
 const tIST = iso => { const d = _ist(iso); return d ? d.toISOString().slice(11, 16) + ' IST' : '' }
+// per-segment monthly goal line for a sleeve tile
+const goalSub = sl => { const g = sl.goal; if (!g) return `${sign(sl.pct)}% · ${sl.open} open`; return `goal ${g.min}–${g.max}%/mo · MTD ${sign(g.mtdPct)}% · ${g.status}` }
 
 export default function TradingJournal() {
   const setView = useViewStore(s => s.setView)
@@ -86,9 +88,9 @@ export default function TradingJournal() {
           <div className="shrink-0 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 p-3 border-b border-border">
             <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} grad="linear-gradient(135deg,#3B6BFF,#7C3AED)" onClick={() => setKind('all')} active={kind === 'all'} />
             <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} onClick={() => setKind('all')} active={kind === 'all'} />
-            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" onClick={() => setKind('CASH')} active={kind === 'CASH'} />}
-            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" onClick={() => setKind('FNO')} active={kind === 'FNO'} />}
-            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open · aim ₹10k/day${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysHitMin}/${st.dailySleeve.monitor.tradingDays}d hit` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" onClick={() => setKind('DAILY')} active={kind === 'DAILY'} />}
+            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={goalSub(st.cashSleeve)} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" onClick={() => setKind('CASH')} active={kind === 'CASH'} />}
+            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={goalSub(st.foSleeve)} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" onClick={() => setKind('FNO')} active={kind === 'FNO'} />}
+            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`goal ₹10k/day · today ${st.dailySleeve.goal ? inr(st.dailySleeve.goal.todayPnl) : '—'}${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysHitMin}/${st.dailySleeve.monitor.tradingDays}d hit` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" onClick={() => setKind('DAILY')} active={kind === 'DAILY'} />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
             <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} onClick={() => setKind('all')} active={kind === 'all'} />

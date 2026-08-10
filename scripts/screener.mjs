@@ -512,6 +512,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       try { const dd = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${ys}?interval=1d&range=6mo`); const r = dd?.chart?.result?.[0]; const q = r?.indicators?.quote?.[0]; if (r?.timestamp && q) barsBySymbol[sym] = { time: r.timestamp, h: q.high, l: q.low, c: q.close } } catch {}
     }
     for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) openOrUpdate(ledger, card, todayISO, todayTs)
+    try { await logCommodities(ledger, board, addBiz, todayISO, todayTs, barsBySymbol) } catch (e) { console.log('Commodities skipped:', e.message) }
     closedNow = evaluate(ledger, barsBySymbol, todayISO, todayTs)
     for (const g of board) if (LEDGER_GENS.has(g.id)) {
       // NEWEST-opened signals ALWAYS surface first (so fresh picks are visible), then by strength.
@@ -834,6 +835,47 @@ function buildReversal(scored, fnoLots, addBiz) {
 
 // Log the desk's index directional as CE/PE trades in the ledger (used by daily + intraday).
 // Prefers live option-OI/FII/far-month direction; falls back to multi-TF alignment when OI is down.
+// ── COMMODITIES: Gold / Crude / Silver as tradeable F&O trend+breakout setups (institutional
+// trend-following: price aligned with 20/50 EMA + at a 20-day breakout, ATR-based SL/targets). ──
+async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol) {
+  const LIST = [['GOLD', 'GC=F'], ['CRUDEOIL', 'CL=F'], ['SILVER', 'SI=F']]
+  const ema = (a, p) => { const k = 2 / (p + 1); let e = a[0]; for (let i = 1; i < a.length; i++) e = a[i] * k + e * (1 - k); return e }
+  const fnoCard = board.find(g => g.id === 'fno')
+  let n = 0
+  for (const [sym, yf] of LIST) {
+    try {
+      const dd = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yf)}?interval=1d&range=6mo`)
+      const r = dd?.chart?.result?.[0], q = r?.indicators?.quote?.[0]
+      if (!r?.timestamp || !q) continue
+      const c = [], h = [], l = []
+      for (let i = 0; i < r.timestamp.length; i++) { if (q.close[i] == null) continue; c.push(q.close[i]); h.push(q.high[i]); l.push(q.low[i]) }
+      if (c.length < 60) continue
+      barsBySymbol[sym] = { time: r.timestamp, h: q.high, l: q.low, c: q.close }   // so evaluate() can resolve it
+      const px = c.at(-1), e20 = ema(c.slice(-60), 20), e50 = ema(c.slice(-80), 50)
+      let atr = 0; for (let i = c.length - 14; i < c.length; i++) atr += Math.max(h[i] - l[i], Math.abs(h[i] - c[i - 1]), Math.abs(l[i] - c[i - 1])); atr /= 14
+      const hi20 = Math.max(...h.slice(-20)), lo20 = Math.min(...l.slice(-20))
+      const up = px > e20 && e20 > e50, down = px < e20 && e20 < e50
+      const dir = (up && px >= hi20 * 0.985) ? 'LONG' : (down && px <= lo20 * 1.015) ? 'SHORT' : null
+      if (!dir) continue
+      const bull = dir === 'LONG', mult = bull ? 1 : -1
+      const entry = round(px, 2), sl = round(bull ? entry - 1.5 * atr : entry + 1.5 * atr, 2)
+      const targets = [2, 3.5, 5].map((m, i) => ({ price: round(entry + mult * m * atr, 2), pct: round((mult * m * atr / entry) * 100, 1), by: addBiz((i + 1) * 4) }))
+      const card = {
+        symbol: sym, underlying: sym, name: sym, kind: 'Commodity', direction: dir, commodity: true,
+        entry, sl, ltp: entry, slPct: round((Math.abs(entry - sl) / entry) * 100, 1), targets,
+        confidence: 70, grade: 'A', rr: round(Math.abs(targets[0].price - entry) / Math.abs(entry - sl), 1),
+        optionPlay: `${sym} ${bull ? 'LONG (buy futures / CE)' : 'SHORT (buy PE)'} — trend + breakout`,
+        reason: `${dir} trend — price ${bull ? 'above' : 'below'} 20 & 50 EMA, ${bull ? 'near 20-day high' : 'near 20-day low'} (ATR-based SL/targets)`,
+        setupType: 'Commodity trend', dirTone: bull ? 'up' : 'down',
+      }
+      if (fnoCard) fnoCard.signals.push(card)
+      try { openOrUpdate(lg, { generator: 'fno', ...card }, todayISO, todayTs); n++ } catch {}
+    } catch { /* skip this commodity */ }
+  }
+  if (n) console.log(`Commodities: ${n} Gold/Crude/Silver setups logged`)
+  return n
+}
+
 function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
   const LOT = sym => fnoLots[sym] || ({ NIFTY: 65, BANKNIFTY: 30 })[sym]
   let n = 0

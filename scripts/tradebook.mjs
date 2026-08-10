@@ -29,6 +29,19 @@ const DAILY_MAX_OPEN = 12            // up to 12 safe cash names
 const DAILY_POS_PCT = 8              // ~8% of the ₹10L pool per position (~₹9–10L working)
 const DAILY_TARGET_INR = 10000       // daily profit aim (₹10k ≈ 1%)
 const DAILY_MIN_CONF = 65            // safety gate: only setups at/above this confidence
+
+// ── PER-SEGMENT GOALS (user-set) — the engine tracks month-to-date progress + pace toward each. ──
+const SEGMENT_GOALS = {
+  CASH:  { monthlyMin: 7,  monthlyMax: 10 },   // % / month on the ₹10L cash book
+  FO:    { monthlyMin: 10, monthlyMax: 15 },   // % / month on the ₹10L F&O book
+  DAILY: { dailyInr: DAILY_TARGET_INR },       // ₹ / day on the ₹10L daily-income sleeve
+}
+// ── AVERAGING / SL-to-structure (moderate): for a top-quality, still-valid setup, add ONCE on a dip
+// and widen the stop to the next structural support instead of stopping out. Capital stays capped. ──
+const AVG_MAX_MULT = 1.5             // final position ≤ 1.5× the base size
+const AVG_TRIGGER_PCT = 6           // consider averaging once price is ~6% underwater (near the SL zone)
+const AVG_MIN_DELIVERY = 55         // "good company" proxy — strong delivery %/hands
+const AVG_SL_WIDEN_PCT = 5          // widen SL ~5% below the average-in price (to structure)
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -65,6 +78,13 @@ const gradeRank = s => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[s.grade] 
 function sizeTrade(sig, fnoLots = {}) {
   const entry = sig.entry, sl = sig.sl
   if (!entry || !sl) return null
+  // COMMODITY (Gold/Crude/Silver) → F&O sleeve, price-move P&L (unleveraged paper model; ₹-budget
+  // sized so P&L is % move × budget — currency-independent and can't blow up like an option).
+  if (sig.commodity) {
+    const budget = CAP_FO * FO_DEPLOY_PCT / 100     // ~₹1L slice of the F&O sleeve per commodity
+    const qty = Math.max(1, Math.floor(budget / entry))
+    return { kind: 'COMM', sleeve: 'FO', qty, lots: null, lotSize: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
+  }
   const foRisk = CAP_FO * RISK_PCT / 100, foDeploy = CAP_FO * FO_DEPLOY_PCT / 100, foMax = CAP_FO * FNO_MAX_MARGIN_PCT / 100
   // OPTION BUY (CE/PE) — defined risk = premium paid; sized off the F&O sleeve
   if (sig.optType && sig.lot && sig.entryPremium) {
@@ -192,6 +212,27 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held)
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       pos.peakPct = Math.max(pos.peakPct ?? 0, pos.unrealizedPct)
+      // AVERAGE ONCE on a dip — for a top-quality, still-valid CASH long (good company = strong delivery,
+      // good setup = A++/A+): add on the dip to improve the cost basis and widen the SL to structure,
+      // instead of stopping out. Capped at AVG_MAX_MULT× base, within the sleeve's ₹10L and free cash.
+      if (!pos.averaged && !bearish && pos.kind === 'CASH' && (pos.grade === 'A++' || pos.grade === 'A+')
+        && (pos.delivery ?? 0) >= AVG_MIN_DELIVERY && pos.unrealizedPct <= -AVG_TRIGGER_PCT && (pos.peakPct ?? 0) < BOOK_AT_PCT) {
+        const base = pos.baseInvested || pos.invested
+        const sleeveDep = Object.values(b.open).filter(p => p.sleeve === pos.sleeve).reduce((a, p) => a + (p.invested || 0), 0)
+        const capRoom = (pos.sleeve === 'FO' ? CAP_FO : CAP_CASH) - sleeveDep
+        const cashRoom = pos.sleeve === 'FO' ? b.cashFO : b.cashCash
+        const addBudget = Math.max(0, Math.min(base * (AVG_MAX_MULT - 1), capRoom, cashRoom))
+        const addQty = pos.ltp > 0 ? Math.floor(addBudget / pos.ltp) : 0
+        if (addQty > 0) {
+          const addCost = Math.round(addQty * pos.ltp)
+          pos.entryPrice = +(((pos.entryPrice * pos.qty) + (pos.ltp * addQty)) / (pos.qty + addQty)).toFixed(2)  // blended cost basis
+          pos.qty += addQty; pos.invested += addCost; pos.baseInvested = base; pos.averaged = true
+          if (pos.sleeve === 'FO') b.cashFO -= addCost; else b.cashCash -= addCost   // (cash re-derived in §2 anyway)
+          pos.sl = +(pos.ltp * (1 - AVG_SL_WIDEN_PCT / 100)).toFixed(2)              // widen SL to structure below the add
+          pos.avgNote = `Averaged once at ₹${pos.ltp} (${pos.grade}, delivery ${pos.delivery ?? '—'}%) — new avg ₹${pos.entryPrice}, SL widened to ₹${pos.sl}`
+          pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
+        }
+      }
       // PARTIAL BOOK 50% at +40% — but F&O trades in WHOLE LOTS, so only if ≥2 lots (you can't
       // book half of a single lot). Cash can book any share count.
       const isLot = !!(pos.lotSize && pos.lots)
@@ -306,8 +347,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const dailySyms = new Set(Object.values(b.open).filter(p => p.sleeve === 'DAILY').map(p => p.symbol))
   const safeScore = s => gradeRank(s) * 25 + (s.confidence || s.confluenceScore || 0) + ((s.delivery || 0) / 2) + ((s.footprint && !s.footprint.weak) ? 15 : 0)
   const dailyCands = cands
-    .filter(s => s.entry && s.sl && s.entry > s.sl
-      && (s.direction || 'LONG') !== 'SHORT' && (s.direction || 'LONG') !== 'BEARISH'   // safe cash longs only
+    .filter(s => s.entry && s.sl && s.entry > s.sl && !s.commodity && !s.optType   // safe cash equities only
+      && (s.direction || 'LONG') !== 'SHORT' && (s.direction || 'LONG') !== 'BEARISH'
       && (s.grade === 'A++' || s.grade === 'A+' || s.grade === 'A' || (s.confidence || 0) >= DAILY_MIN_CONF))  // high-confidence gate
     .sort((a, z) => safeScore(z) - safeScore(a))
   let dailyOpened = 0
@@ -342,7 +383,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     entered.push(b.open[key]); dailyOpened++
   }
 
-  computeStats(b)
+  computeStats(b, todayISO)
   save(b)
   Object.defineProperty(b, '_entered', { value: entered, enumerable: false })
   Object.defineProperty(b, '_exited', { value: exited, enumerable: false })
@@ -368,7 +409,22 @@ function dailyMonitor(b, dailyClosed) {
   }
 }
 
-function computeStats(b) {
+// month-to-date return vs a monthly % goal, with simple day-of-month pace.
+function monthlyGoal(b, sleeve, capital, deployedVal, todayISO) {
+  const g = SEGMENT_GOALS[sleeve]; if (!g) return null
+  const mk = (todayISO || '').slice(0, 7)
+  const realizedMTD = b.closed.filter(t => (t.sleeve || 'CASH') === sleeve && (t.exitDate || '').startsWith(mk)).reduce((a, t) => a + (t.realizedPnl || 0), 0)
+  const mtdPnl = realizedMTD + (deployedVal.unreal || 0)                 // booked this month + open MTM
+  const pct = +((mtdPnl / capital) * 100).toFixed(2)
+  const dom = Math.max(1, parseInt((todayISO || '2026-01-01').slice(8, 10), 10))
+  const frac = Math.min(1, dom / 30)                                     // rough month-elapsed fraction
+  const expectMin = +(g.monthlyMin * frac).toFixed(2)
+  const projected = frac > 0 ? +(pct / frac).toFixed(1) : null          // end-of-month projection
+  const status = pct >= g.monthlyMax * frac ? 'ahead' : pct >= expectMin ? 'on pace' : 'behind'
+  return { type: 'monthly', min: g.monthlyMin, max: g.monthlyMax, mtdPct: pct, mtdPnl: Math.round(mtdPnl), expectMin, projected, status }
+}
+
+function computeStats(b, todayISO) {
   const open = Object.values(b.open)
   const investedOpen = open.reduce((a, p) => a + (p.invested || 0), 0)
   const unrealized = open.reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
@@ -392,15 +448,19 @@ function computeStats(b) {
   const monthly = {}
   for (const t of mainClosed) { const m = (t.exitDate || '').slice(0, 7); if (!m) continue; (monthly[m] ||= { pnl: 0, trades: 0 }); monthly[m].pnl += t.realizedPnl; monthly[m].trades++ }
   const months = Object.entries(monthly).sort().map(([month, v]) => ({ month, pnl: Math.round(v.pnl), pct: +((v.pnl / mainCapital) * 100).toFixed(2), trades: v.trades }))
+  const cashUnreal = cashOpen.reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
+  const foUnreal = foOpen.reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
   // DAILY-INCOME sleeve (separate ₹10L, 30-day experiment)
   const dailyOpen = open.filter(p => p.sleeve === 'DAILY')
   const dailyVal = dailyOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
+  const dailyUnreal = dailyOpen.reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
   const dailyClosed = b.closed.filter(t => t.sleeve === 'DAILY')
   const dWins = dailyClosed.filter(t => t.result === 'WIN').length
+  const dailyTodayPnl = dailyClosed.filter(t => t.exitDate === todayISO).reduce((a, t) => a + (t.realizedPnl || 0), 0) + dailyUnreal
   b.stats = {
     equity: b.equity, cash: Math.round(b.cashCash + b.cashFO + b.cashDaily), investedOpen,
-    cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl) },
-    foSleeve: { capital: b.capitalFO, cash: Math.round(b.cashFO), equity: Math.round(b.cashFO + foVal), pct: +(((b.cashFO + foVal - b.capitalFO) / b.capitalFO) * 100).toFixed(2), open: foOpen.length, closedPnl: Math.round(foClosedPnl) },
+    cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl), goal: monthlyGoal(b, 'CASH', b.capitalCash, { unreal: cashUnreal }, todayISO) },
+    foSleeve: { capital: b.capitalFO, cash: Math.round(b.cashFO), equity: Math.round(b.cashFO + foVal), pct: +(((b.cashFO + foVal - b.capitalFO) / b.capitalFO) * 100).toFixed(2), open: foOpen.length, closedPnl: Math.round(foClosedPnl), goal: monthlyGoal(b, 'FO', b.capitalFO, { unreal: foUnreal }, todayISO) },
     dailySleeve: {
       capital: b.capitalDaily, cash: Math.round(b.cashDaily), equity: Math.round(b.cashDaily + dailyVal),
       pct: +(((b.cashDaily + dailyVal - b.capitalDaily) / b.capitalDaily) * 100).toFixed(2),
@@ -408,6 +468,7 @@ function computeStats(b) {
       winRate: dailyClosed.length ? +((dWins / dailyClosed.length) * 100).toFixed(1) : null,
       closedPnl: Math.round(dailyClosed.reduce((a, t) => a + t.realizedPnl, 0)),
       startedAt: b.dailyStartedAt, targetInr: DAILY_TARGET_INR, monitor: dailyMonitor(b, dailyClosed),
+      goal: { type: 'daily', targetInr: DAILY_TARGET_INR, todayPnl: Math.round(dailyTodayPnl), status: dailyTodayPnl >= DAILY_TARGET_INR ? 'hit' : dailyTodayPnl > 0 ? 'progress' : 'flat' },
     },
     open: cashOpen.length + foOpen.length, closedCount: mainClosed.length, wins: wins.length, losses: losses.length,
     winRate: decided ? +((wins.length / decided) * 100).toFixed(1) : null,
