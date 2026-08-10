@@ -18,14 +18,17 @@ const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
 // ── Daily Income sleeve (separate ₹10L, 30-day monitor) — aims for a small, consistent
 // 1–2% booked per day: take the best LONG momentum setups, book fast at +target / cut fast,
 // square off if not resolved. This is an HONEST experiment, NOT a guaranteed daily return. ──
-// exits are return-on-invested (works for cash AND leveraged options). Cash moves ~1:1 with price;
-// options swing far more per rupee, so they get wider take/stop bands.
-const DAILY_TAKE = 1.8               // CASH: book at +1.8% (inside the 1–2% aim)
-const DAILY_STOP = 1.2               // CASH: cut at −1.2%
-const DAILY_TAKE_OPT = 18            // OPTION: book at +18% premium (leverage → contributes the daily 1–2%)
-const DAILY_STOP_OPT = 12            // OPTION: cut at −12% premium
-const DAILY_MAX_OPEN = 10            // concurrent daily names (cash / F&O / options)
-const DAILY_POS_PCT = 8             // deploy ~8% of the ₹10L daily pool per position (so ~₹8L works, not idle)
+// SAFEST daily-income design (user: "safest one", ₹10k/day is fine): buy the UNDERLYING in CASH —
+// no options, no leverage, no theta decay — on ONLY the highest-confidence long setups. Book a small
+// gain fast, keep a tight stop, square off EOD. Aim ~₹10k/day (~1% of ₹10L) — an AIM, not a promise.
+const DAILY_TAKE = 1.5               // book at +1.5% (lock a safe, consistent gain)
+const DAILY_STOP = 0.8               // tight −0.8% stop
+const DAILY_TAKE_OPT = 18            // (unused now — daily sleeve is cash-only for safety)
+const DAILY_STOP_OPT = 12
+const DAILY_MAX_OPEN = 12            // up to 12 safe cash names
+const DAILY_POS_PCT = 8              // ~8% of the ₹10L pool per position (~₹9–10L working)
+const DAILY_TARGET_INR = 10000       // daily profit aim (₹10k ≈ 1%)
+const DAILY_MIN_CONF = 65            // safety gate: only setups at/above this confidence
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -90,26 +93,13 @@ function sizeTrade(sig, fnoLots = {}) {
   return { kind: 'CASH', sleeve: 'CASH', qty, lots: null, lotSize: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
 }
 
-// Daily-Income sizing — deploy a meaningful slice (~8%) of the ₹10L daily pool per position so the
-// sleeve can realistically reach 1–2%/day. Takes cash, F&O stocks (as ATM options), or index options.
-// Loss stays capped at the premium for options (built-in hedge).
-function sizeDaily(sig, fnoLots = {}) {
+// Daily-Income sizing — SAFEST: CASH only (buy the underlying). No options/leverage → P&L is bounded
+// by the real price move, so the sleeve can never balloon past ₹10L + realised profit. Deploys ~8%
+// of the pool per position; invested is always ≤ the price paid, and never exceeds free daily cash.
+function sizeDaily(sig) {
   const entry = sig.entry, sl = sig.sl
-  if (!entry || !sl) return null
+  if (!entry || !sl || entry <= sl) return null                      // long cash only, defined downside
   const target = CAP_DAILY * DAILY_POS_PCT / 100                     // ~₹80k target deploy per position
-  const lot = sig.lot || fnoLots[sig.symbol] || fnoLots[sig.underlying]
-  const bearish = sig.direction === 'SHORT' || sig.direction === 'BEARISH'
-  if ((sig.optType && sig.entryPremium) || lot) {                    // OPTION (index option, or F&O stock → ATM option)
-    const optType = sig.optType || (bearish ? 'PE' : 'CE')
-    const lotSize = sig.lot || lot
-    const prem = sig.entryPremium || Math.round(entry * STOCK_OPT_PREM_PCT)
-    const perLot = prem * lotSize
-    if (!prem || !lotSize || !perLot) return null
-    const lots = Math.max(1, Math.round(target / perLot))
-    const qty = lots * lotSize
-    return { kind: 'OPT', optType, qty, lots, lotSize, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
-  }
-  if (entry <= sl) return null                                        // cash long only
   const qty = Math.max(1, Math.floor(target / entry))
   return { kind: 'CASH', optType: null, qty, lots: null, lotSize: null, entryPremium: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
 }
@@ -259,6 +249,11 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
+  // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
+  // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
+  const CAPOF = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
+  const deployed = { CASH: 0, FO: 0, DAILY: 0 }
+  for (const p of Object.values(b.open)) deployed[p.sleeve] = (deployed[p.sleeve] || 0) + (p.invested || 0)
   let opened = 0
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
@@ -266,9 +261,11 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (openSyms.has(sym)) continue                                     // already holding this stock
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
+    if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
     const pool = size.sleeve === 'FO' ? b.cashFO : b.cashCash
     if (size.invested > pool) continue
     openSyms.add(sym)
+    deployed[size.sleeve] += size.invested
     if (size.sleeve === 'FO') b.cashFO -= size.invested; else b.cashCash -= size.invested
     b.open[s.id] = {
       sleeve: size.sleeve,
@@ -286,35 +283,42 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     opened++
   }
 
-  // 2b) DAILY INCOME sleeve — separate ₹10L. Take the best LONG cash setups, size from the daily
-  //     pool; fast scalp exits (+target / −stop / square-off) are handled in the update loop above.
-  const dailyOpenCount0 = Object.keys(b.open).filter(k => k.startsWith('daily:')).length
+  // 2b) DAILY INCOME sleeve — SAFEST cash longs only, highest-confidence setups, ~₹10k/day aim.
+  //     Hard ₹10L cap (deployed.DAILY): when full, no new trade until one squares off.
   const dailySyms = new Set(Object.values(b.open).filter(p => p.sleeve === 'DAILY').map(p => p.symbol))
+  const safeScore = s => gradeRank(s) * 25 + (s.confidence || s.confluenceScore || 0) + ((s.delivery || 0) / 2) + ((s.footprint && !s.footprint.weak) ? 15 : 0)
+  const dailyCands = cands
+    .filter(s => s.entry && s.sl && s.entry > s.sl
+      && (s.direction || 'LONG') !== 'SHORT' && (s.direction || 'LONG') !== 'BEARISH'   // safe cash longs only
+      && (s.grade === 'A++' || s.grade === 'A+' || s.grade === 'A' || (s.confidence || 0) >= DAILY_MIN_CONF))  // high-confidence gate
+    .sort((a, z) => safeScore(z) - safeScore(a))
   let dailyOpened = 0
-  for (const s of cands) {
-    if (dailyOpenCount0 + dailyOpened >= DAILY_MAX_OPEN) break
-    if (!s.entry || !s.sl) continue
+  for (const s of dailyCands) {
+    if ((deployed.DAILY || 0) >= CAP_DAILY) break
+    if (Object.keys(b.open).filter(k => k.startsWith('daily:')).length >= DAILY_MAX_OPEN) break
     const sym = s.symbol || s.underlying
     if (dailySyms.has(sym)) continue
     const key = 'daily:' + s.id
     if (b.open[key]) continue
-    const size = sizeDaily(s, fnoLots)                                  // cash / F&O-option / index-option, shorts → PE; ~8% of pool
+    const size = sizeDaily(s)                                           // CASH only, ~8% of pool
     if (!size) continue
+    if (deployed.DAILY + size.invested > CAP_DAILY) continue            // ₹10L hard cap
     if (size.invested > b.cashDaily) continue
     b.cashDaily -= size.invested
+    deployed.DAILY += size.invested
     if (!b.dailyStartedAt) b.dailyStartedAt = todayISO
     dailySyms.add(sym)
     b.open[key] = {
       sleeve: 'DAILY', id: key, baseId: s.id, symbol: sym, name: s.name || null,
       generator: s.generator, gen: s.label || s.generator,
-      kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null,
-      optType: size.optType || null, entryPremium: size.entryPremium || null, optionPlay: s.optionPlay || null,
-      qty: size.qty, lots: size.lots, lotSize: size.lotSize, notional: size.notional,
+      kind: 'CASH', direction: 'LONG', grade: s.grade || null,
+      optType: null, entryPremium: null, optionPlay: null,
+      qty: size.qty, lots: null, lotSize: null, notional: size.notional,
       entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,
       entryDate: todayISO, entryAt: nowISO, ltp: s.ltp ?? s.entry,
-      dailyTake: size.kind === 'OPT' ? DAILY_TAKE_OPT : DAILY_TAKE, dailyStop: size.kind === 'OPT' ? DAILY_STOP_OPT : DAILY_STOP,
+      dailyTake: DAILY_TAKE, dailyStop: DAILY_STOP,
       footprint: s.footprint || null, delivery: s.delivery ?? null, rr: s.rr ?? null,
-      reason: s.reason || s.setupType || 'Daily-income scalp',
+      reason: s.reason || s.setupType || 'Safe daily-income — high-confidence long',
       unrealizedPnl: 0, unrealizedPct: 0,
     }
     entered.push(b.open[key]); dailyOpened++
@@ -385,7 +389,7 @@ function computeStats(b) {
       open: dailyOpen.length, closedCount: dailyClosed.length,
       winRate: dailyClosed.length ? +((dWins / dailyClosed.length) * 100).toFixed(1) : null,
       closedPnl: Math.round(dailyClosed.reduce((a, t) => a + t.realizedPnl, 0)),
-      startedAt: b.dailyStartedAt, monitor: dailyMonitor(b, dailyClosed),
+      startedAt: b.dailyStartedAt, targetInr: DAILY_TARGET_INR, monitor: dailyMonitor(b, dailyClosed),
     },
     open: cashOpen.length + foOpen.length, closedCount: mainClosed.length, wins: wins.length, losses: losses.length,
     winRate: decided ? +((wins.length / decided) * 100).toFixed(1) : null,

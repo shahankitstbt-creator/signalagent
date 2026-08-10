@@ -27,6 +27,10 @@ const pctCls = v => v > 0 ? 'text-green' : v < 0 ? 'text-red' : 'text-txt-sec'
 const sign = v => (v > 0 ? '+' : '') + v
 const dt = s => { if (!s) return '—'; const d = new Date(s); return isNaN(d) ? s : d.toISOString().slice(0, 10) }
 const tm = s => { if (!s) return ''; const d = new Date(s); return isNaN(d) ? '' : d.toISOString().slice(11, 16) + ' UTC' }
+// entry/exit shown in IST (scan-detection time, not live tick fills)
+const _ist = iso => { const ms = Date.parse(iso); return isNaN(ms) ? null : new Date(ms + 5.5 * 3600 * 1000) }
+const dIST = (iso, fb) => { const d = _ist(iso); return d ? d.toISOString().slice(0, 10) : (fb || '—') }
+const tIST = iso => { const d = _ist(iso); return d ? d.toISOString().slice(11, 16) + ' IST' : '' }
 
 export default function TradingJournal() {
   const setView = useViewStore(s => s.setView)
@@ -70,7 +74,7 @@ export default function TradingJournal() {
       <div className="shrink-0 px-3 sm:px-5 py-2.5 border-b border-border glass flex items-center gap-3 flex-wrap z-20">
         <button onClick={() => setView('board')} className="mono text-xs text-txt-sec hover:text-accent">← Board</button>
         <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">📓 Trading Journal</div>
-        <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income · every high-conviction signal taken · sizing by risk</span>
+        <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income (safe cash) · hard ₹10L cap per book · times in IST</span>
         <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent ml-auto">⟳</button>
       </div>
 
@@ -84,7 +88,7 @@ export default function TradingJournal() {
             <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} />
             {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" />}
             {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" />}
-            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysInBand}/${st.dailySleeve.monitor.tradingDays}d in 1–2%` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" />}
+            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open · aim ₹10k/day${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysHitMin}/${st.dailySleeve.monitor.tradingDays}d hit` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
             <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} />
@@ -154,7 +158,7 @@ function OpenTable({ rows: raw }) {
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><JTh label="Dir" k="result" s={s} cls={L} />
-        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Entry date" k="entryDate" s={s} cls={L} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Entry date · time" k="entryDate" s={s} cls={L} />
         <JTh label="LTP" k="ltp" s={s} cls={R} /><JTh label="Unrealised" k="unreal" s={s} cls={R} /><JTh label="SL" k="sl" s={s} cls={R} />
         <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Grade" k="grade" s={s} cls={L} /><th className={L}>Setup</th>
       </tr></thead>
@@ -166,7 +170,7 @@ function OpenTable({ rows: raw }) {
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? <span className="text-txt-muted"> ({s.lots}L)</span> : ''}</td>
             <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
-            <td className="px-3 py-2 text-txt-sec">{s.entryDate}</td>
+            <td className="px-3 py-2 text-txt-sec">{dIST(s.entryAt, s.entryDate)}<div className="text-[10px] text-txt-muted">{tIST(s.entryAt)}</div></td>
             <td className="px-3 py-2 text-right text-txt-sec">₹{curPx(s)}</td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.unrealizedPnl)}`}>{inr(s.unrealizedPnl)}<span className="text-[10px]"> ({sign(s.unrealizedPct)}%)</span></td>
             <td className="px-3 py-2 text-right text-red">₹{s.sl}</td>
@@ -189,7 +193,7 @@ function ClosedTable({ rows: raw }) {
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><th className={L}>Dir</th>
-        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Exit" k="exit" s={s} cls={R} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry · time" k="entry" s={s} cls={R} /><JTh label="Exit · time" k="exit" s={s} cls={R} />
         <JTh label="Held" k="held" s={s} cls={L} /><JTh label="Result" k="result" s={s} cls={L} /><JTh label="P&L" k="pnl" s={s} cls={R} />
         <th className={L}>Target / on time</th><th className={L}>Notes</th>
       </tr></thead>
@@ -200,8 +204,8 @@ function ClosedTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? ` (${s.lots}L)` : ''}</td>
-            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted">{s.entryDate}</div></td>
-            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted">{s.exitDate}</div></td>
+            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted">{dIST(s.entryAt, s.entryDate)} · {tIST(s.entryAt)}</div></td>
+            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted">{dIST(s.exitAt, s.exitDate)} · {tIST(s.exitAt)}</div></td>
             <td className="px-3 py-2 text-right text-txt-sec">{s.daysHeld != null ? `${s.daysHeld}d` : '—'}</td>
             <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${s.result === 'WIN' ? 'bg-green' : s.result === 'LOSS' ? 'bg-red' : 'bg-yellow'}`}>{s.result === 'WIN' ? '🎯 WIN' : s.result === 'LOSS' ? '🔴 LOSS' : '⏳ EXPIRED'}</span></td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.realizedPnl)}`}>{inr(s.realizedPnl)}<div className="text-[10px]">{sign(s.realizedPct)}%</div></td>
