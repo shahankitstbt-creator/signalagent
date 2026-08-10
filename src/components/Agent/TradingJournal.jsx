@@ -84,14 +84,14 @@ export default function TradingJournal() {
         <>
           {/* stat tiles */}
           <div className="shrink-0 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 p-3 border-b border-border">
-            <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} grad="linear-gradient(135deg,#3B6BFF,#7C3AED)" />
-            <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} />
-            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" />}
-            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" />}
-            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open · aim ₹10k/day${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysHitMin}/${st.dailySleeve.monitor.tradingDays}d hit` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" />}
+            <Tile label="Total Equity" value={inr(st.equity)} sub={`start ${inr(book.capitalStart)}`} tone={st.totalPct >= 0 ? 'text-green' : 'text-red'} grad="linear-gradient(135deg,#3B6BFF,#7C3AED)" onClick={() => setKind('all')} active={kind === 'all'} />
+            <Tile label="Total P&L" value={`${sign(st.totalPct)}%`} sub={inr(st.equity - book.capitalStart)} tone={pctCls(st.totalPct)} grad={st.totalPct >= 0 ? 'linear-gradient(135deg,#10A56E,#3B6BFF)' : 'linear-gradient(135deg,#E5384A,#E8590C)'} onClick={() => setKind('all')} active={kind === 'all'} />
+            {st.cashSleeve && <Tile label="💰 Cash book" value={inr(st.cashSleeve.equity)} sub={`${sign(st.cashSleeve.pct)}% · ${st.cashSleeve.open} open`} tone={pctCls(st.cashSleeve.pct)} grad="linear-gradient(135deg,#10A56E,#0E7FA3)" onClick={() => setKind('CASH')} active={kind === 'CASH'} />}
+            {st.foSleeve && <Tile label="⚡ F&O book" value={inr(st.foSleeve.equity)} sub={`${sign(st.foSleeve.pct)}% · ${st.foSleeve.open} open`} tone={pctCls(st.foSleeve.pct)} grad="linear-gradient(135deg,#7C3AED,#DB2777)" onClick={() => setKind('FNO')} active={kind === 'FNO'} />}
+            {st.dailySleeve && <Tile label="⚡ Daily income" value={inr(st.dailySleeve.equity)} sub={`${sign(st.dailySleeve.pct)}% · ${st.dailySleeve.open} open · aim ₹10k/day${st.dailySleeve.monitor?.tradingDays ? ` · ${st.dailySleeve.monitor.daysHitMin}/${st.dailySleeve.monitor.tradingDays}d hit` : ''}`} tone={pctCls(st.dailySleeve.pct)} grad="linear-gradient(135deg,#22D3EE,#8B5CF6)" onClick={() => setKind('DAILY')} active={kind === 'DAILY'} />}
             <Tile label="This month" value={thisMonth ? `${sign(thisMonth.pct)}%` : '—'} sub={`aim ${st.monthTarget.min}–${st.monthTarget.max}%`} tone={thisMonth ? pctCls(thisMonth.pct) : ''} />
             <Tile label="Win rate" value={st.winRate != null ? `${st.winRate}%` : '—'} sub={`${st.wins}W / ${st.losses}L`} />
-            <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} />
+            <Tile label="Open / Closed" value={`${st.open} / ${st.closedCount}`} sub={`${inr(st.cash)} cash free`} onClick={() => setKind('all')} active={kind === 'all'} />
             <Tile label="Profit factor" value={st.profitFactor != null ? st.profitFactor : '—'} sub={st.onTimeWinRate != null ? `${st.onTimeWinRate}% on time` : 'building'} />
           </div>
 
@@ -132,10 +132,12 @@ export default function TradingJournal() {
   )
 }
 
-function Tile({ label, value, sub, tone, grad }) {
+function Tile({ label, value, sub, tone, grad, onClick, active }) {
   return (
-    <div className="kpi elev card-hover px-3 py-2.5" style={grad ? { '--kpi-grad': grad } : {}}>
-      <div className="text-[9px] text-txt-muted uppercase tracking-wide font-semibold truncate">{label}</div>
+    <div onClick={onClick} title={onClick ? 'Click to view these trades' : undefined}
+      className={`kpi elev card-hover px-3 py-2.5 ${onClick ? 'cursor-pointer' : ''}`}
+      style={{ ...(grad ? { '--kpi-grad': grad } : {}), ...(active ? { outline: '2px solid var(--color-accent)', outlineOffset: '-1px' } : {}) }}>
+      <div className="text-[9px] text-txt-muted uppercase tracking-wide font-semibold truncate">{label}{onClick && <span className="text-accent"> ▾</span>}</div>
       <div className={`mono text-sm sm:text-base font-bold ${tone || 'text-txt'}`}>{value}</div>
       {sub && <div className="text-[9px] text-txt-sec mt-0.5 leading-tight">{sub}</div>}
     </div>
