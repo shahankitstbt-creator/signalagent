@@ -298,7 +298,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const isIdxOpt = s => s.optType && (s.symbol === 'NIFTY' || s.symbol === 'BANKNIFTY')
   // commodities + index options get top priority so they always get F&O capital (never crowded out by stock options)
   const catRank = s => (s.commodity || isIdxOpt(s)) ? 4 : s.optType ? 3 : (s.generator === 'fno' || s.lot || fnoLots[s.symbol] || fnoLots[s.underlying]) ? 2 : 1
-  const isStockOptSym = (s, size) => size.sleeve === 'FO' && size.kind === 'OPT' && !s.commodity && s.symbol !== 'NIFTY' && s.symbol !== 'BANKNIFTY'
+  // "reserved" = any F&O that is NOT a commodity and NOT an index → capped so index+commodities keep ₹3L
+  const isReservedFO = (s, size) => size.sleeve === 'FO' && !s.commodity && s.symbol !== 'NIFTY' && s.symbol !== 'BANKNIFTY'
   // only block ids already OPEN — NOT closed ones (a symbol must be re-tradable after its trade closes;
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
@@ -316,8 +317,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   b.cashCash = Math.round(b.capitalCash + (b.realizedTotal.CASH || 0) - (deployed.CASH || 0))
   b.cashFO = Math.round(b.capitalFO + (b.realizedTotal.FO || 0) - (deployed.FO || 0))
   b.cashDaily = Math.round(b.capitalDaily + (b.realizedTotal.DAILY || 0) - (deployed.DAILY || 0))
-  // stock-options already deployed in the F&O sleeve — capped so index/commodities keep ₹3L of room
-  let foStockOpt = Object.values(b.open).filter(p => p.sleeve === 'FO' && p.kind === 'OPT' && !p.commodity && p.symbol !== 'NIFTY' && p.symbol !== 'BANKNIFTY').reduce((a, p) => a + (p.invested || 0), 0)
+  // non-commodity / non-index F&O already deployed — capped so index+commodities keep ₹3L of room
+  let foStockOpt = Object.values(b.open).filter(p => p.sleeve === 'FO' && !p.commodity && p.symbol !== 'NIFTY' && p.symbol !== 'BANKNIFTY').reduce((a, p) => a + (p.invested || 0), 0)
   let opened = 0
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
@@ -326,7 +327,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
-    const stockOpt = isStockOptSym(s, size)
+    const stockOpt = isReservedFO(s, size)
     if (stockOpt && foStockOpt + size.invested > FO_STOCKOPT_CAP) continue      // reserve F&O room for index/commodities
     const pool = size.sleeve === 'FO' ? b.cashFO : b.cashCash
     if (size.invested > pool) continue
