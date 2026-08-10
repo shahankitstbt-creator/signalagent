@@ -44,6 +44,7 @@ const AVG_MIN_DELIVERY = 55         // "good company" proxy — strong delivery 
 const AVG_SL_WIDEN_PCT = 5          // widen SL ~5% below the average-in price (to structure)
 const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
+const FO_STOCKOPT_CAP = 700000      // reserve ₹3L of the F&O sleeve for INDEX options + COMMODITIES (Gold/Crude/Silver)
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of the F&O sleeve
 const STOCK_OPT_PREM_PCT = 0.035    // est. monthly ATM stock-option premium ≈ 3.5% of spot (higher IV than index)
@@ -295,7 +296,9 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // 2) OPEN new trades. Two separate pools: cash trades draw the ₹10L cash sleeve, F&O + options
   // draw the dedicated ₹10L F&O sleeve — so F&O/options can never be crowded out by cash.
   const isIdxOpt = s => s.optType && (s.symbol === 'NIFTY' || s.symbol === 'BANKNIFTY')
-  const catRank = s => isIdxOpt(s) ? 4 : s.optType ? 3 : (s.generator === 'fno' || s.lot || fnoLots[s.symbol] || fnoLots[s.underlying]) ? 2 : 1
+  // commodities + index options get top priority so they always get F&O capital (never crowded out by stock options)
+  const catRank = s => (s.commodity || isIdxOpt(s)) ? 4 : s.optType ? 3 : (s.generator === 'fno' || s.lot || fnoLots[s.symbol] || fnoLots[s.underlying]) ? 2 : 1
+  const isStockOptSym = (s, size) => size.sleeve === 'FO' && size.kind === 'OPT' && !s.commodity && s.symbol !== 'NIFTY' && s.symbol !== 'BANKNIFTY'
   // only block ids already OPEN — NOT closed ones (a symbol must be re-tradable after its trade closes;
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
@@ -313,6 +316,8 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   b.cashCash = Math.round(b.capitalCash + (b.realizedTotal.CASH || 0) - (deployed.CASH || 0))
   b.cashFO = Math.round(b.capitalFO + (b.realizedTotal.FO || 0) - (deployed.FO || 0))
   b.cashDaily = Math.round(b.capitalDaily + (b.realizedTotal.DAILY || 0) - (deployed.DAILY || 0))
+  // stock-options already deployed in the F&O sleeve — capped so index/commodities keep ₹3L of room
+  let foStockOpt = Object.values(b.open).filter(p => p.sleeve === 'FO' && p.kind === 'OPT' && !p.commodity && p.symbol !== 'NIFTY' && p.symbol !== 'BANKNIFTY').reduce((a, p) => a + (p.invested || 0), 0)
   let opened = 0
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
@@ -321,9 +326,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
+    const stockOpt = isStockOptSym(s, size)
+    if (stockOpt && foStockOpt + size.invested > FO_STOCKOPT_CAP) continue      // reserve F&O room for index/commodities
     const pool = size.sleeve === 'FO' ? b.cashFO : b.cashCash
     if (size.invested > pool) continue
     openSyms.add(sym)
+    if (stockOpt) foStockOpt += size.invested
     deployed[size.sleeve] += size.invested
     if (size.sleeve === 'FO') b.cashFO -= size.invested; else b.cashCash -= size.invested
     b.open[s.id] = {

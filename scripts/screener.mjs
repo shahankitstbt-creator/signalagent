@@ -854,8 +854,9 @@ async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol
       const px = c.at(-1), e20 = ema(c.slice(-60), 20), e50 = ema(c.slice(-80), 50)
       let atr = 0; for (let i = c.length - 14; i < c.length; i++) atr += Math.max(h[i] - l[i], Math.abs(h[i] - c[i - 1]), Math.abs(l[i] - c[i - 1])); atr /= 14
       const hi20 = Math.max(...h.slice(-20)), lo20 = Math.min(...l.slice(-20))
-      const up = px > e20 && e20 > e50, down = px < e20 && e20 < e50
-      const dir = (up && px >= hi20 * 0.985) ? 'LONG' : (down && px <= lo20 * 1.015) ? 'SHORT' : null
+      // trend = price above BOTH EMAs (don't require e20>e50 — misses strong trends recovering from a dip)
+      const up = px > e20 && px > e50, down = px < e20 && px < e50
+      const dir = (up && px >= hi20 * 0.97) ? 'LONG' : (down && px <= lo20 * 1.03) ? 'SHORT' : null
       if (!dir) continue
       const bull = dir === 'LONG', mult = bull ? 1 : -1
       const entry = round(px, 2), sl = round(bull ? entry - 1.5 * atr : entry + 1.5 * atr, 2)
