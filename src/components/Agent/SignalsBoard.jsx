@@ -344,6 +344,11 @@ export default function SignalsBoard() {
                 <div className="card elev data-panel">
                   <div className="px-4 sm:px-5 py-3.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap rounded-t-2xl" style={{ background: tint(active.color, 0.06) }}>
                     <span className="text-[13px]"><span className="font-bold" style={{ color: active.color }}>{active.label}</span> <span className="text-txt-muted">— {active.desc}</span></span>
+                    {genTR && genTR.decided >= 20 && (genTR.winRate < 45
+                      ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-red) 16%, transparent)', color: 'var(--color-red)' }} title="Measured win-rate below 45% on a real sample → auto-benched from live trading by the self-improvement engine. Shown for discovery only.">⚠ benched — not traded</span>
+                      : genTR.winRate >= 55
+                        ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-green) 16%, transparent)', color: 'var(--color-green)' }} title="Proven on a real closed sample → actively traded">✓ proven · traded</span>
+                        : <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-yellow) 16%, transparent)', color: 'var(--color-yellow)' }} title="Around breakeven — traded lightly while it proves out">• developing</span>)}
                     {genTR && (genTR.decided > 0
                       ? <span className="ml-auto shrink-0 px-2.5 py-1 rounded-full" style={{ background: tint(active.color, 0.14) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
                       : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}
