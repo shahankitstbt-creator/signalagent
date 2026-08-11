@@ -163,7 +163,7 @@ function failReason(c, pos) {
 }
 
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
-export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}) {
+export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
   const entered = [], exited = []   // events THIS run → Telegram entry/exit alerts
@@ -306,8 +306,11 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
   const openSyms = new Set(Object.values(b.open).filter(p => p.sleeve !== 'DAILY').map(p => p.symbol))    // one live cash/F&O position per underlying (daily sleeve tracked separately)
+  // ADAPTIVE QUALITY: stop booking generators PROVEN weak (measured win-rate < 45% on ≥20 closed) —
+  // concentrate capital on proven winners. This lifts the portfolio's real accuracy over time.
+  const weakGen = g => { const r = genWinRates[g]; return r && r.decided >= 20 && r.winRate < 45 }
   const cands = Object.values(ledger.active)
-    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
+    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && !weakGen(s.generator))
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
   // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
   // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
