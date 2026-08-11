@@ -97,6 +97,17 @@ export default function TradingJournal() {
             <Tile label="Profit factor" value={st.profitFactor != null ? st.profitFactor : '—'} sub={st.onTimeWinRate != null ? `${st.onTimeWinRate}% on time` : 'building'} />
           </div>
 
+          {/* what the engine learned from losses (avoids repeating) */}
+          {st.lessons?.length > 0 && (
+            <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap mono text-[10px]">
+              <span className="font-bold text-txt-sec">🧠 Learned from losses:</span>
+              {st.lessons.slice(0, 5).map((l, i) => (
+                <span key={i} className="px-2 py-0.5 rounded-full" style={{ background: 'color-mix(in srgb, var(--color-red) 12%, transparent)', color: 'var(--color-red)' }} title={`avg ${l.avgLossPct}% · last ${l.lastSymbol || '—'}`}>{l.category} ×{l.count}</span>
+              ))}
+              {st.activeCooldowns > 0 && <span className="px-2 py-0.5 rounded-full text-txt-sec" style={{ background: 'var(--color-bg-base)' }}>⏸ {st.activeCooldowns} names in post-loss cooldown (won't re-enter)</span>}
+            </div>
+          )}
+
           {/* tabs */}
           <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
             {[['open', `Open (${open.length})`], ['closed', `Closed (${closed.length})`]].map(([k, lbl]) => (

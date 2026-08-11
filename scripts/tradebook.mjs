@@ -33,6 +33,7 @@ const DAILY_MIN_CONF = 65            // confidence gate
 const DAILY_QUALITY_GENS = new Set(['confluence', 'vp_fib', 'momentum', 'vol_accum', 'money_flow'])
 const DAILY_MIN_PRICE = 100          // skip penny/micro-caps (they gap through stops)
 const DAILY_MIN_DELIV = 45           // volume/strong-hands confirmation (NSE delivery %)
+const LOSS_COOLDOWN_DAYS = 5         // after a stop-out, DON'T re-enter the same name for a week — learn from the mistake
 
 // ── PER-SEGMENT GOALS (user-set) — the engine tracks month-to-date progress + pace toward each. ──
 const SEGMENT_GOALS = {
@@ -162,6 +163,25 @@ function failReason(c, pos) {
   return null
 }
 
+// ── LOSS-LEARNING: on every booked loss, record WHY it failed + a per-name cooldown so the engine
+// doesn't repeat the same mistake. Lessons persist in the book (b.lossLessons) and feed avoidance. ──
+function lossCategoryOf(rec) {
+  if (rec.sleeve === 'DAILY') return 'daily scalp stopped (intraday noise)'
+  if ((rec.entryPrice || 0) < 100) return 'illiquid / low-price name'
+  if (rec.daysHeld != null && rec.daysHeld <= 1) return 'false breakout (stopped ≤1 day)'
+  if (rec.generator === 'reversal') return 'counter-trend reversal failed'
+  return 'no follow-through (trend/base failed)'
+}
+function recordLoss(b, rec) {
+  b.lossCooldown ||= {}; b.lossLessons ||= {}
+  const sym = rec.symbol || rec.underlying
+  if (sym) b.lossCooldown[sym] = rec.exitDate || (rec.exitAt || '').slice(0, 10)
+  const cat = lossCategoryOf(rec)
+  const L = (b.lossLessons[cat] ||= { count: 0, avgLossPct: 0, lastSymbol: null, lastDate: null })
+  L.avgLossPct = +(((L.avgLossPct * L.count) + (rec.realizedPct || 0)) / (L.count + 1)).toFixed(2)
+  L.count++; L.lastSymbol = sym; L.lastDate = rec.exitDate || null
+}
+
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
 export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
   const b = loadBook()
@@ -202,6 +222,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       }
       b.cashDaily += pos.invested + pnl; bankRealised('DAILY', pnl)
       const rec = { ...pos, exitPrice: ltp, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: retPct, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      if (result === 'LOSS') recordLoss(b, rec)
       b.closed.push(rec); exited.push(rec); delete b.open[id]
       continue
     }
@@ -264,6 +285,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
     bankRealised(pos.sleeve, pnl)
         const trRec = { ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: solid ? `Runner stopped at cost-to-cost (peaked +${pos.peakPct}%)` : `Runner trailed out at +${pos.unrealizedPct}% (peaked +${pos.peakPct}%)`, failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
+        if (trRec.result === 'LOSS') recordLoss(b, trRec)
         b.closed.push(trRec); exited.push(trRec)
         delete b.open[id]
       }
@@ -290,6 +312,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       failureReason: result === 'WIN' ? null : failReason(c, pos),
       unrealizedPnl: undefined, unrealizedPct: undefined,
     }
+    if (result === 'LOSS') recordLoss(b, fRec)
     b.closed.push(fRec); exited.push(fRec)
     delete b.open[id]
   }
@@ -309,6 +332,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // ADAPTIVE QUALITY: stop booking generators PROVEN weak (measured win-rate < 45% on ≥20 closed) —
   // concentrate capital on proven winners. This lifts the portfolio's real accuracy over time.
   const weakGen = g => { const r = genWinRates[g]; return r && r.decided >= 20 && r.winRate < 45 }
+  const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && !weakGen(s.generator))
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
@@ -329,6 +353,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
     if (openSyms.has(sym)) continue                                     // already holding this stock
+    if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
@@ -374,6 +399,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (Object.keys(b.open).filter(k => k.startsWith('daily:')).length >= DAILY_MAX_OPEN) break
     const sym = s.symbol || s.underlying
     if (dailySyms.has(sym)) continue
+    if (inCooldown(sym)) continue                                       // recently stopped out → cooldown
     const key = 'daily:' + s.id
     if (b.open[key]) continue
     const size = sizeDaily(s)                                           // CASH only, ~8% of pool
@@ -474,6 +500,9 @@ function computeStats(b, todayISO) {
   const dailyClosed = b.closed.filter(t => t.sleeve === 'DAILY')
   const dWins = dailyClosed.filter(t => t.result === 'WIN').length
   const dailyTodayPnl = dailyClosed.filter(t => t.exitDate === todayISO).reduce((a, t) => a + (t.realizedPnl || 0), 0) + dailyUnreal
+  // LOSS-LEARNING: prune expired cooldowns; surface why losses happened (top categories) so they inform avoidance
+  if (b.lossCooldown && todayISO) for (const [sym, d] of Object.entries(b.lossCooldown)) { const dd = (Date.parse(todayISO) - Date.parse(d)) / 86400000; if (isNaN(dd) || dd >= LOSS_COOLDOWN_DAYS) delete b.lossCooldown[sym] }
+  const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol })).sort((a, z) => z.count - a.count)
   b.stats = {
     equity: b.equity, cash: Math.round(b.cashCash + b.cashFO + b.cashDaily), investedOpen,
     cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl), goal: monthlyGoal(b, 'CASH', b.capitalCash, { unreal: cashUnreal }, todayISO) },
@@ -497,5 +526,6 @@ function computeStats(b, todayISO) {
     avgLossPct: losses.length ? +(losses.reduce((a, t) => a + t.realizedPct, 0) / losses.length).toFixed(2) : null,
     onTimeWinRate: wins.length ? +((onTimeWins / wins.length) * 100).toFixed(1) : null,
     monthly: months, monthTarget: { min: 5, max: 7 },
+    lessons: lessons.slice(0, 6), activeCooldowns: Object.keys(b.lossCooldown || {}).length,
   }
 }
