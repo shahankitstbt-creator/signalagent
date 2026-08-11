@@ -585,7 +585,27 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
 
   // ── 🔄 REVERSAL / MEAN-REVERSION (two-sided: oversold-bounce longs + overbought-fade shorts) ──
   const revCol = board.find(g => g.id === 'reversal')
-  if (revCol) { const rev = buildReversal(scored, fnoLots, addBiz); revCol.signals = rev; revCol.count = rev.length; console.log(`Reversal: ${rev.length} setups (${rev.filter(r => r.direction === 'SHORT').length} short / ${rev.filter(r => r.direction === 'LONG').length} long)`) }
+  if (revCol) {
+    const rev = buildReversal(scored, fnoLots, addBiz)
+    // RECONCILE contradictions: never show/short a stock the trend engines are BUYing (and vice versa).
+    // Mean-reversion defers to the trend consensus — a reversal SHORT only survives if NO trend gen is long it.
+    const TREND_GENS = ['confluence', 'momentum', 'fno', 'vp_fib', 'vol_accum', 'harmonic', 'money_flow', 'multibagger']
+    const longSyms = new Set(), shortSyms = new Set()
+    for (const g of board) if (TREND_GENS.includes(g.id)) for (const x of (g.signals || [])) {
+      const sym = x.symbol || x.underlying; if (!sym) continue
+      const d = String(x.direction || 'LONG')
+      if (/SHORT|BEAR/.test(d)) shortSyms.add(sym); else longSyms.add(sym)
+    }
+    const kept = rev.filter(r => {
+      const sym = r.symbol || r.underlying
+      if (r.direction === 'SHORT' && longSyms.has(sym)) return false   // don't short a trend-BUY
+      if (r.direction === 'LONG' && shortSyms.has(sym)) return false   // don't buy a trend-SELL
+      return true
+    })
+    const dropped = rev.length - kept.length
+    revCol.signals = kept; revCol.count = kept.length
+    console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} contradicting the trend consensus` : ''}`)
+  }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
   // ── 🎯 SMART-MONEY DESK: multi-timeframe (15m→1D) confluence for NIFTY/BankNifty/Gold + top
