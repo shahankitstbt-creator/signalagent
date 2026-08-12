@@ -34,6 +34,9 @@ const DAILY_QUALITY_GENS = new Set(['confluence', 'vp_fib', 'momentum', 'vol_acc
 const DAILY_MIN_PRICE = 100          // skip penny/micro-caps (they gap through stops)
 const DAILY_MIN_DELIV = 45           // volume/strong-hands confirmation (NSE delivery %)
 const LOSS_COOLDOWN_DAYS = 5         // after a stop-out, DON'T re-enter the same name for a week — learn from the mistake
+// CASH-book quality gate (from loss analysis): skip penny/illiquid names and don't CHASE an already-extended move
+const CASH_MIN_PRICE = 50           // no sub-₹50 penny stocks (false-breakout prone)
+const CASH_MAX_CHASE = 8            // skip if the stock already ran ≥8% today (chasing = buying the top)
 
 // ── PER-SEGMENT GOALS (user-set) — the engine tracks month-to-date progress + pace toward each. ──
 const SEGMENT_GOALS = {
@@ -356,6 +359,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
+    if (size.sleeve === 'CASH' && (s.entry < CASH_MIN_PRICE || (s.changePct || 0) >= CASH_MAX_CHASE)) continue  // quality: no pennies, no chasing extended moves
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
     const stockOpt = isReservedFO(s, size)
     if (stockOpt && foStockOpt + size.invested > FO_STOCKOPT_CAP) continue      // reserve F&O room for index/commodities
