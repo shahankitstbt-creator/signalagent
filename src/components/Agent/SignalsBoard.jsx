@@ -127,20 +127,32 @@ function DailyStrip({ d }) {
   )
   return (
     <div className="card elev p-4 sm:p-5" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-cyan) 10%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
+      {(() => { const occ = Math.max(0, d.capital - d.cash), occPct = Math.round((occ / d.capital) * 100); return (
+      <>
       <div className="flex items-center gap-2 flex-wrap mb-3">
         <span className="mono text-[13px] font-bold">⚡ Daily-Income Sleeve</span>
         <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-cyan) 18%, transparent)', color: 'var(--color-cyan)' }}>₹10L safe cash · aim ₹10k/day</span>
-        <span className="mono text-[10px] text-txt-muted">30-day experiment{d.startedAt ? ` · since ${d.startedAt}` : ''}</span>
-        <span className="mono text-[10px] text-txt-muted ml-auto">Not a guarantee — honestly monitored</span>
+        <span className="mono text-[10px] text-green font-bold">● live</span>
+        {/* live occupancy bar */}
+        <span className="hidden sm:flex items-center gap-1.5 ml-1">
+          <span className="mono text-[9px] text-txt-muted">occupied</span>
+          <span style={{ width: 90, height: 6, borderRadius: 999, background: 'color-mix(in srgb,var(--color-txt-muted) 25%,transparent)', overflow: 'hidden', display: 'inline-block' }}><i style={{ display: 'block', height: '100%', width: occPct + '%', background: 'linear-gradient(90deg,var(--color-cyan),var(--color-purple))' }} /></span>
+          <span className="mono text-[9px] font-bold">{occPct}%</span>
+        </span>
+        <span className="mono text-[10px] text-txt-muted ml-auto">updates every scan · not a guarantee</span>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
         {cell('Sleeve equity', inr(d.equity).replace('+', ''), '')}
+        {cell('Occupied', inr(occ).replace('+', '') + ` · ${occPct}%`, '')}
+        {cell('Free cash', inr(d.cash).replace('+', ''), d.cash < d.capital * 0.1 ? 'text-yellow' : 'text-green')}
+        {cell('Open now', `${d.open} / 8`, '')}
         {cell('Net P&L', inr(pnl), pnl >= 0 ? 'text-green' : 'text-red')}
         {cell('Return', `${d.pct >= 0 ? '+' : ''}${d.pct}%`, d.pct >= 0 ? 'text-green' : 'text-red')}
-        {cell('Open now', d.open, '')}
         {cell('Avg/day', m.avgDayPct != null ? `${m.avgDayPct >= 0 ? '+' : ''}${m.avgDayPct}%` : '—', m.avgDayPct >= 1 ? 'text-green' : '')}
         {cell('Days ≥ ₹10k', `${m.daysHitMin ?? 0}/${m.tradingDays ?? 0}`, (m.daysHitMin ?? 0) > 0 ? 'text-green' : '')}
       </div>
+      </>
+      ) })()}
     </div>
   )
 }

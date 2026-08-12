@@ -173,7 +173,7 @@ function OpenTable({ rows: raw }) {
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><JTh label="Dir" k="result" s={s} cls={L} />
-        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="Entry date · time" k="entryDate" s={s} cls={L} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="In / Out · time (IST)" k="entryDate" s={s} cls={L} />
         <JTh label="LTP" k="ltp" s={s} cls={R} /><JTh label="Unrealised" k="unreal" s={s} cls={R} /><JTh label="SL" k="sl" s={s} cls={R} />
         <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Grade" k="grade" s={s} cls={L} /><th className={L}>Setup</th>
       </tr></thead>
@@ -185,7 +185,10 @@ function OpenTable({ rows: raw }) {
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? <span className="text-txt-muted"> ({s.lots}L)</span> : ''}</td>
             <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
-            <td className="px-3 py-2 text-txt-sec">{dIST(s.entryAt, s.entryDate)}<div className="text-[10px] text-txt-muted">{tIST(s.entryAt)}</div></td>
+            <td className="px-3 py-2 text-txt-sec">
+              <div><span className="text-green">In</span> {dIST(s.entryAt, s.entryDate)} <span className="text-txt-muted">{tIST(s.entryAt)}</span></div>
+              <div className="text-[10px] text-txt-muted"><span className="text-yellow">Out</span> — holding (targets/SL pending)</div>
+            </td>
             <td className="px-3 py-2 text-right text-txt-sec">₹{curPx(s)}</td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.unrealizedPnl)}`}>{inr(s.unrealizedPnl)}<span className="text-[10px]"> ({sign(s.unrealizedPct)}%)</span></td>
             <td className="px-3 py-2 text-right text-red">₹{s.sl}</td>
@@ -219,8 +222,8 @@ function ClosedTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? ` (${s.lots}L)` : ''}</td>
-            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted">{dIST(s.entryAt, s.entryDate)} · {tIST(s.entryAt)}</div></td>
-            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted">{dIST(s.exitAt, s.exitDate)} · {tIST(s.exitAt)}</div></td>
+            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted"><span className="text-green">In</span> {dIST(s.entryAt, s.entryDate)} · {tIST(s.entryAt)}</div></td>
+            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted"><span className="text-yellow">Out</span> {dIST(s.exitAt, s.exitDate)} · {tIST(s.exitAt)}</div></td>
             <td className="px-3 py-2 text-right text-txt-sec">{s.daysHeld != null ? `${s.daysHeld}d` : '—'}</td>
             <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${s.result === 'WIN' ? 'bg-green' : s.result === 'LOSS' ? 'bg-red' : 'bg-yellow'}`}>{s.result === 'WIN' ? '🎯 WIN' : s.result === 'LOSS' ? '🔴 LOSS' : '⏳ EXPIRED'}</span></td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.realizedPnl)}`}>{inr(s.realizedPnl)}<div className="text-[10px]">{sign(s.realizedPct)}%</div></td>
