@@ -77,6 +77,15 @@ export function loadBook() {
   // NORMALISE: any legacy open position without a sleeve is the original CASH book. Guarantees every
   // position belongs to exactly one sleeve, so deployment/cash grouping can never leak (was inflating cash equity).
   for (const p of Object.values(b.open)) if (p && !p.sleeve) p.sleeve = 'CASH'
+  // RETROFIT HEDGE: any F&O OPTION opened before hedging existed is defined to capped risk NOW —
+  // max loss/profit bounded at ±its current net cost (a long option can't lose more than premium
+  // anyway; this just enforces the same defined-risk model the new debit spreads use). No new naked F&O.
+  for (const p of Object.values(b.open)) {
+    if (p && p.sleeve === 'FO' && p.kind === 'OPT' && !p.hedged && p.qty > 0) {
+      p.hedged = true; p.netDebit = Math.round(p.invested / p.qty); p.longPrem = p.entryPremium ?? p.netDebit
+      p.hedgeNote = `Retrofit to defined-risk — max loss capped at net ₹${p.invested}`
+    }
+  }
   return b
 }
 const save = b => { b.updatedAt = new Date().toISOString(); try { writeFileSync(PATH, JSON.stringify(b, null, 2)) } catch {} }
@@ -575,7 +584,17 @@ function computeStats(b, todayISO) {
   const dailyTodayPnl = dailyClosed.filter(t => t.exitDate === todayISO).reduce((a, t) => a + (t.realizedPnl || 0), 0) + dailyUnreal
   // LOSS-LEARNING: prune expired cooldowns; surface why losses happened (top categories) so they inform avoidance
   if (b.lossCooldown && todayISO) for (const [sym, d] of Object.entries(b.lossCooldown)) { const dd = (Date.parse(todayISO) - Date.parse(d)) / 86400000; if (isNaN(dd) || dd >= LOSS_COOLDOWN_DAYS) delete b.lossCooldown[sym] }
-  const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol, fix: v.fix })).sort((a, z) => z.count - a.count)
+  const FIX_BY_CAT = {
+    'gave back an open gain': 'trail sooner — book part at +40% and pull the stop to cost-to-cost',
+    'averaged a loser that kept falling': 'only average A++ names (delivery ≥55) still above their base — else take the first stop',
+    'daily scalp stopped (intraday noise)': 'enter only on a VWAP/POC reclaim with volume; skip the first 15 min',
+    'illiquid / low-price name': 'keep the ≥₹50 floor; prefer liquid F&O-eligible names where the stop fills',
+    'counter-trend reversal failed': 'take a reversal ONLY after a confirmed CHoCH and never against a trend desk',
+    'false breakout (stopped ≤1 day)': 'require a confirmed close beyond the level + volume; enter the retest',
+    'stop too wide (loose risk)': 'anchor the stop to the nearest swing/LVN and size down to ~1% risk',
+    'no follow-through (trend/base failed)': 'demand one more confluence (VP node / FVG / structure) before entry',
+  }
+  const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol, fix: v.fix || FIX_BY_CAT[category] || null })).sort((a, z) => z.count - a.count)
   const lossJournal = (b.lossJournal || []).slice(0, 12)   // recent per-trade post-mortems (what we missed + fix)
   // SEGMENT LEADERBOARD — which book is consistent (win-rate ≥55%) AND highest-returning
   const segWin = arr => { const w = arr.filter(t => t.result === 'WIN').length, n = arr.filter(t => t.result === 'WIN' || t.result === 'LOSS').length; return n ? +((w / n) * 100).toFixed(1) : null }
