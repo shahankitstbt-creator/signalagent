@@ -65,7 +65,11 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 3. **Partial book** — book 50% at +40%; trail the rest (A++/A+ → cost-to-cost; others → +10% floor).
 4. **No contradictions** — a reversal SHORT is dropped if any trend desk is LONG that name (and vice-versa).
 5. **Loss cooldown** — after a stop-out, the name is **benched for 5 days** (don't re-buy what just stopped you).
-6. **Weak-desk benching** — any generator proven weak (<45% win on ≥20 closed) is **auto-removed from trading**.
+6. **Per-desk optimization (target 75% win-rate)** — measured on ≥20 closed trades:
+   - **≥75%** → proven ✓ — traded freely.
+   - **45–75%** → *optimizing* ⚙ — trades **only its highest-conviction setups** (confidence ≥60 or grade A+/A++) so its win-rate climbs toward 75%.
+   - **<45%** → **benched** ⚠ — auto-removed from trading (shown for discovery only).
+   The evening self-improvement re-checks every desk against 75% and adjusts which ones are optimizing/benched.
 
 ---
 

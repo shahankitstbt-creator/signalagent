@@ -510,7 +510,7 @@ export default function SignalsBoard() {
                       <span className="text-base w-5 text-center shrink-0">{icon}</span>
                       <span className="flex-1 min-w-0 truncate text-[12.5px] font-medium">{label}</span>
                       {g.id === topId && <span className="text-[10px] shrink-0" style={{ color: '#FF6D00' }} title={`Top accuracy ${topWin}%`}>★</span>}
-                      <span className="w-11 text-right text-[10px] font-bold tabular-nums shrink-0" style={{ color: wr == null ? 'var(--color-txt-muted)' : wr >= 60 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#8896a6' }} title="confidence (measured win-rate)">{wr != null ? Math.round(wr) + '%' : '—'}</span>
+                      <span className="w-11 text-right text-[10px] font-bold tabular-nums shrink-0" style={{ color: wr == null ? 'var(--color-txt-muted)' : wr >= 75 ? '#0E9F6E' : wr >= 45 ? '#FFB300' : '#E5384A' }} title="measured win-rate — green ≥75% (proven), amber 45–75% (optimizing), red <45% (benched)">{wr != null ? Math.round(wr) + '%' : '—'}</span>
                       {newPerTab[i] > 0 && <span className="px-1.5 rounded-full text-[9px] font-bold shrink-0 bg-green text-white" title={`${newPerTab[i]} new today`}>+{newPerTab[i]}</span>}
                     </>}
               </button>
@@ -534,10 +534,10 @@ export default function SignalsBoard() {
                   <div className="px-4 sm:px-5 py-3.5 text-[11px] mono text-txt-sec border-b border-border flex items-center gap-3 flex-wrap rounded-t-2xl" style={{ background: tint(active.color, 0.06) }}>
                     <span className="text-[13px]"><span className="font-bold" style={{ color: active.color }}>{active.label}</span> <span className="text-txt-muted">— {active.desc}</span></span>
                     {genTR && genTR.decided >= 20 && (genTR.winRate < 45
-                      ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-red) 16%, transparent)', color: 'var(--color-red)' }} title="Measured win-rate below 45% on a real sample → auto-benched from live trading by the self-improvement engine. Shown for discovery only.">⚠ benched — not traded</span>
-                      : genTR.winRate >= 55
-                        ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-green) 16%, transparent)', color: 'var(--color-green)' }} title="Proven on a real closed sample → actively traded">✓ proven · traded</span>
-                        : <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-yellow) 16%, transparent)', color: 'var(--color-yellow)' }} title="Around breakeven — traded lightly while it proves out">• developing</span>)}
+                      ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-red) 16%, transparent)', color: 'var(--color-red)' }} title="Win-rate below 45% → auto-benched from live trading. Shown for discovery only.">⚠ benched — not traded</span>
+                      : genTR.winRate >= 75
+                        ? <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-green) 16%, transparent)', color: 'var(--color-green)' }} title="≥75% on a real sample → proven & traded freely">✓ proven · traded</span>
+                        : <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: 'color-mix(in srgb, var(--color-yellow) 16%, transparent)', color: 'var(--color-yellow)' }} title="Below the 75% target → being OPTIMIZED: trades only its highest-conviction setups so its win-rate climbs.">⚙ optimizing → 75% (best setups only)</span>)}
                     {genTR && (genTR.decided > 0
                       ? <span className="ml-auto shrink-0 px-2.5 py-1 rounded-full" style={{ background: tint(active.color, 0.14) }}>track record <b className={genTR.winRate >= 80 ? 'text-green' : 'text-txt'}>{genTR.winRate}%</b> ({genTR.win}/{genTR.decided}) · {genTR.open} open</span>
                       : genTR.open > 0 ? <span className="ml-auto shrink-0 text-txt-muted">{genTR.open} open · accuracy builds as trades close</span> : null)}

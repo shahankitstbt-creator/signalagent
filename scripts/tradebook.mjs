@@ -347,10 +347,18 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const openSyms = new Set(Object.values(b.open).filter(p => p.sleeve !== 'DAILY').map(p => p.symbol))    // one live cash/F&O position per underlying (daily sleeve tracked separately)
   // ADAPTIVE QUALITY: stop booking generators PROVEN weak (measured win-rate < 45% on ≥20 closed) —
   // concentrate capital on proven winners. This lifts the portfolio's real accuracy over time.
-  const weakGen = g => { const r = genWinRates[g]; return r && r.decided >= 20 && r.winRate < 45 }
+  // PER-DESK OPTIMIZATION toward a 75% target: <45% win → benched (not traded); 45–75% → "optimizing",
+  // trade only its BEST setups (higher confidence / grade) so its win-rate climbs; ≥75% → proven, trade freely.
+  const deskGate = s => {
+    const r = genWinRates[s.generator]
+    if (!r || r.decided < 20) return true                                         // still building → allow
+    if (r.winRate < 45) return false                                              // proven weak → benched
+    if (r.winRate < 75) return (s.confidence || 0) >= 60 || s.grade === 'A++' || s.grade === 'A+'  // optimizing → only best
+    return true                                                                    // proven ≥75% → trade freely
+  }
   const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
   const cands = Object.values(ledger.active)
-    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && !weakGen(s.generator))
+    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && deskGate(s))
     .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
   // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
   // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
