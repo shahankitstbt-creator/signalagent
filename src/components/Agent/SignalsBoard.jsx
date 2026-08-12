@@ -128,30 +128,53 @@ function copyTradeSize(p, cap, risk) {
   return qty >= 1 ? { qty, deploy: Math.round(qty * p.entryPrice), riskRs: Math.round(qty * riskPer) } : null
 }
 function fmtCopyTrade(p, cap, risk) {
-  const N = n => (+n).toLocaleString('en-IN'), isOpt = p.kind === 'OPT', size = copyTradeSize(p, cap, risk)
-  const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join(' · ')
-  return `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''}Buy @ ₹${N(p.entryPrice)} · SL ₹${N(p.sl)}\n${tg}${p.rr ? ` · R:R 1:${p.rr}` : ''}`
-}
-// clean, organized single-trade copy (aligned labels, one per line) — used by every row's copy button
-function cleanCopy(s) {
-  const sym = s.symbol || s.underlying || ''
-  if (s.entry == null || !Array.isArray(s.targets) || !s.targets.length) return s.social || sym   // non-trade cards keep their caption
-  const N = n => n == null ? '—' : (+n).toLocaleString('en-IN')
-  const buy = !/SHORT|BEAR/.test(String(s.direction || 'LONG'))
+  const N = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')
+  const size = copyTradeSize(p, cap, risk), isOpt = p.kind === 'OPT'
+  const buy = !/SHORT|BEAR/.test(String(p.direction || 'LONG'))
   const L = []
-  L.push(`📈 ${sym} — ${buy ? 'BUY' : 'SELL'}${s.grade ? ' · ' + s.grade : ''}${s.optType ? ' ' + s.optType : (s.optionPlay ? '' : ' · CASH')}`)
+  L.push(`${buy ? '🟢' : '🔴'} ${buy ? 'BUY' : 'SELL'} ${isOpt ? (p.optType || 'F&O') : 'CASH'} — ${p.symbol}${p.grade ? `  |  ${p.grade}` : ''}`)
+  if (isOpt && p.optionPlay) L.push(`👉 ${p.optionPlay}`)
+  L.push(`📍 Entry ₹${N(p.entryPrice)}     🛑 SL ₹${N(p.sl)}`)
+  ;(p.targets || []).slice(0, 3).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1} ₹${N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
+  if (size) L.push(`📦 Buy ${size.qty} sh  (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})`)
+  return L.join('\n')
+}
+// well-designed, sectioned trade card (emoji bullets + dividers) — like a clean broadcast message.
+const _N = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')
+const _nowIST = () => { const d = new Date(Date.now() + 5.5 * 3600 * 1000); const iso = d.toISOString(); const h = +iso.slice(11, 13), ap = h >= 12 ? 'PM' : 'AM', h12 = ((h + 11) % 12) + 1; return `${String(h12).padStart(2, '0')}:${iso.slice(14, 16)} ${ap}, ${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)} IST` }
+function tradeCard(s, opts = {}) {
+  const sym = s.symbol || s.underlying || ''
+  const buy = !/SHORT|BEAR/.test(String(s.direction || 'LONG'))
+  const isOpt = !!(s.optType || s.kind === 'OPT' || s.optionPlay)
+  const D = '━━━━━━━━━━━━━━━━━━'
+  const L = []
+  L.push('📈 STOCKSBYVARSHA')
+  L.push(D)
+  L.push(`${buy ? '🟢' : '🔴'} ${buy ? 'BUY' : 'SELL'} ${isOpt ? 'F&O' : 'CASH'} — ${sym}${s.grade ? `  |  ${s.grade}` : ''}`)
   if (s.optionPlay) L.push(`👉 ${s.optionPlay}`)
-  L.push('━━━━━━━━━━━━━━━━')
-  L.push(`Entry      ₹${N(s.entry)}`)
-  L.push(`Stop-loss  ₹${N(s.sl)}${s.slPct != null ? `  (${s.slPct}%)` : ''}`)
-  s.targets.forEach((t, i) => L.push(`Target ${i + 1}   ₹${N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
-  if (s.plan?.shares) L.push(`Buy qty    ${s.plan.shares} sh  (₹${N(s.plan.deploy)})`)
-  if (s.rr) L.push(`Risk:Reward  1:${s.rr}`)
-  if (s.delivery != null) L.push(`Delivery   ${s.delivery}%`)
-  if (s.reason) L.push(`\nWhy: ${s.reason}`)
-  L.push('━━━━━━━━━━━━━━━━')
+  L.push(D)
+  L.push(`💰 CMP: ₹${_N(s.ltp ?? s.entry)}`)
+  L.push(D)
+  L.push(`📍 Entry: ₹${_N(s.entry)}`)
+  L.push(`🛑 SL: ₹${_N(s.sl)}${s.slPct != null ? `  (${s.slPct}%)` : ''}`)
+  ;(s.targets || []).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${_N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
+  L.push(D)
+  if (opts.size) L.push(`📦 Buy: ${opts.size.qty} shares  (₹${_N(opts.size.deploy)})`)
+  else if (s.plan?.shares) L.push(`📦 Buy: ${s.plan.shares} shares  (₹${_N(s.plan.deploy)})`)
+  else if (s.lot) L.push(`📦 Lot: ${s.lot}`)
+  const meta = []
+  if (opts.size) meta.push(`risk ₹${_N(opts.size.riskRs)}`)
+  if (s.rr) meta.push(`R:R 1:${s.rr}`)
+  if (s.delivery != null) meta.push(`Delivery ${s.delivery}%`)
+  if (meta.length) L.push(`📊 ${meta.join('  ·  ')}`)
+  if (s.reason) L.push(`💡 ${s.reason}`)
+  L.push(`⏰ ${_nowIST()}`)
   L.push('📌 Educational only, not advice. Not SEBI-registered.')
   return L.join('\n')
+}
+function cleanCopy(s) {
+  if (s.entry == null || !Array.isArray(s.targets) || !s.targets.length) return s.social || (s.symbol || s.underlying || '')
+  return tradeCard(s)
 }
 function copyPicks(book) {
   if (!book?.open) return []
@@ -163,8 +186,9 @@ function copyPicks(book) {
 function copyAllTrades(book) {
   const picks = copyPicks(book); if (!picks.length) return false
   const cap = +localStorage.getItem('pt_cap') || 100000, risk = +localStorage.getItem('pt_risk') || 1
-  const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join('\n\n')
-  const txt = `📋 STOCKSBYVARSHA — ${picks.length} trades to copy\nCapital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade\n\n${body}\n\n📌 Educational only, not advice. Not SEBI-registered.`
+  const D = '━━━━━━━━━━━━━━━━━━'
+  const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join(`\n${D}\n`)
+  const txt = `📋 STOCKSBYVARSHA — TODAY'S ${picks.length} TOP TRADES\n(Capital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade)\n${D}\n${body}\n${D}\n📌 Educational only, not advice. Not SEBI-registered.`
   navigator.clipboard?.writeText(txt); return picks.length
 }
 function CopyTradesPanel({ book }) {

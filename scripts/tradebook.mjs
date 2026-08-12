@@ -260,6 +260,19 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
           pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
         }
       }
+      // ── HONOR THE STOP (applies to CASH + F&O): if price has hit the SL, EXIT NOW — never let a
+      // position sit past its stop. Top-quality cash names get ONE average-in above (which widens the
+      // SL); everything else — and any averaged name that breaks its widened SL — is stopped out here. ──
+      const hitStop = bearish ? (pos.ltp >= pos.sl) : (pos.ltp <= pos.sl)
+      if (pos.sl && hitStop) {
+        const pnl = pnlFor(pos, pos.sl, bearish, held)
+        if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+        bankRealised(pos.sleeve, pnl)
+        const slRec = { ...pos, exitPrice: pos.sl, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Exited at stop-loss ₹${pos.sl}${pos.averaged ? ' (widened after averaging)' : ''}`, failureReason: pnl < 0 ? 'Hit stop-loss — exited per plan' : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+        if (slRec.result === 'LOSS') recordLoss(b, slRec)
+        b.closed.push(slRec); exited.push(slRec); delete b.open[id]
+        continue
+      }
       // PARTIAL BOOK 50% at +40% — but F&O trades in WHOLE LOTS, so only if ≥2 lots (you can't
       // book half of a single lot). Cash can book any share count.
       const isLot = !!(pos.lotSize && pos.lots)
