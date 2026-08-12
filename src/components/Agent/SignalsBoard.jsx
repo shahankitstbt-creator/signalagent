@@ -120,6 +120,10 @@ const gradeRankN = g => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[g] || 0
 const istDT = iso => { const ms = Date.parse(iso); if (isNaN(ms)) return ''; const d = new Date(ms + 5.5 * 3600 * 1000); return d.toISOString().slice(5, 10).replace('-', '/') + ' ' + d.toISOString().slice(11, 16) }
 function CopyTradesPanel({ book }) {
   const [open, setOpen] = useState(true)
+  const [cap, setCap] = useState(() => { const v = +localStorage.getItem('pt_cap'); return v > 0 ? v : 100000 })
+  const [risk, setRisk] = useState(() => { const v = +localStorage.getItem('pt_risk'); return v > 0 ? v : 1 })
+  const setCapS = v => { setCap(v); try { localStorage.setItem('pt_cap', v) } catch {} }
+  const setRiskS = v => { setRisk(v); try { localStorage.setItem('pt_risk', v) } catch {} }
   if (!book?.open) return null
   const picks = Object.values(book.open)
     .filter(p => p.sleeve !== 'DAILY' && (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+') && Array.isArray(p.targets) && p.targets.length)   // liquid, tradeable, top-grade only
@@ -135,40 +139,80 @@ function CopyTradesPanel({ book }) {
         <span className="ml-auto mono text-xs text-txt-muted">{open ? '▾' : '▸'}</span>
       </div>
       {open && (
-        <div className="grid gap-2.5 p-3 md:grid-cols-2 xl:grid-cols-3">
-          {picks.map((p, i) => {
-            const near = Math.abs((p.ltp - p.entryPrice) / p.entryPrice) <= 0.015
-            const up = (p.unrealizedPct ?? 0) >= 0
-            const action = near ? { t: '🟢 ENTER NOW', c: '#0E9F6E' } : up ? { t: '🟡 RUNNING — wait for pullback', c: '#C2840A' } : { t: '🟢 STILL NEAR ENTRY', c: '#0E9F6E' }
-            const isOpt = p.kind === 'OPT'
-            return (
-              <div key={p.id + i} className="rounded-xl border border-border bg-bg-card p-3 elev">
-                <div className="flex items-center gap-2">
-                  <span className="mono text-sm font-bold text-txt">{p.symbol}</span>
-                  {p.grade && <span className="mono text-[9px] px-1.5 py-0.5 rounded text-white font-bold" style={{ background: gradeBg(p.grade) }}>{p.grade}</span>}
-                  <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{isOpt ? p.optType || 'F&O' : 'CASH'}</span>
-                  <span className="ml-auto mono text-[10px] font-bold" style={{ color: action.c }}>{action.t}</span>
-                </div>
-                {isOpt && p.optionPlay && <div className="mono text-[10px] mt-1" style={{ color: '#7C3AED' }}>👉 {p.optionPlay}</div>}
-                <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
-                  <div><div className="text-[9px] text-txt-muted uppercase">Buy @</div><div className="font-bold">₹{(+p.entryPrice).toLocaleString('en-IN')}</div></div>
-                  <div><div className="text-[9px] text-txt-muted uppercase">Now</div><div className={`font-bold ${up ? 'text-green' : 'text-red'}`}>₹{(+(p.ltp ?? p.entryPrice)).toFixed(2)} <span className="text-[9px]">({up ? '+' : ''}{p.unrealizedPct}%)</span></div></div>
-                  <div><div className="text-[9px] text-txt-muted uppercase">Stop</div><div className="font-bold text-red">₹{(+p.sl).toLocaleString('en-IN')}</div></div>
-                </div>
-                <div className="grid grid-cols-3 gap-2 mt-1.5 mono text-[11px]">
-                  {p.targets.slice(0, 3).map((t, k) => <div key={k}><div className="text-[9px] text-txt-muted uppercase">T{k + 1} {t.by ? `· ${t.by}` : ''}</div><div className="font-bold text-green">₹{(+t.price).toLocaleString('en-IN')}</div></div>)}
-                </div>
-                <div className="mono text-[9.5px] text-txt-muted mt-2 flex items-center gap-2 flex-wrap">
-                  <span>🕐 entered {istDT(p.entryAt) || p.entryDate} IST</span>
-                  {p.rr && <span>· R:R 1:{p.rr}</span>}
-                  {p.delivery != null && <span>· deliv {p.delivery}%</span>}
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        <>
+          <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-2 border-b border-border mono text-[11px]">
+            <span className="text-txt-sec font-bold">💰 Size my trades:</span>
+            <span className="text-txt-muted">Capital ₹</span>
+            <input type="number" value={cap} onChange={e => setCapS(+e.target.value)} className="w-24 px-2 py-1 rounded-lg bg-bg-base border border-border focus:border-accent outline-none text-right" />
+            <span className="text-txt-muted ml-1">Risk</span>
+            <input type="number" step="0.5" value={risk} onChange={e => setRiskS(+e.target.value)} className="w-14 px-2 py-1 rounded-lg bg-bg-base border border-border focus:border-accent outline-none text-right" />
+            <span className="text-txt-muted">% per trade</span>
+            <span className="text-txt-muted ml-auto hidden sm:inline">→ each card shows how many shares to buy</span>
+          </div>
+          <div className="grid gap-2.5 p-3 md:grid-cols-2 xl:grid-cols-3">
+            {picks.map((p, i) => <CopyCard key={p.id + i} p={p} cap={cap} risk={risk} />)}
+          </div>
+        </>
       )}
       <div className="px-4 py-1.5 border-t border-border mono text-[9.5px] text-txt-muted">Educational only, not advice. Not SEBI-registered. Enter only if price is still near "Buy @"; always place the Stop. We book at targets / exit on stop — you'll get a Telegram entry &amp; exit alert.</div>
+    </div>
+  )
+}
+
+function CopyCard({ p, cap = 100000, risk = 1 }) {
+  const [copied, setCopied] = useState(false)
+  const near = Math.abs((p.ltp - p.entryPrice) / p.entryPrice) <= 0.015
+  const up = (p.unrealizedPct ?? 0) >= 0
+  const action = near ? { t: '🟢 ENTER NOW', c: '#0E9F6E' } : up ? { t: '🟡 RUNNING — wait for pullback', c: '#C2840A' } : { t: '🟢 STILL NEAR ENTRY', c: '#0E9F6E' }
+  const isOpt = p.kind === 'OPT'
+  const N = n => (+n).toLocaleString('en-IN')
+  // position size from YOUR capital + risk%: qty = risk₹ / (entry−SL), capped at 25% of capital in one name
+  const riskPer = p.entryPrice - p.sl
+  let size = null
+  if (!isOpt && riskPer > 0 && cap > 0) {
+    let qty = Math.floor((cap * (risk || 1) / 100) / riskPer)
+    if (qty * p.entryPrice > cap * 0.25) qty = Math.floor((cap * 0.25) / p.entryPrice)
+    qty = Math.max(0, qty)
+    if (qty >= 1) size = { qty, deploy: Math.round(qty * p.entryPrice), riskRs: Math.round(qty * riskPer) }
+  }
+  const copy = (e) => {
+    e.stopPropagation()
+    const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join('\n')
+    const szl = size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''
+    const txt = `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${szl}Buy @ ₹${N(p.entryPrice)}\nStop-loss ₹${N(p.sl)}\n${tg}${p.rr ? `\nR:R 1:${p.rr}` : ''}\n🕐 signalled ${istDT(p.entryAt) || p.entryDate} IST\n📌 Educational only, not advice. Not SEBI-registered.`
+    navigator.clipboard?.writeText(txt); setCopied(true); setTimeout(() => setCopied(false), 1600)
+  }
+  return (
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev flex flex-col">
+      <div className="flex items-center gap-2">
+        <span className="mono text-sm font-bold text-txt">{p.symbol}</span>
+        {p.grade && <span className="mono text-[9px] px-1.5 py-0.5 rounded text-white font-bold" style={{ background: gradeBg(p.grade) }}>{p.grade}</span>}
+        <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{isOpt ? p.optType || 'F&O' : 'CASH'}</span>
+        <span className="ml-auto mono text-[10px] font-bold" style={{ color: action.c }}>{action.t}</span>
+      </div>
+      {isOpt && p.optionPlay && <div className="mono text-[10px] mt-1" style={{ color: '#7C3AED' }}>👉 {p.optionPlay}</div>}
+      <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
+        <div><div className="text-[9px] text-txt-muted uppercase">Buy @</div><div className="font-bold">₹{N(p.entryPrice)}</div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">Now</div><div className={`font-bold ${up ? 'text-green' : 'text-red'}`}>₹{(+(p.ltp ?? p.entryPrice)).toFixed(2)} <span className="text-[9px]">({up ? '+' : ''}{p.unrealizedPct}%)</span></div></div>
+        <div><div className="text-[9px] text-txt-muted uppercase">Stop</div><div className="font-bold text-red">₹{N(p.sl)}</div></div>
+      </div>
+      <div className="grid grid-cols-3 gap-2 mt-1.5 mono text-[11px]">
+        {p.targets.slice(0, 3).map((t, k) => <div key={k}><div className="text-[9px] text-txt-muted uppercase">T{k + 1} {t.by ? `· ${t.by}` : ''}</div><div className="font-bold text-green">₹{N(t.price)}</div></div>)}
+      </div>
+      <div className="mono text-[9.5px] text-txt-muted mt-2 flex items-center gap-2 flex-wrap">
+        <span>🕐 entered {istDT(p.entryAt) || p.entryDate} IST</span>
+        {p.rr && <span>· R:R 1:{p.rr}</span>}
+        {p.delivery != null && <span>· deliv {p.delivery}%</span>}
+      </div>
+      {size ? (
+        <div className="mono text-[11px] mt-2 px-2.5 py-1.5 rounded-lg font-bold" style={{ background: 'color-mix(in srgb,var(--color-accent) 12%,transparent)', color: 'var(--color-accent)' }}>
+          👉 Buy {size.qty} shares · ₹{N(size.deploy)} in · risk ₹{N(size.riskRs)}
+        </div>
+      ) : isOpt ? <div className="mono text-[10px] mt-2 text-txt-muted">Size as per your F&O lot</div> : null}
+      <button onClick={copy} className="mono text-[12px] font-bold w-full mt-2 py-2 rounded-lg text-white card-hover"
+        style={{ background: copied ? '#0E9F6E' : 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
+        {copied ? '✓ Copied — paste into your broker' : '📋 Copy this trade'}
+      </button>
     </div>
   )
 }
