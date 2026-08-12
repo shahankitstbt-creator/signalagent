@@ -512,7 +512,7 @@ function computeStats(b, todayISO) {
     cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl), goal: monthlyGoal(b, 'CASH', b.capitalCash, { unreal: cashUnreal }, todayISO) },
     foSleeve: { capital: b.capitalFO, cash: Math.round(b.cashFO), equity: Math.round(b.cashFO + foVal), pct: +(((b.cashFO + foVal - b.capitalFO) / b.capitalFO) * 100).toFixed(2), open: foOpen.length, closedPnl: Math.round(foClosedPnl), goal: monthlyGoal(b, 'FO', b.capitalFO, { unreal: foUnreal }, todayISO) },
     dailySleeve: {
-      capital: b.capitalDaily, cash: Math.round(b.cashDaily), equity: Math.round(b.cashDaily + dailyVal),
+      capital: b.capitalDaily, cash: Math.round(b.cashDaily), deployed: Math.round(dailyOpen.reduce((a, p) => a + (p.invested || 0), 0)), equity: Math.round(b.cashDaily + dailyVal),
       pct: +(((b.cashDaily + dailyVal - b.capitalDaily) / b.capitalDaily) * 100).toFixed(2),
       open: dailyOpen.length, closedCount: dailyClosed.length,
       winRate: dailyClosed.length ? +((dWins / dailyClosed.length) * 100).toFixed(1) : null,

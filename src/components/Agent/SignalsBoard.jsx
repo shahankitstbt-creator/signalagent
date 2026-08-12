@@ -127,7 +127,7 @@ function DailyStrip({ d }) {
   )
   return (
     <div className="card elev p-4 sm:p-5" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-cyan) 10%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
-      {(() => { const occ = Math.max(0, d.capital - d.cash), occPct = Math.round((occ / d.capital) * 100); return (
+      {(() => { const occ = d.deployed ?? Math.max(0, d.capital - d.cash), occPct = Math.round((occ / (occ + d.cash || 1)) * 100); return (
       <>
       <div className="flex items-center gap-2 flex-wrap mb-3">
         <span className="mono text-[13px] font-bold">⚡ Daily-Income Sleeve</span>
