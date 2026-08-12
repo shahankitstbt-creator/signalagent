@@ -27,6 +27,9 @@ const DAILY_MAX_HOLD = 1             // DAY TRADE: winners book at +target intra
 const DAILY_MAX_OPEN = 8             // fewer, higher-quality names (one loser can't tank the day)
 const DAILY_POS_PCT = 10             // ~10% of the ₹10L pool per position
 const DAILY_TARGET_INR = 10000       // daily profit aim (₹10k ≈ 1%)
+// FRESH-START token for the Daily-Income sleeve. Bump this date to WIPE the daily book clean (remove
+// all prior daily trades + P&L, reset capital to ₹10L, restart the 30-day monitor). Runs exactly once.
+const DAILY_RESET_TOKEN = '2026-08-12'
 const DAILY_MIN_CONF = 65            // confidence gate
 // cash-intraday uses the institutional confluence generators: Volume Profile+Fib+VWAP, multi-gen
 // confluence, momentum, volume accumulation, money-flow. LIQUID names only (no gapping micro-caps).
@@ -110,6 +113,18 @@ export function loadBook() {
       p.hedged = true; p.netDebit = Math.round(p.invested / p.qty); p.longPrem = p.entryPremium ?? p.netDebit
       p.hedgeNote = `Retrofit to defined-risk — max loss capped at net ₹${p.invested}`
     }
+  }
+  // DAILY-INCOME FRESH START (one-time, token-guarded): the prior daily trades contained mistakes, so
+  // REMOVE them all — wipe every daily open + closed trade, zero the sleeve's realised P&L, reset capital
+  // to ₹10L, and restart the 30-day monitor. Rules (SYSTEM_RULES §3/§4b) are unchanged — only the slate.
+  if (b.dailyResetToken !== DAILY_RESET_TOKEN) {
+    for (const k of Object.keys(b.open)) if (b.open[k]?.sleeve === 'DAILY') delete b.open[k]
+    b.closed = (b.closed || []).filter(t => t.sleeve !== 'DAILY')   // remove ALL previous daily trades
+    if (b.realizedTotal) b.realizedTotal.DAILY = 0
+    b.capitalDaily = CAP_DAILY
+    b.cashDaily = CAP_DAILY
+    b.dailyStartedAt = null                                          // set again on the first fresh daily trade
+    b.dailyResetToken = DAILY_RESET_TOKEN
   }
   return b
 }
