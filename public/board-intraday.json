@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T11:33:57.339Z",
+  "generatedAt": "2026-08-12T12:28:32.706Z",
   "date": "2026-08-12",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -1256,22 +1256,22 @@
             "rsi": 55,
             "positioning": [
               {
-                "expiry": "08SEP2026",
-                "daysOut": 27,
-                "resistance": 25000,
-                "support": 24500,
-                "pcr": 0.82
+                "expiry": "15SEP2026",
+                "daysOut": 33,
+                "resistance": 24500,
+                "support": 24400,
+                "pcr": 0.72
               },
               {
                 "expiry": "27OCT2026",
-                "daysOut": 76,
+                "daysOut": 75,
                 "resistance": 25500,
                 "support": 23500,
                 "pcr": 1.2
               },
               {
                 "expiry": "29DEC2026",
-                "daysOut": 139,
+                "daysOut": 138,
                 "resistance": 25000,
                 "support": 24000,
                 "pcr": 1.17
@@ -1282,9 +1282,9 @@
               "PCR 0.67 — calls written (resistance above)",
               "Breadth 68% advancing",
               "OI walls (18AUG2026): resistance 24500 (max call OI) · support 24300 (max put OI)",
-              "📅 ~27d out (08SEP): big call OI 25000 · put floor 24500 · PCR 0.82 — medium-term range",
-              "📅 ~76d out (27OCT): big call OI 25500 · put floor 23500 · PCR 1.2 — medium-term support building",
-              "📅 ~139d out (29DEC): big call OI 25000 · put floor 24000 · PCR 1.17 — medium-term support building"
+              "📅 ~33d out (15SEP): big call OI 24500 · put floor 24400 · PCR 0.72 — medium-term cap building",
+              "📅 ~75d out (27OCT): big call OI 25500 · put floor 23500 · PCR 1.2 — medium-term support building",
+              "📅 ~138d out (29DEC): big call OI 25000 · put floor 24000 · PCR 1.17 — medium-term support building"
             ]
           },
           "spot": 24435.95,
@@ -1575,21 +1575,21 @@
             "positioning": [
               {
                 "expiry": "29SEP2026",
-                "daysOut": 48,
+                "daysOut": 47,
                 "resistance": 58000,
                 "support": 58000,
                 "pcr": 1.53
               },
               {
                 "expiry": "27OCT2026",
-                "daysOut": 76,
+                "daysOut": 75,
                 "resistance": 58000,
                 "support": 57000,
                 "pcr": 2.51
               },
               {
                 "expiry": "29DEC2026",
-                "daysOut": 139,
+                "daysOut": 138,
                 "resistance": 60000,
                 "support": 57000,
                 "pcr": 1.37
@@ -1600,9 +1600,9 @@
               "PCR 0.71 — calls written (resistance above)",
               "Breadth 71% advancing",
               "OI walls (25AUG2026): resistance 58000 (max call OI) · support 58000 (max put OI)",
-              "📅 ~48d out (29SEP): big call OI 58000 · put floor 58000 · PCR 1.53 — medium-term support building",
-              "📅 ~76d out (27OCT): big call OI 58000 · put floor 57000 · PCR 2.51 — medium-term support building",
-              "📅 ~139d out (29DEC): big call OI 60000 · put floor 57000 · PCR 1.37 — medium-term support building",
+              "📅 ~47d out (29SEP): big call OI 58000 · put floor 58000 · PCR 1.53 — medium-term support building",
+              "📅 ~75d out (27OCT): big call OI 58000 · put floor 57000 · PCR 2.51 — medium-term support building",
+              "📅 ~138d out (29DEC): big call OI 60000 · put floor 57000 · PCR 1.37 — medium-term support building",
               "Far-month smart money building a FLOOR — put-writing PCR 1.37 at 57000 (medium-term bullish)"
             ]
           },
@@ -1616,47 +1616,39 @@
           "name": "Gold (Spot XAU/USD)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4471,
+            "spot": 4466.4,
             "aligned": "LONG",
-            "net": 10,
-            "longs": 10,
+            "net": 9,
+            "longs": 9,
             "shorts": 0,
             "timeframes": [
               {
                 "tf": "15m",
-                "dir": "LONG",
-                "score": 4,
-                "entry": 4471,
-                "sl": 4461.8,
-                "targets": [
-                  4483.27,
-                  4492.47,
-                  4501.66
-                ],
-                "etaDates": [
-                  "2026-08-13",
-                  "2026-08-13",
-                  "2026-08-13"
-                ],
-                "rr": 1.33,
+                "dir": "NEUTRAL",
+                "score": 1,
+                "entry": 4466.9,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
                 "poc": 4450.39,
-                "vah": 4465.26,
-                "val": 4425.61,
-                "vwap": 4464.56,
-                "rsi": 56,
+                "vah": 4477.16,
+                "val": 4435.53,
+                "vwap": 4465.94,
+                "rsi": 49,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4450.39 · lower highs"
+                "reason": "above VWAP · above POC 4450.39 · lower highs · at 38.2% Fib 4468.84"
               },
               {
                 "tf": "35m",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4454.28,
+                "score": 4,
+                "entry": 4466.9,
+                "sl": 4451.01,
                 "targets": [
-                  4493.29,
-                  4510.01,
-                  4526.72
+                  4488.08,
+                  4503.97,
+                  4519.86
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1667,21 +1659,21 @@
                 "poc": 4405.42,
                 "vah": 4464.41,
                 "val": 4390.12,
-                "vwap": 4449.73,
-                "rsi": 60,
+                "vwap": 4450.64,
+                "rsi": 56,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4405.42 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4405.42 · lower highs"
               },
               {
                 "tf": "45m",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4451.82,
+                "score": 4,
+                "entry": 4466.9,
+                "sl": 4449.12,
                 "targets": [
-                  4496.57,
-                  4515.75,
-                  4534.93
+                  4490.61,
+                  4508.39,
+                  4526.17
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1692,21 +1684,21 @@
                 "poc": 4405.66,
                 "vah": 4487.85,
                 "val": 4323.46,
-                "vwap": 4446.46,
-                "rsi": 60,
+                "vwap": 4447.48,
+                "rsi": 57,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4405.66 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4405.66 · lower highs"
               },
               {
                 "tf": "75m",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4446.13,
+                "score": 5,
+                "entry": 4466.9,
+                "sl": 4442.99,
                 "targets": [
-                  4504.16,
-                  4529.03,
-                  4553.9
+                  4498.79,
+                  4522.7,
+                  4546.61
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1715,23 +1707,23 @@
                 ],
                 "rr": 1.33,
                 "poc": 4121.36,
-                "vah": 4400.27,
+                "vah": 4410.8,
                 "val": 4074,
-                "vwap": 4438.24,
-                "rsi": 61,
+                "vwap": 4439.67,
+                "rsi": 60,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4121.36 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4121.36 · at 38.2% Fib 4449.16"
               },
               {
                 "tf": "90m",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4442.66,
+                "score": 5,
+                "entry": 4466.9,
+                "sl": 4440.13,
                 "targets": [
-                  4508.78,
-                  4537.12,
-                  4565.45
+                  4502.59,
+                  4529.35,
+                  4556.12
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1741,22 +1733,22 @@
                 "rr": 1.33,
                 "poc": 4108.49,
                 "vah": 4376.08,
-                "val": 4043.09,
-                "vwap": 4433.96,
-                "rsi": 62,
+                "val": 4054.98,
+                "vwap": 4434.76,
+                "rsi": 60,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4108.49 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4108.49 · at 38.2% Fib 4448.74"
               },
               {
                 "tf": "1h",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4449.49,
+                "score": 5,
+                "entry": 4466.9,
+                "sl": 4446,
                 "targets": [
-                  4499.68,
-                  4521.18,
-                  4542.69
+                  4494.76,
+                  4515.66,
+                  4536.55
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1764,24 +1756,24 @@
                   "2026-08-14"
                 ],
                 "rr": 1.33,
-                "poc": 4417.49,
-                "vah": 4484.67,
-                "val": 4277.97,
-                "vwap": 4450.48,
-                "rsi": 60,
+                "poc": 4315.8,
+                "vah": 4484.76,
+                "val": 4279.96,
+                "vwap": 4451.14,
+                "rsi": 58,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4417.49 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4315.8 · at 38.2% Fib 4464.71"
               },
               {
                 "tf": "2h",
                 "dir": "LONG",
                 "score": 6,
-                "entry": 4471,
-                "sl": 4437.69,
+                "entry": 4466.9,
+                "sl": 4432.88,
                 "targets": [
-                  4515.41,
-                  4548.72,
-                  4582.03
+                  4512.26,
+                  4546.27,
+                  4580.29
                 ],
                 "etaDates": [
                   "2026-08-13",
@@ -1792,21 +1784,21 @@
                 "poc": 4112.51,
                 "vah": 4325.01,
                 "val": 4009.3,
-                "vwap": 4417.42,
-                "rsi": 63,
+                "vwap": 4417.97,
+                "rsi": 61,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4112.51 · higher lows"
               },
               {
                 "tf": "3h",
                 "dir": "LONG",
-                "score": 6,
-                "entry": 4471,
-                "sl": 4427.17,
+                "score": 5,
+                "entry": 4466.9,
+                "sl": 4426.09,
                 "targets": [
-                  4529.43,
-                  4573.26,
-                  4617.08
+                  4521.31,
+                  4562.12,
+                  4602.93
                 ],
                 "etaDates": [
                   "2026-08-14",
@@ -1814,24 +1806,24 @@
                   "2026-08-18"
                 ],
                 "rr": 1.33,
-                "poc": 4049.45,
+                "poc": 4102.65,
                 "vah": 4202.4,
                 "val": 3976.3,
-                "vwap": 4370.38,
-                "rsi": 65,
+                "vwap": 4374.22,
+                "rsi": 64,
                 "fib": "38.2%",
-                "reason": "rising EMA stack · above VWAP · above POC 4049.45 · higher lows"
+                "reason": "rising EMA stack · above VWAP · above POC 4102.65"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
                 "score": 6,
-                "entry": 4471,
-                "sl": 4421.24,
+                "entry": 4466.9,
+                "sl": 4416.44,
                 "targets": [
-                  4537.34,
-                  4587.1,
-                  4636.85
+                  4534.18,
+                  4584.65,
+                  4635.11
                 ],
                 "etaDates": [
                   "2026-08-14",
@@ -1840,10 +1832,10 @@
                 ],
                 "rr": 1.33,
                 "poc": 4102.65,
-                "vah": 4175.8,
+                "vah": 4189.1,
                 "val": 4002.9,
-                "vwap": 4328.88,
-                "rsi": 66,
+                "vwap": 4329.58,
+                "rsi": 65,
                 "fib": "38.2%",
                 "reason": "rising EMA stack · above VWAP · above POC 4102.65 · higher lows"
               },
@@ -1851,12 +1843,12 @@
                 "tf": "1D",
                 "dir": "LONG",
                 "score": 4,
-                "entry": 4471,
-                "sl": 4355.89,
+                "entry": 4466.4,
+                "sl": 4351.29,
                 "targets": [
-                  4624.48,
-                  4739.6,
-                  4854.71
+                  4619.88,
+                  4735,
+                  4850.11
                 ],
                 "etaDates": [
                   "2026-08-17",
@@ -1867,7 +1859,7 @@
                 "poc": 4429.31,
                 "vah": 4936.72,
                 "val": 4003.09,
-                "vwap": 4175.39,
+                "vwap": 4181.94,
                 "rsi": 71,
                 "fib": "38.2%",
                 "reason": "above VWAP · above POC 4429.31 · higher lows"
@@ -1875,7 +1867,7 @@
             ]
           },
           "directional": null,
-          "spot": 4471,
+          "spot": 4466.4,
           "aligned": "LONG"
         },
         {
