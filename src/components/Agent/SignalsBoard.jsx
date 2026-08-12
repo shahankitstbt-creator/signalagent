@@ -118,8 +118,23 @@ function KpiHero({ book, o, total, newCount, gensCount, active }) {
 // copy all ~70 positions; these are the few worth acting on), with clear entry price/time + action.
 const gradeRankN = g => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[g] || 0
 const istDT = iso => { const ms = Date.parse(iso); if (isNaN(ms)) return ''; const d = new Date(ms + 5.5 * 3600 * 1000); return d.toISOString().slice(5, 10).replace('-', '/') + ' ' + d.toISOString().slice(11, 16) }
+// position size from capital + risk% (qty = risk₹ / (entry−SL), capped at 25% of capital in one name)
+function copyTradeSize(p, cap, risk) {
+  const riskPer = p.entryPrice - p.sl
+  if (p.kind === 'OPT' || !(riskPer > 0) || !(cap > 0)) return null
+  let qty = Math.floor((cap * (risk || 1) / 100) / riskPer)
+  if (qty * p.entryPrice > cap * 0.25) qty = Math.floor((cap * 0.25) / p.entryPrice)
+  qty = Math.max(0, qty)
+  return qty >= 1 ? { qty, deploy: Math.round(qty * p.entryPrice), riskRs: Math.round(qty * riskPer) } : null
+}
+function fmtCopyTrade(p, cap, risk) {
+  const N = n => (+n).toLocaleString('en-IN'), isOpt = p.kind === 'OPT', size = copyTradeSize(p, cap, risk)
+  const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join(' · ')
+  return `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''}Buy @ ₹${N(p.entryPrice)} · SL ₹${N(p.sl)}\n${tg}${p.rr ? ` · R:R 1:${p.rr}` : ''}`
+}
 function CopyTradesPanel({ book }) {
   const [open, setOpen] = useState(true)
+  const [copiedAll, setCopiedAll] = useState(false)
   const [cap, setCap] = useState(() => { const v = +localStorage.getItem('pt_cap'); return v > 0 ? v : 100000 })
   const [risk, setRisk] = useState(() => { const v = +localStorage.getItem('pt_risk'); return v > 0 ? v : 1 })
   const setCapS = v => { setCap(v); try { localStorage.setItem('pt_cap', v) } catch {} }
@@ -130,13 +145,23 @@ function CopyTradesPanel({ book }) {
     .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
     .slice(0, 6)
   if (!picks.length) return null
+  const copyAll = (e) => {
+    e.stopPropagation()
+    const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join('\n\n')
+    const txt = `📋 STOCKSBYVARSHA — ${picks.length} trades to copy\nCapital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade\n\n${body}\n\n📌 Educational only, not advice. Not SEBI-registered.`
+    navigator.clipboard?.writeText(txt); setCopiedAll(true); setTimeout(() => setCopiedAll(false), 1800)
+  }
   return (
     <div className="card elev" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-green) 9%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
-      <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-3 border-b border-border cursor-pointer" onClick={() => setOpen(o => !o)}>
-        <span className="mono text-[13px] font-bold">📋 Copy Trades — take these manually</span>
+      <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-3 border-b border-border">
+        <span className="mono text-[13px] font-bold cursor-pointer" onClick={() => setOpen(o => !o)}>📋 Copy Trades — take these manually</span>
         <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb,var(--color-green) 16%,transparent)', color: 'var(--color-green)' }}>top {picks.length} highest-conviction</span>
-        <span className="mono text-[10px] text-txt-muted hidden sm:inline">enter near the entry price · set the SL · book at targets · we alert you on Telegram when we exit</span>
-        <span className="ml-auto mono text-xs text-txt-muted">{open ? '▾' : '▸'}</span>
+        {/* ONE button — copies ALL trades at once */}
+        <button onClick={copyAll} className="mono text-[12px] font-bold px-4 py-1.5 rounded-lg text-white ml-auto card-hover"
+          style={{ background: copiedAll ? '#0E9F6E' : 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
+          {copiedAll ? `✓ Copied all ${picks.length} trades` : `📋 Copy all ${picks.length} trades`}
+        </button>
+        <span className="mono text-xs text-txt-muted cursor-pointer" onClick={() => setOpen(o => !o)}>{open ? '▾' : '▸'}</span>
       </div>
       {open && (
         <>
@@ -160,28 +185,12 @@ function CopyTradesPanel({ book }) {
 }
 
 function CopyCard({ p, cap = 100000, risk = 1 }) {
-  const [copied, setCopied] = useState(false)
   const near = Math.abs((p.ltp - p.entryPrice) / p.entryPrice) <= 0.015
   const up = (p.unrealizedPct ?? 0) >= 0
   const action = near ? { t: '🟢 ENTER NOW', c: '#0E9F6E' } : up ? { t: '🟡 RUNNING — wait for pullback', c: '#C2840A' } : { t: '🟢 STILL NEAR ENTRY', c: '#0E9F6E' }
   const isOpt = p.kind === 'OPT'
   const N = n => (+n).toLocaleString('en-IN')
-  // position size from YOUR capital + risk%: qty = risk₹ / (entry−SL), capped at 25% of capital in one name
-  const riskPer = p.entryPrice - p.sl
-  let size = null
-  if (!isOpt && riskPer > 0 && cap > 0) {
-    let qty = Math.floor((cap * (risk || 1) / 100) / riskPer)
-    if (qty * p.entryPrice > cap * 0.25) qty = Math.floor((cap * 0.25) / p.entryPrice)
-    qty = Math.max(0, qty)
-    if (qty >= 1) size = { qty, deploy: Math.round(qty * p.entryPrice), riskRs: Math.round(qty * riskPer) }
-  }
-  const copy = (e) => {
-    e.stopPropagation()
-    const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join('\n')
-    const szl = size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''
-    const txt = `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${szl}Buy @ ₹${N(p.entryPrice)}\nStop-loss ₹${N(p.sl)}\n${tg}${p.rr ? `\nR:R 1:${p.rr}` : ''}\n🕐 signalled ${istDT(p.entryAt) || p.entryDate} IST\n📌 Educational only, not advice. Not SEBI-registered.`
-    navigator.clipboard?.writeText(txt); setCopied(true); setTimeout(() => setCopied(false), 1600)
-  }
+  const size = copyTradeSize(p, cap, risk)   // shares to buy from your capital + risk%
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev flex flex-col">
       <div className="flex items-center gap-2">
@@ -209,10 +218,6 @@ function CopyCard({ p, cap = 100000, risk = 1 }) {
           👉 Buy {size.qty} shares · ₹{N(size.deploy)} in · risk ₹{N(size.riskRs)}
         </div>
       ) : isOpt ? <div className="mono text-[10px] mt-2 text-txt-muted">Size as per your F&O lot</div> : null}
-      <button onClick={copy} className="mono text-[12px] font-bold w-full mt-2 py-2 rounded-lg text-white card-hover"
-        style={{ background: copied ? '#0E9F6E' : 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
-        {copied ? '✓ Copied — paste into your broker' : '📋 Copy this trade'}
-      </button>
     </div>
   )
 }
