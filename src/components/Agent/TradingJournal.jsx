@@ -18,6 +18,7 @@ function JTh({ label, k, s, cls = '' }) {
 }
 
 const inr = n => n == null ? '—' : '₹' + Math.round(n).toLocaleString('en-IN')
+const px = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')   // clean price (2 dp, no float noise)
 // options are priced by PREMIUM, not the underlying — show the premium and keep the underlying as a hint
 const isOpt = p => p.kind === 'OPT'
 const entryPx = p => isOpt(p) ? p.entryPremium : p.entryPrice
@@ -173,7 +174,7 @@ function OpenTable({ rows: raw }) {
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><JTh label="Dir" k="result" s={s} cls={L} />
-        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry" k="entry" s={s} cls={R} /><JTh label="In / Out · time (IST)" k="entryDate" s={s} cls={L} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry ₹" k="entry" s={s} cls={R} /><th className={L}>Time (IST)</th>
         <JTh label="LTP" k="ltp" s={s} cls={R} /><JTh label="Unrealised" k="unreal" s={s} cls={R} /><JTh label="SL" k="sl" s={s} cls={R} />
         <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Grade" k="grade" s={s} cls={L} /><th className={L}>Setup</th>
       </tr></thead>
@@ -184,15 +185,15 @@ function OpenTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? <span className="text-txt-muted"> ({s.lots}L)</span> : ''}</td>
-            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
-            <td className="px-3 py-2 text-txt-sec">
-              <div><span className="text-green">In</span> {dIST(s.entryAt, s.entryDate)} <span className="text-txt-muted">{tIST(s.entryAt)}</span></div>
-              <div className="text-[10px] text-txt-muted"><span className="text-yellow">Out</span> — holding (targets/SL pending)</div>
+            <td className="px-3 py-2 text-right">₹{px(entryPx(s))}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
+            <td className="px-3 py-2 text-[10px] text-txt-sec whitespace-nowrap">
+              <div><span className="text-green font-bold">Entry:</span> {dIST(s.entryAt, s.entryDate)} {tIST(s.entryAt)}</div>
+              <div><span className="text-yellow font-bold">Exit:</span> — holding</div>
             </td>
-            <td className="px-3 py-2 text-right text-txt-sec">₹{curPx(s)}</td>
+            <td className="px-3 py-2 text-right text-txt-sec">₹{px(curPx(s))}</td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.unrealizedPnl)}`}>{inr(s.unrealizedPnl)}<span className="text-[10px]"> ({sign(s.unrealizedPct)}%)</span></td>
-            <td className="px-3 py-2 text-right text-red">₹{s.sl}</td>
-            <td className="px-3 py-2 text-right text-green">₹{s.targets?.[0]?.price}</td>
+            <td className="px-3 py-2 text-right text-red">₹{px(s.sl)}</td>
+            <td className="px-3 py-2 text-right text-green">₹{px(s.targets?.[0]?.price)}</td>
             <td className="px-3 py-2">{s.grade ? <span className="px-1.5 rounded bg-bg-card text-[10px]">{s.grade}</span> : '—'}{s.footprint && !s.footprint.weak ? ' 🕵️' : ''}</td>
             <td className="px-3 py-2 text-txt-sec max-w-[220px] truncate" title={s.reason}>{s.reason || s.gen}</td>
           </tr>
@@ -211,7 +212,7 @@ function ClosedTable({ rows: raw }) {
     <table className="w-full mono text-xs border-collapse">
       <thead><tr className="text-txt-sec text-[10px] uppercase sticky top-0 bg-bg-panel">
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><th className={L}>Dir</th>
-        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry · time" k="entry" s={s} cls={R} /><JTh label="Exit · time" k="exit" s={s} cls={R} />
+        <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry ₹" k="entry" s={s} cls={R} /><JTh label="Exit ₹" k="exit" s={s} cls={R} /><th className={L}>Time (IST)</th>
         <JTh label="Held" k="held" s={s} cls={L} /><JTh label="Result" k="result" s={s} cls={L} /><JTh label="P&L" k="pnl" s={s} cls={R} />
         <th className={L}>Target / on time</th><th className={L}>Notes</th>
       </tr></thead>
@@ -222,8 +223,12 @@ function ClosedTable({ rows: raw }) {
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? ` (${s.lots}L)` : ''}</td>
-            <td className="px-3 py-2 text-right">₹{entryPx(s)}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}<div className="text-[10px] text-txt-muted"><span className="text-green">In</span> {dIST(s.entryAt, s.entryDate)} · {tIST(s.entryAt)}</div></td>
-            <td className="px-3 py-2 text-right">₹{exitPx(s)}<div className="text-[10px] text-txt-muted"><span className="text-yellow">Out</span> {dIST(s.exitAt, s.exitDate)} · {tIST(s.exitAt)}</div></td>
+            <td className="px-3 py-2 text-right">₹{px(entryPx(s))}{isOpt(s) && <span className="text-[9px] text-txt-muted"> prem</span>}</td>
+            <td className="px-3 py-2 text-right">₹{px(exitPx(s))}</td>
+            <td className="px-3 py-2 text-[10px] text-txt-sec whitespace-nowrap">
+              <div><span className="text-green font-bold">Entry:</span> {dIST(s.entryAt, s.entryDate)} {tIST(s.entryAt)}</div>
+              <div><span className="text-yellow font-bold">Exit:</span> {dIST(s.exitAt, s.exitDate)} {tIST(s.exitAt)}</div>
+            </td>
             <td className="px-3 py-2 text-right text-txt-sec">{s.daysHeld != null ? `${s.daysHeld}d` : '—'}</td>
             <td className="px-3 py-2"><span className={`px-2 py-0.5 rounded text-white text-[10px] font-bold ${s.result === 'WIN' ? 'bg-green' : s.result === 'LOSS' ? 'bg-red' : 'bg-yellow'}`}>{s.result === 'WIN' ? '🎯 WIN' : s.result === 'LOSS' ? '🔴 LOSS' : '⏳ EXPIRED'}</span></td>
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.realizedPnl)}`}>{inr(s.realizedPnl)}<div className="text-[10px]">{sign(s.realizedPct)}%</div></td>
