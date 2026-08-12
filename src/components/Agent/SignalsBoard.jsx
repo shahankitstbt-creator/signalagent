@@ -132,6 +132,27 @@ function fmtCopyTrade(p, cap, risk) {
   const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join(' · ')
   return `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''}Buy @ ₹${N(p.entryPrice)} · SL ₹${N(p.sl)}\n${tg}${p.rr ? ` · R:R 1:${p.rr}` : ''}`
 }
+// clean, organized single-trade copy (aligned labels, one per line) — used by every row's copy button
+function cleanCopy(s) {
+  const sym = s.symbol || s.underlying || ''
+  if (s.entry == null || !Array.isArray(s.targets) || !s.targets.length) return s.social || sym   // non-trade cards keep their caption
+  const N = n => n == null ? '—' : (+n).toLocaleString('en-IN')
+  const buy = !/SHORT|BEAR/.test(String(s.direction || 'LONG'))
+  const L = []
+  L.push(`📈 ${sym} — ${buy ? 'BUY' : 'SELL'}${s.grade ? ' · ' + s.grade : ''}${s.optType ? ' ' + s.optType : (s.optionPlay ? '' : ' · CASH')}`)
+  if (s.optionPlay) L.push(`👉 ${s.optionPlay}`)
+  L.push('━━━━━━━━━━━━━━━━')
+  L.push(`Entry      ₹${N(s.entry)}`)
+  L.push(`Stop-loss  ₹${N(s.sl)}${s.slPct != null ? `  (${s.slPct}%)` : ''}`)
+  s.targets.forEach((t, i) => L.push(`Target ${i + 1}   ₹${N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
+  if (s.plan?.shares) L.push(`Buy qty    ${s.plan.shares} sh  (₹${N(s.plan.deploy)})`)
+  if (s.rr) L.push(`Risk:Reward  1:${s.rr}`)
+  if (s.delivery != null) L.push(`Delivery   ${s.delivery}%`)
+  if (s.reason) L.push(`\nWhy: ${s.reason}`)
+  L.push('━━━━━━━━━━━━━━━━')
+  L.push('📌 Educational only, not advice. Not SEBI-registered.')
+  return L.join('\n')
+}
 function copyPicks(book) {
   if (!book?.open) return []
   return Object.values(book.open)
@@ -627,7 +648,7 @@ function TradeTable({ signals, color, setView }) {
 function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
@@ -733,7 +754,7 @@ function FnoDetail({ s }) {
 }
 function FnoRow({ s, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
@@ -752,7 +773,7 @@ function FnoRow({ s, color, open, onToggle }) {
 function FnoCard({ s, color }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
@@ -823,7 +844,7 @@ function PlanGrid({ s }) {
 function ConfRow({ s, color, open, onToggle, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const chart = e => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
@@ -857,7 +878,7 @@ function ConfRow({ s, color, open, onToggle, setView }) {
 function ConfCard({ s, setView }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${gradeBg(s.grade)}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
@@ -887,7 +908,7 @@ function MobileTradeCard({ s, color, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
   const isBuy = (s.direction || 'LONG') === 'LONG'
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
@@ -948,7 +969,7 @@ function Windows({ s }) {
 }
 function AssetBiasRow({ s, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const tcls = biasToneCls(s.biasTone)
   return (
     <>
@@ -976,7 +997,7 @@ function AssetBiasRow({ s, color, open, onToggle }) {
 function AssetBiasCard({ s, color }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const tcls = biasToneCls(s.biasTone)
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
@@ -1018,7 +1039,7 @@ function VedicTable({ signals, color }) {
 }
 function AstroRow({ s, i, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
@@ -1047,7 +1068,7 @@ function AstroRow({ s, i, color, open, onToggle }) {
 }
 function AstroCard({ s, color }) {
   const [copied, setCopied] = useState(false)
-  const copy = () => { navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = () => { navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }}>
       <div className="flex items-center gap-2">
@@ -1293,7 +1314,7 @@ function InfoCard({ s, color, setView }) {
   if (s.isDesk) return <DeskCard s={s} color={color} setView={setView} />
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = () => { navigator.clipboard?.writeText(s.social || ''); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = () => { navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
   const tone = s.biasTone === 'up' ? 'text-green' : s.biasTone === 'down' ? 'text-red' : 'text-yellow'
   const chart = () => { const sym = s.symbol === 'NIFTY' ? '^NSEI' : s.symbol === 'GOLD' ? 'GC=F' : s.symbol === 'BANKNIFTY' ? '^NSEBANK' : s.symbol + '.NS'; openSymbol(s.symbol === 'NIFTY' || s.symbol === 'GOLD' || s.symbol === 'BANKNIFTY' ? 'indices' : 'stocks', sym); setView('chart') }
   return (
