@@ -84,6 +84,19 @@ const gradeRank = s => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[s.grade] 
 
 // position sizing — the engine decides quantity from risk (entry→SL) + deploy caps.
 // F&O-eligible symbols are booked as F&O (lot-sized, leveraged) rather than cash.
+// Wrap a naked long option into a HEDGED vertical debit spread: sell an OTM leg for ~50% credit.
+// net debit (per unit) = long premium − short credit = the DEFINED max loss; the short leg also caps
+// the upside at the spread width. invested = net debit × qty → the sleeve risks half a naked long.
+function hedgeSpread(o) {
+  const shortPrem = Math.round(o.entryPremium * 0.5)          // OTM leg sold ≈ half the ATM premium
+  const netDebit = o.entryPremium - shortPrem                 // per-unit cost = max loss
+  return {
+    ...o, hedged: true, longPrem: o.entryPremium, shortPrem, netDebit,
+    invested: Math.round(netDebit * o.qty),
+    hedgeNote: `Hedged ${o.optType} debit spread — long ₹${o.entryPremium} / short ₹${shortPrem}; net debit ₹${netDebit} = defined max loss`,
+  }
+}
+
 function sizeTrade(sig, fnoLots = {}) {
   const entry = sig.entry, sl = sig.sl
   if (!entry || !sl) return null
@@ -95,13 +108,15 @@ function sizeTrade(sig, fnoLots = {}) {
     return { kind: 'COMM', sleeve: 'FO', qty, lots: null, lotSize: null, invested: Math.round(qty * entry), notional: Math.round(qty * entry) }
   }
   const foRisk = CAP_FO * RISK_PCT / 100, foDeploy = CAP_FO * FO_DEPLOY_PCT / 100, foMax = CAP_FO * FNO_MAX_MARGIN_PCT / 100
-  // OPTION BUY (CE/PE) — defined risk = premium paid; sized off the F&O sleeve
+  // OPTION BUY (CE/PE) → ALWAYS HEDGED as a vertical DEBIT SPREAD: buy the ATM leg, sell an OTM leg
+  // for ~50% credit. Net debit (= max loss) is HALF the naked premium, and it is DEFINED — the short
+  // leg caps the downside AND the upside. No naked F&O in this book. (see hedgeSpread())
   if (sig.optType && sig.lot && sig.entryPremium) {
     const lot = sig.lot, prem = sig.entryPremium, perLot = prem * lot
     if (perLot > foMax) return null
     const lots = Math.max(1, Math.floor(Math.min(foRisk * 2, foDeploy) / perLot))
     const qty = lots * lot
-    return { kind: 'OPT', sleeve: 'FO', optType: sig.optType, qty, lots, lotSize: lot, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
+    return hedgeSpread({ kind: 'OPT', sleeve: 'FO', optType: sig.optType, qty, lots, lotSize: lot, entryPremium: prem, notional: Math.round(entry * qty) })
   }
   const lotFromMap = fnoLots[sig.symbol] || fnoLots[sig.underlying]
   if (lotFromMap && !sig.lot) sig = { ...sig, lot: lotFromMap }
@@ -115,7 +130,7 @@ function sizeTrade(sig, fnoLots = {}) {
     if (!prem || perLot > foMax) return null
     const lots = Math.max(1, Math.floor(Math.min(foRisk * 2, foDeploy) / perLot))
     const qty = lots * lotSize
-    return { kind: 'OPT', sleeve: 'FO', optType, stockOption: true, qty, lots, lotSize, entryPremium: prem, invested: Math.round(prem * qty), notional: Math.round(entry * qty) }
+    return hedgeSpread({ kind: 'OPT', sleeve: 'FO', optType, stockOption: true, qty, lots, lotSize, entryPremium: prem, notional: Math.round(entry * qty) })
   }
   if (entry <= sl) return null   // long cash guard
   const riskAmt = CAP_CASH * RISK_PCT / 100, maxDeploy = CAP_CASH * MAX_DEPLOY_PCT / 100, riskPerShare = entry - sl
@@ -142,12 +157,21 @@ const daysBetween = (a, b) => { const d = (Date.parse(b) - Date.parse(a)) / 8640
 const DTE0 = 20   // ~trading days to monthly expiry at entry (paper model)
 function pnlFor(pos, exitPrice, bearish, daysHeld = 0) {
   if (pos.kind === 'OPT') {
-    // Realistic-ish ATM option: premium = decaying time-value (THETA, √time) + intrinsic (delta≈0.55).
-    // A flat/adverse held option BLEEDS premium (theta); only a real favourable move pays.
     const moveFav = bearish ? (pos.entryPrice - exitPrice) : (exitPrice - pos.entryPrice)
     const held = Math.min(Math.max(0, daysHeld), DTE0)
-    const timeValue = pos.entryPremium * Math.sqrt((DTE0 - held) / DTE0)   // theta decay
-    const intrinsicGain = 0.55 * moveFav                                   // delta on the move
+    if (pos.hedged) {
+      // HEDGED DEBIT SPREAD: value moves within [0, 2×netDebit] → profit capped at +net debit,
+      // loss floored at −net debit. The short leg funds half the cost and caps both tails (defined
+      // risk). Delta on the net (~0.35, both legs move) and reduced theta because the short bleeds too.
+      const debit = pos.netDebit ?? (pos.invested / pos.qty)
+      const decay = Math.sqrt((DTE0 - held) / DTE0)
+      let val = debit * decay + 0.35 * moveFav          // net spread value at exit
+      val = Math.max(0, Math.min(val, 2 * debit))        // hedge caps: max +100%, max −100% of net debit
+      return Math.round((val - debit) * pos.qty)
+    }
+    // Naked long (legacy) — theta-decaying time value + delta intrinsic; loss capped at premium.
+    const timeValue = pos.entryPremium * Math.sqrt((DTE0 - held) / DTE0)
+    const intrinsicGain = 0.55 * moveFav
     const exitPrem = Math.max(0, timeValue + intrinsicGain)
     return Math.round((exitPrem - pos.entryPremium) * pos.qty)
   }
@@ -166,23 +190,47 @@ function failReason(c, pos) {
   return null
 }
 
-// ── LOSS-LEARNING: on every booked loss, record WHY it failed + a per-name cooldown so the engine
-// doesn't repeat the same mistake. Lessons persist in the book (b.lossLessons) and feed avoidance. ──
-function lossCategoryOf(rec) {
-  if (rec.sleeve === 'DAILY') return 'daily scalp stopped (intraday noise)'
-  if ((rec.entryPrice || 0) < 100) return 'illiquid / low-price name'
-  if (rec.daysHeld != null && rec.daysHeld <= 1) return 'false breakout (stopped ≤1 day)'
-  if (rec.generator === 'reversal') return 'counter-trend reversal failed'
-  return 'no follow-through (trend/base failed)'
+// ── LOSS-LEARNING: on every booked loss, run a PRO-TRADER POST-MORTEM — name exactly what we missed,
+// WHY it happened, and the FIX — then keep it in memory (b.lossJournal + b.lossLessons) so the same
+// mistake is avoided next time. This is how a real desk compounds: it doesn't repeat its errors. ──
+function diagnoseLoss(rec) {
+  const entry = rec.entryPrice || 0, sl = rec.sl || 0
+  const stopWidthPct = entry && sl ? Math.abs(entry - sl) / entry * 100 : 0
+  const held = rec.daysHeld
+  const gave = (rec.peakPct ?? 0) >= 8   // was in decent profit, then lost it
+  // Ordered most-specific → most-general; each returns {category, missed, why, fix}.
+  if (gave)
+    return { category: 'gave back an open gain', missed: 'a trailing stop / partial book while it was up', why: `ran to +${rec.peakPct}% then reversed all the way to the stop`, fix: 'trail sooner — book part at +40% and pull the stop to cost-to-cost so a winner never becomes a loser' }
+  if (rec.averaged)
+    return { category: 'averaged a loser that kept falling', missed: 'confirmation that the setup + company were truly strong before adding', why: 'added on the dip but price broke the widened structural stop anyway', fix: 'only average A++ names with delivery ≥55 AND price still above the higher-timeframe base — otherwise take the first stop' }
+  if (rec.sleeve === 'DAILY')
+    return { category: 'daily scalp stopped (intraday noise)', missed: 'a tighter confirmation trigger before entry', why: 'intraday chop hit the 2.5% stop before the move developed', fix: 'enter only on a reclaim of VWAP/POC with volume; skip the first 15 min noise' }
+  if (entry && entry < 100)
+    return { category: 'illiquid / low-price name', missed: 'a liquidity filter', why: 'thin low-priced name gapped straight through the stop', fix: 'keep the ≥₹50 floor and prefer F&O-eligible liquid names where the stop actually fills' }
+  if (rec.generator === 'reversal')
+    return { category: 'counter-trend reversal failed', missed: 'a structure shift (CHoCH/BOS) before fading the trend', why: 'faded a move that was still trending — the trend won', fix: 'take a reversal ONLY after a confirmed CHoCH and never when a trend desk is positioned the opposite way' }
+  if (held != null && held <= 1 && stopWidthPct <= 5)
+    return { category: 'false breakout (stopped ≤1 day)', missed: 'a confirmation close above the level + volume', why: 'entered the breakout before it held — it failed the next candle', fix: 'require a confirmed close beyond the level with above-average volume; enter the retest, not the first poke' }
+  if (stopWidthPct > 8)
+    return { category: 'stop too wide (loose risk)', missed: 'a tighter structural stop', why: `${stopWidthPct.toFixed(1)}% stop meant a normal pullback booked a big loss`, fix: 'anchor the stop to the nearest swing/LVN, size down to keep ~1% risk — never widen risk to fit a position' }
+  return { category: 'no follow-through (trend/base failed)', missed: 'stronger confluence at entry', why: 'thesis stalled — the base/trend did not extend as expected', fix: 'demand one more confirming factor (VP node / FVG / structure) before committing capital' }
 }
 function recordLoss(b, rec) {
-  b.lossCooldown ||= {}; b.lossLessons ||= {}
+  b.lossCooldown ||= {}; b.lossLessons ||= {}; b.lossJournal ||= []
   const sym = rec.symbol || rec.underlying
   if (sym) b.lossCooldown[sym] = rec.exitDate || (rec.exitAt || '').slice(0, 10)
-  const cat = lossCategoryOf(rec)
-  const L = (b.lossLessons[cat] ||= { count: 0, avgLossPct: 0, lastSymbol: null, lastDate: null })
+  const d = diagnoseLoss(rec)
+  // aggregate lesson by category (with the fix attached)
+  const L = (b.lossLessons[d.category] ||= { count: 0, avgLossPct: 0, lastSymbol: null, lastDate: null, fix: d.fix })
   L.avgLossPct = +(((L.avgLossPct * L.count) + (rec.realizedPct || 0)) / (L.count + 1)).toFixed(2)
-  L.count++; L.lastSymbol = sym; L.lastDate = rec.exitDate || null
+  L.count++; L.lastSymbol = sym; L.lastDate = rec.exitDate || null; L.fix = d.fix
+  // per-trade post-mortem, newest first, capped — the searchable "what went wrong" log
+  b.lossJournal.unshift({
+    date: rec.exitDate || (rec.exitAt || '').slice(0, 10), symbol: sym, sleeve: rec.sleeve || 'CASH',
+    generator: rec.generator || null, grade: rec.grade || null, lossPct: rec.realizedPct ?? null,
+    category: d.category, missed: d.missed, why: d.why, fix: d.fix,
+  })
+  if (b.lossJournal.length > 80) b.lossJournal = b.lossJournal.slice(0, 80)
 }
 
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
@@ -345,21 +393,15 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
   const openSyms = new Set(Object.values(b.open).filter(p => p.sleeve !== 'DAILY').map(p => p.symbol))    // one live cash/F&O position per underlying (daily sleeve tracked separately)
-  // ADAPTIVE QUALITY: stop booking generators PROVEN weak (measured win-rate < 45% on ≥20 closed) —
-  // concentrate capital on proven winners. This lifts the portfolio's real accuracy over time.
-  // PER-DESK OPTIMIZATION toward a 75% target: <45% win → benched (not traded); 45–75% → "optimizing",
-  // trade only its BEST setups (higher confidence / grade) so its win-rate climbs; ≥75% → proven, trade freely.
-  const deskGate = s => {
-    const r = genWinRates[s.generator]
-    if (!r || r.decided < 20) return true                                         // still building → allow
-    if (r.winRate < 45) return false                                              // proven weak → benched
-    if (r.winRate < 75) return (s.confidence || 0) >= 60 || s.grade === 'A++' || s.grade === 'A+'  // optimizing → only best
-    return true                                                                    // proven ≥75% → trade freely
-  }
+  // WE DO NOT SUPPRESS DESKS. Every desk keeps trading — a weak desk is FIXED by learning from each
+  // loss (post-mortem below), by the reversal↔trend contradiction filter, and by the 5-day name
+  // cooldown — NOT by benching the whole desk. `genWinRates` is used only to RANK (best-proven desks
+  // sort first when capital is tight), never to block. Confidence still weights the sort.
+  const deskEdge = s => { const r = genWinRates[s.generator]; return (r && r.decided >= 20) ? r.winRate : 55 }
   const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
   const cands = Object.values(ledger.active)
-    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && deskGate(s))
-    .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
+    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
+    .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (deskEdge(z) - deskEdge(a)) || (z.confidence || 0) - (a.confidence || 0))
   // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
   // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
   const CAPOF = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
@@ -533,7 +575,8 @@ function computeStats(b, todayISO) {
   const dailyTodayPnl = dailyClosed.filter(t => t.exitDate === todayISO).reduce((a, t) => a + (t.realizedPnl || 0), 0) + dailyUnreal
   // LOSS-LEARNING: prune expired cooldowns; surface why losses happened (top categories) so they inform avoidance
   if (b.lossCooldown && todayISO) for (const [sym, d] of Object.entries(b.lossCooldown)) { const dd = (Date.parse(todayISO) - Date.parse(d)) / 86400000; if (isNaN(dd) || dd >= LOSS_COOLDOWN_DAYS) delete b.lossCooldown[sym] }
-  const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol })).sort((a, z) => z.count - a.count)
+  const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol, fix: v.fix })).sort((a, z) => z.count - a.count)
+  const lossJournal = (b.lossJournal || []).slice(0, 12)   // recent per-trade post-mortems (what we missed + fix)
   // SEGMENT LEADERBOARD — which book is consistent (win-rate ≥55%) AND highest-returning
   const segWin = arr => { const w = arr.filter(t => t.result === 'WIN').length, n = arr.filter(t => t.result === 'WIN' || t.result === 'LOSS').length; return n ? +((w / n) * 100).toFixed(1) : null }
   const cashClosedArr = mainClosed.filter(t => (t.sleeve || 'CASH') !== 'FO'), foClosedArr = mainClosed.filter(t => t.sleeve === 'FO')
@@ -565,7 +608,7 @@ function computeStats(b, todayISO) {
     avgLossPct: losses.length ? +(losses.reduce((a, t) => a + t.realizedPct, 0) / losses.length).toFixed(2) : null,
     onTimeWinRate: wins.length ? +((onTimeWins / wins.length) * 100).toFixed(1) : null,
     monthly: months, monthTarget: { min: 5, max: 7 },
-    lessons: lessons.slice(0, 6), activeCooldowns: Object.keys(b.lossCooldown || {}).length,
+    lessons: lessons.slice(0, 6), lossJournal, activeCooldowns: Object.keys(b.lossCooldown || {}).length,
     segmentRank,
   }
 }

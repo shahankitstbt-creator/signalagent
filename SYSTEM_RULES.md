@@ -60,16 +60,13 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 
 ## 4. EXIT / RISK MANAGEMENT RULES
 
-1. **Honor the STOP** — the moment price hits the SL, **EXIT** (Cash + F&O), on every scan. Never sit past the stop.
-2. **Average once (quality only)** — a top-quality CASH long (A++/A+, delivery ≥55) that dips ~6% gets **one add** to improve the cost basis and **widen the SL to structure** — then if it breaks that, it exits.
-3. **Partial book** — book 50% at +40%; trail the rest (A++/A+ → cost-to-cost; others → +10% floor).
-4. **No contradictions** — a reversal SHORT is dropped if any trend desk is LONG that name (and vice-versa).
-5. **Loss cooldown** — after a stop-out, the name is **benched for 5 days** (don't re-buy what just stopped you).
-6. **Per-desk optimization (target 75% win-rate)** — measured on ≥20 closed trades:
-   - **≥75%** → proven ✓ — traded freely.
-   - **45–75%** → *optimizing* ⚙ — trades **only its highest-conviction setups** (confidence ≥60 or grade A+/A++) so its win-rate climbs toward 75%.
-   - **<45%** → **benched** ⚠ — auto-removed from trading (shown for discovery only).
-   The evening self-improvement re-checks every desk against 75% and adjusts which ones are optimizing/benched.
+1. **Honor the STOP (Cash + F&O)** — the moment price hits the SL, **EXIT**, on every scan. Never sit past the stop — *except* the one quality-averaging case below.
+2. **Average when setup + company are both strong — even past the SL** — a top-quality CASH long (A++/A+, delivery ≥55) that dips ~6% gets **one add** to improve the cost basis and **widen the SL to structure**. Then that widened stop is final — if it breaks, it exits. (Averaging a weak name is itself a logged mistake — see rule 7.)
+3. **F&O is ALWAYS HEDGED** — no naked options. Every F&O option is booked as a **vertical debit spread** (buy the ATM leg, sell an OTM leg for ~50% credit). Net debit = the **defined max loss** (half a naked long); the short leg caps both tails. F&O never carries undefined risk.
+4. **Partial book** — book 50% at +40%; trail the rest (A++/A+ → cost-to-cost; others → +10% floor).
+5. **No contradictions** — a reversal SHORT is dropped if any trend desk is LONG that name (and vice-versa).
+6. **Loss cooldown** — after a stop-out, the name is **benched for 5 days** (don't re-buy what just stopped you).
+7. **Every loss gets a post-mortem, kept in memory** — on each booked loss the engine records **what we missed, why it happened, and the fix**, then avoids repeating it. **We do NOT bench whole desks** — a weak desk is FIXED by these lessons + the contradiction filter + the cooldown. Win-rate is used only to *rank* desks when capital is tight, never to block them.
 
 ---
 
