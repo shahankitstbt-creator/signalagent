@@ -179,10 +179,12 @@ export async function notifyTradeEvents(entered, exited, dateStr) {
     if (res.skipped) { stop = true; return }
     if (res.ok) { sent[key] = dateStr; n++; await new Promise(r => setTimeout(r, 1100)) }
   }
-  // DATE-stable keys (not run timestamps): a position alerts at most ONCE on entry and ONCE per
-  // exit-per-day, even if a scan race briefly rolls back state and re-derives the same trade.
-  for (const p of (exited || [])) { if (stop) break; await send('tbexit:' + p.id + ':' + (p.exitDate || '') + ':' + (p.partial ? 'p' : (p.result || 'f')), formatExit(p, dateStr)) }
-  for (const p of (entered || [])) { if (stop) break; await send('tbentry:' + p.id + ':' + (p.entryDate || ''), formatEntry(p, dateStr)) }
+  // COPY-WORTHY only: alert just the few high-conviction, human-followable trades (not the whole
+  // ~70-position paper book, and not the fast daily-income scalps) — a manageable stream to trade manually.
+  const copyworthy = p => p.sleeve !== 'DAILY' && (p.grade === 'A++' || p.grade === 'A+' || (p.confidence || 0) >= 70)
+  // DATE-stable keys: a position alerts at most ONCE on entry and ONCE per exit-per-day.
+  for (const p of (exited || [])) { if (stop) break; if (!copyworthy(p)) continue; await send('tbexit:' + p.id + ':' + (p.exitDate || '') + ':' + (p.partial ? 'p' : (p.result || 'f')), formatExit(p, dateStr)) }
+  for (const p of (entered || [])) { if (stop) break; if (!copyworthy(p)) continue; await send('tbentry:' + p.id + ':' + (p.entryDate || ''), formatEntry(p, dateStr)) }
   saveSent(sent)
   if (n) console.log(`Telegram: ${n} trade entry/exit alerts`)
 }

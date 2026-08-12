@@ -114,6 +114,65 @@ function KpiHero({ book, o, total, newCount, gensCount, active }) {
     </div>
   )
 }
+// 📋 COPY TRADES — a SHORT curated list of the highest-conviction trades to take MANUALLY (you can't
+// copy all ~70 positions; these are the few worth acting on), with clear entry price/time + action.
+const gradeRankN = g => ({ 'A++': 5, 'A+': 4, 'A': 3, 'B': 2, 'C': 1 })[g] || 0
+const istDT = iso => { const ms = Date.parse(iso); if (isNaN(ms)) return ''; const d = new Date(ms + 5.5 * 3600 * 1000); return d.toISOString().slice(5, 10).replace('-', '/') + ' ' + d.toISOString().slice(11, 16) }
+function CopyTradesPanel({ book }) {
+  const [open, setOpen] = useState(true)
+  if (!book?.open) return null
+  const picks = Object.values(book.open)
+    .filter(p => p.sleeve !== 'DAILY' && (p.grade === 'A++' || p.grade === 'A+' || (p.confidence || 0) >= 70) && p.entryPrice && Array.isArray(p.targets) && p.targets.length)
+    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.confidence || 0) - (a.confidence || 0)))
+    .slice(0, 6)
+  if (!picks.length) return null
+  return (
+    <div className="card elev" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-green) 9%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
+      <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-3 border-b border-border cursor-pointer" onClick={() => setOpen(o => !o)}>
+        <span className="mono text-[13px] font-bold">📋 Copy Trades — take these manually</span>
+        <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb,var(--color-green) 16%,transparent)', color: 'var(--color-green)' }}>top {picks.length} highest-conviction</span>
+        <span className="mono text-[10px] text-txt-muted hidden sm:inline">enter near the entry price · set the SL · book at targets · we alert you on Telegram when we exit</span>
+        <span className="ml-auto mono text-xs text-txt-muted">{open ? '▾' : '▸'}</span>
+      </div>
+      {open && (
+        <div className="grid gap-2.5 p-3 md:grid-cols-2 xl:grid-cols-3">
+          {picks.map((p, i) => {
+            const near = Math.abs((p.ltp - p.entryPrice) / p.entryPrice) <= 0.015
+            const up = (p.unrealizedPct ?? 0) >= 0
+            const action = near ? { t: '🟢 ENTER NOW', c: '#0E9F6E' } : up ? { t: '🟡 RUNNING — wait for pullback', c: '#C2840A' } : { t: '🟢 STILL NEAR ENTRY', c: '#0E9F6E' }
+            const isOpt = p.kind === 'OPT'
+            return (
+              <div key={p.id + i} className="rounded-xl border border-border bg-bg-card p-3 elev">
+                <div className="flex items-center gap-2">
+                  <span className="mono text-sm font-bold text-txt">{p.symbol}</span>
+                  {p.grade && <span className="mono text-[9px] px-1.5 py-0.5 rounded text-white font-bold" style={{ background: gradeBg(p.grade) }}>{p.grade}</span>}
+                  <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{isOpt ? p.optType || 'F&O' : 'CASH'}</span>
+                  <span className="ml-auto mono text-[10px] font-bold" style={{ color: action.c }}>{action.t}</span>
+                </div>
+                {isOpt && p.optionPlay && <div className="mono text-[10px] mt-1" style={{ color: '#7C3AED' }}>👉 {p.optionPlay}</div>}
+                <div className="grid grid-cols-3 gap-2 mt-2 mono text-[11px]">
+                  <div><div className="text-[9px] text-txt-muted uppercase">Buy @</div><div className="font-bold">₹{(+p.entryPrice).toLocaleString('en-IN')}</div></div>
+                  <div><div className="text-[9px] text-txt-muted uppercase">Now</div><div className={`font-bold ${up ? 'text-green' : 'text-red'}`}>₹{(+(p.ltp ?? p.entryPrice)).toFixed(2)} <span className="text-[9px]">({up ? '+' : ''}{p.unrealizedPct}%)</span></div></div>
+                  <div><div className="text-[9px] text-txt-muted uppercase">Stop</div><div className="font-bold text-red">₹{(+p.sl).toLocaleString('en-IN')}</div></div>
+                </div>
+                <div className="grid grid-cols-3 gap-2 mt-1.5 mono text-[11px]">
+                  {p.targets.slice(0, 3).map((t, k) => <div key={k}><div className="text-[9px] text-txt-muted uppercase">T{k + 1} {t.by ? `· ${t.by}` : ''}</div><div className="font-bold text-green">₹{(+t.price).toLocaleString('en-IN')}</div></div>)}
+                </div>
+                <div className="mono text-[9.5px] text-txt-muted mt-2 flex items-center gap-2 flex-wrap">
+                  <span>🕐 entered {istDT(p.entryAt) || p.entryDate} IST</span>
+                  {p.rr && <span>· R:R 1:{p.rr}</span>}
+                  {p.delivery != null && <span>· deliv {p.delivery}%</span>}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      <div className="px-4 py-1.5 border-t border-border mono text-[9.5px] text-txt-muted">Educational only, not advice. Not SEBI-registered. Enter only if price is still near "Buy @"; always place the Stop. We book at targets / exit on stop — you'll get a Telegram entry &amp; exit alert.</div>
+    </div>
+  )
+}
+
 // Daily-Income sleeve — the separate ₹10L experiment aiming for a consistent 1–2%/day, monitored 30 days.
 function DailyStrip({ d }) {
   if (!d) return null
@@ -349,6 +408,7 @@ export default function SignalsBoard() {
             <div className="flex-1 overflow-y-auto">
               <div className="p-3 sm:p-5 flex flex-col gap-4 sm:gap-5">
                 {/* KPI hero — portfolio summary above the detail (mockup layout) */}
+                <CopyTradesPanel book={book} />
                 <KpiHero book={book} o={o} total={total} newCount={newCount} gensCount={gens.length} active={active} />
                 <DailyStrip d={book?.dailySleeve} />
 
