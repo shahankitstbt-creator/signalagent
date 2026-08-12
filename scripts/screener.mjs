@@ -1223,10 +1223,10 @@ async function fetchExternalGainers() {
 }
 
 // the daily missed-mover review → public/learning.json (+ bounded auto-tuning)
-// Accuracy aim the user set: work toward 80%+ measured win-rate, CONTINUOUS (rolling 30-day horizon so
-// the self-improvement never "expires"). 80% is an aspiration the engine climbs toward by tightening
+// Accuracy aim the user set: work toward 85%+ measured win-rate, CONTINUOUS (rolling 30-day horizon so
+// the self-improvement never "expires"). 85% is an aspiration the engine climbs toward by tightening
 // selectivity daily — NOT a guarantee; the number shown is always the real, measured win-rate.
-const GOAL = { target: 80, start: '2026-06-19' }
+const GOAL = { target: 85, start: '2026-06-19' }
 
 async function runSelfImprovement(scored, board, today, ledger, externalNote, tr) {
   const tuning = loadTuning()
