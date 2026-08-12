@@ -410,8 +410,14 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       && (fnoLots[s.symbol] || fnoLots[s.underlying])              // LIQUID: F&O-eligible names only (no micro-caps that gap −5%)
       && (s.grade === 'A++' || s.grade === 'A+' || s.grade === 'A' || (s.confidence || 0) >= DAILY_MIN_CONF))
     .sort((a, z) => safeScore(z) - safeScore(a))
+  // GOAL-AWARE: once today's Daily-Income P&L (booked + open) has reached the ₹10k goal, STOP opening
+  // new day-trades — the specific daily goal is in hand, so don't add fresh risk. (Existing trades run on.)
+  const dailyTodayPnl = b.closed.filter(t => t.sleeve === 'DAILY' && t.exitDate === todayISO).reduce((a, t) => a + (t.realizedPnl || 0), 0)
+    + Object.values(b.open).filter(p => p.sleeve === 'DAILY').reduce((a, p) => a + (p.unrealizedPnl || 0), 0)
+  const dailyGoalHit = dailyTodayPnl >= DAILY_TARGET_INR
   let dailyOpened = 0
   for (const s of dailyCands) {
+    if (dailyGoalHit) break                                             // ₹10k day-goal reached → stop adding day-trades
     if ((deployed.DAILY || 0) >= CAP_DAILY) break
     if (Object.keys(b.open).filter(k => k.startsWith('daily:')).length >= DAILY_MAX_OPEN) break
     const sym = s.symbol || s.underlying

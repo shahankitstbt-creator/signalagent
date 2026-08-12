@@ -300,7 +300,8 @@ function DailyStrip({ d }) {
       <>
       <div className="flex items-center gap-2 flex-wrap mb-3">
         <span className="mono text-[13px] font-bold">⚡ Daily-Income Sleeve</span>
-        <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-cyan) 18%, transparent)', color: 'var(--color-cyan)' }}>₹10L safe cash · aim ₹10k/day</span>
+        <span className="pill text-[10px] px-2 py-0.5" style={{ background: 'color-mix(in srgb, var(--color-cyan) 18%, transparent)', color: 'var(--color-cyan)' }}>₹10L day-trade · goal ₹10k/day</span>
+        {d.goal && <span className="pill text-[10px] px-2 py-0.5 font-bold" style={{ background: d.goal.status === 'hit' ? 'color-mix(in srgb,var(--color-green) 18%,transparent)' : 'color-mix(in srgb,var(--color-yellow) 16%,transparent)', color: d.goal.status === 'hit' ? 'var(--color-green)' : 'var(--color-yellow)' }}>{d.goal.status === 'hit' ? `✓ ₹10k goal hit today (${inr(d.goal.todayPnl)}) — no new trades` : `today ${inr(d.goal.todayPnl || 0)} / ₹10k`}</span>}
         <span className="mono text-[10px] text-green font-bold">● live</span>
         {/* live occupancy bar */}
         <span className="hidden sm:flex items-center gap-1.5 ml-1">
