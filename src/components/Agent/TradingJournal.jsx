@@ -120,6 +120,19 @@ export default function TradingJournal() {
             </div>
           )}
 
+          {/* segment leaderboard — which book is consistent + highest-returning */}
+          {st.segmentRank?.length > 0 && (
+            <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap mono text-[10px]">
+              <span className="font-bold text-txt-sec">🏆 Segment leaderboard:</span>
+              {st.segmentRank.map((sg, i) => (
+                <span key={sg.key} className="px-2 py-0.5 rounded-full" title={`${sg.trades} closed trades`}
+                  style={{ background: i === 0 ? 'color-mix(in srgb,var(--color-green) 14%,transparent)' : 'var(--color-bg-base)', color: i === 0 ? 'var(--color-green)' : 'var(--color-txt-sec)', fontWeight: i === 0 ? 700 : 400 }}>
+                  #{sg.rank} {sg.name} {sg.pct >= 0 ? '+' : ''}{sg.pct}%{sg.winRate != null ? ` · ${sg.winRate}% win` : ''}{sg.consistent ? ' ✓consistent' : ''}
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* tabs */}
           <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
             {[['open', `Open (${open.length})`], ['closed', `Closed (${closed.length})`]].map(([k, lbl]) => (

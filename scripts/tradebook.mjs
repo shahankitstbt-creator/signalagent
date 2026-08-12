@@ -520,6 +520,14 @@ function computeStats(b, todayISO) {
   // LOSS-LEARNING: prune expired cooldowns; surface why losses happened (top categories) so they inform avoidance
   if (b.lossCooldown && todayISO) for (const [sym, d] of Object.entries(b.lossCooldown)) { const dd = (Date.parse(todayISO) - Date.parse(d)) / 86400000; if (isNaN(dd) || dd >= LOSS_COOLDOWN_DAYS) delete b.lossCooldown[sym] }
   const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol })).sort((a, z) => z.count - a.count)
+  // SEGMENT LEADERBOARD — which book is consistent (win-rate ≥55%) AND highest-returning
+  const segWin = arr => { const w = arr.filter(t => t.result === 'WIN').length, n = arr.filter(t => t.result === 'WIN' || t.result === 'LOSS').length; return n ? +((w / n) * 100).toFixed(1) : null }
+  const cashClosedArr = mainClosed.filter(t => (t.sleeve || 'CASH') !== 'FO'), foClosedArr = mainClosed.filter(t => t.sleeve === 'FO')
+  const segmentRank = [
+    { key: 'CASH', name: 'Cash', pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), winRate: segWin(cashClosedArr), trades: cashClosedArr.length },
+    { key: 'FO', name: 'F&O', pct: +(((b.cashFO + foVal - b.capitalFO) / b.capitalFO) * 100).toFixed(2), winRate: segWin(foClosedArr), trades: foClosedArr.length },
+    { key: 'DAILY', name: 'Daily', pct: +(((b.cashDaily + dailyVal - b.capitalDaily) / b.capitalDaily) * 100).toFixed(2), winRate: segWin(dailyClosed), trades: dailyClosed.length },
+  ].sort((a, z) => z.pct - a.pct).map((x, i) => ({ ...x, rank: i + 1, consistent: x.winRate != null && x.winRate >= 55 }))
   b.stats = {
     equity: b.equity, cash: Math.round(b.cashCash + b.cashFO + b.cashDaily), investedOpen,
     cashSleeve: { capital: b.capitalCash, cash: Math.round(b.cashCash), equity: Math.round(b.cashCash + cashVal), pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), open: cashOpen.length, closedPnl: Math.round(cashClosedPnl), goal: monthlyGoal(b, 'CASH', b.capitalCash, { unreal: cashUnreal }, todayISO) },
@@ -544,5 +552,6 @@ function computeStats(b, todayISO) {
     onTimeWinRate: wins.length ? +((onTimeWins / wins.length) * 100).toFixed(1) : null,
     monthly: months, monthTarget: { min: 5, max: 7 },
     lessons: lessons.slice(0, 6), activeCooldowns: Object.keys(b.lossCooldown || {}).length,
+    segmentRank,
   }
 }
