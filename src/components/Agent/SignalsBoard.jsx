@@ -132,6 +132,20 @@ function fmtCopyTrade(p, cap, risk) {
   const tg = p.targets.slice(0, 3).map((x, k) => `T${k + 1} ₹${N(x.price)}${x.by ? ` (by ${x.by})` : ''}`).join(' · ')
   return `📈 ${p.symbol} — BUY ${isOpt ? (p.optType || 'F&O') : 'CASH'}${p.grade ? ` · ${p.grade}` : ''}\n${isOpt && p.optionPlay ? `👉 ${p.optionPlay}\n` : ''}${size ? `Buy ${size.qty} shares (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})\n` : ''}Buy @ ₹${N(p.entryPrice)} · SL ₹${N(p.sl)}\n${tg}${p.rr ? ` · R:R 1:${p.rr}` : ''}`
 }
+function copyPicks(book) {
+  if (!book?.open) return []
+  return Object.values(book.open)
+    .filter(p => p.sleeve !== 'DAILY' && (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+') && Array.isArray(p.targets) && p.targets.length)
+    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
+    .slice(0, 6)
+}
+function copyAllTrades(book) {
+  const picks = copyPicks(book); if (!picks.length) return false
+  const cap = +localStorage.getItem('pt_cap') || 100000, risk = +localStorage.getItem('pt_risk') || 1
+  const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join('\n\n')
+  const txt = `📋 STOCKSBYVARSHA — ${picks.length} trades to copy\nCapital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade\n\n${body}\n\n📌 Educational only, not advice. Not SEBI-registered.`
+  navigator.clipboard?.writeText(txt); return picks.length
+}
 function CopyTradesPanel({ book }) {
   const [open, setOpen] = useState(true)
   const [copiedAll, setCopiedAll] = useState(false)
@@ -139,18 +153,9 @@ function CopyTradesPanel({ book }) {
   const [risk, setRisk] = useState(() => { const v = +localStorage.getItem('pt_risk'); return v > 0 ? v : 1 })
   const setCapS = v => { setCap(v); try { localStorage.setItem('pt_cap', v) } catch {} }
   const setRiskS = v => { setRisk(v); try { localStorage.setItem('pt_risk', v) } catch {} }
-  if (!book?.open) return null
-  const picks = Object.values(book.open)
-    .filter(p => p.sleeve !== 'DAILY' && (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+') && Array.isArray(p.targets) && p.targets.length)   // liquid, tradeable, top-grade only
-    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
-    .slice(0, 6)
+  const picks = copyPicks(book)
   if (!picks.length) return null
-  const copyAll = (e) => {
-    e.stopPropagation()
-    const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join('\n\n')
-    const txt = `📋 STOCKSBYVARSHA — ${picks.length} trades to copy\nCapital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade\n\n${body}\n\n📌 Educational only, not advice. Not SEBI-registered.`
-    navigator.clipboard?.writeText(txt); setCopiedAll(true); setTimeout(() => setCopiedAll(false), 1800)
-  }
+  const copyAll = (e) => { e.stopPropagation(); copyAllTrades(book); setCopiedAll(true); setTimeout(() => setCopiedAll(false), 1800) }
   return (
     <div className="card elev" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-green) 9%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
       <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-3 border-b border-border">
@@ -279,6 +284,7 @@ export default function SignalsBoard() {
   const [navCollapsed, setNavCollapsed] = useState(false)
   const [theme, setTheme] = useState(getTheme())
   const [book, setBook] = useState(null)   // real paper-portfolio stats from trade_book.json
+  const [copiedHdr, setCopiedHdr] = useState(false)
   const setView = useViewStore(s => s.setView)
 
   const scanNow = async () => {
@@ -371,6 +377,11 @@ export default function SignalsBoard() {
 
           {/* action cluster — top right */}
           <div className="flex items-center gap-1.5 shrink-0">
+            <button onClick={() => { const n = copyAllTrades(book); if (n) { setCopiedHdr(true); setTimeout(() => setCopiedHdr(false), 1800) } }}
+              title="Copy all high-conviction trades (with position size) to paste into your broker"
+              className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: copiedHdr ? '#0E9F6E' : 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
+              {copiedHdr ? '✓' : '📋'} <span className="hidden lg:inline">{copiedHdr ? 'Copied' : 'Copy Trades'}</span>
+            </button>
             <button onClick={() => setView('journal')} title="Trading Journal — ₹20L paper portfolio & performance"
               className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
               📓 <span className="hidden lg:inline">Journal</span>

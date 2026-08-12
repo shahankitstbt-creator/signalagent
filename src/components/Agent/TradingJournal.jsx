@@ -19,6 +19,17 @@ function JTh({ label, k, s, cls = '' }) {
 
 const inr = n => n == null ? '—' : '₹' + Math.round(n).toLocaleString('en-IN')
 const px = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')   // clean price (2 dp, no float noise)
+// full trade detail for hover tooltip (reason, entry date/time, SL, targets + dates, R:R…)
+const tradeTitle = (s, entryPx) => [
+  `${s.symbol}${s.name ? ' — ' + s.name : ''}   [${s.gen || s.generator || 'signal'}${s.grade ? ' · ' + s.grade : ''}]`,
+  `${s.direction === 'SHORT' ? 'SELL' : 'BUY'} · ${s.kind}${s.optType ? ' ' + s.optType : ''}   qty ${s.qty}${s.lots ? ` (${s.lots} lot)` : ''}`,
+  `Entered: ${dIST(s.entryAt, s.entryDate)} ${tIST(s.entryAt)}`,
+  `Entry ₹${px(entryPx)}   Stop ₹${px(s.sl)}${s.slPct ? ` (${s.slPct}%)` : ''}`,
+  ...(Array.isArray(s.targets) ? s.targets.map((t, i) => `Target ${i + 1}: ₹${px(t.price)}${t.pct != null ? ` (+${t.pct}%)` : ''}${t.by ? ` — by ${t.by}` : ''}`) : []),
+  s.rr ? `Risk:Reward  1:${s.rr}` : '',
+  s.delivery != null ? `NSE delivery ${s.delivery}%` : '',
+  s.reason ? `\nWhy: ${s.reason}` : '',
+].filter(Boolean).join('\n')
 // options are priced by PREMIUM, not the underlying — show the premium and keep the underlying as a hint
 const isOpt = p => p.kind === 'OPT'
 const entryPx = p => isOpt(p) ? p.entryPremium : p.entryPrice
@@ -180,8 +191,8 @@ function OpenTable({ rows: raw }) {
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (
-          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card">
-            <td className="px-3 py-2 font-bold">{s.symbol}</td>
+          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card cursor-help" title={tradeTitle(s, entryPx(s))}>
+            <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? <span className="text-txt-muted"> ({s.lots}L)</span> : ''}</td>
@@ -218,8 +229,8 @@ function ClosedTable({ rows: raw }) {
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (
-          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top">
-            <td className="px-3 py-2 font-bold">{s.symbol}</td>
+          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top cursor-help" title={tradeTitle(s, entryPx(s))}>
+            <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
             <td className="px-3 py-2 text-right">{s.qty}{s.lots ? ` (${s.lots}L)` : ''}</td>
