@@ -122,8 +122,8 @@ function CopyTradesPanel({ book }) {
   const [open, setOpen] = useState(true)
   if (!book?.open) return null
   const picks = Object.values(book.open)
-    .filter(p => p.sleeve !== 'DAILY' && (p.grade === 'A++' || p.grade === 'A+' || (p.confidence || 0) >= 70) && p.entryPrice && Array.isArray(p.targets) && p.targets.length)
-    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.confidence || 0) - (a.confidence || 0)))
+    .filter(p => p.sleeve !== 'DAILY' && (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+') && Array.isArray(p.targets) && p.targets.length)   // liquid, tradeable, top-grade only
+    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
     .slice(0, 6)
   if (!picks.length) return null
   return (
