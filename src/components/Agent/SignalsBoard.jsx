@@ -135,13 +135,24 @@ function fmtCopyTrade(p, cap, risk) {
   L.push(`${buy ? '🟢' : '🔴'} ${buy ? 'BUY' : 'SELL'} ${isOpt ? (p.optType || 'F&O') : 'CASH'} — ${p.symbol}${p.grade ? `  |  ${p.grade}` : ''}`)
   if (isOpt && p.optionPlay) L.push(`👉 ${p.optionPlay}`)
   L.push(`📍 Entry ₹${N(p.entryPrice)}     🛑 SL ₹${N(p.sl)}`)
-  ;(p.targets || []).slice(0, 3).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1} ₹${N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
+  ;(p.targets || []).slice(0, 3).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1} ₹${N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${fmtByDT(t.by)}` : ''}`))
   if (size) L.push(`📦 Buy ${size.qty} sh  (₹${N(size.deploy)}, risk ₹${N(size.riskRs)})`)
+  if (p.reason) L.push(`💡 ${p.reason}`)
   return L.join('\n')
 }
 // well-designed, sectioned trade card (emoji bullets + dividers) — like a clean broadcast message.
 const _N = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')
 const _nowIST = () => { const d = new Date(Date.now() + 5.5 * 3600 * 1000); const iso = d.toISOString(); const h = +iso.slice(11, 13), ap = h >= 12 ? 'PM' : 'AM', h12 = ((h + 11) % 12) + 1; return `${String(h12).padStart(2, '0')}:${iso.slice(14, 16)} ${ap}, ${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)} IST` }
+const _mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+// unify every target ETA to a "DD Mon, HH:MM IST" — intraday "~Nh" → clock time from now; swing date → market close 15:30
+function fmtByDT(by) {
+  if (!by) return ''
+  const h = /^~(\d+)h$/.exec(String(by))
+  if (h) { const d = new Date(Date.now() + (+h[1]) * 3600 * 1000 + 5.5 * 3600 * 1000); const iso = d.toISOString(); return `${+iso.slice(8, 10)} ${_mon[+iso.slice(5, 7) - 1]}, ${iso.slice(11, 16)} IST` }
+  const dm = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(by))
+  if (dm) return `${+dm[3]} ${_mon[+dm[2] - 1]}, 15:30 IST`
+  return `${by}, 15:30 IST`
+}
 function tradeCard(s, opts = {}) {
   const sym = s.symbol || s.underlying || ''
   const buy = !/SHORT|BEAR/.test(String(s.direction || 'LONG'))
@@ -157,7 +168,7 @@ function tradeCard(s, opts = {}) {
   L.push(D)
   L.push(`📍 Entry: ₹${_N(s.entry)}`)
   L.push(`🛑 SL: ₹${_N(s.sl)}${s.slPct != null ? `  (${s.slPct}%)` : ''}`)
-  ;(s.targets || []).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${_N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${t.by}` : ''}`))
+  ;(s.targets || []).forEach((t, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${_N(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  · by ${fmtByDT(t.by)}` : ''}`))
   L.push(D)
   if (opts.size) L.push(`📦 Buy: ${opts.size.qty} shares  (₹${_N(opts.size.deploy)})`)
   else if (s.plan?.shares) L.push(`📦 Buy: ${s.plan.shares} shares  (₹${_N(s.plan.deploy)})`)

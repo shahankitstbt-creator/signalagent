@@ -5,6 +5,16 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { env } from './env.mjs'
 const E = env()
 const BOOK = ['Book 50%', 'Book 25% (or 50% if skipping T3)', 'Target — trail 25% with TSL at T1']
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+// unify target ETA to "DD Mon, HH:MM IST" — intraday "~Nh" → clock time; swing date → market close 15:30
+function fmtByDT(by) {
+  if (!by) return ''
+  const h = /^~(\d+)h$/.exec(String(by))
+  if (h) { const d = new Date(Date.now() + (+h[1]) * 3600 * 1000 + 5.5 * 3600 * 1000); const iso = d.toISOString(); return `${+iso.slice(8, 10)} ${MON[+iso.slice(5, 7) - 1]}, ${iso.slice(11, 16)} IST` }
+  const dm = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(by))
+  if (dm) return `${+dm[3]} ${MON[+dm[2] - 1]}, 15:30 IST`
+  return `${by}, 15:30 IST`
+}
 
 export function formatSignal(s, dateStr) {
   const isFno = s.generator === 'fno' || !!s.optionPlay
@@ -29,7 +39,7 @@ export function formatSignal(s, dateStr) {
     if (e2 !== entry) L.push(`📍 E2 (add on dip): ₹${e2}`)
   }
   if (sl != null) L.push(`🛑 SL: ₹${sl}${s.slPct != null ? ` (${s.slPct}%)` : ''}  ·  15-min closing basis`)
-  t.forEach((x, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${x.price} (+${x.pct}%) by ${x.by} — ${BOOK[i] || 'book'}`))
+  t.forEach((x, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${x.price} (+${x.pct}%) by ${fmtByDT(x.by)} — ${BOOK[i] || 'book'}`))
   L.push('━━━━━━━━━━━━━━━━━━')
   if (s.lot) L.push(`📦 Lot: ${s.lot}${s.futures ? `  ·  ${s.futures}` : ''}`)
   if (s.reason) L.push(`💡 Why: ${s.reason}`)
@@ -142,7 +152,7 @@ function formatEntry(p, dateStr) {
   if (p.kind === 'OPT' && p.optType) L.push(`👉 Buy ${p.optType} · ${p.lots} lot${p.lots > 1 ? 's' : ''} × ${p.lotSize} @ ₹${p.entryPremium} prem`)
   L.push(`📍 Entry: ₹${p.entryPrice}`)
   if (p.sl != null) L.push(`🛑 SL: ₹${p.sl}`)
-  t.slice(0, 3).forEach((x, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${x.price}${x.pct != null ? ` (+${x.pct}%)` : ''}${x.by ? ` by ${x.by}` : ''}`))
+  t.slice(0, 3).forEach((x, i) => L.push(`${i === 2 ? '🚀' : '🎯'} T${i + 1}: ₹${x.price}${x.pct != null ? ` (+${x.pct}%)` : ''}${x.by ? ` by ${fmtByDT(x.by)}` : ''}`))
   if (p.sleeve === 'DAILY') L.push(`⚡ Daily plan: book +${p.dailyTake}% / cut −${p.dailyStop}% · square off EOD`)
   const meta = []
   if (p.qty) meta.push(`Qty ${p.qty}`)

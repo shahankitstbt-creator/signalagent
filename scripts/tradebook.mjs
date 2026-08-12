@@ -23,7 +23,7 @@ const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
 // gain fast, keep a tight stop, square off EOD. Aim ~₹10k/day (~1% of ₹10L) — an AIM, not a promise.
 const DAILY_TAKE = 1.5               // book at +1.5% (lock a consistent gain)
 const DAILY_STOP = 2.5               // tight intraday stop (works because names are LIQUID largecaps — they don't gap −5%)
-const DAILY_MAX_HOLD = 4             // hold a good setup up to 4 days — don't panic-square-off at a loss
+const DAILY_MAX_HOLD = 1             // DAY TRADE: winners book at +target intraday, losers cut at −stop; anything unresolved squares off by the next session (no multi-day holds)
 const DAILY_MAX_OPEN = 8             // fewer, higher-quality names (one loser can't tank the day)
 const DAILY_POS_PCT = 10             // ~10% of the ₹10L pool per position
 const DAILY_TARGET_INR = 10000       // daily profit aim (₹10k ≈ 1%)
