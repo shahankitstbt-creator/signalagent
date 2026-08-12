@@ -106,7 +106,18 @@ The paper book obeys **real Indian market hours** (`marketSession()` in tradeboo
 
 The engine tracks each book's **MTD return vs goal + pace** and **win-rate**. Watch the leaderboard in the
 Journal tiles + the `stats.segmentRank` field. **Capital should follow the book that is consistent AND highest-returning.**
-(As of last check: Cash steady, Daily positive, **F&O the weak spot** — under review.)
+(As of last check: Cash steady, Daily strongest, **F&O the weak spot** — hedged + under review.)
+
+### 📅 REVIEW MILESTONE — 30 August 2026
+This is a **30-day monitored run**. We keep the whole system running exactly as defined here — every day —
+and **review the full result on 30 Aug 2026**. Do NOT wait until the 30th to act:
+- **Daily evaluation is MANDATORY** — the post-market self-improvement (≈18:00 IST) runs every trading day:
+  measure each sleeve's return-vs-goal + win-rate, run every loss post-mortem (rule 7), tighten selectivity,
+  update `goal.json`/`learning.json`, and record which segment is most consistent + highest-returning.
+- Between now and 30 Aug: apply the lessons daily, keep the books within their goals (Cash 7–10%/mo,
+  F&O 10–15%/mo, Daily ₹10k/day), and let the segment leaderboard show which sleeve earns more capital.
+- **On 30 Aug 2026:** produce the 30-day verdict — realised P&L + win-rate per sleeve, whether each goal was
+  met, what the loss journal taught us, and where capital should concentrate next.
 
 ---
 
