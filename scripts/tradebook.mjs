@@ -60,6 +60,31 @@ const BOOK_AT_PCT = 40              // book 50% of a position once it's up this 
 const TRAIL_EXIT_PCT = 10          // after partial book, exit the runner if it gives back to this
 const MAX_OPEN = 70                   // concurrent positions across both sleeves (options are cheap → many fit the F&O sleeve)
 
+// ── MARKET SESSION (IST) — the paper book only executes fills during REAL market hours, squares off
+// day-trades at 15:30, trades commodities until 23:30, and NEVER changes on weekends/holidays.
+// Equity/F&O/Index: 09:15–15:30 IST · Commodities (Gold/Crude/Silver, MCX): 09:15–23:30 IST. ──
+const NSE_HOLIDAYS = new Set([   // 2026 NSE trading holidays (extend as the official list is published)
+  '2026-01-26', '2026-02-16', '2026-03-06', '2026-03-25', '2026-04-01', '2026-04-03', '2026-04-14',
+  '2026-05-01', '2026-08-15', '2026-08-25', '2026-09-05', '2026-10-02', '2026-10-20', '2026-11-09',
+  '2026-11-10', '2026-11-24', '2026-12-25',
+])
+export function marketSession(nowISO = new Date().toISOString()) {
+  const ist = new Date(new Date(nowISO).getTime() + 5.5 * 3600 * 1000)   // shift so UTC getters read IST wall-clock
+  const dow = ist.getUTCDay(), istDate = ist.toISOString().slice(0, 10)
+  const mins = ist.getUTCHours() * 60 + ist.getUTCMinutes()
+  const tradingDay = dow >= 1 && dow <= 5 && !NSE_HOLIDAYS.has(istDate)
+  const OPEN = 555, EQ_CLOSE = 930, COMM_CLOSE = 1410   // 09:15, 15:30, 23:30 in minutes-of-day
+  return {
+    istDate, istMins: mins, tradingDay,
+    equityOpen:        tradingDay && mins >= OPEN && mins <= EQ_CLOSE,       // NSE cash/F&O/index fills allowed
+    commodityOpen:     tradingDay && mins >= OPEN && mins <= COMM_CLOSE,     // MCX commodity fills allowed
+    equityClosedForDay: tradingDay && mins > EQ_CLOSE,                       // after 15:30 → square off day-trades
+    dailyEntryOpen:    tradingDay && mins >= OPEN && mins <= EQ_CLOSE - 30,  // no NEW day-trades in the last 30 min
+  }
+}
+// is a given position's market open right now? commodities run late; everything else on the equity clock.
+const canFillNow = (pos, sess) => (pos.commodity || pos.kind === 'COMM') ? sess.commodityOpen : sess.equityOpen
+
 export function loadBook() {
   let b
   try { b = JSON.parse(readFileSync(PATH, 'utf8')); b.open ||= {}; b.closed ||= [] }
@@ -246,6 +271,7 @@ function recordLoss(b, rec) {
 export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
+  const sess = marketSession(nowISO)   // IST market session — gates every fill (open/close/square-off)
   const entered = [], exited = []   // events THIS run → Telegram entry/exit alerts
   // Banked realised P&L per sleeve — survives closed-array slicing; cash is DERIVED from it below
   // (cash = capital + bankedRealised − deployed) so incremental drift is impossible. Migrate once.
@@ -274,14 +300,22 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       const pnl = pnlFor(pos, ltp, false, held)        // daily = long cash
       const retPct = pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0
       let result = null, why = null
-      if (retPct >= DAILY_TAKE) { result = 'WIN'; why = `Booked +${retPct}% (target)` }
-      else if (retPct <= -DAILY_STOP) { result = 'LOSS'; why = `Stopped at ${retPct}% (tight intraday stop)` }
-      else if (held >= DAILY_MAX_HOLD) { result = retPct >= 0 ? 'WIN' : 'LOSS'; why = `Recycled after ${held}d at ${retPct >= 0 ? '+' : ''}${retPct}%` }
-      if (!result) {                                    // still working → mark to market, keep holding
+      const carried = pos.entryDate < todayISO          // survived into a new session → must be squared flat
+      if (sess.equityOpen) {                            // intraday take/stop fills only during 09:15–15:30 IST
+        if (retPct >= DAILY_TAKE) { result = 'WIN'; why = `Booked +${retPct}% (target)` }
+        else if (retPct <= -DAILY_STOP) { result = 'LOSS'; why = `Stopped at ${retPct}% (tight intraday stop)` }
+      }
+      if (!result && sess.tradingDay && (sess.equityClosedForDay || carried)) {   // 15:30 SQUARE-OFF — day-trades never carry overnight (only on a trading day; no changes on holidays)
+        result = retPct >= 0 ? 'WIN' : 'LOSS'
+        why = `Squared off at 15:30 close at ${retPct >= 0 ? '+' : ''}${retPct}% (intraday — no overnight hold)`
+      }
+      if (!result) {                                    // market shut or still working → mark to market, hold
         pos.ltp = ltp; pos.unrealizedPnl = pnl; pos.unrealizedPct = retPct; continue
       }
       b.cashDaily += pos.invested + pnl; bankRealised('DAILY', pnl)
-      const rec = { ...pos, exitPrice: ltp, exitDate: todayISO, exitAt: nowISO, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: retPct, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      const squaredOff = !sess.equityOpen               // exit came from the 15:30 close, not an intraday fill
+      const exitAt = squaredOff ? `${todayISO}T10:00:00.000Z` : nowISO   // 15:30 IST = 10:00 UTC
+      const rec = { ...pos, exitPrice: ltp, exitDate: todayISO, exitAt, result, maxTarget: result === 'WIN' ? 1 : 0, realizedPnl: pnl, realizedPct: retPct, daysHeld: held, expectationMatch: why, failureReason: result === 'LOSS' ? why : null, unrealizedPnl: undefined, unrealizedPct: undefined }
       if (result === 'LOSS') recordLoss(b, rec)
       b.closed.push(rec); exited.push(rec); delete b.open[id]
       continue
@@ -296,6 +330,10 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held)
       pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
       pos.peakPct = Math.max(pos.peakPct ?? 0, pos.unrealizedPct)
+      // MARKET-HOURS GATE: only execute fills (average / stop / partial / trail) while THIS position's
+      // market is open (equity 09:15–15:30, commodities till 23:30). Outside hours — and on weekends/
+      // holidays — we just mark to market and HOLD. You cannot exit a trade when the market is shut.
+      if (!canFillNow(pos, sess)) continue
       // AVERAGE ONCE on a dip — for a top-quality, still-valid CASH long (good company = strong delivery,
       // good setup = A++/A+): add on the dip to improve the cost basis and widen the SL to structure,
       // instead of stopping out. Capped at AVG_MAX_MULT× base, within the sleeve's ₹10L and free cash.
@@ -365,6 +403,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       continue
     }
     const c = closedById[id]                                    // closed → realise P&L + journal
+    if (!sess.tradingDay) continue                              // holiday/weekend → never change the book; defer this close to the next session
     const exitPrice = c?.closePrice ?? pos.ltp ?? pos.entryPrice
     const result = (c?.result || 'expired').toUpperCase()
     const pnl = pnlFor(pos, exitPrice, bearish, c?.daysHeld ?? daysBetween(pos.entryDate, c?.closedAt || todayISO))
@@ -431,6 +470,9 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
     if (!size) continue
+    // MARKET-HOURS GATE: only OPEN a new trade when that segment's market is live (commodities till 23:30,
+    // everything else 09:15–15:30). No new fills off-session / on holidays.
+    if (!((s.commodity || size.kind === 'COMM') ? sess.commodityOpen : sess.equityOpen)) continue
     if (size.sleeve === 'CASH' && (s.entry < CASH_MIN_PRICE || (s.changePct || 0) >= CASH_MAX_CHASE)) continue  // quality: no pennies, no chasing extended moves
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
     const stockOpt = isReservedFO(s, size)
@@ -476,6 +518,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const dailyGoalHit = dailyTodayPnl >= DAILY_TARGET_INR
   let dailyOpened = 0
   for (const s of dailyCands) {
+    if (!sess.dailyEntryOpen) break                                     // day-trades only 09:15–15:00 IST (need time to manage/exit before 15:30)
     if (dailyGoalHit) break                                             // ₹10k day-goal reached → stop adding day-trades
     if ((deployed.DAILY || 0) >= CAP_DAILY) break
     if (Object.keys(b.open).filter(k => k.startsWith('daily:')).length >= DAILY_MAX_OPEN) break

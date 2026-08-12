@@ -70,6 +70,22 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 
 ---
 
+## 4b. MARKET HOURS — when the book may change (IST)
+
+The paper book obeys **real Indian market hours** (`marketSession()` in tradebook.mjs). No fills happen off-session.
+
+| Segment | Trading window (IST) |
+|---|---|
+| NSE Stocks / Cash / F&O / Nifty 50 / index options | **09:15 – 15:30** |
+| Commodities — Gold / Crude / Silver (MCX) | **09:15 – 23:30** |
+
+- **No fills when the market is shut** — outside these windows the book only marks-to-market; it cannot open, stop, trail, or exit.
+- **Day-trades are flat by 15:30** — every Daily-Income position is **squared off at the 15:30 close** (exit stamped 15:30 IST). Nothing carries overnight; new day-trades stop opening after **15:00**.
+- **No new day-trade in the last 30 min** (need time to manage/exit before close).
+- **Holidays & weekends → the trade book NEVER changes.** No opens, no exits, no square-offs; a pending close defers to the next trading session. NSE holiday list is in `NSE_HOLIDAYS`.
+
+---
+
 ## 5. DAILY AUTOMATED TASKS (runs itself — no manual steps)
 
 | When (IST) | Task |
