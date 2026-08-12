@@ -114,9 +114,25 @@ export default function TradingJournal() {
             <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap mono text-[10px]">
               <span className="font-bold text-txt-sec">🧠 Learned from losses:</span>
               {st.lessons.slice(0, 5).map((l, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-full" style={{ background: 'color-mix(in srgb, var(--color-red) 12%, transparent)', color: 'var(--color-red)' }} title={`avg ${l.avgLossPct}% · last ${l.lastSymbol || '—'}`}>{l.category} ×{l.count}</span>
+                <span key={i} className="px-2 py-0.5 rounded-full cursor-help" style={{ background: 'color-mix(in srgb, var(--color-red) 12%, transparent)', color: 'var(--color-red)' }} title={`${l.category} — avg ${l.avgLossPct}% · last ${l.lastSymbol || '—'}\nFIX: ${l.fix || '—'}`}>{l.category} ×{l.count}</span>
               ))}
               {st.activeCooldowns > 0 && <span className="px-2 py-0.5 rounded-full text-txt-sec" style={{ background: 'var(--color-bg-base)' }}>⏸ {st.activeCooldowns} names in post-loss cooldown (won't re-enter)</span>}
+            </div>
+          )}
+
+          {/* per-trade post-mortems — what we missed on each recent loss + the fix (kept in memory) */}
+          {st.lossJournal?.length > 0 && (
+            <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border mono text-[10px]">
+              <div className="font-bold text-txt-sec mb-1">🔎 Loss post-mortems (what we missed → fix, kept in memory):</div>
+              <div className="flex flex-col gap-1">
+                {st.lossJournal.slice(0, 5).map((l, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="shrink-0 text-txt-muted w-[128px]">{l.date} · {l.symbol} ({l.sleeve})</span>
+                    <span className="shrink-0" style={{ color: 'var(--color-red)' }}>missed: {l.missed}</span>
+                    <span className="text-txt-sec">→ fix: {l.fix}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
