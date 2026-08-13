@@ -187,20 +187,65 @@ function cleanCopy(s) {
   if (s.entry == null || !Array.isArray(s.targets) || !s.targets.length) return s.social || (s.symbol || s.underlying || '')
   return tradeCard(s)
 }
+// ── ROBUST CLIPBOARD + global toast feedback ──
+// navigator.clipboard fails silently in some contexts; fall back to a hidden textarea + execCommand so
+// copy ALWAYS works. Every copy fires a toast so the user KNOWS whether it copied.
+async function copyText(txt) {
+  if (!txt) return false
+  try { if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(txt); return true } } catch { /* fall through */ }
+  try {
+    const ta = document.createElement('textarea')
+    ta.value = txt; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '-1000px'; ta.style.opacity = '0'
+    document.body.appendChild(ta); ta.focus(); ta.select()
+    const ok = document.execCommand('copy'); document.body.removeChild(ta); return ok
+  } catch { return false }
+}
+function toast(msg, ok = true) { try { window.dispatchEvent(new CustomEvent('pt-toast', { detail: { msg, ok } })) } catch {} }
+// copy + flip a button's local "copied" flag + toast — the one call every copy button uses
+async function doCopy(txt, setCopied) {
+  const ok = await copyText(txt)
+  if (setCopied) { setCopied(ok); setTimeout(() => setCopied(false), 1600) }
+  toast(ok ? '✓ Copied to clipboard' : '⚠ Copy failed — long-press to select & copy', ok)
+  return ok
+}
+// global toast listener — one instance mounted at the board root; shows the latest copy result
+function Toast() {
+  const [t, setT] = useState(null)
+  useEffect(() => {
+    let timer
+    const on = e => { setT(e.detail); clearTimeout(timer); timer = setTimeout(() => setT(null), 2000) }
+    window.addEventListener('pt-toast', on)
+    return () => { window.removeEventListener('pt-toast', on); clearTimeout(timer) }
+  }, [])
+  if (!t) return null
+  return (
+    <div className="fixed left-1/2 bottom-6 -translate-x-1/2 z-[100] pointer-events-none" style={{ animation: 'ptToastIn .18s ease-out' }}>
+      <div className="mono text-[13px] font-bold px-4 py-2.5 rounded-xl text-white shadow-lg flex items-center gap-2"
+        style={{ background: t.ok ? '#0E9F6E' : '#E5384A', boxShadow: '0 8px 28px rgba(0,0,0,.35)' }}>
+        {t.msg}
+      </div>
+    </div>
+  )
+}
 function copyPicks(book) {
   if (!book?.open) return []
-  return Object.values(book.open)
-    .filter(p => p.sleeve !== 'DAILY' && (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+') && Array.isArray(p.targets) && p.targets.length)
-    .sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
-    .slice(0, 6)
+  const withTargets = Object.values(book.open).filter(p => p.sleeve !== 'DAILY' && Array.isArray(p.targets) && p.targets.length)
+  const sort = arr => arr.sort((a, z) => (gradeRankN(z.grade) - gradeRankN(a.grade)) || ((z.delivery || 0) - (a.delivery || 0)) || ((z.entryPrice || 0) - (a.entryPrice || 0)))
+  // Tier 1: highest-conviction A++/A+ names ≥ ₹50. Tier 2 (fallback): any open cash/F&O trade — so the
+  // "Copy Trades" button ALWAYS has something to copy instead of silently doing nothing.
+  const strict = withTargets.filter(p => (p.entryPrice || 0) >= 50 && (p.grade === 'A++' || p.grade === 'A+'))
+  return sort(strict.length ? strict : withTargets).slice(0, 6)
 }
-function copyAllTrades(book) {
-  const picks = copyPicks(book); if (!picks.length) return false
+async function copyAllTrades(book) {
+  const picks = copyPicks(book)
+  if (!picks.length) { toast('No open trades to copy yet', false); return 0 }
   const cap = +localStorage.getItem('pt_cap') || 100000, risk = +localStorage.getItem('pt_risk') || 1
   const D = '━━━━━━━━━━━━━━━━━━'
   const body = picks.map(p => fmtCopyTrade(p, cap, risk)).join(`\n${D}\n`)
   const txt = `📋 STOCKSBYVARSHA — TODAY'S ${picks.length} TOP TRADES\n(Capital ₹${(+cap).toLocaleString('en-IN')} · risk ${risk}%/trade)\n${D}\n${body}\n${D}\n📌 Educational only, not advice. Not SEBI-registered.`
-  navigator.clipboard?.writeText(txt); return picks.length
+  const ok = await copyText(txt)
+  toast(ok ? `✓ Copied ${picks.length} trades — paste into your broker/notes` : '⚠ Copy failed — long-press to select & copy', ok)
+  return ok ? picks.length : 0
 }
 function CopyTradesPanel({ book }) {
   const [open, setOpen] = useState(true)
@@ -211,7 +256,7 @@ function CopyTradesPanel({ book }) {
   const setRiskS = v => { setRisk(v); try { localStorage.setItem('pt_risk', v) } catch {} }
   const picks = copyPicks(book)
   if (!picks.length) return null
-  const copyAll = (e) => { e.stopPropagation(); copyAllTrades(book); setCopiedAll(true); setTimeout(() => setCopiedAll(false), 1800) }
+  const copyAll = async (e) => { e.stopPropagation(); const n = await copyAllTrades(book); if (n) { setCopiedAll(true); setTimeout(() => setCopiedAll(false), 1800) } }
   return (
     <div className="card elev" style={{ background: 'linear-gradient(100deg, color-mix(in srgb, var(--color-green) 9%, var(--color-bg-card)), var(--color-bg-card) 60%)' }}>
       <div className="flex items-center gap-2 flex-wrap px-4 sm:px-5 py-3 border-b border-border">
@@ -414,6 +459,7 @@ export default function SignalsBoard() {
   return (
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
       <HitPopups />
+      <Toast />
       {/* header */}
       <div className="shrink-0 border-b border-border glass elev z-20">
         {/* tier 1 — brand · centered search · action cluster */}
@@ -434,7 +480,7 @@ export default function SignalsBoard() {
 
           {/* action cluster — top right */}
           <div className="flex items-center gap-1.5 shrink-0">
-            <button onClick={() => { const n = copyAllTrades(book); if (n) { setCopiedHdr(true); setTimeout(() => setCopiedHdr(false), 1800) } }}
+            <button onClick={async () => { const n = await copyAllTrades(book); if (n) { setCopiedHdr(true); setTimeout(() => setCopiedHdr(false), 1800) } }}
               title="Copy all high-conviction trades (with position size) to paste into your broker"
               className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: copiedHdr ? '#0E9F6E' : 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
               {copiedHdr ? '✓' : '📋'} <span className="hidden lg:inline">{copiedHdr ? 'Copied' : 'Copy Trades'}</span>
@@ -684,7 +730,7 @@ function TradeTable({ signals, color, setView }) {
 function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
@@ -790,7 +836,7 @@ function FnoDetail({ s }) {
 }
 function FnoRow({ s, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
@@ -809,7 +855,7 @@ function FnoRow({ s, color, open, onToggle }) {
 function FnoCard({ s, color }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
@@ -880,7 +926,7 @@ function PlanGrid({ s }) {
 function ConfRow({ s, color, open, onToggle, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const chart = e => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
@@ -914,7 +960,7 @@ function ConfRow({ s, color, open, onToggle, setView }) {
 function ConfCard({ s, setView }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${gradeBg(s.grade)}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
@@ -944,7 +990,7 @@ function MobileTradeCard({ s, color, setView }) {
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
   const isBuy = (s.direction || 'LONG') === 'LONG'
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
@@ -1005,7 +1051,7 @@ function Windows({ s }) {
 }
 function AssetBiasRow({ s, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const tcls = biasToneCls(s.biasTone)
   return (
     <>
@@ -1033,7 +1079,7 @@ function AssetBiasRow({ s, color, open, onToggle }) {
 function AssetBiasCard({ s, color }) {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const copy = e => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const tcls = biasToneCls(s.biasTone)
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
@@ -1075,7 +1121,7 @@ function VedicTable({ signals, color }) {
 }
 function AstroRow({ s, i, color, open, onToggle }) {
   const [copied, setCopied] = useState(false)
-  const copy = (e) => { e.stopPropagation(); navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = (e) => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
     <>
       <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
@@ -1104,7 +1150,7 @@ function AstroRow({ s, i, color, open, onToggle }) {
 }
 function AstroCard({ s, color }) {
   const [copied, setCopied] = useState(false)
-  const copy = () => { navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = () => { doCopy(cleanCopy(s), setCopied) }
   return (
     <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }}>
       <div className="flex items-center gap-2">
@@ -1350,7 +1396,7 @@ function InfoCard({ s, color, setView }) {
   if (s.isDesk) return <DeskCard s={s} color={color} setView={setView} />
   const [copied, setCopied] = useState(false)
   const openSymbol = useChartStore(st => st.openSymbol)
-  const copy = () => { navigator.clipboard?.writeText(cleanCopy(s)); setCopied(true); setTimeout(() => setCopied(false), 1500) }
+  const copy = () => { doCopy(cleanCopy(s), setCopied) }
   const tone = s.biasTone === 'up' ? 'text-green' : s.biasTone === 'down' ? 'text-red' : 'text-yellow'
   const chart = () => { const sym = s.symbol === 'NIFTY' ? '^NSEI' : s.symbol === 'GOLD' ? 'GC=F' : s.symbol === 'BANKNIFTY' ? '^NSEBANK' : s.symbol + '.NS'; openSymbol(s.symbol === 'NIFTY' || s.symbol === 'GOLD' || s.symbol === 'BANKNIFTY' ? 'indices' : 'stocks', sym); setView('chart') }
   return (

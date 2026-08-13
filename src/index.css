@@ -169,3 +169,6 @@ table.stbl > tbody > tr { transition: background .12s ease; }
 :root[data-theme="light"] .card-hover:hover { box-shadow: 0 10px 26px rgba(16,26,46,.12); }
 :root[data-theme="light"] .kpi { box-shadow: 0 1px 2px rgba(16,26,46,.04), 0 8px 24px rgba(16,26,46,.06); }
 :root[data-theme="light"] .btn-primary { color: #fff; box-shadow: 0 4px 14px rgba(47,91,234,.28); }
+
+/* copy-confirmation toast slide-up */
+@keyframes ptToastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
