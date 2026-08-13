@@ -120,11 +120,14 @@ export default function TradingJournal() {
             </div>
           )}
 
-          {/* per-trade post-mortems — what we missed on each recent loss + the fix (kept in memory) */}
+          {/* per-trade post-mortems — collapsible (default CLOSED so it never pushes the trades table down) */}
           {st.lossJournal?.length > 0 && (
-            <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border mono text-[10px]">
-              <div className="font-bold text-txt-sec mb-1">🔎 Loss post-mortems (what we missed → fix, kept in memory):</div>
-              <div className="flex flex-col gap-1">
+            <details className="group shrink-0 px-3 sm:px-5 py-2 border-b border-border mono text-[10px]">
+              <summary className="font-bold text-txt-sec cursor-pointer select-none list-none flex items-center gap-1.5 [&::-webkit-details-marker]:hidden">
+                <span className="inline-block transition-transform group-open:rotate-90 text-txt-muted">▸</span>
+                🔎 Loss post-mortems (what we missed → fix, kept in memory) · {st.lossJournal.length}
+              </summary>
+              <div className="flex flex-col gap-1 mt-1.5">
                 {st.lossJournal.slice(0, 5).map((l, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="shrink-0 text-txt-muted w-[128px]">{l.date} · {l.symbol} ({l.sleeve})</span>
@@ -133,7 +136,7 @@ export default function TradingJournal() {
                   </div>
                 ))}
               </div>
-            </div>
+            </details>
           )}
 
           {/* segment leaderboard — which book is consistent + highest-returning */}
