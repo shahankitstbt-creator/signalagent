@@ -280,9 +280,56 @@ function recordLoss(b, rec) {
 }
 
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
+// ── MONTHLY ROLLOVER: at the first scan of a new month, write the finished month to the LOG BOOK
+// (start capital, end capital, P&L + win-rate per sleeve, that month's trades, and the major mistakes),
+// then START FRESH — all three sleeves reset to ₹10L, flat, clean. Learning (lossLessons/journal)
+// PERSISTS across months so the system keeps improving. Runs exactly once per month. ──
+function monthlyRollover(b, todayISO) {
+  const curMonth = (todayISO || '').slice(0, 7)
+  if (!curMonth) return null
+  if (b.monthKey == null) { b.monthKey = curMonth; return null }   // first ever run — just anchor, no rollover
+  if (curMonth === b.monthKey) return null                          // same month — nothing to do
+  const prev = b.monthKey
+  const capMap = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
+  const snap = { month: prev, startCapital: CAPITAL, endCapital: 0, pnl: 0, sleeves: {}, trades: [], mistakes: [], closedAt: todayISO }
+  for (const sl of ['CASH', 'FO', 'DAILY']) {
+    const closedMonth = b.closed.filter(t => (t.sleeve || 'CASH') === sl && (t.exitDate || '').startsWith(prev))
+    const realizedMonth = closedMonth.reduce((a, t) => a + (t.realizedPnl || 0), 0)
+    const openVal = Object.values(b.open).filter(p => p.sleeve === sl).reduce((a, p) => a + (p.unrealizedPnl || 0), 0)  // flatten open at last mark
+    const pnl = realizedMonth + openVal
+    const dec = closedMonth.filter(t => !t.partial && (t.result === 'WIN' || t.result === 'LOSS'))
+    const wins = dec.filter(t => t.result === 'WIN').length
+    snap.sleeves[sl] = { startCapital: capMap[sl], endCapital: Math.round(capMap[sl] + pnl), pnl: Math.round(pnl), pct: +((pnl / capMap[sl]) * 100).toFixed(2), trades: dec.length, winRate: dec.length ? +((wins / dec.length) * 100).toFixed(1) : null }
+    snap.pnl += pnl
+  }
+  snap.endCapital = Math.round(CAPITAL + snap.pnl)
+  snap.pct = +((snap.pnl / CAPITAL) * 100).toFixed(2)
+  // compact trade log for the month (so the trades are kept, not the whole object)
+  snap.trades = b.closed.filter(t => (t.exitDate || '').startsWith(prev)).map(t => ({ sym: t.symbol, sleeve: t.sleeve, dir: t.direction, result: t.result, pnl: Math.round(t.realizedPnl || 0), pct: t.realizedPct, entryDate: t.entryDate, exitDate: t.exitDate, partial: !!t.partial }))
+  // major mistakes of the month (from the per-trade post-mortems dated in that month)
+  const monthLosses = (b.lossJournal || []).filter(l => (l.date || '').startsWith(prev))
+  const byCat = {}
+  for (const l of monthLosses) { (byCat[l.category] ||= { category: l.category, count: 0, fix: l.fix }); byCat[l.category].count++ }
+  snap.mistakes = Object.values(byCat).sort((a, z) => z.count - a.count).slice(0, 8)
+  b.monthlyLog = (b.monthlyLog || []); b.monthlyLog.push(snap)
+  if (b.monthlyLog.length > 36) b.monthlyLog = b.monthlyLog.slice(-36)   // keep 3 years
+  // FRESH START — flat, ₹10L each. Learning persists; capital/positions/realised reset.
+  b.open = {}
+  b.closed = []
+  b.realizedTotal = { CASH: 0, FO: 0, DAILY: 0 }
+  b.capitalCash = CAP_CASH; b.capitalFO = CAP_FO; b.capitalDaily = CAP_DAILY
+  b.cashCash = CAP_CASH; b.cashFO = CAP_FO; b.cashDaily = CAP_DAILY
+  b.dailyStartedAt = null
+  b.startedAt = todayISO
+  b.monthKey = curMonth
+  return snap
+}
+
 export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
+  const rolled = monthlyRollover(b, todayISO)   // new month? → log the old month + fresh ₹10L start
+  if (rolled) console.log(`MONTHLY ROLLOVER: ${rolled.month} closed at ₹${rolled.endCapital.toLocaleString('en-IN')} (${rolled.pct >= 0 ? '+' : ''}${rolled.pct}%). New month starts fresh at ₹30L.`)
   const sess = marketSession(nowISO)   // IST market session — gates every fill (open/close/square-off)
   const entered = [], exited = []   // events THIS run → Telegram entry/exit alerts
   // Banked realised P&L per sleeve — survives closed-array slicing; cash is DERIVED from it below
@@ -301,6 +348,15 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // 1) UPDATE / CLOSE booked positions
   for (const id of Object.keys(b.open)) {
     const pos = b.open[id]
+    // SELF-HEAL HEDGE (belt-and-suspenders over the load-time retrofit): any F&O option still naked is
+    // converted to defined-risk here — this loop runs every scan on every open position, so nothing
+    // stays naked even if it slipped through opening. netDebit floored to avoid a 0-cost no-op.
+    if (pos.sleeve === 'FO' && pos.kind === 'OPT' && !pos.hedged) {
+      pos.hedged = true
+      pos.netDebit = Math.max(1, Math.round((pos.invested || 0) / Math.max(1, pos.qty || 1)))
+      pos.longPrem = pos.entryPremium ?? pos.netDebit
+      pos.hedgeNote = pos.hedgeNote || `Auto-hedged to defined-risk — max loss capped at net ₹${pos.invested}`
+    }
 
     // ── DAILY INCOME sleeve (liquid cash, VP+Fib+Momentum+Volume entries): book the quick gain at
     //    +target; on a loss, exit only at the STRUCTURAL SL (below VP support/swing low) — NOT a blind
@@ -671,16 +727,21 @@ function computeStats(b, todayISO) {
   const foOpen = open.filter(p => p.sleeve === 'FO'), cashOpen = open.filter(p => p.sleeve !== 'FO' && p.sleeve !== 'DAILY')
   const foVal = foOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
   const cashVal = cashOpen.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0)
-  const foClosedPnl = b.closed.filter(t => t.sleeve === 'FO').reduce((a, t) => a + t.realizedPnl, 0)
-  const cashClosedPnl = b.closed.filter(t => t.sleeve !== 'FO' && t.sleeve !== 'DAILY').reduce((a, t) => a + t.realizedPnl, 0)
+  // realised P&L from the UNTRUNCATED realizedTotal (b.closed is capped at 4000 → would understate after
+  // that; realizedTotal is the source of truth that also drives cash/equity, so the numbers reconcile).
+  const foClosedPnl = b.realizedTotal?.FO || 0
+  const cashClosedPnl = b.realizedTotal?.CASH || 0
   // MAIN portfolio = cash + F&O (the ₹20L swing book). Daily-income sleeve is tracked separately.
   const mainClosed = b.closed.filter(t => t.sleeve !== 'DAILY')
   const mainCapital = b.capitalCash + b.capitalFO
-  const wins = mainClosed.filter(t => t.result === 'WIN'), losses = mainClosed.filter(t => t.result === 'LOSS')
+  // WIN-RATE counts each SETUP once — EXCLUDE partial-book records (a partial +40% booking is not a
+  // second "win"; the runner's final exit is the setup's outcome). Otherwise win-rate is inflated.
+  const decidedRecs = mainClosed.filter(t => !t.partial)
+  const wins = decidedRecs.filter(t => t.result === 'WIN'), losses = decidedRecs.filter(t => t.result === 'LOSS')
   const decided = wins.length + losses.length
-  const realized = mainClosed.reduce((a, t) => a + t.realizedPnl, 0)
-  const grossWin = wins.reduce((a, t) => a + t.realizedPnl, 0)
-  const grossLoss = Math.abs(losses.reduce((a, t) => a + t.realizedPnl, 0))
+  const realized = (b.realizedTotal?.CASH || 0) + (b.realizedTotal?.FO || 0)                          // untruncated (reconciles with equity)
+  const grossWin = mainClosed.filter(t => t.result === 'WIN').reduce((a, t) => a + t.realizedPnl, 0)  // profit factor uses every cash event
+  const grossLoss = Math.abs(mainClosed.filter(t => t.result === 'LOSS').reduce((a, t) => a + t.realizedPnl, 0))
   const onTimeWins = wins.filter(t => t.hitOnTime === true).length
   // monthly realised P&L (main sleeves) vs the 5–7% aim
   const monthly = {}
@@ -710,7 +771,7 @@ function computeStats(b, todayISO) {
   const lessons = Object.entries(b.lossLessons || {}).map(([category, v]) => ({ category, count: v.count, avgLossPct: v.avgLossPct, lastSymbol: v.lastSymbol, fix: v.fix || FIX_BY_CAT[category] || null })).sort((a, z) => z.count - a.count)
   const lossJournal = (b.lossJournal || []).slice(0, 12)   // recent per-trade post-mortems (what we missed + fix)
   // SEGMENT LEADERBOARD — which book is consistent (win-rate ≥55%) AND highest-returning
-  const segWin = arr => { const w = arr.filter(t => t.result === 'WIN').length, n = arr.filter(t => t.result === 'WIN' || t.result === 'LOSS').length; return n ? +((w / n) * 100).toFixed(1) : null }
+  const segWin = arr => { const d = arr.filter(t => !t.partial); const w = d.filter(t => t.result === 'WIN').length, n = d.filter(t => t.result === 'WIN' || t.result === 'LOSS').length; return n ? +((w / n) * 100).toFixed(1) : null }
   const cashClosedArr = mainClosed.filter(t => (t.sleeve || 'CASH') !== 'FO'), foClosedArr = mainClosed.filter(t => t.sleeve === 'FO')
   const segmentRank = [
     { key: 'CASH', name: 'Cash', pct: +(((b.cashCash + cashVal - b.capitalCash) / b.capitalCash) * 100).toFixed(2), winRate: segWin(cashClosedArr), trades: cashClosedArr.length },
@@ -735,13 +796,16 @@ function computeStats(b, todayISO) {
     realizedPnl: Math.round(realized), realizedPct: +((realized / mainCapital) * 100).toFixed(2),
     unrealizedPnl: Math.round(unrealized),
     totalPct: +(((b.equity - b.capitalStart) / b.capitalStart) * 100).toFixed(2),
-    profitFactor: grossLoss ? +(grossWin / grossLoss).toFixed(2) : (grossWin ? null : null),
+    profitFactor: grossLoss ? +(grossWin / grossLoss).toFixed(2) : (grossWin > 0 ? 99.99 : null),
     avgWinPct: wins.length ? +(wins.reduce((a, t) => a + t.realizedPct, 0) / wins.length).toFixed(2) : null,
     avgLossPct: losses.length ? +(losses.reduce((a, t) => a + t.realizedPct, 0) / losses.length).toFixed(2) : null,
     onTimeWinRate: wins.length ? +((onTimeWins / wins.length) * 100).toFixed(1) : null,
     monthly: months, monthTarget: { min: 5, max: 7 },
     lessons: lessons.slice(0, 6), lossJournal, activeCooldowns: Object.keys(b.lossCooldown || {}).length,
     segmentRank,
+    monthKey: b.monthKey || null,
+    // MONTHLY LOG BOOK — each finished month: start/end capital, P&L, per-sleeve, top mistakes (trades count only; full trades in trade_book.monthlyLog)
+    monthlyLog: (b.monthlyLog || []).map(m => ({ month: m.month, startCapital: m.startCapital, endCapital: m.endCapital, pnl: m.pnl, pct: m.pct, sleeves: m.sleeves, mistakes: m.mistakes, tradeCount: m.trades?.length || 0 })),
   }
   b.stats.integrity = checkIntegrity(b, todayISO)   // daily self-verification — flags P&L/data bugs
 }

@@ -880,7 +880,7 @@ async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol
       if (!dir) continue
       const bull = dir === 'LONG', mult = bull ? 1 : -1
       const entry = round(px, 2), sl = round(bull ? entry - 1.5 * atr : entry + 1.5 * atr, 2)
-      const targets = [2, 3.5, 5].map((m, i) => ({ price: round(entry + mult * m * atr, 2), pct: round((mult * m * atr / entry) * 100, 1), by: addBiz((i + 1) * 4) }))
+      const targets = [2, 3.5, 5].map((m, i) => ({ price: round(entry + mult * m * atr, 2), pct: round((m * atr / entry) * 100, 1), by: addBiz((i + 1) * 4) }))
       const card = {
         symbol: sym, underlying: sym, name: sym, kind: 'Commodity', direction: dir, commodity: true,
         entry, sl, ltp: entry, slPct: round((Math.abs(entry - sl) / entry) * 100, 1), targets,
@@ -906,13 +906,13 @@ function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
     let trade = null
     if (d && d.direction !== 'NEUTRAL' && d.sl && Array.isArray(d.targets)) {
       const spot = d.spot || d.entry
-      trade = { direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE', entry: d.entry, sl: d.sl, spot, targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100, 1), by: addBiz((i + 1) * 3) })), conviction: d.conviction, grade: d.grade, play: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay }
+      trade = { direction: d.direction, optType: d.direction === 'BULLISH' ? 'CE' : 'PE', entry: d.entry, sl: d.sl, spot, targets: d.targets.map((p, i) => ({ price: p, pct: round(((p - d.entry) / d.entry) * 100 * (d.direction === 'BEARISH' ? -1 : 1), 1), by: addBiz((i + 1) * 3) })), conviction: d.conviction, grade: d.grade, play: d.optionPlay, reason: d.reasons?.[0] || d.optionPlay }
     } else {
       const m = card.mtf
       if (m && Math.abs(m.net) >= 3) {
         const bull = m.net > 0
         const row = (m.timeframes || []).find(r => r.tf === '1D' && r.dir !== 'NEUTRAL') || (m.timeframes || []).find(r => r.dir === (bull ? 'LONG' : 'SHORT') && r.targets)
-        if (row && row.sl && row.targets) trade = { direction: bull ? 'BULLISH' : 'BEARISH', optType: bull ? 'CE' : 'PE', entry: row.entry, sl: row.sl, spot: card.spot || row.entry, targets: row.targets.map((p, i) => ({ price: p, pct: round(((p - row.entry) / row.entry) * 100, 1), by: (row.etaDates && row.etaDates[i]) || addBiz((i + 1) * 3) })), conviction: Math.min(90, 55 + Math.abs(m.net) * 4), grade: Math.abs(m.net) >= 6 ? 'A+' : 'A', play: `Buy ${card.symbol} ${bull ? 'CE' : 'PE'} — multi-TF ${m.aligned}`, reason: `Multi-timeframe ${m.aligned} (${m.longs}L/${m.shorts}S across 10 TFs)` }
+        if (row && row.sl && row.targets) trade = { direction: bull ? 'BULLISH' : 'BEARISH', optType: bull ? 'CE' : 'PE', entry: row.entry, sl: row.sl, spot: card.spot || row.entry, targets: row.targets.map((p, i) => ({ price: p, pct: round(((p - row.entry) / row.entry) * 100 * (bull ? 1 : -1), 1), by: (row.etaDates && row.etaDates[i]) || addBiz((i + 1) * 3) })), conviction: Math.min(90, 55 + Math.abs(m.net) * 4), grade: Math.abs(m.net) >= 6 ? 'A+' : 'A', play: `Buy ${card.symbol} ${bull ? 'CE' : 'PE'} — multi-TF ${m.aligned}`, reason: `Multi-timeframe ${m.aligned} (${m.longs}L/${m.shorts}S across 10 TFs)` }
       }
     }
     if (!trade) continue
