@@ -86,6 +86,12 @@ The paper book obeys **real Indian market hours** (`marketSession()` in tradeboo
 
 ---
 
+## 4b². LOG BOOKS — Daily + Monthly (two separate records)
+
+Two log books, viewable from the **Log Book button** in the Trading Journal header (beside Refresh):
+- **DAILY log** (`dailyRollover`, `stats.dailyLog`): at the first scan of each new day, records the finished day — **start capital, end capital, P&L + win-rate per sleeve, that day's trades, and the day's mistakes**. **Records only — no capital reset** (capital carries within the month). Skips empty weekend/holiday days.
+- **MONTHLY log** (`stats.monthlyLog`, see §4c): same fields per month, **and resets all sleeves to ₹10L fresh**.
+
 ## 4c. MONTHLY CYCLE — logbook + fresh ₹10L start (every month)
 
 At the **first scan of each new month** the engine automatically (`monthlyRollover()`):
