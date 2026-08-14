@@ -391,12 +391,14 @@ export default function SignalsBoard() {
 
   const scanNow = async () => {
     if (scanning) return
-    setScanning(true); setScanMsg('Starting scan…')
+    setScanning(true); setScanMsg('Starting scan…'); toast('🔄 Starting scan…')
     try {
       const r = await fetch('/api/scan?tf=' + tf, { method: 'POST' })
       const j = await r.json().catch(() => ({}))
-      setScanMsg(r.ok && j.ok ? '✓ Scan started — board auto-refreshes in a few minutes' : '⚠ ' + (j.error || 'Could not start scan'))
-    } catch (e) { setScanMsg('⚠ ' + e.message) }
+      const ok = r.ok && j.ok
+      const msg = ok ? '✓ Scan started — board auto-refreshes in a few minutes' : '⚠ ' + (j.error || 'Could not start scan')
+      setScanMsg(msg); toast(msg, ok)
+    } catch (e) { setScanMsg('⚠ ' + e.message); toast('⚠ ' + e.message, false) }
     setScanning(false)
     setTimeout(() => setScanMsg(null), 9000)
   }
@@ -495,7 +497,7 @@ export default function SignalsBoard() {
             <button onClick={() => alertsOn ? disableAlerts() : enableAlerts()} className={`ibtn ${alertsOn ? 'on' : ''}`} title={alertsOn ? 'Alerts on' : 'Alerts off'}>{alertsOn ? '🔔' : '🔕'}</button>
             <button onClick={() => setModal('news')} className="ibtn" title="Market news">📰</button>
             <button onClick={() => setModal('learning')} className="ibtn" title="Self-improvement log">🧠</button>
-            <button onClick={() => setTheme(toggleTheme())} className="ibtn" title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}>{theme === 'dark' ? '☀️' : '🌙'}</button>
+            <button onClick={() => { const t = toggleTheme(); setTheme(t); toast(t === 'dark' ? '🌙 Dark theme on' : '☀️ Light theme on') }} className="ibtn" title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}>{theme === 'dark' ? '☀️' : '🌙'}</button>
             <span className="hdiv hidden sm:block" />
             <button onClick={() => setView('agent')} className="ibtn" title="Content agent">📣</button>
             <button onClick={() => setView('chart')} className="ibtn" title="Charts">📈</button>

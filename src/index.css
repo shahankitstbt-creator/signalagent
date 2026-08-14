@@ -175,3 +175,12 @@ table.stbl > tbody > tr { transition: background .12s ease; }
 
 /* refresh-button spin */
 @keyframes ptSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ── UNIVERSAL CLICK FEEDBACK: every button visibly reacts the moment it is pressed ── */
+button { transition: transform .09s ease, filter .12s ease; }
+button:not(:disabled):active { transform: scale(0.93); filter: brightness(1.12); }
+button:not(:disabled) { cursor: pointer; }
+/* class-styled buttons carry transform in their own transitions too, so the press still animates */
+.ibtn, .navitem { transition: color .14s, border-color .14s, background .14s, transform .09s ease; }
+.ibtn:not(:disabled):active, .navitem:active { transform: scale(0.92); }
+@media (prefers-reduced-motion: reduce) { button:active, .ibtn:active, .navitem:active { transform: none !important; } }
