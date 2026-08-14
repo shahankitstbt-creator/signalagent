@@ -54,11 +54,17 @@ export default function TradingJournal() {
   const [q, setQ] = useState('')
   const [kind, setKind] = useState('all')       // all | CASH | FNO | OPT
   const [sortBy, setSortBy] = useState('recent') // recent | pnl | symbol | ret
+  const [refreshing, setRefreshing] = useState(false)
 
-  const load = () => fetch('/trade_book.json?t=' + Date.now(), { cache: 'no-store' })
-    .then(async r => { const t = await r.text(); if (!r.ok || t.trim().startsWith('<')) throw new Error('Journal builds with the next daily scan — check back shortly.'); return JSON.parse(t) })
-    .then(setBook).catch(e => setErr(e.message))
+  const load = () => {
+    setRefreshing(true)
+    return fetch('/trade_book.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(async r => { const t = await r.text(); if (!r.ok || t.trim().startsWith('<')) throw new Error('Journal builds with the next daily scan — check back shortly.'); return JSON.parse(t) })
+      .then(b => { setBook(b); setErr(null) }).catch(e => setErr(e.message))
+      .finally(() => setRefreshing(false))
+  }
   useEffect(() => { load(); const id = setInterval(load, 60000); return () => clearInterval(id) }, [])
+  const updatedIST = book?.updatedAt ? new Date(book.updatedAt).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) : null
 
   const st = book?.stats
   // search + kind filter + sort, shared by both tabs
@@ -89,7 +95,15 @@ export default function TradingJournal() {
         <button onClick={() => setView('board')} className="mono text-xs text-txt-sec hover:text-accent">← Board</button>
         <div className="mono text-base sm:text-lg font-bold brand-grad tracking-tight">📓 Trading Journal</div>
         <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income (safe cash) · hard ₹10L cap per book · times in IST</span>
-        <button onClick={load} className="mono text-xs text-txt-sec hover:text-accent ml-auto">⟳</button>
+        <div className="ml-auto flex items-center gap-2">
+          {updatedIST && <span className="mono text-[10px] text-txt-muted hidden sm:inline">updated {updatedIST} IST</span>}
+          <button onClick={load} disabled={refreshing} title="Refresh positions now"
+            className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover disabled:opacity-70"
+            style={{ background: 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
+            <span className="inline-block" style={{ animation: refreshing ? 'ptSpin .8s linear infinite' : 'none' }}>⟳</span>
+            {refreshing ? 'Refreshing…' : 'Refresh'}
+          </button>
+        </div>
       </div>
 
       {err && !book && <div className="p-6 mono text-sm text-yellow">{err}</div>}
