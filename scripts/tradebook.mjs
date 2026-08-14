@@ -615,6 +615,53 @@ function monthlyGoal(b, sleeve, capital, deployedVal, todayISO) {
   return { type: 'monthly', min: g.monthlyMin, max: g.monthlyMax, mtdPct: pct, mtdPnl: Math.round(mtdPnl), expectMin, projected, status }
 }
 
+// ── SELF-VERIFICATION: runs every scan and flags data-integrity / P&L bugs BEFORE the user sees them.
+// This is the guard against the class of bug that mis-marked winning options as losses. Any issue is
+// surfaced in stats.integrity + console so it's caught the same day. ──
+function checkIntegrity(b, todayISO) {
+  const issues = []
+  const add = (level, code, msg, detail) => issues.push({ level, code, msg, detail: detail ?? null })
+  const sess = marketSession()
+  const CAP = { CASH: b.capitalCash, FO: b.capitalFO, DAILY: b.capitalDaily }
+  const deployed = { CASH: 0, FO: 0, DAILY: 0 }
+  for (const p of Object.values(b.open)) deployed[p.sleeve] = (deployed[p.sleeve] || 0) + (p.invested || 0)
+  // 1) CASH INVARIANT per sleeve: cashX == capitalX + realizedTotalX − deployedX
+  for (const sl of ['CASH', 'FO', 'DAILY']) {
+    const cashField = sl === 'CASH' ? b.cashCash : sl === 'FO' ? b.cashFO : b.cashDaily
+    const expect = (CAP[sl] || 0) + ((b.realizedTotal?.[sl]) || 0) - (deployed[sl] || 0)
+    if (Math.abs((cashField || 0) - expect) > 5) add('CRITICAL', 'cash-drift', `${sl} cash drift`, `cash ${Math.round(cashField)} vs expected ${Math.round(expect)} (Δ${Math.round(cashField - expect)})`)
+    // 2) HARD ₹10L CAP
+    if ((deployed[sl] || 0) > (CAP[sl] || 0) + 1) add('CRITICAL', 'over-cap', `${sl} deployed over its ₹10L cap`, `deployed ${Math.round(deployed[sl])} > cap ${CAP[sl]}`)
+  }
+  // 3) EQUITY finite
+  if (!Number.isFinite(b.equity)) add('CRITICAL', 'equity-nan', 'equity is not a finite number', String(b.equity))
+  // per-position checks
+  for (const p of Object.values(b.open)) {
+    const bearish = p.direction === 'SHORT' || p.direction === 'BEARISH' || p.optType === 'PE'
+    const moveFavPct = p.entryPrice ? ((bearish ? (p.entryPrice - p.ltp) : (p.ltp - p.entryPrice)) / p.entryPrice) * 100 : 0
+    const uPct = p.unrealizedPct ?? 0
+    // 4) P&L CONTRADICTS PRICE DIRECTION (the theta-bug signature)
+    if (moveFavPct >= 1 && uPct < -5) add('HIGH', 'pnl-vs-direction', `${p.symbol}: price moved FAVOURABLY +${moveFavPct.toFixed(1)}% but P&L shows ${uPct}%`, `${p.kind} ${p.optType || ''} entry ${p.entryPrice} ltp ${p.ltp}`)
+    if (moveFavPct <= -1 && uPct > 5) add('HIGH', 'pnl-vs-direction', `${p.symbol}: price moved AGAINST ${moveFavPct.toFixed(1)}% but P&L shows +${uPct}%`, `${p.kind} ${p.optType || ''} entry ${p.entryPrice} ltp ${p.ltp}`)
+    // 5) DEFINED-RISK bound: an option can't be worse than −100% (net debit) or better than +100%
+    if (p.kind === 'OPT' && (uPct < -100.5 || uPct > 100.5)) add('HIGH', 'opt-bound', `${p.symbol}: option P&L ${uPct}% outside defined-risk ±100%`, null)
+    // 6) NAKED F&O option
+    if (p.sleeve === 'FO' && p.kind === 'OPT' && !p.hedged) add('HIGH', 'naked-fo', `${p.symbol}: F&O option is NOT hedged`, null)
+    // 7) DAILY carried overnight (should have squared at 15:30)
+    if (p.sleeve === 'DAILY' && p.entryDate && p.entryDate < todayISO) add('HIGH', 'daily-overnight', `${p.symbol}: daily position carried overnight (entry ${p.entryDate})`, null)
+    // 8) past stop but still open DURING an open market (off-hours holding is expected)
+    const pastStop = p.sl && (bearish ? p.ltp >= p.sl : p.ltp <= p.sl)
+    const marketOpenForP = (p.commodity || p.kind === 'COMM') ? sess.commodityOpen : sess.equityOpen
+    if (pastStop && marketOpenForP) add('MEDIUM', 'past-stop', `${p.symbol}: still open past its stop during market hours`, `ltp ${p.ltp} vs sl ${p.sl}`)
+    // 9) NaN unrealized
+    if (!Number.isFinite(p.unrealizedPnl ?? 0)) add('HIGH', 'pos-nan', `${p.symbol}: unrealized P&L is NaN`, null)
+  }
+  const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3 }
+  issues.sort((a, z) => order[a.level] - order[z.level])
+  for (const i of issues) console.log(`[INTEGRITY ${i.level}] ${i.code}: ${i.msg}${i.detail ? ' — ' + i.detail : ''}`)
+  return { ok: issues.length === 0, count: issues.length, critical: issues.filter(i => i.level === 'CRITICAL').length, issues: issues.slice(0, 20), checkedAt: new Date().toISOString() }
+}
+
 function computeStats(b, todayISO) {
   const open = Object.values(b.open)
   const investedOpen = open.reduce((a, p) => a + (p.invested || 0), 0)
@@ -696,4 +743,5 @@ function computeStats(b, todayISO) {
     lessons: lessons.slice(0, 6), lossJournal, activeCooldowns: Object.keys(b.lossCooldown || {}).length,
     segmentRank,
   }
+  b.stats.integrity = checkIntegrity(b, todayISO)   // daily self-verification — flags P&L/data bugs
 }
