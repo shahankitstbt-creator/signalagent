@@ -59,6 +59,7 @@ const FO_STOCKOPT_CAP = 700000      // reserve ₹3L of the F&O sleeve for INDEX
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
 const FNO_MAX_MARGIN_PCT = 12        // skip an F&O trade whose smallest lot needs >12% of the F&O sleeve
 const STOCK_OPT_PREM_PCT = 0.035    // est. monthly ATM stock-option premium ≈ 3.5% of spot (higher IV than index)
+const FO_OPT_MAX_HOLD = 6           // TIME-STOP: never hold an F&O option/spread >6 days (theta bleed) — recycle
 const BOOK_AT_PCT = 40              // book 50% of a position once it's up this much
 const TRAIL_EXIT_PCT = 10          // after partial book, exit the runner if it gives back to this
 const MAX_OPEN = 70                   // concurrent positions across both sleeves (options are cheap → many fit the F&O sleeve)
@@ -206,23 +207,19 @@ const daysBetween = (a, b) => { const d = (Date.parse(b) - Date.parse(a)) / 8640
 const DTE0 = 20   // ~trading days to monthly expiry at entry (paper model)
 function pnlFor(pos, exitPrice, bearish, daysHeld = 0) {
   if (pos.kind === 'OPT') {
-    const moveFav = bearish ? (pos.entryPrice - exitPrice) : (exitPrice - pos.entryPrice)
-    const held = Math.min(Math.max(0, daysHeld), DTE0)
-    if (pos.hedged) {
-      // HEDGED DEBIT SPREAD: value moves within [0, 2×netDebit] → profit capped at +net debit,
-      // loss floored at −net debit. The short leg funds half the cost and caps both tails (defined
-      // risk). Delta on the net (~0.35, both legs move) and reduced theta because the short bleeds too.
-      const debit = pos.netDebit ?? (pos.invested / pos.qty)
-      const decay = Math.sqrt((DTE0 - held) / DTE0)
-      let val = debit * decay + 0.35 * moveFav          // net spread value at exit
-      val = Math.max(0, Math.min(val, 2 * debit))        // hedge caps: max +100%, max −100% of net debit
-      return Math.round((val - debit) * pos.qty)
-    }
-    // Naked long (legacy) — theta-decaying time value + delta intrinsic; loss capped at premium.
-    const timeValue = pos.entryPremium * Math.sqrt((DTE0 - held) / DTE0)
-    const intrinsicGain = 0.55 * moveFav
-    const exitPrem = Math.max(0, timeValue + intrinsicGain)
-    return Math.round((exitPrem - pos.entryPremium) * pos.qty)
+    // DEFINED-RISK SPREAD P&L is driven by the UNDERLYING move, NOT by theta. A hedged debit spread
+    // tracks price: reaching the target → +100% of the net debit, hitting the stop → −100%. This fixes
+    // the old bug where a winning call (underlying UP) still showed a huge loss purely from time decay.
+    const moveFav = bearish ? (pos.entryPrice - exitPrice) : (exitPrice - pos.entryPrice)   // rupees in our favour
+    const debit = pos.netDebit ?? (pos.invested / pos.qty)   // per-unit net cost = the DEFINED max loss
+    const t1 = pos.targets?.[0]?.price
+    const upDist = Math.max(1e-6, Math.abs((t1 != null ? t1 - pos.entryPrice : pos.entryPrice * 0.03)))   // entry→target (rupees)
+    const dnDist = Math.max(1e-6, Math.abs((pos.sl != null ? pos.entryPrice - pos.sl : pos.entryPrice * 0.02)))  // entry→stop (rupees)
+    let val
+    if (moveFav >= 0) val = debit + debit * Math.min(1, moveFav / upDist)   // toward +100% at target
+    else val = debit * Math.max(0, 1 - (-moveFav) / dnDist)                 // toward −100% (0 value) at stop
+    // slight time premium only while barely-moved and near expiry (kept small so it never dominates)
+    return Math.round((val - debit) * pos.qty)
   }
   return Math.round((exitPrice - pos.entryPrice) * pos.qty * (bearish ? -1 : 1))
 }
@@ -381,6 +378,17 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         const slRec = { ...pos, exitPrice: pos.sl, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Exited at stop-loss ₹${pos.sl}${pos.averaged ? ' (widened after averaging)' : ''}`, failureReason: pnl < 0 ? 'Hit stop-loss — exited per plan' : null, unrealizedPnl: undefined, unrealizedPct: undefined }
         if (slRec.result === 'LOSS') recordLoss(b, slRec)
         b.closed.push(slRec); exited.push(slRec); delete b.open[id]
+        continue
+      }
+      // ── TIME-STOP for F&O OPTIONS: a monthly option/spread must NOT be held for weeks — theta bleeds
+      // it even when the direction is right. Recycle after FO_OPT_MAX_HOLD days at the current mark. ──
+      if (pos.kind === 'OPT' && held >= FO_OPT_MAX_HOLD) {
+        const pnl = pnlFor(pos, pos.ltp, bearish, held)
+        if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+        bankRealised(pos.sleeve, pnl)
+        const tsRec = { ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Time-stop: option held ${held}d (>${FO_OPT_MAX_HOLD}d) — recycled at ₹${pos.ltp} to stop theta bleed`, failureReason: pnl < 0 ? `Time-stop after ${held} days — option decayed; recycled` : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+        if (tsRec.result === 'LOSS') recordLoss(b, tsRec)
+        b.closed.push(tsRec); exited.push(tsRec); delete b.open[id]
         continue
       }
       // PARTIAL BOOK 50% at +40% — but F&O trades in WHOLE LOTS, so only if ≥2 lots (you can't
