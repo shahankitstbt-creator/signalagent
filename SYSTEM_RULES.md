@@ -86,6 +86,21 @@ The paper book obeys **real Indian market hours** (`marketSession()` in tradeboo
 
 ---
 
+## 4c. MONTHLY CYCLE — logbook + fresh ₹10L start (every month)
+
+At the **first scan of each new month** the engine automatically (`monthlyRollover()`):
+1. **Writes the finished month to the LOG BOOK** (`trade_book.monthlyLog` + `stats.monthlyLog`): per sleeve — **start capital ₹10L, end capital, P&L, %, win-rate, trade count** — plus the month's **compact trade list** and the **major mistakes** (from the loss post-mortems dated that month).
+2. **Starts every sleeve FRESH at ₹10L** — flat (no carried positions), realised P&L zeroed, capital reset. Book restarts at ₹30L total.
+3. **Learning PERSISTS** — loss lessons / post-mortems / cooldowns carry across months, so the system keeps improving; only capital + positions + realised reset.
+
+So each month is a clean, comparable scorecard, and the history is never lost. **Every month behaves the same** — this is a permanent routine.
+
+## 4d. RELIABILITY — the system verifies ITSELF every scan
+
+`checkIntegrity()` runs on **every scan** and flags (in `stats.integrity` + logs) any: cash-invariant drift, sleeve over the ₹10L cap, **P&L that contradicts price direction** (the class of bug that mis-marked winning options), option P&L outside the defined-risk ±100%, **naked (un-hedged) F&O**, daily position carried overnight, or a position sitting past its stop in market hours. A bug in the numbers now surfaces the **same day**, not after the user spots it.
+
+---
+
 ## 5. DAILY AUTOMATED TASKS (runs itself — no manual steps)
 
 | When (IST) | Task |
