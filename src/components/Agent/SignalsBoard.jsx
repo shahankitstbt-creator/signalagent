@@ -601,7 +601,11 @@ export default function SignalsBoard() {
                     {(search || sortBy !== 'default') && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
                   </div>
                   {rows.length === 0
-                    ? <div className="p-10 mono text-sm text-txt-muted text-center">{search ? `No matches for "${search}" in this tab.` : 'No signals in this generator today.'}</div>
+                    ? <div className="p-10 mono text-sm text-txt-muted text-center leading-relaxed">{search
+                        ? `No matches for "${search}" in this tab.`
+                        : active.id === 'reversal'
+                          ? <>No reversal setups pass the filter right now.<br /><span className="text-[12px]">Reversals are counter-trend — any that conflicted with the prevailing trend were removed so you never see the same stock as both BUY and SELL. When a clean, non-conflicting reversal appears, it shows here.</span></>
+                          : 'No signals in this generator today.'}</div>
                     : active.id === 'fno'
                       ? <FnoTable signals={rows} color={active.color} setView={setView} />
                     : active.id === 'confluence'
