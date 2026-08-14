@@ -280,6 +280,54 @@ function recordLoss(b, rec) {
 }
 
 // Reconcile the book with the ledger: close finished trades, open new ones, mark-to-market.
+// current book equity + per-sleeve equity from the live state (same formula computeStats uses).
+function bookEquity(b) {
+  const open = Object.values(b.open || {})
+  return Math.round((b.cashCash || 0) + (b.cashFO || 0) + (b.cashDaily || 0) + open.reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0))
+}
+function sleeveEquity(b, sl) {
+  const cash = sl === 'CASH' ? b.cashCash : sl === 'FO' ? b.cashFO : b.cashDaily
+  return Math.round((cash || 0) + Object.values(b.open || {}).filter(p => p.sleeve === sl).reduce((a, p) => a + (p.invested || 0) + (p.unrealizedPnl || 0), 0))
+}
+
+// ── DAILY ROLLOVER: at the first scan of a new calendar day, write the finished day to the DAILY LOG
+// BOOK — start capital, end capital, P&L + win-rate per sleeve, and that day's trades + mistakes. Unlike
+// the monthly rollover it does NOT reset capital (capital carries within the month); it only RECORDS. ──
+function dailyRollover(b, todayISO) {
+  const day = todayISO
+  if (!day) return null
+  if (b.dayKey == null) {   // first ever run — anchor the day baseline, no log yet
+    b.dayKey = day; b.dayOpenEquity = bookEquity(b)
+    b.dayOpenSleeve = { CASH: sleeveEquity(b, 'CASH'), FO: sleeveEquity(b, 'FO'), DAILY: sleeveEquity(b, 'DAILY') }
+    return null
+  }
+  if (day === b.dayKey) return null   // same day — nothing to do
+  const prev = b.dayKey
+  const endEq = bookEquity(b)
+  const startEq = Math.round(b.dayOpenEquity ?? CAPITAL)
+  const capMap = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
+  const closedPrev = b.closed.filter(t => (t.exitDate || '') === prev)
+  const wasTradingDay = marketSession(prev + 'T06:00:00.000Z').tradingDay
+  // roll the day baseline forward regardless (so tomorrow measures from today's close)
+  const advance = () => { b.dayKey = day; b.dayOpenEquity = endEq; b.dayOpenSleeve = { CASH: sleeveEquity(b, 'CASH'), FO: sleeveEquity(b, 'FO'), DAILY: sleeveEquity(b, 'DAILY') } }
+  if (!wasTradingDay && closedPrev.length === 0) { advance(); return null }   // skip empty weekend/holiday entries
+  const snap = { day: prev, startCapital: startEq, endCapital: endEq, pnl: endEq - startEq, pct: +(((endEq - startEq) / (startEq || CAPITAL)) * 100).toFixed(2), sleeves: {}, trades: [], mistakes: [] }
+  for (const sl of ['CASH', 'FO', 'DAILY']) {
+    const s0 = Math.round(b.dayOpenSleeve?.[sl] ?? capMap[sl]); const s1 = sleeveEquity(b, sl)
+    const dec = closedPrev.filter(t => (t.sleeve || 'CASH') === sl && !t.partial && (t.result === 'WIN' || t.result === 'LOSS'))
+    const wins = dec.filter(t => t.result === 'WIN').length
+    snap.sleeves[sl] = { startCapital: s0, endCapital: s1, pnl: s1 - s0, trades: dec.length, winRate: dec.length ? +((wins / dec.length) * 100).toFixed(1) : null }
+  }
+  snap.trades = closedPrev.map(t => ({ sym: t.symbol, sleeve: t.sleeve, dir: t.direction, result: t.result, pnl: Math.round(t.realizedPnl || 0), pct: t.realizedPct, partial: !!t.partial }))
+  const dayLosses = (b.lossJournal || []).filter(l => (l.date || '') === prev)
+  const byCat = {}; for (const l of dayLosses) { (byCat[l.category] ||= { category: l.category, count: 0, fix: l.fix }).count++ }
+  snap.mistakes = Object.values(byCat).sort((a, z) => z.count - a.count).slice(0, 6)
+  b.dailyLog = (b.dailyLog || []); b.dailyLog.push(snap)
+  if (b.dailyLog.length > 180) b.dailyLog = b.dailyLog.slice(-180)   // ~6 months of trading days
+  advance()
+  return snap
+}
+
 // ── MONTHLY ROLLOVER: at the first scan of a new month, write the finished month to the LOG BOOK
 // (start capital, end capital, P&L + win-rate per sleeve, that month's trades, and the major mistakes),
 // then START FRESH — all three sleeves reset to ₹10L, flat, clean. Learning (lossLessons/journal)
@@ -322,12 +370,17 @@ function monthlyRollover(b, todayISO) {
   b.dailyStartedAt = null
   b.startedAt = todayISO
   b.monthKey = curMonth
+  // the new month starts flat at ₹30L → reset the DAILY baseline so day-1 measures from ₹30L
+  b.dayKey = todayISO; b.dayOpenEquity = CAPITAL
+  b.dayOpenSleeve = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
   return snap
 }
 
 export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
+  const rolledDay = dailyRollover(b, todayISO)   // new day? → log the finished day (records only, no reset)
+  if (rolledDay) console.log(`DAILY LOG: ${rolledDay.day} — ₹${rolledDay.startCapital.toLocaleString('en-IN')} → ₹${rolledDay.endCapital.toLocaleString('en-IN')} (${rolledDay.pnl >= 0 ? '+' : ''}${rolledDay.pnl})`)
   const rolled = monthlyRollover(b, todayISO)   // new month? → log the old month + fresh ₹10L start
   if (rolled) console.log(`MONTHLY ROLLOVER: ${rolled.month} closed at ₹${rolled.endCapital.toLocaleString('en-IN')} (${rolled.pct >= 0 ? '+' : ''}${rolled.pct}%). New month starts fresh at ₹30L.`)
   const sess = marketSession(nowISO)   // IST market session — gates every fill (open/close/square-off)
@@ -809,6 +862,8 @@ function computeStats(b, todayISO) {
     monthKey: b.monthKey || null,
     // MONTHLY LOG BOOK — each finished month: start/end capital, P&L, per-sleeve, top mistakes (trades count only; full trades in trade_book.monthlyLog)
     monthlyLog: (b.monthlyLog || []).map(m => ({ month: m.month, startCapital: m.startCapital, endCapital: m.endCapital, pnl: m.pnl, pct: m.pct, sleeves: m.sleeves, mistakes: m.mistakes, tradeCount: m.trades?.length || 0 })),
+    // DAILY LOG BOOK — each finished day: start/end capital, P&L, per-sleeve, that day's trades + mistakes (last 60 days)
+    dailyLog: (b.dailyLog || []).slice(-60).reverse(),
   }
   b.stats.integrity = checkIntegrity(b, todayISO)   // daily self-verification — flags P&L/data bugs
 }

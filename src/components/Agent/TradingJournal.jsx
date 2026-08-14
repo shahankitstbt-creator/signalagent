@@ -55,6 +55,7 @@ export default function TradingJournal() {
   const [kind, setKind] = useState('all')       // all | CASH | FNO | OPT
   const [sortBy, setSortBy] = useState('recent') // recent | pnl | symbol | ret
   const [refreshing, setRefreshing] = useState(false)
+  const [logOpen, setLogOpen] = useState(false)
 
   const load = () => {
     setRefreshing(true)
@@ -97,6 +98,11 @@ export default function TradingJournal() {
         <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income (safe cash) · hard ₹10L cap per book · times in IST</span>
         <div className="ml-auto flex items-center gap-2">
           {updatedIST && <span className="mono text-[10px] text-txt-muted hidden sm:inline">updated {updatedIST} IST</span>}
+          <button onClick={() => setLogOpen(true)} title="Daily & Monthly log books"
+            className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover"
+            style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
+            📒 <span className="hidden sm:inline">Log Book</span>
+          </button>
           <button onClick={load} disabled={refreshing} title="Refresh positions now"
             className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover disabled:opacity-70"
             style={{ background: 'linear-gradient(90deg,#2962FF,#3B6BFF)' }}>
@@ -105,6 +111,7 @@ export default function TradingJournal() {
           </button>
         </div>
       </div>
+      {logOpen && <LogBook st={st} onClose={() => setLogOpen(false)} />}
 
       {err && !book && <div className="p-6 mono text-sm text-yellow">{err}</div>}
 
@@ -299,3 +306,81 @@ function ClosedTable({ rows: raw }) {
 }
 
 function Empty({ msg }) { return <div className="p-8 mono text-sm text-txt-muted text-center">{msg}</div> }
+
+// ── LOG BOOK — Daily & Monthly record of start capital, end capital, P&L, trades + mistakes ──
+function pnlCls(n) { return (n || 0) > 0 ? 'text-green' : (n || 0) < 0 ? 'text-red' : 'text-txt-sec' }
+function sgn(n) { return (n || 0) >= 0 ? '+' : '' }
+function LogBook({ st, onClose }) {
+  const [tab, setTab] = useState('daily')
+  const daily = st?.dailyLog || []
+  const monthly = st?.monthlyLog || []
+  const rows = tab === 'daily' ? daily : monthly
+  const keyOf = r => tab === 'daily' ? r.day : r.month
+  return (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6" style={{ background: 'rgba(4,8,14,.66)' }} onClick={onClose}>
+      <div className="w-full max-w-4xl max-h-[86vh] flex flex-col rounded-2xl border border-border overflow-hidden elev" style={{ background: 'var(--color-bg-card)' }} onClick={e => e.stopPropagation()}>
+        {/* header */}
+        <div className="shrink-0 flex items-center gap-3 px-4 sm:px-5 py-3 border-b border-border">
+          <span className="mono text-base font-bold brand-grad">📒 Log Book</span>
+          <div className="flex items-center gap-1 ml-1">
+            {[['daily', 'Daily'], ['monthly', 'Monthly']].map(([k, lbl]) => (
+              <button key={k} onClick={() => setTab(k)}
+                className={`mono text-[11px] font-bold px-3 py-1.5 rounded-lg ${tab === k ? 'text-white' : 'text-txt-sec bg-bg-base border border-border'}`}
+                style={tab === k ? { background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' } : {}}>{lbl}</button>
+            ))}
+          </div>
+          <button onClick={onClose} className="ibtn ml-auto" title="Close">✕</button>
+        </div>
+        {/* body */}
+        <div className="overflow-auto p-3 sm:p-4">
+          {rows.length === 0
+            ? <div className="p-10 mono text-sm text-txt-muted text-center leading-relaxed">
+                No {tab} entries yet.<br />
+                <span className="text-[12px]">{tab === 'daily'
+                  ? 'The first daily entry is written after today’s session rolls into tomorrow (start capital → end capital → P&L, with that day’s trades).'
+                  : 'The first monthly entry is written when the month rolls over — each sleeve then also restarts fresh at ₹10L.'}</span>
+              </div>
+            : <div className="overflow-x-auto">
+                <table className="w-full mono text-[11px]" style={{ borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr className="text-txt-sec text-left" style={{ borderBottom: '1px solid var(--color-border)' }}>
+                      <th className="px-2 py-2">{tab === 'daily' ? 'Day' : 'Month'}</th>
+                      <th className="px-2 py-2 text-right">Start ₹</th>
+                      <th className="px-2 py-2 text-right">End ₹</th>
+                      <th className="px-2 py-2 text-right">P&L</th>
+                      <th className="px-2 py-2 text-right">Cash</th>
+                      <th className="px-2 py-2 text-right">F&O</th>
+                      <th className="px-2 py-2 text-right">Daily</th>
+                      <th className="px-2 py-2 text-right">Trades</th>
+                      <th className="px-2 py-2">Top mistakes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, i) => {
+                      const sv = r.sleeves || {}
+                      const tradeN = tab === 'daily' ? (r.trades?.length ?? 0) : (r.tradeCount ?? 0)
+                      return (
+                        <tr key={keyOf(r) + i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                          <td className="px-2 py-2 font-bold">{keyOf(r)}</td>
+                          <td className="px-2 py-2 text-right tabular-nums">{inr(r.startCapital)}</td>
+                          <td className="px-2 py-2 text-right tabular-nums">{inr(r.endCapital)}</td>
+                          <td className={`px-2 py-2 text-right tabular-nums font-bold ${pnlCls(r.pnl)}`}>{sgn(r.pnl)}{inr(r.pnl).replace('₹', '₹')}<span className="text-[9px] opacity-70"> ({sgn(r.pct)}{r.pct}%)</span></td>
+                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.CASH?.pnl)}`}>{sgn(sv.CASH?.pnl)}{inr(sv.CASH?.pnl)}</td>
+                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.FO?.pnl)}`}>{sgn(sv.FO?.pnl)}{inr(sv.FO?.pnl)}</td>
+                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.DAILY?.pnl)}`}>{sgn(sv.DAILY?.pnl)}{inr(sv.DAILY?.pnl)}</td>
+                          <td className="px-2 py-2 text-right tabular-nums text-txt-sec">{tradeN}</td>
+                          <td className="px-2 py-2 text-txt-sec max-w-[220px]">{(r.mistakes || []).length ? (r.mistakes || []).map(m => `${m.category} ×${m.count}`).join(' · ') : '—'}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>}
+        </div>
+        <div className="shrink-0 px-4 py-2 border-t border-border mono text-[10px] text-txt-muted">
+          Start = capital at the open · End = capital at the close · Monthly rolls each sleeve back to ₹10L; Daily records only. Paper — educational, not advice.
+        </div>
+      </div>
+    </div>
+  )
+}
