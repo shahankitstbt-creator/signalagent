@@ -444,6 +444,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
         bankRealised(pos.sleeve, pnl)
         const tsRec = { ...pos, exitPrice: pos.ltp, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: `Time-stop: option held ${held}d (>${FO_OPT_MAX_HOLD}d) — recycled at ₹${pos.ltp} to stop theta bleed`, failureReason: pnl < 0 ? `Time-stop after ${held} days — option decayed; recycled` : null, unrealizedPnl: undefined, unrealizedPct: undefined }
         if (tsRec.result === 'LOSS') recordLoss(b, tsRec)
+        b.lossCooldown ||= {}; b.lossCooldown[pos.symbol || pos.underlying] = todayISO   // cool off — don't re-open the same option next scan (prevents churn + stale-entry re-buy)
         b.closed.push(tsRec); exited.push(tsRec); delete b.open[id]
         continue
       }
@@ -567,9 +568,11 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
       id: s.id, symbol: s.symbol || s.underlying, name: s.name || null, generator: s.generator, gen: s.label || s.generator,
       kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null,
       optType: size.optType || null, entryPremium: size.entryPremium || null, optionPlay: s.optionPlay || null,
+      // CARRY the hedge fields from sizeTrade — dropping them left F&O options stored as NAKED (bug)
+      hedged: size.hedged || false, netDebit: size.netDebit ?? null, longPrem: size.longPrem ?? null, shortPrem: size.shortPrem ?? null, hedgeNote: size.hedgeNote || null, stockOption: size.stockOption || false, commodity: size.commodity || s.commodity || false,
       qty: size.qty, lots: size.lots, lotSize: size.lotSize, notional: size.notional,
       entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,
-      entryDate: s.openedAt, entryAt: nowISO, ltp: s.ltp ?? s.entry,
+      entryDate: todayISO, entryAt: nowISO, ltp: s.ltp ?? s.entry,   // entryDate = actual entry day (not the signal's first-seen date → prevents instant time-stop churn)
       footprint: s.footprint || null, delivery: s.delivery ?? null, rr: s.rr ?? null,
       reason: s.reason || s.setupType || (Array.isArray(s.precursors) ? s.precursors[0] : null) || null,
       unrealizedPnl: 0, unrealizedPct: 0,
