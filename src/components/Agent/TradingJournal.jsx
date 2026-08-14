@@ -101,7 +101,7 @@ export default function TradingJournal() {
           <button onClick={() => setLogOpen(true)} title="Daily & Monthly log books"
             className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover"
             style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
-            📒 <span className="hidden sm:inline">Log Book</span>
+            📒 Log Book
           </button>
           <button onClick={load} disabled={refreshing} title="Refresh positions now"
             className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover disabled:opacity-70"
