@@ -1062,6 +1062,26 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
   }
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
+  // 🎯 1-MONTH MOVERS — curated cross-desk list of LIQUID, high-conviction LONGs whose targets sit
+  // ~10–20% above entry (≈1-month horizon). Discovery overlay only — the underlying signals already
+  // log/trade via their own desks, so this never double-trades. Educational, not a guarantee.
+  const MOVER_SRC = ['confluence', 'momentum', 'vol_accum', 'multibagger', 'vp_fib', 'money_flow', 'harmonic']
+  const movers = new Map()
+  for (const id of MOVER_SRC) for (const s of (byGen[id] || [])) {
+    const sym = s.symbol || s.underlying; if (!sym) continue
+    const dir = String(s.direction || 'LONG'); if (/SHORT|BEAR/.test(dir)) continue         // upside only
+    if (!s.entry || s.entry < 30) continue                                                  // no sub-₹30 illiquid pennies
+    const up = Math.max(0, ...(s.targets || []).map(t => t.pct).filter(x => x != null))
+    if (up < 10 || up > 30) continue                                                        // ~10–20%+ band (cap 30 → drop fantasy targets)
+    const liquid = !!(s.lot || s.fno) || (s.delivery ?? 0) >= 45                            // F&O-eligible or strong delivery
+    const conf = s.confidence || s.confluenceScore || 0
+    const quality = s.grade === 'A++' || s.grade === 'A+' || conf >= 65
+    if (!liquid || !quality) continue
+    const score = conf + ({ 'A++': 30, 'A+': 20, 'A': 10 }[s.grade] || 0) + ((s.footprint && !s.footprint.weak) ? 15 : 0) + Math.min(20, (s.delivery || 0) / 5) + Math.min(15, up / 2)
+    const prev = movers.get(sym)
+    if (!prev || score > prev._moverScore) movers.set(sym, { ...s, generator: 'movers', _moverScore: Math.round(score), upsidePct: up, srcDesk: id })
+  }
+  byGen.movers = [...movers.values()].sort((a, b) => b._moverScore - a._moverScore).slice(0, 20)
   const p = dailyBias(today).panchang
   return GEN_META.map(g => {
     let desc = g.desc

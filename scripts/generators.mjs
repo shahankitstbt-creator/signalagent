@@ -13,6 +13,7 @@ const ema = (a, len) => { const k = 2 / (len + 1); const o = [a[0]]; for (let i 
 // (not its own tab). Money Flow → US Stocks → US Indices are kept last, in that order.
 export const GEN_META = [
   { id: 'confluence', label: '⭐ Top Confluence Picks', color: '#2962FF', desc: 'Highest-conviction: 2+ generators agree + Vedic bias aligned — each with a position-sized trade plan' },
+  { id: 'movers', label: '🎯 1-Month Movers (10–20%)', color: '#00C853', desc: 'Curated across the momentum/accumulation/confluence desks: LIQUID, high-conviction LONGs whose targets sit ~10–20% above entry with a ~1-month horizon — the setups positioned for a big swing. Ranked by conviction. Educational discovery, NOT a guarantee — each has entry / SL / targets so you manage the risk.' },
   { id: 'option_buildup', label: '🎯 Smart-Money Desk', color: '#DC2626', desc: 'NIFTY · BankNifty · Gold · top F&O stocks — multi-timeframe (15m→1D) confluence of Volume Profile + Fib + VWAP + price action + live option OI positioning + far-expiry accumulation, with entry / SL / targets / dates per timeframe' },
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
   { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
