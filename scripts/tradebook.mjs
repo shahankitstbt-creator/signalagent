@@ -53,7 +53,9 @@ const AVG_MAX_MULT = 1.5             // final position ≤ 1.5× the base size
 const AVG_TRIGGER_PCT = 6           // consider averaging once price is ~6% underwater (near the SL zone)
 const AVG_MIN_DELIVERY = 55         // "good company" proxy — strong delivery %/hands
 const AVG_SL_WIDEN_PCT = 5          // widen SL ~5% below the average-in price (to structure)
-const MAX_DEPLOY_PCT = 4              // cash: ≤4% of the cash sleeve per position
+const MAX_DEPLOY_PCT = 10             // cash: CONCENTRATE — up to ~10% (₹1L) per swing (fewer, bigger, quality names)
+const CASH_MAX_OPEN = 12             // cap concurrent CASH swings at 12 → keeps room for fresh high-conviction setups
+const CASH_MIN_DELIVERY = 45         // LIQUIDITY/quality floor for a cash swing when it's not an F&O-eligible name
 const FO_DEPLOY_PCT = 10             // F&O/option: ≤10% of the F&O sleeve per position
 const FO_STOCKOPT_CAP = 700000      // reserve ₹3L of the F&O sleeve for INDEX options + COMMODITIES (Gold/Crude/Silver)
 const FNO_MARGIN = 0.20              // futures margin ≈ 20% of notional (paper model)
@@ -596,6 +598,15 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // non-commodity / non-index F&O already deployed — capped so index+commodities keep ₹3L of room
   let foStockOpt = Object.values(b.open).filter(p => p.sleeve === 'FO' && !p.commodity && p.symbol !== 'NIFTY' && p.symbol !== 'BANKNIFTY').reduce((a, p) => a + (p.invested || 0), 0)
   let opened = 0
+  let cashOpenCount = Object.values(b.open).filter(p => p.sleeve === 'CASH').length
+  // CASH SWING QUALITY GATE: concentrate on LIQUID, high-conviction names — F&O-eligible OR strong delivery
+  // (not illiquid micro-caps that gap), AND grade A+/A++ or high confidence. Blocks the weak micro-cap churn.
+  const liquidQualityCash = s => {
+    const sym = s.symbol || s.underlying
+    const liquid = !!(fnoLots[sym] || fnoLots[s.underlying]) || (s.delivery ?? 0) >= CASH_MIN_DELIVERY
+    const quality = s.grade === 'A++' || s.grade === 'A+' || (s.confidence || 0) >= 65
+    return liquid && quality
+  }
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
@@ -606,13 +617,18 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     // MARKET-HOURS GATE: only OPEN a new trade when that segment's market is live (commodities till 23:30,
     // everything else 09:15–15:30). No new fills off-session / on holidays.
     if (!((s.commodity || size.kind === 'COMM') ? sess.commodityOpen : sess.equityOpen)) continue
-    if (size.sleeve === 'CASH' && (s.entry < CASH_MIN_PRICE || (s.changePct || 0) >= CASH_MAX_CHASE)) continue  // quality: no pennies, no chasing extended moves
+    if (size.sleeve === 'CASH') {
+      if (s.entry < CASH_MIN_PRICE || (s.changePct || 0) >= CASH_MAX_CHASE) continue  // no pennies, no chasing extended moves
+      if (cashOpenCount >= CASH_MAX_OPEN) continue                       // CONCENTRATE — cap swings, keep room for the best setups
+      if (!liquidQualityCash(s)) continue                               // LIQUID + quality only (no illiquid micro-caps)
+    }
     if (deployed[size.sleeve] + size.invested > CAPOF[size.sleeve]) continue   // ₹10L sleeve cap
     const stockOpt = isReservedFO(s, size)
     if (stockOpt && foStockOpt + size.invested > FO_STOCKOPT_CAP) continue      // reserve F&O room for index/commodities
     const pool = size.sleeve === 'FO' ? b.cashFO : b.cashCash
     if (size.invested > pool) continue
     openSyms.add(sym)
+    if (size.sleeve === 'CASH') cashOpenCount++
     if (stockOpt) foStockOpt += size.invested
     deployed[size.sleeve] += size.invested
     if (size.sleeve === 'FO') b.cashFO -= size.invested; else b.cashCash -= size.invested
