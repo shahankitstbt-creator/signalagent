@@ -47,9 +47,11 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 **Hard cap** — total invested per sleeve can **NEVER exceed ₹10L**. When full → no new trade until one closes.
 **One position per underlying** in the main book. **F&O reserve** — ₹3L of the F&O sleeve is kept for index + commodities so stock options can't crowd them out.
 
-**Cash-book quality gate** (from loss analysis):
-- No penny stocks (**entry ≥ ₹50**).
-- **No chasing** — skip if the stock already ran ≥8% today.
+**Cash-book = CONCENTRATED, LIQUID swing trades** (updated per user 2026-08-17):
+- **Fewer, bigger swings** — up to **~10% (₹1L) per position**, capped at **12 concurrent** so there's always room for the best fresh setups (was 26 tiny ~₹40k positions).
+- **Liquid + quality only** — a cash swing must be **F&O-eligible OR delivery ≥ 45%** AND **grade A+/A++ or confidence ≥ 65**. No illiquid, no-grade micro-caps (they gap and bleed).
+- No penny stocks (**entry ≥ ₹50**); **no chasing** — skip if it already ran ≥8% today.
+- Existing weak micro-cap positions wind down naturally via their stops/targets; new capital goes to concentrated liquid names.
 
 **Daily-Income (DAY TRADE)**:
 - Liquid **F&O-eligible names only** (no micro-caps that gap).
