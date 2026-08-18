@@ -57,7 +57,9 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 **Daily-Income (DAY TRADE)**:
 - Liquid **F&O-eligible names only** (no micro-caps that gap).
 - Entries from the confluence desks (VP+Fib / momentum / volume / money-flow).
-- **Book +1.5% / cut −2.5% intraday**; anything unresolved **squares off by the next session** (max 1-day hold — no multi-day carries).
+- **Book +1.5% / cut −2.5% intraday**; **flat by the 15:30 close** — no overnight carry (§4b).
+- **ONE day-trade per name PER DAY** — never re-buy a name already day-traded today (no same-stock churn / scalping loop).
+- Max 8 positions · ~10% (₹1L) each · stop opening new once the ₹10k day-goal is in hand.
 
 ---
 
