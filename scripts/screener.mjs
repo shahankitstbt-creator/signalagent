@@ -527,9 +527,11 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     saveLedger(ledger)
     tr = trackRecord(ledger, GEN_META)
     writeFileSync('public/track_record.json', JSON.stringify({ generatedAt: today.toISOString(), ...tr }, null, 2))
-    // SELF-IMPROVEMENT runs only on the post-market (--improve) pass (6 PM IST) when the
-    // day's moves are final. Pre-market/live passes just refresh the boards.
-    if (improve) {
+    // SELF-IMPROVEMENT runs on the post-market (--improve) pass when the day's moves are final. It's
+    // guarded by staleness so it runs EXACTLY once/day: if the 17:32 cron is dropped, the 18:02 backup
+    // pass catches up (and it won't double-run if the first one already did it today).
+    const learnStale = () => { try { return JSON.parse(readFileSync('public/learning.json', 'utf8')).date !== todayISO } catch { return true } }
+    if (improve && learnStale()) {
       const extNote = await fetchExternalGainers()
       const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
       goal = si.goal

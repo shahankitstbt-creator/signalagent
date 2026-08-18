@@ -10,6 +10,7 @@ on:
     - cron: '1,6 10 * * 1-5'            # DEDICATED post-close SQUARE-OFF (15:31 & 15:36 IST) — guarantees Daily-Income is flat right after 15:30 even if a cron run is dropped
     - cron: '7,37 10-16 * * 1-5'        # every 30 min after-market (≈16:07–22:07 IST)
     - cron: '2 12 * * 1-5'              # post-market daily close + weekly + self-improve (~17:32 IST)
+    - cron: '32 12 * * 1-5'             # BACKUP self-improve (~18:02 IST) — catches up if the 17:32 run was dropped (staleness-guarded → never double-runs)
   workflow_dispatch:               # manual (Actions tab or in-app ScanNow)
     inputs:
       tf:
@@ -58,8 +59,8 @@ jobs:
               weekly)   node scripts/screener.mjs --tf weekly --full ;;
               *)        node scripts/screener.mjs --full --top 80 --improve ;;
             esac
-          elif [ "$H" -eq 12 ] && [ "$MIN" -lt 25 ]; then
-            echo "POST-MARKET ~17:30 IST — full daily close + weekly + self-improvement"
+          elif [ "$H" -eq 12 ] && [ "$MIN" -lt 45 ]; then
+            echo "POST-MARKET ~17:30–18:05 IST — full daily close + weekly + self-improvement (17:32 run + 18:02 backup; self-improve is staleness-guarded so it runs once/day)"
             node scripts/screener.mjs --full --top 80 --improve
             node scripts/screener.mjs --tf weekly --full
           else

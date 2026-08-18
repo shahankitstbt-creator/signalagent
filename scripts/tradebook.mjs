@@ -706,6 +706,43 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     entered.push(b.open[key]); dailyOpened++
   }
 
+  // ══ AUTO-REMEDIATION: the book self-CORRECTS every scan — it doesn't just detect a rule breach, it
+  //    FIXES it before saving, so a violation cannot persist even one cycle. (Belt-and-suspenders over
+  //    the structural prevention + the self-audit.) ══
+  // (1) Any Daily-Income trade still open after 15:30 → force square-off NOW (day-trades are never carried).
+  if (sess.tradingDay && sess.equityClosedForDay) {
+    for (const id of Object.keys(b.open)) {
+      const pos = b.open[id]; if (pos.sleeve !== 'DAILY') continue
+      const held = daysBetween(pos.entryDate, todayISO)
+      const px = pos.ltp ?? pos.entryPrice
+      const pnl = pnlFor(pos, px, false, held)
+      b.cashDaily += pos.invested + pnl; bankRealised('DAILY', pnl)
+      const rec = { ...pos, exitPrice: px, exitDate: todayISO, exitAt: `${todayISO}T10:00:00.000Z`, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: pnl >= 0 ? 1 : 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: 'Auto-squared at 15:30 close (remediation backstop)', failureReason: pnl < 0 ? 'Squared at 15:30 close' : null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      if (rec.result === 'LOSS') recordLoss(b, rec)
+      b.closed.push(rec); exited.push(rec); delete b.open[id]
+      console.log(`[REMEDIATE] force-squared stray daily ${pos.symbol} at 15:30 close`)
+    }
+  }
+  // (2) Any sleeve over its ₹10L cap → trim the NEWEST positions until back under cap (can't sit over-deployed).
+  for (const sl of ['CASH', 'FO', 'DAILY']) {
+    const cap = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }[sl]
+    let dep = Object.values(b.open).filter(p => p.sleeve === sl).reduce((a, p) => a + (p.invested || 0), 0)
+    if (dep <= cap) continue
+    const newest = Object.entries(b.open).filter(([, p]) => p.sleeve === sl).sort((a, z) => String(z[1].entryAt || '').localeCompare(String(a[1].entryAt || '')))
+    for (const [id, pos] of newest) {
+      if (dep <= cap) break
+      const bearish = pos.direction === 'SHORT' || pos.direction === 'BEARISH' || pos.optType === 'PE'
+      const held = daysBetween(pos.entryDate, todayISO)
+      const px = pos.ltp ?? pos.entryPrice
+      const pnl = pnlFor(pos, px, bearish, held)
+      if (pos.sleeve === 'FO') b.cashFO += pos.invested + pnl; else if (pos.sleeve === 'DAILY') b.cashDaily += pos.invested + pnl; else b.cashCash += pos.invested + pnl
+      bankRealised(pos.sleeve, pnl)
+      const rec = { ...pos, exitPrice: px, exitDate: todayISO, exitAt: nowISO, result: pnl >= 0 ? 'WIN' : 'LOSS', maxTarget: 0, realizedPnl: pnl, realizedPct: pos.invested ? +((pnl / pos.invested) * 100).toFixed(2) : 0, daysHeld: held, expectationMatch: 'Trimmed — sleeve was over its ₹10L cap (remediation)', failureReason: null, unrealizedPnl: undefined, unrealizedPct: undefined }
+      b.closed.push(rec); exited.push(rec); delete b.open[id]; dep -= (pos.invested || 0)
+      console.log(`[REMEDIATE] trimmed ${pos.symbol} — ${sl} was over ₹10L cap`)
+    }
+  }
+
   computeStats(b, todayISO)
   save(b)
   Object.defineProperty(b, '_entered', { value: entered, enumerable: false })
