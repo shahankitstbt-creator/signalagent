@@ -1314,6 +1314,11 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
   }
   writeFileSync('public/goal.json', JSON.stringify(goal, null, 2))
 
+  // TRAJECTORY HISTORY — accumulate one row per day so the improvement is VISIBLE over time
+  let prevHist = []
+  try { prevHist = (JSON.parse(readFileSync('public/learning.json', 'utf8')).history) || [] } catch {}
+  const todayRow = { date: dateStr, accuracy: measured, catchRate, catchableRate, qualityBar: tuning.qualityBar, minMoveScore: tuning.minMoveScore, changed: adjustments.length, topChange: adjustments[0] || null }
+  const history = [...prevHist.filter(h => h.date !== dateStr), todayRow].slice(-60)
   writeFileSync('public/learning.json', JSON.stringify({
     date: dateStr, generatedAt: today.toISOString(),
     moversChecked: movers.length, caught: caught.length, missed: missed.length, catchRate,
@@ -1321,6 +1326,7 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
     sources: ['Own NSE-universe gainers (≥5% today)', 'Groww top-gainers (cross-check)', 'Dhan top-gainers (cross-check)'],
     externalNote, reasonTally, misses, adjustments, tuning: { minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar },
     goal: { target: GOAL.target, deadline: deadline, current: measured, status },
+    history,
     note: 'Daily self-review: which ≥5% movers the engine did NOT flag the prior day, and why. Reasons feed bounded auto-tuning to widen coverage without chasing noise. Gap-up/news moves are intentionally hard to pre-empt and are flagged as such.',
   }, null, 2))
   console.log(`Self-improve: ${movers.length} movers (${gapUpMovers} news gap-ups), caught ${caught.length} (${catchRate ?? '–'}% all / ${catchableRate ?? '–'}% catchable), missed ${missed.length} · goal ${measured ?? '–'}%/${GOAL.target}% (${daysLeft}d) → learning.json`)

@@ -56,6 +56,7 @@ export default function TradingJournal() {
   const [sortBy, setSortBy] = useState('recent') // recent | pnl | symbol | ret
   const [refreshing, setRefreshing] = useState(false)
   const [logOpen, setLogOpen] = useState(false)
+  const [improveOpen, setImproveOpen] = useState(false)
 
   const load = () => {
     setRefreshing(true)
@@ -98,6 +99,11 @@ export default function TradingJournal() {
         <span className="mono text-[10px] text-txt-muted">₹10L cash + ₹10L F&O + ⚡₹10L daily-income (safe cash) · hard ₹10L cap per book · times in IST</span>
         <div className="ml-auto flex items-center gap-2">
           {updatedIST && <span className="mono text-[10px] text-txt-muted hidden sm:inline">updated {updatedIST} IST</span>}
+          <button onClick={() => setImproveOpen(true)} title="Daily self-improvement — what the engine learned & changed"
+            className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover"
+            style={{ background: 'linear-gradient(90deg,#AA00FF,#2962FF)' }}>
+            🧠 Improvement
+          </button>
           <button onClick={() => setLogOpen(true)} title="Daily & Monthly log books"
             className="mono text-[11px] font-bold px-3 py-1.5 rounded-lg text-white flex items-center gap-1.5 card-hover"
             style={{ background: 'linear-gradient(90deg,#0E9F6E,#2962FF)' }}>
@@ -112,6 +118,7 @@ export default function TradingJournal() {
         </div>
       </div>
       {logOpen && <LogBook st={st} onClose={() => setLogOpen(false)} />}
+      {improveOpen && <SelfImprove onClose={() => setImproveOpen(false)} />}
 
       {err && !book && <div className="p-6 mono text-sm text-yellow">{err}</div>}
 
@@ -379,6 +386,81 @@ function LogBook({ st, onClose }) {
         </div>
         <div className="shrink-0 px-4 py-2 border-t border-border mono text-[10px] text-txt-muted">
           Start = capital at the open · End = capital at the close · Monthly rolls each sleeve back to ₹10L; Daily records only. Paper — educational, not advice.
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── SELF-IMPROVEMENT — what the engine learned & changed each day (from /learning.json) ──
+function SelfImprove({ onClose }) {
+  const [d, setD] = useState(null)
+  const [err, setErr] = useState(null)
+  useEffect(() => {
+    fetch('/learning.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(async r => { const t = await r.text(); if (!r.ok || t.trim().startsWith('<')) throw new Error('Self-improvement runs after the market close (~17:32 IST) — check back this evening.'); return JSON.parse(t) })
+      .then(setD).catch(e => setErr(e.message))
+  }, [])
+  const g = d?.goal
+  const hist = (d?.history || []).slice().reverse()
+  return (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6" style={{ background: 'rgba(4,8,14,.66)' }} onClick={onClose}>
+      <div className="w-full max-w-3xl max-h-[86vh] flex flex-col rounded-2xl border border-border overflow-hidden elev" style={{ background: 'var(--color-bg-card)' }} onClick={e => e.stopPropagation()}>
+        <div className="shrink-0 flex items-center gap-3 px-4 sm:px-5 py-3 border-b border-border">
+          <span className="mono text-base font-bold brand-grad">🧠 Daily Self-Improvement</span>
+          {d?.date && <span className="mono text-[10px] text-txt-muted">{d.date}</span>}
+          <button onClick={onClose} className="ibtn ml-auto" title="Close">✕</button>
+        </div>
+        <div className="overflow-auto p-4 sm:p-5 flex flex-col gap-4 mono">
+          {err && <div className="p-6 text-sm text-txt-muted text-center">{err}</div>}
+          {d && <>
+            {/* goal trajectory */}
+            {g && <div className="rounded-xl border border-border p-3" style={{ background: 'var(--color-bg-base)' }}>
+              <div className="text-[10px] uppercase text-txt-muted mb-1">Accuracy goal</div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold" style={{ color: g.current >= g.target ? 'var(--color-green)' : 'var(--color-yellow)' }}>{g.current ?? '–'}%</span>
+                <span className="text-xs text-txt-sec">measured → target {g.target}%</span>
+              </div>
+              <div className="text-[11px] text-txt-sec mt-1">{g.status}</div>
+            </div>}
+            {/* today's review */}
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg border border-border p-2"><div className="text-[9px] uppercase text-txt-muted">Movers checked</div><div className="text-lg font-bold">{d.moversChecked}</div></div>
+              <div className="rounded-lg border border-border p-2"><div className="text-[9px] uppercase text-txt-muted">Caught</div><div className="text-lg font-bold text-green">{d.caught} <span className="text-[11px]">({d.catchRate}%)</span></div></div>
+              <div className="rounded-lg border border-border p-2"><div className="text-[9px] uppercase text-txt-muted">Missed</div><div className="text-lg font-bold text-red">{d.missed}</div></div>
+            </div>
+            {/* what it CHANGED today */}
+            <div>
+              <div className="text-[10px] uppercase text-txt-muted mb-1">✦ What it changed today (auto-tuning)</div>
+              {d.adjustments?.length ? d.adjustments.map((a, i) => <div key={i} className="text-[11px] text-cyan mb-1">• {a}</div>)
+                : <div className="text-[11px] text-txt-sec">No change needed today — selectivity already at target; kept the current gates.</div>}
+              {d.tuning && <div className="text-[10px] text-txt-muted mt-1">current gates → pre-move score ≥ {d.tuning.minMoveScore} · quality bar {d.tuning.qualityBar}</div>}
+            </div>
+            {/* why it missed */}
+            {d.reasonTally?.length > 0 && <div>
+              <div className="text-[10px] uppercase text-txt-muted mb-1">Why movers were missed (feeds the tuning)</div>
+              <div className="flex flex-wrap gap-1.5">{d.reasonTally.slice(0, 6).map((r, i) => <span key={i} className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'var(--color-bg-base)', color: 'var(--color-txt-sec)' }}>{r.reason} ×{r.count}</span>)}</div>
+            </div>}
+            {/* trajectory history */}
+            {hist.length > 0 && <div>
+              <div className="text-[10px] uppercase text-txt-muted mb-1">Improvement trajectory (recent days)</div>
+              <div className="overflow-x-auto"><table className="w-full text-[11px]" style={{ borderCollapse: 'collapse' }}>
+                <thead><tr className="text-txt-sec text-left" style={{ borderBottom: '1px solid var(--color-border)' }}>
+                  <th className="px-2 py-1">Day</th><th className="px-2 py-1 text-right">Accuracy</th><th className="px-2 py-1 text-right">Catch%</th><th className="px-2 py-1 text-right">Quality bar</th><th className="px-2 py-1">Changed</th>
+                </tr></thead>
+                <tbody>{hist.map((h, i) => <tr key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                  <td className="px-2 py-1 font-bold">{h.date}</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{h.accuracy ?? '–'}%</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{h.catchRate ?? '–'}%</td>
+                  <td className="px-2 py-1 text-right tabular-nums">{h.qualityBar}</td>
+                  <td className="px-2 py-1 text-txt-sec max-w-[260px] truncate" title={h.topChange || ''}>{h.changed ? (h.topChange || `${h.changed} change(s)`) : '—'}</td>
+                </tr>)}</tbody>
+              </table></div>
+            </div>}
+          </>}
+        </div>
+        <div className="shrink-0 px-4 py-2 border-t border-border mono text-[10px] text-txt-muted">
+          Runs every evening (~17:32 IST): reviews the day's ≥5% movers it missed & why, then bounded auto-tuning toward the {g?.target ?? 85}% aim. Educational — accuracy is measured-historical, never a guarantee.
         </div>
       </div>
     </div>
