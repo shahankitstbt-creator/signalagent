@@ -106,9 +106,15 @@ At the **first scan of each new month** the engine automatically (`monthlyRollov
 
 So each month is a clean, comparable scorecard, and the history is never lost. **Every month behaves the same** — this is a permanent routine.
 
-## 4d. RELIABILITY — the system verifies ITSELF every scan
+## 4d. RELIABILITY — the system is SELF-CORRECTING (detect + auto-fix + verify)
 
-`checkIntegrity()` runs on **every scan** and flags (in `stats.integrity` + logs) any: cash-invariant drift, sleeve over the ₹10L cap, **P&L that contradicts price direction** (the class of bug that mis-marked winning options), option P&L outside the defined-risk ±100%, **naked (un-hedged) F&O**, daily position carried overnight, or a position sitting past its stop in market hours. A bug in the numbers now surfaces the **same day**, not after the user spots it.
+Rules are enforced in CODE, not just documented. Four layers so a breach cannot persist:
+1. **Structural prevention** — the breach is impossible to create (e.g. one day-trade per name/day; hard ₹10L cap at open; no naked F&O; no off-session fills).
+2. **Auto-remediation** (`syncTradeBook`, every scan, before save) — if a breach somehow exists it is **FIXED immediately**: any Daily trade still open after 15:30 is force-squared; any sleeve over its ₹10L cap is trimmed; any naked F&O is hedged. A violation can't survive a single cycle.
+3. **Self-audit** (`checkIntegrity`, every scan → `stats.integrity`) — flags cash drift, over-cap, P&L-vs-price-direction, option P&L outside ±100%, naked F&O, daily overnight/past-close/over-count/churn, past-stop-in-hours. Any residue surfaces the **same scan**.
+4. **Redundant scheduling** — square-off crons at **15:31 & 15:36 IST**; self-improve at **17:32 + 18:02 IST backup** (staleness-guarded → runs once/day even if a run is dropped).
+
+Honesty: this makes the system self-correcting — it does NOT claim literal perfection (no honest system can). A breach is caught and auto-fixed, not merely documented.
 
 ---
 
