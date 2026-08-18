@@ -788,6 +788,16 @@ function checkIntegrity(b, todayISO) {
     // 9) NaN unrealized
     if (!Number.isFinite(p.unrealizedPnl ?? 0)) add('HIGH', 'pos-nan', `${p.symbol}: unrealized P&L is NaN`, null)
   }
+  // ── DAILY-INCOME RULE ENFORCEMENT (self-audit backstop; the engine also prevents these structurally) ──
+  const dailyOpen = Object.values(b.open).filter(p => p.sleeve === 'DAILY')
+  // 10) too many day-trades open
+  if (dailyOpen.length > DAILY_MAX_OPEN) add('HIGH', 'daily-overcount', `Daily-Income has ${dailyOpen.length} open (rule: ≤${DAILY_MAX_OPEN})`, null)
+  // 11) BACKSTOP — a day-trade still open after the 15:30 close on a trading day (square-off should have run)
+  if (sess.equityClosedForDay) for (const p of dailyOpen) add('CRITICAL', 'daily-past-close', `${p.symbol}: day-trade still OPEN after 15:30 — should be squared off`, `entry ${p.entryDate}`)
+  // 12) same name day-traded more than once today (churn)
+  const dtCount = {}
+  for (const t of b.closed) if (t.sleeve === 'DAILY' && (t.exitDate || '') === todayISO && !t.partial) { const k = t.symbol || t.underlying; dtCount[k] = (dtCount[k] || 0) + 1 }
+  for (const [sym, n] of Object.entries(dtCount)) if (n > 1) add('MEDIUM', 'daily-churn', `${sym} day-traded ${n}× today (rule: 1 per name/day)`, null)
   const order = { CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3 }
   issues.sort((a, z) => order[a.level] - order[z.level])
   for (const i of issues) console.log(`[INTEGRITY ${i.level}] ${i.code}: ${i.msg}${i.detail ? ' — ' + i.detail : ''}`)

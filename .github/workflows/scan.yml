@@ -7,6 +7,7 @@ on:
     # some scheduled runs (best-effort), so density + self-heal + the Vercel daily cron (backup)
     # together keep it fully automatic with no manual steps. Times UTC; IST = UTC + 5:30.
     - cron: '2,17,32,47 3-10 * * 1-5'   # EVERY 15 MIN during live market (≈08:32–16:00 IST)
+    - cron: '1,6 10 * * 1-5'            # DEDICATED post-close SQUARE-OFF (15:31 & 15:36 IST) — guarantees Daily-Income is flat right after 15:30 even if a cron run is dropped
     - cron: '7,37 10-16 * * 1-5'        # every 30 min after-market (≈16:07–22:07 IST)
     - cron: '2 12 * * 1-5'              # post-market daily close + weekly + self-improve (~17:32 IST)
   workflow_dispatch:               # manual (Actions tab or in-app ScanNow)
