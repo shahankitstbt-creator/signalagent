@@ -653,6 +653,9 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // 2b) DAILY INCOME sleeve — SAFEST cash longs only, highest-confidence setups, ~₹10k/day aim.
   //     Hard ₹10L cap (deployed.DAILY): when full, no new trade until one squares off.
   const dailySyms = new Set(Object.values(b.open).filter(p => p.sleeve === 'DAILY').map(p => p.symbol))
+  // ONE day-trade per name PER DAY — never re-buy a name already day-traded today (stops the same-stock
+  // churn, e.g. booking +1.5% on TORNTPHARM 8× in a session). It's a day-trade book, not a scalping loop.
+  const dailyTradedToday = new Set(b.closed.filter(t => t.sleeve === 'DAILY' && t.exitDate === todayISO).map(t => t.symbol || t.underlying))
   const safeScore = s => gradeRank(s) * 25 + (s.confidence || s.confluenceScore || 0) + ((s.delivery || 0) / 2) + ((s.footprint && !s.footprint.weak) ? 15 : 0)
   const dailyCands = cands
     .filter(s => s.entry && s.sl && s.entry > s.sl && !s.commodity && !s.optType   // liquid cash equities only
@@ -675,6 +678,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (Object.keys(b.open).filter(k => k.startsWith('daily:')).length >= DAILY_MAX_OPEN) break
     const sym = s.symbol || s.underlying
     if (dailySyms.has(sym)) continue
+    if (dailyTradedToday.has(sym)) continue                            // already day-traded today → no re-entry (no churn)
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown
     const key = 'daily:' + s.id
     if (b.open[key]) continue
