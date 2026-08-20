@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>P&F Chart — Point & Figure Signals</title>
+<style>
+  :root{
+    --bg:#0A0E17; --panel:#0F1623; --card:#151E2D; --border:#1E2D42;
+    --txt:#E0E8F0; --txt2:#6B7F99; --muted:#3A4F66;
+    --green:#00C853; --red:#FF1744; --cyan:#22D3EE; --gold:#FFB300; --blue:#2962FF; --purple:#AA00FF;
+    --up:#089981; --dn:#F23645;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:"Inter",system-ui,sans-serif;font-size:14px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .wrap{max-width:1280px;margin:0 auto;padding:14px}
+  .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px}
+  .logo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#06121a}
+  h1{font-size:17px;margin:0;font-weight:700}
+  .sub{color:var(--txt2);font-size:11px}
+  .price{font-size:24px;font-weight:800}
+  input,select,button{font-family:inherit}
+  .search{background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--txt);padding:8px 12px;font-size:13px;width:200px;outline:none}
+  .search:focus{border-color:var(--blue)}
+  .chip{cursor:pointer;background:var(--card);border:1px solid var(--border);border-radius:999px;color:var(--txt2);padding:5px 11px;font-size:11px;font-weight:600}
+  .chip:hover{color:var(--txt);border-color:var(--blue)}
+  .chip.on{color:#fff;background:linear-gradient(90deg,var(--blue),#3B6BFF);border-color:transparent}
+  .tf{cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--txt2);padding:6px 12px;font-size:12px;font-weight:700;border-radius:8px}
+  .tf.on{color:#fff;background:linear-gradient(90deg,var(--purple),var(--blue));border-color:transparent}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}
+  @media(max-width:960px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+  .card h2{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);margin:0 0 10px;display:flex;justify-content:space-between}
+  canvas{width:100%;display:block;border-radius:8px;background:var(--panel)}
+  .sig{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;margin-top:14px}
+  @media(max-width:960px){.sig{grid-template-columns:1fr}}
+  .verdict{font-size:26px;font-weight:800}
+  .kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:13px}
+  .kv:last-child{border-bottom:0}
+  .pill{font-size:10px;padding:2px 9px;border-radius:999px;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;text-transform:uppercase;font-size:10px}
+  .tag{font-weight:700;padding:2px 8px;border-radius:6px;font-size:11px}
+  .flt{color:var(--txt2);font-size:11px;margin-top:6px}
+  .note{margin-top:12px;font-size:12px;color:var(--txt2);border-left:3px solid var(--gold);padding:8px 12px;background:rgba(255,179,0,.06);border-radius:6px}
+  .err{color:var(--red);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">P&amp;F</div>
+    <div>
+      <h1 id="ttl">P&amp;F Chart <span class="pill" style="background:#1E2D42;color:#6B7F99">any asset · any timeframe</span></h1>
+      <div class="sub mono" id="assetsub">select an asset & timeframe — Point &amp; Figure signals</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div class="price mono" id="px">—</div>
+      <div class="sub mono" id="meta">—</div>
+    </div>
+    <button class="tf" id="refresh">⟳</button>
+  </div>
+
+  <!-- asset selection -->
+  <div class="row" style="margin-bottom:8px">
+    <input class="search mono" id="sym" list="symlist" placeholder="Symbol (e.g. GC=F, ^NSEI, BTC-USD, RELIANCE.NS, AAPL)" />
+    <datalist id="symlist"></datalist>
+    <button class="chip" onclick="pick(document.getElementById('sym').value)">Load</button>
+    <span class="sub">Quick:</span>
+    <span id="chips" class="row"></span>
+  </div>
+  <!-- timeframe -->
+  <div class="row">
+    <span class="sub">Timeframe:</span>
+    <span id="tfs" class="row"></span>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2><span>Point &amp; Figure</span><span id="pnftag" class="mono">—</span></h2>
+      <canvas id="pnf" width="720" height="420"></canvas>
+      <div class="flt mono" id="pnfmeta">X = demand (up) · O = supply (down) · box + 3-box reversal removes time &amp; noise</div>
+    </div>
+    <div class="card">
+      <h2><span>Price &amp; trend cloud</span><span id="trendtag" class="mono">—</span></h2>
+      <canvas id="chart" width="520" height="420"></canvas>
+      <div class="flt mono">Teal EMA20 · Red EMA50 · green cloud = uptrend, red = downtrend</div>
+    </div>
+  </div>
+
+  <div class="sig">
+    <div class="card">
+      <h2 style="margin-top:0">Signal — this timeframe</h2>
+      <div class="row" style="align-items:center;gap:10px">
+        <span class="verdict" id="verdict">—</span>
+        <span class="pill" id="conf" style="background:#1E2D42;color:#6B7F99">—</span>
+      </div>
+      <div style="margin:8px 0;color:var(--txt2);font-size:12px" id="why">—</div>
+      <div class="kv"><span>Entry</span><b class="mono" id="entry">—</b></div>
+      <div class="kv"><span>Stop-loss</span><b class="mono" id="sl" style="color:var(--red)">—</b></div>
+      <div class="kv"><span>Target 1 (1:2)</span><b class="mono" id="t1" style="color:var(--green)">—</b></div>
+      <div class="kv"><span>Target 2 (1:3)</span><b class="mono" id="t2" style="color:var(--green)">—</b></div>
+    </div>
+    <div class="card">
+      <h2 style="margin-top:0">Multi-timeframe confluence</h2>
+      <table><thead><tr><th>Timeframe</th><th>Trend</th><th>P&amp;F signal</th><th>Note</th></tr></thead>
+        <tbody id="mtf"><tr><td colspan="4" class="sub">loading…</td></tr></tbody></table>
+      <div id="overall" style="margin-top:10px;font-weight:700"></div>
+      <div class="note">Signals fire only on <b>closed candles</b> (no repainting) and only <b>with the trend</b>. Educational — a realistic edge is a repeatable ~55–65% with good R:R, not "95%". Not SEBI-registered advice.</div>
+    </div>
+  </div>
+  <div class="flt mono" style="margin-top:10px" id="dataerr"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const TF={'1m':{i:'1m',r:'1d'},'5m':{i:'5m',r:'5d'},'15m':{i:'15m',r:'1mo'},'30m':{i:'30m',r:'1mo'},'1h':{i:'60m',r:'3mo'},'1D':{i:'1d',r:'1y'},'1W':{i:'1wk',r:'5y'}};
+const ASSETS=[
+  ['Gold','GC=F'],['Silver','SI=F'],['Crude','CL=F'],['NatGas','NG=F'],['Copper','HG=F'],
+  ['Nifty','^NSEI'],['BankNifty','^NSEBANK'],['Sensex','^BSESN'],['S&P500','^GSPC'],['Nasdaq','^IXIC'],
+  ['BTC','BTC-USD'],['ETH','ETH-USD'],['EURUSD','EURUSD=X'],['USDINR','INR=X'],
+  ['Reliance','RELIANCE.NS'],['TCS','TCS.NS'],['HDFC Bank','HDFCBANK.NS'],['Infosys','INFY.NS'],['Tata Steel','TATASTEEL.NS'],
+  ['Apple','AAPL'],['Tesla','TSLA'],['Nvidia','NVDA'],
+];
+let SYM='GC=F', TFSEL='15m';
+const fmt=n=>n==null?'—':(+n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const ema=(a,n)=>{const k=2/(n+1);let e=a[0],o=[e];for(let i=1;i<a.length;i++){e=a[i]*k+e*(1-k);o.push(e);}return o;};
+
+async function fetchOHLC(sym,tf){
+  const m=TF[tf]; const url=`/yahoo/v8/finance/chart/${encodeURIComponent(sym)}?interval=${m.i}&range=${m.r}`;
+  const r=await fetch(url,{cache:'no-store'}); const j=await r.json();
+  const res=j.chart&&j.chart.result&&j.chart.result[0];
+  if(!res||!res.timestamp) throw new Error((j.chart&&j.chart.error&&j.chart.error.description)||'no data for '+sym);
+  const t=res.timestamp,q=res.indicators.quote[0],bars=[];
+  for(let i=0;i<t.length;i++){ if(q.close[i]==null)continue; bars.push({t:t[i]*1000,o:q.open[i],h:q.high[i],l:q.low[i],c:q.close[i]}); }
+  return {bars,meta:res.meta};
+}
+
+// ---- Point & Figure ----
+function buildPnF(bars,box,rev=3){
+  const fl=p=>Math.floor(p/box)*box; let cols=[],dir=null;
+  for(const b of bars){
+    if(dir===null){dir='X';cols.push({dir,top:fl(b.h),bottom:fl(b.l)});continue;}
+    const c=cols[cols.length-1];
+    if(dir==='X'){const nt=fl(b.h); if(nt>c.top)c.top=nt; else if(fl(b.l)<=c.top-rev*box){dir='O';cols.push({dir,top:c.top-box,bottom:fl(b.l)});}}
+    else{const nb=fl(b.l); if(nb<c.bottom)c.bottom=nb; else if(fl(b.h)>=c.bottom+rev*box){dir='X';cols.push({dir,top:fl(b.h),bottom:c.bottom+box});}}
+  }
+  return cols;
+}
+function pnfFor(bars){
+  const rngs=bars.map(b=>b.h-b.l).filter(x=>x>0).sort((a,b)=>a-b); const med=rngs[Math.floor(rngs.length/2)]||(bars[bars.length-1].c*0.001);
+  let box=Math.max(bars[bars.length-1].c*1e-4,+(med).toPrecision(2)), cols=buildPnF(bars,box),g=0;
+  while(cols.length>46&&g++<10){box*=1.5;cols=buildPnF(bars,box);}
+  while(cols.length<8&&g++<14&&box>1e-6){box/=1.5;cols=buildPnF(bars,box);}
+  return {cols,box};
+}
+function drawPnF(pnf){
+  const cv=$('pnf'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,padL=8,padR=52,padY=10;
+  ctx.clearRect(0,0,W,H); const {cols,box}=pnf, show=cols.slice(-34);
+  let hi=-1e18,lo=1e18; show.forEach(c=>{hi=Math.max(hi,c.top);lo=Math.min(lo,c.bottom);}); if(hi<=lo)hi=lo+box;
+  const cw=(W-padL-padR)/show.length, yFor=p=>padY+(H-2*padY)*(1-(p-lo)/((hi-lo)||1));
+  // grid + price axis
+  ctx.strokeStyle='rgba(255,255,255,.05)';ctx.fillStyle='#6B7F99';ctx.font='10px JetBrains Mono, monospace';ctx.textAlign='left';ctx.textBaseline='middle';
+  const step=Math.max(box,Math.round((hi-lo)/8/box)*box);
+  for(let p=Math.ceil(lo/step)*step;p<=hi;p+=step){const y=yFor(p);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.fillText(fmt(p),W-padR+4,y);}
+  // columns
+  ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';
+  show.forEach((c,ci)=>{const cx=padL+cw*(ci+0.5);
+    for(let p=c.bottom;p<=c.top+1e-9;p+=box){const cy=yFor(p+box/2);ctx.fillStyle=c.dir==='X'?'#00C853':'#FF1744';ctx.fillText(c.dir,cx,cy);}});
+  $('pnfmeta').textContent=`box ${fmt(box)} · 3-box reversal · ${cols.length} columns · noise removed`;
+  $('pnftag').textContent='box '+fmt(box);
+}
+function drawChart(bars){
+  const cv=$('chart'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,pad=8;
+  ctx.clearRect(0,0,W,H); const view=bars.slice(-120),cl=view.map(b=>b.c),e20=ema(cl,20),e50=ema(cl,50);
+  let hi=-1e18,lo=1e18; view.forEach(b=>{hi=Math.max(hi,b.h);lo=Math.min(lo,b.l);}); e20.concat(e50).forEach(v=>{hi=Math.max(hi,v);lo=Math.min(lo,v);});
+  const rng=(hi-lo)||1,y=v=>pad+(H-2*pad)*(1-(v-lo)/rng),x=i=>pad+(W-2*pad)*i/(view.length-1);
+  for(let i=1;i<view.length;i++){const up=e20[i]>=e50[i];ctx.beginPath();ctx.moveTo(x(i-1),y(e20[i-1]));ctx.lineTo(x(i),y(e20[i]));ctx.lineTo(x(i),y(e50[i]));ctx.lineTo(x(i-1),y(e50[i-1]));ctx.closePath();ctx.fillStyle=up?'rgba(8,153,129,.22)':'rgba(242,54,69,.20)';ctx.fill();}
+  const cw=Math.max(1,(W-2*pad)/view.length*0.6);
+  view.forEach((b,i)=>{const up=b.c>=b.o;ctx.strokeStyle=up?'#089981':'#F23645';ctx.fillStyle=ctx.strokeStyle;ctx.beginPath();ctx.moveTo(x(i),y(b.h));ctx.lineTo(x(i),y(b.l));ctx.stroke();const yo=y(b.o),yc=y(b.c);ctx.fillRect(x(i)-cw/2,Math.min(yo,yc),cw,Math.max(1,Math.abs(yc-yo)));});
+  const line=(arr,col)=>{ctx.beginPath();arr.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();};
+  line(e20,'#22D3EE');line(e50,'#FF6B6B');
+  const up=e20[e20.length-1]>=e50[e50.length-1];
+  $('trendtag').textContent=up?'UPTREND':'DOWNTREND';$('trendtag').style.color=up?'#00C853':'#FF1744';
+  return {up};
+}
+// signal from P&F breakout + trend
+function calcSignal(bars){
+  const pnf=pnfFor(bars),cols=pnf.cols,box=pnf.box,last=cols[cols.length-1],price=bars[bars.length-1].c;
+  const cl=bars.map(b=>b.c),e20=ema(cl,20),e50=ema(cl,50),up=e20[e20.length-1]>=e50[e50.length-1];
+  let prevX=null,prevO=null;
+  for(let i=cols.length-2;i>=0;i--){if(!prevX&&cols[i].dir==='X')prevX=cols[i];if(!prevO&&cols[i].dir==='O')prevO=cols[i];if(prevX&&prevO)break;}
+  let v='WAIT',why='In range / cloud flat — no trade.',entry=price,sl=null,t1=null,t2=null;
+  if(last.dir==='X'&&prevX&&last.top>prevX.top){
+    if(up){v='BUY';why='P&F double-top breakout + green cloud (trend up).';sl=last.bottom-box;const risk=Math.max(box,entry-sl);t1=entry+risk*2;t2=entry+risk*3;}
+    else why='Breakout up but cloud red — skip (don’t fight trend).';
+  }else if(last.dir==='O'&&prevO&&last.bottom<prevO.bottom){
+    if(!up){v='SELL';why='P&F double-bottom breakdown + red cloud (trend down).';sl=last.top+box;const risk=Math.max(box,sl-entry);t1=entry-risk*2;t2=entry-risk*3;}
+    else why='Breakdown but cloud green — skip.';
+  }
+  return {v,why,entry,sl,t1,t2,up,pnf};
+}
+function tagHTML(v){const c=v==='BUY'?'#00C853':v==='SELL'?'#FF1744':'#6B7F99';return `<span class="tag" style="background:${c}22;color:${c}">${v}</span>`;}
+
+async function run(){
+  $('meta').textContent='loading…';$('dataerr').textContent='';
+  $('ttl').firstChild.textContent='';
+  const name=(ASSETS.find(a=>a[1]===SYM)||[SYM])[0];
+  $('assetsub').textContent=`${name} · ${SYM} · ${TFSEL}`;
+  try{
+    const {bars,meta}=await fetchOHLC(SYM,TFSEL);
+    if(!bars.length) throw new Error('no bars');
+    const last=bars[bars.length-1];
+    $('px').textContent=fmt(last.c);
+    $('meta').textContent=(meta.currency||'')+' · '+new Date(last.t).toLocaleString();
+    drawChart(bars); const sig=calcSignal(bars); drawPnF(sig.pnf);
+    const c=sig.v==='BUY'?'#00C853':sig.v==='SELL'?'#FF1744':'#6B7F99';
+    $('verdict').textContent=sig.v;$('verdict').style.color=c;
+    $('conf').textContent=sig.up?'trend up':'trend down';$('conf').style.background=c+'22';$('conf').style.color=c;
+    $('why').textContent=sig.why;
+    $('entry').textContent=sig.v==='WAIT'?'—':fmt(sig.entry);
+    $('sl').textContent=sig.sl==null?'—':fmt(sig.sl);
+    $('t1').textContent=sig.t1==null?'—':fmt(sig.t1);
+    $('t2').textContent=sig.t2==null?'—':fmt(sig.t2);
+  }catch(e){ $('dataerr').innerHTML='<span class="err">⚠ '+e.message+' — try another symbol (Yahoo format: GC=F, ^NSEI, BTC-USD, RELIANCE.NS, AAPL)</span>'; $('px').textContent='—'; }
+  // multi-timeframe
+  const mtfTFs=['15m','1h','1D','1W'];
+  const rows=await Promise.all(mtfTFs.map(async tf=>{ try{ const {bars}=await fetchOHLC(SYM,tf); const s=calcSignal(bars); return {tf,up:s.up,v:s.v,why:s.why}; }catch(e){ return {tf,err:true}; } }));
+  $('mtf').innerHTML=rows.map(r=>r.err?`<tr><td>${r.tf}</td><td colspan="3" class="sub">—</td></tr>`
+    :`<tr><td class="mono">${r.tf}</td><td><span style="color:${r.up?'#00C853':'#FF1744'}">${r.up?'▲ up':'▼ down'}</span></td><td>${tagHTML(r.v)}</td><td class="sub">${r.v==='WAIT'?'no trigger':'aligned'}</td></tr>`).join('');
+  const buys=rows.filter(r=>r.v==='BUY').length,sells=rows.filter(r=>r.v==='SELL').length,ups=rows.filter(r=>r.up).length;
+  let verdict,vc;
+  if(ups>=3&&buys>=1){verdict='🟢 BULLISH — trend up across timeframes; buy the P&F breakouts';vc='#00C853';}
+  else if(ups<=1&&sells>=1){verdict='🔴 BEARISH — trend down across timeframes; sell the breakdowns';vc='#FF1744';}
+  else{verdict='🟡 MIXED — timeframes disagree; wait for alignment';vc='#FFB300';}
+  $('overall').innerHTML=`<span style="color:${vc}">${verdict}</span>`;
+}
+
+// build UI
+$('chips').innerHTML=['GC=F','SI=F','CL=F','^NSEI','^NSEBANK','BTC-USD','ETH-USD','RELIANCE.NS','AAPL'].map(s=>`<span class="chip" data-s="${s}">${(ASSETS.find(a=>a[1]===s)||[s])[0]}</span>`).join('');
+$('tfs').innerHTML=Object.keys(TF).map(t=>`<span class="tf" data-t="${t}">${t}</span>`).join('');
+$('symlist').innerHTML=ASSETS.map(a=>`<option value="${a[1]}">${a[0]}</option>`).join('');
+function pick(s){ if(!s)return; SYM=s.trim(); $('sym').value=SYM; document.querySelectorAll('#chips .chip').forEach(c=>c.classList.toggle('on',c.dataset.s===SYM)); run(); }
+function pickTF(t){ TFSEL=t; document.querySelectorAll('#tfs .tf').forEach(el=>el.classList.toggle('on',el.dataset.t===t)); run(); }
+$('chips').onclick=e=>{const s=e.target.dataset.s;if(s)pick(s);};
+$('tfs').onclick=e=>{const t=e.target.dataset.t;if(t)pickTF(t);};
+$('sym').addEventListener('keydown',e=>{if(e.key==='Enter')pick($('sym').value);});
+$('refresh').onclick=run;
+$('sym').value=SYM; document.querySelectorAll('#chips .chip').forEach(c=>c.classList.toggle('on',c.dataset.s===SYM));
+document.querySelectorAll('#tfs .tf').forEach(el=>el.classList.toggle('on',el.dataset.t===TFSEL));
+run(); setInterval(run,45000);
+</script>
+</body>
+</html>
