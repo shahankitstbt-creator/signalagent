@@ -27,6 +27,7 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 | Desk | Rule / edge |
 |---|---|
 | **⭐ Confluence (Top Picks)** | Highest conviction — fires only when **2+ generators agree** on the same stock (+ Vedic bias + delivery). Grade A++/A+. |
+| **📊 Point & Figure** | **P&F double-top breakout** (box + 3-box reversal → noise/time filtered) confirmed by the **EMA trend cloud** — only with the trend. A tracked desk with entry/SL/targets, measured honestly in the ledger. Also a standalone **any-asset/any-timeframe P&F chart** at `/pnf.html` (📊 P&F nav link) with multi-timeframe confluence. |
 | **🎯 1-Month Movers (10–20%)** | Curated CROSS-DESK list: LIQUID (F&O-eligible or delivery ≥45%), high-conviction (grade A+/A++ or confidence ≥65) **LONGs whose target sits ~10–20% above entry** (~1-month horizon). Pulled from momentum/vol_accum/confluence/vp_fib/money_flow/harmonic, deduped, ranked by conviction. **Display-only discovery overlay** (underlying signals still trade via their own desks — no double-trade). Educational, NOT a guarantee; each has entry/SL/targets. |
 | **📐 VP·Fib·VWAP** | Volume-Profile POC/VAL + Fibonacci retracement + VWAP align → institutional magnet zone. |
 | **🚀 Momentum** | Price breaking out with volume; RSI/trend confirmation; enters near a 20-day high with room (not extended). |
