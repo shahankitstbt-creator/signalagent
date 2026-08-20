@@ -38,7 +38,7 @@ import { notifyTradeEvents } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
-const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal'])                            // ALSO tracked in the ledger
+const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf'])                      // ALSO tracked in the ledger (pnf = Point & Figure desk)
 
 // timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
 const TF = {
@@ -1041,7 +1041,7 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
   // price-based columns: rank by confidence, feed up to 30 fresh candidates/day into the ledger
   // (was 15 — too narrow; new setups couldn't get in past the persistent high-confidence names)
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic']) byGen[id] = byGen[id].sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 30)
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic', 'pnf']) byGen[id] = (byGen[id] || []).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 30)
   // momentum = WIDE net: rank by fresh-momentum score, keep 25 (movers-now first)
   byGen.momentum = (byGen.momentum || []).sort((a, b) => (b._momScore ?? 0) - (a._momScore ?? 0)).slice(0, 25)
   // tag any card whose stock is in today's news with its catalyst headline

@@ -22,6 +22,7 @@ export const GEN_META = [
   { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'multibagger', label: 'Multibagger Quality', color: '#7C3AED', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
   { id: 'harmonic', label: 'Harmonic & Chart Patterns', color: '#EA580C', desc: 'Bullish harmonic / chart-pattern breakout completing' },
+  { id: 'pnf', label: '📊 Point & Figure', color: '#00E5FF', desc: 'Point & Figure DOUBLE-TOP BREAKOUT confirmed by the EMA trend cloud — noise-filtered (box + 3-box reversal), trend-aligned entries only. Explore any asset/timeframe on the standalone P&F chart (/pnf.html).' },
   { id: 'vedic_astro', label: 'Vedic Astro · Nifty & Gold', color: '#9333EA', desc: 'VedicAstro · Vyapar Ratna · Planet Positions · Combinations · KP + Hora/Rahu-Kaal timing — real positions, traditional reading (no edge claim)' },
   { id: 'astro_timing', label: 'Hora & Rahu-Kaal Timing', color: '#DB2777', desc: 'Intraday timing windows for Nifty & Gold (tradition)' },
   { id: 'money_flow', label: 'Money Flow', color: '#0E7FA3', desc: 'MFI & OBV rising with price — money flowing in' },
@@ -88,6 +89,36 @@ function mk(gen, st, a, reason, accuracy, addDays) {
     rs: a._rs || null,                              // relative strength vs NIFTY
     social,
   }
+}
+
+// Point & Figure: build X/O columns (box + 3-box reversal) and detect a DOUBLE-TOP BREAKOUT — the
+// current up-column (X) prints a higher top than the previous X-column. Noise/time are filtered out,
+// so only genuine multi-box demand counts. Returns { buy, box, cols }.
+function pnfBreakout(d, rev = 3) {
+  const N = d.h.length; if (N < 20) return { buy: false }
+  const price = d.c[N - 1]
+  const look = Math.min(N, 150)
+  const rngs = []; for (let i = N - look; i < N; i++) rngs.push(d.h[i] - d.l[i])
+  rngs.sort((x, y) => x - y); const med = rngs[Math.floor(rngs.length / 2)] || price * 0.01
+  let box = Math.max(price * 1e-3, +(med).toPrecision(2)); if (!(box > 0)) return { buy: false }
+  const fl = p => Math.floor(p / box) * box
+  const build = () => {
+    let cols = [], dir = null
+    for (let i = N - look; i < N; i++) {
+      const h = d.h[i], l = d.l[i]; if (h == null || l == null) continue
+      if (dir === null) { dir = 'X'; cols.push({ dir, top: fl(h), bottom: fl(l) }); continue }
+      const c = cols[cols.length - 1]
+      if (dir === 'X') { const nt = fl(h); if (nt > c.top) c.top = nt; else if (fl(l) <= c.top - rev * box) { dir = 'O'; cols.push({ dir, top: c.top - box, bottom: fl(l) }) } }
+      else { const nb = fl(l); if (nb < c.bottom) c.bottom = nb; else if (fl(h) >= c.bottom + rev * box) { dir = 'X'; cols.push({ dir, top: fl(h), bottom: c.bottom + box }) } }
+    }
+    return cols
+  }
+  let cols = build(), g = 0
+  while (cols.length > 46 && g++ < 8) { box *= 1.5; cols = build() }
+  const last = cols[cols.length - 1]; let prevX = null
+  for (let i = cols.length - 2; i >= 0; i--) if (cols[i].dir === 'X') { prevX = cols[i]; break }
+  const buy = !!(last && last.dir === 'X' && prevX && last.top > prevX.top)
+  return { buy, box, cols, colTop: last?.top, prevTop: prevX?.top }
 }
 
 // ── stock-based generators. ctx = { st, d, a, f, addDays } ──
@@ -176,12 +207,20 @@ const STOCK_GENS = {
     card.movingNow = movingNow || bigMove
     return card
   },
+  // Point & Figure double-top breakout, CONFIRMED by the EMA trend cloud (only with the trend).
+  pnf: ({ st, d, a, addDays }) => {
+    const pf = pnfBreakout(d)
+    if (!(pf.buy && a.emaStack && a.bullish)) return null                 // breakout + trend up (never against the cloud)
+    const card = mk(M.pnf, st, a, `P&F double-top breakout above ₹${round(pf.prevTop)} (box ₹${round(pf.box)}) with EMA cloud up — noise-filtered demand`, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
+    card.pnfBox = round(pf.box); card.pnfBreak = round(pf.prevTop)
+    return card
+  },
 }
 
 // run the price-only generators (no fundamentals) for one stock
 export function runPriceGenerators(st, d, a, addDays) {
   const out = []
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic', 'momentum']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic', 'momentum', 'pnf']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
   return out
 }
 export function runMultibagger(st, a, f, addDays) { try { return STOCK_GENS.multibagger({ st, a, f, addDays }) } catch { return null } }
