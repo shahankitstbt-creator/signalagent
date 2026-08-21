@@ -99,10 +99,11 @@
         <span class="pill" id="conf" style="background:#1E2D42;color:#6B7F99">—</span>
       </div>
       <div style="margin:8px 0;color:var(--txt2);font-size:12px" id="why">—</div>
-      <div class="kv"><span>Entry</span><b class="mono" id="entry">—</b></div>
-      <div class="kv"><span>Stop-loss</span><b class="mono" id="sl" style="color:var(--red)">—</b></div>
-      <div class="kv"><span>Target 1 (1:2)</span><b class="mono" id="t1" style="color:var(--green)">—</b></div>
-      <div class="kv"><span>Target 2 (1:3)</span><b class="mono" id="t2" style="color:var(--green)">—</b></div>
+      <div class="kv"><span>Entry — buy/sell signal box</span><b class="mono" id="entry">—</b></div>
+      <div class="kv"><span>Stop-loss — opposite signal</span><b class="mono" id="sl" style="color:var(--red)">—</b></div>
+      <div class="kv"><span>Target — P&amp;F vertical count</span><b class="mono" id="t1" style="color:var(--green)">—</b></div>
+      <div class="kv"><span>Risk : Reward</span><b class="mono" id="t2">—</b></div>
+      <div class="flt mono" id="cntline" style="margin-top:8px;color:var(--gold)"></div>
     </div>
     <div class="card">
       <h2 style="margin-top:0">Multi-timeframe confluence</h2>
@@ -157,10 +158,13 @@ function pnfFor(bars){
   while(cols.length<8&&g++<14&&box>1e-6){box/=1.5;cols=buildPnF(bars,box);}
   return {cols,box};
 }
-function drawPnF(pnf){
-  const cv=$('pnf'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,padL=8,padR=52,padY=10;
+function drawPnF(pnf,sig){
+  const cv=$('pnf'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,padL=8,padR=64,padY=10;
   ctx.clearRect(0,0,W,H); const {cols,box}=pnf, show=cols.slice(-34);
-  let hi=-1e18,lo=1e18; show.forEach(c=>{hi=Math.max(hi,c.top);lo=Math.min(lo,c.bottom);}); if(hi<=lo)hi=lo+box;
+  let hi=-1e18,lo=1e18; show.forEach(c=>{hi=Math.max(hi,c.top);lo=Math.min(lo,c.bottom);});
+  // include the trade levels (esp. the count target) so they're visible on the chart
+  [sig&&sig.entry,sig&&sig.sl,sig&&sig.target].forEach(v=>{if(v!=null){hi=Math.max(hi,v);lo=Math.min(lo,v);}});
+  if(hi<=lo)hi=lo+box; const padv=(hi-lo)*0.04; hi+=padv; lo-=padv;
   const cw=(W-padL-padR)/show.length, yFor=p=>padY+(H-2*padY)*(1-(p-lo)/((hi-lo)||1));
   // grid + price axis
   ctx.strokeStyle='rgba(255,255,255,.05)';ctx.fillStyle='#6B7F99';ctx.font='10px JetBrains Mono, monospace';ctx.textAlign='left';ctx.textBaseline='middle';
@@ -170,7 +174,16 @@ function drawPnF(pnf){
   ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';
   show.forEach((c,ci)=>{const cx=padL+cw*(ci+0.5);
     for(let p=c.bottom;p<=c.top+1e-9;p+=box){const cy=yFor(p+box/2);ctx.fillStyle=c.dir==='X'?'#00C853':'#FF1744';ctx.fillText(c.dir,cx,cy);}});
-  $('pnfmeta').textContent=`box ${fmt(box)} · 3-box reversal · ${cols.length} columns · noise removed`;
+  // trade levels — Entry / SL / count Target
+  if(sig&&sig.v!=='WAIT'){
+    const lvl=(price,col,label)=>{ if(price==null)return; const y=yFor(price);
+      ctx.strokeStyle=col;ctx.setLineDash([5,4]);ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle=col;ctx.textAlign='right';ctx.font='9px JetBrains Mono, monospace';ctx.fillText(label,W-padR-2,y-5);ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';};
+    lvl(sig.target,'#00C853','🎯 count target '+fmt(sig.target));
+    lvl(sig.entry,'#22D3EE','▶ entry '+fmt(sig.entry));
+    lvl(sig.sl,'#FF1744','🛑 stop '+fmt(sig.sl));
+  }
+  $('pnfmeta').textContent=`box ${fmt(box)} · 3-box reversal · ${cols.length} columns`+(sig&&sig.cnt?` · vertical count: ${sig.cnt.N} boxes ×3× box = target ${fmt(sig.target)}`:'');
   $('pnftag').textContent='box '+fmt(box);
 }
 function drawChart(bars){
@@ -187,21 +200,47 @@ function drawChart(bars){
   $('trendtag').textContent=up?'UPTREND':'DOWNTREND';$('trendtag').style.color=up?'#00C853':'#FF1744';
   return {up};
 }
-// signal from P&F breakout + trend
+// P&F VERTICAL COUNT — the classic price objective. Bullish: find the thrust X-column off the low,
+// count its boxes N, target = column bottom + (N × box × 3-box-reversal). Bearish mirrors it.
+function verticalCount(cols,box,dir){
+  if(dir==='BUY'){
+    let lowIdx=0,lowVal=Infinity; cols.forEach((c,i)=>{if(c.bottom<lowVal){lowVal=c.bottom;lowIdx=i;}});
+    let thrust=null; for(let i=lowIdx;i<cols.length;i++){if(cols[i].dir==='X'){thrust=cols[i];break;}}
+    if(!thrust)return null; const N=Math.round((thrust.top-thrust.bottom)/box)+1;
+    return {N,target:thrust.bottom+N*box*3,base:thrust.bottom};
+  }else{
+    let hiIdx=0,hiVal=-Infinity; cols.forEach((c,i)=>{if(c.top>hiVal){hiVal=c.top;hiIdx=i;}});
+    let thrust=null; for(let i=hiIdx;i<cols.length;i++){if(cols[i].dir==='O'){thrust=cols[i];break;}}
+    if(!thrust)return null; const N=Math.round((thrust.top-thrust.bottom)/box)+1;
+    return {N,target:thrust.top-N*box*3,base:thrust.top};
+  }
+}
+// signal — TRUE P&F rules: entry on the double-top buy signal, stop on the double-bottom sell (pattern),
+// target from the vertical count. Trend cloud must agree.
 function calcSignal(bars){
   const pnf=pnfFor(bars),cols=pnf.cols,box=pnf.box,last=cols[cols.length-1],price=bars[bars.length-1].c;
   const cl=bars.map(b=>b.c),e20=ema(cl,20),e50=ema(cl,50),up=e20[e20.length-1]>=e50[e50.length-1];
-  let prevX=null,prevO=null;
+  let prevX=null,prevO=null,lastO=null,lastX=null;
   for(let i=cols.length-2;i>=0;i--){if(!prevX&&cols[i].dir==='X')prevX=cols[i];if(!prevO&&cols[i].dir==='O')prevO=cols[i];if(prevX&&prevO)break;}
-  let v='WAIT',why='In range / cloud flat — no trade.',entry=price,sl=null,t1=null,t2=null;
-  if(last.dir==='X'&&prevX&&last.top>prevX.top){
-    if(up){v='BUY';why='P&F double-top breakout + green cloud (trend up).';sl=last.bottom-box;const risk=Math.max(box,entry-sl);t1=entry+risk*2;t2=entry+risk*3;}
-    else why='Breakout up but cloud red — skip (don’t fight trend).';
-  }else if(last.dir==='O'&&prevO&&last.bottom<prevO.bottom){
-    if(!up){v='SELL';why='P&F double-bottom breakdown + red cloud (trend down).';sl=last.top+box;const risk=Math.max(box,sl-entry);t1=entry-risk*2;t2=entry-risk*3;}
-    else why='Breakdown but cloud green — skip.';
+  for(let i=cols.length-1;i>=0;i--){if(!lastO&&cols[i].dir==='O')lastO=cols[i];if(!lastX&&cols[i].dir==='X')lastX=cols[i];if(lastO&&lastX)break;}
+  let v='WAIT',why='No fresh P&F signal — inside the range / cloud flat. Wait for a breakout.',entry=null,sl=null,target=null,cnt=null;
+  if(last.dir==='X'&&prevX&&last.top>prevX.top){                 // DOUBLE-TOP BUY
+    if(up){v='BUY';
+      entry=prevX.top+box;                                       // buy signal = one box above prior X top
+      sl=(lastO?lastO.bottom:last.bottom)-box;                   // double-bottom sell = below the last O column
+      cnt=verticalCount(cols,box,'BUY'); target=cnt?cnt.target:null;
+      why=`Double-top BUY: X-column printed above the prior top ₹${fmt(prevX.top)} + green cloud. Enter on the breakout box.`;
+    } else why='Double-top breakout, but EMA cloud is red — skip (never buy against the trend).';
+  }else if(last.dir==='O'&&prevO&&last.bottom<prevO.bottom){     // DOUBLE-BOTTOM SELL
+    if(!up){v='SELL';
+      entry=prevO.bottom-box;
+      sl=(lastX?lastX.top:last.top)+box;                         // double-top buy = above the last X column
+      cnt=verticalCount(cols,box,'SELL'); target=cnt?cnt.target:null;
+      why=`Double-bottom SELL: O-column printed below the prior bottom ₹${fmt(prevO.bottom)} + red cloud. Enter on the breakdown box.`;
+    } else why='Double-bottom breakdown, but cloud is green — skip.';
   }
-  return {v,why,entry,sl,t1,t2,up,pnf};
+  const rr=(entry!=null&&sl!=null&&target!=null)?Math.abs((target-entry)/(entry-sl)):null;
+  return {v,why,entry,sl,target,cnt,rr,up,box,pnf};
 }
 function tagHTML(v){const c=v==='BUY'?'#00C853':v==='SELL'?'#FF1744':'#6B7F99';return `<span class="tag" style="background:${c}22;color:${c}">${v}</span>`;}
 
@@ -216,15 +255,16 @@ async function run(){
     const last=bars[bars.length-1];
     $('px').textContent=fmt(last.c);
     $('meta').textContent=(meta.currency||'')+' · '+new Date(last.t).toLocaleString();
-    drawChart(bars); const sig=calcSignal(bars); drawPnF(sig.pnf);
+    drawChart(bars); const sig=calcSignal(bars); drawPnF(sig.pnf,sig);
     const c=sig.v==='BUY'?'#00C853':sig.v==='SELL'?'#FF1744':'#6B7F99';
     $('verdict').textContent=sig.v;$('verdict').style.color=c;
     $('conf').textContent=sig.up?'trend up':'trend down';$('conf').style.background=c+'22';$('conf').style.color=c;
     $('why').textContent=sig.why;
-    $('entry').textContent=sig.v==='WAIT'?'—':fmt(sig.entry);
+    $('entry').textContent=sig.entry==null?'—':fmt(sig.entry);
     $('sl').textContent=sig.sl==null?'—':fmt(sig.sl);
-    $('t1').textContent=sig.t1==null?'—':fmt(sig.t1);
-    $('t2').textContent=sig.t2==null?'—':fmt(sig.t2);
+    $('t1').textContent=sig.target==null?'—':fmt(sig.target);
+    $('t2').textContent=sig.rr==null?'—':('1 : '+sig.rr.toFixed(1));
+    $('cntline').textContent=sig.cnt?`Vertical count: ${sig.cnt.N} boxes × 3 × box ${fmt(sig.box)} = target ${fmt(sig.target)} (from base ${fmt(sig.cnt.base)})`:'';
   }catch(e){ $('dataerr').innerHTML='<span class="err">⚠ '+e.message+' — try another symbol (Yahoo format: GC=F, ^NSEI, BTC-USD, RELIANCE.NS, AAPL)</span>'; $('px').textContent='—'; }
   // multi-timeframe
   const mtfTFs=['15m','1h','1D','1W'];
