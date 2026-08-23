@@ -1,55 +1,59 @@
 {
-  "generatedAt": "2026-08-22T04:15:33.357Z",
+  "generatedAt": "2026-08-23T03:36:05.001Z",
   "universe": 2297,
   "scanned": 2054,
-  "candidates": 710,
+  "candidates": 725,
   "count": 80,
   "note": "Confidence = blend of criteria confluence and measured backtest hit-rate. NOT a guaranteed win-rate. Fundamentals are quarterly (screener.in). Curate before trading.",
   "picks": [
     {
-      "symbol": "CORALFINAC",
-      "name": "Coral India Finance & Housing Limited",
-      "sector": "Equity",
+      "symbol": "NIACL",
+      "name": "The New India Assurance Company Ltd.",
+      "sector": "Financial Services",
       "indices": [
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 34.11,
+      "price": 184.13,
       "direction": "LONG",
-      "changePct": 0.86,
-      "setupType": "Accumulation",
-      "moveScore": 94,
-      "entry": 34.11,
-      "sl": 30.87,
-      "slPct": -9.5,
+      "changePct": 0.57,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 184.13,
+      "sl": 175.39,
+      "slPct": -4.7,
       "targets": [
         {
-          "price": 38.43,
-          "pct": 12.7,
-          "by": "2026-09-02"
+          "price": 195.78,
+          "pct": 6.3,
+          "by": "2026-08-25"
         },
         {
-          "price": 41.68,
-          "pct": 22.2,
-          "by": "2026-09-16"
+          "price": 204.52,
+          "pct": 11.1,
+          "by": "2026-08-28"
         },
         {
-          "price": 44.92,
-          "pct": 31.7,
+          "price": 213.26,
+          "pct": 15.8,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 56.2,
-      "confidence": 97,
+      "rsi": 57.4,
+      "confidence": 100,
       "backtestHitRate": null,
-      "backtestTrades": 3,
+      "backtestTrades": 5,
       "criteria": [
         {
           "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -58,7 +62,7 @@
         },
         {
           "ok": false,
-          "label": "RSI 56.2 building toward breakout"
+          "label": "RSI 57.4 building toward breakout"
         },
         {
           "ok": true,
@@ -69,12 +73,12 @@
           "label": "Higher lows (ascending base)"
         },
         {
-          "ok": false,
-          "label": "Harmonic up"
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
         },
         {
           "ok": true,
-          "label": "FII stable (-0.01%)"
+          "label": "FII stable (0.01%)"
         },
         {
           "ok": true,
@@ -91,20 +95,20 @@
       ],
       "fundamentals": {
         "promoter": {
-          "cur": 74.96,
-          "prev": 74.96,
+          "cur": 85.44,
+          "prev": 85.44,
           "delta": 0,
           "status": "stable"
         },
         "fii": {
-          "cur": 0.68,
-          "prev": 0.69,
-          "delta": -0.01,
+          "cur": 1.02,
+          "prev": 1.01,
+          "delta": 0.01,
           "status": "stable"
         },
         "dii": {
-          "cur": 0,
-          "prev": 0,
+          "cur": 11.17,
+          "prev": 11.17,
           "delta": 0,
           "status": "stable"
         },
@@ -115,46 +119,46 @@
         },
         "ok": true
       },
-      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 1.62× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (2.6× RVOL); Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 38.43 / 41.68 / 44.92 (12.7% / 22.2% / 31.7%), risk to 30.87."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 5.65× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; Range contraction",
+      "expected": "Targets 195.78 / 204.52 / 213.26 (6.3% / 11.1% / 15.8%), risk to 175.39."
     },
     {
-      "symbol": "MPSLTD",
-      "name": "MPS Limited",
+      "symbol": "JKIPL",
+      "name": "Jinkushal Industries Limited",
       "sector": "Equity",
       "indices": [
         "NSE Equity"
       ],
-      "price": 2917.4,
+      "price": 102.32,
       "direction": "LONG",
-      "changePct": -0.42,
+      "changePct": 2.56,
       "setupType": "Squeeze breakout",
       "moveScore": 100,
-      "entry": 2917.4,
-      "sl": 2702.46,
-      "slPct": -7.4,
+      "entry": 102.32,
+      "sl": 93.04,
+      "slPct": -9.1,
       "targets": [
         {
-          "price": 3142.8,
-          "pct": 7.7,
-          "by": "2026-09-02"
+          "price": 112.46,
+          "pct": 9.9,
+          "by": "2026-08-28"
         },
         {
-          "price": 3311.85,
-          "pct": 13.5,
-          "by": "2026-09-07"
+          "price": 120.07,
+          "pct": 17.3,
+          "by": "2026-09-16"
         },
         {
-          "price": 3480.9,
-          "pct": 19.3,
-          "by": "2026-09-14"
+          "price": 127.68,
+          "pct": 24.8,
+          "by": "2026-10-06"
         }
       ],
-      "rr": 1.05,
-      "rsi": 67,
-      "confidence": 90,
-      "backtestHitRate": 83.3,
-      "backtestTrades": 6,
+      "rr": 1.09,
+      "rsi": 56.7,
+      "confidence": 100,
+      "backtestHitRate": null,
+      "backtestTrades": 4,
       "criteria": [
         {
           "ok": true,
@@ -170,7 +174,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 67 building toward breakout"
+          "label": "RSI 56.7 building toward breakout"
         },
         {
           "ok": true,
@@ -185,12 +189,12 @@
           "label": "Harmonic up"
         },
         {
-          "ok": false,
-          "label": "FII down (-0.09%)"
+          "ok": true,
+          "label": "FII up (1.3%)"
         },
         {
           "ok": true,
-          "label": "DII up (0.18%)"
+          "label": "DII up (0.06%)"
         },
         {
           "ok": true,
@@ -203,21 +207,21 @@
       ],
       "fundamentals": {
         "promoter": {
-          "cur": 68.34,
-          "prev": 68.34,
+          "cur": 74.99,
+          "prev": 74.99,
           "delta": 0,
           "status": "stable"
         },
         "fii": {
-          "cur": 1.38,
-          "prev": 1.47,
-          "delta": -0.09,
-          "status": "down"
+          "cur": 2.12,
+          "prev": 0.82,
+          "delta": 1.3,
+          "status": "up"
         },
         "dii": {
-          "cur": 2.14,
-          "prev": 1.96,
-          "delta": 0.18,
+          "cur": 4.23,
+          "prev": 4.17,
+          "delta": 0.06,
           "status": "up"
         },
         "pledge": {
@@ -227,8 +231,120 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below); Above rising 20 & 50 EMA; RSI 67 building (not overbought); Up/down volume 2× (accumulation); Higher lows (ascending base); Positive 20-day momentum +10%; Range contraction; Near 52-week high",
-      "expected": "Targets 3142.8 / 3311.85 / 3480.9 (7.7% / 13.5% / 19.3%), risk to 2702.46."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.7% below); Above rising 20 & 50 EMA; RSI 57 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.9× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 5-day volume > 20-day average",
+      "expected": "Targets 112.46 / 120.07 / 127.68 (9.9% / 17.3% / 24.8%), risk to 93.04."
+    },
+    {
+      "symbol": "MBAPL",
+      "name": "Madhya Bharat Agro Products Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 169.52,
+      "direction": "LONG",
+      "changePct": 3.74,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 169.52,
+      "sl": 159.23,
+      "slPct": -6.1,
+      "targets": [
+        {
+          "price": 182.83,
+          "pct": 7.9,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 192.82,
+          "pct": 13.7,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 202.8,
+          "pct": 19.6,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.29,
+      "rsi": 67.6,
+      "confidence": 88,
+      "backtestHitRate": 61.5,
+      "backtestTrades": 13,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 67.6 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": false,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        },
+        {
+          "ok": true,
+          "label": "FII up (0.21%)"
+        },
+        {
+          "ok": true,
+          "label": "DII stable (0.01%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 74.76,
+          "prev": 74.76,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 0.67,
+          "prev": 0.46,
+          "delta": 0.21,
+          "status": "up"
+        },
+        "dii": {
+          "cur": 0.01,
+          "prev": 0,
+          "delta": 0.01,
+          "status": "stable"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.0% below); Above rising 20 & 50 EMA; RSI 68 building (not overbought); Up/down volume 2.16× (accumulation); Positive 20-day momentum +14%; 1-day volume surge (1× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 182.83 / 192.82 / 202.8 (7.9% / 13.7% / 19.6%), risk to 159.23."
     },
     {
       "symbol": "SKIPPER",
@@ -238,33 +354,33 @@
         "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 555.45,
+      "price": 554,
       "direction": "LONG",
-      "changePct": 0.84,
+      "changePct": -0.26,
       "setupType": "Squeeze breakout",
       "moveScore": 100,
-      "entry": 555.45,
-      "sl": 512.34,
-      "slPct": -7.8,
+      "entry": 554,
+      "sl": 512.45,
+      "slPct": -7.5,
       "targets": [
         {
-          "price": 597.57,
-          "pct": 7.6,
+          "price": 594.95,
+          "pct": 7.4,
           "by": "2026-08-25"
         },
         {
-          "price": 629.15,
-          "pct": 13.3,
+          "price": 625.66,
+          "pct": 12.9,
           "by": "2026-09-16"
         },
         {
-          "price": 660.74,
-          "pct": 19,
+          "price": 656.37,
+          "pct": 18.5,
           "by": "2026-10-06"
         }
       ],
-      "rr": 0.98,
-      "rsi": 57.5,
+      "rr": 0.99,
+      "rsi": 56.8,
       "confidence": 88,
       "backtestHitRate": null,
       "backtestTrades": 5,
@@ -283,7 +399,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 57.5 building toward breakout"
+          "label": "RSI 56.8 building toward breakout"
         },
         {
           "ok": true,
@@ -340,8 +456,8 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below); Above rising 20 & 50 EMA; RSI 58 building (not overbought); Up/down volume 1.95× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 1-day volume surge (1.28× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 597.57 / 629.15 / 660.74 (7.6% / 13.3% / 19%), risk to 512.34."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below); Above rising 20 & 50 EMA; RSI 57 building (not overbought); Up/down volume 1.79× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; Range contraction; Near 52-week high",
+      "expected": "Targets 594.95 / 625.66 / 656.37 (7.4% / 12.9% / 18.5%), risk to 512.45."
     },
     {
       "symbol": "KPRMILL",
@@ -354,34 +470,34 @@
         "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 1153.2,
+      "price": 1151.6,
       "direction": "LONG",
-      "changePct": 2.4,
+      "changePct": -0.14,
       "setupType": "Squeeze breakout",
-      "moveScore": 100,
-      "entry": 1153.2,
-      "sl": 1070.31,
-      "slPct": -7.2,
+      "moveScore": 98,
+      "entry": 1151.6,
+      "sl": 1074.37,
+      "slPct": -6.7,
       "targets": [
         {
-          "price": 1221.05,
-          "pct": 5.9,
+          "price": 1218.86,
+          "pct": 5.8,
           "by": "2026-10-05"
         },
         {
-          "price": 1271.94,
-          "pct": 10.3,
+          "price": 1269.31,
+          "pct": 10.2,
           "by": "2026-10-08"
         },
         {
-          "price": 1322.83,
-          "pct": 14.7,
+          "price": 1319.75,
+          "pct": 14.6,
           "by": "2026-10-15"
         }
       ],
-      "rr": 0.82,
-      "rsi": 63.1,
-      "confidence": 88,
+      "rr": 0.87,
+      "rsi": 62.7,
+      "confidence": 87,
       "backtestHitRate": null,
       "backtestTrades": 4,
       "criteria": [
@@ -399,7 +515,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 63.1 building toward breakout"
+          "label": "RSI 62.7 building toward breakout"
         },
         {
           "ok": true,
@@ -456,117 +572,8 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.6% below); Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 3.87× (accumulation); Higher lows (ascending base); Positive 20-day momentum +12%; 1-day volume surge (0.84× RVOL); Range contraction",
-      "expected": "Targets 1221.05 / 1271.94 / 1322.83 (5.9% / 10.3% / 14.7%), risk to 1070.31."
-    },
-    {
-      "symbol": "CYBERMEDIA",
-      "name": "Cyber Media (India) Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 16.56,
-      "direction": "LONG",
-      "changePct": -0.84,
-      "setupType": "Squeeze breakout",
-      "moveScore": 100,
-      "entry": 16.56,
-      "sl": 15.4,
-      "slPct": -7,
-      "targets": [
-        {
-          "price": 18.1,
-          "pct": 9.3,
-          "by": "2026-09-01"
-        },
-        {
-          "price": 19.26,
-          "pct": 16.3,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 20.42,
-          "pct": 23.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 54.7,
-      "confidence": 88,
-      "backtestHitRate": null,
-      "backtestTrades": 5,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": false,
-          "label": "RSI 54.7 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII stable (0%)"
-        },
-        {
-          "ok": false,
-          "label": "DII n/a (?%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter up"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 67.13,
-          "prev": 66.57,
-          "delta": 0.56,
-          "status": "up"
-        },
-        "fii": {
-          "cur": 0,
-          "prev": 0,
-          "delta": 0,
-          "status": "stable"
-        },
-        "dii": {
-          "status": "n/a"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.15× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 18.1 / 19.26 / 20.42 (9.3% / 16.3% / 23.3%), risk to 15.4."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 2.92× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; Range contraction",
+      "expected": "Targets 1218.86 / 1269.31 / 1319.75 (5.8% / 10.2% / 14.6%), risk to 1074.37."
     },
     {
       "symbol": "TPLPLASTEH",
@@ -679,6 +686,233 @@
       },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.1% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Up/down volume 2.05× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; 1-day volume surge (3.07× RVOL); Range contraction; Near 52-week high",
       "expected": "Targets 88.67 / 93.23 / 97.79 (7.3% / 12.9% / 18.4%), risk to 75.44."
+    },
+    {
+      "symbol": "SUPREMEIND",
+      "name": "Supreme Industries Ltd.",
+      "sector": "Capital Goods",
+      "indices": [
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 100",
+        "NIFTY Midcap 150",
+        "NSE Equity"
+      ],
+      "price": 3642,
+      "direction": "LONG",
+      "changePct": -0.22,
+      "setupType": "Breakout watch",
+      "moveScore": 97,
+      "entry": 3642,
+      "sl": 3429.24,
+      "slPct": -5.8,
+      "targets": [
+        {
+          "price": 3814.56,
+          "pct": 4.7,
+          "by": "2026-09-03"
+        },
+        {
+          "price": 3943.97,
+          "pct": 8.3,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 4073.39,
+          "pct": 11.8,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.81,
+      "rsi": 64,
+      "confidence": 84,
+      "backtestHitRate": 66.7,
+      "backtestTrades": 6,
+      "criteria": [
+        {
+          "ok": false,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 64 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
+        },
+        {
+          "ok": true,
+          "label": "FII stable (-0.04%)"
+        },
+        {
+          "ok": false,
+          "label": "DII down (-0.16%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 48.96,
+          "prev": 48.96,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 17.08,
+          "prev": 17.12,
+          "delta": -0.04,
+          "status": "stable"
+        },
+        "dii": {
+          "cur": 18.98,
+          "prev": 19.14,
+          "delta": -0.16,
+          "status": "down"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Breakout watch — Hugging 20-day high (0.9% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 2.56× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 3814.56 / 3943.97 / 4073.39 (4.7% / 8.3% / 11.8%), risk to 3429.24."
+    },
+    {
+      "symbol": "MANOMAY",
+      "name": "Manomay Tex India Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 217.19,
+      "direction": "LONG",
+      "changePct": 2.72,
+      "setupType": "Squeeze breakout",
+      "moveScore": 93,
+      "entry": 217.19,
+      "sl": 205.48,
+      "slPct": -5.4,
+      "targets": [
+        {
+          "price": 232.57,
+          "pct": 7.1,
+          "by": "2026-09-01"
+        },
+        {
+          "price": 244.11,
+          "pct": 12.4,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 255.65,
+          "pct": 17.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.31,
+      "rsi": 63.2,
+      "confidence": 84,
+      "backtestHitRate": null,
+      "backtestTrades": 4,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": false,
+          "label": "RSI 63.2 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        },
+        {
+          "ok": true,
+          "label": "FII stable (-0.04%)"
+        },
+        {
+          "ok": false,
+          "label": "DII n/a (?%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 57.3,
+          "prev": 57.3,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 1.32,
+          "prev": 1.36,
+          "delta": -0.04,
+          "status": "stable"
+        },
+        "dii": {
+          "status": "n/a"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.3% below); Above rising 20 & 50 EMA; Up/down volume 3.51× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; 1-day volume surge (0.87× RVOL); Range contraction",
+      "expected": "Targets 232.57 / 244.11 / 255.65 (7.1% / 12.4% / 17.7%), risk to 205.48."
     },
     {
       "symbol": "DATAPATTNS",
@@ -798,457 +1032,6 @@
       "expected": "Targets 5210.76 / 5496.41 / 5782.05 (7.9% / 13.8% / 19.7%), risk to 4401.91."
     },
     {
-      "symbol": "EDELWEISS",
-      "name": "Edelweiss Financial Services Ltd.",
-      "sector": "Financial Services",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 126.62,
-      "direction": "LONG",
-      "changePct": 3.56,
-      "setupType": "Squeeze breakout",
-      "moveScore": 100,
-      "entry": 126.62,
-      "sl": 116.91,
-      "slPct": -7.7,
-      "targets": [
-        {
-          "price": 135.52,
-          "pct": 7,
-          "by": "2026-09-01"
-        },
-        {
-          "price": 142.19,
-          "pct": 12.3,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 148.86,
-          "pct": 17.6,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.92,
-      "rsi": 62.9,
-      "confidence": 83,
-      "backtestHitRate": 42.9,
-      "backtestTrades": 14,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 62.9 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII up (0.43%)"
-        },
-        {
-          "ok": true,
-          "label": "DII up (0.79%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 32.26,
-          "prev": 32.25,
-          "delta": 0.01,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 19.47,
-          "prev": 19.04,
-          "delta": 0.43,
-          "status": "up"
-        },
-        "dii": {
-          "cur": 7.25,
-          "prev": 6.46,
-          "delta": 0.79,
-          "status": "up"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 3.26× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (3.69× RVOL); Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 135.52 / 142.19 / 148.86 (7% / 12.3% / 17.6%), risk to 116.91."
-    },
-    {
-      "symbol": "JMA",
-      "name": "Jullundur Motor Agency (Delhi) Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 91.11,
-      "direction": "LONG",
-      "changePct": 0.92,
-      "setupType": "Squeeze breakout",
-      "moveScore": 100,
-      "entry": 91.11,
-      "sl": 85.37,
-      "slPct": -6.3,
-      "targets": [
-        {
-          "price": 97.41,
-          "pct": 6.9,
-          "by": "2026-09-03"
-        },
-        {
-          "price": 102.13,
-          "pct": 12.1,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 106.85,
-          "pct": 17.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.1,
-      "rsi": 57.4,
-      "confidence": 83,
-      "backtestHitRate": 42.9,
-      "backtestTrades": 7,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 57.4 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII stable (0%)"
-        },
-        {
-          "ok": true,
-          "label": "DII stable (0%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 51,
-          "prev": 51,
-          "delta": 0,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 0.05,
-          "prev": 0.05,
-          "delta": 0,
-          "status": "stable"
-        },
-        "dii": {
-          "cur": 0.01,
-          "prev": 0.01,
-          "delta": 0,
-          "status": "stable"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA; RSI 57 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 3.24× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; Range contraction; Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 97.41 / 102.13 / 106.85 (6.9% / 12.1% / 17.3%), risk to 85.37."
-    },
-    {
-      "symbol": "VIYASH",
-      "name": "Viyash Scientific Ltd.",
-      "sector": "Healthcare",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 265.85,
-      "direction": "LONG",
-      "changePct": -2.04,
-      "setupType": "Momentum building",
-      "moveScore": 94,
-      "entry": 265.85,
-      "sl": 243.05,
-      "slPct": -8.6,
-      "targets": [
-        {
-          "price": 288.36,
-          "pct": 8.5,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 305.25,
-          "pct": 14.8,
-          "by": "2026-09-07"
-        },
-        {
-          "price": 322.13,
-          "pct": 21.2,
-          "by": "2026-09-14"
-        }
-      ],
-      "rr": 0.99,
-      "rsi": 51.2,
-      "confidence": 83,
-      "backtestHitRate": 70,
-      "backtestTrades": 10,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 51.2 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII up (1.56%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-4.22%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 61.31,
-          "prev": 61.31,
-          "delta": 0,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 4.5,
-          "prev": 2.94,
-          "delta": 1.56,
-          "status": "up"
-        },
-        "dii": {
-          "cur": 3.76,
-          "prev": 7.98,
-          "delta": -4.22,
-          "status": "down"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 51 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.45× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 5-day volume > 20-day average",
-      "expected": "Targets 288.36 / 305.25 / 322.13 (8.5% / 14.8% / 21.2%), risk to 243.05."
-    },
-    {
-      "symbol": "SKFINDUS",
-      "name": "SKF India (Industrial) Ltd.",
-      "sector": "Capital Goods",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 2753.7,
-      "direction": "LONG",
-      "changePct": -1.67,
-      "setupType": "Momentum building",
-      "moveScore": 91,
-      "entry": 2753.7,
-      "sl": 2586.35,
-      "slPct": -6.1,
-      "targets": [
-        {
-          "price": 2976.83,
-          "pct": 8.1,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 3144.18,
-          "pct": 14.2,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 3311.52,
-          "pct": 20.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 52.9,
-      "confidence": 83,
-      "backtestHitRate": null,
-      "backtestTrades": 4,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 52.9 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII up (0.21%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-0.54%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 52.58,
-          "prev": 52.58,
-          "delta": 0,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 5.08,
-          "prev": 4.87,
-          "delta": 0.21,
-          "status": "up"
-        },
-        "dii": {
-          "cur": 29.18,
-          "prev": 29.72,
-          "delta": -0.54,
-          "status": "down"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 53 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.45× (accumulation); Higher lows (ascending base); Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 2976.83 / 3144.18 / 3311.52 (8.1% / 14.2% / 20.3%), risk to 2586.35."
-    },
-    {
       "symbol": "UNITDSPR",
       "name": "United Spirits Ltd.",
       "sector": "Fast Moving Consumer Goods",
@@ -1261,34 +1044,34 @@
         "NIFTY FMCG",
         "NSE Equity"
       ],
-      "price": 1544,
+      "price": 1556,
       "direction": "LONG",
-      "changePct": 1.31,
+      "changePct": 0.78,
       "setupType": "Squeeze breakout",
-      "moveScore": 98,
-      "entry": 1544,
-      "sl": 1500.9,
-      "slPct": -2.8,
+      "moveScore": 100,
+      "entry": 1556,
+      "sl": 1504.24,
+      "slPct": -3.3,
       "targets": [
         {
-          "price": 1601.46,
-          "pct": 3.7,
+          "price": 1614.56,
+          "pct": 3.8,
           "by": "2026-08-27"
         },
         {
-          "price": 1644.56,
-          "pct": 6.5,
+          "price": 1658.47,
+          "pct": 6.6,
           "by": "2026-09-01"
         },
         {
-          "price": 1687.65,
-          "pct": 9.3,
+          "price": 1702.39,
+          "pct": 9.4,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.33,
-      "rsi": 63.4,
-      "confidence": 82,
+      "rr": 1.13,
+      "rsi": 65.4,
+      "confidence": 83,
       "backtestHitRate": 60,
       "backtestTrades": 10,
       "criteria": [
@@ -1305,8 +1088,8 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 63.4 building toward breakout"
+          "ok": true,
+          "label": "RSI 65.4 building toward breakout"
         },
         {
           "ok": true,
@@ -1363,8 +1146,191 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.4% below); Above rising 20 & 50 EMA; Up/down volume 2.29× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (1.12× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 1601.46 / 1644.56 / 1687.65 (3.7% / 6.5% / 9.3%), risk to 1500.9."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA; RSI 65 building (not overbought); Up/down volume 1.67× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 1-day volume surge (1.01× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 1614.56 / 1658.47 / 1702.39 (3.8% / 6.6% / 9.4%), risk to 1504.24."
+    },
+    {
+      "symbol": "JMA",
+      "name": "Jullundur Motor Agency (Delhi) Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 90.73,
+      "direction": "LONG",
+      "changePct": -0.42,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 90.73,
+      "sl": 85.89,
+      "slPct": -5.3,
+      "targets": [
+        {
+          "price": 96.79,
+          "pct": 6.7,
+          "by": "2026-09-03"
+        },
+        {
+          "price": 101.34,
+          "pct": 11.7,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 105.89,
+          "pct": 16.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.25,
+      "rsi": 56,
+      "confidence": 83,
+      "backtestHitRate": 42.9,
+      "backtestTrades": 7,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 56 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        },
+        {
+          "ok": true,
+          "label": "FII stable (0%)"
+        },
+        {
+          "ok": true,
+          "label": "DII stable (0%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 51,
+          "prev": 51,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 0.05,
+          "prev": 0.05,
+          "delta": 0,
+          "status": "stable"
+        },
+        "dii": {
+          "cur": 0.01,
+          "prev": 0.01,
+          "delta": 0,
+          "status": "stable"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA; RSI 56 building (not overbought); Up/down volume 2.79× (accumulation); Higher lows (ascending base); Range contraction; Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 96.79 / 101.34 / 105.89 (6.7% / 11.7% / 16.7%), risk to 85.89."
+    },
+    {
+      "symbol": "MPSLTD",
+      "name": "MPS Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 2897.9,
+      "direction": "LONG",
+      "changePct": -0.67,
+      "setupType": "Squeeze breakout",
+      "moveScore": 93,
+      "entry": 2897.9,
+      "sl": 2728.23,
+      "slPct": -5.9,
+      "targets": [
+        {
+          "price": 3116.57,
+          "pct": 7.5,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 3280.57,
+          "pct": 13.2,
+          "by": "2026-09-07"
+        },
+        {
+          "price": 3444.57,
+          "pct": 18.9,
+          "by": "2026-09-14"
+        }
+      ],
+      "rr": 1.29,
+      "rsi": 65.4,
+      "confidence": 81,
+      "backtestHitRate": 83.3,
+      "backtestTrades": 6,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 65.4 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA; RSI 65 building (not overbought); Higher lows (ascending base); Positive 20-day momentum +5%; Range contraction; Near 52-week high",
+      "expected": "Targets 3116.57 / 3280.57 / 3444.57 (7.5% / 13.2% / 18.9%), risk to 2728.23."
     },
     {
       "symbol": "LT",
@@ -1717,126 +1683,9 @@
       "expected": "Targets 1446.92 / 1490.44 / 1533.96 (4.2% / 7.3% / 10.4%), risk to 1317.5."
     },
     {
-      "symbol": "ABREL",
-      "name": "Aditya Birla Real Estate Ltd.",
-      "sector": "Realty",
-      "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 100",
-        "NIFTY Smallcap 250",
-        "NSE Equity"
-      ],
-      "price": 1445.5,
-      "direction": "LONG",
-      "changePct": 3.61,
-      "setupType": "Squeeze breakout",
-      "moveScore": 100,
-      "entry": 1445.5,
-      "sl": 1363.5,
-      "slPct": -5.7,
-      "targets": [
-        {
-          "price": 1536.5,
-          "pct": 6.3,
-          "by": "2026-09-08"
-        },
-        {
-          "price": 1604.75,
-          "pct": 11,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 1673,
-          "pct": 15.7,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.11,
-      "rsi": 60,
-      "confidence": 78,
-      "backtestHitRate": 25,
-      "backtestTrades": 8,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII up (0.22%)"
-        },
-        {
-          "ok": true,
-          "label": "DII up (0.23%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 50.21,
-          "prev": 50.21,
-          "delta": 0,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 9.26,
-          "prev": 9.04,
-          "delta": 0.22,
-          "status": "up"
-        },
-        "dii": {
-          "cur": 16.63,
-          "prev": 16.4,
-          "delta": 0.23,
-          "status": "up"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 1.89× (accumulation); Higher lows (ascending base); Positive 20-day momentum +3%; 1-day volume surge (3.74× RVOL); 5-day volume > 20-day average",
-      "expected": "Targets 1536.5 / 1604.75 / 1673 (6.3% / 11% / 15.7%), risk to 1363.5."
-    },
-    {
-      "symbol": "OBEROIRLTY",
-      "name": "Oberoi Realty Ltd.",
-      "sector": "Realty",
+      "symbol": "360ONE",
+      "name": "360 ONE WAM Ltd.",
+      "sector": "Financial Services",
       "indices": [
         "NIFTY 200",
         "NIFTY 500",
@@ -1846,43 +1695,43 @@
         "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 1886,
+      "price": 1199,
       "direction": "LONG",
-      "changePct": -0.98,
-      "setupType": "Momentum building",
-      "moveScore": 99,
-      "entry": 1886,
-      "sl": 1808.7,
-      "slPct": -4.1,
+      "changePct": -0.33,
+      "setupType": "Squeeze breakout",
+      "moveScore": 93,
+      "entry": 1199,
+      "sl": 1144.21,
+      "slPct": -4.6,
       "targets": [
         {
-          "price": 1989.07,
-          "pct": 5.5,
-          "by": "2026-09-02"
+          "price": 1261.87,
+          "pct": 5.2,
+          "by": "2026-09-01"
         },
         {
-          "price": 2066.37,
-          "pct": 9.6,
+          "price": 1309.03,
+          "pct": 9.2,
           "by": "2026-09-16"
         },
         {
-          "price": 2143.67,
-          "pct": 13.7,
+          "price": 1356.18,
+          "pct": 13.1,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.33,
-      "rsi": 56.5,
-      "confidence": 78,
-      "backtestHitRate": 44.4,
-      "backtestTrades": 9,
+      "rr": 1.15,
+      "rsi": 61.6,
+      "confidence": 80,
+      "backtestHitRate": 60,
+      "backtestTrades": 10,
       "criteria": [
         {
           "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -1891,10 +1740,10 @@
         },
         {
           "ok": true,
-          "label": "RSI 56.5 building toward breakout"
+          "label": "RSI 61.6 building toward breakout"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Accumulation — up-day volume dominates"
         },
         {
@@ -1907,11 +1756,11 @@
         },
         {
           "ok": false,
-          "label": "FII down (-0.31%)"
+          "label": "FII down (-4.78%)"
         },
         {
           "ok": true,
-          "label": "DII up (0.25%)"
+          "label": "DII up (5.95%)"
         },
         {
           "ok": true,
@@ -1924,21 +1773,21 @@
       ],
       "fundamentals": {
         "promoter": {
-          "cur": 67.71,
-          "prev": 67.71,
-          "delta": 0,
+          "cur": 6.2,
+          "prev": 6.24,
+          "delta": -0.04,
           "status": "stable"
         },
         "fii": {
-          "cur": 15.11,
-          "prev": 15.42,
-          "delta": -0.31,
+          "cur": 58.55,
+          "prev": 63.33,
+          "delta": -4.78,
           "status": "down"
         },
         "dii": {
-          "cur": 14.83,
-          "prev": 14.58,
-          "delta": 0.25,
+          "cur": 18.7,
+          "prev": 12.75,
+          "delta": 5.95,
           "status": "up"
         },
         "pledge": {
@@ -1948,49 +1797,50 @@
         },
         "ok": true
       },
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.72× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 1989.07 / 2066.37 / 2143.67 (5.5% / 9.6% / 13.7%), risk to 1808.7."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.0% below); Above rising 20 & 50 EMA; RSI 62 building (not overbought); Higher lows (ascending base); Positive 20-day momentum +9%; Range contraction; Near 52-week high",
+      "expected": "Targets 1261.87 / 1309.03 / 1356.18 (5.2% / 9.2% / 13.1%), risk to 1144.21."
     },
     {
-      "symbol": "BEPL",
-      "name": "Bhansali Engineering Polymers Limited",
-      "sector": "Equity",
+      "symbol": "SHRIPISTON",
+      "name": "SPR Auto Technologies Ltd.",
+      "sector": "Automobile and Auto Components",
       "indices": [
+        "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 125.82,
+      "price": 4600.1,
       "direction": "LONG",
-      "changePct": 2.1,
-      "setupType": "Breakout watch",
-      "moveScore": 90,
-      "entry": 125.82,
-      "sl": 117.5,
-      "slPct": -6.6,
+      "changePct": 1.91,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 4600.1,
+      "sl": 4370.53,
+      "slPct": -5,
       "targets": [
         {
-          "price": 135.34,
-          "pct": 7.6,
-          "by": "2026-08-28"
+          "price": 4904.84,
+          "pct": 6.6,
+          "by": "2026-08-26"
         },
         {
-          "price": 142.48,
-          "pct": 13.2,
-          "by": "2026-09-02"
+          "price": 5133.39,
+          "pct": 11.6,
+          "by": "2026-08-31"
         },
         {
-          "price": 149.61,
-          "pct": 18.9,
-          "by": "2026-09-09"
+          "price": 5361.95,
+          "pct": 16.6,
+          "by": "2026-10-06"
         }
       ],
-      "rr": 1.14,
-      "rsi": 60.8,
-      "confidence": 78,
-      "backtestHitRate": 44.4,
-      "backtestTrades": 9,
+      "rr": 1.33,
+      "rsi": 64.3,
+      "confidence": 79,
+      "backtestHitRate": 45.5,
+      "backtestTrades": 11,
       "criteria": [
         {
-          "ok": false,
+          "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
@@ -2003,7 +1853,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 60.8 building toward breakout"
+          "label": "RSI 64.3 building toward breakout"
         },
         {
           "ok": true,
@@ -2019,15 +1869,15 @@
         },
         {
           "ok": true,
-          "label": "FII stable (0.03%)"
+          "label": "FII up (0.19%)"
         },
         {
           "ok": true,
-          "label": "DII stable (0%)"
+          "label": "DII up (3.84%)"
         },
         {
-          "ok": true,
-          "label": "Promoter stable"
+          "ok": false,
+          "label": "Promoter down"
         },
         {
           "ok": true,
@@ -2036,22 +1886,22 @@
       ],
       "fundamentals": {
         "promoter": {
-          "cur": 57.48,
-          "prev": 57.48,
-          "delta": 0,
-          "status": "stable"
+          "cur": 41.55,
+          "prev": 43.75,
+          "delta": -2.2,
+          "status": "down"
         },
         "fii": {
-          "cur": 1.39,
-          "prev": 1.36,
-          "delta": 0.03,
-          "status": "stable"
+          "cur": 8.4,
+          "prev": 8.21,
+          "delta": 0.19,
+          "status": "up"
         },
         "dii": {
-          "cur": 0,
-          "prev": 0,
-          "delta": 0,
-          "status": "stable"
+          "cur": 16,
+          "prev": 12.16,
+          "delta": 3.84,
+          "status": "up"
         },
         "pledge": {
           "pct": 0,
@@ -2060,8 +1910,80 @@
         },
         "ok": true
       },
-      "why": "Breakout watch — Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA; RSI 61 building (not overbought); Up/down volume 1.42× (accumulation); Higher lows (ascending base); Positive 20-day momentum +3%; 1-day volume surge (1.37× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 135.34 / 142.48 / 149.61 (7.6% / 13.2% / 18.9%), risk to 117.5."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.0% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Up/down volume 5.22× (accumulation); Higher lows (ascending base); Positive 20-day momentum +11%; 1-day volume surge (1.48× RVOL); Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 4904.84 / 5133.39 / 5361.95 (6.6% / 11.6% / 16.6%), risk to 4370.53."
+    },
+    {
+      "symbol": "TMB",
+      "name": "Tamilnad Mercantile Bank Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 878.55,
+      "direction": "LONG",
+      "changePct": 1.02,
+      "setupType": "Momentum building",
+      "moveScore": 92,
+      "entry": 878.55,
+      "sl": 818.34,
+      "slPct": -6.9,
+      "targets": [
+        {
+          "price": 931.14,
+          "pct": 6,
+          "by": "2026-08-28"
+        },
+        {
+          "price": 970.58,
+          "pct": 10.5,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 1010.02,
+          "pct": 15,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.87,
+      "rsi": 61,
+      "confidence": 79,
+      "backtestHitRate": 77.8,
+      "backtestTrades": 9,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 61 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 61 building (not overbought); Up/down volume 1.94× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (0.41× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 931.14 / 970.58 / 1010.02 (6% / 10.5% / 15%), risk to 818.34."
     },
     {
       "symbol": "BAJAJ-AUTO",
@@ -2260,6 +2182,118 @@
       "expected": "Targets 12392.94 / 12894.65 / 13396.36 (5.7% / 10% / 14.3%), risk to 11222.29."
     },
     {
+      "symbol": "UDS",
+      "name": "Updater Services Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 215.67,
+      "direction": "LONG",
+      "changePct": 1.37,
+      "setupType": "Breakout watch",
+      "moveScore": 97,
+      "entry": 215.67,
+      "sl": 201.56,
+      "slPct": -6.5,
+      "targets": [
+        {
+          "price": 231.23,
+          "pct": 7.2,
+          "by": "2026-09-10"
+        },
+        {
+          "price": 242.9,
+          "pct": 12.6,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 254.56,
+          "pct": 18,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.1,
+      "rsi": 62.6,
+      "confidence": 76,
+      "backtestHitRate": 57.1,
+      "backtestTrades": 7,
+      "criteria": [
+        {
+          "ok": false,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 62.6 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        },
+        {
+          "ok": false,
+          "label": "FII down (-0.53%)"
+        },
+        {
+          "ok": false,
+          "label": "DII down (-3.55%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 59.09,
+          "prev": 59.09,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 3.5,
+          "prev": 4.03,
+          "delta": -0.53,
+          "status": "down"
+        },
+        "dii": {
+          "cur": 9.41,
+          "prev": 12.96,
+          "delta": -3.55,
+          "status": "down"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Breakout watch — Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA; RSI 63 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 3.22× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 231.23 / 242.9 / 254.56 (7.2% / 12.6% / 18%), risk to 201.56."
+    },
+    {
       "symbol": "DIXON",
       "name": "Dixon Technologies (India) Ltd.",
       "sector": "Consumer Durables",
@@ -2379,6 +2413,118 @@
       "expected": "Targets 15623.51 / 16203.64 / 16783.76 (5.2% / 9.1% / 13%), risk to 13921.65."
     },
     {
+      "symbol": "SANDHAR",
+      "name": "Sandhar Technologies Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 667.75,
+      "direction": "LONG",
+      "changePct": 3.05,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 667.75,
+      "sl": 611.47,
+      "slPct": -8.4,
+      "targets": [
+        {
+          "price": 717.58,
+          "pct": 7.5,
+          "by": "2026-08-28"
+        },
+        {
+          "price": 754.96,
+          "pct": 13.1,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 792.33,
+          "pct": 18.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.89,
+      "rsi": 59.4,
+      "confidence": 75,
+      "backtestHitRate": 33.3,
+      "backtestTrades": 9,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 59.4 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
+        },
+        {
+          "ok": true,
+          "label": "FII up (1.32%)"
+        },
+        {
+          "ok": false,
+          "label": "DII down (-2.57%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 70.38,
+          "prev": 70.38,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 2.09,
+          "prev": 0.77,
+          "delta": 1.32,
+          "status": "up"
+        },
+        "dii": {
+          "cur": 14.82,
+          "prev": 17.39,
+          "delta": -2.57,
+          "status": "down"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA; RSI 59 building (not overbought); Up/down volume 2.05× (accumulation); Higher lows (ascending base); Positive 20-day momentum +12%; 1-day volume surge (0.86× RVOL); Range contraction",
+      "expected": "Targets 717.58 / 754.96 / 792.33 (7.5% / 13.1% / 18.7%), risk to 611.47."
+    },
+    {
       "symbol": "DALBHARAT",
       "name": "Dalmia Bharat Ltd.",
       "sector": "Construction Materials",
@@ -2495,118 +2641,6 @@
       "expected": "Targets 1962.72 / 2024.77 / 2086.81 (4.4% / 7.7% / 11%), risk to 1814.03."
     },
     {
-      "symbol": "INDOTECH",
-      "name": "Indo Tech Transformers Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 3727.8,
-      "direction": "LONG",
-      "changePct": 0.49,
-      "setupType": "Momentum building",
-      "moveScore": 92,
-      "entry": 3727.8,
-      "sl": 3338.87,
-      "slPct": -10.4,
-      "targets": [
-        {
-          "price": 4100.05,
-          "pct": 10,
-          "by": "2026-08-27"
-        },
-        {
-          "price": 4379.24,
-          "pct": 17.5,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 4658.43,
-          "pct": 25,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.96,
-      "rsi": 60.5,
-      "confidence": 74,
-      "backtestHitRate": 42.9,
-      "backtestTrades": 7,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60.5 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII stable (0.01%)"
-        },
-        {
-          "ok": true,
-          "label": "DII stable (0.05%)"
-        },
-        {
-          "ok": false,
-          "label": "Promoter down"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 72.18,
-          "prev": 75,
-          "delta": -2.82,
-          "status": "down"
-        },
-        "fii": {
-          "cur": 0.28,
-          "prev": 0.27,
-          "delta": 0.01,
-          "status": "stable"
-        },
-        "dii": {
-          "cur": 0.05,
-          "prev": 0,
-          "delta": 0.05,
-          "status": "stable"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 61 building (not overbought); Up/down volume 1.78× (accumulation); Higher lows (ascending base); Positive 20-day momentum +13%; 1-day volume surge (3.06× RVOL); Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 4100.05 / 4379.24 / 4658.43 (10% / 17.5% / 25%), risk to 3338.87."
-    },
-    {
       "symbol": "ATLANTAELE",
       "name": "Atlanta Electricals Ltd.",
       "sector": "Capital Goods",
@@ -2679,42 +2713,47 @@
       "expected": "Targets 2030.67 / 2168.5 / 2306.32 (10% / 17.4% / 24.9%), risk to 1641.62."
     },
     {
-      "symbol": "TMB",
-      "name": "Tamilnad Mercantile Bank Ltd.",
-      "sector": "Financial Services",
+      "symbol": "OBEROIRLTY",
+      "name": "Oberoi Realty Ltd.",
+      "sector": "Realty",
       "indices": [
+        "NIFTY 200",
+        "NIFTY 500",
         "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 100",
+        "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 869.7,
+      "price": 1886,
       "direction": "LONG",
-      "changePct": 3.68,
+      "changePct": -0.98,
       "setupType": "Momentum building",
-      "moveScore": 82,
-      "entry": 869.7,
-      "sl": 818.34,
-      "slPct": -5.9,
+      "moveScore": 99,
+      "entry": 1886,
+      "sl": 1808.7,
+      "slPct": -4.1,
       "targets": [
         {
-          "price": 922.27,
-          "pct": 6,
-          "by": "2026-08-28"
-        },
-        {
-          "price": 961.7,
-          "pct": 10.6,
+          "price": 1989.07,
+          "pct": 5.5,
           "by": "2026-09-02"
         },
         {
-          "price": 1001.13,
-          "pct": 15.1,
+          "price": 2066.37,
+          "pct": 9.6,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 2143.67,
+          "pct": 13.7,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.02,
-      "rsi": 59,
-      "confidence": 74,
-      "backtestHitRate": 77.8,
+      "rr": 1.33,
+      "rsi": 56.5,
+      "confidence": 73,
+      "backtestHitRate": 44.4,
       "backtestTrades": 9,
       "criteria": [
         {
@@ -2731,14 +2770,14 @@
         },
         {
           "ok": true,
-          "label": "RSI 59 building toward breakout"
+          "label": "RSI 56.5 building toward breakout"
         },
         {
           "ok": true,
           "label": "Accumulation — up-day volume dominates"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Higher lows (ascending base)"
         },
         {
@@ -2747,46 +2786,46 @@
         }
       ],
       "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 59 building (not overbought); Up/down volume 1.9× (accumulation); Positive 20-day momentum +9%; 1-day volume surge (0.3× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 922.27 / 961.7 / 1001.13 (6% / 10.6% / 15.1%), risk to 818.34."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.72× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 1989.07 / 2066.37 / 2143.67 (5.5% / 9.6% / 13.7%), risk to 1808.7."
     },
     {
-      "symbol": "AEROFLEX",
-      "name": "Aeroflex Industries Limited",
+      "symbol": "SMCGLOBAL",
+      "name": "SMC Global Securities Limited",
       "sector": "Equity",
       "indices": [
         "NSE Equity"
       ],
-      "price": 475.3,
+      "price": 81.13,
       "direction": "LONG",
-      "changePct": 0.24,
+      "changePct": 0,
       "setupType": "Momentum building",
-      "moveScore": 85,
-      "entry": 475.3,
-      "sl": 438.71,
-      "slPct": -7.7,
+      "moveScore": 94,
+      "entry": 81.13,
+      "sl": 77.18,
+      "slPct": -4.9,
       "targets": [
         {
-          "price": 519.24,
-          "pct": 9.2,
-          "by": "2026-08-28"
+          "price": 86.4,
+          "pct": 6.5,
+          "by": "2026-08-27"
         },
         {
-          "price": 552.2,
+          "price": 90.35,
+          "pct": 11.4,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 94.3,
           "pct": 16.2,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 585.15,
-          "pct": 23.1,
-          "by": "2026-09-09"
+          "by": "2026-10-06"
         }
       ],
-      "rr": 1.2,
-      "rsi": 60,
+      "rr": 1.33,
+      "rsi": 61.9,
       "confidence": 73,
-      "backtestHitRate": 66.7,
-      "backtestTrades": 12,
+      "backtestHitRate": 37.5,
+      "backtestTrades": 8,
       "criteria": [
         {
           "ok": true,
@@ -2802,7 +2841,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 60 building toward breakout"
+          "label": "RSI 61.9 building toward breakout"
         },
         {
           "ok": true,
@@ -2813,13 +2852,131 @@
           "label": "Higher lows (ascending base)"
         },
         {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
+        },
+        {
           "ok": false,
-          "label": "Harmonic up"
+          "label": "FII down (-0.26%)"
+        },
+        {
+          "ok": true,
+          "label": "DII stable (-0.01%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 66.71,
+          "prev": 66.72,
+          "delta": -0.01,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 2.14,
+          "prev": 2.4,
+          "delta": -0.26,
+          "status": "down"
+        },
+        "dii": {
+          "cur": 0,
+          "prev": 0.01,
+          "delta": -0.01,
+          "status": "stable"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 62 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 2.07× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; Range contraction",
+      "expected": "Targets 86.4 / 90.35 / 94.3 (6.5% / 11.4% / 16.2%), risk to 77.18."
+    },
+    {
+      "symbol": "ABCAPITAL",
+      "name": "Aditya Birla Capital Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 100",
+        "NIFTY Midcap 150",
+        "NSE Equity"
+      ],
+      "price": 413,
+      "direction": "LONG",
+      "changePct": 0.98,
+      "setupType": "Momentum building",
+      "moveScore": 85,
+      "entry": 413,
+      "sl": 391.79,
+      "slPct": -5.1,
+      "targets": [
+        {
+          "price": 433.07,
+          "pct": 4.9,
+          "by": "2026-09-08"
+        },
+        {
+          "price": 448.11,
+          "pct": 8.5,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 463.16,
+          "pct": 12.1,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.95,
+      "rsi": 56.1,
+      "confidence": 73,
+      "backtestHitRate": 66.7,
+      "backtestTrades": 9,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 56.1 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
         }
       ],
       "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 2.25× (accumulation); Higher lows (ascending base); Positive 20-day momentum +13%; Range contraction; Near 52-week high",
-      "expected": "Targets 519.24 / 552.2 / 585.15 (9.2% / 16.2% / 23.1%), risk to 438.71."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Up/down volume 1.59× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; Range contraction; Near 52-week high",
+      "expected": "Targets 433.07 / 448.11 / 463.16 (4.9% / 8.5% / 12.1%), risk to 391.79."
     },
     {
       "symbol": "DLF",
@@ -2898,42 +3055,48 @@
       "expected": "Targets 710.89 / 735.48 / 760.07 (4.8% / 8.5% / 12.1%), risk to 653.51."
     },
     {
-      "symbol": "OBCL",
-      "name": "OBCL Limited",
-      "sector": "Equity",
+      "symbol": "PREMIERENE",
+      "name": "Premier Energies Ltd.",
+      "sector": "Capital Goods",
       "indices": [
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 100",
+        "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 54.2,
+      "price": 1053,
       "direction": "LONG",
-      "changePct": 0.02,
+      "changePct": 1.25,
       "setupType": "Squeeze breakout",
-      "moveScore": 94,
-      "entry": 54.2,
-      "sl": 51.75,
-      "slPct": -4.5,
+      "moveScore": 95,
+      "entry": 1053,
+      "sl": 996.29,
+      "slPct": -5.4,
       "targets": [
         {
-          "price": 57.47,
-          "pct": 6,
-          "by": "2026-08-25"
+          "price": 1110.08,
+          "pct": 5.4,
+          "by": "2026-08-31"
         },
         {
-          "price": 59.92,
-          "pct": 10.6,
+          "price": 1152.89,
+          "pct": 9.5,
           "by": "2026-09-16"
         },
         {
-          "price": 62.38,
-          "pct": 15.1,
+          "price": 1195.71,
+          "pct": 13.6,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.33,
-      "rsi": 55.1,
+      "rr": 1.01,
+      "rsi": 54.5,
       "confidence": 72,
-      "backtestHitRate": null,
-      "backtestTrades": 4,
+      "backtestHitRate": 33.3,
+      "backtestTrades": 9,
       "criteria": [
         {
           "ok": true,
@@ -2949,7 +3112,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 55.1 building toward breakout"
+          "label": "RSI 54.5 building toward breakout"
         },
         {
           "ok": true,
@@ -2962,82 +3125,52 @@
         {
           "ok": false,
           "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); RSI 55 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 3.93× (accumulation); Higher lows (ascending base); Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 57.47 / 59.92 / 62.38 (6% / 10.6% / 15.1%), risk to 51.75."
-    },
-    {
-      "symbol": "BCLIND",
-      "name": "Bcl Industries Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 37.19,
-      "direction": "LONG",
-      "changePct": 3.82,
-      "setupType": "Momentum building",
-      "moveScore": 94,
-      "entry": 37.19,
-      "sl": 34.92,
-      "slPct": -6.1,
-      "targets": [
-        {
-          "price": 40.07,
-          "pct": 7.7,
-          "by": "2026-09-15"
         },
-        {
-          "price": 42.22,
-          "pct": 13.5,
-          "by": "2026-09-18"
-        },
-        {
-          "price": 44.38,
-          "pct": 19.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.27,
-      "rsi": 55.9,
-      "confidence": 72,
-      "backtestHitRate": null,
-      "backtestTrades": 5,
-      "criteria": [
         {
           "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
+          "label": "FII up (2.2%)"
+        },
+        {
+          "ok": true,
+          "label": "DII up (4.28%)"
         },
         {
           "ok": false,
-          "label": "Near 20-day breakout level"
+          "label": "Promoter down"
         },
         {
           "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 55.9 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
+          "label": "Pledge 0% (low)"
         }
       ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.97× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 5-day volume > 20-day average",
-      "expected": "Targets 40.07 / 42.22 / 44.38 (7.7% / 13.5% / 19.3%), risk to 34.92."
+      "fundamentals": {
+        "promoter": {
+          "cur": 58.48,
+          "prev": 63.94,
+          "delta": -5.46,
+          "status": "down"
+        },
+        "fii": {
+          "cur": 7.92,
+          "prev": 5.72,
+          "delta": 2.2,
+          "status": "up"
+        },
+        "dii": {
+          "cur": 17.97,
+          "prev": 13.69,
+          "delta": 4.28,
+          "status": "up"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.8% below); RSI 55 building (not overbought); Up/down volume 1.55× (accumulation); Higher lows (ascending base); Positive 20-day momentum +3%; 1-day volume surge (3.08× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 1110.08 / 1152.89 / 1195.71 (5.4% / 9.5% / 13.6%), risk to 996.29."
     },
     {
       "symbol": "ARIS",
@@ -3046,33 +3179,33 @@
       "indices": [
         "NSE Equity"
       ],
-      "price": 139.32,
+      "price": 143.41,
       "direction": "LONG",
-      "changePct": 2.44,
+      "changePct": 2.94,
       "setupType": "Squeeze breakout",
       "moveScore": 93,
-      "entry": 139.32,
+      "entry": 143.41,
       "sl": 130.98,
-      "slPct": -6,
+      "slPct": -8.7,
       "targets": [
         {
-          "price": 149.51,
-          "pct": 7.3,
+          "price": 153.65,
+          "pct": 7.1,
           "by": "2026-08-28"
         },
         {
-          "price": 157.16,
-          "pct": 12.8,
+          "price": 161.33,
+          "pct": 12.5,
           "by": "2026-09-16"
         },
         {
-          "price": 164.81,
-          "pct": 18.3,
+          "price": 169.01,
+          "pct": 17.9,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.22,
-      "rsi": 70.3,
+      "rr": 0.82,
+      "rsi": 74.6,
       "confidence": 72,
       "backtestHitRate": null,
       "backtestTrades": 5,
@@ -3091,7 +3224,7 @@
         },
         {
           "ok": false,
-          "label": "RSI 70.3 building toward breakout"
+          "label": "RSI 74.6 building toward breakout"
         },
         {
           "ok": true,
@@ -3104,52 +3237,82 @@
         {
           "ok": true,
           "label": "Harmonic up (Bullish ABC retrace)"
-        },
-        {
-          "ok": false,
-          "label": "FII down (-0.13%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-4.68%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
         }
       ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 37.57,
-          "prev": 37.59,
-          "delta": -0.02,
-          "status": "stable"
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below); Above rising 20 & 50 EMA; Up/down volume 6.08× (accumulation); Higher lows (ascending base); Positive 20-day momentum +17%; 1-day volume surge (1.18× RVOL); Range contraction",
+      "expected": "Targets 153.65 / 161.33 / 169.01 (7.1% / 12.5% / 17.9%), risk to 130.98."
+    },
+    {
+      "symbol": "CYBERMEDIA",
+      "name": "Cyber Media (India) Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 16.9,
+      "direction": "LONG",
+      "changePct": 2.05,
+      "setupType": "Squeeze breakout",
+      "moveScore": 93,
+      "entry": 16.9,
+      "sl": 15.71,
+      "slPct": -7,
+      "targets": [
+        {
+          "price": 18.49,
+          "pct": 9.4,
+          "by": "2026-09-01"
         },
-        "fii": {
-          "cur": 1.94,
-          "prev": 2.07,
-          "delta": -0.13,
-          "status": "down"
+        {
+          "price": 19.68,
+          "pct": 16.4,
+          "by": "2026-09-16"
         },
-        "dii": {
-          "cur": 1.09,
-          "prev": 5.77,
-          "delta": -4.68,
-          "status": "down"
+        {
+          "price": 20.87,
+          "pct": 23.5,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 58.6,
+      "confidence": 72,
+      "backtestHitRate": null,
+      "backtestTrades": 5,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
         },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
         },
-        "ok": true
-      },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA; Up/down volume 6.04× (accumulation); Higher lows (ascending base); Positive 20-day momentum +14%; 1-day volume surge (1.27× RVOL); Range contraction",
-      "expected": "Targets 149.51 / 157.16 / 164.81 (7.3% / 12.8% / 18.3%), risk to 130.98."
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 58.6 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": false,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA; RSI 59 building (not overbought); Up/down volume 2.27× (accumulation); Positive 20-day momentum +9%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 18.49 / 19.68 / 20.87 (9.4% / 16.4% / 23.5%), risk to 15.71."
     },
     {
       "symbol": "GEOJITFSL",
@@ -3223,81 +3386,6 @@
       "expected": "Targets 86.11 / 90.15 / 94.2 (6.7% / 11.7% / 16.7%), risk to 76.68."
     },
     {
-      "symbol": "MGL",
-      "name": "Mahanagar Gas Ltd.",
-      "sector": "Oil Gas & Consumable Fuels",
-      "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 250",
-        "NSE Equity"
-      ],
-      "price": 1137.8,
-      "direction": "LONG",
-      "changePct": 0.87,
-      "setupType": "Momentum building",
-      "moveScore": 99,
-      "entry": 1137.8,
-      "sl": 1088.89,
-      "slPct": -4.3,
-      "targets": [
-        {
-          "price": 1203.02,
-          "pct": 5.7,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 1251.93,
-          "pct": 10,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 1300.85,
-          "pct": 14.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 55.1,
-      "confidence": 71,
-      "backtestHitRate": 37.5,
-      "backtestTrades": 8,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 55.1 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 55 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 5.56× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 1203.02 / 1251.93 / 1300.85 (5.7% / 10% / 14.3%), risk to 1088.89."
-    },
-    {
       "symbol": "FEDERALBNK",
       "name": "Federal Bank Ltd.",
       "sector": "Financial Services",
@@ -3369,18 +3457,94 @@
         {
           "ok": false,
           "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 1.46× (accumulation); Higher lows (ascending base); 1-day volume surge (1.03× RVOL); Near 52-week high",
+      "expected": "Targets 374.17 / 384.04 / 393.92 (3.6% / 6.4% / 9.1%), risk to 348.33."
+    },
+    {
+      "symbol": "LODHA",
+      "name": "Lodha Developers Ltd.",
+      "sector": "Realty",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 1242,
+      "direction": "LONG",
+      "changePct": 0.16,
+      "setupType": "Momentum building",
+      "moveScore": 92,
+      "entry": 1242,
+      "sl": 1183.84,
+      "slPct": -4.7,
+      "targets": [
+        {
+          "price": 1319.54,
+          "pct": 6.2,
+          "by": "2026-09-01"
+        },
+        {
+          "price": 1377.7,
+          "pct": 10.9,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 1435.86,
+          "pct": 15.6,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 58.3,
+      "confidence": 71,
+      "backtestHitRate": 50,
+      "backtestTrades": 8,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
         },
         {
           "ok": true,
-          "label": "FII up (1.66%)"
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 58.3 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
+        },
+        {
+          "ok": true,
+          "label": "FII up (2.41%)"
         },
         {
           "ok": false,
-          "label": "DII down (-1.12%)"
+          "label": "DII down (-1.06%)"
         },
         {
           "ok": false,
-          "label": "Promoter n/a"
+          "label": "Promoter down"
         },
         {
           "ok": true,
@@ -3389,18 +3553,21 @@
       ],
       "fundamentals": {
         "promoter": {
-          "status": "n/a"
+          "cur": 70.31,
+          "prev": 72.27,
+          "delta": -1.96,
+          "status": "down"
         },
         "fii": {
-          "cur": 27.71,
-          "prev": 26.05,
-          "delta": 1.66,
+          "cur": 23.65,
+          "prev": 21.24,
+          "delta": 2.41,
           "status": "up"
         },
         "dii": {
-          "cur": 49.27,
-          "prev": 50.39,
-          "delta": -1.12,
+          "cur": 3.56,
+          "prev": 4.62,
+          "delta": -1.06,
           "status": "down"
         },
         "pledge": {
@@ -3410,46 +3577,47 @@
         },
         "ok": true
       },
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 1.46× (accumulation); Higher lows (ascending base); 1-day volume surge (1.03× RVOL); Near 52-week high",
-      "expected": "Targets 374.17 / 384.04 / 393.92 (3.6% / 6.4% / 9.1%), risk to 348.33."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 58 building (not overbought); Up/down volume 1.86× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (0.63× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 1319.54 / 1377.7 / 1435.86 (6.2% / 10.9% / 15.6%), risk to 1183.84."
     },
     {
-      "symbol": "RVTH",
-      "name": "Revathi Equipment India Limited",
-      "sector": "Equity",
+      "symbol": "SKFINDUS",
+      "name": "SKF India (Industrial) Ltd.",
+      "sector": "Capital Goods",
       "indices": [
+        "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 753,
+      "price": 2758.3,
       "direction": "LONG",
-      "changePct": 2.95,
+      "changePct": 0.17,
       "setupType": "Momentum building",
-      "moveScore": 92,
-      "entry": 753,
-      "sl": 702.28,
-      "slPct": -6.7,
+      "moveScore": 91,
+      "entry": 2758.3,
+      "sl": 2597.38,
+      "slPct": -5.8,
       "targets": [
         {
-          "price": 820.63,
-          "pct": 9,
-          "by": "2026-08-24"
+          "price": 2972.86,
+          "pct": 7.8,
+          "by": "2026-09-02"
         },
         {
-          "price": 871.35,
-          "pct": 15.7,
+          "price": 3133.78,
+          "pct": 13.6,
           "by": "2026-09-16"
         },
         {
-          "price": 922.07,
-          "pct": 22.5,
+          "price": 3294.71,
+          "pct": 19.4,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 59.4,
+      "rsi": 53.3,
       "confidence": 71,
       "backtestHitRate": null,
-      "backtestTrades": 3,
+      "backtestTrades": 4,
       "criteria": [
         {
           "ok": true,
@@ -3465,7 +3633,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 59.4 building toward breakout"
+          "label": "RSI 53.3 building toward breakout"
         },
         {
           "ok": true,
@@ -3481,53 +3649,53 @@
         }
       ],
       "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 59 building (not overbought); Up/down volume 2.54× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (8.66× RVOL); Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 820.63 / 871.35 / 922.07 (9% / 15.7% / 22.5%), risk to 702.28."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 53 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.53× (accumulation); Higher lows (ascending base); Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 2972.86 / 3133.78 / 3294.71 (7.8% / 13.6% / 19.4%), risk to 2597.38."
     },
     {
-      "symbol": "KROSS",
-      "name": "Kross Limited",
+      "symbol": "BCLIND",
+      "name": "Bcl Industries Limited",
       "sector": "Equity",
       "indices": [
         "NSE Equity"
       ],
-      "price": 210.36,
+      "price": 36.5,
       "direction": "LONG",
-      "changePct": 6.1,
-      "setupType": "Squeeze breakout",
-      "moveScore": 87,
-      "entry": 210.36,
-      "sl": 195.32,
-      "slPct": -7.1,
+      "changePct": -1.86,
+      "setupType": "Momentum building",
+      "moveScore": 91,
+      "entry": 36.5,
+      "sl": 34.39,
+      "slPct": -5.8,
       "targets": [
         {
-          "price": 227.14,
-          "pct": 8,
-          "by": "2026-09-04"
+          "price": 39.31,
+          "pct": 7.7,
+          "by": "2026-09-15"
         },
         {
-          "price": 239.73,
-          "pct": 14,
-          "by": "2026-09-09"
+          "price": 41.41,
+          "pct": 13.5,
+          "by": "2026-09-18"
         },
         {
-          "price": 252.32,
-          "pct": 19.9,
-          "by": "2026-09-16"
+          "price": 43.52,
+          "pct": 19.2,
+          "by": "2026-10-06"
         }
       ],
-      "rr": 1.12,
-      "rsi": 58.1,
+      "rr": 1.33,
+      "rsi": 51.6,
       "confidence": 71,
-      "backtestHitRate": 57.1,
-      "backtestTrades": 7,
+      "backtestHitRate": null,
+      "backtestTrades": 5,
       "criteria": [
         {
           "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Near 20-day breakout level"
         },
         {
@@ -3536,14 +3704,14 @@
         },
         {
           "ok": true,
-          "label": "RSI 58.1 building toward breakout"
+          "label": "RSI 51.6 building toward breakout"
         },
         {
           "ok": true,
           "label": "Accumulation — up-day volume dominates"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Higher lows (ascending base)"
         },
         {
@@ -3552,8 +3720,8 @@
         }
       ],
       "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA; RSI 58 building (not overbought); Up/down volume 1.75× (accumulation); 1-day volume surge (1.61× RVOL); Range contraction",
-      "expected": "Targets 227.14 / 239.73 / 252.32 (8% / 14% / 19.9%), risk to 195.32."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 52 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.69× (accumulation); Higher lows (ascending base); Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 39.31 / 41.41 / 43.52 (7.7% / 13.5% / 19.2%), risk to 34.39."
     },
     {
       "symbol": "ETERNAL",
@@ -3668,78 +3836,6 @@
       },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.1% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.47× (accumulation); Higher lows (ascending base); Positive 20-day momentum +17%; Range contraction",
       "expected": "Targets 344.24 / 356.42 / 368.59 (5% / 8.7% / 12.4%), risk to 313.93."
-    },
-    {
-      "symbol": "SHRIPISTON",
-      "name": "SPR Auto Technologies Ltd.",
-      "sector": "Automobile and Auto Components",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 4513.8,
-      "direction": "LONG",
-      "changePct": 1.34,
-      "setupType": "Squeeze breakout",
-      "moveScore": 93,
-      "entry": 4513.8,
-      "sl": 4289.91,
-      "slPct": -5,
-      "targets": [
-        {
-          "price": 4812.32,
-          "pct": 6.6,
-          "by": "2026-08-26"
-        },
-        {
-          "price": 5036.21,
-          "pct": 11.6,
-          "by": "2026-08-31"
-        },
-        {
-          "price": 5260.1,
-          "pct": 16.5,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 60.3,
-      "confidence": 70,
-      "backtestHitRate": 45.5,
-      "backtestTrades": 11,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60.3 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": false,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 3.67× (accumulation); Positive 20-day momentum +6%; Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 4812.32 / 5036.21 / 5260.1 (6.6% / 11.6% / 16.5%), risk to 4289.91."
     },
     {
       "symbol": "HEG",
@@ -3885,97 +3981,56 @@
         {
           "ok": false,
           "label": "Harmonic up"
-        },
-        {
-          "ok": false,
-          "label": "FII down (-0.25%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-0.12%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter stable"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
         }
       ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 62,
-          "prev": 62,
-          "delta": 0,
-          "status": "stable"
-        },
-        "fii": {
-          "cur": 5.42,
-          "prev": 5.67,
-          "delta": -0.25,
-          "status": "down"
-        },
-        "dii": {
-          "cur": 29.67,
-          "prev": 29.79,
-          "delta": -0.12,
-          "status": "down"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
+      "fundamentals": null,
       "why": "Breakout watch — Hugging 20-day high (0.4% below); Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 2.64× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 1-day volume surge (1.31× RVOL); Range contraction; Near 52-week high",
       "expected": "Targets 165.02 / 172.35 / 179.68 (6.3% / 11% / 15.7%), risk to 145.04."
     },
     {
-      "symbol": "BLUSPRING",
-      "name": "Bluspring Enterprises Limited",
+      "symbol": "GUFICBIO",
+      "name": "Gufic Biosciences Limited",
       "sector": "Equity",
       "indices": [
         "NSE Equity"
       ],
-      "price": 117.96,
+      "price": 431.5,
       "direction": "LONG",
-      "changePct": -1.59,
-      "setupType": "Momentum building",
-      "moveScore": 89,
-      "entry": 117.96,
-      "sl": 105.88,
-      "slPct": -10.2,
+      "changePct": 4.3,
+      "setupType": "Breakout watch",
+      "moveScore": 90,
+      "entry": 431.5,
+      "sl": 396.81,
+      "slPct": -8,
       "targets": [
         {
-          "price": 131.77,
-          "pct": 11.7,
-          "by": "2026-09-15"
+          "price": 465.37,
+          "pct": 7.8,
+          "by": "2026-08-27"
         },
         {
-          "price": 142.12,
-          "pct": 20.5,
-          "by": "2026-09-18"
+          "price": 490.77,
+          "pct": 13.7,
+          "by": "2026-09-16"
         },
         {
-          "price": 152.48,
-          "pct": 29.3,
+          "price": 516.17,
+          "pct": 19.6,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.14,
-      "rsi": 55.9,
+      "rr": 0.98,
+      "rsi": 63.7,
       "confidence": 70,
-      "backtestHitRate": null,
-      "backtestTrades": 4,
+      "backtestHitRate": 50,
+      "backtestTrades": 6,
       "criteria": [
         {
-          "ok": true,
+          "ok": false,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -3984,7 +4039,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 55.9 building toward breakout"
+          "label": "RSI 63.7 building toward breakout"
         },
         {
           "ok": true,
@@ -4000,8 +4055,8 @@
         }
       ],
       "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Stealth volume accumulation — money in before the move; Higher lows (ascending base); Positive 20-day momentum +13%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 131.77 / 142.12 / 152.48 (11.7% / 20.5% / 29.3%), risk to 105.88."
+      "why": "Breakout watch — Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Up/down volume 1.53× (accumulation); Higher lows (ascending base); Positive 20-day momentum +14%; 1-day volume surge (2.15× RVOL); Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 465.37 / 490.77 / 516.17 (7.8% / 13.7% / 19.6%), risk to 396.81."
     },
     {
       "symbol": "UJJIVANSFB",
@@ -4151,6 +4206,77 @@
       "expected": "Targets 1290.12 / 1345.1 / 1400.09 (6% / 10.5% / 15.1%), risk to 1157.67."
     },
     {
+      "symbol": "KROSS",
+      "name": "Kross Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 206.84,
+      "direction": "LONG",
+      "changePct": -1.67,
+      "setupType": "Momentum building",
+      "moveScore": 86,
+      "entry": 206.84,
+      "sl": 194.68,
+      "slPct": -5.9,
+      "targets": [
+        {
+          "price": 223.05,
+          "pct": 7.8,
+          "by": "2026-09-04"
+        },
+        {
+          "price": 235.2,
+          "pct": 13.7,
+          "by": "2026-09-09"
+        },
+        {
+          "price": 247.36,
+          "pct": 19.6,
+          "by": "2026-09-16"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 54.9,
+      "confidence": 70,
+      "backtestHitRate": 57.1,
+      "backtestTrades": 7,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 54.9 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 55 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.47× (accumulation); Higher lows (ascending base); Range contraction",
+      "expected": "Targets 223.05 / 235.2 / 247.36 (7.8% / 13.7% / 19.6%), risk to 194.68."
+    },
+    {
       "symbol": "PERSISTENT",
       "name": "Persistent Systems Ltd.",
       "sector": "Information Technology",
@@ -4271,6 +4397,122 @@
       "expected": "Targets 5974.09 / 6204.03 / 6433.97 (5.4% / 9.5% / 13.5%), risk to 5411.84."
     },
     {
+      "symbol": "CHALET",
+      "name": "Chalet Hotels Ltd.",
+      "sector": "Consumer Services",
+      "indices": [
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Smallcap 250",
+        "NSE Equity"
+      ],
+      "price": 861.95,
+      "direction": "LONG",
+      "changePct": 1.06,
+      "setupType": "Squeeze breakout",
+      "moveScore": 100,
+      "entry": 861.95,
+      "sl": 809.64,
+      "slPct": -6.1,
+      "targets": [
+        {
+          "price": 909.08,
+          "pct": 5.5,
+          "by": "2026-09-15"
+        },
+        {
+          "price": 944.43,
+          "pct": 9.6,
+          "by": "2026-09-18"
+        },
+        {
+          "price": 979.78,
+          "pct": 13.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.9,
+      "rsi": 59.6,
+      "confidence": 69,
+      "backtestHitRate": 14.3,
+      "backtestTrades": 7,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 59.6 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": true,
+          "label": "Harmonic up (Bullish ABC retrace)"
+        },
+        {
+          "ok": false,
+          "label": "FII down (-0.45%)"
+        },
+        {
+          "ok": true,
+          "label": "DII up (0.42%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
+        }
+      ],
+      "fundamentals": {
+        "promoter": {
+          "cur": 67.29,
+          "prev": 67.29,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 4.26,
+          "prev": 4.71,
+          "delta": -0.45,
+          "status": "down"
+        },
+        "dii": {
+          "cur": 24.99,
+          "prev": 24.57,
+          "delta": 0.42,
+          "status": "up"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (0.8% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 1.31× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 1-day volume surge (1.01× RVOL); Range contraction",
+      "expected": "Targets 909.08 / 944.43 / 979.78 (5.5% / 9.6% / 13.7%), risk to 809.64."
+    },
+    {
       "symbol": "LTTS",
       "name": "L&T Technology Services Ltd.",
       "sector": "Information Technology",
@@ -4346,49 +4588,45 @@
       "expected": "Targets 3812.76 / 3968.89 / 4125.01 (5.8% / 10.1% / 14.4%), risk to 3439.18."
     },
     {
-      "symbol": "NAM-INDIA",
-      "name": "Nippon Life India Asset Management Ltd.",
-      "sector": "Financial Services",
+      "symbol": "ELECTHERM",
+      "name": "Electrotherm (India) Limited",
+      "sector": "Equity",
       "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 1232.5,
+      "price": 1052.2,
       "direction": "LONG",
-      "changePct": 1.27,
-      "setupType": "Breakout watch",
-      "moveScore": 90,
-      "entry": 1232.5,
-      "sl": 1148.24,
-      "slPct": -6.8,
+      "changePct": 3.88,
+      "setupType": "Squeeze breakout",
+      "moveScore": 88,
+      "entry": 1052.2,
+      "sl": 949.53,
+      "slPct": -9.8,
       "targets": [
         {
-          "price": 1301.15,
-          "pct": 5.6,
-          "by": "2026-09-02"
+          "price": 1155.87,
+          "pct": 9.9,
+          "by": "2026-08-27"
         },
         {
-          "price": 1352.63,
-          "pct": 9.7,
+          "price": 1233.61,
+          "pct": 17.2,
           "by": "2026-09-16"
         },
         {
-          "price": 1404.12,
-          "pct": 13.9,
+          "price": 1311.36,
+          "pct": 24.6,
           "by": "2026-10-06"
         }
       ],
-      "rr": 0.81,
-      "rsi": 60.4,
+      "rr": 1.01,
+      "rsi": 55.6,
       "confidence": 69,
-      "backtestHitRate": 45.5,
-      "backtestTrades": 11,
+      "backtestHitRate": 50,
+      "backtestTrades": 6,
       "criteria": [
         {
-          "ok": false,
+          "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
@@ -4401,10 +4639,10 @@
         },
         {
           "ok": true,
-          "label": "RSI 60.4 building toward breakout"
+          "label": "RSI 55.6 building toward breakout"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Accumulation — up-day volume dominates"
         },
         {
@@ -4412,13 +4650,13 @@
           "label": "Higher lows (ascending base)"
         },
         {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
+          "ok": false,
+          "label": "Harmonic up"
         }
       ],
       "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 2.4× (accumulation); Higher lows (ascending base); Positive 20-day momentum +11%; 1-day volume surge (3.15× RVOL); Range contraction; Near 52-week high",
-      "expected": "Targets 1301.15 / 1352.63 / 1404.12 (5.6% / 9.7% / 13.9%), risk to 1148.24."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.2% below); Above rising 20 & 50 EMA; RSI 56 building (not overbought); Higher lows (ascending base); Positive 20-day momentum +4%; Range contraction",
+      "expected": "Targets 1155.87 / 1233.61 / 1311.36 (9.9% / 17.2% / 24.6%), risk to 949.53."
     },
     {
       "symbol": "GRADIENTE",
@@ -4427,33 +4665,33 @@
       "indices": [
         "NSE Equity"
       ],
-      "price": 2.9,
+      "price": 2.93,
       "direction": "LONG",
-      "changePct": 1.4,
+      "changePct": 1.03,
       "setupType": "Squeeze breakout",
       "moveScore": 88,
-      "entry": 2.9,
-      "sl": 2.62,
-      "slPct": -9.7,
+      "entry": 2.93,
+      "sl": 2.68,
+      "slPct": -8.5,
       "targets": [
         {
-          "price": 3.23,
-          "pct": 11.4,
+          "price": 3.26,
+          "pct": 11.3,
           "by": "2026-09-02"
         },
         {
-          "price": 3.48,
-          "pct": 20,
+          "price": 3.51,
+          "pct": 19.8,
           "by": "2026-09-16"
         },
         {
-          "price": 3.73,
-          "pct": 28.6,
+          "price": 3.76,
+          "pct": 28.3,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.17,
-      "rsi": 51.2,
+      "rr": 1.31,
+      "rsi": 52.6,
       "confidence": 69,
       "backtestHitRate": null,
       "backtestTrades": 0,
@@ -4472,7 +4710,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 51.2 building toward breakout"
+          "label": "RSI 52.6 building toward breakout"
         },
         {
           "ok": true,
@@ -4488,8 +4726,79 @@
         }
       ],
       "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below); RSI 51 building (not overbought); Up/down volume 8.97× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 3.23 / 3.48 / 3.73 (11.4% / 20% / 28.6%), risk to 2.62."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below); RSI 53 building (not overbought); Up/down volume 11.98× (accumulation); Higher lows (ascending base); Positive 20-day momentum +11%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 3.26 / 3.51 / 3.76 (11.3% / 19.8% / 28.3%), risk to 2.68."
+    },
+    {
+      "symbol": "RVTH",
+      "name": "Revathi Equipment India Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 733.9,
+      "direction": "LONG",
+      "changePct": -2.54,
+      "setupType": "Accumulation",
+      "moveScore": 87,
+      "entry": 733.9,
+      "sl": 681.48,
+      "slPct": -7.1,
+      "targets": [
+        {
+          "price": 803.79,
+          "pct": 9.5,
+          "by": "2026-08-24"
+        },
+        {
+          "price": 856.21,
+          "pct": 16.7,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 908.63,
+          "pct": 23.8,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 53.1,
+      "confidence": 69,
+      "backtestHitRate": null,
+      "backtestTrades": 3,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": false,
+          "label": "RSI 53.1 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.34× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 803.79 / 856.21 / 908.63 (9.5% / 16.7% / 23.8%), risk to 681.48."
     },
     {
       "symbol": "PCJEWELLER",
@@ -4564,42 +4873,42 @@
       "expected": "Targets 11 / 11.59 / 12.17 (7.6% / 13.4% / 19.1%), risk to 9.37."
     },
     {
-      "symbol": "KMEW",
-      "name": "Knowledge Marine & Engineering Works Limited",
+      "symbol": "RADIOCITY",
+      "name": "Music Broadcast Limited",
       "sector": "Equity",
       "indices": [
         "NSE Equity"
       ],
-      "price": 2691.8,
+      "price": 6.69,
       "direction": "LONG",
-      "changePct": -2.06,
-      "setupType": "Accumulation",
+      "changePct": 0,
+      "setupType": "Momentum building",
       "moveScore": 87,
-      "entry": 2691.8,
-      "sl": 2507.73,
-      "slPct": -6.8,
+      "entry": 6.69,
+      "sl": 6.2,
+      "slPct": -7.3,
       "targets": [
         {
-          "price": 2937.22,
-          "pct": 9.1,
-          "by": "2026-09-02"
+          "price": 7.34,
+          "pct": 9.7,
+          "by": "2026-09-30"
         },
         {
-          "price": 3121.29,
-          "pct": 16,
-          "by": "2026-09-07"
+          "price": 7.83,
+          "pct": 17,
+          "by": "2026-10-05"
         },
         {
-          "price": 3305.35,
-          "pct": 22.8,
-          "by": "2026-10-06"
+          "price": 8.32,
+          "pct": 24.4,
+          "by": "2026-10-12"
         }
       ],
       "rr": 1.33,
-      "rsi": 60.8,
+      "rsi": 56.1,
       "confidence": 69,
-      "backtestHitRate": 50,
-      "backtestTrades": 12,
+      "backtestHitRate": null,
+      "backtestTrades": 2,
       "criteria": [
         {
           "ok": true,
@@ -4614,8 +4923,8 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 60.8 building toward breakout"
+          "ok": true,
+          "label": "RSI 56.1 building toward breakout"
         },
         {
           "ok": true,
@@ -4631,8 +4940,222 @@
         }
       ],
       "fundamentals": null,
-      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 3.08× (accumulation); Higher lows (ascending base); Positive 20-day momentum +15%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 2937.22 / 3121.29 / 3305.35 (9.1% / 16% / 22.8%), risk to 2507.73."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 56 building (not overbought); Up/down volume 1.46× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 1-day volume surge (1.68× RVOL); Range contraction",
+      "expected": "Targets 7.34 / 7.83 / 8.32 (9.7% / 17% / 24.4%), risk to 6.2."
+    },
+    {
+      "symbol": "JSFB",
+      "name": "Jana Small Finance Bank Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 582.35,
+      "direction": "LONG",
+      "changePct": 3.46,
+      "setupType": "Momentum building",
+      "moveScore": 87,
+      "entry": 582.35,
+      "sl": 536.53,
+      "slPct": -7.9,
+      "targets": [
+        {
+          "price": 633.01,
+          "pct": 8.7,
+          "by": "2026-08-27"
+        },
+        {
+          "price": 671,
+          "pct": 15.2,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 709,
+          "pct": 21.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.11,
+      "rsi": 59.9,
+      "confidence": 69,
+      "backtestHitRate": null,
+      "backtestTrades": 4,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 59.9 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 2.87× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; 1-day volume surge (7.81× RVOL); Near 52-week high",
+      "expected": "Targets 633.01 / 671 / 709 (8.7% / 15.2% / 21.7%), risk to 536.53."
+    },
+    {
+      "symbol": "GVPTECH",
+      "name": "GVP Infotech Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 7.34,
+      "direction": "LONG",
+      "changePct": 8.1,
+      "setupType": "Momentum building",
+      "moveScore": 87,
+      "entry": 7.34,
+      "sl": 6.53,
+      "slPct": -11,
+      "targets": [
+        {
+          "price": 8.03,
+          "pct": 9.4,
+          "by": "2026-08-24"
+        },
+        {
+          "price": 8.54,
+          "pct": 16.3,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 9.06,
+          "pct": 23.4,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.85,
+      "rsi": 62.9,
+      "confidence": 69,
+      "backtestHitRate": null,
+      "backtestTrades": 4,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 62.9 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 3.56× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (5.53× RVOL); Range contraction",
+      "expected": "Targets 8.03 / 8.54 / 9.06 (9.4% / 16.3% / 23.4%), risk to 6.53."
+    },
+    {
+      "symbol": "LAL",
+      "name": "Lorenzini Apparels Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 8.76,
+      "direction": "LONG",
+      "changePct": 2.82,
+      "setupType": "Momentum building",
+      "moveScore": 87,
+      "entry": 8.76,
+      "sl": 7.9,
+      "slPct": -9.8,
+      "targets": [
+        {
+          "price": 9.91,
+          "pct": 13.1,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 10.77,
+          "pct": 22.9,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 11.63,
+          "pct": 32.8,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 54.6,
+      "confidence": 69,
+      "backtestHitRate": null,
+      "backtestTrades": 1,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 54.6 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 55 building (not overbought); Up/down volume 2.92× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 1-day volume surge (0.48× RVOL); Range contraction",
+      "expected": "Targets 9.91 / 10.77 / 11.63 (13.1% / 22.9% / 32.8%), risk to 7.9."
     },
     {
       "symbol": "KAYNES",
@@ -4750,122 +5273,6 @@
       },
       "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Up/down volume 1.48× (accumulation); Higher lows (ascending base); Positive 20-day momentum +22%; Range contraction",
       "expected": "Targets 4159.38 / 4361.41 / 4563.44 (6.9% / 12.1% / 17.3%), risk to 3603.16."
-    },
-    {
-      "symbol": "CYIENT",
-      "name": "Cyient Ltd.",
-      "sector": "Information Technology",
-      "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 250",
-        "NSE Equity"
-      ],
-      "price": 892.65,
-      "direction": "LONG",
-      "changePct": -1.15,
-      "setupType": "Breakout watch",
-      "moveScore": 97,
-      "entry": 892.65,
-      "sl": 841.99,
-      "slPct": -5.7,
-      "targets": [
-        {
-          "price": 942.72,
-          "pct": 5.6,
-          "by": "2026-08-26"
-        },
-        {
-          "price": 980.28,
-          "pct": 9.8,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 1017.83,
-          "pct": 14,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.99,
-      "rsi": 58.4,
-      "confidence": 68,
-      "backtestHitRate": 14.3,
-      "backtestTrades": 7,
-      "criteria": [
-        {
-          "ok": false,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 58.4 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        },
-        {
-          "ok": true,
-          "label": "FII stable (0.01%)"
-        },
-        {
-          "ok": false,
-          "label": "DII down (-1.5%)"
-        },
-        {
-          "ok": true,
-          "label": "Promoter up"
-        },
-        {
-          "ok": true,
-          "label": "Pledge 0% (low)"
-        }
-      ],
-      "fundamentals": {
-        "promoter": {
-          "cur": 24.7,
-          "prev": 23.28,
-          "delta": 1.42,
-          "status": "up"
-        },
-        "fii": {
-          "cur": 14.53,
-          "prev": 14.52,
-          "delta": 0.01,
-          "status": "stable"
-        },
-        "dii": {
-          "cur": 37.49,
-          "prev": 38.99,
-          "delta": -1.5,
-          "status": "down"
-        },
-        "pledge": {
-          "pct": 0,
-          "low": true,
-          "assumed": true
-        },
-        "ok": true
-      },
-      "why": "Breakout watch — Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 58 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.61× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; Range contraction; 5-day volume > 20-day average",
-      "expected": "Targets 942.72 / 980.28 / 1017.83 (5.6% / 9.8% / 14%), risk to 841.99."
     },
     {
       "symbol": "AUBANK",
@@ -5019,6 +5426,227 @@
       "expected": "Targets 165.9 / 172.69 / 179.49 (5.8% / 10.1% / 14.4%), risk to 148.13."
     },
     {
+      "symbol": "BEPL",
+      "name": "Bhansali Engineering Polymers Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 125.82,
+      "direction": "LONG",
+      "changePct": 2.1,
+      "setupType": "Breakout watch",
+      "moveScore": 90,
+      "entry": 125.82,
+      "sl": 117.5,
+      "slPct": -6.6,
+      "targets": [
+        {
+          "price": 135.34,
+          "pct": 7.6,
+          "by": "2026-08-28"
+        },
+        {
+          "price": 142.48,
+          "pct": 13.2,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 149.61,
+          "pct": 18.9,
+          "by": "2026-09-09"
+        }
+      ],
+      "rr": 1.14,
+      "rsi": 60.8,
+      "confidence": 68,
+      "backtestHitRate": 44.4,
+      "backtestTrades": 9,
+      "criteria": [
+        {
+          "ok": false,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 60.8 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Breakout watch — Hugging 20-day high (2.2% below); Above rising 20 & 50 EMA; RSI 61 building (not overbought); Up/down volume 1.42× (accumulation); Higher lows (ascending base); Positive 20-day momentum +3%; 1-day volume surge (1.37× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 135.34 / 142.48 / 149.61 (7.6% / 13.2% / 18.9%), risk to 117.5."
+    },
+    {
+      "symbol": "JINDALSTEL",
+      "name": "Jindal Steel Ltd.",
+      "sector": "Metals & Mining",
+      "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Metal",
+        "NIFTY Commodities",
+        "NSE Equity"
+      ],
+      "price": 1127.8,
+      "direction": "LONG",
+      "changePct": 0.8,
+      "setupType": "Squeeze breakout",
+      "moveScore": 90,
+      "entry": 1127.8,
+      "sl": 1081.16,
+      "slPct": -4.1,
+      "targets": [
+        {
+          "price": 1176.16,
+          "pct": 4.3,
+          "by": "2026-09-03"
+        },
+        {
+          "price": 1212.44,
+          "pct": 7.5,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 1248.71,
+          "pct": 10.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.04,
+      "rsi": 59,
+      "confidence": 68,
+      "backtestHitRate": 42.9,
+      "backtestTrades": 7,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": false,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 59 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.3% below); RSI 59 building (not overbought); Up/down volume 2.47× (accumulation); Higher lows (ascending base); Positive 20-day momentum +9%; 1-day volume surge (1.09× RVOL); Range contraction",
+      "expected": "Targets 1176.16 / 1212.44 / 1248.71 (4.3% / 7.5% / 10.7%), risk to 1081.16."
+    },
+    {
+      "symbol": "EDELWEISS",
+      "name": "Edelweiss Financial Services Ltd.",
+      "sector": "Financial Services",
+      "indices": [
+        "NIFTY Total Market",
+        "NSE Equity"
+      ],
+      "price": 128.68,
+      "direction": "LONG",
+      "changePct": 1.63,
+      "setupType": "Breakout watch",
+      "moveScore": 90,
+      "entry": 128.68,
+      "sl": 119.14,
+      "slPct": -7.4,
+      "targets": [
+        {
+          "price": 137.78,
+          "pct": 7.1,
+          "by": "2026-09-01"
+        },
+        {
+          "price": 144.61,
+          "pct": 12.4,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 151.44,
+          "pct": 17.7,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 0.95,
+      "rsi": 65.8,
+      "confidence": 68,
+      "backtestHitRate": 42.9,
+      "backtestTrades": 14,
+      "criteria": [
+        {
+          "ok": false,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": true,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 65.8 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Breakout watch — Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 66 building (not overbought); Up/down volume 3.79× (accumulation); Higher lows (ascending base); Positive 20-day momentum +10%; 1-day volume surge (2.97× RVOL); Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 137.78 / 144.61 / 151.44 (7.1% / 12.4% / 17.7%), risk to 119.14."
+    },
+    {
       "symbol": "VMART",
       "name": "V-Mart Retail Ltd.",
       "sector": "Consumer Services",
@@ -5091,40 +5719,181 @@
       "expected": "Targets 894.97 / 937.06 / 979.15 (6.7% / 11.7% / 16.7%), risk to 781.49."
     },
     {
-      "symbol": "LLOYDSENGG",
-      "name": "Lloyds Engineering Works Ltd.",
-      "sector": "Capital Goods",
+      "symbol": "AIROLAM",
+      "name": "Airo Lam limited",
+      "sector": "Equity",
       "indices": [
-        "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 92.25,
+      "price": 89,
       "direction": "LONG",
-      "changePct": -0.7,
-      "setupType": "Momentum building",
-      "moveScore": 85,
-      "entry": 92.25,
-      "sl": 86.52,
-      "slPct": -6.2,
+      "changePct": 0.01,
+      "setupType": "Accumulation",
+      "moveScore": 86,
+      "entry": 89,
+      "sl": 83.29,
+      "slPct": -6.4,
       "targets": [
         {
-          "price": 99.89,
-          "pct": 8.3,
-          "by": "2026-08-27"
+          "price": 96.62,
+          "pct": 8.6,
+          "by": "2026-09-07"
         },
         {
-          "price": 105.62,
-          "pct": 14.5,
-          "by": "2026-09-16"
+          "price": 102.33,
+          "pct": 15,
+          "by": "2026-09-10"
         },
         {
-          "price": 111.35,
-          "pct": 20.7,
+          "price": 108.04,
+          "pct": 21.4,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 53.1,
+      "rsi": 50.3,
+      "confidence": 68,
+      "backtestHitRate": null,
+      "backtestTrades": 3,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": false,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 50.3 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Accumulation — Volatility squeeze — coiled for a move; RSI 50 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 2.27× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; 1-day volume surge (2.96× RVOL); 5-day volume > 20-day average",
+      "expected": "Targets 96.62 / 102.33 / 108.04 (8.6% / 15% / 21.4%), risk to 83.29."
+    },
+    {
+      "symbol": "GRPLTD",
+      "name": "GRP Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 2039.4,
+      "direction": "LONG",
+      "changePct": 2.06,
+      "setupType": "Momentum building",
+      "moveScore": 86,
+      "entry": 2039.4,
+      "sl": 1933.52,
+      "slPct": -5.2,
+      "targets": [
+        {
+          "price": 2180.58,
+          "pct": 6.9,
+          "by": "2026-09-28"
+        },
+        {
+          "price": 2286.46,
+          "pct": 12.1,
+          "by": "2026-10-01"
+        },
+        {
+          "price": 2392.34,
+          "pct": 17.3,
+          "by": "2026-10-08"
+        }
+      ],
+      "rr": 1.33,
+      "rsi": 56.7,
+      "confidence": 68,
+      "backtestHitRate": null,
+      "backtestTrades": 3,
+      "criteria": [
+        {
+          "ok": true,
+          "label": "Volatility squeeze — coiled for a move"
+        },
+        {
+          "ok": false,
+          "label": "Near 20-day breakout level"
+        },
+        {
+          "ok": true,
+          "label": "Above rising 20/50 EMA"
+        },
+        {
+          "ok": true,
+          "label": "RSI 56.7 building toward breakout"
+        },
+        {
+          "ok": true,
+          "label": "Accumulation — up-day volume dominates"
+        },
+        {
+          "ok": true,
+          "label": "Higher lows (ascending base)"
+        },
+        {
+          "ok": false,
+          "label": "Harmonic up"
+        }
+      ],
+      "fundamentals": null,
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 57 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.78× (accumulation); Higher lows (ascending base); Range contraction",
+      "expected": "Targets 2180.58 / 2286.46 / 2392.34 (6.9% / 12.1% / 17.3%), risk to 1933.52."
+    },
+    {
+      "symbol": "AMBICAAGAR",
+      "name": "Ambica Agarbathies & Aroma industries Limited",
+      "sector": "Equity",
+      "indices": [
+        "NSE Equity"
+      ],
+      "price": 24.77,
+      "direction": "LONG",
+      "changePct": 0.24,
+      "setupType": "Squeeze breakout",
+      "moveScore": 85,
+      "entry": 24.77,
+      "sl": 23.01,
+      "slPct": -7.1,
+      "targets": [
+        {
+          "price": 26.65,
+          "pct": 7.6,
+          "by": "2026-08-25"
+        },
+        {
+          "price": 28.07,
+          "pct": 13.3,
+          "by": "2026-08-28"
+        },
+        {
+          "price": 29.48,
+          "pct": 19,
+          "by": "2026-10-06"
+        }
+      ],
+      "rr": 1.07,
+      "rsi": 51,
       "confidence": 68,
       "backtestHitRate": null,
       "backtestTrades": 4,
@@ -5134,7 +5903,7 @@
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -5143,10 +5912,10 @@
         },
         {
           "ok": true,
-          "label": "RSI 53.1 building toward breakout"
+          "label": "RSI 51 building toward breakout"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Accumulation — up-day volume dominates"
         },
         {
@@ -5159,117 +5928,50 @@
         }
       ],
       "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 53 building (not overbought); Up/down volume 1.32× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; Range contraction; Near 52-week high",
-      "expected": "Targets 99.89 / 105.62 / 111.35 (8.3% / 14.5% / 20.7%), risk to 86.52."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 51 building (not overbought); Higher lows (ascending base); Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 26.65 / 28.07 / 29.48 (7.6% / 13.3% / 19%), risk to 23.01."
     },
     {
-      "symbol": "CORONA",
-      "name": "CORONA Remedies Ltd.",
-      "sector": "Healthcare",
+      "symbol": "BAJAJHLDNG",
+      "name": "Bajaj Holdings & Investment Ltd.",
+      "sector": "Financial Services",
       "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
         "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 2165.8,
+      "price": 11320,
       "direction": "LONG",
-      "changePct": 2.09,
-      "setupType": "Momentum building",
-      "moveScore": 85,
-      "entry": 2165.8,
-      "sl": 2064.49,
-      "slPct": -4.7,
+      "changePct": -0.42,
+      "setupType": "Squeeze breakout",
+      "moveScore": 97,
+      "entry": 11320,
+      "sl": 11002.22,
+      "slPct": -2.8,
       "targets": [
         {
-          "price": 2300.88,
-          "pct": 6.2,
-          "by": "2026-09-14"
+          "price": 11743.71,
+          "pct": 3.7,
+          "by": "2026-09-09"
         },
         {
-          "price": 2402.19,
-          "pct": 10.9,
-          "by": "2026-09-17"
+          "price": 12061.49,
+          "pct": 6.6,
+          "by": "2026-09-16"
         },
         {
-          "price": 2503.5,
-          "pct": 15.6,
+          "price": 12379.27,
+          "pct": 9.4,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 62.5,
-      "confidence": 68,
-      "backtestHitRate": null,
-      "backtestTrades": 5,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 62.5 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 63 building (not overbought); Up/down volume 3.72× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Range contraction; Near 52-week high",
-      "expected": "Targets 2300.88 / 2402.19 / 2503.5 (6.2% / 10.9% / 15.6%), risk to 2064.49."
-    },
-    {
-      "symbol": "IFBAGRO",
-      "name": "IFB Agro Industries Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 1007.9,
-      "direction": "LONG",
-      "changePct": 1.59,
-      "setupType": "Accumulation",
-      "moveScore": 82,
-      "entry": 1007.9,
-      "sl": 945.41,
-      "slPct": -6.2,
-      "targets": [
-        {
-          "price": 1091.22,
-          "pct": 8.3,
-          "by": "2026-09-01"
-        },
-        {
-          "price": 1153.72,
-          "pct": 14.5,
-          "by": "2026-09-04"
-        },
-        {
-          "price": 1216.21,
-          "pct": 20.7,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 54.2,
-      "confidence": 68,
-      "backtestHitRate": 57.1,
+      "rsi": 55.5,
+      "confidence": 67,
+      "backtestHitRate": 28.6,
       "backtestTrades": 7,
       "criteria": [
         {
@@ -5277,7 +5979,7 @@
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -5285,25 +5987,25 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 54.2 building toward breakout"
+          "ok": true,
+          "label": "RSI 55.5 building toward breakout"
         },
         {
           "ok": true,
           "label": "Accumulation — up-day volume dominates"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Higher lows (ascending base)"
         },
         {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
+          "ok": false,
+          "label": "Harmonic up"
         }
       ],
       "fundamentals": null,
-      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 1.34× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; Range contraction",
-      "expected": "Targets 1091.22 / 1153.72 / 1216.21 (8.3% / 14.5% / 20.7%), risk to 945.41."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below); Above rising 20 & 50 EMA; RSI 56 building (not overbought); Stealth volume accumulation — money in before the move; Positive 20-day momentum +6%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 11743.71 / 12061.49 / 12379.27 (3.7% / 6.6% / 9.4%), risk to 11002.22."
     },
     {
       "symbol": "MINDACORP",
@@ -5452,78 +6154,6 @@
       "expected": "Targets 910.96 / 959.15 / 1007.34 (7.6% / 13.3% / 19%), risk to 777.92."
     },
     {
-      "symbol": "JSFB",
-      "name": "Jana Small Finance Bank Ltd.",
-      "sector": "Financial Services",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 562.85,
-      "direction": "LONG",
-      "changePct": -1.45,
-      "setupType": "Momentum building",
-      "moveScore": 84,
-      "entry": 562.85,
-      "sl": 527.12,
-      "slPct": -6.3,
-      "targets": [
-        {
-          "price": 610.49,
-          "pct": 8.5,
-          "by": "2026-08-27"
-        },
-        {
-          "price": 646.22,
-          "pct": 14.8,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 681.95,
-          "pct": 21.2,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 55.3,
-      "confidence": 67,
-      "backtestHitRate": null,
-      "backtestTrades": 4,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 55.3 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": false,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 55 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.55× (accumulation); Positive 20-day momentum +4%; Near 52-week high",
-      "expected": "Targets 610.49 / 646.22 / 681.95 (8.5% / 14.8% / 21.2%), risk to 527.12."
-    },
-    {
       "symbol": "RAYMOND",
       "name": "Raymond Limited",
       "sector": "Equity",
@@ -5595,41 +6225,47 @@
       "expected": "Targets 688.66 / 722.79 / 756.93 (7.1% / 12.4% / 17.7%), risk to 609.02."
     },
     {
-      "symbol": "SCPL",
-      "name": "Sheetal Cool Products Limited",
-      "sector": "Equity",
+      "symbol": "TVSMOTOR",
+      "name": "TVS Motor Company Ltd.",
+      "sector": "Automobile and Auto Components",
       "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY Auto",
         "NSE Equity"
       ],
-      "price": 670.55,
+      "price": 4390,
       "direction": "LONG",
-      "changePct": -1.13,
+      "changePct": 0,
       "setupType": "Breakout watch",
-      "moveScore": 83,
-      "entry": 670.55,
-      "sl": 571.79,
-      "slPct": -14.7,
+      "moveScore": 90,
+      "entry": 4390,
+      "sl": 4269.09,
+      "slPct": -2.8,
       "targets": [
         {
-          "price": 754.63,
-          "pct": 12.5,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 817.69,
-          "pct": 21.9,
+          "price": 4551.22,
+          "pct": 3.7,
           "by": "2026-09-07"
         },
         {
-          "price": 880.75,
-          "pct": 31.3,
+          "price": 4672.13,
+          "pct": 6.4,
+          "by": "2026-09-16"
+        },
+        {
+          "price": 4793.05,
+          "pct": 9.2,
           "by": "2026-10-06"
         }
       ],
-      "rr": 0.85,
-      "rsi": 64.8,
-      "confidence": 67,
-      "backtestHitRate": 50,
+      "rr": 1.33,
+      "rsi": 66.4,
+      "confidence": 66,
+      "backtestHitRate": 37.5,
       "backtestTrades": 8,
       "criteria": [
         {
@@ -5646,78 +6282,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 64.8 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA; RSI 65 building (not overbought); Up/down volume 1.59× (accumulation); Higher lows (ascending base); Positive 20-day momentum +15%; Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 754.63 / 817.69 / 880.75 (12.5% / 21.9% / 31.3%), risk to 571.79."
-    },
-    {
-      "symbol": "GLOBALE",
-      "name": "Globale Tessile Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 11.6,
-      "direction": "LONG",
-      "changePct": 1.31,
-      "setupType": "Squeeze breakout",
-      "moveScore": 83,
-      "entry": 11.6,
-      "sl": 10.28,
-      "slPct": -11.4,
-      "targets": [
-        {
-          "price": 12.75,
-          "pct": 9.9,
-          "by": "2026-08-31"
-        },
-        {
-          "price": 13.61,
-          "pct": 17.3,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 14.48,
-          "pct": 24.8,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.88,
-      "rsi": 60.9,
-      "confidence": 67,
-      "backtestHitRate": null,
-      "backtestTrades": 5,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": false,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60.9 building toward breakout"
+          "label": "RSI 66.4 building toward breakout"
         },
         {
           "ok": true,
@@ -5733,151 +6298,8 @@
         }
       ],
       "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below); RSI 61 building (not overbought); Up/down volume 5.62× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; 5-day volume > 20-day average",
-      "expected": "Targets 12.75 / 13.61 / 14.48 (9.9% / 17.3% / 24.8%), risk to 10.28."
-    },
-    {
-      "symbol": "VIMTALABS",
-      "name": "Vimta Labs Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 640.4,
-      "direction": "LONG",
-      "changePct": 3.02,
-      "setupType": "Momentum building",
-      "moveScore": 87,
-      "entry": 640.4,
-      "sl": 603.78,
-      "slPct": -5.7,
-      "targets": [
-        {
-          "price": 689.23,
-          "pct": 7.6,
-          "by": "2026-08-27"
-        },
-        {
-          "price": 725.85,
-          "pct": 13.3,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 762.47,
-          "pct": 19.1,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 60.1,
-      "confidence": 66,
-      "backtestHitRate": 42.9,
-      "backtestTrades": 7,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60.1 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 2.88× (accumulation); Higher lows (ascending base); Positive 20-day momentum +14%; 1-day volume surge (0.91× RVOL); Range contraction",
-      "expected": "Targets 689.23 / 725.85 / 762.47 (7.6% / 13.3% / 19.1%), risk to 603.78."
-    },
-    {
-      "symbol": "AKUMS",
-      "name": "Akums Drugs and Pharmaceuticals Ltd.",
-      "sector": "Healthcare",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 752.9,
-      "direction": "LONG",
-      "changePct": -0.05,
-      "setupType": "Breakout watch",
-      "moveScore": 85,
-      "entry": 752.9,
-      "sl": 709.81,
-      "slPct": -5.7,
-      "targets": [
-        {
-          "price": 805.76,
-          "pct": 7,
-          "by": "2026-08-31"
-        },
-        {
-          "price": 845.4,
-          "pct": 12.3,
-          "by": "2026-09-03"
-        },
-        {
-          "price": 885.04,
-          "pct": 17.6,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.23,
-      "rsi": 66.2,
-      "confidence": 66,
-      "backtestHitRate": 45.5,
-      "backtestTrades": 11,
-      "criteria": [
-        {
-          "ok": false,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 66.2 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 66 building (not overbought); Up/down volume 2.96× (accumulation); Higher lows (ascending base); Positive 20-day momentum +8%; 1-day volume surge (1.14× RVOL); Near 52-week high",
-      "expected": "Targets 805.76 / 845.4 / 885.04 (7% / 12.3% / 17.6%), risk to 709.81."
+      "why": "Breakout watch — Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA; RSI 66 building (not overbought); Up/down volume 2.94× (accumulation); Higher lows (ascending base); Positive 20-day momentum +13%; 1-day volume surge (0.77× RVOL); Range contraction; Near 52-week high",
+      "expected": "Targets 4551.22 / 4672.13 / 4793.05 (3.7% / 6.4% / 9.2%), risk to 4269.09."
     },
     {
       "symbol": "TATACAP",
@@ -5956,49 +6378,53 @@
       "expected": "Targets 383.03 / 396.52 / 410.01 (4.9% / 8.6% / 12.3%), risk to 351.56."
     },
     {
-      "symbol": "NPST",
-      "name": "Network People Services Technologies Limited",
-      "sector": "Equity",
+      "symbol": "ESCORTS",
+      "name": "Escorts Kubota Ltd.",
+      "sector": "Capital Goods",
       "indices": [
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Midcap 150",
         "NSE Equity"
       ],
-      "price": 1606.9,
+      "price": 3086.6,
       "direction": "LONG",
-      "changePct": 0.8,
-      "setupType": "Accumulation",
-      "moveScore": 82,
-      "entry": 1606.9,
-      "sl": 1483.04,
-      "slPct": -7.7,
+      "changePct": -0.18,
+      "setupType": "Squeeze breakout",
+      "moveScore": 88,
+      "entry": 3086.6,
+      "sl": 2997.92,
+      "slPct": -2.9,
       "targets": [
         {
-          "price": 1772.05,
-          "pct": 10.3,
-          "by": "2026-08-26"
+          "price": 3204.85,
+          "pct": 3.8,
+          "by": "2026-09-10"
         },
         {
-          "price": 1895.91,
-          "pct": 18,
+          "price": 3293.53,
+          "pct": 6.7,
           "by": "2026-09-16"
         },
         {
-          "price": 2019.77,
-          "pct": 25.7,
+          "price": 3382.21,
+          "pct": 9.6,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
       "rsi": 55.8,
-      "confidence": 66,
-      "backtestHitRate": null,
-      "backtestTrades": 5,
+      "confidence": 65,
+      "backtestHitRate": 37.5,
+      "backtestTrades": 8,
       "criteria": [
         {
           "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -6006,7 +6432,7 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "RSI 55.8 building toward breakout"
         },
         {
@@ -6014,7 +6440,7 @@
           "label": "Accumulation — up-day volume dominates"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Higher lows (ascending base)"
         },
         {
@@ -6023,53 +6449,49 @@
         }
       ],
       "fundamentals": null,
-      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.22× (accumulation); Higher lows (ascending base); Positive 20-day momentum +5%; 5-day volume > 20-day average",
-      "expected": "Targets 1772.05 / 1895.91 / 2019.77 (10.3% / 18% / 25.7%), risk to 1483.04."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.8% below); Above rising 20 & 50 EMA; RSI 56 building (not overbought); Up/down volume 3.17× (accumulation); Positive 20-day momentum +6%; Range contraction",
+      "expected": "Targets 3204.85 / 3293.53 / 3382.21 (3.8% / 6.7% / 9.6%), risk to 2997.92."
     },
     {
-      "symbol": "ELECON",
-      "name": "Elecon Engineering Co. Ltd.",
-      "sector": "Capital Goods",
+      "symbol": "INGERRAND",
+      "name": "Ingersoll Rand (India) Limited",
+      "sector": "Equity",
       "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 250",
         "NSE Equity"
       ],
-      "price": 451.7,
+      "price": 4660.6,
       "direction": "LONG",
-      "changePct": 5.33,
-      "setupType": "Squeeze breakout",
-      "moveScore": 90,
-      "entry": 451.7,
-      "sl": 422.03,
-      "slPct": -6.6,
+      "changePct": -0.96,
+      "setupType": "Breakout watch",
+      "moveScore": 85,
+      "entry": 4660.6,
+      "sl": 4390.5,
+      "slPct": -5.8,
       "targets": [
         {
-          "price": 483.42,
-          "pct": 7,
-          "by": "2026-08-31"
+          "price": 4943.64,
+          "pct": 6.1,
+          "by": "2026-08-28"
         },
         {
-          "price": 507.22,
-          "pct": 12.3,
-          "by": "2026-09-16"
+          "price": 5155.92,
+          "pct": 10.6,
+          "by": "2026-09-02"
         },
         {
-          "price": 531.01,
-          "pct": 17.6,
+          "price": 5368.2,
+          "pct": 15.2,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.07,
-      "rsi": 51.8,
+      "rr": 1.05,
+      "rsi": 59.7,
       "confidence": 65,
-      "backtestHitRate": 33.3,
-      "backtestTrades": 9,
+      "backtestHitRate": 42.9,
+      "backtestTrades": 7,
       "criteria": [
         {
-          "ok": true,
+          "ok": false,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
@@ -6077,12 +6499,12 @@
           "label": "Near 20-day breakout level"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": true,
-          "label": "RSI 51.8 building toward breakout"
+          "ok": false,
+          "label": "RSI 59.7 building toward breakout"
         },
         {
           "ok": true,
@@ -6098,117 +6520,51 @@
         }
       ],
       "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.2% below); RSI 52 building (not overbought); Up/down volume 1.91× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; 1-day volume surge (1.97× RVOL); Range contraction",
-      "expected": "Targets 483.42 / 507.22 / 531.01 (7% / 12.3% / 17.6%), risk to 422.03."
+      "why": "Breakout watch — Hugging 20-day high (2.3% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.11× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Near 52-week high; 5-day volume > 20-day average",
+      "expected": "Targets 4943.64 / 5155.92 / 5368.2 (6.1% / 10.6% / 15.2%), risk to 4390.5."
     },
     {
-      "symbol": "SMCGLOBAL",
-      "name": "SMC Global Securities Limited",
-      "sector": "Equity",
+      "symbol": "HYUNDAI",
+      "name": "Hyundai Motor India Ltd.",
+      "sector": "Automobile and Auto Components",
       "indices": [
+        "NIFTY Next 50",
+        "NIFTY 100",
+        "NIFTY 200",
+        "NIFTY 500",
+        "NIFTY Total Market",
         "NSE Equity"
       ],
-      "price": 81.13,
+      "price": 2218.8,
       "direction": "LONG",
-      "changePct": -0.25,
-      "setupType": "Momentum building",
-      "moveScore": 87,
-      "entry": 81.13,
-      "sl": 77.1,
-      "slPct": -5,
+      "changePct": -0.37,
+      "setupType": "Breakout watch",
+      "moveScore": 92,
+      "entry": 2218.8,
+      "sl": 2141.02,
+      "slPct": -3.5,
       "targets": [
         {
-          "price": 86.51,
-          "pct": 6.6,
+          "price": 2322.5,
+          "pct": 4.7,
+          "by": "2026-08-24"
+        },
+        {
+          "price": 2400.28,
+          "pct": 8.2,
           "by": "2026-08-27"
         },
         {
-          "price": 90.54,
-          "pct": 11.6,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 94.58,
-          "pct": 16.6,
+          "price": 2478.06,
+          "pct": 11.7,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 61.9,
-      "confidence": 65,
-      "backtestHitRate": 37.5,
-      "backtestTrades": 8,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 61.9 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 62 building (not overbought); Up/down volume 1.86× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; 1-day volume surge (1.7× RVOL); Range contraction",
-      "expected": "Targets 86.51 / 90.54 / 94.58 (6.6% / 11.6% / 16.6%), risk to 77.1."
-    },
-    {
-      "symbol": "STEELCAS",
-      "name": "Steelcast Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 358.7,
-      "direction": "LONG",
-      "changePct": 0.38,
-      "setupType": "Breakout watch",
-      "moveScore": 85,
-      "entry": 358.7,
-      "sl": 326.07,
-      "slPct": -9.1,
-      "targets": [
-        {
-          "price": 385.05,
-          "pct": 7.3,
-          "by": "2026-09-02"
-        },
-        {
-          "price": 404.81,
-          "pct": 12.9,
-          "by": "2026-09-07"
-        },
-        {
-          "price": 424.57,
-          "pct": 18.4,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.81,
-      "rsi": 70.4,
+      "rsi": 63.9,
       "confidence": 64,
-      "backtestHitRate": 37.5,
-      "backtestTrades": 8,
+      "backtestHitRate": 11.1,
+      "backtestTrades": 9,
       "criteria": [
         {
           "ok": false,
@@ -6223,8 +6579,8 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 70.4 building toward breakout"
+          "ok": true,
+          "label": "RSI 63.9 building toward breakout"
         },
         {
           "ok": true,
@@ -6237,11 +6593,52 @@
         {
           "ok": false,
           "label": "Harmonic up"
+        },
+        {
+          "ok": false,
+          "label": "FII down (-2.15%)"
+        },
+        {
+          "ok": true,
+          "label": "DII up (1.94%)"
+        },
+        {
+          "ok": true,
+          "label": "Promoter stable"
+        },
+        {
+          "ok": true,
+          "label": "Pledge 0% (low)"
         }
       ],
-      "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 3.04× (accumulation); Higher lows (ascending base); Positive 20-day momentum +16%; Near 52-week high; 5-day volume > 20-day average",
-      "expected": "Targets 385.05 / 404.81 / 424.57 (7.3% / 12.9% / 18.4%), risk to 326.07."
+      "fundamentals": {
+        "promoter": {
+          "cur": 82.5,
+          "prev": 82.5,
+          "delta": 0,
+          "status": "stable"
+        },
+        "fii": {
+          "cur": 3.28,
+          "prev": 5.43,
+          "delta": -2.15,
+          "status": "down"
+        },
+        "dii": {
+          "cur": 11.65,
+          "prev": 9.71,
+          "delta": 1.94,
+          "status": "up"
+        },
+        "pledge": {
+          "pct": 0,
+          "low": true,
+          "assumed": true
+        },
+        "ok": true
+      },
+      "why": "Breakout watch — Hugging 20-day high (2.5% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.9× (accumulation); Higher lows (ascending base); Positive 20-day momentum +14%; Range contraction",
+      "expected": "Targets 2322.5 / 2400.28 / 2478.06 (4.7% / 8.2% / 11.7%), risk to 2141.02."
     },
     {
       "symbol": "RBLBANK",
@@ -6397,45 +6794,49 @@
       "expected": "Targets 1181.44 / 1220.03 / 1258.61 (4.6% / 8% / 11.4%), risk to 1091.42."
     },
     {
-      "symbol": "BHARATCOAL",
-      "name": "Bharat Coking Coal Limited",
-      "sector": "Equity",
+      "symbol": "CYIENT",
+      "name": "Cyient Ltd.",
+      "sector": "Information Technology",
       "indices": [
+        "NIFTY 500",
+        "NIFTY Total Market",
+        "NIFTY MidSmallcap 400",
+        "NIFTY Smallcap 250",
         "NSE Equity"
       ],
-      "price": 34.81,
+      "price": 892.65,
       "direction": "LONG",
-      "changePct": 4.63,
-      "setupType": "Squeeze breakout",
-      "moveScore": 82,
-      "entry": 34.81,
-      "sl": 32.73,
-      "slPct": -6,
+      "changePct": -1.15,
+      "setupType": "Breakout watch",
+      "moveScore": 97,
+      "entry": 892.65,
+      "sl": 841.99,
+      "slPct": -5.7,
       "targets": [
         {
-          "price": 36.5,
-          "pct": 4.9,
-          "by": "2026-08-25"
+          "price": 942.72,
+          "pct": 5.6,
+          "by": "2026-08-26"
         },
         {
-          "price": 37.77,
-          "pct": 8.5,
-          "by": "2026-08-28"
+          "price": 980.28,
+          "pct": 9.8,
+          "by": "2026-09-16"
         },
         {
-          "price": 39.03,
-          "pct": 12.1,
+          "price": 1017.83,
+          "pct": 14,
           "by": "2026-10-06"
         }
       ],
-      "rr": 0.81,
-      "rsi": 51.3,
-      "confidence": 64,
-      "backtestHitRate": 42.9,
+      "rr": 0.99,
+      "rsi": 58.4,
+      "confidence": 63,
+      "backtestHitRate": 14.3,
       "backtestTrades": 7,
       "criteria": [
         {
-          "ok": true,
+          "ok": false,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
@@ -6443,12 +6844,12 @@
           "label": "Near 20-day breakout level"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Above rising 20/50 EMA"
         },
         {
           "ok": true,
-          "label": "RSI 51.3 building toward breakout"
+          "label": "RSI 58.4 building toward breakout"
         },
         {
           "ok": true,
@@ -6464,80 +6865,8 @@
         }
       ],
       "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.6% below); RSI 51 building (not overbought); Up/down volume 1.34× (accumulation); Higher lows (ascending base); 1-day volume surge (5.24× RVOL); Range contraction",
-      "expected": "Targets 36.5 / 37.77 / 39.03 (4.9% / 8.5% / 12.1%), risk to 32.73."
-    },
-    {
-      "symbol": "JAYNECOIND",
-      "name": "Jayaswal Neco Industries Ltd.",
-      "sector": "Capital Goods",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 93.68,
-      "direction": "LONG",
-      "changePct": 2.7,
-      "setupType": "Squeeze breakout",
-      "moveScore": 90,
-      "entry": 93.68,
-      "sl": 86.07,
-      "slPct": -8.1,
-      "targets": [
-        {
-          "price": 100.48,
-          "pct": 7.3,
-          "by": "2026-08-26"
-        },
-        {
-          "price": 105.58,
-          "pct": 12.7,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 110.68,
-          "pct": 18.1,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 0.89,
-      "rsi": 58.7,
-      "confidence": 63,
-      "backtestHitRate": 25,
-      "backtestTrades": 8,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": false,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 58.7 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); RSI 59 building (not overbought); Up/down volume 2.54× (accumulation); Higher lows (ascending base); Positive 20-day momentum +11%; 1-day volume surge (2.24× RVOL); Range contraction",
-      "expected": "Targets 100.48 / 105.58 / 110.68 (7.3% / 12.7% / 18.1%), risk to 86.07."
+      "why": "Breakout watch — Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 58 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.61× (accumulation); Higher lows (ascending base); Positive 20-day momentum +6%; Range contraction; 5-day volume > 20-day average",
+      "expected": "Targets 942.72 / 980.28 / 1017.83 (5.6% / 9.8% / 14%), risk to 841.99."
     },
     {
       "symbol": "ASHIMASYN",
@@ -6611,197 +6940,53 @@
       "expected": "Targets 20.51 / 22.05 / 23.59 (11.1% / 19.4% / 27.8%), risk to 16.74."
     },
     {
-      "symbol": "MONARCH",
-      "name": "Monarch Networth Capital Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 391.85,
-      "direction": "LONG",
-      "changePct": 1.74,
-      "setupType": "Momentum building",
-      "moveScore": 85,
-      "entry": 391.85,
-      "sl": 371.37,
-      "slPct": -5.2,
-      "targets": [
-        {
-          "price": 419.16,
-          "pct": 7,
-          "by": "2026-10-01"
-        },
-        {
-          "price": 439.64,
-          "pct": 12.2,
-          "by": "2026-10-06"
-        },
-        {
-          "price": 460.13,
-          "pct": 17.4,
-          "by": "2026-10-13"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 60.2,
-      "confidence": 62,
-      "backtestHitRate": 33.3,
-      "backtestTrades": 6,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": false,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 60.2 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 60 building (not overbought); Up/down volume 3.74× (accumulation); Higher lows (ascending base); Positive 20-day momentum +10%; Range contraction; Near 52-week high",
-      "expected": "Targets 419.16 / 439.64 / 460.13 (7% / 12.2% / 17.4%), risk to 371.37."
-    },
-    {
-      "symbol": "WESTLIFE",
-      "name": "Westlife Foodworld Ltd.",
-      "sector": "Consumer Services",
-      "indices": [
-        "NIFTY Total Market",
-        "NSE Equity"
-      ],
-      "price": 594.5,
-      "direction": "LONG",
-      "changePct": 3.49,
-      "setupType": "Breakout watch",
-      "moveScore": 84,
-      "entry": 594.5,
-      "sl": 558.29,
-      "slPct": -6.1,
-      "targets": [
-        {
-          "price": 642.78,
-          "pct": 8.1,
-          "by": "2026-09-03"
-        },
-        {
-          "price": 678.98,
-          "pct": 14.2,
-          "by": "2026-09-08"
-        },
-        {
-          "price": 715.19,
-          "pct": 20.3,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 65.1,
-      "confidence": 62,
-      "backtestHitRate": 33.3,
-      "backtestTrades": 6,
-      "criteria": [
-        {
-          "ok": false,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 65.1 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": false,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA; RSI 65 building (not overbought); Stealth volume accumulation — money in before the move; Up/down volume 1.31× (accumulation); Positive 20-day momentum +24%; 1-day volume surge (1.21× RVOL)",
-      "expected": "Targets 642.78 / 678.98 / 715.19 (8.1% / 14.2% / 20.3%), risk to 558.29."
-    },
-    {
-      "symbol": "ANANTRAJ",
-      "name": "Anant Raj Ltd.",
-      "sector": "Realty",
+      "symbol": "HOMEFIRST",
+      "name": "Home First Finance Company India Ltd.",
+      "sector": "Financial Services",
       "indices": [
         "NIFTY 500",
         "NIFTY Total Market",
         "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 100",
         "NIFTY Smallcap 250",
         "NSE Equity"
       ],
-      "price": 625,
+      "price": 1193.7,
       "direction": "LONG",
-      "changePct": -1.4,
-      "setupType": "Accumulation",
-      "moveScore": 82,
-      "entry": 625,
-      "sl": 596.92,
-      "slPct": -4.5,
+      "changePct": 0.53,
+      "setupType": "Squeeze breakout",
+      "moveScore": 87,
+      "entry": 1193.7,
+      "sl": 1148.29,
+      "slPct": -3.8,
       "targets": [
         {
-          "price": 662.44,
-          "pct": 6,
-          "by": "2026-08-31"
+          "price": 1254.24,
+          "pct": 5.1,
+          "by": "2026-09-04"
         },
         {
-          "price": 690.52,
-          "pct": 10.5,
+          "price": 1299.65,
+          "pct": 8.9,
           "by": "2026-09-16"
         },
         {
-          "price": 718.6,
-          "pct": 15,
+          "price": 1345.05,
+          "pct": 12.7,
           "by": "2026-10-06"
         }
       ],
       "rr": 1.33,
-      "rsi": 58.4,
+      "rsi": 53,
       "confidence": 62,
-      "backtestHitRate": 37.5,
-      "backtestTrades": 8,
+      "backtestHitRate": 28.6,
+      "backtestTrades": 7,
       "criteria": [
         {
           "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": false,
+          "ok": true,
           "label": "Near 20-day breakout level"
         },
         {
@@ -6809,8 +6994,8 @@
           "label": "Above rising 20/50 EMA"
         },
         {
-          "ok": false,
-          "label": "RSI 58.4 building toward breakout"
+          "ok": true,
+          "label": "RSI 53 building toward breakout"
         },
         {
           "ok": true,
@@ -6826,12 +7011,12 @@
         }
       ],
       "fundamentals": null,
-      "why": "Accumulation — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; Stealth volume accumulation — money in before the move; Up/down volume 2.02× (accumulation); Higher lows (ascending base); Positive 20-day momentum +7%; Range contraction",
-      "expected": "Targets 662.44 / 690.52 / 718.6 (6% / 10.5% / 15%), risk to 596.92."
+      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.9% below); Above rising 20 & 50 EMA; RSI 53 building (not overbought); Higher lows (ascending base); 1-day volume surge (1.56× RVOL); Range contraction",
+      "expected": "Targets 1254.24 / 1299.65 / 1345.05 (5.1% / 8.9% / 12.7%), risk to 1148.29."
     },
     {
-      "symbol": "INDGN",
-      "name": "Indegene Ltd.",
+      "symbol": "CAPLIPOINT",
+      "name": "Caplin Point Laboratories Ltd.",
       "sector": "Healthcare",
       "indices": [
         "NIFTY 500",
@@ -6840,43 +7025,43 @@
         "NIFTY Smallcap 250",
         "NSE Equity"
       ],
-      "price": 566.7,
+      "price": 2560.8,
       "direction": "LONG",
-      "changePct": 0.19,
-      "setupType": "Breakout watch",
+      "changePct": 1.23,
+      "setupType": "Momentum building",
       "moveScore": 85,
-      "entry": 566.7,
-      "sl": 540.65,
-      "slPct": -4.6,
+      "entry": 2560.8,
+      "sl": 2424.41,
+      "slPct": -5.3,
       "targets": [
         {
-          "price": 601.44,
-          "pct": 6.1,
-          "by": "2026-09-09"
+          "price": 2730.71,
+          "pct": 6.6,
+          "by": "2026-08-31"
         },
         {
-          "price": 627.49,
-          "pct": 10.7,
-          "by": "2026-09-17"
+          "price": 2858.14,
+          "pct": 11.6,
+          "by": "2026-09-03"
         },
         {
-          "price": 653.54,
-          "pct": 15.3,
+          "price": 2985.57,
+          "pct": 16.6,
           "by": "2026-10-06"
         }
       ],
-      "rr": 1.33,
-      "rsi": 63.8,
+      "rr": 1.25,
+      "rsi": 52,
       "confidence": 61,
       "backtestHitRate": 28.6,
       "backtestTrades": 7,
       "criteria": [
         {
-          "ok": false,
+          "ok": true,
           "label": "Volatility squeeze — coiled for a move"
         },
         {
-          "ok": true,
+          "ok": false,
           "label": "Near 20-day breakout level"
         },
         {
@@ -6885,7 +7070,7 @@
         },
         {
           "ok": true,
-          "label": "RSI 63.8 building toward breakout"
+          "label": "RSI 52 building toward breakout"
         },
         {
           "ok": true,
@@ -6901,154 +7086,8 @@
         }
       ],
       "fundamentals": null,
-      "why": "Breakout watch — Hugging 20-day high (3.0% below); Above rising 20 & 50 EMA; RSI 64 building (not overbought); Up/down volume 3.66× (accumulation); Higher lows (ascending base); Positive 20-day momentum +16%; 1-day volume surge (1.74× RVOL); Near 52-week high",
-      "expected": "Targets 601.44 / 627.49 / 653.54 (6.1% / 10.7% / 15.3%), risk to 540.65."
-    },
-    {
-      "symbol": "SHANKARA",
-      "name": "Shankara Building Products Limited",
-      "sector": "Equity",
-      "indices": [
-        "NSE Equity"
-      ],
-      "price": 142.21,
-      "direction": "LONG",
-      "changePct": -0.23,
-      "setupType": "Squeeze breakout",
-      "moveScore": 87,
-      "entry": 142.21,
-      "sl": 137.91,
-      "slPct": -3,
-      "targets": [
-        {
-          "price": 147.95,
-          "pct": 4,
-          "by": "2026-09-04"
-        },
-        {
-          "price": 152.25,
-          "pct": 7.1,
-          "by": "2026-09-16"
-        },
-        {
-          "price": 156.56,
-          "pct": 10.1,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.33,
-      "rsi": 61.6,
-      "confidence": 59,
-      "backtestHitRate": 16.7,
-      "backtestTrades": 6,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 61.6 building toward breakout"
-        },
-        {
-          "ok": false,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": false,
-          "label": "Harmonic up"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (2.4% below); Above rising 20 & 50 EMA; RSI 62 building (not overbought); Higher lows (ascending base); 1-day volume surge (0.49× RVOL); Range contraction",
-      "expected": "Targets 147.95 / 152.25 / 156.56 (4% / 7.1% / 10.1%), risk to 137.91."
-    },
-    {
-      "symbol": "CHALET",
-      "name": "Chalet Hotels Ltd.",
-      "sector": "Consumer Services",
-      "indices": [
-        "NIFTY 500",
-        "NIFTY Total Market",
-        "NIFTY MidSmallcap 400",
-        "NIFTY Smallcap 250",
-        "NSE Equity"
-      ],
-      "price": 852.9,
-      "direction": "LONG",
-      "changePct": 0.57,
-      "setupType": "Squeeze breakout",
-      "moveScore": 88,
-      "entry": 852.9,
-      "sl": 809.6,
-      "slPct": -5.1,
-      "targets": [
-        {
-          "price": 900.41,
-          "pct": 5.6,
-          "by": "2026-09-15"
-        },
-        {
-          "price": 936.03,
-          "pct": 9.7,
-          "by": "2026-09-18"
-        },
-        {
-          "price": 971.66,
-          "pct": 13.9,
-          "by": "2026-10-06"
-        }
-      ],
-      "rr": 1.1,
-      "rsi": 57,
-      "confidence": 58,
-      "backtestHitRate": 14.3,
-      "backtestTrades": 7,
-      "criteria": [
-        {
-          "ok": true,
-          "label": "Volatility squeeze — coiled for a move"
-        },
-        {
-          "ok": true,
-          "label": "Near 20-day breakout level"
-        },
-        {
-          "ok": true,
-          "label": "Above rising 20/50 EMA"
-        },
-        {
-          "ok": true,
-          "label": "RSI 57 building toward breakout"
-        },
-        {
-          "ok": true,
-          "label": "Accumulation — up-day volume dominates"
-        },
-        {
-          "ok": true,
-          "label": "Higher lows (ascending base)"
-        },
-        {
-          "ok": true,
-          "label": "Harmonic up (Bullish ABC retrace)"
-        }
-      ],
-      "fundamentals": null,
-      "why": "Squeeze breakout — Volatility squeeze — coiled for a move; Hugging 20-day high (1.9% below); Above rising 20 & 50 EMA; RSI 57 building (not overbought); Higher lows (ascending base); Positive 20-day momentum +4%; Range contraction",
-      "expected": "Targets 900.41 / 936.03 / 971.66 (5.6% / 9.7% / 13.9%), risk to 809.6."
+      "why": "Momentum building — Volatility squeeze — coiled for a move; Above rising 20 & 50 EMA; RSI 52 building (not overbought); Up/down volume 1.45× (accumulation); Higher lows (ascending base); Positive 20-day momentum +4%; Range contraction; Near 52-week high",
+      "expected": "Targets 2730.71 / 2858.14 / 2985.57 (6.6% / 11.6% / 16.6%), risk to 2424.41."
     }
   ]
 }
