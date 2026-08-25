@@ -47,12 +47,41 @@ function Sth({ label, k, s, cls = '' }) {
   return <th onClick={() => s.toggle(k)} className={`${cls} cursor-pointer select-none hover:text-txt`} title="Click to sort">{label}<span className="text-[8px] opacity-60">{active ? (s.dir === 'asc' ? ' ▲' : ' ▼') : ' ↕'}</span></th>
 }
 
-function applyView(signals, q, sortBy) {
+function applyView(signals, q, sortBy, minConf = 0) {
   let r = signals || []
   if (q && q.trim()) { const s = q.trim().toLowerCase(); r = r.filter(x => (`${x.symbol || ''} ${x.underlying || ''} ${x.name || ''} ${x.sector || ''}`).toLowerCase().includes(s)) }
+  if (minConf > 0) r = r.filter(x => confOf(x) >= minConf)
   const cmp = SORTS[sortBy]
   if (cmp) r = [...r].sort(cmp)
   return r
+}
+// the confidence score for a signal (desks use different field names)
+const confOf = s => s?.confidence ?? s?.confluenceScore ?? s?.conviction ?? 0
+// FULL hover detail for ANY board signal — confidence, reason, entry/SL, targets + dates, R:R, delivery…
+function sigTitle(s) {
+  if (!s) return ''
+  const money = s.optType || s.commodity || (s.symbol || '').includes('=X') ? '' : '₹'
+  const num = x => x == null ? '—' : `${money}${(+x).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
+  const dir = /SHORT|BEAR/.test(String(s.direction || '')) ? 'SELL / SHORT' : 'BUY / LONG'
+  const L = [
+    `${s.symbol || s.underlying || ''}${s.name ? ' — ' + s.name : ''}`,
+    `${s.label || s.generator || 'signal'}${s.grade ? '  ·  Grade ' + s.grade : ''}`,
+    `${dir}${s.optType ? '  ·  ' + s.optType : ''}${s.lot ? '  ·  lot ' + s.lot : ''}`,
+    `Confidence: ${confOf(s)}%${s.accuracy != null ? `  ·  backtested first-target hit ~${s.accuracy}% (${s.backtestTrades || 0} setups)` : ''}`,
+  ]
+  if (s.ltp != null || s.entry != null) L.push(`LTP ${num(s.ltp ?? s.entry)}   Entry ${num(s.entry)}   Stop ${num(s.sl)}${s.slPct != null ? ` (${s.slPct}%)` : ''}`)
+  if (Array.isArray(s.targets)) s.targets.forEach((t, i) => L.push(`Target ${i + 1}: ${num(t.price)}${t.pct != null ? `  (+${t.pct}%)` : ''}${t.by ? `  — by ${fmtByDT(t.by)}` : ''}`))
+  const meta = []
+  if (s.rr) meta.push(`R:R 1:${s.rr}`)
+  if (s.delivery != null) meta.push(`Delivery ${s.delivery}%`)
+  if (s.rsi != null) meta.push(`RSI ${Math.round(s.rsi)}`)
+  if (s.changePct != null) meta.push(`${s.changePct >= 0 ? '+' : ''}${s.changePct}% today`)
+  if (meta.length) L.push(meta.join('   ·   '))
+  if (s.footprint && !s.footprint.weak) L.push(`🕵️ Smart-money footprint ${s.footprint.score}: ${(s.footprint.flags || []).join(', ')}`)
+  if (s.news) L.push(`📰 ${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`)
+  if (s.reason) L.push(`\nWhy: ${s.reason}`)
+  L.push('\n(hover shows full analysis · educational, not advice)')
+  return L.filter(Boolean).join('\n')
 }
 // board date, set once per render so NewTag can flag anything generated TODAY (server-authoritative,
 // works all day) — not just the fragile 2h client-side "seen since last visit" window.
@@ -383,6 +412,7 @@ export default function SignalsBoard() {
   const [scanning, setScanning] = useState(false)
   const [search, setSearch] = useState('')
   const [sortBy, setSortBy] = useState('default')
+  const [minConf, setMinConf] = useState(0)   // confidence-score filter
   const [navCollapsed, setNavCollapsed] = useState(false)
   const [theme, setTheme] = useState(getTheme())
   const [book, setBook] = useState(null)   // real paper-portfolio stats from trade_book.json
@@ -449,7 +479,7 @@ export default function SignalsBoard() {
   const newCount = gens.reduce((n, g) => n + (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length, 0)
   const newPerTab = tabs.map(g => (g.signals || []).filter(s => isNewSig(s, g.id, flags)).length)
   const active = tabs[tab] || tabs[0]
-  const rows = applyView(active?.signals, search, sortBy)
+  const rows = applyView(active?.signals, search, sortBy, minConf)
   const tr = board?.trackRecord
   const o = tr?.overall
   const topId = tr?.topGenerator?.id           // most-accurate tab (measured, reliable sample)
@@ -602,7 +632,14 @@ export default function SignalsBoard() {
                     {[['default', 'Default'], ['strength', 'Strength'], ['change', 'Change %'], ['rr', 'R:R'], ['symbol', 'A–Z']].map(([k, lbl]) => (
                       <button key={k} onClick={() => setSortBy(k)} className={`mono text-[10px] px-2.5 py-1 rounded-full ${sortBy === k ? 'text-white font-bold' : 'text-txt-sec bg-bg-base border border-border'}`} style={sortBy === k ? { background: active.color } : {}}>{lbl}</button>
                     ))}
-                    {(search || sortBy !== 'default') && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
+                    <span className="hdiv hidden sm:block" />
+                    <span className="mono text-[10px] text-txt-muted">Confidence ≥</span>
+                    {[[0, 'All'], [60, '60'], [70, '70'], [80, '80'], [90, '90']].map(([v, lbl]) => (
+                      <button key={v} onClick={() => setMinConf(v)} title={v ? `Show only signals with confidence ≥ ${v}%` : 'Show all signals'}
+                        className={`mono text-[10px] px-2.5 py-1 rounded-full ${minConf === v ? 'text-white font-bold' : 'text-txt-sec bg-bg-base border border-border'}`}
+                        style={minConf === v ? { background: v >= 80 ? '#0E9F6E' : v >= 60 ? '#2962FF' : '#6B7F99' } : {}}>{lbl}</button>
+                    ))}
+                    {(search || sortBy !== 'default' || minConf > 0) && <span className="mono text-[10px] text-txt-muted">· {rows.length} shown</span>}
                   </div>
                   {rows.length === 0
                     ? <div className="p-10 mono text-sm text-txt-muted text-center leading-relaxed">{search
@@ -744,8 +781,8 @@ function RowGroup({ s, i, isBuy, t, color, open, onToggle, setView }) {
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
-      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} />
+      <tr onClick={onToggle} title={sigTitle(s)} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted text-[9px]">ⓘ</span>
           {s.movingNow && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#F59E0B' }}>🚀 MOVING</span>}
           {s.footprint && !s.footprint.weak && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white" style={{ background: '#0E9F6E' }} title={s.footprint.flags?.join(' · ')}>🕵️ FOOTPRINT {s.footprint.score}</span>}
           {s.news && <span className="ml-1 px-1.5 rounded-full text-[10px] font-bold text-white bg-accent-primary" title={`${s.news}${s.newsSource ? ' — ' + s.newsSource : ''}`}>📰 NEWS</span>}
@@ -849,8 +886,8 @@ function FnoRow({ s, color, open, onToggle }) {
   const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
     <>
-      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.underlying}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+      <tr onClick={onToggle} title={sigTitle(s)} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.underlying}<NewTag s={s} /><span className="ml-1 text-txt-muted text-[9px]">ⓘ</span><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2 text-txt-sec">{s.kind}</td>
         <td className="px-3 py-2"><span className={`tpill text-white ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.underlying} base={s.spot} /></td>
@@ -867,7 +904,7 @@ function FnoCard({ s, color }) {
   const [copied, setCopied] = useState(false)
   const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   return (
-    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" title={sigTitle(s)} style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
         <span className="mono text-sm font-bold text-txt">{s.underlying}</span><NewTag s={s} />
         <span className="mono text-[9px] px-1.5 py-0.5 rounded bg-bg-panel text-txt-sec">{s.kind}</span>
@@ -940,8 +977,8 @@ function ConfRow({ s, color, open, onToggle, setView }) {
   const chart = e => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
     <>
-      <tr onClick={onToggle} className="border-b border-border hover:bg-bg-card cursor-pointer">
-        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
+      <tr onClick={onToggle} title={sigTitle(s)} className="border-b border-border hover:bg-bg-card cursor-pointer">
+        <td className="px-3 py-2 font-bold text-txt">{s.symbol}<NewTag s={s} /><span className="ml-1 text-txt-muted text-[9px]">ⓘ</span><span className="ml-1 text-txt-muted">{open ? '▾' : '▸'}</span></td>
         <td className="px-3 py-2"><span className="tpill text-white" style={{ background: gradeBg(s.grade) }}>{s.grade}</span></td>
         <td className="px-3 py-2 text-accent font-bold">{s.genCount}×</td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.symbol} base={s.ltp} /></td>
@@ -1003,7 +1040,7 @@ function MobileTradeCard({ s, color, setView }) {
   const copy = (e) => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const chart = (e) => { e.stopPropagation(); openSymbol('stocks', s.symbol + '.NS'); setView('chart') }
   return (
-    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" title={sigTitle(s)} style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
         <span className="mono text-base font-bold text-txt">{s.symbol}</span><NewTag s={s} />
         <span className={`mono text-[10px] font-bold px-2 py-0.5 rounded text-white ${isBuy ? 'bg-green' : 'bg-red'}`}>{isBuy ? 'BUY' : 'SELL'}</span>
@@ -1092,7 +1129,7 @@ function AssetBiasCard({ s, color }) {
   const copy = e => { e.stopPropagation(); doCopy(cleanCopy(s), setCopied) }
   const tcls = biasToneCls(s.biasTone)
   return (
-    <div className="rounded-xl border border-border bg-bg-card p-3 elev" style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
+    <div className="rounded-xl border border-border bg-bg-card p-3 elev" title={sigTitle(s)} style={{ borderLeft: `4px solid ${color}` }} onClick={() => setOpen(o => !o)}>
       <div className="flex items-center gap-2">
         <span className="mono text-sm font-bold text-txt">{s.name}</span>
         <span className={`ml-auto mono text-sm font-bold ${tcls}`}>{s.score > 0 ? '+' : ''}{s.score}</span>
