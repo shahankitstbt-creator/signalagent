@@ -37,6 +37,7 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 | **🔺 Harmonic / Chart Patterns** | XABCD harmonics + classic patterns at Fibonacci completion zones. |
 | **🎯 Smart-Money Desk** | NIFTY/BankNifty/Gold multi-timeframe (10 TFs) + option positioning + far-expiry OI. |
 | **🔄 Reversal / Mean-Reversion** | Oversold-bounce longs / overbought-fade shorts at a liquidity sweep. **Defers to trend** (see rule 4). |
+| **📉 Short / Sell** | The SELL side — spots **distribution breakdowns** (close below 20-day support on volume), **overbought/profit-booking reversals** (RSI hot + rejection wick at highs), and **bull traps** (failed breakout) BEFORE the drop. SHORT: stop ABOVE structure, targets below; F&O-eligible → PE / short-futures. Liquid names only; **defers to trend** (never SHORT a name the trend desks are BUYing). Tracked in the ledger. |
 | **Commodities** | Gold / Crude / Silver — trend + breakout (price above 20&50 EMA, near 20-day high), ATR-based SL/targets. |
 | **🧲 Gamma / Dealer Map** | GEX walls, gamma flip, dealer support/resistance (context, not a trade). |
 | **🔯 Vedic + Hora** | Astro timing — tradition only, NO proven edge; never sized on its own. |
