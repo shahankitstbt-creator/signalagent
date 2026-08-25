@@ -38,7 +38,7 @@ import { notifyTradeEvents } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
-const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf'])                      // ALSO tracked in the ledger (pnf = Point & Figure desk)
+const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf', 'short_sell'])         // ALSO tracked in the ledger (pnf = Point & Figure, short_sell = the SELL side)
 
 // timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
 const TF = {
@@ -607,6 +607,9 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const dropped = rev.length - kept.length
     revCol.signals = kept; revCol.count = kept.length
     console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} contradicting the trend consensus` : ''}`)
+    // SELL desk also defers to trend consensus — never SHORT a name the trend engines are BUYing (no same-stock BUY+SELL)
+    const scol = board.find(g => g.id === 'short_sell')
+    if (scol) { const before = scol.signals.length; scol.signals = (scol.signals || []).filter(s2 => !longSyms.has(s2.symbol || s2.underlying)); scol.count = scol.signals.length; console.log(`Short/Sell: ${scol.count} sell setups${before - scol.count ? ` · dropped ${before - scol.count} that trend desks are buying` : ''}`) }
   }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
@@ -1041,7 +1044,7 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
   for (const st of finalists) { const m = runMultibagger(st, st, st._fund, addDays); if (m) byGen.multibagger.push(m) }
   // price-based columns: rank by confidence, feed up to 30 fresh candidates/day into the ledger
   // (was 15 — too narrow; new setups couldn't get in past the persistent high-confidence names)
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic', 'pnf']) byGen[id] = (byGen[id] || []).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 30)
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic', 'pnf', 'short_sell']) byGen[id] = (byGen[id] || []).sort((a, b) => (b.confidence ?? 0) - (a.confidence ?? 0)).slice(0, 30)
   // momentum = WIDE net: rank by fresh-momentum score, keep 25 (movers-now first)
   byGen.momentum = (byGen.momentum || []).sort((a, b) => (b._momScore ?? 0) - (a._momScore ?? 0)).slice(0, 25)
   // tag any card whose stock is in today's news with its catalyst headline

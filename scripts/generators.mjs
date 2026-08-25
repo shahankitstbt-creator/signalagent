@@ -18,6 +18,7 @@ export const GEN_META = [
   { id: 'fno', label: '📊 Futures & Options', color: '#7C3AED', desc: 'F&O-eligible stocks, indices & commodities — direction + lot size + a concrete options play (reuses all signal logic)' },
   { id: 'momentum', label: '🚀 Momentum & Early Movers', color: '#F59E0B', desc: 'Wide net across the FULL NSE universe — stocks surging on volume NOW or poised to break out. Catches moves early (a day before / during live market); higher-risk & less filtered than the confluence picks' },
   { id: 'reversal', label: '🔄 Reversal / Mean-Reversion', color: '#DB2777', desc: 'The OPPOSITE of momentum — fade extremes after the SL-hunt. LONG oversold bottoms (sell-side liquidity swept + hammer) and SHORT overbought tops (buy-side swept + shooting star). Two-sided; shorts book as PE options.' },
+  { id: 'short_sell', label: '📉 Short / Sell', color: '#F23645', desc: 'The SELL side — identify DISTRIBUTION, tops, bull-traps & profit-booking BEFORE the drop. Three setups: breakdown below 20-day support (distribution), overbought rejection at the highs (profit-booking/reversal), and a failed breakout (bull trap). SHORT with stop ABOVE structure, targets below; F&O-eligible names trade as PE / short futures. Liquid names only.' },
   { id: 'vp_fib', label: '📐 VP + Fib + VWAP', color: '#D97706', desc: 'The confluence combo — Volume Profile POC + a key Fibonacci level + VWAP fair-value stacked in one zone = institutional magnet for a fast, high-odds reaction (triple stack = strongest)' },
   { id: 'vol_accum', label: 'Volume + Accumulation', color: '#0E9F6E', desc: 'Coiling with rising up-volume in an uptrend (swing upside)' },
   { id: 'multibagger', label: 'Multibagger Quality', color: '#7C3AED', desc: 'Ownership strong: promoter/FII/DII up, low pledge, uptrend' },
@@ -207,6 +208,45 @@ const STOCK_GENS = {
     card.movingNow = movingNow || bigMove
     return card
   },
+  // 📉 SHORT / SELL — spot DISTRIBUTION, tops, traps & profit-booking BEFORE the drop. Bearish only,
+  // liquid names. SL ABOVE structure, targets BELOW. F&O-eligible names become PE / short-futures plays.
+  short_sell: ({ st, d, a, addDays }) => {
+    const c = d.c, h = d.h, l = d.l, v = d.v, i = c.length - 1
+    if (i < 45) return null
+    const price = c[i]
+    let dv = 0; for (let k = i - 19; k <= i; k++) dv += (v[k] || 0) * (c[k] || 0); dv /= 20
+    if (dv < 3e7 || price < 20) return null                                       // tradeable shorts only (liquid)
+    const e20 = ema(c, 20), e50 = ema(c, 50)
+    let atr = 0; for (let k = i - 13; k <= i; k++) atr += Math.max(h[k] - l[k], Math.abs(h[k] - c[k - 1]), Math.abs(l[k] - c[k - 1])); atr /= 14
+    const rsi = a.rsi, bearCandle = c[i] < c[i - 1] && c[i] < (h[i] + l[i]) / 2
+    const below = price < e20[i] && price < e50[i]
+    const swingHi = Math.max(...h.slice(-20)), supp = Math.min(...l.slice(i - 20, i))
+    const rvol = (a.vol && a.vol.rvol) || 1, upperWick = (h[i] - Math.max(c[i], c[i - 1])) / (atr || 1)
+    const breakdown = below && price <= supp * 1.003 && rvol >= 1.2 && bearCandle                 // distribution
+    const overbought = rsi != null && rsi >= 68 && bearCandle && h[i] >= swingHi * 0.985 && upperWick >= 0.5  // profit-booking
+    const hi20prev = Math.max(...h.slice(i - 22, i - 2))
+    const trap = h.slice(-3).some(x => x > hi20prev) && c[i] < hi20prev && bearCandle             // bull trap
+    const setup = breakdown ? 'Distribution breakdown' : overbought ? 'Overbought reversal — profit-booking' : trap ? 'Bull trap — failed breakout' : null
+    if (!setup) return null
+    const entry = round(price), sl = round(Math.max(swingHi, price + 1.6 * atr)), risk = Math.max(sl - entry, atr)
+    const tps = [entry - 1.5 * risk, entry - 2.5 * risk, entry - 4 * risk].map(x => round(Math.max(x, price * 0.55)))
+    const dpt = Math.max(atr * 0.55, entry * 0.004); const eta = tps.map(t => Math.max(1, Math.round((entry - t) / dpt)))
+    for (let k = 1; k < eta.length; k++) if (eta[k] <= eta[k - 1]) eta[k] = eta[k - 1] + 2
+    const conf = Math.min(90, 58 + (breakdown ? 8 : 0) + (rvol >= 1.6 ? 8 : rvol >= 1.3 ? 4 : 0) + (rsi >= 72 ? 6 : 0) + (below ? 4 : 0))
+    const reason = breakdown ? `Distribution: closed below 20-day support ₹${round(supp)} on ${round(rvol, 1)}× volume, under 20 & 50 EMA — supply in control`
+      : overbought ? `Profit-booking/reversal: RSI ${Math.round(rsi)} + rejection wick at the highs ₹${round(swingHi)} — buyers exhausted`
+        : `Bull trap: poked above ₹${round(hi20prev)} then closed back below — trapped longs will sell`
+    return {
+      generator: 'short_sell', symbol: st.symbol, name: st.name, sector: st.sector, indices: st.indices,
+      label: M.short_sell.label, direction: 'SHORT', dirTone: 'down', setupType: setup,
+      ltp: entry, entry, sl, slPct: round(((sl - entry) / entry) * 100, 1),
+      targets: tps.map((t, k) => ({ price: t, pct: round(((entry - t) / entry) * 100, 1), by: addDays(eta[k]), days: eta[k] })),
+      rsi: round(rsi, 0), confidence: conf, grade: conf >= 78 ? 'A+' : conf >= 65 ? 'A' : 'B',
+      rr: round((entry - tps[0]) / (sl - entry), 2), reason,
+      optionPlay: `Buy PE (bearish) / short futures — ${setup}`, delivery: st._deliv ? st._deliv.pct : null,
+      social: `📉 ${st.symbol} — SELL/SHORT (${setup})\n${reason}\nEntry ₹${entry} · SL ₹${sl} · T1 ₹${tps[0]}\n📌 Educational only, not advice. Not SEBI-registered.`,
+    }
+  },
   // Point & Figure double-top breakout, CONFIRMED by the EMA trend cloud (only with the trend).
   pnf: ({ st, d, a, addDays }) => {
     const pf = pnfBreakout(d)
@@ -220,7 +260,7 @@ const STOCK_GENS = {
 // run the price-only generators (no fundamentals) for one stock
 export function runPriceGenerators(st, d, a, addDays) {
   const out = []
-  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic', 'momentum', 'pnf']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
+  for (const id of ['vol_accum', 'vp_fib', 'money_flow', 'harmonic', 'momentum', 'pnf', 'short_sell']) { try { const s = STOCK_GENS[id]({ st, d, a, addDays }); if (s) out.push(s) } catch { } }
   return out
 }
 export function runMultibagger(st, a, f, addDays) { try { return STOCK_GENS.multibagger({ st, a, f, addDays }) } catch { return null } }

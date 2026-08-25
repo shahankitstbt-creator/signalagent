@@ -852,6 +852,7 @@ function FnoTable({ signals, color, setView }) {
           <th className={H}>Signal</th>
           <Sth label="Spot/LTP" k="spot" s={s} cls={H} />
           <Sth label="Lot" k="lot" s={s} cls={H} />
+          <Sth label="Conf" k="conf" s={s} cls={H} />
           <th className={H}>Suggested options play</th>
           <th className={H}></th>
         </tr></thead>
@@ -892,10 +893,11 @@ function FnoRow({ s, color, open, onToggle }) {
         <td className="px-3 py-2"><span className={`tpill text-white ${dirCls(s.dirTone)}`}>{s.direction}</span></td>
         <td className="px-3 py-2 text-right text-txt-sec"><Ltp symbol={s.underlying} base={s.spot} /></td>
         <td className="px-3 py-2 text-txt-sec">{s.lot ?? '—'}</td>
+        <td className={`px-3 py-2 text-right font-bold ${confColor(confOf(s))}`}>{confOf(s) ? confOf(s) + '%' : '—'}</td>
         <td className="px-3 py-2 text-[11px]" style={{ color: '#7C3AED' }}>{s.optionPlay}</td>
         <td className="px-3 py-2"><button onClick={copy} className="px-2 py-1 rounded text-white text-[10px]" style={{ background: color }}>{copied ? '✓' : '📋'}</button></td>
       </tr>
-      {open && <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}><td colSpan={7} className="px-5 py-3"><FnoDetail s={s} /></td></tr>}
+      {open && <tr className="border-b border-border" style={{ background: tint(color, 0.04) }}><td colSpan={8} className="px-5 py-3"><FnoDetail s={s} /></td></tr>}
     </>
   )
 }
