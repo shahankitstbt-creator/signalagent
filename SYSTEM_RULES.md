@@ -155,6 +155,12 @@ and **review the full result on 30 Aug 2026**. Do NOT wait until the 30th to act
 
 ---
 
+## 6b. LONG-ONLY UNIVERSE (no shorting these)
+
+**NEVER fire a SHORT** on **F&O-eligible stocks**, **indices** (Nifty, BankNifty, Sensex, MidcpNifty, FinNifty), or **commodities** (Gold, Silver, Crude, XAUUSD, XAGUSD). These trade **long-only** (buy / CE only). Enforced at every source: the Short/Sell desk, reversal shorts, index-option PE, commodity shorts, and a trade-book backstop that refuses to open a short on any of them. (Shorts may still appear on **non-F&O cash stocks** — those are informational; cash delivery can't be shorted anyway.)
+
+---
+
 ## 7. WHAT WE NEVER DO
 - Never claim >80%/100%/"sure"/"guaranteed" accuracy — no system can.
 - Never place real orders (Angel API is READ-ONLY).
