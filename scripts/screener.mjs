@@ -39,6 +39,11 @@ import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
 const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf', 'short_sell'])         // ALSO tracked in the ledger (pnf = Point & Figure, short_sell = the SELL side)
+// LONG-ONLY universe (user rule): NEVER fire a SHORT on F&O-eligible stocks, indices, or commodities.
+const NO_SHORT_INDEX = new Set(['NIFTY', 'BANKNIFTY', 'SENSEX', 'MIDCPNIFTY', 'MIDCPNIFTY50', 'FINNIFTY', 'NIFTYNXT50', 'BANKEX'])
+const NO_SHORT_COMMO = new Set(['GOLD', 'SILVER', 'CRUDEOIL', 'NATURALGAS', 'COPPER', 'XAUUSD', 'XAGUSD'])
+const isShortSig = s => /SHORT|BEAR/.test(String(s?.direction || ''))
+const longOnlyName = (sym, fnoLots = {}) => { const u = String(sym || '').replace('.NS', '').toUpperCase(); return !!(fnoLots[u] || fnoLots[sym] || NO_SHORT_INDEX.has(u) || NO_SHORT_COMMO.has(u)) }
 
 // timeframe modes: Daily (swing), Weekly (positional), Intraday (pre-move, real-market)
 const TF = {
@@ -600,16 +605,17 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     }
     const kept = rev.filter(r => {
       const sym = r.symbol || r.underlying
+      if (r.direction === 'SHORT' && longOnlyName(sym, fnoLots)) return false   // LONG-ONLY: no short on F&O/index/commodity
       if (r.direction === 'SHORT' && longSyms.has(sym)) return false   // don't short a trend-BUY
       if (r.direction === 'LONG' && shortSyms.has(sym)) return false   // don't buy a trend-SELL
       return true
     })
     const dropped = rev.length - kept.length
     revCol.signals = kept; revCol.count = kept.length
-    console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} contradicting the trend consensus` : ''}`)
-    // SELL desk also defers to trend consensus — never SHORT a name the trend engines are BUYing (no same-stock BUY+SELL)
+    console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} (long-only F&O/index/commodity + trend contradictions)` : ''}`)
+    // SELL desk — LONG-ONLY rule (no short on F&O/index/commodity) + defers to trend (no same-stock BUY+SELL)
     const scol = board.find(g => g.id === 'short_sell')
-    if (scol) { const before = scol.signals.length; scol.signals = (scol.signals || []).filter(s2 => !longSyms.has(s2.symbol || s2.underlying)); scol.count = scol.signals.length; console.log(`Short/Sell: ${scol.count} sell setups${before - scol.count ? ` · dropped ${before - scol.count} that trend desks are buying` : ''}`) }
+    if (scol) { const before = scol.signals.length; scol.signals = (scol.signals || []).filter(s2 => { const sym = s2.symbol || s2.underlying; return !longOnlyName(sym, fnoLots) && !longSyms.has(sym) }); scol.count = scol.signals.length; console.log(`Short/Sell: ${scol.count} sell setups${before - scol.count ? ` · dropped ${before - scol.count} (long-only F&O/index/commodity + trend buys)` : ''}`) }
   }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
@@ -881,7 +887,7 @@ async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol
       const hi20 = Math.max(...h.slice(-20)), lo20 = Math.min(...l.slice(-20))
       // trend = price above BOTH EMAs (don't require e20>e50 — misses strong trends recovering from a dip)
       const up = px > e20 && px > e50, down = px < e20 && px < e50
-      const dir = (up && px >= hi20 * 0.97) ? 'LONG' : (down && px <= lo20 * 1.03) ? 'SHORT' : null
+      const dir = (up && px >= hi20 * 0.97) ? 'LONG' : null   // LONG-ONLY: no shorts on Gold/Silver/Crude
       if (!dir) continue
       const bull = dir === 'LONG', mult = bull ? 1 : -1
       const entry = round(px, 2), sl = round(bull ? entry - 1.5 * atr : entry + 1.5 * atr, 2)
@@ -921,6 +927,7 @@ function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
       }
     }
     if (!trade) continue
+    if (isShortSig(trade)) continue   // LONG-ONLY: never fire a PE/short on indices or F&O names
     try {
       openOrUpdate(lg, {
         generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',

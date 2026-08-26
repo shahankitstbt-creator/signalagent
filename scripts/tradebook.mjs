@@ -607,9 +607,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const quality = s.grade === 'A++' || s.grade === 'A+' || (s.confidence || 0) >= 65
     return liquid && quality
   }
+  const IDX = new Set(['NIFTY', 'BANKNIFTY', 'SENSEX', 'MIDCPNIFTY', 'FINNIFTY', 'NIFTYNXT50', 'BANKEX'])
   for (const s of cands) {
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
+    // LONG-ONLY backstop: never TAKE a short on an F&O stock, index, or commodity (user rule).
+    if ((s.direction === 'SHORT' || s.direction === 'BEARISH') && (fnoLots[sym] || fnoLots[s.underlying] || s.commodity || IDX.has(String(sym || '').toUpperCase()))) continue
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
