@@ -21,8 +21,8 @@ const RISK_PCT = 1                    // risk ~1% of the sleeve per trade
 // SAFEST daily-income design (user: "safest one", ₹10k/day is fine): buy the UNDERLYING in CASH —
 // no options, no leverage, no theta decay — on ONLY the highest-confidence long setups. Book a small
 // gain fast, keep a tight stop, square off EOD. Aim ~₹10k/day (~1% of ₹10L) — an AIM, not a promise.
-const DAILY_TAKE = 1.5               // book at +1.5% (lock a consistent gain)
-const DAILY_STOP = 2.5               // tight intraday stop (works because names are LIQUID largecaps — they don't gap −5%)
+const DAILY_TAKE = 1.8               // book at +1.8% — target now LARGER than the stop (positive expectancy)
+const DAILY_STOP = 1.2               // cut at −1.2% (was −2.5%, which made R:R inverted → guaranteed losing math). R:R 1.5:1; at 56% win, expectancy ≈ +0.44%/trade instead of −0.26%. Liquid names hold a 1.2% stop.
 const DAILY_MAX_HOLD = 1             // DAY TRADE: winners book at +target intraday, losers cut at −stop; anything unresolved squares off by the next session (no multi-day holds)
 const DAILY_MAX_OPEN = 8             // fewer, higher-quality names (one loser can't tank the day)
 const DAILY_POS_PCT = 10             // ~10% of the ₹10L pool per position
@@ -604,7 +604,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const liquidQualityCash = s => {
     const sym = s.symbol || s.underlying
     const liquid = !!(fnoLots[sym] || fnoLots[s.underlying]) || (s.delivery ?? 0) >= CASH_MIN_DELIVERY
-    const quality = s.grade === 'A++' || s.grade === 'A+' || (s.confidence || 0) >= 65
+    const quality = s.grade === 'A++' || s.grade === 'A+' || (s.confidence || 0) >= 72   // raised 65→72: fewer, higher-conviction cash swings
     return liquid && quality
   }
   const IDX = new Set(['NIFTY', 'BANKNIFTY', 'SENSEX', 'MIDCPNIFTY', 'FINNIFTY', 'NIFTYNXT50', 'BANKEX'])
