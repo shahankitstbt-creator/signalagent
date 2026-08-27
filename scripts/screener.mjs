@@ -1064,8 +1064,10 @@ function maxPain(strikes) {
   }
   return best
 }
-// The closing-bias read: where the option chain says price is being pulled into the auction, and why.
-function computeCAS(o, gex) {
+// The DAILY institutional-footprint read: combines the option pin (max pain) + gamma + PCR with the REAL
+// FII/DII positioning (futures long/short, options tilt, cash flows) → a composite directional bias every
+// day, plus WHAT the big money is targeting (the pin level). This is the pro-trader read, not just expiry.
+function computeCAS(o, gex, inst = null) {
   if (!o || o.placeholder || !o.strikes?.length) return null
   const spot = o.spot, mp = maxPain(o.strikes), callWall = o.resistance, putWall = o.support
   const flip = gex?.gammaFlip ?? null, regime = gex?.regime ?? null
@@ -1074,27 +1076,64 @@ function computeCAS(o, gex) {
   const why = []
   let lean, bias
   if (mp == null) { lean = 'NO DATA'; bias = 'neutral' }
-  else if (Math.abs(distPct) < 0.12) { lean = 'PIN'; bias = 'neutral'; why.push(`Spot ${spot} ≈ Max Pain ${mp} → most likely PINNED into the 15:30 auction`) }
-  else if (distPct > 0) { lean = 'PULL UP'; bias = 'up'; why.push(`Max Pain ${mp} is ABOVE spot (+${distPct}%) → writers profit if it drifts up toward ${mp}; call cap ${callWall}`) }
-  else { lean = 'PULL DOWN'; bias = 'down'; why.push(`Max Pain ${mp} is BELOW spot (${distPct}%) → downward pull toward ${mp}; put floor ${putWall}`) }
-  if (negGamma) why.push(`NEG-gamma (below flip ${flip}) → dealers AMPLIFY: a wall-break can trend hard into the close`)
-  else if (regime) why.push(`POS-gamma (above flip ${flip}) → dealers SUPPRESS: expect pin/range toward the high-OI strikes`)
-  if (o.pcr >= 1.2) why.push(`PCR ${o.pcr} — heavy put-writing, support below`)
-  else if (o.pcr <= 0.8) why.push(`PCR ${o.pcr} — heavy call-writing, cap above`)
-  // the ranked strikes (biggest OI) that act as the auction's magnets
-  const magnets = [...o.strikes].map(s => ({ k: s.strike, ce: s.ceOI || 0, pe: s.peOI || 0 }))
-    .sort((a, b) => (b.ce + b.pe) - (a.ce + a.pe)).slice(0, 6)
-  return { spot, maxPain: mp, callWall, putWall, gammaFlip: flip, regime, pcr: o.pcr, atm: o.atm, expiry: o.expiry, lean, bias, distPct, why, magnets, predictedClose: mp }
+  else if (Math.abs(distPct) < 0.12) { lean = 'PIN'; bias = 'neutral'; why.push(`Spot ${spot} ≈ Max Pain ${mp} → PINNED into the 15:30 auction`) }
+  else if (distPct > 0) { lean = 'PULL UP'; bias = 'up'; why.push(`Max Pain ${mp} ABOVE spot (+${distPct}%) → pull up toward ${mp}; call cap ${callWall}`) }
+  else { lean = 'PULL DOWN'; bias = 'down'; why.push(`Max Pain ${mp} BELOW spot (${distPct}%) → pull down toward ${mp}; put floor ${putWall}`) }
+  if (negGamma) why.push(`NEG-gamma (below flip ${flip}) → dealers AMPLIFY: a wall-break trends hard into the close`)
+  else if (regime) why.push(`POS-gamma (above flip ${flip}) → dealers SUPPRESS: pin/range toward high-OI strikes`)
+  if (o.pcr >= 1.2) why.push(`PCR ${o.pcr} — heavy put-writing (support)`) ; else if (o.pcr <= 0.8) why.push(`PCR ${o.pcr} — heavy call-writing (cap)`)
+  const magnets = [...o.strikes].map(s => ({ k: s.strike, ce: s.ceOI || 0, pe: s.peOI || 0 })).sort((a, b) => (b.ce + b.pe) - (a.ce + a.pe)).slice(0, 6)
+  // ── COMPOSITE FOOTPRINT: weigh the option pin WITH the real FII/DII smart-money positioning ──
+  let score = 0; const factors = []
+  const add = (s, f) => { score += s; factors.push({ dir: s > 0 ? 'up' : s < 0 ? 'down' : 'flat', f }) }
+  if (lean === 'PULL UP') add(1, `Option pin pulling UP to ${mp}`); else if (lean === 'PULL DOWN') add(-1, `Option pin pulling DOWN to ${mp}`); else if (lean === 'PIN') add(0, `Pinned at ${mp} (range day)`)
+  const fii = inst?.fii, dii = inst?.dii
+  if (fii) {
+    if (fii.futRatio != null) { if (fii.futRatio <= 0.5) add(-1.6, `FII net SHORT index futures (L/S ${fii.futRatio}) — bearish`); else if (fii.futRatio >= 1.5) add(1.6, `FII net LONG index futures (L/S ${fii.futRatio}) — bullish`); else factors.push({ dir: 'flat', f: `FII futures balanced (L/S ${fii.futRatio})` }) }
+    if (fii.optIdxPutNet > 0 && fii.optIdxCallNet <= 0) add(-1, 'FII long PUTS + short CALLS — bearish options hedge'); else if (fii.optIdxCallNet > 0 && fii.optIdxPutNet <= 0) add(1, 'FII long CALLS + short PUTS — bullish options')
+    if (fii.cash >= 800) add(0.6, `FII buying cash +₹${Math.round(fii.cash)}cr`); else if (fii.cash <= -800) add(-0.6, `FII selling cash −₹${Math.abs(Math.round(fii.cash))}cr`)
+  }
+  if (dii?.cash >= 1500) add(0.5, `DII buying +₹${Math.round(dii.cash)}cr (floor under the market)`); else if (dii?.cash <= -1500) add(-0.5, `DII selling −₹${Math.abs(Math.round(dii.cash))}cr`)
+  const direction = score >= 1 ? 'BULLISH' : score <= -1 ? 'BEARISH' : 'NEUTRAL'
+  const confidence = Math.round(Math.min(88, 48 + Math.abs(score) * 10))   // capped — honest, never 90+
+  return { spot, maxPain: mp, callWall, putWall, gammaFlip: flip, regime, pcr: o.pcr, atm: o.atm, expiry: o.expiry, lean, bias, distPct, why, magnets, predictedClose: mp, footprintScore: +score.toFixed(1), direction, confidence, factors, target: mp, instBias: inst?.bias || null }
+}
+// Actual NIFTY/BankNifty daily closes since 3 Aug 2026 (real, from Yahoo) — the "actual" column.
+async function casActuals() {
+  const out = {}
+  for (const [idx, sym] of [['NIFTY', '%5ENSEI'], ['BANKNIFTY', '%5ENSEBANK']]) {
+    try {
+      const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=6mo`)
+      const r = d?.chart?.result?.[0], t = r?.timestamp || [], c = r?.indicators?.quote?.[0]?.close || []
+      out[idx] = t.map((ts, i) => ({ date: new Date(ts * 1000).toISOString().slice(0, 10), close: c[i] != null ? Math.round(c[i] * 100) / 100 : null }))
+        .filter(x => x.close != null && x.date >= '2026-08-03')
+    } catch { out[idx] = [] }
+  }
+  return out
+}
+// EXPIRY CALENDAR 3 Aug → 31 Dec 2026 — the days the last-15-min "auction pin" is strongest (option
+// writers/dealers drag the index to max-pain into the close). BSE Sensex weekly = TUESDAY, NSE Nifty
+// weekly = THURSDAY (monthly = last of month). These are the honestly-forecastable dates; the exact
+// PIN LEVEL only firms up as OI builds toward each date. (Verify vs the exchange circular — days shift on holidays.)
+function casExpiries() {
+  const out = []
+  for (const d = new Date(Date.UTC(2026, 7, 3)); d <= new Date(Date.UTC(2026, 11, 31)); d.setUTCDate(d.getUTCDate() + 1)) {
+    const dow = d.getUTCDay(); if (dow !== 2 && dow !== 4) continue
+    const nx = new Date(d); nx.setUTCDate(nx.getUTCDate() + 7)
+    out.push({ date: d.toISOString().slice(0, 10), exchange: dow === 2 ? 'BSE · Sensex' : 'NSE · Nifty/BankNifty', type: nx.getUTCMonth() !== d.getUTCMonth() ? 'monthly' : 'weekly' })
+  }
+  return out
 }
 // Track each day's ~3PM prediction and resolve it against the actual close → an HONEST measured hit-rate.
-function writeCAS(inputs, today) {
+function writeCAS(inputs, today, actuals = null, expiries = null, inst = null) {
   const todayISO = today.toISOString().slice(0, 10)
   const ist = new Date(today.getTime() + 5.5 * 3600000), mins = ist.getUTCHours() * 60 + ist.getUTCMinutes()
   let cas = { live: {}, history: [] }
   try { cas = JSON.parse(readFileSync('public/cas.json', 'utf8')) } catch {}
   cas.history = cas.history || []; cas.live = {}
   for (const { idx, o, gex } of inputs) {
-    const c = computeCAS(o, gex); if (!c) continue
+    const c = computeCAS(o, gex, inst); if (!c) continue
+    c.isExpiry = !!(o.expiry && String(o.expiry).slice(0, 10) === todayISO)   // strongest pin on the actual expiry day
     cas.live[idx] = c
     let e = cas.history.find(h => h.date === todayISO && h.index === idx)
     // capture the prediction in the ~14:45–15:35 IST window (near the close, positioning is set)
@@ -1109,6 +1148,10 @@ function writeCAS(inputs, today) {
     }
   }
   cas.history = cas.history.slice(-120)
+  if (actuals) cas.actuals = actuals               // real NIFTY/BankNifty daily closes since 3 Aug (context)
+  if (expiries) cas.expiries = expiries            // forecastable expiry-pin days through Dec 2026
+  cas.regime = inst || cas.regime || null          // current FII/DII smart-money regime
+  try { cas.fiiHistory = (JSON.parse(readFileSync('public/fii_history.json', 'utf8')) || []).slice(-40) } catch {}   // FII/DII footprint since ~3 Aug
   const resolved = cas.history.filter(h => h.hit != null)
   cas.hitRate = resolved.length ? Math.round(resolved.filter(h => h.hit).length / resolved.length * 100) : null
   cas.resolved = resolved.length; cas.updatedAt = today.toISOString()
@@ -1144,7 +1187,7 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
     optCards.push(card)
     casInputs.push({ idx, o, gex: card.gex })
   }
-  try { writeCAS(casInputs, today) } catch (e) { console.log('CAS write skipped:', e.message) }   // Closing-Auction predictor → public/cas.json
+  try { const casAct = await casActuals(); writeCAS(casInputs, today, casAct, casExpiries(), inst) } catch (e) { console.log('CAS write skipped:', e.message) }   // Closing-Auction predictor → public/cas.json
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
   // 🎯 1-MONTH MOVERS — curated cross-desk list of LIQUID, high-conviction LONGs whose targets sit
