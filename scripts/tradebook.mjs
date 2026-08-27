@@ -638,7 +638,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     b.open[s.id] = {
       sleeve: size.sleeve,
       id: s.id, symbol: s.symbol || s.underlying, name: s.name || null, generator: s.generator, gen: s.label || s.generator,
-      kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null,
+      kind: size.kind, direction: s.direction || 'LONG', grade: s.grade || null, confidence: s.confidence ?? s.confluenceScore ?? null,
       optType: size.optType || null, entryPremium: size.entryPremium || null, optionPlay: s.optionPlay || null,
       // CARRY the hedge fields from sizeTrade — dropping them left F&O options stored as NAKED (bug)
       hedged: size.hedged || false, netDebit: size.netDebit ?? null, longPrem: size.longPrem ?? null, shortPrem: size.shortPrem ?? null, hedgeNote: size.hedgeNote || null, stockOption: size.stockOption || false, commodity: size.commodity || s.commodity || false,
@@ -696,7 +696,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     b.open[key] = {
       sleeve: 'DAILY', id: key, baseId: s.id, symbol: sym, name: s.name || null,
       generator: s.generator, gen: s.label || s.generator,
-      kind: 'CASH', direction: 'LONG', grade: s.grade || null,
+      kind: 'CASH', direction: 'LONG', grade: s.grade || null, confidence: s.confidence ?? s.confluenceScore ?? null,
       optType: null, entryPremium: null, optionPlay: null,
       qty: size.qty, lots: null, lotSize: null, notional: size.notional,
       entryPrice: s.entry, sl: s.sl, targets: s.targets, invested: size.invested,

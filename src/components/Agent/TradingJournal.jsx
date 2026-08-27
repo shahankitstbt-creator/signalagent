@@ -1,10 +1,14 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useViewStore } from '../../store/viewStore'
 
+// conviction as a % out of 100 — use the stored confidence if present, else map the grade
+const gradeToPct = g => ({ 'A++': 96, 'A+': 88, 'A': 75, 'B': 60, 'C': 45 })[g] ?? null
+const convPct = s => (s?.confidence != null ? Math.round(s.confidence) : gradeToPct(s?.grade))
+const hiConv = s => (convPct(s) ?? 0) >= 80        // high-conviction → highlighted row
 // column-header sorting for the journal tables
 const JACC = {
   symbol: r => r.symbol || '', qty: r => r.qty, entry: r => r.entryPrice, entryDate: r => r.entryDate,
-  ltp: r => r.ltp, unreal: r => r.unrealizedPct, sl: r => r.sl, t1: r => r.targets?.[0]?.price, grade: r => r.grade || '',
+  ltp: r => r.ltp, unreal: r => r.unrealizedPct, sl: r => r.sl, t1: r => r.targets?.[0]?.price, grade: r => r.grade || '', conv: r => convPct(r) ?? -1,
   exit: r => r.exitPrice, exitDate: r => r.exitDate, held: r => r.daysHeld, result: r => r.result || '', pnl: r => r.realizedPnl, ret: r => r.realizedPct,
 }
 function useColSort(rows) {
@@ -21,8 +25,8 @@ const inr = n => n == null ? '—' : '₹' + Math.round(n).toLocaleString('en-IN
 const px = n => n == null ? '—' : (+(+n).toFixed(2)).toLocaleString('en-IN')   // clean price (2 dp, no float noise)
 // full trade detail for hover tooltip (reason, entry date/time, SL, targets + dates, R:R…)
 const tradeTitle = (s, entryPx) => [
-  `${s.symbol}${s.name ? ' — ' + s.name : ''}   [${s.gen || s.generator || 'signal'}${s.grade ? ' · ' + s.grade : ''}]`,
-  `${s.direction === 'SHORT' ? 'SELL' : 'BUY'} · ${s.kind}${s.optType ? ' ' + s.optType : ''}   qty ${s.qty}${s.lots ? ` (${s.lots} lot)` : ''}`,
+  `${s.symbol}${s.name ? ' — ' + s.name : ''}   [${s.gen || s.generator || 'signal'}]`,
+  `${s.direction === 'SHORT' ? 'SELL' : 'BUY'} · ${s.kind}${s.optType ? ' ' + s.optType : ''}   qty ${s.qty}${s.lots ? ` (${s.lots} lot)` : ''}${convPct(s) != null ? `   ·   Conviction ${convPct(s)}%${hiConv(s) ? ' (HIGH)' : ''}` : ''}`,
   `Entered: ${dIST(s.entryAt, s.entryDate)} ${tIST(s.entryAt)}`,
   `Entry ₹${px(entryPx)}   Stop ₹${px(s.sl)}${s.slPct ? ` (${s.slPct}%)` : ''}`,
   ...(Array.isArray(s.targets) ? s.targets.map((t, i) => `Target ${i + 1}: ₹${px(t.price)}${t.pct != null ? ` (+${t.pct}%)` : ''}${t.by ? ` — by ${t.by}` : ''}`) : []),
@@ -247,11 +251,12 @@ function OpenTable({ rows: raw }) {
         <JTh label="Symbol" k="symbol" s={s} cls={L} /><th className={L}></th><JTh label="Dir" k="result" s={s} cls={L} />
         <JTh label="Qty" k="qty" s={s} cls={R} /><JTh label="Entry ₹" k="entry" s={s} cls={R} /><th className={L}>Time (IST)</th>
         <JTh label="LTP" k="ltp" s={s} cls={R} /><JTh label="Unrealised" k="unreal" s={s} cls={R} /><JTh label="SL" k="sl" s={s} cls={R} />
-        <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Grade" k="grade" s={s} cls={L} /><th className={L}>Setup</th>
+        <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Conviction" k="conv" s={s} cls={R} /><th className={L}>Setup</th>
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (
-          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card cursor-help" title={tradeTitle(s, entryPx(s))}>
+          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card cursor-help" title={tradeTitle(s, entryPx(s))}
+            style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 34%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
@@ -265,7 +270,9 @@ function OpenTable({ rows: raw }) {
             <td className={`px-3 py-2 text-right font-bold ${pctCls(s.unrealizedPnl)}`}>{inr(s.unrealizedPnl)}<span className="text-[10px]"> ({sign(s.unrealizedPct)}%)</span></td>
             <td className="px-3 py-2 text-right text-red">₹{px(s.sl)}</td>
             <td className="px-3 py-2 text-right text-green">₹{px(s.targets?.[0]?.price)}</td>
-            <td className="px-3 py-2">{s.grade ? <span className="px-1.5 rounded bg-bg-card text-[10px]">{s.grade}</span> : '—'}{s.footprint && !s.footprint.weak ? ' 🕵️' : ''}</td>
+            <td className="px-3 py-2 text-right">{convPct(s) != null
+              ? <span className="px-1.5 py-0.5 rounded text-[10px] font-bold tabular-nums" style={{ background: hiConv(s) ? '#2962FF' : 'var(--color-bg-card)', color: hiConv(s) ? '#fff' : 'var(--color-txt-sec)' }}>{convPct(s)}%</span>
+              : '—'}{s.footprint && !s.footprint.weak ? ' 🕵️' : ''}</td>
             <td className="px-3 py-2 text-txt-sec max-w-[220px] truncate" title={s.reason}>{s.reason || s.gen}</td>
           </tr>
         ))}
@@ -289,7 +296,8 @@ function ClosedTable({ rows: raw }) {
       </tr></thead>
       <tbody>
         {rows.map((s, i) => (
-          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top cursor-help" title={tradeTitle(s, entryPx(s))}>
+          <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top cursor-help" title={tradeTitle(s, entryPx(s))}
+            style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 30%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
             <td className="px-3 py-2"><KindTag s={s} /></td>
             <td className="px-3 py-2"><span className={s.direction === 'SHORT' ? 'text-red' : 'text-green'}>{s.direction === 'SHORT' ? 'SELL' : 'BUY'}</span></td>
