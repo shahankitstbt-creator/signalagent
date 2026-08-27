@@ -565,9 +565,12 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const fpStrong = !!(fp && fp.strong)
     const riskPS = Math.max(0.05, best.entry - best.sl)
     const shares = Math.max(1, Math.floor((CAP * RISKPCT / 100) / riskPS))
-    // grade upgrades on a footprint: it's the "informed money is already in" edge
-    const grade = (gens.length >= 3 || (gens.length >= 2 && fpStrong)) ? 'A++'
-      : (gens.length >= 2 && (vedicUp || strongDeliv || fp)) ? 'A+' : 'A'
+    // TRADE-ANALYSIS FIX: plain confluence was net-NEGATIVE; money_flow (81%) & multibagger (63%) are the
+    // proven winners. Reserve the top grade for confluences that INCLUDE a winner desk, and rank them higher.
+    const genIds = new Set(list.map(x => x.s.generator || ''))
+    const hasWinner = genIds.has('money_flow') || genIds.has('multibagger')
+    const grade = (hasWinner && (gens.length >= 3 || (gens.length >= 2 && fpStrong))) ? 'A++'
+      : (gens.length >= 3 || (gens.length >= 2 && (vedicUp || strongDeliv || fp || hasWinner))) ? 'A+' : 'A'
     const rewardT1 = round(shares * (best.targets[0].price - best.entry))
     const accLine = best.accuracy != null ? `Backtested ~${best.accuracy}% (n=${best.backtestTrades})` : 'Limited backtest history'
     const delivLine = best.delivery != null ? `\n📦 Delivery ${best.delivery}% (${strongDeliv ? 'strong hands accumulating' : 'mostly intraday'})` : ''
@@ -575,7 +578,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const social = `⭐ TOP PICK (Grade ${grade}) — ${sym}\n${gens.length} signals agree: ${gens.join(', ')}${vedicUp ? ` + ${vb.name} Vedic bias bullish` : ''}${delivLine}${fpLine}\nEntry ₹${best.entry} · SL ₹${best.sl} (${best.slPct}%)\nT1 ₹${best.targets[0].price} (+${best.targets[0].pct}%) by ${best.targets[0].by} · T2 +${best.targets[1].pct}% · T3 +${best.targets[2].pct}%\nPlan (₹1L, 1% risk): buy ${shares} sh · risk ₹${round(shares * riskPS)} · reward T1 ₹${rewardT1} · R:R 1:${best.rr}\n${accLine}. 📌 Educational only, not advice. Not SEBI-registered.\n#${sym} #swingtrading #nifty`
     confluence.push({
       ...best, generator: 'confluence', generators: gens, genCount: gens.length, grade, social,
-      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0) + (strongDeliv ? 20 : 0) + (fp?.score || 0) * 0.35),
+      confluenceScore: Math.round(gens.length * 30 + (best.accuracy ?? best.confidence ?? 0) * 0.4 + (vedicUp ? 15 : 0) + (strongDeliv ? 20 : 0) + (fp?.score || 0) * 0.35 + (hasWinner ? 25 : 0)),
       vedicAsset: vb?.name, vedicLabel: vb?.label, vedicAligned: vedicUp, delivery: best.delivery, strongDeliv, footprint: fp,
       plan: { capital: CAP, riskPct: RISKPCT, shares, deploy: round(shares * best.entry), riskRs: round(shares * riskPS), rewardT1Rs: rewardT1 },
     })

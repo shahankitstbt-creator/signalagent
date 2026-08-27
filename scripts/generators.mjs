@@ -149,7 +149,7 @@ const STOCK_GENS = {
     const nearPOC = near(vp.poc)
     const fibHit = fibs.find(([fp]) => near(fp))
     const nearVWAP = near(vb.vwap, 0.01) || (a.price >= vb.lower && a.price <= vb.vwap)  // at/reclaiming VWAP from below
-    if (!(nearPOC && fibHit && a.bullish)) return null                                  // VP + Fib is the base
+    if (!(nearPOC && fibHit && a.bullish && (a.rr || 0) >= 2)) return null               // VP+Fib base + R:R ≥ 2 (loss-analysis fix: vp_fib won 56% but lost money on bad R:R — now reward must beat risk 2:1)
     const triple = nearVWAP
     const reason = triple
       ? `Triple confluence: POC ₹${round(vp.poc)} + ${fibHit[1]} Fib + VWAP ₹${round(vb.vwap)} stacked — institutional magnet, high-odds reaction`
@@ -185,21 +185,24 @@ const STOCK_GENS = {
   // Momentum & Early Movers — WIDE net across the full universe. Catches (a) stocks moving
   // NOW on volume (intraday/day-of), and (b) stocks poised to break out (a day before).
   // Lower bar than the other gens by design — labelled higher-risk. Ranked by fresh momentum.
-  momentum: ({ st, a, addDays }) => {
+  momentum: ({ st, d, a, addDays }) => {
     const V = a.vol || {}
     const rvol = V.rvol ?? 1
     const chg = a.changePct ?? 0
     const fp = a._footprint
     const movingNow = chg >= 3 && rvol >= 1.5 && a.bullish
     const bigMove = chg >= 5 && rvol >= 1.8
-    const preBreak = a.nearBreakout && rvol >= 1.3 && (a.emaStack || a.higherLows)
+    // CONFIRMED breakout (loss-analysis fix for the #1 loss = false breakouts): require the close to be
+    // ABOVE the prior 20-day high with volume — NOT just "near" it. No entering the first poke.
+    const i = d.c.length - 1, hi20 = i > 21 ? Math.max(...d.h.slice(i - 21, i)) : Infinity
+    const confirmedBreak = d.c[i] > hi20 && rvol >= 1.4 && (a.emaStack || a.higherLows)
     const squeezeFire = a.squeeze && chg >= 1.5 && rvol >= 1.3
     const volSurge = V.vol1GtVol5 && chg >= 2 && a.bullish
     const footprintPre = fp && fp.strong && a.bullish && chg < 3   // accumulation footprint, BEFORE it runs
-    if (!(movingNow || bigMove || preBreak || squeezeFire || volSurge || footprintPre)) return null
+    if (!(movingNow || bigMove || confirmedBreak || squeezeFire || volSurge || footprintPre)) return null
     const tag = (bigMove || movingNow) ? `🚀 Moving now +${chg.toFixed(1)}% on ${rvol}× volume`
       : footprintPre ? `🕵️ Accumulation footprint — smart money in before the move: ${fp.flags[0]}`
-        : preBreak ? `About to break the 20-day high on ${rvol}× volume`
+        : confirmedBreak ? `Confirmed close above the 20-day high ₹${round(hi20)} on ${rvol}× volume`
           : squeezeFire ? `Squeeze firing — volatility expanding up (+${chg.toFixed(1)}%)`
             : `Volume surge ${rvol}× with price up +${chg.toFixed(1)}%`
     const card = mk(M.momentum, st, a, tag, a.bt.trades >= 4 ? a.bt.hitRate : null, addDays)
