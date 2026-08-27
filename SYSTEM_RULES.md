@@ -155,6 +155,20 @@ and **review the full result on 30 Aug 2026**. Do NOT wait until the 30th to act
 
 ---
 
+## 6a. WHAT WINS vs LOSES (from 438-trade analysis, 2026-08-27) — take BETTER trades
+
+Codified from real results (re-analyse monthly). **Concentrate on proven winners, cut the leaks:**
+- **Best desks:** 🥇 **money_flow 81%**, multibagger 63%, F&O 56% (leverage). **Weight these highest.**
+- **Leaks to fix:** **confluence 48% (net −₹33k)** — "Top Picks" is net-negative; **vp_fib** wins small / loses big (bad R:R); vol_accum 38%, reversal 33%.
+- **Grade is miscalibrated:** **A+ wins (58%, +₹190k)** but **A++ *loses* (47%, −₹25k)**. → Rank/trade by **measured desk win-rate FIRST, grade second** (applied in the book's selection sort). Never assume A++ = best.
+- **Hold window:** **5–10 days wins most (61%)**; 2–4 days worst. Lean to the swing sweet spot.
+- **#1 loss cause = false breakouts (25×)** → require a **confirmed close beyond the level + volume; enter the retest**, not the first poke. **#2 = option time-decay (32×)** → don't hold weak-moving options (6-day time-stop).
+- **Cash is the weak sleeve (44%, −₹7k)** → highest selectivity + the R:R/expectancy fixes.
+
+**Honesty:** a 75%+ overall win-rate across all desks is not achievable — only money_flow clears it. Higher *traded* win-rate comes from **concentration on the winners**, not a blanket promise.
+
+---
+
 ## 6b. LONG-ONLY UNIVERSE (no shorting these)
 
 **NEVER fire a SHORT** on **F&O-eligible stocks**, **indices** (Nifty, BankNifty, Sensex, MidcpNifty, FinNifty), or **commodities** (Gold, Silver, Crude, XAUUSD, XAGUSD). These trade **long-only** (buy / CE only). Enforced at every source: the Short/Sell desk, reversal shorts, index-option PE, commodity shorts, and a trade-book backstop that refuses to open a short on any of them. (Shorts may still appear on **non-F&O cash stocks** — those are informational; cash delivery can't be shorted anyway.)
