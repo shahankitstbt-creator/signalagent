@@ -582,11 +582,21 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // sort first when capital is tight), never to block. Confidence still weights the sort.
   const deskEdge = s => { const r = genWinRates[s.generator]; return (r && r.decided >= 20) ? r.winRate : 55 }
   const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
-  // TRADE-ANALYSIS LEARNING (2026-08-27): the book was prioritising A++ (which measured 47% win / net LOSS)
-  // over the desks that actually win. Now rank primarily by MEASURED desk win-rate (money_flow 81%, etc.),
-  // then grade — so proven winners get the capital first. Raw grade is a weak, miscalibrated signal.
+  // ACCURACY PUSH toward the 75% aim — the book only TAKES odds-favoured trades (raises the *traded*
+  // win-rate even though raw signal win-rate across all desks stays ~50%). Take a trade only if:
+  //   • the desk is PROVEN (measured win-rate ≥ 55%, e.g. money_flow 81% / multibagger / fno), OR
+  //   • it's high-conviction (≥72) AND reward beats risk (R:R ≥ 1.8).
+  // Everything else (proven-losing desk + low conviction / poor R:R) is skipped — no low-odds trades.
+  // Commodities/index (catRank 4) are exempt (few, trend-following). Never suppresses the BOARD desks.
+  const oddsFavoured = s => {
+    if (s.commodity || (s.optType && (s.symbol === 'NIFTY' || s.symbol === 'BANKNIFTY'))) return true
+    const conv = s.confidence ?? s.confluenceScore ?? 0, rr = s.rr ?? 0
+    return deskEdge(s) >= 55 || (conv >= 72 && rr >= 1.8)
+  }
+  // TRADE-ANALYSIS LEARNING (2026-08-27): rank primarily by MEASURED desk win-rate (money_flow 81%, etc.),
+  // then grade — proven winners get the capital first. Raw grade is a weak, miscalibrated signal (A++ lost).
   const cands = Object.values(ledger.active)
-    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
+    .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length && oddsFavoured(s))
     .sort((a, z) => catRank(z) - catRank(a) || (deskEdge(z) - deskEdge(a)) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
   // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
   // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
