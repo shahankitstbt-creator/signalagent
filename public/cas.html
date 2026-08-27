@@ -93,6 +93,23 @@
       <p>We combine these into a daily <b>BULLISH / BEARISH / NEUTRAL</b> bias + conviction + the level they're targeting (Positioning tab).</p></details>
     <details><summary>How the forecast is built (the basis)</summary>
       <p>Expected close = current spot + a <b>small drift</b> in the direction of the current FII/DII bias (capped). The <b>range</b> = spot × daily-volatility × √(days out) — a standard uncertainty cone that widens with time. Near-term is anchored to today's option positioning; months out is trend + volatility only. <b>No one</b> can name December's exact close — so we show the expected path AND the honest range, and roll it forward every day.</p></details>
+    <details><summary>⚙️ THE EXACT FORMULAS (nothing hidden)</summary>
+      <p><b>1. Max Pain</b> — for every strike K: <span class="mono">loss(K) = Σ (K−strike)·callOI for strikes below K + Σ (strike−K)·putOI for strikes above K</span>. Max Pain = the K with the <b>smallest</b> loss (where writers lose least). It's the pin target.</p>
+      <p><b>2. Pin lean</b> — <span class="mono">dist% = (MaxPain − Spot)/Spot ×100</span>. |dist%|&lt;0.12 → PIN · &gt;0 → PULL UP · &lt;0 → PULL DOWN.</p>
+      <p><b>3. Gamma flip</b> — walk strikes low→high summing net OI (callOI−putOI); the strike where the running sum crosses 0 = <b>flip</b>. Spot &lt; flip → <b>NEG GAMMA</b> (dealers amplify → trend/2000-pt days) · Spot ≥ flip → <b>POS GAMMA</b> (dealers pin/range).</p>
+      <p><b>4. Footprint score</b> (the daily bias) — start 0, then add:</p>
+      <ul class="mono" style="font-size:11.5px">
+        <li>pin PULL UP +1 · PULL DOWN −1 · PIN 0</li>
+        <li>FII futures L/S ratio ≤0.5 → −1.6 · ≥1.5 → +1.6</li>
+        <li>FII options: long PUTS+short CALLS −1 · long CALLS+short PUTS +1</li>
+        <li>FII cash ≥+₹800cr +0.6 · ≤−₹800cr −0.6</li>
+        <li>DII cash ≥+₹1500cr +0.5 · ≤−₹1500cr −0.5</li>
+      </ul>
+      <p><span class="mono">score ≥ +1 → BULLISH · ≤ −1 → BEARISH · else NEUTRAL. Conviction = min(88, 48 + |score|×10)%.</span></p>
+      <p><b>5. Forecast</b> — for each trading day N ahead: <span class="mono">drift = clamp(score × 0.0015 × N, −12%, +12%)</span> · <span class="mono">Expected = Spot ×(1+drift)</span> · <span class="mono">Range = Spot × volDaily × √N</span> (volDaily: Nifty/Sensex 0.7%, BankNifty 0.9%).</p>
+      <p><b>6. Historical prediction</b> (FII/DII only, since option-OI wasn't stored): <span class="mono">futNet&lt;−100k −1 · &gt;+100k +1 · covering(+20k vs prior) +0.6 · adding shorts(−20k) −0.6 · FIIcash±800 ±0.5 · DIIcash&gt;2500 +0.3</span>. score≥0.5→UP · ≤−0.5→DOWN. Scored vs next-day Nifty move (±0.15% = the flat band).</p>
+      <p class="sub">These weights are <b>hand-set heuristics from trading logic, not curve-fitted</b> — that's why they're transparent and adjustable, and why the measured hit-rate is the honest judge.</p>
+    </details>
     <div class="note">Probabilistic edge, right more often than not (strongest on expiry days), scored against reality — the hit-rate up top is the real number, never a claimed "90%". Educational only, not advice. Not SEBI-registered.</div>
   </div>
 
