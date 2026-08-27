@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Closing Auction (CAS) Predictor</title>
+<style>
+  :root{
+    --bg:#0A0E17; --panel:#0F1623; --card:#151E2D; --border:#1E2D42;
+    --txt:#E0E8F0; --txt2:#6B7F99; --muted:#3A4F66;
+    --green:#00C853; --red:#FF1744; --cyan:#22D3EE; --gold:#FFB300; --blue:#2962FF; --purple:#AA00FF;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:"Inter",system-ui,sans-serif;font-size:14px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:16px}
+  .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:16px}
+  .logo{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--gold),#FF6D00);color:#111}
+  h1{font-size:18px;margin:0;font-weight:700}
+  .sub{color:var(--txt2);font-size:11px}
+  .badge{font-size:10px;padding:3px 9px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--txt2)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px}
+  .idx{display:flex;align-items:baseline;gap:10px}
+  .idx b{font-size:16px}
+  .verdict{font-size:26px;font-weight:800;margin:8px 0}
+  .lvls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .lv{border:1px solid var(--border);border-radius:10px;padding:8px 10px;background:var(--panel)}
+  .lv .k{font-size:10px;text-transform:uppercase;color:var(--txt2)}
+  .lv .v{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+  canvas{width:100%;display:block;border-radius:8px;background:var(--panel);margin-top:8px}
+  .why{margin-top:10px}
+  .why li{color:var(--txt2);font-size:12px;margin:4px 0}
+  .mag{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:10px;padding:3px 8px;border-radius:999px;background:var(--panel);border:1px solid var(--border);color:var(--txt2)}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:7px 8px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+  th{color:var(--txt2);text-transform:uppercase;font-size:10px}
+  .tag{font-weight:700;padding:2px 8px;border-radius:6px;font-size:11px}
+  .note{margin-top:14px;font-size:12px;color:var(--txt2);border-left:3px solid var(--gold);padding:10px 12px;background:rgba(255,179,0,.06);border-radius:6px;line-height:1.55}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);margin:22px 0 10px}
+  details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-top:12px}
+  summary{cursor:pointer;font-weight:700;font-size:13px}
+  details p,details li{color:var(--txt2);font-size:12.5px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">CAS</div>
+    <div>
+      <h1>Closing Auction (CAS) Predictor <span class="badge">NIFTY · BankNifty</span></h1>
+      <div class="sub mono" id="sub">option-chain positioning → where the 15:30 close is being pulled</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div class="mono" id="hit" style="font-size:20px;font-weight:800">—</div>
+      <div class="sub mono">measured hit-rate</div>
+    </div>
+  </div>
+
+  <div class="grid" id="cards"></div>
+
+  <div class="sec">How this works — the calculation &amp; core</div>
+  <details open>
+    <summary>What the Closing Auction (CAS) is &amp; why the option chain predicts it</summary>
+    <p><b>Closing Auction Session (CAS):</b> instead of the last traded price, the closing price is set by a short call-auction near 15:30 — orders are pooled and a single equilibrium price is struck. Large desks concentrate their closing orders here, so the close often lands at a level the big option positions "want."</p>
+    <p><b>The core engine = MAX PAIN.</b> For every strike we sum how much the option <i>writers</i> (sellers) would lose if price expired there — call writers pay when price is above their strike, put writers pay when it's below. The strike where writers lose the LEAST (buyers lose most) is <b>Max Pain</b>. Because writers are the big, hedged money, price gravitates toward Max Pain into expiry/close — they defend it.</p>
+    <ul>
+      <li><b>Max Pain vs Spot</b> → the pull: above spot = drift up, below = drift down, equal = pinned.</li>
+      <li><b>Call Wall</b> (max call OI) = upside cap · <b>Put Wall</b> (max put OI) = downside floor. The close usually stays between them.</li>
+      <li><b>Gamma regime</b> (dealer positioning): <b>above the gamma flip</b> dealers <i>suppress</i> moves → pin/range; <b>below it</b> they <i>amplify</i> → a wall-break can trend hard into the close.</li>
+      <li><b>PCR</b>: high = put-writing (support), low = call-writing (cap).</li>
+    </ul>
+    <p><b>How to track/trace:</b> watch how OI shifts through the day (the walls migrate), and where spot sits vs Max Pain at ~3 PM. The prediction is captured near the close each day and scored against the actual close → the honest hit-rate above.</p>
+  </details>
+
+  <div class="sec">Historical record — prediction vs actual close (day-wise)</div>
+  <div class="card" style="overflow-x:auto">
+    <table><thead><tr><th>Date</th><th>Index</th><th>Pred @</th><th>Spot @pred</th><th>Max Pain</th><th>Lean</th><th>Close</th><th>Result</th></tr></thead>
+      <tbody id="hist"><tr><td colspan="8" class="sub">loading…</td></tr></tbody></table>
+  </div>
+
+  <div class="note" id="honest">
+    <b>Honest note:</b> this is a <b>probabilistic</b> edge, not a crystal ball. Max-pain gravity is real but not absolute — strong news/trend days override it (that's exactly when the gamma regime flips to "amplify"). The number shown is the <b>real measured hit-rate</b> from our own log, updated daily — never a claimed "90%". Educational only, not advice. Not SEBI-registered.
+  </div>
+  <div class="sub mono" style="margin-top:10px" id="upd"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const N=n=>n==null?'—':(+n).toLocaleString('en-IN',{maximumFractionDigits:1});
+function leanColor(l){return /UP/.test(l)?'#00C853':/DOWN/.test(l)?'#FF1744':l==='PIN'?'#FFB300':'#6B7F99';}
+
+function bar(cv,c){
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height,pad=30;
+  ctx.clearRect(0,0,W,H);
+  const vals=[c.putWall,c.callWall,c.spot,c.maxPain].filter(x=>x!=null);
+  let lo=Math.min(...vals),hi=Math.max(...vals);const m=(hi-lo)*0.12||1;lo-=m;hi+=m;
+  const x=v=>pad+(W-2*pad)*(v-lo)/((hi-lo)||1),y=H/2;
+  // track
+  ctx.strokeStyle='#2A3B55';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(pad,y);ctx.lineTo(W-pad,y);ctx.stroke();
+  const mark=(v,col,label,up)=>{if(v==null)return;const px=x(v);ctx.fillStyle=col;ctx.beginPath();ctx.arc(px,y,5,0,7);ctx.fill();
+    ctx.font='10px JetBrains Mono, monospace';ctx.textAlign='center';ctx.fillText(label,px,up?y-12:y+18);ctx.fillStyle=col;ctx.fillText(N(v),px,up?y-24:y+30);};
+  mark(c.putWall,'#00C853','Put Wall',false);
+  mark(c.callWall,'#FF1744','Call Wall',true);
+  mark(c.maxPain,'#FFB300','Max Pain',true);
+  mark(c.spot,'#22D3EE','Spot',false);
+  // pull arrow spot→maxpain
+  if(c.spot!=null&&c.maxPain!=null&&Math.abs(c.spot-c.maxPain)>((hi-lo)*0.01)){
+    ctx.strokeStyle=leanColor(c.lean);ctx.lineWidth=2;const x1=x(c.spot),x2=x(c.maxPain);
+    ctx.beginPath();ctx.moveTo(x1,y-1);ctx.lineTo(x2,y-1);ctx.stroke();
+    const dir=x2>x1?1:-1;ctx.beginPath();ctx.moveTo(x2,y-1);ctx.lineTo(x2-6*dir,y-5);ctx.lineTo(x2-6*dir,y+3);ctx.fill();
+  }
+}
+
+function render(cas){
+  $('hit').textContent=cas.hitRate!=null?cas.hitRate+'%':'building…';
+  $('hit').style.color=cas.hitRate>=60?'#00C853':cas.hitRate>=45?'#FFB300':'#6B7F99';
+  $('upd').textContent='updated '+new Date(cas.updatedAt).toLocaleString()+' · resolved days: '+(cas.resolved||0);
+  const cards=$('cards');cards.innerHTML='';
+  for(const idx of ['NIFTY','BANKNIFTY']){
+    const c=cas.live?.[idx];if(!c){cards.innerHTML+=`<div class="card"><div class="idx"><b>${idx}</b></div><div class="sub" style="margin-top:10px">Option chain unavailable — Angel One live OI needed (off-hours / credentials).</div></div>`;continue;}
+    const col=leanColor(c.lean);
+    const el=document.createElement('div');el.className='card';
+    el.innerHTML=`
+      <div class="idx"><b>${idx}</b> <span class="sub mono">spot ${N(c.spot)} · exp ${c.expiry||'—'} · PCR ${c.pcr??'—'}</span></div>
+      <div class="verdict" style="color:${col}">${c.lean}${c.maxPain!=null?` → ${N(c.maxPain)}`:''}</div>
+      <div class="lvls">
+        <div class="lv"><div class="k">Max Pain (magnet)</div><div class="v" style="color:#FFB300">${N(c.maxPain)}</div></div>
+        <div class="lv"><div class="k">Gamma regime</div><div class="v" style="color:${c.regime==='NEG GAMMA'?'#FF1744':'#00C853'};font-size:13px">${c.regime||'—'}</div></div>
+        <div class="lv"><div class="k">Call Wall (cap)</div><div class="v" style="color:#FF6B6B">${N(c.callWall)}</div></div>
+        <div class="lv"><div class="k">Put Wall (floor)</div><div class="v" style="color:#00C853">${N(c.putWall)}</div></div>
+      </div>
+      <canvas width="520" height="120"></canvas>
+      <ul class="why">${(c.why||[]).map(w=>`<li>${w}</li>`).join('')}</ul>
+      <div class="sub" style="margin-top:8px">OI magnets (biggest strikes):</div>
+      <div class="mag">${(c.magnets||[]).map(m=>`<span class="chip">${N(m.k)} · CE ${(m.ce/1000).toFixed(0)}k / PE ${(m.pe/1000).toFixed(0)}k</span>`).join('')}</div>`;
+    cards.appendChild(el);
+    bar(el.querySelector('canvas'),c);
+  }
+  const H=(cas.history||[]).slice().reverse();
+  $('hist').innerHTML=H.length?H.map(h=>{
+    const res=h.hit==null?'<span class="sub">pending</span>':h.hit?'<span class="tag" style="background:#00C85322;color:#00C853">✓ toward max pain</span>':'<span class="tag" style="background:#FF174422;color:#FF1744">✗ diverged</span>';
+    return `<tr><td class="mono">${h.date}</td><td class="mono">${h.index}</td><td class="mono">${h.predAt||'—'}</td><td class="mono">${N(h.spotAtPred)}</td><td class="mono" style="color:#FFB300">${N(h.maxPain)}</td><td style="color:${leanColor(h.lean)}">${h.lean}</td><td class="mono">${N(h.closeSpot)}</td><td>${res}</td></tr>`;
+  }).join(''):'<tr><td colspan="8" class="sub">No entries yet — the first prediction is captured near 15:00 IST on the next trading day, then scored at the close.</td></tr>';
+}
+
+function load(){ fetch('/cas.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(render).catch(()=>{$('cards').innerHTML='<div class="card sub">CAS data builds on the next scan — check back shortly.</div>';}); }
+load(); setInterval(load,60000);
+</script>
+</body>
+</html>

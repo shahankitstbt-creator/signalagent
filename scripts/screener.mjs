@@ -1048,6 +1048,73 @@ function computeGex(o) {
   }
 }
 
+// ── CLOSING AUCTION (CAS) ENGINE ──────────────────────────────────────────────────────────────────
+// MAX PAIN = the expiry strike where option WRITERS lose the least (buyers lose the most). Price tends
+// to gravitate toward it into expiry / the 3:30 close, because the big option-writing desks defend it.
+function maxPain(strikes) {
+  if (!Array.isArray(strikes) || strikes.length < 3) return null
+  let best = null, bestLoss = Infinity
+  for (const { strike: K } of strikes) {
+    let loss = 0
+    for (const s of strikes) {
+      if (s.strike < K) loss += (K - s.strike) * (s.ceOI || 0)   // call writers pay when it closes above their strike
+      else if (s.strike > K) loss += (s.strike - K) * (s.peOI || 0) // put writers pay when it closes below theirs
+    }
+    if (loss < bestLoss) { bestLoss = loss; best = K }
+  }
+  return best
+}
+// The closing-bias read: where the option chain says price is being pulled into the auction, and why.
+function computeCAS(o, gex) {
+  if (!o || o.placeholder || !o.strikes?.length) return null
+  const spot = o.spot, mp = maxPain(o.strikes), callWall = o.resistance, putWall = o.support
+  const flip = gex?.gammaFlip ?? null, regime = gex?.regime ?? null
+  const negGamma = regime === 'NEG GAMMA'
+  const distPct = mp != null ? +(((mp - spot) / spot) * 100).toFixed(2) : 0
+  const why = []
+  let lean, bias
+  if (mp == null) { lean = 'NO DATA'; bias = 'neutral' }
+  else if (Math.abs(distPct) < 0.12) { lean = 'PIN'; bias = 'neutral'; why.push(`Spot ${spot} ≈ Max Pain ${mp} → most likely PINNED into the 15:30 auction`) }
+  else if (distPct > 0) { lean = 'PULL UP'; bias = 'up'; why.push(`Max Pain ${mp} is ABOVE spot (+${distPct}%) → writers profit if it drifts up toward ${mp}; call cap ${callWall}`) }
+  else { lean = 'PULL DOWN'; bias = 'down'; why.push(`Max Pain ${mp} is BELOW spot (${distPct}%) → downward pull toward ${mp}; put floor ${putWall}`) }
+  if (negGamma) why.push(`NEG-gamma (below flip ${flip}) → dealers AMPLIFY: a wall-break can trend hard into the close`)
+  else if (regime) why.push(`POS-gamma (above flip ${flip}) → dealers SUPPRESS: expect pin/range toward the high-OI strikes`)
+  if (o.pcr >= 1.2) why.push(`PCR ${o.pcr} — heavy put-writing, support below`)
+  else if (o.pcr <= 0.8) why.push(`PCR ${o.pcr} — heavy call-writing, cap above`)
+  // the ranked strikes (biggest OI) that act as the auction's magnets
+  const magnets = [...o.strikes].map(s => ({ k: s.strike, ce: s.ceOI || 0, pe: s.peOI || 0 }))
+    .sort((a, b) => (b.ce + b.pe) - (a.ce + a.pe)).slice(0, 6)
+  return { spot, maxPain: mp, callWall, putWall, gammaFlip: flip, regime, pcr: o.pcr, atm: o.atm, expiry: o.expiry, lean, bias, distPct, why, magnets, predictedClose: mp }
+}
+// Track each day's ~3PM prediction and resolve it against the actual close → an HONEST measured hit-rate.
+function writeCAS(inputs, today) {
+  const todayISO = today.toISOString().slice(0, 10)
+  const ist = new Date(today.getTime() + 5.5 * 3600000), mins = ist.getUTCHours() * 60 + ist.getUTCMinutes()
+  let cas = { live: {}, history: [] }
+  try { cas = JSON.parse(readFileSync('public/cas.json', 'utf8')) } catch {}
+  cas.history = cas.history || []; cas.live = {}
+  for (const { idx, o, gex } of inputs) {
+    const c = computeCAS(o, gex); if (!c) continue
+    cas.live[idx] = c
+    let e = cas.history.find(h => h.date === todayISO && h.index === idx)
+    // capture the prediction in the ~14:45–15:35 IST window (near the close, positioning is set)
+    if (!e && mins >= 885 && mins <= 940 && c.maxPain != null) {
+      e = { date: todayISO, index: idx, predAt: ist.toISOString().slice(11, 16), spotAtPred: c.spot, maxPain: c.maxPain, lean: c.lean, callWall: c.callWall, putWall: c.putWall, closeSpot: null, hit: null }
+      cas.history.push(e)
+    }
+    // resolve at/after 15:30 with the actual (latest) spot = the close
+    if (e && e.closeSpot == null && mins >= 930) {
+      e.closeSpot = c.spot
+      e.hit = Math.abs(e.closeSpot - e.maxPain) <= Math.abs(e.spotAtPred - e.maxPain) + e.maxPain * 0.0005  // closed toward / stayed near max pain
+    }
+  }
+  cas.history = cas.history.slice(-120)
+  const resolved = cas.history.filter(h => h.hit != null)
+  cas.hitRate = resolved.length ? Math.round(resolved.filter(h => h.hit).length / resolved.length * 100) : null
+  cas.resolved = resolved.length; cas.updatedAt = today.toISOString()
+  try { writeFileSync('public/cas.json', JSON.stringify(cas, null, 2)) } catch {}
+}
+
 async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst = null) {
   const byGen = {}; for (const g of GEN_META) byGen[g.id] = []
   for (const st of scored) { if (!st._d) continue; for (const sg of runPriceGenerators(st, st._d, st, addDays)) byGen[sg.generator]?.push(sg) }
@@ -1067,6 +1134,7 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
   const oiHist = loadOIHist()
   const optCards = []
   const breadthMap = computeBreadth(scored)
+  const casInputs = []
   for (const [idx, step, nm, bkey] of [['NIFTY', 50, 'Nifty Option Chain', 'NIFTY 50'], ['BANKNIFTY', 100, 'Bank Nifty Option Chain', 'NIFTY Bank']]) {
     const o = await optionBuildup(idx, step)
     const card = optionCard(o, idx, nm, oiHist, today)
@@ -1074,7 +1142,9 @@ async function buildBoard(scored, finalists, addDays, today, newsMap = {}, inst 
     try { card.directional = await indexDirectional(o, card._bu, inst, breadthMap[bkey], idx) } catch {}
     try { card.gex = computeGex(o) } catch {}   // gamma-exposure / dealer-positioning map
     optCards.push(card)
+    casInputs.push({ idx, o, gex: card.gex })
   }
+  try { writeCAS(casInputs, today) } catch (e) { console.log('CAS write skipped:', e.message) }   // Closing-Auction predictor → public/cas.json
   saveOIHist(oiHist)
   byGen.option_buildup = optCards
   // 🎯 1-MONTH MOVERS — curated cross-desk list of LIQUID, high-conviction LONGs whose targets sit

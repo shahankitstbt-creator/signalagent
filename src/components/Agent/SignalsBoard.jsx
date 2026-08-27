@@ -525,6 +525,10 @@ export default function SignalsBoard() {
               className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#00E5FF,#AA00FF)' }}>
               📊 <span className="hidden lg:inline">P&F</span>
             </a>
+            <a href="/cas.html" target="_blank" rel="noopener" title="Closing Auction (CAS) Predictor — where the option chain is pulling the 15:30 close"
+              className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#FFB300,#FF6D00)', color: '#111' }}>
+              🎯 <span className="hidden lg:inline">CAS</span>
+            </a>
             <span className="hdiv hidden sm:block" />
             <button onClick={load} className="ibtn" title="Refresh board">⟳</button>
             <button onClick={scanNow} disabled={scanning} className="ibtn" title="Run a fresh scan now">{scanning ? '⏳' : '🔄'}</button>
