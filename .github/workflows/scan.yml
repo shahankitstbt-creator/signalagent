@@ -81,12 +81,21 @@ jobs:
           git config user.email "bot@stocksbyvarsha.local"
           git add public/ledger.json public/goal.json public/tuning.json public/tg_sent.json public/track_record.json public/board*.json public/learning.json public/news.json public/delivery.json public/delivery_history.json public/trade_book.json public/fii_history.json public/oi_history.json public/picks.json 2>/dev/null || true
           git commit -m "state $(date -u +%FT%RZ)" || echo "no state changes"
-          # CRITICAL: never LOSE dedup/book state to a push race — rebase on latest, then push, retry.
-          # If this silently failed, the next scan would re-open positions & re-send Telegram (duplicates).
+          # CRITICAL: never LOSE dedup/book state to a push race, AND never leave conflict markers in the
+          # working tree (the OLD `pull --rebase --autostash` did on JSON conflicts → the deploy shipped
+          # corrupted board.json). Rebase with -X theirs so state conflicts auto-resolve to the FRESH local
+          # data (this scan just generated it), and ABORT on any failure so the tree is always clean.
           for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main && git push && { echo "state pushed"; break; }
+            git fetch origin main
+            if git rebase --strategy-option=theirs origin/main; then
+              git push && { echo "state pushed"; break; }
+            else
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "push race — retry $i"; sleep 4
           done
+          # hard safety: if anything left markers, discard them so the deploy can never ship a corrupt file
+          if grep -rl '^<<<<<<< ' public/*.json >/dev/null 2>&1; then echo "markers found — restoring clean state"; git checkout -- public/ ; fi
       - name: Deploy to Vercel (tradingview project → stocksbyvarsha.vercel.app)
         run: |
           npx --yes vercel@latest link --yes --project tradingview --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }}
