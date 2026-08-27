@@ -165,7 +165,9 @@ Codified from real results (re-analyse monthly). **Concentrate on proven winners
 - **#1 loss cause = false breakouts (25×)** → require a **confirmed close beyond the level + volume; enter the retest**, not the first poke. **#2 = option time-decay (32×)** → don't hold weak-moving options (6-day time-stop).
 - **Cash is the weak sleeve (44%, −₹7k)** → highest selectivity + the R:R/expectancy fixes.
 
-**Honesty:** a 75%+ overall win-rate across all desks is not achievable — only money_flow clears it. Higher *traded* win-rate comes from **concentration on the winners**, not a blanket promise.
+**SELECTIVITY GATE (accuracy push → 75% aim):** the trade book only TAKES an **odds-favoured** trade — a **proven desk (measured win-rate ≥ 55%)** OR **high-conviction (≥72) with R:R ≥ 1.8**. Low-odds trades (proven-losing desk + weak conviction/R:R) are skipped. This raises the *traded* win-rate across all 3 sleeves without suppressing the board desks. (Commodities/index exempt — trend-following, few.)
+
+**Honesty:** a sustained 75%+ *overall signal* win-rate across all desks is not achievable — only money_flow clears it. The path is **concentrating the traded book on the winners** so the *traded* accuracy climbs; it is not a blanket promise, and the number shown is always the real measured one.
 
 ---
 
