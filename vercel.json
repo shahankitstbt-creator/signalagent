@@ -11,6 +11,7 @@
     { "source": "/manifest.webmanifest", "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }] }
   ],
   "crons": [
-    { "path": "/api/cron-scan?tf=daily", "schedule": "35 3 * * *" }
+    { "path": "/api/cron-scan?tf=daily", "schedule": "35 3 * * *" },
+    { "path": "/api/cron-scan?tf=intraday", "schedule": "2 10 * * *" }
   ]
 }
