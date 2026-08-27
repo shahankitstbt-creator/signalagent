@@ -1,0 +1,2788 @@
+{
+  "live": {
+    "NIFTY": {
+      "spot": 24090.85,
+      "maxPain": 24200,
+      "callWall": 24300,
+      "putWall": 24000,
+      "gammaFlip": 24400,
+      "regime": "NEG GAMMA",
+      "pcr": 0.84,
+      "atm": 24100,
+      "expiry": "01SEP2026",
+      "lean": "PULL UP",
+      "bias": "up",
+      "distPct": 0.45,
+      "why": [
+        "Max Pain 24200 ABOVE spot (+0.45%) → pull up toward 24200; call cap 24300",
+        "NEG-gamma (below flip 24400) → dealers AMPLIFY: a wall-break trends hard into the close"
+      ],
+      "magnets": [
+        {
+          "k": 24300,
+          "ce": 13253305,
+          "pe": 4979260
+        },
+        {
+          "k": 24200,
+          "ce": 10122580,
+          "pe": 6730945
+        },
+        {
+          "k": 24400,
+          "ce": 12241515,
+          "pe": 2312180
+        },
+        {
+          "k": 24350,
+          "ce": 8066695,
+          "pe": 1679145
+        },
+        {
+          "k": 24000,
+          "ce": 1692925,
+          "pe": 7042295
+        },
+        {
+          "k": 24100,
+          "ce": 3034070,
+          "pe": 5523375
+        }
+      ],
+      "predictedClose": 24200,
+      "footprintScore": 1,
+      "direction": "BULLISH",
+      "confidence": 58,
+      "factors": [
+        {
+          "dir": "up",
+          "f": "Option pin pulling UP to 24200"
+        }
+      ],
+      "target": 24200,
+      "instBias": null,
+      "isExpiry": false
+    },
+    "BANKNIFTY": {
+      "spot": 57509.95,
+      "maxPain": 57500,
+      "callWall": 57500,
+      "putWall": 57500,
+      "gammaFlip": 57500,
+      "regime": "POS GAMMA",
+      "pcr": 1.13,
+      "atm": 57500,
+      "expiry": "29SEP2026",
+      "lean": "PIN",
+      "bias": "neutral",
+      "distPct": -0.02,
+      "why": [
+        "Spot 57509.95 ≈ Max Pain 57500 → PINNED into the 15:30 auction",
+        "POS-gamma (above flip 57500) → dealers SUPPRESS: pin/range toward high-OI strikes"
+      ],
+      "magnets": [
+        {
+          "k": 57500,
+          "ce": 1829640,
+          "pe": 1763400
+        },
+        {
+          "k": 58000,
+          "ce": 1269960,
+          "pe": 1152840
+        },
+        {
+          "k": 57000,
+          "ce": 212790,
+          "pe": 691050
+        },
+        {
+          "k": 57800,
+          "ce": 288690,
+          "pe": 175890
+        },
+        {
+          "k": 57700,
+          "ce": 241290,
+          "pe": 161940
+        },
+        {
+          "k": 57900,
+          "ce": 229560,
+          "pe": 149250
+        }
+      ],
+      "predictedClose": 57500,
+      "footprintScore": 0,
+      "direction": "NEUTRAL",
+      "confidence": 48,
+      "factors": [
+        {
+          "dir": "flat",
+          "f": "Pinned at 57500 (range day)"
+        }
+      ],
+      "target": 57500,
+      "instBias": null,
+      "isExpiry": false
+    }
+  },
+  "history": [],
+  "actuals": {
+    "NIFTY": [
+      {
+        "date": "2026-08-03",
+        "close": 24774.3
+      },
+      {
+        "date": "2026-08-04",
+        "close": 24614.9
+      },
+      {
+        "date": "2026-08-05",
+        "close": 24624.65
+      },
+      {
+        "date": "2026-08-06",
+        "close": 24636
+      },
+      {
+        "date": "2026-08-07",
+        "close": 24570.65
+      },
+      {
+        "date": "2026-08-10",
+        "close": 24583.8
+      },
+      {
+        "date": "2026-08-11",
+        "close": 24471.7
+      },
+      {
+        "date": "2026-08-12",
+        "close": 24435.95
+      },
+      {
+        "date": "2026-08-13",
+        "close": 24395.85
+      },
+      {
+        "date": "2026-08-14",
+        "close": 24366
+      },
+      {
+        "date": "2026-08-17",
+        "close": 24287.65
+      },
+      {
+        "date": "2026-08-18",
+        "close": 24154.9
+      },
+      {
+        "date": "2026-08-19",
+        "close": 24078.3
+      },
+      {
+        "date": "2026-08-20",
+        "close": 24231.85
+      },
+      {
+        "date": "2026-08-21",
+        "close": 24252
+      },
+      {
+        "date": "2026-08-24",
+        "close": 24219.05
+      },
+      {
+        "date": "2026-08-25",
+        "close": 24334.55
+      },
+      {
+        "date": "2026-08-26",
+        "close": 24207.75
+      },
+      {
+        "date": "2026-08-27",
+        "close": 24090.85
+      }
+    ],
+    "BANKNIFTY": [
+      {
+        "date": "2026-08-03",
+        "close": 58247.95
+      },
+      {
+        "date": "2026-08-04",
+        "close": 57907.2
+      },
+      {
+        "date": "2026-08-05",
+        "close": 57739.95
+      },
+      {
+        "date": "2026-08-06",
+        "close": 58063.65
+      },
+      {
+        "date": "2026-08-07",
+        "close": 57746.45
+      },
+      {
+        "date": "2026-08-10",
+        "close": 57686.95
+      },
+      {
+        "date": "2026-08-11",
+        "close": 57446.25
+      },
+      {
+        "date": "2026-08-12",
+        "close": 57885.85
+      },
+      {
+        "date": "2026-08-13",
+        "close": 57635.25
+      },
+      {
+        "date": "2026-08-14",
+        "close": 57491.1
+      },
+      {
+        "date": "2026-08-17",
+        "close": 57497.8
+      },
+      {
+        "date": "2026-08-18",
+        "close": 57262.4
+      },
+      {
+        "date": "2026-08-19",
+        "close": 57239.75
+      },
+      {
+        "date": "2026-08-20",
+        "close": 57495.9
+      },
+      {
+        "date": "2026-08-21",
+        "close": 57761.95
+      },
+      {
+        "date": "2026-08-24",
+        "close": 57525.95
+      },
+      {
+        "date": "2026-08-25",
+        "close": 57514.2
+      },
+      {
+        "date": "2026-08-26",
+        "close": 57783.75
+      },
+      {
+        "date": "2026-08-27",
+        "close": 57509.95
+      }
+    ],
+    "SENSEX": [
+      {
+        "date": "2026-08-03",
+        "close": 78639.03
+      },
+      {
+        "date": "2026-08-04",
+        "close": 78428.95
+      },
+      {
+        "date": "2026-08-05",
+        "close": 78581
+      },
+      {
+        "date": "2026-08-06",
+        "close": 78954.76
+      },
+      {
+        "date": "2026-08-07",
+        "close": 78499.17
+      },
+      {
+        "date": "2026-08-10",
+        "close": 78542.44
+      },
+      {
+        "date": "2026-08-11",
+        "close": 78154.25
+      },
+      {
+        "date": "2026-08-12",
+        "close": 77966.35
+      },
+      {
+        "date": "2026-08-13",
+        "close": 78079.96
+      },
+      {
+        "date": "2026-08-14",
+        "close": 78009.25
+      },
+      {
+        "date": "2026-08-17",
+        "close": 77728.16
+      },
+      {
+        "date": "2026-08-18",
+        "close": 77235.46
+      },
+      {
+        "date": "2026-08-19",
+        "close": 76909.68
+      },
+      {
+        "date": "2026-08-20",
+        "close": 77537.72
+      },
+      {
+        "date": "2026-08-21",
+        "close": 77540.83
+      },
+      {
+        "date": "2026-08-24",
+        "close": 77369.11
+      },
+      {
+        "date": "2026-08-25",
+        "close": 77656.09
+      },
+      {
+        "date": "2026-08-26",
+        "close": 77472.94
+      },
+      {
+        "date": "2026-08-27",
+        "close": 76933.59
+      }
+    ]
+  },
+  "expiries": [
+    {
+      "date": "2026-08-04",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-06",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-11",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-13",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-18",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-20",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-08-25",
+      "exchange": "BSE · Sensex",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-08-27",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-09-01",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-03",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-08",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-10",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-15",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-17",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-22",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-09-24",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-09-29",
+      "exchange": "BSE · Sensex",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-10-01",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-06",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-08",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-13",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-15",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-20",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-22",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-10-27",
+      "exchange": "BSE · Sensex",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-10-29",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-11-03",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-05",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-10",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-12",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-17",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-19",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-11-24",
+      "exchange": "BSE · Sensex",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-11-26",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-12-01",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-03",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-08",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-10",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-15",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-17",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-22",
+      "exchange": "BSE · Sensex",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-24",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "weekly"
+    },
+    {
+      "date": "2026-12-29",
+      "exchange": "BSE · Sensex",
+      "type": "monthly"
+    },
+    {
+      "date": "2026-12-31",
+      "exchange": "NSE · Nifty/BankNifty",
+      "type": "monthly"
+    }
+  ],
+  "regime": null,
+  "fiiHistory": [
+    {
+      "date": "2026-07-24",
+      "futIdxNet": -270847,
+      "fiiCash": -3893,
+      "diiCash": 5454
+    },
+    {
+      "date": "2026-07-27",
+      "futIdxNet": -266925,
+      "fiiCash": -1688,
+      "diiCash": 2329
+    },
+    {
+      "date": "2026-07-28",
+      "futIdxNet": -205601,
+      "fiiCash": 755,
+      "diiCash": 1664
+    },
+    {
+      "date": "2026-07-30",
+      "futIdxNet": -186612,
+      "fiiCash": 3624,
+      "diiCash": -1864
+    },
+    {
+      "date": "2026-07-31",
+      "futIdxNet": -173113,
+      "fiiCash": 277,
+      "diiCash": 2260
+    },
+    {
+      "date": "2026-08-03",
+      "futIdxNet": -150816,
+      "fiiCash": 922,
+      "diiCash": 1571
+    },
+    {
+      "date": "2026-08-04",
+      "futIdxNet": -153773,
+      "fiiCash": 2446,
+      "diiCash": -936
+    },
+    {
+      "date": "2026-08-05",
+      "futIdxNet": -158903,
+      "fiiCash": -943,
+      "diiCash": 2883
+    },
+    {
+      "date": "2026-08-06",
+      "futIdxNet": -145118,
+      "fiiCash": -18,
+      "diiCash": 4014
+    },
+    {
+      "date": "2026-08-07",
+      "futIdxNet": -150058,
+      "fiiCash": 480,
+      "diiCash": 236
+    },
+    {
+      "date": "2026-08-10",
+      "futIdxNet": -152163,
+      "fiiCash": 1975,
+      "diiCash": -1290
+    },
+    {
+      "date": "2026-08-11",
+      "futIdxNet": -156131,
+      "fiiCash": 259,
+      "diiCash": 25
+    },
+    {
+      "date": "2026-08-12",
+      "futIdxNet": -165169,
+      "fiiCash": -1003,
+      "diiCash": 5842
+    },
+    {
+      "date": "2026-08-13",
+      "futIdxNet": -168702,
+      "fiiCash": -511,
+      "diiCash": 4353
+    },
+    {
+      "date": "2026-08-14",
+      "futIdxNet": -176698,
+      "fiiCash": 508,
+      "diiCash": 356
+    },
+    {
+      "date": "2026-08-17",
+      "futIdxNet": -181587,
+      "fiiCash": -2535,
+      "diiCash": 5101
+    },
+    {
+      "date": "2026-08-18",
+      "futIdxNet": -194158,
+      "fiiCash": 1652,
+      "diiCash": 2579
+    },
+    {
+      "date": "2026-08-19",
+      "futIdxNet": -209807,
+      "fiiCash": 408,
+      "diiCash": 3974
+    },
+    {
+      "date": "2026-08-20",
+      "futIdxNet": -212113,
+      "fiiCash": -583,
+      "diiCash": 3538
+    },
+    {
+      "date": "2026-08-21",
+      "futIdxNet": -209855,
+      "fiiCash": -543,
+      "diiCash": 2124
+    },
+    {
+      "date": "2026-08-24",
+      "futIdxNet": -219383,
+      "fiiCash": 1182,
+      "diiCash": 2493
+    },
+    {
+      "date": "2026-08-25",
+      "futIdxNet": -184227,
+      "fiiCash": 1594,
+      "diiCash": 230
+    },
+    {
+      "date": "2026-08-26",
+      "futIdxNet": -186060,
+      "fiiCash": 503,
+      "diiCash": 6425
+    }
+  ],
+  "forecast": [
+    {
+      "date": "2026-08-28",
+      "dayN": 1,
+      "NIFTY": {
+        "exp": 24127,
+        "low": 23958,
+        "high": 24296
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56992,
+        "high": 58028
+      },
+      "SENSEX": {
+        "exp": 77049,
+        "low": 76510,
+        "high": 77588
+      }
+    },
+    {
+      "date": "2026-08-31",
+      "dayN": 2,
+      "NIFTY": {
+        "exp": 24163,
+        "low": 23925,
+        "high": 24402
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56778,
+        "high": 58242
+      },
+      "SENSEX": {
+        "exp": 77164,
+        "low": 76403,
+        "high": 77926
+      }
+    },
+    {
+      "date": "2026-09-01",
+      "dayN": 3,
+      "NIFTY": {
+        "exp": 24199,
+        "low": 23907,
+        "high": 24491
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56613,
+        "high": 58406
+      },
+      "SENSEX": {
+        "exp": 77280,
+        "low": 76347,
+        "high": 78213
+      }
+    },
+    {
+      "date": "2026-09-02",
+      "dayN": 4,
+      "NIFTY": {
+        "exp": 24235,
+        "low": 23898,
+        "high": 24573
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56475,
+        "high": 58545
+      },
+      "SENSEX": {
+        "exp": 77395,
+        "low": 76318,
+        "high": 78472
+      }
+    },
+    {
+      "date": "2026-09-03",
+      "dayN": 5,
+      "NIFTY": {
+        "exp": 24272,
+        "low": 23894,
+        "high": 24649
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56353,
+        "high": 58667
+      },
+      "SENSEX": {
+        "exp": 77511,
+        "low": 76306,
+        "high": 78715
+      }
+    },
+    {
+      "date": "2026-09-04",
+      "dayN": 6,
+      "NIFTY": {
+        "exp": 24308,
+        "low": 23895,
+        "high": 24721
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56242,
+        "high": 58778
+      },
+      "SENSEX": {
+        "exp": 77626,
+        "low": 76307,
+        "high": 78945
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "dayN": 7,
+      "NIFTY": {
+        "exp": 24344,
+        "low": 23898,
+        "high": 24790
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56141,
+        "high": 58879
+      },
+      "SENSEX": {
+        "exp": 77741,
+        "low": 76317,
+        "high": 79166
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "dayN": 8,
+      "NIFTY": {
+        "exp": 24380,
+        "low": 23903,
+        "high": 24857
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 56046,
+        "high": 58974
+      },
+      "SENSEX": {
+        "exp": 77857,
+        "low": 76334,
+        "high": 79380
+      }
+    },
+    {
+      "date": "2026-09-09",
+      "dayN": 9,
+      "NIFTY": {
+        "exp": 24416,
+        "low": 23910,
+        "high": 24922
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55957,
+        "high": 59063
+      },
+      "SENSEX": {
+        "exp": 77972,
+        "low": 76357,
+        "high": 79588
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "dayN": 10,
+      "NIFTY": {
+        "exp": 24452,
+        "low": 23919,
+        "high": 24985
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55873,
+        "high": 59147
+      },
+      "SENSEX": {
+        "exp": 78088,
+        "low": 76385,
+        "high": 79791
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "dayN": 11,
+      "NIFTY": {
+        "exp": 24488,
+        "low": 23929,
+        "high": 25048
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55793,
+        "high": 59227
+      },
+      "SENSEX": {
+        "exp": 78203,
+        "low": 76417,
+        "high": 79989
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "dayN": 12,
+      "NIFTY": {
+        "exp": 24524,
+        "low": 23940,
+        "high": 25109
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55717,
+        "high": 59303
+      },
+      "SENSEX": {
+        "exp": 78318,
+        "low": 76453,
+        "high": 80184
+      }
+    },
+    {
+      "date": "2026-09-15",
+      "dayN": 13,
+      "NIFTY": {
+        "exp": 24561,
+        "low": 23953,
+        "high": 25169
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55644,
+        "high": 59376
+      },
+      "SENSEX": {
+        "exp": 78434,
+        "low": 76492,
+        "high": 80376
+      }
+    },
+    {
+      "date": "2026-09-16",
+      "dayN": 14,
+      "NIFTY": {
+        "exp": 24597,
+        "low": 23966,
+        "high": 25228
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55573,
+        "high": 59447
+      },
+      "SENSEX": {
+        "exp": 78549,
+        "low": 76534,
+        "high": 80564
+      }
+    },
+    {
+      "date": "2026-09-17",
+      "dayN": 15,
+      "NIFTY": {
+        "exp": 24633,
+        "low": 23980,
+        "high": 25286
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55505,
+        "high": 59515
+      },
+      "SENSEX": {
+        "exp": 78665,
+        "low": 76579,
+        "high": 80750
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "dayN": 16,
+      "NIFTY": {
+        "exp": 24669,
+        "low": 23994,
+        "high": 25344
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55440,
+        "high": 59580
+      },
+      "SENSEX": {
+        "exp": 78780,
+        "low": 76626,
+        "high": 80934
+      }
+    },
+    {
+      "date": "2026-09-21",
+      "dayN": 17,
+      "NIFTY": {
+        "exp": 24705,
+        "low": 24010,
+        "high": 25400
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55376,
+        "high": 59644
+      },
+      "SENSEX": {
+        "exp": 78895,
+        "low": 76675,
+        "high": 81116
+      }
+    },
+    {
+      "date": "2026-09-22",
+      "dayN": 18,
+      "NIFTY": {
+        "exp": 24741,
+        "low": 24026,
+        "high": 25457
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55314,
+        "high": 59706
+      },
+      "SENSEX": {
+        "exp": 79011,
+        "low": 76726,
+        "high": 81296
+      }
+    },
+    {
+      "date": "2026-09-23",
+      "dayN": 19,
+      "NIFTY": {
+        "exp": 24777,
+        "low": 24042,
+        "high": 25513
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55254,
+        "high": 59766
+      },
+      "SENSEX": {
+        "exp": 79126,
+        "low": 76779,
+        "high": 81474
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "dayN": 20,
+      "NIFTY": {
+        "exp": 24814,
+        "low": 24059,
+        "high": 25568
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55195,
+        "high": 59825
+      },
+      "SENSEX": {
+        "exp": 79242,
+        "low": 76833,
+        "high": 81650
+      }
+    },
+    {
+      "date": "2026-09-25",
+      "dayN": 21,
+      "NIFTY": {
+        "exp": 24850,
+        "low": 24077,
+        "high": 25622
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55138,
+        "high": 59882
+      },
+      "SENSEX": {
+        "exp": 79357,
+        "low": 76889,
+        "high": 81825
+      }
+    },
+    {
+      "date": "2026-09-28",
+      "dayN": 22,
+      "NIFTY": {
+        "exp": 24886,
+        "low": 24095,
+        "high": 25677
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55082,
+        "high": 59938
+      },
+      "SENSEX": {
+        "exp": 79472,
+        "low": 76946,
+        "high": 81998
+      }
+    },
+    {
+      "date": "2026-09-29",
+      "dayN": 23,
+      "NIFTY": {
+        "exp": 24922,
+        "low": 24113,
+        "high": 25731
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 55028,
+        "high": 59992
+      },
+      "SENSEX": {
+        "exp": 79588,
+        "low": 77005,
+        "high": 82171
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "dayN": 24,
+      "NIFTY": {
+        "exp": 24958,
+        "low": 24132,
+        "high": 25784
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54974,
+        "high": 60046
+      },
+      "SENSEX": {
+        "exp": 79703,
+        "low": 77065,
+        "high": 82341
+      }
+    },
+    {
+      "date": "2026-10-01",
+      "dayN": 25,
+      "NIFTY": {
+        "exp": 24994,
+        "low": 24151,
+        "high": 25837
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54922,
+        "high": 60098
+      },
+      "SENSEX": {
+        "exp": 79819,
+        "low": 77126,
+        "high": 82511
+      }
+    },
+    {
+      "date": "2026-10-02",
+      "dayN": 26,
+      "NIFTY": {
+        "exp": 25030,
+        "low": 24171,
+        "high": 25890
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54871,
+        "high": 60149
+      },
+      "SENSEX": {
+        "exp": 79934,
+        "low": 77188,
+        "high": 82680
+      }
+    },
+    {
+      "date": "2026-10-05",
+      "dayN": 27,
+      "NIFTY": {
+        "exp": 25067,
+        "low": 24190,
+        "high": 25943
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54820,
+        "high": 60199
+      },
+      "SENSEX": {
+        "exp": 80049,
+        "low": 77251,
+        "high": 82848
+      }
+    },
+    {
+      "date": "2026-10-06",
+      "dayN": 28,
+      "NIFTY": {
+        "exp": 25103,
+        "low": 24210,
+        "high": 25995
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54771,
+        "high": 60249
+      },
+      "SENSEX": {
+        "exp": 80165,
+        "low": 77315,
+        "high": 83014
+      }
+    },
+    {
+      "date": "2026-10-07",
+      "dayN": 29,
+      "NIFTY": {
+        "exp": 25139,
+        "low": 24231,
+        "high": 26047
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54723,
+        "high": 60297
+      },
+      "SENSEX": {
+        "exp": 80280,
+        "low": 77380,
+        "high": 83180
+      }
+    },
+    {
+      "date": "2026-10-08",
+      "dayN": 30,
+      "NIFTY": {
+        "exp": 25175,
+        "low": 24251,
+        "high": 26099
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54675,
+        "high": 60345
+      },
+      "SENSEX": {
+        "exp": 80396,
+        "low": 77446,
+        "high": 83345
+      }
+    },
+    {
+      "date": "2026-10-09",
+      "dayN": 31,
+      "NIFTY": {
+        "exp": 25211,
+        "low": 24272,
+        "high": 26150
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54628,
+        "high": 60392
+      },
+      "SENSEX": {
+        "exp": 80511,
+        "low": 77513,
+        "high": 83509
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "dayN": 32,
+      "NIFTY": {
+        "exp": 25247,
+        "low": 24293,
+        "high": 26201
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54582,
+        "high": 60438
+      },
+      "SENSEX": {
+        "exp": 80626,
+        "low": 77580,
+        "high": 83673
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "dayN": 33,
+      "NIFTY": {
+        "exp": 25283,
+        "low": 24315,
+        "high": 26252
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54537,
+        "high": 60483
+      },
+      "SENSEX": {
+        "exp": 80742,
+        "low": 77648,
+        "high": 83835
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "dayN": 34,
+      "NIFTY": {
+        "exp": 25319,
+        "low": 24336,
+        "high": 26303
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54492,
+        "high": 60528
+      },
+      "SENSEX": {
+        "exp": 80857,
+        "low": 77717,
+        "high": 83997
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "dayN": 35,
+      "NIFTY": {
+        "exp": 25356,
+        "low": 24358,
+        "high": 26353
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54448,
+        "high": 60572
+      },
+      "SENSEX": {
+        "exp": 80973,
+        "low": 77787,
+        "high": 84159
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "dayN": 36,
+      "NIFTY": {
+        "exp": 25392,
+        "low": 24380,
+        "high": 26404
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54404,
+        "high": 60615
+      },
+      "SENSEX": {
+        "exp": 81088,
+        "low": 77857,
+        "high": 84319
+      }
+    },
+    {
+      "date": "2026-10-19",
+      "dayN": 37,
+      "NIFTY": {
+        "exp": 25428,
+        "low": 24402,
+        "high": 26454
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54362,
+        "high": 60658
+      },
+      "SENSEX": {
+        "exp": 81203,
+        "low": 77928,
+        "high": 84479
+      }
+    },
+    {
+      "date": "2026-10-20",
+      "dayN": 38,
+      "NIFTY": {
+        "exp": 25464,
+        "low": 24424,
+        "high": 26504
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54319,
+        "high": 60701
+      },
+      "SENSEX": {
+        "exp": 81319,
+        "low": 77999,
+        "high": 84639
+      }
+    },
+    {
+      "date": "2026-10-21",
+      "dayN": 39,
+      "NIFTY": {
+        "exp": 25500,
+        "low": 24447,
+        "high": 26553
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54278,
+        "high": 60742
+      },
+      "SENSEX": {
+        "exp": 81434,
+        "low": 78071,
+        "high": 84797
+      }
+    },
+    {
+      "date": "2026-10-22",
+      "dayN": 40,
+      "NIFTY": {
+        "exp": 25536,
+        "low": 24470,
+        "high": 26603
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54236,
+        "high": 60783
+      },
+      "SENSEX": {
+        "exp": 81550,
+        "low": 78144,
+        "high": 84956
+      }
+    },
+    {
+      "date": "2026-10-23",
+      "dayN": 41,
+      "NIFTY": {
+        "exp": 25572,
+        "low": 24493,
+        "high": 26652
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54196,
+        "high": 60824
+      },
+      "SENSEX": {
+        "exp": 81665,
+        "low": 78217,
+        "high": 85113
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "dayN": 42,
+      "NIFTY": {
+        "exp": 25609,
+        "low": 24516,
+        "high": 26701
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54156,
+        "high": 60864
+      },
+      "SENSEX": {
+        "exp": 81780,
+        "low": 78290,
+        "high": 85271
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "dayN": 43,
+      "NIFTY": {
+        "exp": 25645,
+        "low": 24539,
+        "high": 26751
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54116,
+        "high": 60904
+      },
+      "SENSEX": {
+        "exp": 81896,
+        "low": 78364,
+        "high": 85427
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "dayN": 44,
+      "NIFTY": {
+        "exp": 25681,
+        "low": 24562,
+        "high": 26799
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54077,
+        "high": 60943
+      },
+      "SENSEX": {
+        "exp": 82011,
+        "low": 78439,
+        "high": 85583
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "dayN": 45,
+      "NIFTY": {
+        "exp": 25717,
+        "low": 24586,
+        "high": 26848
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 54038,
+        "high": 60982
+      },
+      "SENSEX": {
+        "exp": 82127,
+        "low": 78514,
+        "high": 85739
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "dayN": 46,
+      "NIFTY": {
+        "exp": 25753,
+        "low": 24609,
+        "high": 26897
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53999,
+        "high": 61020
+      },
+      "SENSEX": {
+        "exp": 82242,
+        "low": 78589,
+        "high": 85895
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "dayN": 47,
+      "NIFTY": {
+        "exp": 25789,
+        "low": 24633,
+        "high": 26945
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53962,
+        "high": 61058
+      },
+      "SENSEX": {
+        "exp": 82357,
+        "low": 78665,
+        "high": 86049
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "dayN": 48,
+      "NIFTY": {
+        "exp": 25825,
+        "low": 24657,
+        "high": 26994
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53924,
+        "high": 61096
+      },
+      "SENSEX": {
+        "exp": 82473,
+        "low": 78742,
+        "high": 86204
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "dayN": 49,
+      "NIFTY": {
+        "exp": 25862,
+        "low": 24681,
+        "high": 27042
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53887,
+        "high": 61133
+      },
+      "SENSEX": {
+        "exp": 82588,
+        "low": 78818,
+        "high": 86358
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "dayN": 50,
+      "NIFTY": {
+        "exp": 25898,
+        "low": 24705,
+        "high": 27090
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53850,
+        "high": 61170
+      },
+      "SENSEX": {
+        "exp": 82704,
+        "low": 78896,
+        "high": 86512
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "dayN": 51,
+      "NIFTY": {
+        "exp": 25934,
+        "low": 24729,
+        "high": 27138
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53814,
+        "high": 61206
+      },
+      "SENSEX": {
+        "exp": 82819,
+        "low": 78973,
+        "high": 86665
+      }
+    },
+    {
+      "date": "2026-11-09",
+      "dayN": 52,
+      "NIFTY": {
+        "exp": 25970,
+        "low": 24754,
+        "high": 27186
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53778,
+        "high": 61242
+      },
+      "SENSEX": {
+        "exp": 82934,
+        "low": 79051,
+        "high": 86818
+      }
+    },
+    {
+      "date": "2026-11-10",
+      "dayN": 53,
+      "NIFTY": {
+        "exp": 26006,
+        "low": 24778,
+        "high": 27234
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53742,
+        "high": 61278
+      },
+      "SENSEX": {
+        "exp": 83050,
+        "low": 79129,
+        "high": 86970
+      }
+    },
+    {
+      "date": "2026-11-11",
+      "dayN": 54,
+      "NIFTY": {
+        "exp": 26042,
+        "low": 24803,
+        "high": 27281
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53706,
+        "high": 61313
+      },
+      "SENSEX": {
+        "exp": 83165,
+        "low": 79208,
+        "high": 87123
+      }
+    },
+    {
+      "date": "2026-11-12",
+      "dayN": 55,
+      "NIFTY": {
+        "exp": 26078,
+        "low": 24828,
+        "high": 27329
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53671,
+        "high": 61348
+      },
+      "SENSEX": {
+        "exp": 83281,
+        "low": 79287,
+        "high": 87274
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "dayN": 56,
+      "NIFTY": {
+        "exp": 26114,
+        "low": 24853,
+        "high": 27376
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53637,
+        "high": 61383
+      },
+      "SENSEX": {
+        "exp": 83396,
+        "low": 79366,
+        "high": 87426
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "dayN": 57,
+      "NIFTY": {
+        "exp": 26151,
+        "low": 24877,
+        "high": 27424
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53602,
+        "high": 61418
+      },
+      "SENSEX": {
+        "exp": 83511,
+        "low": 79446,
+        "high": 87577
+      }
+    },
+    {
+      "date": "2026-11-17",
+      "dayN": 58,
+      "NIFTY": {
+        "exp": 26187,
+        "low": 24902,
+        "high": 27471
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53568,
+        "high": 61452
+      },
+      "SENSEX": {
+        "exp": 83627,
+        "low": 79525,
+        "high": 87728
+      }
+    },
+    {
+      "date": "2026-11-18",
+      "dayN": 59,
+      "NIFTY": {
+        "exp": 26223,
+        "low": 24928,
+        "high": 27518
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53534,
+        "high": 61486
+      },
+      "SENSEX": {
+        "exp": 83742,
+        "low": 79606,
+        "high": 87879
+      }
+    },
+    {
+      "date": "2026-11-19",
+      "dayN": 60,
+      "NIFTY": {
+        "exp": 26259,
+        "low": 24953,
+        "high": 27565
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53501,
+        "high": 61519
+      },
+      "SENSEX": {
+        "exp": 83858,
+        "low": 79686,
+        "high": 88029
+      }
+    },
+    {
+      "date": "2026-11-20",
+      "dayN": 61,
+      "NIFTY": {
+        "exp": 26295,
+        "low": 24978,
+        "high": 27612
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53467,
+        "high": 61552
+      },
+      "SENSEX": {
+        "exp": 83973,
+        "low": 79767,
+        "high": 88179
+      }
+    },
+    {
+      "date": "2026-11-23",
+      "dayN": 62,
+      "NIFTY": {
+        "exp": 26331,
+        "low": 25003,
+        "high": 27659
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53434,
+        "high": 61585
+      },
+      "SENSEX": {
+        "exp": 84088,
+        "low": 79848,
+        "high": 88329
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "dayN": 63,
+      "NIFTY": {
+        "exp": 26367,
+        "low": 25029,
+        "high": 27706
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53402,
+        "high": 61618
+      },
+      "SENSEX": {
+        "exp": 84204,
+        "low": 79929,
+        "high": 88478
+      }
+    },
+    {
+      "date": "2026-11-25",
+      "dayN": 64,
+      "NIFTY": {
+        "exp": 26404,
+        "low": 25054,
+        "high": 27753
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53369,
+        "high": 61651
+      },
+      "SENSEX": {
+        "exp": 84319,
+        "low": 80011,
+        "high": 88627
+      }
+    },
+    {
+      "date": "2026-11-26",
+      "dayN": 65,
+      "NIFTY": {
+        "exp": 26440,
+        "low": 25080,
+        "high": 27799
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53337,
+        "high": 61683
+      },
+      "SENSEX": {
+        "exp": 84435,
+        "low": 80093,
+        "high": 88776
+      }
+    },
+    {
+      "date": "2026-11-27",
+      "dayN": 66,
+      "NIFTY": {
+        "exp": 26476,
+        "low": 25106,
+        "high": 27846
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53305,
+        "high": 61715
+      },
+      "SENSEX": {
+        "exp": 84550,
+        "low": 80175,
+        "high": 88925
+      }
+    },
+    {
+      "date": "2026-11-30",
+      "dayN": 67,
+      "NIFTY": {
+        "exp": 26512,
+        "low": 25132,
+        "high": 27892
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53273,
+        "high": 61747
+      },
+      "SENSEX": {
+        "exp": 84665,
+        "low": 80257,
+        "high": 89074
+      }
+    },
+    {
+      "date": "2026-12-01",
+      "dayN": 68,
+      "NIFTY": {
+        "exp": 26548,
+        "low": 25158,
+        "high": 27939
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53242,
+        "high": 61778
+      },
+      "SENSEX": {
+        "exp": 84781,
+        "low": 80340,
+        "high": 89222
+      }
+    },
+    {
+      "date": "2026-12-02",
+      "dayN": 69,
+      "NIFTY": {
+        "exp": 26584,
+        "low": 25183,
+        "high": 27985
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53211,
+        "high": 61809
+      },
+      "SENSEX": {
+        "exp": 84896,
+        "low": 80423,
+        "high": 89370
+      }
+    },
+    {
+      "date": "2026-12-03",
+      "dayN": 70,
+      "NIFTY": {
+        "exp": 26620,
+        "low": 25209,
+        "high": 28031
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53179,
+        "high": 61840
+      },
+      "SENSEX": {
+        "exp": 85012,
+        "low": 80506,
+        "high": 89517
+      }
+    },
+    {
+      "date": "2026-12-04",
+      "dayN": 71,
+      "NIFTY": {
+        "exp": 26657,
+        "low": 25236,
+        "high": 28077
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53149,
+        "high": 61871
+      },
+      "SENSEX": {
+        "exp": 85127,
+        "low": 80589,
+        "high": 89665
+      }
+    },
+    {
+      "date": "2026-12-07",
+      "dayN": 72,
+      "NIFTY": {
+        "exp": 26693,
+        "low": 25262,
+        "high": 28124
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53118,
+        "high": 61902
+      },
+      "SENSEX": {
+        "exp": 85242,
+        "low": 80673,
+        "high": 89812
+      }
+    },
+    {
+      "date": "2026-12-08",
+      "dayN": 73,
+      "NIFTY": {
+        "exp": 26729,
+        "low": 25288,
+        "high": 28170
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53088,
+        "high": 61932
+      },
+      "SENSEX": {
+        "exp": 85358,
+        "low": 80757,
+        "high": 89959
+      }
+    },
+    {
+      "date": "2026-12-09",
+      "dayN": 74,
+      "NIFTY": {
+        "exp": 26765,
+        "low": 25314,
+        "high": 28216
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53057,
+        "high": 61962
+      },
+      "SENSEX": {
+        "exp": 85473,
+        "low": 80841,
+        "high": 90106
+      }
+    },
+    {
+      "date": "2026-12-10",
+      "dayN": 75,
+      "NIFTY": {
+        "exp": 26801,
+        "low": 25341,
+        "high": 28262
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 53027,
+        "high": 61992
+      },
+      "SENSEX": {
+        "exp": 85589,
+        "low": 80925,
+        "high": 90252
+      }
+    },
+    {
+      "date": "2026-12-11",
+      "dayN": 76,
+      "NIFTY": {
+        "exp": 26837,
+        "low": 25367,
+        "high": 28307
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52998,
+        "high": 62022
+      },
+      "SENSEX": {
+        "exp": 85704,
+        "low": 81009,
+        "high": 90399
+      }
+    },
+    {
+      "date": "2026-12-14",
+      "dayN": 77,
+      "NIFTY": {
+        "exp": 26873,
+        "low": 25394,
+        "high": 28353
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52968,
+        "high": 62052
+      },
+      "SENSEX": {
+        "exp": 85819,
+        "low": 81094,
+        "high": 90545
+      }
+    },
+    {
+      "date": "2026-12-15",
+      "dayN": 78,
+      "NIFTY": {
+        "exp": 26909,
+        "low": 25420,
+        "high": 28399
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52939,
+        "high": 62081
+      },
+      "SENSEX": {
+        "exp": 85935,
+        "low": 81179,
+        "high": 90691
+      }
+    },
+    {
+      "date": "2026-12-16",
+      "dayN": 79,
+      "NIFTY": {
+        "exp": 26946,
+        "low": 25447,
+        "high": 28444
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52910,
+        "high": 62110
+      },
+      "SENSEX": {
+        "exp": 86050,
+        "low": 81264,
+        "high": 90837
+      }
+    },
+    {
+      "date": "2026-12-17",
+      "dayN": 80,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25473,
+        "high": 28490
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52880,
+        "high": 62139
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81349,
+        "high": 90982
+      }
+    },
+    {
+      "date": "2026-12-18",
+      "dayN": 81,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25464,
+        "high": 28499
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52852,
+        "high": 62168
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81319,
+        "high": 91012
+      }
+    },
+    {
+      "date": "2026-12-21",
+      "dayN": 82,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25455,
+        "high": 28509
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52823,
+        "high": 62197
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81289,
+        "high": 91042
+      }
+    },
+    {
+      "date": "2026-12-22",
+      "dayN": 83,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25445,
+        "high": 28518
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52794,
+        "high": 62225
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81259,
+        "high": 91072
+      }
+    },
+    {
+      "date": "2026-12-23",
+      "dayN": 84,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25436,
+        "high": 28527
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52766,
+        "high": 62254
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81230,
+        "high": 91101
+      }
+    },
+    {
+      "date": "2026-12-24",
+      "dayN": 85,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25427,
+        "high": 28536
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52738,
+        "high": 62282
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81201,
+        "high": 91131
+      }
+    },
+    {
+      "date": "2026-12-25",
+      "dayN": 86,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25418,
+        "high": 28546
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52710,
+        "high": 62310
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81171,
+        "high": 91160
+      }
+    },
+    {
+      "date": "2026-12-28",
+      "dayN": 87,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25409,
+        "high": 28555
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52682,
+        "high": 62338
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81142,
+        "high": 91189
+      }
+    },
+    {
+      "date": "2026-12-29",
+      "dayN": 88,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25400,
+        "high": 28564
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52655,
+        "high": 62365
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81114,
+        "high": 91218
+      }
+    },
+    {
+      "date": "2026-12-30",
+      "dayN": 89,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25391,
+        "high": 28573
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52627,
+        "high": 62393
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81085,
+        "high": 91246
+      }
+    },
+    {
+      "date": "2026-12-31",
+      "dayN": 90,
+      "NIFTY": {
+        "exp": 26982,
+        "low": 25382,
+        "high": 28582
+      },
+      "BANKNIFTY": {
+        "exp": 57510,
+        "low": 52600,
+        "high": 62420
+      },
+      "SENSEX": {
+        "exp": 86166,
+        "low": 81057,
+        "high": 91275
+      }
+    }
+  ],
+  "historical": [
+    {
+      "date": "2026-07-24",
+      "forDate": null,
+      "pred": "DOWN",
+      "score": -1.2,
+      "futIdxNet": -270847,
+      "fiiCash": -3893,
+      "diiCash": 5454,
+      "banknifty": null,
+      "sensex": null,
+      "niftyNext": null,
+      "actual": null,
+      "hit": null
+    },
+    {
+      "date": "2026-07-27",
+      "forDate": null,
+      "pred": "DOWN",
+      "score": -1.5,
+      "futIdxNet": -266925,
+      "fiiCash": -1688,
+      "diiCash": 2329,
+      "banknifty": null,
+      "sensex": null,
+      "niftyNext": null,
+      "actual": null,
+      "hit": null
+    },
+    {
+      "date": "2026-07-28",
+      "forDate": null,
+      "pred": "FLAT",
+      "score": -0.4,
+      "futIdxNet": -205601,
+      "fiiCash": 755,
+      "diiCash": 1664,
+      "banknifty": null,
+      "sensex": null,
+      "niftyNext": null,
+      "actual": null,
+      "hit": null
+    },
+    {
+      "date": "2026-07-30",
+      "forDate": null,
+      "pred": "DOWN",
+      "score": -0.5,
+      "futIdxNet": -186612,
+      "fiiCash": 3624,
+      "diiCash": -1864,
+      "banknifty": null,
+      "sensex": null,
+      "niftyNext": null,
+      "actual": null,
+      "hit": null
+    },
+    {
+      "date": "2026-07-31",
+      "forDate": null,
+      "pred": "DOWN",
+      "score": -1,
+      "futIdxNet": -173113,
+      "fiiCash": 277,
+      "diiCash": 2260,
+      "banknifty": null,
+      "sensex": null,
+      "niftyNext": null,
+      "actual": null,
+      "hit": null
+    },
+    {
+      "date": "2026-08-03",
+      "forDate": "2026-08-04",
+      "pred": "FLAT",
+      "score": 0.1,
+      "futIdxNet": -150816,
+      "fiiCash": 922,
+      "diiCash": 1571,
+      "nifty": 24774.3,
+      "banknifty": 58247.95,
+      "sensex": 78639.03,
+      "niftyNext": 24614.9,
+      "actual": "DOWN",
+      "hit": null
+    },
+    {
+      "date": "2026-08-04",
+      "forDate": "2026-08-05",
+      "pred": "DOWN",
+      "score": -0.5,
+      "futIdxNet": -153773,
+      "fiiCash": 2446,
+      "diiCash": -936,
+      "nifty": 24614.9,
+      "banknifty": 57907.2,
+      "sensex": 78428.95,
+      "niftyNext": 24624.65,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-05",
+      "forDate": "2026-08-06",
+      "pred": "DOWN",
+      "score": -1.2,
+      "futIdxNet": -158903,
+      "fiiCash": -943,
+      "diiCash": 2883,
+      "nifty": 24624.65,
+      "banknifty": 57739.95,
+      "sensex": 78581,
+      "niftyNext": 24636,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-06",
+      "forDate": "2026-08-07",
+      "pred": "DOWN",
+      "score": -0.7,
+      "futIdxNet": -145118,
+      "fiiCash": -18,
+      "diiCash": 4014,
+      "nifty": 24636,
+      "banknifty": 58063.65,
+      "sensex": 78954.76,
+      "niftyNext": 24570.65,
+      "actual": "DOWN",
+      "hit": true
+    },
+    {
+      "date": "2026-08-07",
+      "forDate": "2026-08-10",
+      "pred": "DOWN",
+      "score": -1,
+      "futIdxNet": -150058,
+      "fiiCash": 480,
+      "diiCash": 236,
+      "nifty": 24570.65,
+      "banknifty": 57746.45,
+      "sensex": 78499.17,
+      "niftyNext": 24583.8,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-10",
+      "forDate": "2026-08-11",
+      "pred": "DOWN",
+      "score": -0.5,
+      "futIdxNet": -152163,
+      "fiiCash": 1975,
+      "diiCash": -1290,
+      "nifty": 24583.8,
+      "banknifty": 57686.95,
+      "sensex": 78542.44,
+      "niftyNext": 24471.7,
+      "actual": "DOWN",
+      "hit": true
+    },
+    {
+      "date": "2026-08-11",
+      "forDate": "2026-08-12",
+      "pred": "DOWN",
+      "score": -1,
+      "futIdxNet": -156131,
+      "fiiCash": 259,
+      "diiCash": 25,
+      "nifty": 24471.7,
+      "banknifty": 57446.25,
+      "sensex": 78154.25,
+      "niftyNext": 24435.95,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-12",
+      "forDate": "2026-08-13",
+      "pred": "DOWN",
+      "score": -1.2,
+      "futIdxNet": -165169,
+      "fiiCash": -1003,
+      "diiCash": 5842,
+      "nifty": 24435.95,
+      "banknifty": 57885.85,
+      "sensex": 77966.35,
+      "niftyNext": 24395.85,
+      "actual": "DOWN",
+      "hit": true
+    },
+    {
+      "date": "2026-08-13",
+      "forDate": "2026-08-14",
+      "pred": "DOWN",
+      "score": -0.7,
+      "futIdxNet": -168702,
+      "fiiCash": -511,
+      "diiCash": 4353,
+      "nifty": 24395.85,
+      "banknifty": 57635.25,
+      "sensex": 78079.96,
+      "niftyNext": 24366,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-14",
+      "forDate": "2026-08-17",
+      "pred": "DOWN",
+      "score": -1,
+      "futIdxNet": -176698,
+      "fiiCash": 508,
+      "diiCash": 356,
+      "nifty": 24366,
+      "banknifty": 57491.1,
+      "sensex": 78009.25,
+      "niftyNext": 24287.65,
+      "actual": "DOWN",
+      "hit": true
+    },
+    {
+      "date": "2026-08-17",
+      "forDate": "2026-08-18",
+      "pred": "DOWN",
+      "score": -1.2,
+      "futIdxNet": -181587,
+      "fiiCash": -2535,
+      "diiCash": 5101,
+      "nifty": 24287.65,
+      "banknifty": 57497.8,
+      "sensex": 77728.16,
+      "niftyNext": 24154.9,
+      "actual": "DOWN",
+      "hit": true
+    },
+    {
+      "date": "2026-08-18",
+      "forDate": "2026-08-19",
+      "pred": "FLAT",
+      "score": -0.2,
+      "futIdxNet": -194158,
+      "fiiCash": 1652,
+      "diiCash": 2579,
+      "nifty": 24154.9,
+      "banknifty": 57262.4,
+      "sensex": 77235.46,
+      "niftyNext": 24078.3,
+      "actual": "DOWN",
+      "hit": null
+    },
+    {
+      "date": "2026-08-19",
+      "forDate": "2026-08-20",
+      "pred": "DOWN",
+      "score": -0.7,
+      "futIdxNet": -209807,
+      "fiiCash": 408,
+      "diiCash": 3974,
+      "nifty": 24078.3,
+      "banknifty": 57239.75,
+      "sensex": 76909.68,
+      "niftyNext": 24231.85,
+      "actual": "UP",
+      "hit": false
+    },
+    {
+      "date": "2026-08-20",
+      "forDate": "2026-08-21",
+      "pred": "DOWN",
+      "score": -0.7,
+      "futIdxNet": -212113,
+      "fiiCash": -583,
+      "diiCash": 3538,
+      "nifty": 24231.85,
+      "banknifty": 57495.9,
+      "sensex": 77537.72,
+      "niftyNext": 24252,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-21",
+      "forDate": "2026-08-24",
+      "pred": "DOWN",
+      "score": -1,
+      "futIdxNet": -209855,
+      "fiiCash": -543,
+      "diiCash": 2124,
+      "nifty": 24252,
+      "banknifty": 57761.95,
+      "sensex": 77540.83,
+      "niftyNext": 24219.05,
+      "actual": "FLAT",
+      "hit": false
+    },
+    {
+      "date": "2026-08-24",
+      "forDate": "2026-08-25",
+      "pred": "DOWN",
+      "score": -0.5,
+      "futIdxNet": -219383,
+      "fiiCash": 1182,
+      "diiCash": 2493,
+      "nifty": 24219.05,
+      "banknifty": 57525.95,
+      "sensex": 77369.11,
+      "niftyNext": 24334.55,
+      "actual": "UP",
+      "hit": false
+    },
+    {
+      "date": "2026-08-25",
+      "forDate": "2026-08-26",
+      "pred": "FLAT",
+      "score": 0.1,
+      "futIdxNet": -184227,
+      "fiiCash": 1594,
+      "diiCash": 230,
+      "nifty": 24334.55,
+      "banknifty": 57514.2,
+      "sensex": 77656.09,
+      "niftyNext": 24207.75,
+      "actual": "DOWN",
+      "hit": null
+    },
+    {
+      "date": "2026-08-26",
+      "forDate": "2026-08-27",
+      "pred": "DOWN",
+      "score": -0.7,
+      "futIdxNet": -186060,
+      "fiiCash": 503,
+      "diiCash": 6425,
+      "nifty": 24207.75,
+      "banknifty": 57783.75,
+      "sensex": 77472.94,
+      "niftyNext": 24090.85,
+      "actual": "DOWN",
+      "hit": true
+    }
+  ],
+  "histHitRate": 40,
+  "hitRate": null,
+  "resolved": 0,
+  "updatedAt": "2026-08-27T13:39:08.210Z"
+}
