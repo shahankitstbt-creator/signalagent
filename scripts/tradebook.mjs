@@ -582,9 +582,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // sort first when capital is tight), never to block. Confidence still weights the sort.
   const deskEdge = s => { const r = genWinRates[s.generator]; return (r && r.decided >= 20) ? r.winRate : 55 }
   const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
+  // TRADE-ANALYSIS LEARNING (2026-08-27): the book was prioritising A++ (which measured 47% win / net LOSS)
+  // over the desks that actually win. Now rank primarily by MEASURED desk win-rate (money_flow 81%, etc.),
+  // then grade — so proven winners get the capital first. Raw grade is a weak, miscalibrated signal.
   const cands = Object.values(ledger.active)
     .filter(s => s.status === 'open' && !seen.has(s.id) && s.openedAt >= b.startedAt && s.entry && s.sl && Array.isArray(s.targets) && s.targets.length)
-    .sort((a, z) => catRank(z) - catRank(a) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (deskEdge(z) - deskEdge(a)) || (z.confidence || 0) - (a.confidence || 0))
+    .sort((a, z) => catRank(z) - catRank(a) || (deskEdge(z) - deskEdge(a)) || gradeRank(z) - gradeRank(a) || (z.footprint?.score || 0) - (a.footprint?.score || 0) || (z.confidence || 0) - (a.confidence || 0))
   // HARD CAP: total invested per sleeve can NEVER exceed its ₹10L. Track live-deployed cost so a new
   // trade only opens if it fits under the ₹10L — when the sleeve is full, no new trade until one closes.
   const CAPOF = { CASH: CAP_CASH, FO: CAP_FO, DAILY: CAP_DAILY }
