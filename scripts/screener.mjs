@@ -1101,7 +1101,7 @@ function computeCAS(o, gex, inst = null) {
 // Actual NIFTY/BankNifty daily closes since 3 Aug 2026 (real, from Yahoo) — the "actual" column.
 async function casActuals() {
   const out = {}
-  for (const [idx, sym] of [['NIFTY', '%5ENSEI'], ['BANKNIFTY', '%5ENSEBANK']]) {
+  for (const [idx, sym] of [['NIFTY', '%5ENSEI'], ['BANKNIFTY', '%5ENSEBANK'], ['SENSEX', '%5EBSESN']]) {
     try {
       const d = await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=6mo`)
       const r = d?.chart?.result?.[0], t = r?.timestamp || [], c = r?.indicators?.quote?.[0]?.close || []
@@ -1121,6 +1121,52 @@ function casExpiries() {
     const dow = d.getUTCDay(); if (dow !== 2 && dow !== 4) continue
     const nx = new Date(d); nx.setUTCDate(nx.getUTCDate() + 7)
     out.push({ date: d.toISOString().slice(0, 10), exchange: dow === 2 ? 'BSE · Sensex' : 'NSE · Nifty/BankNifty', type: nx.getUTCMonth() !== d.getUTCMonth() ? 'monthly' : 'weekly' })
+  }
+  return out
+}
+const casNextBiz = iso => { const d = new Date(iso + 'T00:00:00Z'); do { d.setUTCDate(d.getUTCDate() + 1) } while (d.getUTCDay() === 0 || d.getUTCDay() === 6); return d.toISOString().slice(0, 10) }
+// FORECAST: expected close PATH + widening range for NIFTY/BankNifty/Sensex, every trading day → 31 Dec.
+// Honest = a distribution, not a point: mild drift from the current FII/DII bias, band widens with √time.
+function casForecast(live, actuals, todayISO) {
+  const seed = {
+    NIFTY: { spot: live?.NIFTY?.spot, bias: live?.NIFTY?.footprintScore || 0, vol: 0.007 },
+    BANKNIFTY: { spot: live?.BANKNIFTY?.spot, bias: live?.BANKNIFTY?.footprintScore || 0, vol: 0.009 },
+    SENSEX: { spot: (actuals?.SENSEX || []).slice(-1)[0]?.close, bias: live?.NIFTY?.footprintScore || 0, vol: 0.007 },
+  }
+  const out = []; let dayN = 0
+  for (let d = casNextBiz(todayISO); d <= '2026-12-31' && dayN < 130; d = casNextBiz(d)) {
+    dayN++; const row = { date: d, dayN }
+    for (const idx of ['NIFTY', 'BANKNIFTY', 'SENSEX']) {
+      const s = seed[idx]; if (!s.spot) continue
+      const drift = Math.max(-0.12, Math.min(0.12, s.bias * 0.0015 * dayN))
+      const exp = s.spot * (1 + drift), band = s.spot * s.vol * Math.sqrt(dayN)
+      row[idx] = { exp: Math.round(exp), low: Math.round(exp - band), high: Math.round(exp + band) }
+    }
+    out.push(row)
+  }
+  return out
+}
+// HISTORICAL prediction vs actual since 3 Aug — footprint-based (from the REAL stored FII/DII data). The
+// day's FII/DII positioning predicts the NEXT trading day's direction; scored vs the actual Nifty move.
+function casHistorical(fiiHist, actuals) {
+  const nc = Object.fromEntries((actuals?.NIFTY || []).map(x => [x.date, x.close]))
+  const bc = Object.fromEntries((actuals?.BANKNIFTY || []).map(x => [x.date, x.close]))
+  const sc = Object.fromEntries((actuals?.SENSEX || []).map(x => [x.date, x.close]))
+  const dates = Object.keys(nc).sort()
+  const sorted = [...(fiiHist || [])].sort((a, b) => a.date.localeCompare(b.date))
+  const out = []
+  for (let i = 0; i < sorted.length; i++) {
+    const r = sorted[i]; let score = 0
+    if (r.futIdxNet < -100000) score -= 1; else if (r.futIdxNet > 100000) score += 1
+    if (i > 0 && r.futIdxNet > sorted[i - 1].futIdxNet + 20000) score += 0.6   // covering shorts → bullish
+    else if (i > 0 && r.futIdxNet < sorted[i - 1].futIdxNet - 20000) score -= 0.6 // adding shorts → bearish
+    if (r.fiiCash > 800) score += 0.5; else if (r.fiiCash < -800) score -= 0.5
+    if (r.diiCash > 2500) score += 0.3
+    const pred = score >= 0.5 ? 'UP' : score <= -0.5 ? 'DOWN' : 'FLAT'
+    const j = dates.indexOf(r.date), nextDate = j >= 0 && j < dates.length - 1 ? dates[j + 1] : null
+    const c0 = nc[r.date], c1 = nextDate ? nc[nextDate] : null
+    const actual = (c0 != null && c1 != null) ? (c1 > c0 * 1.0015 ? 'UP' : c1 < c0 * 0.9985 ? 'DOWN' : 'FLAT') : null
+    out.push({ date: r.date, forDate: nextDate, pred, score: +score.toFixed(1), futIdxNet: r.futIdxNet, fiiCash: r.fiiCash, diiCash: r.diiCash, nifty: c0, banknifty: bc[r.date] ?? null, sensex: sc[r.date] ?? null, niftyNext: c1, actual, hit: (actual && pred !== 'FLAT') ? (pred === actual) : null })
   }
   return out
 }
@@ -1151,7 +1197,11 @@ function writeCAS(inputs, today, actuals = null, expiries = null, inst = null) {
   if (actuals) cas.actuals = actuals               // real NIFTY/BankNifty daily closes since 3 Aug (context)
   if (expiries) cas.expiries = expiries            // forecastable expiry-pin days through Dec 2026
   cas.regime = inst || cas.regime || null          // current FII/DII smart-money regime
-  try { cas.fiiHistory = (JSON.parse(readFileSync('public/fii_history.json', 'utf8')) || []).slice(-40) } catch {}   // FII/DII footprint since ~3 Aug
+  try { cas.fiiHistory = (JSON.parse(readFileSync('public/fii_history.json', 'utf8')) || []).slice(-60) } catch {}   // FII/DII footprint since ~3 Aug
+  try { cas.forecast = casForecast(cas.live, actuals, todayISO) } catch (e) { }               // expected-close path → 31 Dec (Forecast tab)
+  try { cas.historical = casHistorical(cas.fiiHistory, actuals) } catch (e) { }               // footprint prediction vs actual (Historical tab)
+  const hh = (cas.historical || []).filter(h => h.hit != null)
+  cas.histHitRate = hh.length ? Math.round(hh.filter(h => h.hit).length / hh.length * 100) : null
   const resolved = cas.history.filter(h => h.hit != null)
   cas.hitRate = resolved.length ? Math.round(resolved.filter(h => h.hit).length / resolved.length * 100) : null
   cas.resolved = resolved.length; cas.updatedAt = today.toISOString()
