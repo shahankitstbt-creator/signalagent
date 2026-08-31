@@ -16,25 +16,33 @@
   .sub{color:var(--txt2);font-size:11px}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .tab{cursor:pointer;background:var(--card);border:1px solid var(--border);color:var(--txt2);padding:8px 16px;font-size:13px;font-weight:700;border-radius:10px}
-  .tab.on{color:#fff;background:linear-gradient(90deg,var(--gold),#FF6D00);color:#111;border-color:transparent}
+  .tab.on{color:#111;background:linear-gradient(90deg,var(--gold),#FF6D00);border-color:transparent}
   .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:14px}
   .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);margin:6px 0 10px}
   table{width:100%;border-collapse:collapse;font-size:12px}
   th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
   th:first-child,td:first-child{text-align:left}
   th{color:var(--txt2);text-transform:uppercase;font-size:10px;position:sticky;top:0;background:var(--card)}
-  .scroll{max-height:520px;overflow:auto}
+  .scroll{max-height:560px;overflow:auto}
   .tag{font-weight:700;padding:2px 8px;border-radius:6px;font-size:11px}
-  .verdict{font-size:22px;font-weight:800}
+  .verdict{font-size:30px;font-weight:800;line-height:1.1}
   .lvls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
   .lv{border:1px solid var(--border);border-radius:10px;padding:8px 10px;background:var(--panel)}
   .lv .k{font-size:10px;text-transform:uppercase;color:var(--txt2)} .lv .v{font-size:15px;font-weight:700}
+  .mech{font-size:12.5px;line-height:1.6;color:var(--txt);background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin:8px 0}
+  .drv{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12px}
+  .bar{height:6px;border-radius:4px;flex:0 0 60px;background:#22314a;overflow:hidden}
+  .bar>i{display:block;height:100%}
   .why li{color:var(--txt2);font-size:12px;margin:4px 0}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:820px){.grid{grid-template-columns:1fr}.lvls{grid-template-columns:1fr 1fr}}
   .note{font-size:12px;color:var(--txt2);border-left:3px solid var(--gold);padding:10px 12px;background:rgba(255,179,0,.06);border-radius:6px;line-height:1.6}
+  .meter{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt2)}
+  .meter .track{flex:1;height:6px;border-radius:4px;background:#22314a;overflow:hidden}.meter .track>i{display:block;height:100%}
   details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px}
   summary{cursor:pointer;font-weight:700;font-size:13px} details p,details li{color:var(--txt2);font-size:12.5px;line-height:1.6}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--txt2);margin-bottom:8px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:middle}
   .hide{display:none}
 </style>
 </head>
@@ -45,73 +53,65 @@
     <div class="logo">CAS</div>
     <div>
       <h1>Closing Auction — Footprint &amp; Forecast</h1>
-      <div class="sub mono">the 15:15–15:40 IST auction move (mostly before 15:30) → read from FII/DII positioning + option pin</div>
+      <div class="sub mono">the 15:15–15:30 IST auction move, decoded from dealer gamma + max-pain pin + live OI flow</div>
     </div>
     <div style="margin-left:auto;text-align:right">
       <div class="mono" id="hit" style="font-size:20px;font-weight:800">—</div>
-      <div class="sub mono">footprint hit-rate</div>
+      <div class="sub mono">direction hit-rate</div>
     </div>
   </div>
 
   <div class="tabs">
-    <div class="tab on" data-t="forecast">📈 Forecast</div>
-    <div class="tab" data-t="positioning">🐘 Positioning</div>
+    <div class="tab on" data-t="positioning">🎯 Today's Call</div>
+    <div class="tab" data-t="forecast">📈 Forecast</div>
     <div class="tab" data-t="historical">📊 Historical</div>
-    <div class="tab" data-t="logic">🧠 How it works</div>
+    <div class="tab" data-t="logic">🧠 The cracked footprint</div>
+  </div>
+
+  <!-- TODAY'S CALL (live footprint) -->
+  <div id="positioning">
+    <div class="note" style="margin-bottom:12px"><b>This is the read.</b> Each index is classified into a <b>regime</b> — <b style="color:var(--green)">PINNED</b> (quiet, converges to max pain), <b style="color:var(--cyan)">MAGNET</b> (drifts toward the pin), <b style="color:var(--gold)">TILTED</b> (mild lean), or <b style="color:var(--red)">VOLATILE</b> (dealers amplify → the sudden 1–2% swings) — from three mechanics: <b>max-pain pin strength</b>, <b>dealer gamma</b>, and <b>live intraday OI flow</b>. The expected close + band + confidence follow the regime. Live during market hours; off-hours shows the last read.</div>
+    <div class="grid" id="cards"></div>
+    <div class="sec">🐘 FII / DII footprint since 3 Aug 2026 (real data)</div>
+    <div class="card scroll"><table><thead><tr><th>Date</th><th>FII index-fut net</th><th>FII cash ₹cr</th><th>DII cash ₹cr</th><th>Read</th></tr></thead><tbody id="fii"><tr><td colspan="5" class="sub">loading…</td></tr></tbody></table></div>
   </div>
 
   <!-- FORECAST -->
-  <div id="forecast">
-    <div class="note" style="margin-bottom:12px"><b>Exp = the exact predicted close</b> (single number) for each trading day to 31 Dec, with a <b>tight conviction band</b> (±~0.3% Nifty/Sensex, ±0.5% BankNifty). The next 1–2 days are <b>anchored to the max-pain pin</b> (most accurate). <b>Honest caveat:</b> the tight band is a <i>conviction zone</i> — reliable near-term; the further-out numbers are the model's central path (a mild FII/DII-bias drift), so treat December as a direction+level guess, not a to-the-point call. A big-news / NEG-gamma day breaks the band — that's flagged in Positioning.</div>
-    <div class="card scroll"><table><thead><tr><th>Date</th><th>NIFTY exp</th><th>NIFTY range</th><th>BankNifty exp</th><th>BankNifty range</th><th>Sensex exp</th><th>Sensex range</th></tr></thead><tbody id="fc"><tr><td colspan="7" class="sub">building…</td></tr></tbody></table></div>
-  </div>
-
-  <!-- POSITIONING -->
-  <div id="positioning" class="hide">
-    <div class="grid" id="cards"></div>
-    <div class="sec">🐘 Smart-money footprint since 3 Aug 2026 — FII/DII vs the market (real data)</div>
-    <div class="card scroll"><table><thead><tr><th>Date</th><th>FII index-fut net</th><th>FII cash ₹cr</th><th>DII cash ₹cr</th><th>Read</th></tr></thead><tbody id="fii"><tr><td colspan="5" class="sub">loading…</td></tr></tbody></table></div>
+  <div id="forecast" class="hide">
+    <div class="note" style="margin-bottom:12px"><b>Three tiers of certainty, labelled honestly.</b> <span class="dot" style="background:var(--green)"></span><b>Today</b> = the live footprint (real edge, tight band). <span class="dot" style="background:var(--gold)"></span><b>Expiry pins</b> = the max-pain target for each weekly/monthly expiry (real edge; firms as OI builds). <span class="dot" style="background:var(--muted)"></span><b>Between</b> = a low-confidence drift — <b>no one can name a random day's exact close months out</b>, so the band widens and confidence decays, and we say so. The number's colour = its confidence.</div>
+    <div class="legend"><span><span class="dot" style="background:var(--green)"></span>live footprint</span><span><span class="dot" style="background:var(--gold)"></span>expiry pin</span><span><span class="dot" style="background:var(--muted)"></span>drift · low-conf</span></div>
+    <div class="card scroll"><table><thead><tr><th>Date</th><th>NIFTY</th><th>range · conf</th><th>BankNifty</th><th>range · conf</th><th>Sensex</th><th>range · conf</th></tr></thead><tbody id="fc"><tr><td colspan="7" class="sub">building…</td></tr></tbody></table></div>
   </div>
 
   <!-- HISTORICAL -->
   <div id="historical" class="hide">
-    <div class="note" style="margin-bottom:12px">Our <b>footprint prediction</b> (from that day's real FII/DII positioning) vs the <b>actual next-day move</b>, since 3 Aug. Prediction is filled — it's computed from the stored FII/DII data. (The option-pin part can't be backfilled — historical OI wasn't recorded — so this history is the FII/DII footprint model, scored honestly.)</div>
-    <div class="card scroll"><table><thead><tr><th>Date</th><th>Prediction</th><th>FII fut net</th><th>FII ₹cr</th><th>DII ₹cr</th><th>NIFTY</th><th>Sensex</th><th>Next close</th><th>Actual</th><th>Result</th></tr></thead><tbody id="hst"><tr><td colspan="10" class="sub">building…</td></tr></tbody></table></div>
+    <div class="note" style="margin-bottom:12px">Live captured calls (regime + direction) scored vs the actual close — plus the FII/DII footprint model backfilled since 3 Aug. The <b>per-regime accuracy</b> below is the honest tell: <b>PINNED</b> days should score far higher than <b>VOLATILE</b> ones — that's where the edge is real.</div>
+    <div class="card" id="regacc" style="display:none"></div>
+    <div class="sec">Live regime calls vs actual (as they resolve)</div>
+    <div class="card scroll" style="margin-bottom:14px"><table><thead><tr><th>Date</th><th>Index</th><th>Regime</th><th>Dir call</th><th>Exp close</th><th>Actual close</th><th>Actual dir</th><th>Result</th></tr></thead><tbody id="livehist"><tr><td colspan="8" class="sub">builds as calls resolve at 15:30.</td></tr></tbody></table></div>
+    <div class="sec">FII / DII footprint model vs actual next-day move (since 3 Aug)</div>
+    <div class="card scroll"><table><thead><tr><th>Date</th><th>Prediction</th><th>FII fut net</th><th>NIFTY</th><th>Next close</th><th>Actual</th><th>Result</th></tr></thead><tbody id="hst"><tr><td colspan="7" class="sub">building…</td></tr></tbody></table></div>
   </div>
 
   <!-- LOGIC -->
   <div id="logic" class="hide">
-    <details open><summary>What CAS is &amp; why the last 15 minutes move "randomly"</summary>
-      <p><b>Closing Auction (CAS):</b> the day's close is set by a short call-auction around <b>15:15–15:40 IST (mostly just before 15:30)</b>. Big desks concentrate their closing orders here. You've seen Sensex drop 2000 pts / Nifty jump 200 in this window while no stock moves that much — that's the tell: it's <b>option/derivative positioning</b>, not the cash basket.</p></details>
-    <details><summary>The footprint we read (the logic)</summary>
-      <ul>
-        <li><b>FII index-futures long/short</b> — net short (low L/S ratio) = bearish; covering shorts = bullish. The biggest tell.</li>
-        <li><b>FII options tilt</b> — long PUTS + short CALLS = bearish hedge; the reverse = bullish.</li>
-        <li><b>FII &amp; DII cash flows</b> — who's accumulating/distributing; DII buying often puts a floor under FII selling.</li>
-        <li><b>Max Pain</b> — the strike where option WRITERS lose least; price is pulled there into the close (the "target").</li>
-        <li><b>Gamma regime</b> — above the flip dealers SUPPRESS (pin/range); below it they AMPLIFY (a wall-break trends hard — that's your 2000-pt day).</li>
-      </ul>
-      <p>We combine these into a daily <b>BULLISH / BEARISH / NEUTRAL</b> bias + conviction + the level they're targeting (Positioning tab).</p></details>
-    <details><summary>How the forecast is built (the basis)</summary>
-      <p>Expected close = current spot + a <b>small drift</b> in the direction of the current FII/DII bias (capped). The <b>range</b> = spot × daily-volatility × √(days out) — a standard uncertainty cone that widens with time. Near-term is anchored to today's option positioning; months out is trend + volatility only. <b>No one</b> can name December's exact close — so we show the expected path AND the honest range, and roll it forward every day.</p></details>
-    <details><summary>⚙️ THE EXACT FORMULAS (nothing hidden)</summary>
-      <p><b>1. Max Pain</b> — for every strike K: <span class="mono">loss(K) = Σ (K−strike)·callOI for strikes below K + Σ (strike−K)·putOI for strikes above K</span>. Max Pain = the K with the <b>smallest</b> loss (where writers lose least). It's the pin target.</p>
-      <p><b>2. Pin lean</b> — <span class="mono">dist% = (MaxPain − Spot)/Spot ×100</span>. |dist%|&lt;0.12 → PIN · &gt;0 → PULL UP · &lt;0 → PULL DOWN.</p>
-      <p><b>3. Gamma flip</b> — walk strikes low→high summing net OI (callOI−putOI); the strike where the running sum crosses 0 = <b>flip</b>. Spot &lt; flip → <b>NEG GAMMA</b> (dealers amplify → trend/2000-pt days) · Spot ≥ flip → <b>POS GAMMA</b> (dealers pin/range).</p>
-      <p><b>4. Footprint score</b> (the daily bias) — start 0, then add:</p>
+    <details open><summary>Why the last 15 minutes move "randomly" — and why it isn't random</summary>
+      <p>The close is set by a call-auction around <b>15:15–15:30 IST</b>, where big desks concentrate their closing orders. You've seen Sensex drop 2000 pts / Nifty jump 200 in this window while no single stock moves that much — that's the tell: it's <b>derivative/dealer positioning</b>, not the cash basket. It IS mechanical. Three forces set it, and we measure all three:</p></details>
+    <details open><summary>① Max-pain PIN strength — the gravity</summary>
+      <p><b>Max Pain</b> = the strike where option <b>writers</b> lose the least. Writers (big desks) defend it, so price is pulled there into the close. But the pin only bites when OI is <b>concentrated</b> near it and expiry is <b>near</b>. We quantify it: <span class="mono">pinStrength = (OI within ±2 strikes of max pain / total OI) × expiryFactor × 260</span>, where expiryFactor = 1 on expiry day, 0.75 (1d), 0.5 (≤3d), 0.32 (≤7d), 0.18 (far). A strong pin on expiry day → the index sits on max pain at 15:30.</p></details>
+    <details open><summary>② Dealer GAMMA — suppress or amplify</summary>
+      <p>Walk the strikes low→high summing net OI (callOI−putOI); the strike where the running sum crosses 0 is the <b>gamma flip</b>. <b>Spot ≥ flip → POSITIVE gamma:</b> dealers hedge AGAINST the move (buy weakness / sell strength) → they <b>suppress</b> → quiet pinned close. <b>Spot &lt; flip → NEGATIVE gamma:</b> dealers hedge WITH the move (sell weakness / buy strength) → they <b>amplify</b> → this is the regime behind the sudden 1–2% closing swings. <span class="mono">gammaMag</span> = dealer pressure near ATM, 0–100.</p></details>
+    <details open><summary>③ Live OI FLOW — who's pressing into the close</summary>
+      <p>From intraday OI snapshots (oi_history): <b>rising call OI = call writing</b> (cap building, bearish); <b>falling call OI = call covering</b> (squeeze up, bullish); <b>rising put OI = put writing</b> (floor building, bullish); <b>falling put OI = put covering</b> (support pulled, bearish). <span class="mono">flowBias = (ΔputOI − ΔcallOI) / baseOI</span> → the intraday pressure the old model was blind to.</p></details>
+    <details><summary>④ The regime decision (how the call is made)</summary>
       <ul class="mono" style="font-size:11.5px">
-        <li>pin PULL UP +1 · PULL DOWN −1 · PIN 0</li>
-        <li>FII futures L/S ratio ≤0.5 → −1.6 · ≥1.5 → +1.6</li>
-        <li>FII options: long PUTS+short CALLS −1 · long CALLS+short PUTS +1</li>
-        <li>FII cash ≥+₹800cr +0.6 · ≤−₹800cr −0.6</li>
-        <li>DII cash ≥+₹1500cr +0.5 · ≤−₹1500cr −0.5</li>
+        <li>POS gamma &amp; pinStrength≥45 &amp; |dist|&lt;0.25% → <b>PINNED</b> · expected = max pain · tight band · conf up to 85</li>
+        <li>NEG gamma → <b>VOLATILE</b> · expected = spot + amplified move in the tilt direction · wide band · conf ≤68 (we call direction+size, not an exact number)</li>
+        <li>POS gamma &amp; |dist|≥0.25% → <b>MAGNET</b> · expected = spot + 45% of the way to max pain</li>
+        <li>else → <b>TILTED</b> · mild lean from flow + FII</li>
       </ul>
-      <p><span class="mono">score ≥ +1 → BULLISH · ≤ −1 → BEARISH · else NEUTRAL. Conviction = min(88, 48 + |score|×10)%.</span></p>
-      <p><b>5. Forecast</b> — for each trading day N ahead: <span class="mono">drift = clamp(score × 0.0015 × N, −12%, +12%)</span> · <span class="mono">Expected = Spot ×(1+drift)</span> · <span class="mono">Range = Spot × volDaily × √N</span> (volDaily: Nifty/Sensex 0.7%, BankNifty 0.9%).</p>
-      <p><b>6. Historical prediction</b> (FII/DII only, since option-OI wasn't stored): <span class="mono">futNet&lt;−100k −1 · &gt;+100k +1 · covering(+20k vs prior) +0.6 · adding shorts(−20k) −0.6 · FIIcash±800 ±0.5 · DIIcash&gt;2500 +0.3</span>. score≥0.5→UP · ≤−0.5→DOWN. Scored vs next-day Nifty move (±0.15% = the flat band).</p>
-      <p class="sub">These weights are <b>hand-set heuristics from trading logic, not curve-fitted</b> — that's why they're transparent and adjustable, and why the measured hit-rate is the honest judge.</p>
-    </details>
-    <div class="note">Probabilistic edge, right more often than not (strongest on expiry days), scored against reality — the hit-rate up top is the real number, never a claimed "90%". Educational only, not advice. Not SEBI-registered.</div>
+      <p><span class="mono">tilt = pin-pull ± OI-flow(0.8) ± FII-futures(0.9) ± FII/DII-cash</span> → sets direction &amp; feeds confidence. Everything is capped; confidence never claims 90%+.</p></details>
+    <div class="note">The headline number up top is the <b>measured directional hit-rate</b> — did the close move the way the footprint called? Strongest on PINNED / expiry days, weakest on VOLATILE days (see per-regime accuracy in Historical). Probabilistic edge, scored against reality — never a claimed "90%". Educational only, not advice. Not SEBI-registered.</div>
   </div>
 
   <div class="sub mono" id="upd" style="margin-top:6px"></div>
@@ -120,45 +120,73 @@
 <script>
 const $=id=>document.getElementById(id);
 const N=n=>n==null?'—':(+n).toLocaleString('en-IN',{maximumFractionDigits:0});
+const REGC={PINNED:'#00C853',MAGNET:'#22D3EE',TILTED:'#FFB300',VOLATILE:'#FF1744'};
 const dirTag=d=>{const c=d==='UP'||d==='BULLISH'?'#00C853':d==='DOWN'||d==='BEARISH'?'#FF1744':'#FFB300';return `<span class="tag" style="background:${c}22;color:${c}">${d}</span>`;};
-let TAB='forecast';
+const confColor=c=>c>=60?'#00C853':c>=48?'#FFB300':'#6B7F99';
+let TAB='positioning';
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{TAB=t.dataset.t;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));['forecast','positioning','historical','logic'].forEach(id=>$(id).classList.toggle('hide',id!==TAB));});
 
 function render(cas){
-  $('hit').textContent=cas.histHitRate!=null?cas.histHitRate+'%':(cas.hitRate!=null?cas.hitRate+'%':'building…');
-  $('hit').style.color=(cas.histHitRate||cas.hitRate||0)>=60?'#00C853':(cas.histHitRate||cas.hitRate||0)>=45?'#FFB300':'#6B7F99';
-  $('upd').textContent='updated '+new Date(cas.updatedAt).toLocaleString();
+  const hr=cas.dirHitRate!=null?cas.dirHitRate:cas.histHitRate;
+  $('hit').textContent=hr!=null?hr+'%':'building…';
+  $('hit').style.color=(hr||0)>=58?'#00C853':(hr||0)>=45?'#FFB300':'#6B7F99';
+  $('upd').textContent='updated '+new Date(cas.updatedAt).toLocaleString()+(cas.dirResolved?` · ${cas.dirResolved} calls scored`:'');
 
-  // FORECAST
-  const rng=r=>r?`${N(r.low)}–${N(r.high)}`:'—';
-  $('fc').innerHTML=(cas.forecast||[]).length?(cas.forecast).map(r=>`<tr><td class="mono">${r.date}</td><td class="mono">${N(r.NIFTY?.exp)}</td><td class="mono sub">${rng(r.NIFTY)}</td><td class="mono">${N(r.BANKNIFTY?.exp)}</td><td class="mono sub">${rng(r.BANKNIFTY)}</td><td class="mono">${N(r.SENSEX?.exp)}</td><td class="mono sub">${rng(r.SENSEX)}</td></tr>`).join(''):'<tr><td colspan="7" class="sub">Forecast builds on the next scan (needs live spot).</td></tr>';
-
-  // POSITIONING — live cards
+  // ── TODAY'S CALL — the live footprint cards ──
   const cards=$('cards');cards.innerHTML='';
-  for(const idx of ['NIFTY','BANKNIFTY']){const c=cas.live?.[idx];
-    if(!c){cards.innerHTML+=`<div class="card"><b>${idx}</b><div class="sub" style="margin-top:8px">Live option chain unavailable (off-hours / credentials).</div></div>`;continue;}
-    const dc=c.direction==='BULLISH'?'#00C853':c.direction==='BEARISH'?'#FF1744':'#FFB300';
-    cards.innerHTML+=`<div class="card">
-      <div><b>${idx}</b> <span class="sub mono">spot ${N(c.spot)} · PCR ${c.pcr??'—'}</span>${c.isExpiry?' <span class="tag" style="background:#FF174422;color:#FF1744">⚡ EXPIRY</span>':''}</div>
-      <div class="verdict" style="color:${dc}">${c.direction} <span style="font-size:14px;color:var(--txt2)">${c.confidence}%</span></div>
-      <div class="sub mono" style="margin:-2px 0 6px">🎯 targeting <b style="color:#FFB300">${N(c.target)}</b> (max pain) · gamma ${c.regime}</div>
+  for(const idx of ['NIFTY','BANKNIFTY','SENSEX']){const c=cas.live?.[idx];
+    if(!c){continue;}
+    const reg=c.casRegime||'—', regc=REGC[reg]||'#6B7F99';
+    const dirC=c.direction==='UP'?'#00C853':c.direction==='DOWN'?'#FF1744':'#FFB300';
+    const dirTxt=c.direction==='UP'?'▲ UP':c.direction==='DOWN'?'▼ DOWN':'■ FLAT';
+    const flow=c.flow?`${c.flow.label} <span class="sub">(ΔCE ${c.flow.callChg>0?'+':''}${N(c.flow.callChg)} · ΔPE ${c.flow.putChg>0?'+':''}${N(c.flow.putChg)})</span>`:'—';
+    const drivers=(c.drivers||[]).map(d=>{const dc=d.dir==='up'?'#00C853':d.dir==='down'?'#FF1744':'#6B7F99';
+      return `<div class="drv"><span class="bar"><i style="width:${Math.round((d.w||0)*100)}%;background:${dc}"></i></span><span>${d.text}</span></div>`;}).join('');
+    cards.innerHTML+=`<div class="card" style="border-color:${regc}55">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><div><b>${idx}</b> <span class="sub mono">spot ${N(c.spot)} · PCR ${c.pcr??'—'}</span></div>
+        <span class="tag" style="background:${regc}22;color:${regc}">${reg}${c.magnitude?' · '+c.magnitude:''}</span></div>
+      ${c.isExpiry?'<div class="sub" style="color:#FF1744;margin-top:3px">⚡ EXPIRY TODAY — pin strongest</div>':`<div class="sub" style="margin-top:3px">${c.dExp!=null?c.dExp+'d to expiry':''}</div>`}
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin:8px 0 2px">
+        <div><div class="sub">expected close (15:30)</div><div class="verdict" style="color:${regc}">${N(c.expectedClose)}</div>
+          <div class="sub mono">±${N(c.band)} · <span style="color:${dirC};font-weight:700">${dirTxt}</span> · ${c.expectedMovePct>0?'+':''}${c.expectedMovePct}%</div></div>
+        <div style="text-align:right"><div class="verdict" style="font-size:22px;color:${confColor(c.confidence)}">${c.confidence}%</div><div class="sub">confidence</div></div>
+      </div>
+      <div class="mech">${c.mechanics||''}</div>
+      <div class="meter">pin strength <span class="track"><i style="width:${c.pinStrength||0}%;background:var(--gold)"></i></span> ${c.pinStrength||0}</div>
+      <div class="meter" style="margin-top:4px">dealer gamma <span class="track"><i style="width:${c.gammaMag||0}%;background:${c.regime==='NEG GAMMA'?'#FF1744':'#22D3EE'}"></i></span> ${c.gammaMag||0} <span class="sub">· ${c.regime||''}</span></div>
       <div class="lvls">
         <div class="lv"><div class="k">Max Pain</div><div class="v" style="color:#FFB300">${N(c.maxPain)}</div></div>
+        <div class="lv"><div class="k">Gamma flip</div><div class="v">${N(c.gammaFlip)}</div></div>
         <div class="lv"><div class="k">Call Wall</div><div class="v" style="color:#FF6B6B">${N(c.callWall)}</div></div>
         <div class="lv"><div class="k">Put Wall</div><div class="v" style="color:#00C853">${N(c.putWall)}</div></div>
-        <div class="lv"><div class="k">Gamma flip</div><div class="v">${N(c.gammaFlip)}</div></div>
       </div>
-      <ul class="why">${(c.factors||[]).map(f=>`<li><span style="color:${f.dir==='up'?'#00C853':f.dir==='down'?'#FF1744':'#6B7F99'}">${f.dir==='up'?'▲':f.dir==='down'?'▼':'•'}</span> ${f.f}</li>`).join('')}</ul>`;
+      <div class="sub" style="margin:2px 0 6px">🌊 live OI flow: ${flow}</div>
+      <div class="sec" style="margin:8px 0 4px">footprint drivers (ranked)</div>${drivers||'<span class="sub">building…</span>'}
+    </div>`;
   }
+  if(!cards.innerHTML)cards.innerHTML='<div class="card"><div class="sub">Live option chain unavailable (off-hours / credentials). The last read shows once a market-hours scan runs.</div></div>';
+
   const fh=(cas.fiiHistory||[]).slice().reverse();
   $('fii').innerHTML=fh.length?fh.map(r=>{const bear=(r.futIdxNet||0)<0;return `<tr><td class="mono">${r.date}</td><td class="mono" style="color:${bear?'#FF1744':'#00C853'}">${(r.futIdxNet||0).toLocaleString('en-IN')}</td><td class="mono" style="color:${(r.fiiCash||0)>=0?'#00C853':'#FF1744'}">${r.fiiCash>=0?'+':''}${r.fiiCash}</td><td class="mono" style="color:${(r.diiCash||0)>=0?'#00C853':'#FF1744'}">${r.diiCash>=0?'+':''}${r.diiCash}</td><td>${bear?'<span style="color:#FF1744">FII net SHORT — bearish</span>':'<span style="color:#00C853">FII net LONG — bullish</span>'}</td></tr>`;}).join(''):'<tr><td colspan="5" class="sub">builds after market close.</td></tr>';
 
-  // HISTORICAL
+  // ── FORECAST — tiered, confidence-coloured ──
+  const cell=r=>{if(!r)return '<td class="mono">—</td><td class="sub">—</td>';const col=confColor(r.conf);
+    return `<td class="mono" style="color:${col};font-weight:700">${N(r.exp)}</td><td class="mono sub">${N(r.low)}–${N(r.high)} · <span style="color:${col}">${r.conf}%</span></td>`;};
+  $('fc').innerHTML=(cas.forecast||[]).length?(cas.forecast).map(r=>`<tr${r.isExpiry?' style="background:rgba(255,179,0,.05)"':''}><td class="mono">${r.date}${r.isExpiry?' <span class="tag" style="background:#FFB30022;color:#FFB300">expiry</span>':''}</td>${cell(r.NIFTY)}${cell(r.BANKNIFTY)}${cell(r.SENSEX)}</tr>`).join(''):'<tr><td colspan="7" class="sub">Forecast builds on the next market-hours scan (needs live spot + OI).</td></tr>';
+
+  // ── HISTORICAL ──
+  const ra=cas.regimeAcc||{};const raK=Object.keys(ra);
+  if(raK.length){$('regacc').style.display='';$('regacc').innerHTML='<div class="sec" style="margin:0 0 8px">Per-regime accuracy — where the edge is real</div>'+raK.map(k=>{const c=REGC[k]||'#6B7F99';return `<span class="tag" style="background:${c}22;color:${c};margin-right:8px">${k}: ${ra[k].rate}% <span class="sub">(${ra[k].n})</span></span>`;}).join('');}
+  const LH=(cas.history||[]).filter(h=>h.regime).slice().reverse();
+  $('livehist').innerHTML=LH.length?LH.map(h=>{const rc=REGC[h.regime]||'#6B7F99';
+    const res=h.dirHit==null?'<span class="sub">pending</span>':h.dirHit?'<span class="tag" style="background:#00C85322;color:#00C853">✓ hit</span>':'<span class="tag" style="background:#FF174422;color:#FF1744">✗ miss</span>';
+    return `<tr><td class="mono">${h.date}</td><td>${h.index}</td><td><span class="tag" style="background:${rc}22;color:${rc}">${h.regime}</span></td><td>${h.direction?dirTag(h.direction):'—'}</td><td class="mono">${N(h.expectedClose)}</td><td class="mono">${N(h.closeSpot)}</td><td>${h.actualDir?dirTag(h.actualDir):'<span class="sub">—</span>'}</td><td>${res}</td></tr>`;}).join(''):'<tr><td colspan="8" class="sub">builds as live calls resolve at 15:30 each day.</td></tr>';
+
   const H=(cas.historical||[]).slice().reverse();
   $('hst').innerHTML=H.length?H.map(h=>{
     const res=h.hit==null?'<span class="sub">—</span>':h.hit?'<span class="tag" style="background:#00C85322;color:#00C853">✓ hit</span>':'<span class="tag" style="background:#FF174422;color:#FF1744">✗ miss</span>';
-    return `<tr><td class="mono">${h.date}</td><td>${dirTag(h.pred)}</td><td class="mono" style="color:${(h.futIdxNet||0)<0?'#FF1744':'#00C853'}">${N(h.futIdxNet)}</td><td class="mono">${h.fiiCash>=0?'+':''}${h.fiiCash}</td><td class="mono">${h.diiCash>=0?'+':''}${h.diiCash}</td><td class="mono">${N(h.nifty)}</td><td class="mono">${N(h.sensex)}</td><td class="mono">${N(h.niftyNext)}</td><td>${h.actual?dirTag(h.actual):'<span class="sub">—</span>'}</td><td>${res}</td></tr>`;
-  }).join(''):'<tr><td colspan="10" class="sub">builds as FII/DII data accumulates.</td></tr>';
+    return `<tr><td class="mono">${h.date}</td><td>${dirTag(h.pred)}</td><td class="mono" style="color:${(h.futIdxNet||0)<0?'#FF1744':'#00C853'}">${N(h.futIdxNet)}</td><td class="mono">${N(h.nifty)}</td><td class="mono">${N(h.niftyNext)}</td><td>${h.actual?dirTag(h.actual):'<span class="sub">—</span>'}</td><td>${res}</td></tr>`;
+  }).join(''):'<tr><td colspan="7" class="sub">builds as FII/DII data accumulates.</td></tr>';
 }
 function load(){ fetch('/cas.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(render).catch(()=>{}); }
 load(); setInterval(load,60000);

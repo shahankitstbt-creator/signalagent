@@ -1082,39 +1082,108 @@ function maxPain(strikes) {
   }
   return best
 }
-// The DAILY institutional-footprint read: combines the option pin (max pain) + gamma + PCR with the REAL
-// FII/DII positioning (futures long/short, options tilt, cash flows) → a composite directional bias every
-// day, plus WHAT the big money is targeting (the pin level). This is the pro-trader read, not just expiry.
-function computeCAS(o, gex, inst = null) {
+// INTRADAY OI-FLOW footprint — from oi_history.json (total CE/PE OI snapshots per index over the day).
+// Rising call OI = call WRITING (cap building, bearish); falling = call COVERING (squeeze up, bullish).
+// Rising put OI = put WRITING (floor building, bullish); falling = put COVERING (support pulled, bearish).
+// This is the MOC/positioning pressure the old flat-score model was blind to.
+function oiFlow(idx, oiHist, todayISO) {
+  const rows = (oiHist || []).filter(r => r.index === idx)
+  if (rows.length < 2) return null
+  const todayRows = rows.filter(r => String(r.ts || '').slice(0, 10) === todayISO)
+  const first = todayRows[0] || rows[Math.max(0, rows.length - 6)]     // today's first snapshot, else recent baseline
+  const last = rows[rows.length - 1]
+  if (!first || !last || first === last) return null
+  const callChg = (last.ceOI || 0) - (first.ceOI || 0)
+  const putChg = (last.peOI || 0) - (first.peOI || 0)
+  const base = Math.max(1, (first.ceOI || 0) + (first.peOI || 0))
+  const bias = (putChg - callChg) / base                                // + = puts written / calls covered → bullish
+  const lab = []
+  if (callChg > base * 0.015) lab.push('call writing (cap ↑)'); else if (callChg < -base * 0.015) lab.push('call covering (squeeze ↑)')
+  if (putChg > base * 0.015) lab.push('put writing (floor ↑)'); else if (putChg < -base * 0.015) lab.push('put covering (support ↓)')
+  return { callChg: Math.round(callChg), putChg: Math.round(putChg), bias: +bias.toFixed(3), label: lab.join(' + ') || 'OI steady', dir: bias > 0.008 ? 'up' : bias < -0.008 ? 'down' : 'flat' }
+}
+// ── THE CRACKED CLOSING-AUCTION FOOTPRINT ─────────────────────────────────────────────────────────
+// The 15:15–15:30 move is NOT random — it's governed by three mechanics, in this order:
+//   1. PIN STRENGTH  — how hard writers drag price to max pain (OI concentration × expiry proximity).
+//   2. GAMMA REGIME  — dealers SUPPRESS moves above the gamma-flip (quiet pin) but AMPLIFY below it
+//                      (the sudden 1–2% closing swings happen HERE, in negative gamma).
+//   3. FLOW IMBALANCE — intraday OI writing/covering + FII futures/cash = which way the pressure leans.
+// From these we classify a REGIME (PINNED / MAGNET / VOLATILE / TILTED), each with its OWN expected
+// close, band, magnitude and HONEST confidence. Pinned expiry days are high-edge; volatile days we can
+// only call DIRECTION + "big", not an exact number — and we say so.
+function computeCAS(idx, o, gex, inst = null, oiHist = null, todayISO = null) {
   if (!o || o.placeholder || !o.strikes?.length) return null
   const spot = o.spot, mp = maxPain(o.strikes), callWall = o.resistance, putWall = o.support
   const flip = gex?.gammaFlip ?? null, regime = gex?.regime ?? null
   const negGamma = regime === 'NEG GAMMA'
   const distPct = mp != null ? +(((mp - spot) / spot) * 100).toFixed(2) : 0
-  const why = []
-  let lean, bias
-  if (mp == null) { lean = 'NO DATA'; bias = 'neutral' }
-  else if (Math.abs(distPct) < 0.12) { lean = 'PIN'; bias = 'neutral'; why.push(`Spot ${spot} ≈ Max Pain ${mp} → PINNED into the 15:30 auction`) }
-  else if (distPct > 0) { lean = 'PULL UP'; bias = 'up'; why.push(`Max Pain ${mp} ABOVE spot (+${distPct}%) → pull up toward ${mp}; call cap ${callWall}`) }
-  else { lean = 'PULL DOWN'; bias = 'down'; why.push(`Max Pain ${mp} BELOW spot (${distPct}%) → pull down toward ${mp}; put floor ${putWall}`) }
-  if (negGamma) why.push(`NEG-gamma (below flip ${flip}) → dealers AMPLIFY: a wall-break trends hard into the close`)
-  else if (regime) why.push(`POS-gamma (above flip ${flip}) → dealers SUPPRESS: pin/range toward high-OI strikes`)
-  if (o.pcr >= 1.2) why.push(`PCR ${o.pcr} — heavy put-writing (support)`) ; else if (o.pcr <= 0.8) why.push(`PCR ${o.pcr} — heavy call-writing (cap)`)
-  const magnets = [...o.strikes].map(s => ({ k: s.strike, ce: s.ceOI || 0, pe: s.peOI || 0 })).sort((a, b) => (b.ce + b.pe) - (a.ce + a.pe)).slice(0, 6)
-  // ── COMPOSITE FOOTPRINT: weigh the option pin WITH the real FII/DII smart-money positioning ──
-  let score = 0; const factors = []
-  const add = (s, f) => { score += s; factors.push({ dir: s > 0 ? 'up' : s < 0 ? 'down' : 'flat', f }) }
-  if (lean === 'PULL UP') add(1, `Option pin pulling UP to ${mp}`); else if (lean === 'PULL DOWN') add(-1, `Option pin pulling DOWN to ${mp}`); else if (lean === 'PIN') add(0, `Pinned at ${mp} (range day)`)
+  const S = [...o.strikes].sort((a, b) => a.strike - b.strike)
+  const totalOI = S.reduce((a, s) => a + (s.ceOI || 0) + (s.peOI || 0), 0) || 1
+  const step = S.length > 1 ? Math.abs(S[1].strike - S[0].strike) || 50 : 50
+  // PIN STRENGTH — OI concentration within ±2 strikes of max pain × how close to expiry
+  const nearMP = S.filter(s => Math.abs(s.strike - (mp ?? spot)) <= step * 2).reduce((a, s) => a + (s.ceOI || 0) + (s.peOI || 0), 0)
+  const concentration = nearMP / totalOI
+  const dExp = o.expiry ? Math.max(0, Math.round((new Date(String(o.expiry).slice(0, 10)) - new Date(todayISO || String(o.expiry).slice(0, 10))) / 86400000)) : 5
+  const isExpiry = dExp === 0
+  const expiryFactor = isExpiry ? 1 : dExp <= 1 ? 0.75 : dExp <= 3 ? 0.5 : dExp <= 7 ? 0.32 : 0.18
+  const pinStrength = Math.round(Math.min(100, concentration * expiryFactor * 260))
+  // GAMMA magnitude — dealer hedging pressure near ATM (sum |net OI|) relative to total
+  const gammaMag = Math.round(Math.min(100, (S.filter(s => Math.abs(s.strike - o.atm) <= step * 4).reduce((a, s) => a + Math.abs((s.ceOI || 0) - (s.peOI || 0)), 0) / totalOI) * 120))
+  const flow = oiFlow(idx, oiHist, todayISO)
+  // ── DIRECTIONAL TILT: pin pull + intraday flow + FII positioning ──
   const fii = inst?.fii, dii = inst?.dii
-  if (fii) {
-    if (fii.futRatio != null) { if (fii.futRatio <= 0.5) add(-1.6, `FII net SHORT index futures (L/S ${fii.futRatio}) — bearish`); else if (fii.futRatio >= 1.5) add(1.6, `FII net LONG index futures (L/S ${fii.futRatio}) — bullish`); else factors.push({ dir: 'flat', f: `FII futures balanced (L/S ${fii.futRatio})` }) }
-    if (fii.optIdxPutNet > 0 && fii.optIdxCallNet <= 0) add(-1, 'FII long PUTS + short CALLS — bearish options hedge'); else if (fii.optIdxCallNet > 0 && fii.optIdxPutNet <= 0) add(1, 'FII long CALLS + short PUTS — bullish options')
-    if (fii.cash >= 800) add(0.6, `FII buying cash +₹${Math.round(fii.cash)}cr`); else if (fii.cash <= -800) add(-0.6, `FII selling cash −₹${Math.abs(Math.round(fii.cash))}cr`)
+  const fiiBias = fii && fii.futRatio != null ? (fii.futRatio <= 0.6 ? -1 : fii.futRatio >= 1.5 ? 1 : 0) : 0
+  let tilt = 0
+  if (mp != null) tilt += Math.sign(distPct) * Math.min(1, Math.abs(distPct) / 0.4)         // pin pull
+  tilt += flow ? (flow.dir === 'up' ? 0.8 : flow.dir === 'down' ? -0.8 : 0) : 0             // intraday OI flow
+  tilt += fiiBias * 0.9                                                                       // FII futures
+  if (fii?.cash >= 800) tilt += 0.4; else if (fii?.cash <= -800) tilt -= 0.4
+  if (dii?.cash >= 1500) tilt += 0.3; else if (dii?.cash <= -1500) tilt -= 0.3
+  // ── REGIME CLASSIFICATION → expected close + band + honest confidence ──
+  let casRegime, expectedClose, band, magnitude, confidence, direction, mechanics
+  if (!negGamma && pinStrength >= 45 && Math.abs(distPct) < 0.25 && mp != null) {
+    casRegime = 'PINNED'; expectedClose = mp; direction = 'FLAT'; magnitude = 'quiet'
+    band = Math.round(spot * 0.0015); confidence = Math.round(Math.min(85, 60 + pinStrength / 5))
+    mechanics = `POSITIVE gamma + pin strength ${pinStrength}/100 at max pain ${mp} (${isExpiry ? 'EXPIRY TODAY' : dExp + 'd to expiry'}). Writers defend ${mp} and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈${mp}. Quiet close, not a trend.`
+  } else if (negGamma) {
+    casRegime = 'VOLATILE'; direction = tilt > 0.2 ? 'UP' : tilt < -0.2 ? 'DOWN' : (distPct > 0 ? 'UP' : 'DOWN')
+    magnitude = gammaMag >= 40 ? 'big' : 'normal'
+    const mv = (magnitude === 'big' ? 1.1 : 0.6) * (direction === 'DOWN' ? -1 : 1)
+    expectedClose = Math.round(spot * (1 + mv / 100)); band = Math.round(spot * 0.005)
+    confidence = Math.round(Math.min(68, 52 + Math.abs(tilt) * 7))
+    mechanics = `Spot ${spot} is BELOW the gamma-flip ${flip} → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: ${flow ? flow.label : 'n/a'}; net tilt ${tilt > 0 ? 'bullish' : 'bearish'} → likely ${direction}, magnitude ${magnitude}. (We call direction + size here, not an exact number.)`
+  } else if (Math.abs(distPct) >= 0.25 && mp != null) {
+    casRegime = 'MAGNET'; direction = distPct > 0 ? 'UP' : 'DOWN'; magnitude = 'normal'
+    expectedClose = Math.round(spot + (mp - spot) * 0.45); band = Math.round(spot * 0.0025)
+    confidence = Math.round(Math.min(72, 55 + pinStrength / 6 + Math.abs(tilt) * 4))
+    mechanics = `POSITIVE gamma but spot ${spot} sits ${Math.abs(distPct)}% ${distPct > 0 ? 'below' : 'above'} max pain ${mp}. Writers + dealers drag price PART-WAY to the pin into the close → drift ${direction} toward ≈${expectedClose} (rarely all the way in one session).`
+  } else {
+    casRegime = 'TILTED'; direction = tilt > 0.15 ? 'UP' : tilt < -0.15 ? 'DOWN' : 'FLAT'; magnitude = 'normal'
+    expectedClose = Math.round(spot * (1 + (tilt * 0.1) / 100)); band = Math.round(spot * 0.003)
+    confidence = Math.round(Math.min(60, 50 + Math.abs(tilt) * 6))
+    mechanics = `No strong pin or gamma signal. Mild ${direction === 'FLAT' ? 'no' : direction} tilt from flow (${flow ? flow.label : 'n/a'}) + FII positioning → low-conviction close near ${expectedClose}.`
   }
-  if (dii?.cash >= 1500) add(0.5, `DII buying +₹${Math.round(dii.cash)}cr (floor under the market)`); else if (dii?.cash <= -1500) add(-0.5, `DII selling −₹${Math.abs(Math.round(dii.cash))}cr`)
-  const direction = score >= 1 ? 'BULLISH' : score <= -1 ? 'BEARISH' : 'NEUTRAL'
-  const confidence = Math.round(Math.min(88, 48 + Math.abs(score) * 10))   // capped — honest, never 90+
-  return { spot, maxPain: mp, callWall, putWall, gammaFlip: flip, regime, pcr: o.pcr, atm: o.atm, expiry: o.expiry, lean, bias, distPct, why, magnets, predictedClose: mp, footprintScore: +score.toFixed(1), direction, confidence, factors, target: mp, instBias: inst?.bias || null }
+  const expectedMovePct = +(((expectedClose - spot) / spot) * 100).toFixed(2)
+  // ── RANKED DRIVERS (transparent footprint) ──
+  const drivers = []
+  const pushD = (dir, w, text) => drivers.push({ dir, w: +Math.min(1, w).toFixed(2), text })
+  if (mp != null) pushD(distPct > 0 ? 'up' : distPct < 0 ? 'down' : 'flat', Math.abs(distPct) / 0.4, `Max-pain pin ${mp} (${distPct > 0 ? '+' : ''}${distPct}% vs spot) · pin strength ${pinStrength}/100`)
+  pushD(negGamma ? 'down' : 'flat', gammaMag / 100, `${regime || 'gamma n/a'}${flip ? ` (flip ${flip})` : ''} · dealer pressure ${gammaMag}/100 — ${negGamma ? 'AMPLIFIES' : 'suppresses'} the close`)
+  if (flow) pushD(flow.dir, Math.abs(flow.bias) * 20, `Intraday OI flow: ${flow.label} (ΔCE ${flow.callChg > 0 ? '+' : ''}${flow.callChg} · ΔPE ${flow.putChg > 0 ? '+' : ''}${flow.putChg})`)
+  if (fii) pushD(fiiBias > 0 ? 'up' : fiiBias < 0 ? 'down' : 'flat', 0.6, `FII futures L/S ${fii.futRatio ?? '—'}${fii.cash ? ` · cash ${fii.cash > 0 ? '+' : ''}₹${Math.round(fii.cash)}cr` : ''}`)
+  if (dii?.cash) pushD(dii.cash > 0 ? 'up' : 'down', 0.4, `DII cash ${dii.cash > 0 ? '+' : ''}₹${Math.round(dii.cash)}cr`)
+  drivers.sort((a, z) => z.w - a.w)
+  const why = [mechanics, ...drivers.map(d => `${d.dir === 'up' ? '▲' : d.dir === 'down' ? '▼' : '■'} ${d.text}`)]
+  const magnets = S.map(s => ({ k: s.strike, ce: s.ceOI || 0, pe: s.peOI || 0 })).sort((a, b) => (b.ce + b.pe) - (a.ce + a.pe)).slice(0, 6)
+  const dirWord = direction === 'UP' ? 'BULLISH' : direction === 'DOWN' ? 'BEARISH' : 'NEUTRAL'
+  return {
+    spot, maxPain: mp, callWall, putWall, gammaFlip: flip, regime, pcr: o.pcr, atm: o.atm, expiry: o.expiry, dExp, isExpiry,
+    distPct, casRegime, expectedClose, expectedMovePct, band, magnitude, direction, confidence, pinStrength, gammaMag, flow,
+    drivers, mechanics, why, magnets, tilt: +tilt.toFixed(2), window: '15:15–15:30 IST',
+    // back-compat fields still read by casForecast / historical / the page
+    lean: casRegime, bias: direction.toLowerCase(), predictedClose: expectedClose, footprintScore: +tilt.toFixed(1),
+    target: expectedClose, dirWord, instBias: inst?.bias || null,
+  }
 }
 // Actual NIFTY/BankNifty daily closes since 3 Aug 2026 (real, from Yahoo) — the "actual" column.
 async function casActuals() {
@@ -1144,25 +1213,30 @@ function casExpiries() {
 }
 const casNextBiz = iso => { const d = new Date(iso + 'T00:00:00Z'); do { d.setUTCDate(d.getUTCDate() + 1) } while (d.getUTCDay() === 0 || d.getUTCDay() === 6); return d.toISOString().slice(0, 10) }
 // FORECAST: the EXACT expected close (single number) for each trading day → 31 Dec, with a TIGHT
-// conviction band. Near-term (N≤2) is anchored to the max-pain PIN (the most accurate near-term
-// predictor); the band is a fixed conviction zone (~±0.3% Nifty/Sensex, ±0.5% BankNifty), NOT a √time
-// cone — so it stays tight. Drift from the FII/DII bias is gentle & capped ±5% over the whole horizon.
-function casForecast(live, actuals, todayISO) {
+// HONEST forecast — three tiers of certainty, LABELLED per row so nothing is passed off as more than it is:
+//   • TODAY   = the live closing-auction footprint (regime + expected close + tight band) — real edge.
+//   • EXPIRY  = the max-pain PIN target for each upcoming weekly/monthly expiry — real edge (firms as OI builds).
+//   • BETWEEN = a low-confidence drift band that WIDENS with distance — we do NOT pretend to know an exact
+//     random-day close months out (that depends on flow that isn't set yet). Confidence decays; the page shows it.
+function casForecast(live, actuals, todayISO, expiries) {
+  const expSet = new Set((expiries || []).map(e => e.date))
+  const last = idx => (actuals?.[idx] || []).slice(-1)[0]?.close
   const seed = {
-    NIFTY: { spot: live?.NIFTY?.spot, mp: live?.NIFTY?.maxPain, bias: live?.NIFTY?.footprintScore || 0, band: 0.003 },
-    BANKNIFTY: { spot: live?.BANKNIFTY?.spot, mp: live?.BANKNIFTY?.maxPain, bias: live?.BANKNIFTY?.footprintScore || 0, band: 0.005 },
-    SENSEX: { spot: (actuals?.SENSEX || []).slice(-1)[0]?.close, mp: null, bias: live?.NIFTY?.footprintScore || 0, band: 0.003 },
+    NIFTY: { spot: live?.NIFTY?.spot ?? last('NIFTY'), mp: live?.NIFTY?.maxPain, exp0: live?.NIFTY?.expectedClose, band0: live?.NIFTY?.band, conf0: live?.NIFTY?.confidence, dir: live?.NIFTY?.footprintScore || 0, bp: 0.003 },
+    BANKNIFTY: { spot: live?.BANKNIFTY?.spot ?? last('BANKNIFTY'), mp: live?.BANKNIFTY?.maxPain, exp0: live?.BANKNIFTY?.expectedClose, band0: live?.BANKNIFTY?.band, conf0: live?.BANKNIFTY?.confidence, dir: live?.BANKNIFTY?.footprintScore || 0, bp: 0.005 },
+    SENSEX: { spot: live?.SENSEX?.spot ?? last('SENSEX'), mp: live?.SENSEX?.maxPain, exp0: live?.SENSEX?.expectedClose, band0: live?.SENSEX?.band, conf0: live?.SENSEX?.confidence, dir: (live?.SENSEX?.footprintScore ?? live?.NIFTY?.footprintScore) || 0, bp: 0.003 },
   }
   const out = []; let dayN = 0
   for (let d = casNextBiz(todayISO); d <= '2026-12-31' && dayN < 130; d = casNextBiz(d)) {
-    dayN++; const row = { date: d, dayN }
+    dayN++; const isExp = expSet.has(d); const row = { date: d, dayN, isExpiry: isExp }
     for (const idx of ['NIFTY', 'BANKNIFTY', 'SENSEX']) {
       const s = seed[idx]; if (!s.spot) continue
-      let base = s.spot
-      if (s.mp && dayN <= 2) base = dayN === 1 ? s.mp * 0.7 + s.spot * 0.3 : s.mp * 0.4 + s.spot * 0.6   // near-term PIN anchor
-      const drift = Math.max(-0.05, Math.min(0.05, s.bias * 0.0008 * dayN))                              // gentle, capped ±5%
-      const exp = Math.round(base * (1 + drift)), band = Math.round(s.spot * s.band)                     // TIGHT fixed band, no √time cone
-      row[idx] = { exp, low: exp - band, high: exp + band, band }
+      const drift = Math.max(-0.06, Math.min(0.06, s.dir * 0.0006 * dayN))              // gentle tilt, capped ±6%
+      let exp, band, conf, kind
+      if (dayN === 1 && s.exp0) { exp = s.exp0; band = s.band0 || Math.round(s.spot * s.bp); conf = s.conf0 || 55; kind = 'live footprint' }
+      else if (isExp && s.mp) { exp = Math.round(s.mp * (1 + drift * 0.3)); band = Math.round(s.spot * 0.004); conf = 58; kind = 'expiry pin' }
+      else { exp = Math.round(s.spot * (1 + drift)); band = Math.round(s.spot * (0.004 + 0.0006 * Math.sqrt(dayN))); conf = Math.max(35, Math.round(52 - dayN * 0.3)); kind = 'drift · low-conf' }
+      row[idx] = { exp, low: exp - band, high: exp + band, band, conf, kind }
     }
     out.push(row)
   }
@@ -1199,20 +1273,27 @@ function writeCAS(inputs, today, actuals = null, expiries = null, inst = null) {
   let cas = { live: {}, history: [] }
   try { cas = JSON.parse(readFileSync('public/cas.json', 'utf8')) } catch {}
   cas.history = cas.history || []; cas.live = {}
+  let oiHist = []; try { oiHist = JSON.parse(readFileSync('public/oi_history.json', 'utf8')) || [] } catch {}   // intraday OI-flow footprint
   for (const { idx, o, gex } of inputs) {
-    const c = computeCAS(o, gex, inst); if (!c) continue
+    const c = computeCAS(idx, o, gex, inst, oiHist, todayISO); if (!c) continue
     c.isExpiry = !!(o.expiry && String(o.expiry).slice(0, 10) === todayISO)   // strongest pin on the actual expiry day
     cas.live[idx] = c
     let e = cas.history.find(h => h.date === todayISO && h.index === idx)
     // capture the prediction in the ~14:45–15:35 IST window (near the close, positioning is set)
-    if (!e && mins >= 885 && mins <= 940 && c.maxPain != null) {
-      e = { date: todayISO, index: idx, predAt: ist.toISOString().slice(11, 16), spotAtPred: c.spot, maxPain: c.maxPain, lean: c.lean, callWall: c.callWall, putWall: c.putWall, closeSpot: null, hit: null }
+    if (!e && mins >= 885 && mins <= 940 && c.expectedClose != null) {
+      e = { date: todayISO, index: idx, predAt: ist.toISOString().slice(11, 16), spotAtPred: c.spot, maxPain: c.maxPain,
+        regime: c.casRegime, expectedClose: c.expectedClose, direction: c.direction, band: c.band, confidence: c.confidence,
+        lean: c.lean, callWall: c.callWall, putWall: c.putWall, closeSpot: null, hit: null, dirHit: null }
       cas.history.push(e)
     }
-    // resolve at/after 15:30 with the actual (latest) spot = the close
+    // resolve at/after 15:30 with the actual (latest) spot = the close → score BOTH the number & the direction
     if (e && e.closeSpot == null && mins >= 930) {
       e.closeSpot = c.spot
-      e.hit = Math.abs(e.closeSpot - e.maxPain) <= Math.abs(e.spotAtPred - e.maxPain) + e.maxPain * 0.0005  // closed toward / stayed near max pain
+      const ec = e.expectedClose ?? e.maxPain
+      e.hit = ec != null ? Math.abs(e.closeSpot - ec) <= (e.band || ec * 0.003) * 1.5 : null   // closed inside the predicted band
+      const actDir = e.closeSpot > e.spotAtPred * 1.0008 ? 'UP' : e.closeSpot < e.spotAtPred * 0.9992 ? 'DOWN' : 'FLAT'
+      e.actualDir = actDir
+      e.dirHit = (e.direction && e.direction !== 'FLAT') ? (e.direction === actDir) : (actDir === 'FLAT')   // regime PINNED/FLAT scores a hit if it stayed flat
     }
   }
   cas.history = cas.history.slice(-120)
@@ -1220,12 +1301,20 @@ function writeCAS(inputs, today, actuals = null, expiries = null, inst = null) {
   if (expiries) cas.expiries = expiries            // forecastable expiry-pin days through Dec 2026
   cas.regime = inst || cas.regime || null          // current FII/DII smart-money regime
   try { cas.fiiHistory = (JSON.parse(readFileSync('public/fii_history.json', 'utf8')) || []).slice(-60) } catch {}   // FII/DII footprint since ~3 Aug
-  try { cas.forecast = casForecast(cas.live, actuals, todayISO) } catch (e) { }               // expected-close path → 31 Dec (Forecast tab)
+  try { cas.forecast = casForecast(cas.live, actuals, todayISO, expiries || cas.expiries) } catch (e) { }   // honest tiered forecast (Forecast tab)
   try { cas.historical = casHistorical(cas.fiiHistory, actuals) } catch (e) { }               // footprint prediction vs actual (Historical tab)
   const hh = (cas.historical || []).filter(h => h.hit != null)
   cas.histHitRate = hh.length ? Math.round(hh.filter(h => h.hit).length / hh.length * 100) : null
   const resolved = cas.history.filter(h => h.hit != null)
   cas.hitRate = resolved.length ? Math.round(resolved.filter(h => h.hit).length / resolved.length * 100) : null
+  // DIRECTIONAL hit-rate = did the close move the way the footprint called? (the honest headline metric)
+  const dres = cas.history.filter(h => h.dirHit != null)
+  cas.dirHitRate = dres.length ? Math.round(dres.filter(h => h.dirHit).length / dres.length * 100) : null
+  cas.dirResolved = dres.length
+  // per-regime accuracy — shows WHERE the edge is (PINNED days should score far higher than VOLATILE)
+  const byReg = {}
+  for (const h of cas.history) { if (h.dirHit == null || !h.regime) continue; (byReg[h.regime] ||= { n: 0, hit: 0 }); byReg[h.regime].n++; if (h.dirHit) byReg[h.regime].hit++ }
+  cas.regimeAcc = Object.fromEntries(Object.entries(byReg).map(([k, v]) => [k, { n: v.n, rate: Math.round(v.hit / v.n * 100) }]))
   cas.resolved = resolved.length; cas.updatedAt = today.toISOString()
   try { writeFileSync('public/cas.json', JSON.stringify(cas, null, 2)) } catch {}
 }
