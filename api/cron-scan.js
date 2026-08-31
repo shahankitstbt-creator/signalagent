@@ -4,7 +4,7 @@ const REPO = 'shahankitstbt-creator/signalagent'
 export default async function handler(req, res) {
   const token = process.env.GH_DISPATCH_TOKEN
   if (!token) { res.status(503).json({ ok: false, error: 'no dispatch token' }); return }
-  const tf = ['daily', 'intraday', 'weekly'].includes(req.query.tf) ? req.query.tf : 'daily'
+  const tf = ['daily', 'intraday', 'weekly', 'execute'].includes(req.query.tf) ? req.query.tf : 'daily'
   try {
     const r = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/scan.yml/dispatches`, {
       method: 'POST',

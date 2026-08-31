@@ -6,7 +6,7 @@ on:
     # Public repo → Actions is FREE, so we run DENSE for near-real-time updates. GitHub still drops
     # some scheduled runs (best-effort), so density + self-heal + the Vercel daily cron (backup)
     # together keep it fully automatic with no manual steps. Times UTC; IST = UTC + 5:30.
-    - cron: '2,17,32,47 3-10 * * 1-5'   # EVERY 15 MIN during live market (≈08:32–16:00 IST)
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 3-10 * * 1-5'   # EVERY 5 MIN during live market (≈08:32–16:00 IST): :02/:17/:32/:47 = full intraday scan (new signals); the other ticks = FAST execute-only (honor stops + square-off in ~30s, so runs are cheap and rarely dropped)
     - cron: '1,6 10 * * 1-5'            # DEDICATED post-close SQUARE-OFF (15:31 & 15:36 IST) — guarantees Daily-Income is flat right after 15:30 even if a cron run is dropped
     - cron: '7,37 10-16 * * 1-5'        # every 30 min after-market (≈16:07–22:07 IST)
     - cron: '2 12 * * 1-5'              # post-market daily close + weekly + self-improve (~17:32 IST)
@@ -55,6 +55,7 @@ jobs:
           H=$((10#$(date -u +%H))); MIN=$((10#$(date -u +%M)))
           if [ -n "$TF" ] && [ "$TF" != "auto" ]; then
             case "$TF" in
+              execute)  node scripts/screener.mjs --execute ;;
               intraday) node scripts/screener.mjs --tf intraday --full ;;
               weekly)   node scripts/screener.mjs --tf weekly --full ;;
               *)        node scripts/screener.mjs --full --top 80 --improve ;;
@@ -71,9 +72,15 @@ jobs:
             if [ "$BOARD_DATE" != "$TODAY" ] && [ "$H" -ge 4 ]; then
               echo "AUTO DAILY — board stale ($BOARD_DATE != $TODAY) → full daily + self-improve"
               node scripts/screener.mjs --full --top 80 --improve
+              echo "LIVE — first intraday scan of the FULL NSE universe"
+              node scripts/screener.mjs --tf intraday --full
+            elif [ $((MIN % 15)) -eq 2 ]; then
+              echo "LIVE (:02/:17/:32/:47) — full intraday scan of the NSE universe + Telegram alerts + new entries"
+              node scripts/screener.mjs --tf intraday --full
+            else
+              echo "EXECUTE-ONLY (off-15 tick) — fast run: price open positions, honor stops, square-off Daily (~30s)"
+              node scripts/screener.mjs --execute
             fi
-            echo "LIVE — intraday scan of the FULL NSE universe + real-time Telegram alerts"
-            node scripts/screener.mjs --tf intraday --full
           fi
       - name: Persist state back to repo (accumulates ledger/goal, dedups Telegram)
         run: |

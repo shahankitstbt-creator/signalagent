@@ -383,7 +383,10 @@ function monthlyRollover(b, todayISO) {
   return snap
 }
 
-export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}) {
+export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}, manageOnly = false) {
+  // manageOnly (fast execution worker): mark-to-market, honor stops, square-off, hedge/integrity ONLY —
+  // do NOT open new trades. New entries come solely from the full daily/intraday scan (proper universe +
+  // fresh prices), never from the restricted execute run. This keeps execution frequent AND entries clean.
   const b = loadBook()
   if (!b.startedAt) b.startedAt = todayISO
   const rolledDay = dailyRollover(b, todayISO)   // new day? → log the finished day (records only, no reset)
@@ -667,6 +670,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   }
   const IDX = new Set(['NIFTY', 'BANKNIFTY', 'SENSEX', 'MIDCPNIFTY', 'FINNIFTY', 'NIFTYNXT50', 'BANKEX'])
   for (const s of cands) {
+    if (manageOnly) break                                    // execute-only worker: manage existing, open nothing new
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
     // LONG-ONLY backstop: never TAKE a short on an F&O stock, index, or commodity (user rule).
@@ -733,6 +737,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const dailyGoalHit = dailyTodayPnl >= DAILY_TARGET_INR
   let dailyOpened = 0
   for (const s of dailyCands) {
+    if (manageOnly) break                                              // execute-only worker: no new day-trades, manage existing only
     if (!sess.dailyEntryOpen) break                                     // day-trades only 09:15–15:00 IST (need time to manage/exit before 15:30)
     if (dailyGoalHit) break                                             // ₹10k day-goal reached → stop adding day-trades
     if ((deployed.DAILY || 0) >= CAP_DAILY) break

@@ -381,12 +381,26 @@ function computeBreadth(scored) {
 }
 
 // ── main ──
-export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily', improve = false } = {}) {
+export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily', improve = false, executeOnly = false } = {}) {
   const t0 = Date.now()
   const cfg = TF[tf] || TF.daily
   const isDaily = tf === 'daily'
-  console.log(`Building universe… [${cfg.label}]`)
+  console.log(`Building universe… [${cfg.label}]${executeOnly ? ' · EXECUTE-ONLY' : ''}`)
   let uni = await buildUniverse(full)
+  // ── EXECUTE-ONLY (fast intraday execution worker): price ONLY the symbols we hold OPEN in the book,
+  // so the run finishes in seconds and can fire every 1–3 min for reliable stop-honoring + 15:30 square-off,
+  // instead of scanning ~2000 stocks. Reuses the proven intraday path; positions it can't price are just
+  // held at last mark (syncTradeBook never spurious-closes an un-refreshed position). ──
+  if (executeOnly) {
+    const openSyms = new Set()
+    try {
+      const bk = JSON.parse(readFileSync('public/trade_book.json', 'utf8'))
+      for (const p of Object.values(bk.open || {})) { if (p.symbol) openSyms.add(p.symbol); if (p.underlying) openSyms.add(p.underlying) }
+    } catch (e) { console.log('EXECUTE-ONLY: could not read trade_book —', e.message) }
+    const byId = new Map(uni.map(s => [s.symbol, s]))
+    uni = [...openSyms].map(s => byId.get(s) || { symbol: s, name: s, sector: null, indices: [] })
+    console.log(`EXECUTE-ONLY: pricing ${uni.length} open-position symbol(s) → ${[...openSyms].slice(0, 12).join(', ')}${openSyms.size > 12 ? '…' : ''}`)
+  }
   // expose the full universe to the UI for stock search/watchlist
   mkdirSync('public', { recursive: true })
   if (isDaily) writeFileSync('public/universe.json', JSON.stringify(uni.map(s => ({ symbol: s.symbol, name: s.name, sector: s.sector, indices: s.indices }))))
@@ -698,12 +712,16 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     for (const c of (board.find(g => g.id === 'option_buildup')?.signals || [])) if (c.spot) px[c.symbol] = c.spot
     for (const s of Object.values(lg.active)) if (px[s.symbol] != null) s.ltp = px[s.symbol]   // mark-to-market
     let logged = 0
-    for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) { try { openOrUpdate(lg, card, todayISO, todayTs); logged++ } catch {} }
-    for (const s of (board.find(g => g.id === 'fno')?.signals || [])) { if (s.kind !== 'Stock' || !s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {} }
-    logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
+    // EXECUTE-ONLY skips logging NEW signals — it only refreshes prices for open positions, then manages
+    // them (stops/square-off). New entries come from the full daily/intraday scan, never the execute run.
+    if (!executeOnly) {
+      for (const g of board) if (LEDGER_GENS.has(g.id)) for (const card of g.signals) { try { openOrUpdate(lg, card, todayISO, todayTs); logged++ } catch {} }
+      for (const s of (board.find(g => g.id === 'fno')?.signals || [])) { if (s.kind !== 'Stock' || !s.entry || !s.sl || !s.targets?.[0]?.price) continue; try { openOrUpdate(lg, { ...s, symbol: s.symbol || s.underlying }, todayISO, todayTs); logged++ } catch {} }
+      logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
+    }
     saveLedger(lg)
-    try { tb = syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
-    console.log(`Intraday refresh: ${logged} signals logged, book marked-to-market`)
+    try { tb = syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots, {}, executeOnly) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
+    console.log(`${executeOnly ? 'EXECUTE-ONLY' : 'Intraday refresh'}: ${logged} signals logged, book marked-to-market + stops/square-off enforced`)
   }
 
   // ── TELEGRAM: ONLY trade ENTRY/EXIT alerts, fired the moment the book opens/closes a position.
@@ -1566,6 +1584,7 @@ function buildSignals(scored) {
   }, null, 2))
   console.log(`Signals: ${logics.filter(l => l.active).length}/${LOGICS.length} logics >=${MIN_ACCURACY}% → ${signals.length} live signals`)
 }
+const EXECUTE = ARGS.includes('--execute')   // fast execution worker: price only open positions, honor stops, square-off
 if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('screener.mjs')) {
-  runScan({ full: FULL, top: TOP, limit: LIMIT, tf: TFARG, improve: IMPROVE }).catch(e => { console.error(e); process.exit(1) })
+  runScan({ full: FULL, top: TOP, limit: LIMIT, tf: EXECUTE ? 'intraday' : TFARG, improve: IMPROVE, executeOnly: EXECUTE }).catch(e => { console.error(e); process.exit(1) })
 }
