@@ -292,8 +292,8 @@ function OpenTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
   const groups = groupByDate(rows, 'entryDate')
-  const [collapsed, setCollapsed] = useState(() => new Set())   // all dates EXPANDED by default (see everything); click a date to collapse it
-  const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
+  const [expanded, setExpanded] = useState(() => new Set())   // all dates COLLAPSED by default (incl. new ones); click a date to open it
+  const toggle = d => setExpanded(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No open paper positions yet — they open as new high-conviction signals fire." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
@@ -306,7 +306,7 @@ function OpenTable({ rows: raw }) {
       </tr></thead>
       <tbody>
         {groups.map(([date, drows]) => {
-          const shut = collapsed.has(date)
+          const shut = !expanded.has(date)
           return (
           <Fragment key={date}>
             <tr onClick={() => toggle(date)} className="cursor-pointer select-none hover:brightness-125"><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
@@ -346,8 +346,8 @@ function ClosedTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
   const groups = groupByDate(rows, 'exitDate')
-  const [collapsed, setCollapsed] = useState(() => new Set())   // all dates EXPANDED by default (see everything); click a date to collapse it
-  const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
+  const [expanded, setExpanded] = useState(() => new Set())   // all dates COLLAPSED by default (incl. new ones); click a date to open it
+  const toggle = d => setExpanded(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No closed trades yet — outcomes journal here as targets/stops are hit." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
@@ -362,7 +362,7 @@ function ClosedTable({ rows: raw }) {
         {groups.map(([date, drows]) => {
           const dnet = drows.reduce((a, r) => a + (r.realizedPnl || 0), 0)
           const w = drows.filter(r => r.result === 'WIN').length, l = drows.filter(r => r.result === 'LOSS').length
-          const shut = collapsed.has(date)
+          const shut = !expanded.has(date)
           return (
           <Fragment key={date}>
             <tr onClick={() => toggle(date)} className="cursor-pointer select-none hover:brightness-125"><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
