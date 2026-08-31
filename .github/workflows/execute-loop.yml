@@ -1,0 +1,89 @@
+name: ProTrader execution loop (session-long, reliable)
+
+# WHY: GitHub's SCHEDULER drops individual scheduled runs, so relying on dozens of 5-min triggers to
+# honor stops / square-off is fragile. Instead this fires from ONE reliable pre-market trigger and then
+# STAYS ALIVE, running the fast --execute path every ~3 min for the whole session. One thing to drop
+# instead of 70+. Public repo → Actions minutes are FREE, so a ~5.5h job daily costs nothing.
+# The dedicated square-off crons + the 30-min safety scan in scan.yml remain as backups.
+on:
+  schedule:
+    - cron: '35 3 * * 1-5'   # ~09:05 IST — ONE trigger; the job then loops internally through the session
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: protrader-execute-loop
+  cancel-in-progress: true   # a fresh trigger replaces any still-running loop (never two loops writing at once)
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355       # ~5h55m from ~09:05 IST → covers the session to ~15:00 IST (GitHub's 6h job cap); the 15:31/15:36 square-off crons in scan.yml close the tail
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install --no-audit --no-fund
+      - name: Write .env from secrets
+        run: |
+          cat > .env <<'EOF'
+          ANGEL_API_KEY=${{ secrets.ANGEL_API_KEY }}
+          ANGEL_SECRET_KEY=${{ secrets.ANGEL_SECRET_KEY }}
+          ANGEL_TOTP_SECRET=${{ secrets.ANGEL_TOTP_SECRET }}
+          ANGEL_CLIENT_CODE=${{ secrets.ANGEL_CLIENT_CODE }}
+          ANGEL_MPIN=${{ secrets.ANGEL_MPIN }}
+          ALPHA_VANTAGE_KEY=${{ secrets.ALPHA_VANTAGE_KEY }}
+          TWELVE_DATA_KEY=${{ secrets.TWELVE_DATA_KEY }}
+          TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+          VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
+          EOF
+      - name: Link Vercel (for periodic deploys inside the loop)
+        run: npx --yes vercel@latest link --yes --project tradingview --scope vishalcurators-projects --token=${{ secrets.VERCEL_TOKEN }} || true
+      - name: Session execution loop
+        run: |
+          git config user.name "protrader-bot"
+          git config user.email "bot@stocksbyvarsha.local"
+          ITER=0
+          # Loop until the job's own time budget is nearly spent (guard slightly under the 355-min timeout).
+          END=$(( $(date -u +%s) + 340*60 ))
+          while [ "$(date -u +%s)" -lt "$END" ]; do
+            NOWMIN=$(( 10#$(date -u +%H)*60 + 10#$(date -u +%M) ))   # minutes-since-midnight UTC
+            # Equity session 09:15–15:30 IST = 03:45–10:00 UTC (225–600). Only execute inside it.
+            if [ "$NOWMIN" -ge 225 ] && [ "$NOWMIN" -le 601 ]; then
+              if [ $(( ITER % 10 )) -eq 0 ]; then
+                echo "[$(date -u +%RZ)] FULL intraday scan (new signals + entries) — every ~30 min"
+                node scripts/screener.mjs --tf intraday --full || true
+                DEPLOY=1
+              else
+                echo "[$(date -u +%RZ)] EXECUTE-ONLY — honor stops, square-off, mark-to-market (~30s)"
+                node scripts/screener.mjs --execute || true
+                DEPLOY=0
+              fi
+              # persist state (rebase onto latest so scan.yml's own pushes never conflict-lose)
+              git add public/trade_book.json public/ledger.json public/board*.json public/tg_sent.json public/cas.json public/track_record.json public/goal.json public/oi_history.json 2>/dev/null || true
+              git commit -m "execute-loop $(date -u +%FT%RZ)" || echo "no change"
+              for r in 1 2 3 4 5; do
+                git fetch origin main
+                if git rebase --strategy-option=theirs origin/main; then
+                  git push && break
+                else
+                  git rebase --abort 2>/dev/null || true
+                fi
+                echo "push race — retry $r"; sleep 3
+              done
+              if grep -rl '^<<<<<<< ' public/*.json >/dev/null 2>&1; then git checkout -- public/; fi
+              # deploy to Vercel only on the 30-min full-scan ticks (keeps well under Hobby deploy limits)
+              if [ "$DEPLOY" = "1" ]; then
+                npx --yes vercel@latest deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} || true
+              fi
+              ITER=$(( ITER + 1 ))
+            else
+              echo "[$(date -u +%RZ)] outside equity session — idle"
+            fi
+            sleep 180   # ~3-min cadence
+          done
+          echo "Session loop ended after $ITER iterations."

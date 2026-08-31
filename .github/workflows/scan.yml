@@ -6,7 +6,7 @@ on:
     # Public repo → Actions is FREE, so we run DENSE for near-real-time updates. GitHub still drops
     # some scheduled runs (best-effort), so density + self-heal + the Vercel daily cron (backup)
     # together keep it fully automatic with no manual steps. Times UTC; IST = UTC + 5:30.
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 3-10 * * 1-5'   # EVERY 5 MIN during live market (≈08:32–16:00 IST): :02/:17/:32/:47 = full intraday scan (new signals); the other ticks = FAST execute-only (honor stops + square-off in ~30s, so runs are cheap and rarely dropped)
+    - cron: '2,32 3-10 * * 1-5'   # BACKUP full intraday scan every 30 min (≈08:32–16:00 IST). Frequent execution is owned by the SESSION LOOP (execute-loop.yml); this is the safety net that still runs stops + new signals if the loop's single trigger was dropped.
     - cron: '1,6 10 * * 1-5'            # DEDICATED post-close SQUARE-OFF (15:31 & 15:36 IST) — guarantees Daily-Income is flat right after 15:30 even if a cron run is dropped
     - cron: '7,37 10-16 * * 1-5'        # every 30 min after-market (≈16:07–22:07 IST)
     - cron: '2 12 * * 1-5'              # post-market daily close + weekly + self-improve (~17:32 IST)
