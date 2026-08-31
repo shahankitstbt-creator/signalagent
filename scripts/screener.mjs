@@ -1226,17 +1226,24 @@ function casForecast(live, actuals, todayISO, expiries) {
     BANKNIFTY: { spot: live?.BANKNIFTY?.spot ?? last('BANKNIFTY'), mp: live?.BANKNIFTY?.maxPain, exp0: live?.BANKNIFTY?.expectedClose, band0: live?.BANKNIFTY?.band, conf0: live?.BANKNIFTY?.confidence, dir: live?.BANKNIFTY?.footprintScore || 0, bp: 0.005 },
     SENSEX: { spot: live?.SENSEX?.spot ?? last('SENSEX'), mp: live?.SENSEX?.maxPain, exp0: live?.SENSEX?.expectedClose, band0: live?.SENSEX?.band, conf0: live?.SENSEX?.confidence, dir: (live?.SENSEX?.footprintScore ?? live?.NIFTY?.footprintScore) || 0, bp: 0.003 },
   }
+  const vol = { NIFTY: 0.008, BANKNIFTY: 0.010, SENSEX: 0.008 }   // ~daily vol → the cone is spot × vol × √tradingDays
+  const expSeen = {}                                              // only the NEXT ~2 expiries carry a real pin; beyond that today's OI says nothing
   const out = []; let dayN = 0
   for (let d = casNextBiz(todayISO); d <= '2026-12-31' && dayN < 130; d = casNextBiz(d)) {
     dayN++; const isExp = expSet.has(d); const row = { date: d, dayN, isExpiry: isExp }
     for (const idx of ['NIFTY', 'BANKNIFTY', 'SENSEX']) {
       const s = seed[idx]; if (!s.spot) continue
-      const drift = Math.max(-0.06, Math.min(0.06, s.dir * 0.0006 * dayN))              // gentle tilt, capped ±6%
+      const nExp = isExp ? (expSeen[idx] = (expSeen[idx] || 0) + 1) : (expSeen[idx] || 0)
       let exp, band, conf, kind
-      if (dayN === 1 && s.exp0) { exp = s.exp0; band = s.band0 || Math.round(s.spot * s.bp); conf = s.conf0 || 55; kind = 'live footprint' }
-      else if (isExp && s.mp) { exp = Math.round(s.mp * (1 + drift * 0.3)); band = Math.round(s.spot * 0.004); conf = 58; kind = 'expiry pin' }
-      else { exp = Math.round(s.spot * (1 + drift)); band = Math.round(s.spot * (0.004 + 0.0006 * Math.sqrt(dayN))); conf = Math.max(35, Math.round(52 - dayN * 0.3)); kind = 'drift · low-conf' }
-      row[idx] = { exp, low: exp - band, high: exp + band, band, conf, kind }
+      if (dayN === 1 && s.exp0) {                                                       // TODAY — the live footprint (real edge, tight)
+        exp = s.exp0; band = s.band0 || Math.round(s.spot * s.bp); conf = s.conf0 || 55; kind = 'live footprint'
+      } else if (isExp && s.mp && nExp <= 2) {                                          // next 1–2 expiries — max-pain pin (real, firms near the date)
+        exp = s.mp; band = Math.round(s.spot * 0.006); conf = 52; kind = 'expiry pin'
+      } else {                                                                          // everything else — HONEST widening uncertainty cone (no fake exact number)
+        exp = Math.round(s.spot); band = Math.round(s.spot * (vol[idx] || 0.008) * Math.sqrt(dayN))   // random-walk centre = spot; ± grows with √time
+        conf = Math.max(18, Math.round(48 - dayN * 0.6)); kind = 'uncertainty cone'
+      }
+      row[idx] = { exp, low: exp - band, high: exp + band, band, bandPct: +(band / s.spot * 100).toFixed(1), conf, kind }
     }
     out.push(row)
   }
