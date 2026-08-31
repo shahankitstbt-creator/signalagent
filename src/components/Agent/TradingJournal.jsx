@@ -281,6 +281,9 @@ function KindTag({ s }) {
 function OpenTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
+  const groups = groupByDate(rows, 'entryDate')
+  const [collapsed, setCollapsed] = useState(() => new Set(groups.slice(1).map(g => g[0])))   // newest date open, rest collapsed
+  const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No open paper positions yet — they open as new high-conviction signals fire." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
@@ -292,12 +295,14 @@ function OpenTable({ rows: raw }) {
         <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Conviction" k="conv" s={s} cls={R} /><th className={L}>Setup</th>
       </tr></thead>
       <tbody>
-        {groupByDate(rows, 'entryDate').map(([date, drows]) => (
+        {groups.map(([date, drows]) => {
+          const shut = collapsed.has(date)
+          return (
           <Fragment key={date}>
-            <tr><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
-              📅 {jDate(date)} <span className="text-txt-sec font-semibold text-[11px]">· {drows.length} open position{drows.length > 1 ? 's' : ''}</span>
+            <tr onClick={() => toggle(date)} className="cursor-pointer select-none hover:brightness-125"><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
+              <span className="inline-block w-3 text-txt-sec">{shut ? '▸' : '▾'}</span> 📅 {jDate(date)} <span className="text-txt-sec font-semibold text-[11px]">· {drows.length} open position{drows.length > 1 ? 's' : ''}</span>
             </td></tr>
-        {drows.map((s, i) => (
+        {!shut && drows.map((s, i) => (
           <tr key={s.id + i} className="border-b border-border hover:bg-bg-card cursor-help" title={tradeTitle(s, entryPx(s))}
             style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 34%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
@@ -320,7 +325,8 @@ function OpenTable({ rows: raw }) {
           </tr>
         ))}
           </Fragment>
-        ))}
+          )
+        })}
       </tbody>
     </table>
   )
@@ -329,6 +335,9 @@ function OpenTable({ rows: raw }) {
 function ClosedTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
+  const groups = groupByDate(rows, 'exitDate')
+  const [collapsed, setCollapsed] = useState(() => new Set(groups.slice(1).map(g => g[0])))   // newest date open, rest collapsed
+  const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No closed trades yet — outcomes journal here as targets/stops are hit." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
   return (
@@ -340,15 +349,16 @@ function ClosedTable({ rows: raw }) {
         <th className={L}>Target / on time</th><th className={L}>Notes</th>
       </tr></thead>
       <tbody>
-        {groupByDate(rows, 'exitDate').map(([date, drows]) => {
+        {groups.map(([date, drows]) => {
           const dnet = drows.reduce((a, r) => a + (r.realizedPnl || 0), 0)
           const w = drows.filter(r => r.result === 'WIN').length, l = drows.filter(r => r.result === 'LOSS').length
+          const shut = collapsed.has(date)
           return (
           <Fragment key={date}>
-            <tr><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
-              📅 {jDate(date)} <span className="text-txt-sec font-semibold text-[11px]">· {drows.length} closed · {w}W/{l}L · net </span><span className={`font-bold ${pctCls(dnet)}`}>{inr(dnet)}</span>
+            <tr onClick={() => toggle(date)} className="cursor-pointer select-none hover:brightness-125"><td colSpan={12} className="px-3 py-2.5 text-[13px] font-extrabold bg-bg-panel border-y border-accent sticky top-[26px]" style={{ color: 'var(--color-accent)' }}>
+              <span className="inline-block w-3 text-txt-sec">{shut ? '▸' : '▾'}</span> 📅 {jDate(date)} <span className="text-txt-sec font-semibold text-[11px]">· {drows.length} closed · {w}W/{l}L · net </span><span className={`font-bold ${pctCls(dnet)}`}>{inr(dnet)}</span>
             </td></tr>
-        {drows.map((s, i) => (
+        {!shut && drows.map((s, i) => (
           <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top cursor-help" title={tradeTitle(s, entryPx(s))}
             style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 30%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
