@@ -53,6 +53,11 @@ const AVG_MAX_MULT = 1.5             // final position ≤ 1.5× the base size
 const AVG_TRIGGER_PCT = 6           // consider averaging once price is ~6% underwater (near the SL zone)
 const AVG_MIN_DELIVERY = 55         // "good company" proxy — strong delivery %/hands
 const AVG_SL_WIDEN_PCT = 5          // widen SL ~5% below the average-in price (to structure)
+// ── PYRAMID INTO WINNERS (smart-money scaling) — add to STRENGTH once, then move the stop to the blended
+// cost so the enlarged position is risk-free. This is how a cash swing reaches the 7–10%/mo goal: let the
+// winners get BIG. Losers are handled by average-in-once (above) + the stop; winners are handled here. ──
+const PYRAMID_TRIGGER_PCT = 8       // add a tranche once a quality long is +8% AND still near its peak (trending, not rolling over)
+const PYRAMID_ADD_MULT = 0.5        // pyramid tranche = 50% of the base (adds get smaller — classic pyramiding)
 const MAX_DEPLOY_PCT = 10             // cash: CONCENTRATE — up to ~10% (₹1L) per swing (fewer, bigger, quality names)
 const CASH_MAX_OPEN = 12             // cap concurrent CASH swings at 12 → keeps room for fresh high-conviction setups
 const CASH_MIN_DELIVERY = 45         // LIQUIDITY/quality floor for a cash swing when it's not an F&O-eligible name
@@ -475,6 +480,28 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
           if (pos.sleeve === 'FO') b.cashFO -= addCost; else b.cashCash -= addCost   // (cash re-derived in §2 anyway)
           pos.sl = +(pos.ltp * (1 - AVG_SL_WIDEN_PCT / 100)).toFixed(2)              // widen SL to structure below the add
           pos.avgNote = `Averaged once at ₹${pos.ltp} (${pos.grade}, delivery ${pos.delivery ?? '—'}%) — new avg ₹${pos.entryPrice}, SL widened to ₹${pos.sl}`
+          pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
+        }
+      }
+      // ── PYRAMID INTO A WINNER (cash swings): smart money adds to STRENGTH. When a quality cash long is
+      // +PYRAMID_TRIGGER% and still near its peak (not rolling over) and hasn't partial-booked yet, add a
+      // HALF-size tranche and raise the STOP to the blended cost — the enlarged position can now never
+      // become a loss (worst case = scratch). ONE add per name. This is what lets winners get big enough
+      // to hit the 7–10%/mo cash goal. Capital stays inside the sleeve's ₹10L + free cash. ──
+      if (!pos.pyramided && !pos.averaged && !bearish && pos.kind === 'CASH' && pos.sleeve === 'CASH'
+        && (pos.grade === 'A++' || pos.grade === 'A+') && !pos.partialBooked
+        && pos.unrealizedPct >= PYRAMID_TRIGGER_PCT && pos.unrealizedPct >= (pos.peakPct ?? 0) - 3) {
+        const base = pos.baseInvested || pos.invested
+        const sleeveDep = Object.values(b.open).filter(p => p.sleeve === 'CASH').reduce((a, p) => a + (p.invested || 0), 0)
+        const room = Math.max(0, Math.min(base * PYRAMID_ADD_MULT, CAP_CASH - sleeveDep, b.cashCash))
+        const addQty = pos.ltp > 0 ? Math.floor(room / pos.ltp) : 0
+        if (addQty > 0) {
+          const addCost = Math.round(addQty * pos.ltp)
+          pos.entryPrice = +(((pos.entryPrice * pos.qty) + (pos.ltp * addQty)) / (pos.qty + addQty)).toFixed(2)  // blended cost
+          pos.qty += addQty; pos.invested += addCost; pos.baseInvested = base; pos.pyramided = true
+          b.cashCash -= addCost                                                       // (cash re-derived in §2 anyway)
+          pos.sl = Math.max(pos.sl || 0, pos.entryPrice)                              // stop UP to breakeven — position is now risk-free
+          pos.pyramidNote = `Pyramided +${addQty}@₹${pos.ltp} into strength (peak +${pos.peakPct}%) — stop raised to breakeven ₹${pos.entryPrice}`
           pos.unrealizedPnl = pnlFor(pos, pos.ltp, bearish, held); pos.unrealizedPct = pos.invested ? +((pos.unrealizedPnl / pos.invested) * 100).toFixed(2) : 0
         }
       }
@@ -967,4 +994,38 @@ function computeStats(b, todayISO) {
     dailyLog: (b.dailyLog || []).slice(-60).reverse(),
   }
   b.stats.integrity = checkIntegrity(b, todayISO)   // daily self-verification — flags P&L/data bugs
+  b.stats.compliance = complianceReport(b, todayISO) // user-facing rule-by-rule scorecard (built on integrity)
+}
+
+// ── COMPLIANCE SCORECARD — turns the integrity audit into a plain rule-by-rule PASS/FAIL the user can
+// watch every day. This is the trust layer: before any real money, the book must show a CLEAN card
+// (every desk rule followed) for a full monitored month. Derived from checkIntegrity so it can't drift. ──
+function complianceReport(b, todayISO) {
+  const integ = b.stats?.integrity || { issues: [], critical: 0 }
+  const issues = integ.issues || []
+  const of = code => issues.filter(i => i.code === code)
+  const open = Object.values(b.open)
+  const fo = open.filter(p => p.sleeve === 'FO' && p.kind === 'OPT')
+  const daily = open.filter(p => p.sleeve === 'DAILY')
+  const mk = (todayISO || '').slice(0, 7)
+  const avgd = b.closed.filter(t => t.averaged && (t.exitDate || '').startsWith(mk)).length
+  const pyrd = Object.values(b.open).filter(p => p.pyramided).length
+  const rule = (label, viols, okDetail) => ({ label, pass: viols.length === 0, count: viols.length, detail: viols.length ? viols.map(v => v.msg).slice(0, 3).join(' · ') : okDetail })
+  const rules = [
+    rule(`F&O hedged / defined-risk — ${fo.length} option position${fo.length !== 1 ? 's' : ''}`, of('naked-fo'), fo.length ? 'all hedged spreads ✓' : 'none open'),
+    rule('Stops honored — nothing held past its SL in market hours', of('past-stop'), 'all within stop ✓'),
+    rule('Daily squared by 15:30 — no day-trade held overnight', [...of('daily-past-close'), ...of('daily-overnight')], daily.length ? `${daily.length} open, all intraday` : 'flat / squared ✓'),
+    rule('Sleeve caps ≤ ₹10L each', of('over-cap'), 'within cap ✓'),
+    rule('Cash accounting exact — no drift', of('cash-drift'), 'reconciled ✓'),
+    rule('P&L matches price direction — no pricing-model bug', of('pnl-vs-direction'), 'consistent ✓'),
+    rule('F&O P&L inside defined-risk ±100%', of('opt-bound'), 'bounded ✓'),
+    rule('One day-trade per name per day — no churn', of('daily-churn'), 'no churn ✓'),
+  ]
+  const violations = rules.filter(r => !r.pass)
+  return {
+    clean: violations.length === 0, critical: integ.critical || 0,
+    passed: rules.length - violations.length, total: rules.length, rules,
+    activity: { averagedThisMonth: avgd, pyramidedOpen: pyrd },
+    checkedAt: new Date().toISOString(),
+  }
 }

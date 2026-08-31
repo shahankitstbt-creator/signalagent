@@ -184,6 +184,34 @@ export default function TradingJournal() {
             </div>
           )}
 
+          {/* COMPLIANCE SCORECARD — the trust layer: proves every desk rule was followed this run.
+              Must stay CLEAN for a full monitored month before any real-money step. */}
+          {st.compliance && (
+            <details className="group shrink-0 px-3 sm:px-5 py-2 border-b border-border mono text-[10px]" open={!st.compliance.clean}>
+              <summary className="cursor-pointer select-none list-none flex items-center gap-2 flex-wrap [&::-webkit-details-marker]:hidden">
+                <span className="inline-block transition-transform group-open:rotate-90 text-txt-muted">▸</span>
+                <span className="font-bold" style={{ color: st.compliance.clean ? 'var(--color-green)' : 'var(--color-red)' }}>
+                  {st.compliance.clean ? '🛡️ Rule compliance: ALL CLEAR' : `⚠️ Rule compliance: ${st.compliance.total - st.compliance.passed} VIOLATION(S)`}
+                </span>
+                <span className="px-2 py-0.5 rounded-full" style={{ background: st.compliance.clean ? 'color-mix(in srgb,var(--color-green) 14%,transparent)' : 'color-mix(in srgb,var(--color-red) 14%,transparent)', color: st.compliance.clean ? 'var(--color-green)' : 'var(--color-red)', fontWeight: 700 }}>
+                  {st.compliance.passed}/{st.compliance.total} rules
+                </span>
+                {st.compliance.activity && (
+                  <span className="text-txt-muted">avg-ins this month: {st.compliance.activity.averagedThisMonth} · pyramided open: {st.compliance.activity.pyramidedOpen}</span>
+                )}
+              </summary>
+              <div className="flex flex-col gap-1 mt-1.5">
+                {st.compliance.rules.map((r, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="shrink-0" style={{ color: r.pass ? 'var(--color-green)' : 'var(--color-red)' }}>{r.pass ? '✓' : '✕'}</span>
+                    <span className="shrink-0 text-txt-sec w-[300px]">{r.label}</span>
+                    <span className={r.pass ? 'text-txt-muted' : ''} style={r.pass ? {} : { color: 'var(--color-red)' }}>{r.detail}</span>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+
           {/* tabs */}
           <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
             {[['open', `Open (${open.length})`], ['closed', `Closed (${closed.length})`]].map(([k, lbl]) => (

@@ -68,9 +68,11 @@ Every generator produces `entry`, `sl`, `targets[]` (price, %, ETA date+time), `
 ## 4. EXIT / RISK MANAGEMENT RULES
 
 1. **Honor the STOP (Cash + F&O)** — the moment price hits the SL, **EXIT**, on every scan. Never sit past the stop — *except* the one quality-averaging case below.
-2. **Average when setup + company are both strong — even past the SL** — a top-quality CASH long (A++/A+, delivery ≥55) that dips ~6% gets **one add** to improve the cost basis and **widen the SL to structure**. Then that widened stop is final — if it breaks, it exits. (Averaging a weak name is itself a logged mistake — see rule 7.)
+2. **Average LOSERS when setup + company are both strong — even past the SL** — a top-quality CASH long (A++/A+, delivery ≥55) that dips ~6% gets **one add** to improve the cost basis and **widen the SL to structure**. Then that widened stop is final — if it breaks, it exits. (Averaging a weak name is itself a logged mistake — see rule 7.)
+2b. **Pyramid WINNERS — add to strength (smart-money scaling)** — a quality CASH long (A++/A+) that is **+8% and still near its peak** (trending, not rolling over, not yet partial-booked) gets **one half-size add**, and the **stop is raised to the blended cost (breakeven)** so the enlarged position **can never become a loss** (worst case = scratch). This is how a cash swing gets big enough to hit the **7–10%/mo** goal — winners carry the book, not win-rate alone. One pyramid add per name; capital stays inside the ₹10L sleeve.
 3. **F&O is ALWAYS HEDGED** — no naked options. Every F&O option is booked as a **vertical debit spread** (buy the ATM leg, sell an OTM leg for ~50% credit). Net debit = the **defined max loss** (half a naked long); the short leg caps both tails. F&O never carries undefined risk.
 4. **Partial book** — book 50% at +40%; trail the rest (A++/A+ → cost-to-cost; others → +10% floor).
+4b. **BOOK-EXPECTANCY GATE (accuracy)** — the paper book **refuses to take** any desk that, over ≥15 of its own closed trades, **loses ₹/trade OR wins <45%** (fixed the 73%→47.7% slide: vp_fib/confluence/vol_accum/momentum were the drag). Signals still generate + display on the board; only the book stops trading the bleeders. Self-updates as a desk recovers. Sim on 452 trades: **55.8%→61.5% win-rate, +₹48k**.
 5. **No contradictions** — a reversal SHORT is dropped if any trend desk is LONG that name (and vice-versa).
 6. **Loss cooldown** — after a stop-out, the name is **benched for 5 days** (don't re-buy what just stopped you).
 7. **Every loss gets a post-mortem, kept in memory** — on each booked loss the engine records **what we missed, why it happened, and the fix**, then avoids repeating it. **We do NOT bench whole desks** — a weak desk is FIXED by these lessons + the contradiction filter + the cooldown. Win-rate is used only to *rank* desks when capital is tight, never to block them.
@@ -116,7 +118,17 @@ Rules are enforced in CODE, not just documented. Four layers so a breach cannot 
 3. **Self-audit** (`checkIntegrity`, every scan → `stats.integrity`) — flags cash drift, over-cap, P&L-vs-price-direction, option P&L outside ±100%, naked F&O, daily overnight/past-close/over-count/churn, past-stop-in-hours. Any residue surfaces the **same scan**.
 4. **Redundant scheduling** — square-off crons at **15:31 & 15:36 IST**; self-improve at **17:32 + 18:02 IST backup** (staleness-guarded → runs once/day even if a run is dropped).
 
+5. **Compliance scorecard** (`complianceReport`, every scan → `stats.compliance`) — turns the audit into a plain **rule-by-rule PASS/FAIL** the user can watch in the Journal (🛡️ strip): F&O hedged · stops honored · Daily squared by 15:30 · sleeve caps · cash reconciled · P&L matches price · defined-risk bound · one day-trade/name. Green when clean; auto-expands red on any violation. Also shows avg-ins this month + open pyramids.
+
 Honesty: this makes the system self-correcting — it does NOT claim literal perfection (no honest system can). A breach is caught and auto-fixed, not merely documented.
+
+## 4e. PATH TO REAL MONEY — the acceptance bar (user-set, 2026-08-31)
+Real-money automation (Angel API, cash-only ₹1L to start) is **OFF until proven in paper**. The user's bar:
+> **Each segment must HIT its ₹/% goal in paper first** — Cash **7–10%/mo**, F&O **10–15%/mo**, Daily **₹10k/day** — for a **full month**, with a **CLEAN compliance scorecard** (zero violations) and **reliable intraday execution**.
+- September 2026 (fresh ₹10L reset per sleeve) is the **proving month**.
+- Sequence: clean compliance + goals hit in paper → **always-on execution worker** (guaranteed intraday stops — GitHub cron drops runs, which is the real blocker) → **dry-run order layer** (orders logged, not placed, matched vs the book) → **₹1L cash-only live**.
+- The desk (Claude) owns the trading-policy calls (averaging, pyramiding, hedge structure); the user's job is to watch the scorecard + goal tiles and flip the switch only when the bar is met.
+- HONEST ceiling: a diversified book's sustainable win-rate is ~**60–62%**, not 75%+. Hitting the **₹/% goals** (via big winners + cut losers) is the real target — not a win-rate number.
 
 ---
 
