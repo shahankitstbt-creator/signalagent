@@ -127,6 +127,10 @@ const ASSETS=[
   ['Apple','AAPL'],['Tesla','TSLA'],['Nvidia','NVDA'],
 ];
 let SYM='GC=F', TFSEL='15m';
+// friendly-name → Yahoo symbol, so typing "nifty" / "banknifty" / "gold" just works
+const ALIAS={NIFTY:'^NSEI','NIFTY50':'^NSEI','NIFTY 50':'^NSEI',BANKNIFTY:'^NSEBANK','BANK NIFTY':'^NSEBANK',NIFTYBANK:'^NSEBANK',SENSEX:'^BSESN',MIDCPNIFTY:'^NSEMDCP50',FINNIFTY:'NIFTY_FIN_SERVICE.NS',GOLD:'GC=F',SILVER:'SI=F',CRUDE:'CL=F',CRUDEOIL:'CL=F',NATURALGAS:'NG=F',NATGAS:'NG=F',COPPER:'HG=F',BTC:'BTC-USD',ETH:'ETH-USD',BITCOIN:'BTC-USD'};
+const resolveSym=x=>{const u=String(x||'').trim().toUpperCase();return ALIAS[u]||String(x||'').trim();};
+const clearCanvas=id=>{const cv=document.getElementById(id);if(cv)cv.getContext('2d').clearRect(0,0,cv.width,cv.height);};
 const fmt=n=>n==null?'—':(+n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const ema=(a,n)=>{const k=2/(n+1);let e=a[0],o=[e];for(let i=1;i<a.length;i++){e=a[i]*k+e*(1-k);o.push(e);}return o;};
 
@@ -265,7 +269,7 @@ async function run(){
     $('t1').textContent=sig.target==null?'—':fmt(sig.target);
     $('t2').textContent=sig.rr==null?'—':('1 : '+sig.rr.toFixed(1));
     $('cntline').textContent=sig.cnt?`Vertical count: ${sig.cnt.N} boxes × 3 × box ${fmt(sig.box)} = target ${fmt(sig.target)} (from base ${fmt(sig.cnt.base)})`:'';
-  }catch(e){ $('dataerr').innerHTML='<span class="err">⚠ '+e.message+' — try another symbol (Yahoo format: GC=F, ^NSEI, BTC-USD, RELIANCE.NS, AAPL)</span>'; $('px').textContent='—'; }
+  }catch(e){ clearCanvas('chart'); clearCanvas('pnf'); $('px').textContent='—'; $('mtf')&&($('mtf').innerHTML=''); $('dataerr').innerHTML='<span class="err">⚠ no data for "'+SYM+'" — '+e.message+'. Try: NIFTY, BANKNIFTY, SENSEX, GC=F, BTC-USD, RELIANCE.NS, AAPL</span>'; }
   // multi-timeframe
   const mtfTFs=['15m','1h','1D','1W'];
   const rows=await Promise.all(mtfTFs.map(async tf=>{ try{ const {bars}=await fetchOHLC(SYM,tf); const s=calcSignal(bars); return {tf,up:s.up,v:s.v,why:s.why}; }catch(e){ return {tf,err:true}; } }));
@@ -283,7 +287,7 @@ async function run(){
 $('chips').innerHTML=['GC=F','SI=F','CL=F','^NSEI','^NSEBANK','BTC-USD','ETH-USD','RELIANCE.NS','AAPL'].map(s=>`<span class="chip" data-s="${s}">${(ASSETS.find(a=>a[1]===s)||[s])[0]}</span>`).join('');
 $('tfs').innerHTML=Object.keys(TF).map(t=>`<span class="tf" data-t="${t}">${t}</span>`).join('');
 $('symlist').innerHTML=ASSETS.map(a=>`<option value="${a[1]}">${a[0]}</option>`).join('');
-function pick(s){ if(!s)return; SYM=s.trim(); $('sym').value=SYM; document.querySelectorAll('#chips .chip').forEach(c=>c.classList.toggle('on',c.dataset.s===SYM)); run(); }
+function pick(s){ if(!s)return; SYM=resolveSym(s); $('sym').value=SYM; document.querySelectorAll('#chips .chip').forEach(c=>c.classList.toggle('on',c.dataset.s===SYM)); run(); }
 function pickTF(t){ TFSEL=t; document.querySelectorAll('#tfs .tf').forEach(el=>el.classList.toggle('on',el.dataset.t===t)); run(); }
 $('chips').onclick=e=>{const s=e.target.dataset.s;if(s)pick(s);};
 $('tfs').onclick=e=>{const t=e.target.dataset.t;if(t)pickTF(t);};

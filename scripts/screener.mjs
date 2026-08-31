@@ -1125,22 +1125,26 @@ function casExpiries() {
   return out
 }
 const casNextBiz = iso => { const d = new Date(iso + 'T00:00:00Z'); do { d.setUTCDate(d.getUTCDate() + 1) } while (d.getUTCDay() === 0 || d.getUTCDay() === 6); return d.toISOString().slice(0, 10) }
-// FORECAST: expected close PATH + widening range for NIFTY/BankNifty/Sensex, every trading day → 31 Dec.
-// Honest = a distribution, not a point: mild drift from the current FII/DII bias, band widens with √time.
+// FORECAST: the EXACT expected close (single number) for each trading day → 31 Dec, with a TIGHT
+// conviction band. Near-term (N≤2) is anchored to the max-pain PIN (the most accurate near-term
+// predictor); the band is a fixed conviction zone (~±0.3% Nifty/Sensex, ±0.5% BankNifty), NOT a √time
+// cone — so it stays tight. Drift from the FII/DII bias is gentle & capped ±5% over the whole horizon.
 function casForecast(live, actuals, todayISO) {
   const seed = {
-    NIFTY: { spot: live?.NIFTY?.spot, bias: live?.NIFTY?.footprintScore || 0, vol: 0.007 },
-    BANKNIFTY: { spot: live?.BANKNIFTY?.spot, bias: live?.BANKNIFTY?.footprintScore || 0, vol: 0.009 },
-    SENSEX: { spot: (actuals?.SENSEX || []).slice(-1)[0]?.close, bias: live?.NIFTY?.footprintScore || 0, vol: 0.007 },
+    NIFTY: { spot: live?.NIFTY?.spot, mp: live?.NIFTY?.maxPain, bias: live?.NIFTY?.footprintScore || 0, band: 0.003 },
+    BANKNIFTY: { spot: live?.BANKNIFTY?.spot, mp: live?.BANKNIFTY?.maxPain, bias: live?.BANKNIFTY?.footprintScore || 0, band: 0.005 },
+    SENSEX: { spot: (actuals?.SENSEX || []).slice(-1)[0]?.close, mp: null, bias: live?.NIFTY?.footprintScore || 0, band: 0.003 },
   }
   const out = []; let dayN = 0
   for (let d = casNextBiz(todayISO); d <= '2026-12-31' && dayN < 130; d = casNextBiz(d)) {
     dayN++; const row = { date: d, dayN }
     for (const idx of ['NIFTY', 'BANKNIFTY', 'SENSEX']) {
       const s = seed[idx]; if (!s.spot) continue
-      const drift = Math.max(-0.12, Math.min(0.12, s.bias * 0.0015 * dayN))
-      const exp = s.spot * (1 + drift), band = s.spot * s.vol * Math.sqrt(dayN)
-      row[idx] = { exp: Math.round(exp), low: Math.round(exp - band), high: Math.round(exp + band) }
+      let base = s.spot
+      if (s.mp && dayN <= 2) base = dayN === 1 ? s.mp * 0.7 + s.spot * 0.3 : s.mp * 0.4 + s.spot * 0.6   // near-term PIN anchor
+      const drift = Math.max(-0.05, Math.min(0.05, s.bias * 0.0008 * dayN))                              // gentle, capped ±5%
+      const exp = Math.round(base * (1 + drift)), band = Math.round(s.spot * s.band)                     // TIGHT fixed band, no √time cone
+      row[idx] = { exp, low: exp - band, high: exp + band, band }
     }
     out.push(row)
   }
