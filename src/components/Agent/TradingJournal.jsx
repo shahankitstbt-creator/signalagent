@@ -151,6 +151,15 @@ export default function TradingJournal() {
             <Tile label="Profit factor" value={st.profitFactor != null ? st.profitFactor : '—'} sub={st.onTimeWinRate != null ? `${st.onTimeWinRate}% on time` : 'building'} />
           </div>
 
+          {/* INSIGHTS & COMPLIANCE — one collapsible block, DEFAULT CLOSED so the trades get the vertical space */}
+          <details className="shrink-0 border-b border-border group/ins">
+            <summary className="px-3 sm:px-5 py-2 cursor-pointer select-none list-none flex items-center gap-2 flex-wrap mono text-[10px] [&::-webkit-details-marker]:hidden bg-bg-panel">
+              <span className="inline-block transition-transform group-open/ins:rotate-90 text-txt-muted">▸</span>
+              <span className="font-bold text-txt-sec">📊 Insights &amp; compliance</span>
+              <span className="text-txt-muted">— learned lessons · loss post-mortems · segment leaderboard · rule check</span>
+              {st.compliance && <span className="px-2 py-0.5 rounded-full font-bold" style={{ background: st.compliance.clean ? 'color-mix(in srgb,var(--color-green) 16%,transparent)' : 'color-mix(in srgb,var(--color-red) 16%,transparent)', color: st.compliance.clean ? 'var(--color-green)' : 'var(--color-red)' }}>{st.compliance.clean ? '🛡️ rules clean' : `⚠️ ${st.compliance.total - st.compliance.passed} rule issue`}</span>}
+            </summary>
+
           {/* what the engine learned from losses (avoids repeating) */}
           {st.lessons?.length > 0 && (
             <div className="shrink-0 px-3 sm:px-5 py-2 border-b border-border flex items-center gap-2 flex-wrap mono text-[10px]">
@@ -221,6 +230,7 @@ export default function TradingJournal() {
               </div>
             </details>
           )}
+          </details>
 
           {/* tabs */}
           <div className="shrink-0 flex gap-1 px-3 pt-2 bg-bg-panel border-b border-border">
@@ -282,7 +292,7 @@ function OpenTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
   const groups = groupByDate(rows, 'entryDate')
-  const [collapsed, setCollapsed] = useState(() => new Set(groups.slice(1).map(g => g[0])))   // newest date open, rest collapsed
+  const [collapsed, setCollapsed] = useState(() => new Set())   // all dates EXPANDED by default (see everything); click a date to collapse it
   const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No open paper positions yet — they open as new high-conviction signals fire." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
@@ -336,7 +346,7 @@ function ClosedTable({ rows: raw }) {
   const s = useColSort(raw)
   const rows = s.sorted
   const groups = groupByDate(rows, 'exitDate')
-  const [collapsed, setCollapsed] = useState(() => new Set(groups.slice(1).map(g => g[0])))   // newest date open, rest collapsed
+  const [collapsed, setCollapsed] = useState(() => new Set())   // all dates EXPANDED by default (see everything); click a date to collapse it
   const toggle = d => setCollapsed(p => { const n = new Set(p); n.has(d) ? n.delete(d) : n.add(d); return n })
   if (!rows.length) return <Empty msg="No closed trades yet — outcomes journal here as targets/stops are hit." />
   const L = 'px-3 py-2 font-semibold text-left', R = 'px-3 py-2 font-semibold text-right'
