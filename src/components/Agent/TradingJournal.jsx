@@ -1,5 +1,15 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, Fragment } from 'react'
 import { useViewStore } from '../../store/viewStore'
+
+// ── DATE-WISE grouping: split trade rows into date sections (newest first) so open & closed entries
+// read day-by-day across all 3 segments. Open groups by entry date; closed groups by exit date. ──
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const jDate = d => { if (!d || d === '—') return 'Undated'; const p = String(d).slice(0, 10).split('-'); return p.length === 3 ? `${p[2]} ${MON[+p[1] - 1]} ${p[0]}` : d }
+function groupByDate(rows, key) {
+  const m = new Map()
+  for (const r of rows) { const d = String(r[key] || '').slice(0, 10) || '—'; if (!m.has(d)) m.set(d, []); m.get(d).push(r) }
+  return [...m.entries()].sort((a, z) => String(z[0]).localeCompare(String(a[0])))   // newest date first
+}
 
 // conviction as a % out of 100 — use the stored confidence if present, else map the grade
 const gradeToPct = g => ({ 'A++': 96, 'A+': 88, 'A': 75, 'B': 60, 'C': 45 })[g] ?? null
@@ -282,7 +292,12 @@ function OpenTable({ rows: raw }) {
         <JTh label="T1" k="t1" s={s} cls={R} /><JTh label="Conviction" k="conv" s={s} cls={R} /><th className={L}>Setup</th>
       </tr></thead>
       <tbody>
-        {rows.map((s, i) => (
+        {groupByDate(rows, 'entryDate').map(([date, drows]) => (
+          <Fragment key={date}>
+            <tr><td colSpan={12} className="px-3 py-1.5 text-[10px] font-bold text-txt-sec bg-bg-card border-y border-border sticky top-[26px]">
+              📅 {jDate(date)} <span className="text-txt-muted font-normal">· {drows.length} open</span>
+            </td></tr>
+        {drows.map((s, i) => (
           <tr key={s.id + i} className="border-b border-border hover:bg-bg-card cursor-help" title={tradeTitle(s, entryPx(s))}
             style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 34%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
@@ -304,6 +319,8 @@ function OpenTable({ rows: raw }) {
             <td className="px-3 py-2 text-txt-sec max-w-[220px] truncate" title={s.reason}>{s.reason || s.gen}</td>
           </tr>
         ))}
+          </Fragment>
+        ))}
       </tbody>
     </table>
   )
@@ -323,7 +340,15 @@ function ClosedTable({ rows: raw }) {
         <th className={L}>Target / on time</th><th className={L}>Notes</th>
       </tr></thead>
       <tbody>
-        {rows.map((s, i) => (
+        {groupByDate(rows, 'exitDate').map(([date, drows]) => {
+          const dnet = drows.reduce((a, r) => a + (r.realizedPnl || 0), 0)
+          const w = drows.filter(r => r.result === 'WIN').length, l = drows.filter(r => r.result === 'LOSS').length
+          return (
+          <Fragment key={date}>
+            <tr><td colSpan={12} className="px-3 py-1.5 text-[10px] font-bold text-txt-sec bg-bg-card border-y border-border sticky top-[26px]">
+              📅 {jDate(date)} <span className="text-txt-muted font-normal">· {drows.length} closed · {w}W/{l}L · net </span><span className={pctCls(dnet)}>{inr(dnet)}</span>
+            </td></tr>
+        {drows.map((s, i) => (
           <tr key={s.id + i} className="border-b border-border hover:bg-bg-card align-top cursor-help" title={tradeTitle(s, entryPx(s))}
             style={hiConv(s) ? { background: 'color-mix(in srgb, #1E40AF 30%, transparent)', boxShadow: 'inset 3px 0 0 #2962FF' } : undefined}>
             <td className="px-3 py-2 font-bold">{s.symbol} <span className="text-txt-muted text-[9px]">ⓘ</span></td>
@@ -343,6 +368,9 @@ function ClosedTable({ rows: raw }) {
             <td className="px-3 py-2 text-txt-sec max-w-[280px]">{s.failureReason || s.expectationMatch}</td>
           </tr>
         ))}
+          </Fragment>
+          )
+        })}
       </tbody>
     </table>
   )
