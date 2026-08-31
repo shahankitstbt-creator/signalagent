@@ -412,8 +412,8 @@ function LogBook({ st, onClose }) {
           </div>
           <button onClick={onClose} className="ibtn ml-auto" title="Close">✕</button>
         </div>
-        {/* body */}
-        <div className="overflow-auto p-3 sm:p-4">
+        {/* body — clean stacked cards, no horizontal scroll */}
+        <div className="overflow-auto p-3 sm:p-4" style={{ background: 'var(--color-bg-panel)' }}>
           {rows.length === 0
             ? <div className="p-10 mono text-sm text-txt-muted text-center leading-relaxed">
                 No {tab} entries yet.<br />
@@ -421,41 +421,43 @@ function LogBook({ st, onClose }) {
                   ? 'The first daily entry is written after today’s session rolls into tomorrow (start capital → end capital → P&L, with that day’s trades).'
                   : 'The first monthly entry is written when the month rolls over — each sleeve then also restarts fresh at ₹10L.'}</span>
               </div>
-            : <div className="overflow-x-auto">
-                <table className="w-full mono text-[11px]" style={{ borderCollapse: 'collapse' }}>
-                  <thead>
-                    <tr className="text-txt-sec text-left" style={{ borderBottom: '1px solid var(--color-border)' }}>
-                      <th className="px-2 py-2">{tab === 'daily' ? 'Day' : 'Month'}</th>
-                      <th className="px-2 py-2 text-right">Start ₹</th>
-                      <th className="px-2 py-2 text-right">End ₹</th>
-                      <th className="px-2 py-2 text-right">P&L</th>
-                      <th className="px-2 py-2 text-right">Cash</th>
-                      <th className="px-2 py-2 text-right">F&O</th>
-                      <th className="px-2 py-2 text-right">Daily</th>
-                      <th className="px-2 py-2 text-right">Trades</th>
-                      <th className="px-2 py-2">Top mistakes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((r, i) => {
-                      const sv = r.sleeves || {}
-                      const tradeN = tab === 'daily' ? (r.trades?.length ?? 0) : (r.tradeCount ?? 0)
-                      return (
-                        <tr key={keyOf(r) + i} style={{ borderBottom: '1px solid var(--color-border)' }}>
-                          <td className="px-2 py-2 font-bold">{keyOf(r)}</td>
-                          <td className="px-2 py-2 text-right tabular-nums">{inr(r.startCapital)}</td>
-                          <td className="px-2 py-2 text-right tabular-nums">{inr(r.endCapital)}</td>
-                          <td className={`px-2 py-2 text-right tabular-nums font-bold ${pnlCls(r.pnl)}`}>{sgn(r.pnl)}{inr(r.pnl).replace('₹', '₹')}<span className="text-[9px] opacity-70"> ({sgn(r.pct)}{r.pct}%)</span></td>
-                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.CASH?.pnl)}`}>{sgn(sv.CASH?.pnl)}{inr(sv.CASH?.pnl)}</td>
-                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.FO?.pnl)}`}>{sgn(sv.FO?.pnl)}{inr(sv.FO?.pnl)}</td>
-                          <td className={`px-2 py-2 text-right tabular-nums ${pnlCls(sv.DAILY?.pnl)}`}>{sgn(sv.DAILY?.pnl)}{inr(sv.DAILY?.pnl)}</td>
-                          <td className="px-2 py-2 text-right tabular-nums text-txt-sec">{tradeN}</td>
-                          <td className="px-2 py-2 text-txt-sec max-w-[220px]">{(r.mistakes || []).length ? (r.mistakes || []).map(m => `${m.category} ×${m.count}`).join(' · ') : '—'}</td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
+            : <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                {rows.slice().reverse().map((r, i) => {
+                  const sv = r.sleeves || {}
+                  const tradeN = tab === 'daily' ? (r.trades?.length ?? 0) : (r.tradeCount ?? 0)
+                  const up = (r.pnl || 0) >= 0
+                  return (
+                    <div key={keyOf(r) + i} className="rounded-xl border p-3.5"
+                      style={{ background: 'var(--color-bg-card)', borderColor: up ? 'color-mix(in srgb, var(--color-green) 34%, var(--color-border))' : 'color-mix(in srgb, var(--color-red) 34%, var(--color-border))' }}>
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <div className="mono font-bold text-sm text-txt">{keyOf(r)}</div>
+                          <div className="mono text-[10px] text-txt-muted mt-0.5">{inr(r.startCapital)} → {inr(r.endCapital)} · {tradeN} trade{tradeN !== 1 ? 's' : ''}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className={`mono font-extrabold text-lg leading-none ${pnlCls(r.pnl)}`}>{sgn(r.pnl)}{inr(r.pnl)}</div>
+                          <div className={`mono text-[11px] font-bold ${pnlCls(r.pnl)}`}>{sgn(r.pct)}{r.pct}%</div>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 mt-3">
+                        {[['Cash', sv.CASH], ['F&O', sv.FO], ['Daily', sv.DAILY]].map(([lbl, s]) => (
+                          <div key={lbl} className="rounded-lg px-2.5 py-1.5 border border-border" style={{ background: 'var(--color-bg-base)' }}>
+                            <div className="text-[9px] uppercase tracking-wide text-txt-muted">{lbl}</div>
+                            <div className={`mono text-[12px] font-bold tabular-nums ${pnlCls(s?.pnl)}`}>{s?.pnl != null ? `${sgn(s.pnl)}${inr(s.pnl)}` : '—'}</div>
+                          </div>
+                        ))}
+                      </div>
+                      {(r.mistakes || []).length > 0 && (
+                        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                          <span className="text-[9px] uppercase tracking-wide text-txt-muted">Mistakes:</span>
+                          {(r.mistakes || []).slice(0, 4).map((m, j) => (
+                            <span key={j} className="mono text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'color-mix(in srgb, var(--color-red) 12%, transparent)', color: 'var(--color-red)' }}>{m.category} ×{m.count}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>}
         </div>
         <div className="shrink-0 px-4 py-2 border-t border-border mono text-[10px] text-txt-muted">
