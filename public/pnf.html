@@ -179,16 +179,30 @@ function drawPnF(pnf,sig){
   ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';
   show.forEach((c,ci)=>{const cx=padL+cw*(ci+0.5);
     for(let p=c.bottom;p<=c.top+1e-9;p+=box){const cy=yFor(p+box/2);ctx.fillStyle=c.dir==='X'?'#00C853':'#FF1744';ctx.fillText(c.dir,cx,cy);}});
-  // trade levels — Entry / SL / count Target
-  if(sig&&sig.v!=='WAIT'){
-    const lvl=(price,col,label)=>{ if(price==null)return; const y=yFor(price);
-      ctx.strokeStyle=col;ctx.setLineDash([5,4]);ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.setLineDash([]);
-      ctx.fillStyle=col;ctx.textAlign='right';ctx.font='9px JetBrains Mono, monospace';ctx.fillText(label,W-padR-2,y-5);ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';};
-    lvl(sig.target,'#00C853','🎯 count target '+fmt(sig.target));
-    lvl(sig.entry,'#22D3EE','▶ entry '+fmt(sig.entry));
-    lvl(sig.sl,'#FF1744','🛑 stop '+fmt(sig.sl));
+  const lvl=(price,col,label)=>{ if(price==null)return; const y=yFor(price);
+    ctx.strokeStyle=col;ctx.setLineDash([5,4]);ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=col;ctx.textAlign='right';ctx.font='9px JetBrains Mono, monospace';ctx.fillText(label,W-padR-2,y-5);ctx.textAlign='center';ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';};
+  // ── OPEN COUNT: the projected P&F objective, drawn as a ghost column of X/O boxes from the current
+  //    column toward the count target — the "counts open" the way a real P&F chart prints them ──
+  if(sig&&sig.target!=null&&sig.cnt){
+    const bull=sig.activeDir==='BUY', from=bull?sig.curTop:sig.curBottom, to=sig.target;
+    const gx=padL+cw*(show.length-1+0.5)+cw;              // one column to the right of the last real column
+    ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';ctx.textAlign='center';
+    ctx.globalAlpha=0.34;                                  // ghost = still "open" (not yet achieved)
+    if(bull){ for(let p=from+box;p<=to+1e-9;p+=box){const cy=yFor(p+box/2);ctx.fillStyle='#00C853';ctx.fillText('X',gx,cy);} }
+    else    { for(let p=from-box;p>=to-1e-9;p-=box){const cy=yFor(p+box/2);ctx.fillStyle='#FF1744';ctx.fillText('O',gx,cy);} }
+    ctx.globalAlpha=1;
+    // brace + count label on the projected column
+    const yT=yFor(to),yF=yFor(from);ctx.strokeStyle=bull?'#00C853':'#FF1744';ctx.lineWidth=1;ctx.setLineDash([2,3]);
+    ctx.beginPath();ctx.moveTo(gx+cw*0.5,yT);ctx.lineTo(gx+cw*0.5,yF);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=bull?'#00C853':'#FF1744';ctx.font='9px JetBrains Mono, monospace';ctx.textAlign='center';
+    ctx.fillText(sig.cnt.N+' box',gx,(yT+yF)/2-6);ctx.fillText('count',gx,(yT+yF)/2+6);
+    ctx.font=Math.min(15,cw*0.85)+'px JetBrains Mono, monospace';
   }
-  $('pnfmeta').textContent=`box ${fmt(box)} · 3-box reversal · ${cols.length} columns`+(sig&&sig.cnt?` · vertical count: ${sig.cnt.N} boxes ×3× box = target ${fmt(sig.target)}`:'');
+  // count target line ALWAYS visible (standing objective); Entry/SL only when a fresh signal is live
+  lvl(sig&&sig.target,'#00C853','🎯 count objective '+fmt(sig&&sig.target));
+  if(sig&&sig.v!=='WAIT'){ lvl(sig.entry,'#22D3EE','▶ entry '+fmt(sig.entry)); lvl(sig.sl,'#FF1744','🛑 stop '+fmt(sig.sl)); }
+  $('pnfmeta').textContent=`box ${fmt(box)} · 3-box reversal · ${cols.length} columns`+(sig&&sig.cnt?` · OPEN COUNT: ${sig.cnt.N} boxes ×3× ${fmt(box)} from ${fmt(sig.cnt.base)} → objective ${fmt(sig.target)}`:'');
   $('pnftag').textContent='box '+fmt(box);
 }
 function drawChart(bars){
@@ -228,24 +242,23 @@ function calcSignal(bars){
   let prevX=null,prevO=null,lastO=null,lastX=null;
   for(let i=cols.length-2;i>=0;i--){if(!prevX&&cols[i].dir==='X')prevX=cols[i];if(!prevO&&cols[i].dir==='O')prevO=cols[i];if(prevX&&prevO)break;}
   for(let i=cols.length-1;i>=0;i--){if(!lastO&&cols[i].dir==='O')lastO=cols[i];if(!lastX&&cols[i].dir==='X')lastX=cols[i];if(lastO&&lastX)break;}
-  let v='WAIT',why='No fresh P&F signal — inside the range / cloud flat. Wait for a breakout.',entry=null,sl=null,target=null,cnt=null;
-  if(last.dir==='X'&&prevX&&last.top>prevX.top){                 // DOUBLE-TOP BUY
-    if(up){v='BUY';
-      entry=prevX.top+box;                                       // buy signal = one box above prior X top
-      sl=(lastO?lastO.bottom:last.bottom)-box;                   // double-bottom sell = below the last O column
-      cnt=verticalCount(cols,box,'BUY'); target=cnt?cnt.target:null;
-      why=`Double-top BUY: X-column printed above the prior top ₹${fmt(prevX.top)} + green cloud. Enter on the breakout box.`;
-    } else why='Double-top breakout, but EMA cloud is red — skip (never buy against the trend).';
-  }else if(last.dir==='O'&&prevO&&last.bottom<prevO.bottom){     // DOUBLE-BOTTOM SELL
-    if(!up){v='SELL';
-      entry=prevO.bottom-box;
-      sl=(lastX?lastX.top:last.top)+box;                         // double-top buy = above the last X column
-      cnt=verticalCount(cols,box,'SELL'); target=cnt?cnt.target:null;
-      why=`Double-bottom SELL: O-column printed below the prior bottom ₹${fmt(prevO.bottom)} + red cloud. Enter on the breakdown box.`;
-    } else why='Double-bottom breakdown, but cloud is green — skip.';
+  // ALWAYS compute the active P&F vertical-count OBJECTIVE for the current column direction — it's a
+  // STANDING target (stays "open" until hit or the pattern reverses), shown whether or not a fresh signal fired.
+  const activeDir = last.dir==='X' ? 'BUY' : 'SELL';
+  const cnt = verticalCount(cols,box,activeDir);
+  const target = cnt ? cnt.target : null;
+  let v='WAIT',entry=null,sl=null,why=`Count objective OPEN: ${cnt?cnt.N+' boxes ×3× box → '+fmt(target):'—'}. Waiting for a fresh double-top/bottom breakout to enter.`;
+  if(last.dir==='X'&&prevX&&last.top>prevX.top){                 // DOUBLE-TOP BUY signal
+    if(up){v='BUY'; entry=prevX.top+box; sl=(lastO?lastO.bottom:last.bottom)-box;
+      why=`Double-top BUY above ₹${fmt(prevX.top)} + green cloud. Count objective ₹${fmt(target)} (${cnt?cnt.N:'?'} boxes).`;
+    } else why=`Double-top breakout but cloud RED — count ₹${fmt(target)} shown, no long (don’t fight trend).`;
+  }else if(last.dir==='O'&&prevO&&last.bottom<prevO.bottom){     // DOUBLE-BOTTOM SELL signal
+    if(!up){v='SELL'; entry=prevO.bottom-box; sl=(lastX?lastX.top:last.top)+box;
+      why=`Double-bottom SELL below ₹${fmt(prevO.bottom)} + red cloud. Count objective ₹${fmt(target)} (${cnt?cnt.N:'?'} boxes).`;
+    } else why=`Double-bottom breakdown but cloud GREEN — count ₹${fmt(target)} shown, no short.`;
   }
   const rr=(entry!=null&&sl!=null&&target!=null)?Math.abs((target-entry)/(entry-sl)):null;
-  return {v,why,entry,sl,target,cnt,rr,up,box,pnf};
+  return {v,why,entry,sl,target,cnt,rr,up,box,pnf,activeDir,curTop:last.top,curBottom:last.bottom};
 }
 function tagHTML(v){const c=v==='BUY'?'#00C853':v==='SELL'?'#FF1744':'#6B7F99';return `<span class="tag" style="background:${c}22;color:${c}">${v}</span>`;}
 

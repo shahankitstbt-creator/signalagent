@@ -576,10 +576,21 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   // ids are generator:symbol, so keeping closed ids here permanently barred re-entry).
   const seen = new Set(Object.keys(b.open))
   const openSyms = new Set(Object.values(b.open).filter(p => p.sleeve !== 'DAILY').map(p => p.symbol))    // one live cash/F&O position per underlying (daily sleeve tracked separately)
-  // WE DO NOT SUPPRESS DESKS. Every desk keeps trading — a weak desk is FIXED by learning from each
-  // loss (post-mortem below), by the reversal↔trend contradiction filter, and by the 5-day name
-  // cooldown — NOT by benching the whole desk. `genWinRates` is used only to RANK (best-proven desks
-  // sort first when capital is tight), never to block. Confidence still weights the sort.
+  // BOOK-MEASURED per-desk record — computed from THIS paper book's OWN closed trades (the exact
+  // win-rate the user watches). This is the truth the signal-level track record can't see: a desk can
+  // fire 55%-accurate signals yet LOSE money in the book when its losers dwarf its winners (vp_fib:
+  // 56% win but −₹34k). We use it to stop the book from taking chronically money-losing desks.
+  const bookStat = {}
+  for (const t of (b.closed || [])) {
+    const g = t.generator || t.gen || '?'
+    const st = bookStat[g] || (bookStat[g] = { w: 0, n: 0, pnl: 0 })
+    st.n++; if ((t.realizedPnl || 0) >= 0) st.w++; st.pnl += (t.realizedPnl || 0)
+  }
+  const bookEdge = g => { const s = bookStat[g]; return (s && s.n >= 15) ? 100 * s.w / s.n : null }   // book win-rate %
+  const bookExp  = g => { const s = bookStat[g]; return (s && s.n >= 15) ? s.pnl / s.n : null }        // avg ₹ / trade
+  // Signals STILL generate and display on the board — this only gates what the paper BOOK takes.
+  // The book learns from each loss (post-mortem below), the reversal↔trend filter, and the 5-day name
+  // cooldown. `genWinRates` (signal track record) RANKS best-proven desks first when capital is tight.
   const deskEdge = s => { const r = genWinRates[s.generator]; return (r && r.decided >= 20) ? r.winRate : 55 }
   const inCooldown = sym => { const d = b.lossCooldown?.[sym]; return d && daysBetween(d, todayISO) < LOSS_COOLDOWN_DAYS }   // don't re-enter a name that just stopped us out
   // ACCURACY PUSH toward the 75% aim — the book only TAKES odds-favoured trades (raises the *traded*
@@ -591,6 +602,13 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
   const oddsFavoured = s => {
     if (s.commodity || (s.optType && (s.symbol === 'NIFTY' || s.symbol === 'BANKNIFTY'))) return true
     const conv = s.confidence ?? s.confluenceScore ?? 0, rr = s.rr ?? 0
+    // HARD BLOCK on the book's own proven money-losers — this is what fixes the win-rate slide. Once a
+    // desk has ≥15 closed trades in OUR book, refuse more if it LOSES money on average OR wins <45%
+    // (below a coin-flip — it only drags the rate down). No conviction score overrides a proven bleeder.
+    const bE = bookEdge(s.generator), bX = bookExp(s.generator)
+    if (bX != null && bX < 0) return false          // desk loses ₹ per trade in our book → stop taking it
+    if (bE != null && bE < 45) return false          // desk wins <45% in our book → drags win-rate, skip
+    // otherwise: proven-accurate desk, OR high-conviction with reward beating risk.
     return deskEdge(s) >= 55 || (conv >= 72 && rr >= 1.8)
   }
   // TRADE-ANALYSIS LEARNING (2026-08-27): rank primarily by MEASURED desk win-rate (money_flow 81%, etc.),
