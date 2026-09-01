@@ -88,13 +88,60 @@ function analyzeTF(b, tfMin, addBiz) {
   const nearestFib = fibs.reduce((best, x) => Math.abs(x[0] - price) < Math.abs(best[0] - price) ? x : best, fibs[0])
   const higherLows = b.l.slice(-5)[4] > b.l.slice(-5)[0], lowerHighs = b.h.slice(-5)[4] < b.h.slice(-5)[0]
 
-  let s = 0; const why = []
-  // trend (EMA stack) is the primary driver; VWAP/POC/structure/RSI confirm or temper
-  if (price > e20 && e20 > e50) { s += 2; why.push('rising EMA stack') } else if (price < e20 && e20 < e50) { s -= 2; why.push('falling EMA stack') }
-  if (price > vw.vwap) { s += 1; why.push('above VWAP') } else { s -= 1; why.push('below VWAP') }
-  if (price > vp.poc) { s += 1; why.push(`above POC ${round(vp.poc)}`) } else { s -= 1; why.push(`below POC ${round(vp.poc)}`) }
-  if (higherLows && !lowerHighs) { s += 1; why.push('higher lows') } else if (lowerHighs && !higherLows) { s -= 1; why.push('lower highs') }
-  if (rsi > 72) { s -= 1; why.push(`RSI ${rsi.toFixed(0)} overbought`) } else if (rsi < 28) { s += 1; why.push(`RSI ${rsi.toFixed(0)} oversold`) } else if (rsi > 55) { s += 1 } else if (rsi < 45) { s -= 1 }
+  // ── TREND CONTEXT (where price is) — this alone made the old desk buy tops & sell bottoms ──
+  const h = b.h, l = b.l, o = b.o || c, v = b.v || [], last = n - 1
+  let trend = 0
+  const upStack = price > e20 && e20 > e50, dnStack = price < e20 && e20 < e50
+  if (upStack) trend += 2; else if (dnStack) trend -= 2
+  if (price > vw.vwap) trend += 1; else trend -= 1
+  if (price > vp.poc) trend += 1; else trend -= 1
+  if (higherLows && !lowerHighs) trend += 1; else if (lowerHighs && !higherLows) trend -= 1
+
+  // ── SMART-MONEY FOOTPRINT (what they're DOING) — accumulation vs distribution. Strong enough to
+  // OVERRIDE the trend at exhaustion, so the desk flags a top BEFORE the drop and a bottom BEFORE the
+  // bounce, instead of chasing. This is the Wyckoff read: markup → distribution → markdown → accumulation. ──
+  const rng = Math.max(h[last] - l[last], atr * 0.1)
+  const upWick = (h[last] - Math.max(o[last], c[last])) / rng          // rejection from above (sellers)
+  const dnWick = (Math.min(o[last], c[last]) - l[last]) / rng          // rejection from below (buyers)
+  const stretch = atr ? (price - e20) / atr : 0                        // how far above/below the mean (ATR units)
+  const sweptHigh = h[last] >= swingHi * 0.999 && c[last] < swingHi     // ran the highs (stop-hunt) then closed back under
+  const sweptLow = l[last] <= swingLo * 1.001 && c[last] > swingLo      // ran the lows then closed back above
+  const priorHH = Math.max(...c.slice(-11, -1)), priorRHH = Math.max(...rsiArr.slice(-11, -1))
+  const priorLL = Math.min(...c.slice(-11, -1)), priorRLL = Math.min(...rsiArr.slice(-11, -1))
+  const bearDiv = price >= priorHH && rsi < priorRHH && rsi > 58        // price higher high, momentum weaker → distribution
+  const bullDiv = price <= priorLL && rsi > priorRLL && rsi < 42        // price lower low, momentum stronger → accumulation
+  const volAvg = v.length ? v.slice(-20).reduce((a, x) => a + x, 0) / Math.min(20, v.length) : 0
+  const climaxUp = volAvg && v[last] > volAvg * 1.8 && c[last] < o[last] && stretch > 2   // heavy volume + red bar at highs
+  const climaxDn = volAvg && v[last] > volAvg * 1.8 && c[last] > o[last] && stretch < -2   // heavy volume + green bar at lows
+
+  let dist = 0, accu = 0; const sm = []
+  if (sweptHigh && upWick > 0.33) { dist += 3; sm.push('buy-side liquidity swept + rejection wick → smart money DISTRIBUTING') }
+  if (rsi > 75 && stretch > 4) { dist += 4; sm.push(`EXTREME overbought (RSI ${rsi.toFixed(0)}) & ${stretch.toFixed(1)}×ATR above mean — parabolic / late-stage distribution, chasing here is how you buy the top`) }
+  else if (rsi > 70 && stretch > 2.5) { dist += 2; sm.push(`overbought & ${stretch.toFixed(1)}×ATR above mean → exhaustion / distribution risk`) }
+  if (bearDiv) { dist += 2; sm.push(`bearish divergence (price HH, RSI ${rsi.toFixed(0)} lower) → buyers weakening`) }
+  if (climaxUp) { dist += 2; sm.push('climax volume + reversal bar at highs → selling into strength') }
+  if (sweptLow && dnWick > 0.33) { accu += 3; sm.push('sell-side liquidity swept + hammer → smart money ACCUMULATING') }
+  if (rsi < 25 && stretch < -4) { accu += 4; sm.push(`EXTREME oversold (RSI ${rsi.toFixed(0)}) & ${Math.abs(stretch).toFixed(1)}×ATR below mean — capitulation flush, shorting here is how you sell the bottom`) }
+  else if (rsi < 30 && stretch < -2.5) { accu += 2; sm.push(`oversold & ${Math.abs(stretch).toFixed(1)}×ATR below mean → accumulation`) }
+  if (bullDiv) { accu += 2; sm.push(`bullish divergence (price LL, RSI ${rsi.toFixed(0)} higher) → sellers exhausting`) }
+  if (climaxDn) { accu += 2; sm.push('climax volume + reversal bar at lows → buying the flush') }
+
+  // ── PHASE — the smart-money cycle stage ──
+  let phase
+  if (dist >= 3 && trend >= 0) phase = 'DISTRIBUTION'         // topping into strength — fade the trend
+  else if (accu >= 3 && trend <= 0) phase = 'ACCUMULATION'    // bottoming into weakness — fade the trend
+  else if (trend >= 2) phase = 'MARKUP'
+  else if (trend <= -2) phase = 'MARKDOWN'
+  else phase = 'RANGE'
+
+  const s = trend + accu - dist                               // smart-money overlay can flip the trend read
+  const why = []
+  if (phase === 'DISTRIBUTION') why.push('⚠️ DISTRIBUTION — smart money selling into the rally')
+  else if (phase === 'ACCUMULATION') why.push('✅ ACCUMULATION — smart money buying the dip')
+  else if (phase === 'MARKUP') why.push('markup — trend up, no distribution yet')
+  else if (phase === 'MARKDOWN') why.push('markdown — trend down, no accumulation yet')
+  why.push(...sm)
+  if (upStack) why.push('rising EMA stack'); else if (dnStack) why.push('falling EMA stack')
   if (Math.abs(nearestFib[0] - price) / price < 0.008) why.push(`at ${nearestFib[1]} Fib ${round(nearestFib[0])}`)
 
   const dir = s >= 2 ? 'LONG' : s <= -2 ? 'SHORT' : 'NEUTRAL'
@@ -112,7 +159,7 @@ function analyzeTF(b, tfMin, addBiz) {
   }) : null
   const rr = (dir !== 'NEUTRAL' && sl != null) ? round(Math.abs(targets[0] - entry) / Math.abs(entry - sl), 2) : null
   return {
-    dir, score: s, entry, sl, targets, etaDates, rr,
+    dir, phase, score: s, trend, dist, accu, entry, sl, targets, etaDates, rr,
     poc: round(vp.poc), vah: round(vp.vah), val: round(vp.val), vwap: round(vw.vwap),
     rsi: round(rsi, 0), fib: nearestFib[1], reason: why.slice(0, 4).join(' · '),
   }
@@ -129,5 +176,12 @@ export async function mtfDesk(symbol, ySymbol, opts = {}) {
   const longs = rows.filter(r => r.dir === 'LONG').length, shorts = rows.filter(r => r.dir === 'SHORT').length
   const aligned = net >= 4 ? 'LONG' : net <= -4 ? 'SHORT' : net >= 2 ? 'LEAN LONG' : net <= -2 ? 'LEAN SHORT' : 'MIXED'
   const spot = rows.length ? rows[rows.length - 1].entry : (opts.spot || null)
-  return { symbol, spot, aligned, net, longs, shorts, timeframes: rows }
+  // dominant smart-money phase across timeframes (what they're doing overall) — distribution/accumulation
+  // on the higher TFs is the tell; count them and surface the strongest.
+  const phaseCount = {}; for (const r of rows) if (r.phase) phaseCount[r.phase] = (phaseCount[r.phase] || 0) + 1
+  const distN = phaseCount.DISTRIBUTION || 0, accuN = phaseCount.ACCUMULATION || 0
+  const phase = distN >= 2 ? 'DISTRIBUTION' : accuN >= 2 ? 'ACCUMULATION'
+    : (phaseCount.MARKUP || 0) >= (phaseCount.MARKDOWN || 0) && (phaseCount.MARKUP || 0) > 0 ? 'MARKUP'
+    : (phaseCount.MARKDOWN || 0) > 0 ? 'MARKDOWN' : 'RANGE'
+  return { symbol, spot, aligned, net, longs, shorts, phase, phaseCount, timeframes: rows }
 }

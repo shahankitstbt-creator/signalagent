@@ -1404,9 +1404,10 @@ function DeskCard({ s, color, setView }) {
   const d = s.directional
   return (
     <div className="rounded-lg border border-border bg-bg-card p-3 elev" style={{ borderLeft: `3px solid ${dirColor(m.aligned || '')}` }}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <button onClick={chart} className="mono text-sm font-bold text-txt hover:text-accent">{s.symbol}</button>
         {s.kind && <span className="mono text-[9px] px-1.5 rounded" style={{ background: tint(color, 0.15), color }}>{s.kind}</span>}
+        {m.phase && (() => { const pc = { DISTRIBUTION: '#FF1744', MARKDOWN: '#F97316', ACCUMULATION: '#00C853', MARKUP: '#22C55E', RANGE: '#6B7F99' }[m.phase] || '#6B7F99'; const pl = { DISTRIBUTION: '⚠️ DISTRIBUTION', ACCUMULATION: '✅ ACCUMULATION', MARKUP: '↗ MARKUP', MARKDOWN: '↘ MARKDOWN', RANGE: '↔ RANGE' }[m.phase]; return <span className="mono text-[9px] px-2 py-0.5 rounded-full font-bold" style={{ background: pc + '22', color: pc }} title="Smart-money phase across timeframes (Wyckoff): what big money is doing — distribution = selling into strength, accumulation = buying weakness">{pl}</span> })()}
         <span className="mono text-[10px] px-2 py-0.5 rounded-full text-white font-bold ml-auto" style={{ background: dirColor(m.aligned || '') }}>{m.aligned || '—'} ({m.longs}L/{m.shorts}S)</span>
       </div>
       {s.spot != null && <div className="mono text-[10px] text-txt-muted mt-0.5">{s.name} · spot {s.spot}</div>}
