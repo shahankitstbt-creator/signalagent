@@ -217,7 +217,7 @@
       "invested": 6500,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T06:13:11.053Z",
-      "ltp": 82.3,
+      "ltp": 82.30000305175781,
       "footprint": null,
       "delivery": null,
       "rr": 0.9,
@@ -792,7 +792,7 @@
       "invested": 9200,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T08:40:10.646Z",
-      "ltp": 1351.9,
+      "ltp": 1351.9000244140625,
       "footprint": {
         "score": 20,
         "flags": [
@@ -998,6 +998,61 @@
       "reason": "Accumulation (vol 37/100): Up/down volume 4.87× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
       "unrealizedPnl": -562,
       "unrealizedPct": -0.57
+    },
+    "fno:BHARATFORG": {
+      "sleeve": "FO",
+      "id": "fno:BHARATFORG",
+      "symbol": "BHARATFORG",
+      "name": "Bharat Forge Ltd.",
+      "generator": "fno",
+      "gen": "fno",
+      "kind": "OPT",
+      "direction": "BULLISH",
+      "grade": "A",
+      "confidence": 71,
+      "optType": "CE",
+      "entryPremium": 19,
+      "optionPlay": "Buy BHARATFORG CE — multi-TF LONG",
+      "hedged": true,
+      "netDebit": 9,
+      "longPrem": 19,
+      "shortPrem": 10,
+      "hedgeNote": "Hedged CE debit spread — long ₹19 / short ₹10; net debit ₹9 = defined max loss",
+      "stockOption": false,
+      "commodity": false,
+      "qty": 1000,
+      "lots": 2,
+      "lotSize": 500,
+      "notional": 2055700,
+      "entryPrice": 2055.7,
+      "sl": 2043.34,
+      "targets": [
+        {
+          "price": 2072.17,
+          "pct": 0.8,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 2084.53,
+          "pct": 1.4,
+          "by": "2026-09-02"
+        },
+        {
+          "price": 2096.89,
+          "pct": 2,
+          "by": "2026-09-02"
+        }
+      ],
+      "invested": 9000,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T09:50:51.292Z",
+      "ltp": 2055.7,
+      "footprint": null,
+      "delivery": null,
+      "rr": null,
+      "reason": "Multi-timeframe LONG (4L/0S across 10 TFs)",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
     }
   },
   "closed": [
@@ -1341,12 +1396,12 @@
       "failureReason": "Hit stop-loss — exited per plan"
     }
   ],
-  "updatedAt": "2026-09-01T09:47:27.485Z",
+  "updatedAt": "2026-09-01T09:51:07.655Z",
   "equity": 2964397,
   "stats": {
     "equity": 2964397,
-    "cash": 2459217,
-    "investedOpen": 528225,
+    "cash": 2450217,
+    "investedOpen": 537225,
     "cashSleeve": {
       "capital": 1000000,
       "cash": 1000000,
@@ -1367,10 +1422,10 @@
     },
     "foSleeve": {
       "capital": 1000000,
-      "cash": 856402,
+      "cash": 847402,
       "equity": 967931,
       "pct": -3.21,
-      "open": 12,
+      "open": 13,
       "closedPnl": -10148,
       "goal": {
         "type": "monthly",
@@ -1422,7 +1477,7 @@
         "status": "flat"
       }
     },
-    "open": 12,
+    "open": 13,
     "closedCount": 3,
     "wins": 1,
     "losses": 2,
@@ -5237,7 +5292,7 @@
       "count": 0,
       "critical": 0,
       "issues": [],
-      "checkedAt": "2026-09-01T09:47:27.484Z"
+      "checkedAt": "2026-09-01T09:51:07.655Z"
     },
     "compliance": {
       "clean": true,
@@ -5246,7 +5301,7 @@
       "total": 8,
       "rules": [
         {
-          "label": "F&O hedged / defined-risk — 12 option positions",
+          "label": "F&O hedged / defined-risk — 13 option positions",
           "pass": true,
           "count": 0,
           "detail": "all hedged spreads ✓"
@@ -5298,13 +5353,13 @@
         "averagedThisMonth": 0,
         "pyramidedOpen": 0
       },
-      "checkedAt": "2026-09-01T09:47:27.485Z"
+      "checkedAt": "2026-09-01T09:51:07.655Z"
     }
   },
   "capitalCash": 1000000,
   "capitalFO": 1000000,
   "cashCash": 1000000,
-  "cashFO": 856402,
+  "cashFO": 847402,
   "capitalDaily": 1000000,
   "cashDaily": 602815,
   "dailyStartedAt": "2026-09-01",
