@@ -190,6 +190,13 @@ const STOCK_GENS = {
     const rvol = V.rvol ?? 1
     const chg = a.changePct ?? 0
     const fp = a._footprint
+    // EXHAUSTION GUARD (fix for buying blow-off tops): don't chase a bar that is EXTREMELY overbought AND
+    // already rejecting (big upper wick) — that's the top, not a continuation. Same lesson as the Desk.
+    const j = d.c.length - 1, o = d.o || d.c
+    const rng = Math.max(d.h[j] - d.l[j], 1e-9)
+    const upWick = (d.h[j] - Math.max(o[j], d.c[j])) / rng
+    const blowOff = a.rsi != null && a.rsi >= 80 && upWick >= 0.45
+    if (blowOff) return null
     const movingNow = chg >= 3 && rvol >= 1.5 && a.bullish
     const bigMove = chg >= 5 && rvol >= 1.8
     // CONFIRMED breakout (loss-analysis fix for the #1 loss = false breakouts): require the close to be
