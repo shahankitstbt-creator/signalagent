@@ -1,7 +1,7 @@
 {
   "live": {
     "NIFTY": {
-      "spot": 23979.55,
+      "spot": 23980.25,
       "maxPain": 24000,
       "callWall": 24100,
       "putWall": 23950,
@@ -12,7 +12,7 @@
       "expiry": "01SEP2026",
       "dExp": 0,
       "isExpiry": false,
-      "distPct": 0.09,
+      "distPct": 0.08,
       "casRegime": "VOLATILE",
       "expectedClose": 23716,
       "expectedMovePct": -1.1,
@@ -42,16 +42,16 @@
         },
         {
           "dir": "up",
-          "w": 0.22,
-          "text": "Max-pain pin 24000 (+0.09% vs spot) · pin strength 100/100"
+          "w": 0.2,
+          "text": "Max-pain pin 24000 (+0.08% vs spot) · pin strength 100/100"
         }
       ],
-      "mechanics": "Spot 23979.55 is BELOW the gamma-flip 24100 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 23980.25 is BELOW the gamma-flip 24100 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 23979.55 is BELOW the gamma-flip 24100 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
+        "Spot 23980.25 is BELOW the gamma-flip 24100 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
         "▼ Intraday OI flow: call writing (cap ↑) + put covering (support ↓) (ΔCE +51370930 · ΔPE -82001595)",
         "▼ NEG GAMMA (flip 24100) · dealer pressure 58/100 — AMPLIFIES the close",
-        "▲ Max-pain pin 24000 (+0.09% vs spot) · pin strength 100/100"
+        "▲ Max-pain pin 24000 (+0.08% vs spot) · pin strength 100/100"
       ],
       "magnets": [
         {
@@ -85,7 +85,7 @@
           "pe": 4736615
         }
       ],
-      "tilt": -0.58,
+      "tilt": -0.6,
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
       "bias": "down",
@@ -96,7 +96,7 @@
       "instBias": null
     },
     "BANKNIFTY": {
-      "spot": 57260.55,
+      "spot": 57257.65,
       "maxPain": 57500,
       "callWall": 57500,
       "putWall": 57500,
@@ -109,7 +109,7 @@
       "isExpiry": false,
       "distPct": 0.42,
       "casRegime": "VOLATILE",
-      "expectedClose": 57604,
+      "expectedClose": 57601,
       "expectedMovePct": 0.6,
       "band": 286,
       "magnitude": "normal",
@@ -141,9 +141,9 @@
           "text": "NEG GAMMA (flip 57300) · dealer pressure 13/100 — AMPLIFIES the close"
         }
       ],
-      "mechanics": "Spot 57260.55 is BELOW the gamma-flip 57300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 57257.65 is BELOW the gamma-flip 57300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 57260.55 is BELOW the gamma-flip 57300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+        "Spot 57257.65 is BELOW the gamma-flip 57300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 57500 (+0.42% vs spot) · pin strength 25/100",
         "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -1141290 · ΔPE -728490)",
         "▼ NEG GAMMA (flip 57300) · dealer pressure 13/100 — AMPLIFIES the close"
@@ -184,9 +184,9 @@
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
       "bias": "up",
-      "predictedClose": 57604,
+      "predictedClose": 57601,
       "footprintScore": 1.8,
-      "target": 57604,
+      "target": 57601,
       "dirWord": "BULLISH",
       "instBias": null
     }
@@ -341,7 +341,7 @@
       },
       {
         "date": "2026-09-01",
-        "close": 23979.6
+        "close": 23980
       }
     ],
     "BANKNIFTY": [
@@ -431,7 +431,7 @@
       },
       {
         "date": "2026-09-01",
-        "close": 57255.65
+        "close": 57257.45
       }
     ],
     "SENSEX": [
@@ -521,7 +521,7 @@
       },
       {
         "date": "2026-09-01",
-        "close": 76709.27
+        "close": 76708.01
       }
     ]
   },
@@ -903,18 +903,18 @@
         "kind": "live footprint"
       },
       "BANKNIFTY": {
-        "exp": 57604,
-        "low": 57318,
-        "high": 57890,
+        "exp": 57601,
+        "low": 57315,
+        "high": 57887,
         "band": 286,
         "bandPct": 0.5,
         "conf": 65,
         "kind": "live footprint"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 76095,
-        "high": 77323,
+        "exp": 76708,
+        "low": 76094,
+        "high": 77322,
         "band": 614,
         "bandPct": 0.8,
         "conf": 47,
@@ -944,9 +944,9 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75841,
-        "high": 77577,
+        "exp": 76708,
+        "low": 75840,
+        "high": 77576,
         "band": 868,
         "bandPct": 1.1,
         "conf": 47,
@@ -967,18 +967,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 56269,
-        "high": 58253,
+        "exp": 57258,
+        "low": 56266,
+        "high": 58250,
         "band": 992,
         "bandPct": 1.7,
         "conf": 46,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75646,
-        "high": 77772,
+        "exp": 76708,
+        "low": 75645,
+        "high": 77771,
         "band": 1063,
         "bandPct": 1.4,
         "conf": 46,
@@ -999,18 +999,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 56116,
-        "high": 58406,
+        "exp": 57258,
+        "low": 56113,
+        "high": 58403,
         "band": 1145,
         "bandPct": 2,
         "conf": 46,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75482,
-        "high": 77936,
+        "exp": 76708,
+        "low": 75481,
+        "high": 77935,
         "band": 1227,
         "bandPct": 1.6,
         "conf": 46,
@@ -1040,9 +1040,9 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75337,
-        "high": 78081,
+        "exp": 76708,
+        "low": 75336,
+        "high": 78080,
         "band": 1372,
         "bandPct": 1.8,
         "conf": 45,
@@ -1063,18 +1063,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55858,
-        "high": 58664,
+        "exp": 57258,
+        "low": 55855,
+        "high": 58661,
         "band": 1403,
         "bandPct": 2.5,
         "conf": 44,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75206,
-        "high": 78212,
+        "exp": 76708,
+        "low": 75205,
+        "high": 78211,
         "band": 1503,
         "bandPct": 2,
         "conf": 44,
@@ -1095,18 +1095,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55746,
-        "high": 58776,
+        "exp": 57258,
+        "low": 55743,
+        "high": 58773,
         "band": 1515,
         "bandPct": 2.6,
         "conf": 44,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 75085,
-        "high": 78333,
+        "exp": 76708,
+        "low": 75084,
+        "high": 78332,
         "band": 1624,
         "bandPct": 2.1,
         "conf": 44,
@@ -1127,18 +1127,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55641,
-        "high": 58881,
-        "band": 1620,
+        "exp": 57258,
+        "low": 55639,
+        "high": 58877,
+        "band": 1619,
         "bandPct": 2.8,
         "conf": 43,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74973,
-        "high": 78445,
+        "exp": 76708,
+        "low": 74972,
+        "high": 78444,
         "band": 1736,
         "bandPct": 2.3,
         "conf": 43,
@@ -1159,18 +1159,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55543,
-        "high": 58979,
+        "exp": 57258,
+        "low": 55540,
+        "high": 58976,
         "band": 1718,
         "bandPct": 3,
         "conf": 43,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74868,
-        "high": 78550,
+        "exp": 76708,
+        "low": 74867,
+        "high": 78549,
         "band": 1841,
         "bandPct": 2.4,
         "conf": 43,
@@ -1191,18 +1191,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55450,
-        "high": 59072,
+        "exp": 57258,
+        "low": 55447,
+        "high": 59069,
         "band": 1811,
         "bandPct": 3.2,
         "conf": 42,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74768,
-        "high": 78650,
+        "exp": 76708,
+        "low": 74767,
+        "high": 78649,
         "band": 1941,
         "bandPct": 2.5,
         "conf": 42,
@@ -1223,18 +1223,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55362,
-        "high": 59160,
+        "exp": 57258,
+        "low": 55359,
+        "high": 59157,
         "band": 1899,
         "bandPct": 3.3,
         "conf": 41,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74674,
-        "high": 78744,
+        "exp": 76708,
+        "low": 74673,
+        "high": 78743,
         "band": 2035,
         "bandPct": 2.7,
         "conf": 41,
@@ -1255,18 +1255,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55277,
-        "high": 59245,
-        "band": 1984,
+        "exp": 57258,
+        "low": 55275,
+        "high": 59241,
+        "band": 1983,
         "bandPct": 3.5,
         "conf": 41,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74583,
-        "high": 78835,
+        "exp": 76708,
+        "low": 74582,
+        "high": 78834,
         "band": 2126,
         "bandPct": 2.8,
         "conf": 41,
@@ -1287,18 +1287,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55196,
-        "high": 59326,
-        "band": 2065,
+        "exp": 57258,
+        "low": 55194,
+        "high": 59322,
+        "band": 2064,
         "bandPct": 3.6,
         "conf": 40,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74496,
-        "high": 78922,
+        "exp": 76708,
+        "low": 74495,
+        "high": 78921,
         "band": 2213,
         "bandPct": 2.9,
         "conf": 40,
@@ -1319,18 +1319,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55119,
-        "high": 59403,
+        "exp": 57258,
+        "low": 55116,
+        "high": 59400,
         "band": 2142,
         "bandPct": 3.7,
         "conf": 40,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74413,
-        "high": 79005,
+        "exp": 76708,
+        "low": 74412,
+        "high": 79004,
         "band": 2296,
         "bandPct": 3,
         "conf": 40,
@@ -1351,18 +1351,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 55043,
-        "high": 59479,
+        "exp": 57258,
+        "low": 55040,
+        "high": 59476,
         "band": 2218,
         "bandPct": 3.9,
         "conf": 39,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74332,
-        "high": 79086,
+        "exp": 76708,
+        "low": 74331,
+        "high": 79085,
         "band": 2377,
         "bandPct": 3.1,
         "conf": 39,
@@ -1383,18 +1383,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54971,
-        "high": 59551,
+        "exp": 57258,
+        "low": 54968,
+        "high": 59548,
         "band": 2290,
         "bandPct": 4,
         "conf": 38,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74254,
-        "high": 79164,
+        "exp": 76708,
+        "low": 74253,
+        "high": 79163,
         "band": 2455,
         "bandPct": 3.2,
         "conf": 38,
@@ -1415,18 +1415,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54900,
-        "high": 59622,
+        "exp": 57258,
+        "low": 54897,
+        "high": 59619,
         "band": 2361,
         "bandPct": 4.1,
         "conf": 38,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74179,
-        "high": 79239,
+        "exp": 76708,
+        "low": 74178,
+        "high": 79238,
         "band": 2530,
         "bandPct": 3.3,
         "conf": 38,
@@ -1447,18 +1447,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54832,
-        "high": 59690,
+        "exp": 57258,
+        "low": 54829,
+        "high": 59687,
         "band": 2429,
         "bandPct": 4.2,
         "conf": 37,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74105,
-        "high": 79313,
+        "exp": 76708,
+        "low": 74104,
+        "high": 79312,
         "band": 2604,
         "bandPct": 3.4,
         "conf": 37,
@@ -1479,18 +1479,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54765,
-        "high": 59757,
+        "exp": 57258,
+        "low": 54762,
+        "high": 59754,
         "band": 2496,
         "bandPct": 4.4,
         "conf": 37,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 74034,
-        "high": 79384,
+        "exp": 76708,
+        "low": 74033,
+        "high": 79383,
         "band": 2675,
         "bandPct": 3.5,
         "conf": 37,
@@ -1511,18 +1511,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54700,
-        "high": 59822,
+        "exp": 57258,
+        "low": 54697,
+        "high": 59819,
         "band": 2561,
         "bandPct": 4.5,
         "conf": 36,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73965,
-        "high": 79453,
+        "exp": 76708,
+        "low": 73964,
+        "high": 79452,
         "band": 2744,
         "bandPct": 3.6,
         "conf": 36,
@@ -1543,18 +1543,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54637,
-        "high": 59885,
+        "exp": 57258,
+        "low": 54634,
+        "high": 59882,
         "band": 2624,
         "bandPct": 4.6,
         "conf": 35,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73897,
-        "high": 79521,
+        "exp": 76708,
+        "low": 73896,
+        "high": 79520,
         "band": 2812,
         "bandPct": 3.7,
         "conf": 35,
@@ -1575,18 +1575,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54575,
-        "high": 59947,
+        "exp": 57258,
+        "low": 54572,
+        "high": 59944,
         "band": 2686,
         "bandPct": 4.7,
         "conf": 35,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73831,
-        "high": 79587,
+        "exp": 76708,
+        "low": 73830,
+        "high": 79586,
         "band": 2878,
         "bandPct": 3.8,
         "conf": 35,
@@ -1607,18 +1607,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54515,
-        "high": 60007,
+        "exp": 57258,
+        "low": 54512,
+        "high": 60004,
         "band": 2746,
         "bandPct": 4.8,
         "conf": 34,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73766,
-        "high": 79652,
+        "exp": 76708,
+        "low": 73765,
+        "high": 79651,
         "band": 2943,
         "bandPct": 3.8,
         "conf": 34,
@@ -1639,18 +1639,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54456,
-        "high": 60066,
+        "exp": 57258,
+        "low": 54453,
+        "high": 60063,
         "band": 2805,
         "bandPct": 4.9,
         "conf": 34,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73703,
-        "high": 79715,
+        "exp": 76708,
+        "low": 73702,
+        "high": 79714,
         "band": 3006,
         "bandPct": 3.9,
         "conf": 34,
@@ -1671,18 +1671,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54398,
-        "high": 60124,
+        "exp": 57258,
+        "low": 54395,
+        "high": 60121,
         "band": 2863,
         "bandPct": 5,
         "conf": 33,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73641,
-        "high": 79777,
+        "exp": 76708,
+        "low": 73640,
+        "high": 79776,
         "band": 3068,
         "bandPct": 4,
         "conf": 33,
@@ -1703,18 +1703,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54341,
-        "high": 60181,
+        "exp": 57258,
+        "low": 54338,
+        "high": 60178,
         "band": 2920,
         "bandPct": 5.1,
         "conf": 32,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73580,
-        "high": 79838,
+        "exp": 76708,
+        "low": 73579,
+        "high": 79837,
         "band": 3129,
         "bandPct": 4.1,
         "conf": 32,
@@ -1735,18 +1735,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54286,
-        "high": 60236,
+        "exp": 57258,
+        "low": 54283,
+        "high": 60233,
         "band": 2975,
         "bandPct": 5.2,
         "conf": 32,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73520,
-        "high": 79898,
+        "exp": 76708,
+        "low": 73519,
+        "high": 79897,
         "band": 3189,
         "bandPct": 4.2,
         "conf": 32,
@@ -1767,18 +1767,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54231,
-        "high": 60291,
+        "exp": 57258,
+        "low": 54228,
+        "high": 60288,
         "band": 3030,
         "bandPct": 5.3,
         "conf": 31,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73462,
-        "high": 79956,
+        "exp": 76708,
+        "low": 73461,
+        "high": 79955,
         "band": 3247,
         "bandPct": 4.2,
         "conf": 31,
@@ -1799,18 +1799,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54177,
-        "high": 60345,
-        "band": 3084,
+        "exp": 57258,
+        "low": 54175,
+        "high": 60341,
+        "band": 3083,
         "bandPct": 5.4,
         "conf": 31,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73404,
-        "high": 80014,
+        "exp": 76708,
+        "low": 73403,
+        "high": 80013,
         "band": 3305,
         "bandPct": 4.3,
         "conf": 31,
@@ -1831,18 +1831,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54125,
-        "high": 60397,
+        "exp": 57258,
+        "low": 54122,
+        "high": 60394,
         "band": 3136,
         "bandPct": 5.5,
         "conf": 30,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73348,
-        "high": 80070,
+        "exp": 76708,
+        "low": 73347,
+        "high": 80069,
         "band": 3361,
         "bandPct": 4.4,
         "conf": 30,
@@ -1863,18 +1863,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54073,
-        "high": 60449,
+        "exp": 57258,
+        "low": 54070,
+        "high": 60446,
         "band": 3188,
         "bandPct": 5.6,
         "conf": 29,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73292,
-        "high": 80126,
+        "exp": 76708,
+        "low": 73291,
+        "high": 80125,
         "band": 3417,
         "bandPct": 4.5,
         "conf": 29,
@@ -1895,18 +1895,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 54022,
-        "high": 60500,
+        "exp": 57258,
+        "low": 54019,
+        "high": 60497,
         "band": 3239,
         "bandPct": 5.7,
         "conf": 29,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73238,
-        "high": 80180,
+        "exp": 76708,
+        "low": 73237,
+        "high": 80179,
         "band": 3471,
         "bandPct": 4.5,
         "conf": 29,
@@ -1927,18 +1927,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53972,
-        "high": 60550,
+        "exp": 57258,
+        "low": 53969,
+        "high": 60547,
         "band": 3289,
         "bandPct": 5.7,
         "conf": 28,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73184,
-        "high": 80234,
+        "exp": 76708,
+        "low": 73183,
+        "high": 80233,
         "band": 3525,
         "bandPct": 4.6,
         "conf": 28,
@@ -1959,18 +1959,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53922,
-        "high": 60600,
+        "exp": 57258,
+        "low": 53919,
+        "high": 60597,
         "band": 3339,
         "bandPct": 5.8,
         "conf": 28,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73131,
-        "high": 80287,
+        "exp": 76708,
+        "low": 73130,
+        "high": 80286,
         "band": 3578,
         "bandPct": 4.7,
         "conf": 28,
@@ -1991,19 +1991,19 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53873,
-        "high": 60649,
-        "band": 3388,
+        "exp": 57258,
+        "low": 53871,
+        "high": 60645,
+        "band": 3387,
         "bandPct": 5.9,
         "conf": 27,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 73078,
-        "high": 80340,
-        "band": 3631,
+        "high": 80338,
+        "band": 3630,
         "bandPct": 4.7,
         "conf": 27,
         "kind": "uncertainty cone"
@@ -2023,18 +2023,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53825,
-        "high": 60697,
-        "band": 3436,
+        "exp": 57258,
+        "low": 53823,
+        "high": 60693,
+        "band": 3435,
         "bandPct": 6,
         "conf": 26,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 73027,
-        "high": 80391,
+        "exp": 76708,
+        "low": 73026,
+        "high": 80390,
         "band": 3682,
         "bandPct": 4.8,
         "conf": 26,
@@ -2055,18 +2055,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53778,
-        "high": 60744,
+        "exp": 57258,
+        "low": 53775,
+        "high": 60741,
         "band": 3483,
         "bandPct": 6.1,
         "conf": 26,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72976,
-        "high": 80442,
+        "exp": 76708,
+        "low": 72975,
+        "high": 80441,
         "band": 3733,
         "bandPct": 4.9,
         "conf": 26,
@@ -2087,18 +2087,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53731,
-        "high": 60791,
+        "exp": 57258,
+        "low": 53728,
+        "high": 60788,
         "band": 3530,
         "bandPct": 6.2,
         "conf": 25,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72926,
-        "high": 80492,
+        "exp": 76708,
+        "low": 72925,
+        "high": 80491,
         "band": 3783,
         "bandPct": 4.9,
         "conf": 25,
@@ -2119,18 +2119,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53685,
-        "high": 60837,
+        "exp": 57258,
+        "low": 53682,
+        "high": 60834,
         "band": 3576,
         "bandPct": 6.2,
         "conf": 25,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72877,
-        "high": 80541,
+        "exp": 76708,
+        "low": 72876,
+        "high": 80540,
         "band": 3832,
         "bandPct": 5,
         "conf": 25,
@@ -2151,18 +2151,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53640,
-        "high": 60882,
+        "exp": 57258,
+        "low": 53637,
+        "high": 60879,
         "band": 3621,
         "bandPct": 6.3,
         "conf": 24,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72828,
-        "high": 80590,
+        "exp": 76708,
+        "low": 72827,
+        "high": 80589,
         "band": 3881,
         "bandPct": 5.1,
         "conf": 24,
@@ -2183,18 +2183,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53595,
-        "high": 60927,
+        "exp": 57258,
+        "low": 53592,
+        "high": 60924,
         "band": 3666,
         "bandPct": 6.4,
         "conf": 23,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72780,
-        "high": 80638,
+        "exp": 76708,
+        "low": 72779,
+        "high": 80637,
         "band": 3929,
         "bandPct": 5.1,
         "conf": 23,
@@ -2215,18 +2215,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53550,
-        "high": 60972,
+        "exp": 57258,
+        "low": 53547,
+        "high": 60969,
         "band": 3711,
         "bandPct": 6.5,
         "conf": 23,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72732,
-        "high": 80686,
+        "exp": 76708,
+        "low": 72731,
+        "high": 80685,
         "band": 3977,
         "bandPct": 5.2,
         "conf": 23,
@@ -2247,18 +2247,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53506,
-        "high": 61016,
+        "exp": 57258,
+        "low": 53503,
+        "high": 61013,
         "band": 3755,
         "bandPct": 6.6,
         "conf": 22,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72685,
-        "high": 80733,
+        "exp": 76708,
+        "low": 72684,
+        "high": 80732,
         "band": 4024,
         "bandPct": 5.2,
         "conf": 22,
@@ -2271,26 +2271,26 @@
       "isExpiry": false,
       "NIFTY": {
         "exp": 23980,
-        "low": 22708,
-        "high": 25252,
-        "band": 1272,
+        "low": 22707,
+        "high": 25253,
+        "band": 1273,
         "bandPct": 5.3,
         "conf": 22,
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53463,
-        "high": 61059,
+        "exp": 57258,
+        "low": 53460,
+        "high": 61056,
         "band": 3798,
         "bandPct": 6.6,
         "conf": 22,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72638,
-        "high": 80780,
+        "exp": 76708,
+        "low": 72637,
+        "high": 80779,
         "band": 4071,
         "bandPct": 5.3,
         "conf": 22,
@@ -2311,18 +2311,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53420,
-        "high": 61102,
+        "exp": 57258,
+        "low": 53417,
+        "high": 61099,
         "band": 3841,
         "bandPct": 6.7,
         "conf": 21,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72592,
-        "high": 80826,
+        "exp": 76708,
+        "low": 72591,
+        "high": 80825,
         "band": 4117,
         "bandPct": 5.4,
         "conf": 21,
@@ -2343,18 +2343,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53377,
-        "high": 61145,
-        "band": 3884,
+        "exp": 57258,
+        "low": 53375,
+        "high": 61141,
+        "band": 3883,
         "bandPct": 6.8,
         "conf": 20,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72547,
-        "high": 80871,
+        "exp": 76708,
+        "low": 72546,
+        "high": 80870,
         "band": 4162,
         "bandPct": 5.4,
         "conf": 20,
@@ -2375,18 +2375,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53335,
-        "high": 61187,
-        "band": 3926,
+        "exp": 57258,
+        "low": 53333,
+        "high": 61183,
+        "band": 3925,
         "bandPct": 6.9,
         "conf": 20,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72502,
-        "high": 80916,
+        "exp": 76708,
+        "low": 72501,
+        "high": 80915,
         "band": 4207,
         "bandPct": 5.5,
         "conf": 20,
@@ -2407,18 +2407,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53294,
-        "high": 61228,
+        "exp": 57258,
+        "low": 53291,
+        "high": 61225,
         "band": 3967,
         "bandPct": 6.9,
         "conf": 19,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72457,
-        "high": 80961,
+        "exp": 76708,
+        "low": 72456,
+        "high": 80960,
         "band": 4252,
         "bandPct": 5.5,
         "conf": 19,
@@ -2439,18 +2439,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53253,
-        "high": 61269,
+        "exp": 57258,
+        "low": 53250,
+        "high": 61266,
         "band": 4008,
         "bandPct": 7,
         "conf": 19,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72413,
-        "high": 81005,
+        "exp": 76708,
+        "low": 72412,
+        "high": 81004,
         "band": 4296,
         "bandPct": 5.6,
         "conf": 19,
@@ -2463,26 +2463,26 @@
       "isExpiry": true,
       "NIFTY": {
         "exp": 23980,
-        "low": 22624,
-        "high": 25336,
-        "band": 1356,
+        "low": 22623,
+        "high": 25337,
+        "band": 1357,
         "bandPct": 5.7,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53212,
-        "high": 61310,
+        "exp": 57258,
+        "low": 53209,
+        "high": 61307,
         "band": 4049,
         "bandPct": 7.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72370,
-        "high": 81048,
+        "exp": 76708,
+        "low": 72369,
+        "high": 81047,
         "band": 4339,
         "bandPct": 5.7,
         "conf": 18,
@@ -2503,19 +2503,19 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53172,
-        "high": 61350,
+        "exp": 57258,
+        "low": 53169,
+        "high": 61347,
         "band": 4089,
         "bandPct": 7.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 72326,
-        "high": 81092,
-        "band": 4383,
+        "high": 81090,
+        "band": 4382,
         "bandPct": 5.7,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2535,18 +2535,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53132,
-        "high": 61390,
+        "exp": 57258,
+        "low": 53129,
+        "high": 61387,
         "band": 4129,
         "bandPct": 7.2,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72284,
-        "high": 81134,
+        "exp": 76708,
+        "low": 72283,
+        "high": 81133,
         "band": 4425,
         "bandPct": 5.8,
         "conf": 18,
@@ -2567,18 +2567,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53092,
-        "high": 61430,
-        "band": 4169,
+        "exp": 57258,
+        "low": 53090,
+        "high": 61426,
+        "band": 4168,
         "bandPct": 7.3,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72241,
-        "high": 81177,
+        "exp": 76708,
+        "low": 72240,
+        "high": 81176,
         "band": 4468,
         "bandPct": 5.8,
         "conf": 18,
@@ -2599,19 +2599,19 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53053,
-        "high": 61469,
+        "exp": 57258,
+        "low": 53050,
+        "high": 61466,
         "band": 4208,
         "bandPct": 7.3,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 72199,
-        "high": 81219,
-        "band": 4510,
+        "high": 81217,
+        "band": 4509,
         "bandPct": 5.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2631,18 +2631,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 53014,
-        "high": 61508,
-        "band": 4247,
+        "exp": 57258,
+        "low": 53012,
+        "high": 61504,
+        "band": 4246,
         "bandPct": 7.4,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72158,
-        "high": 81260,
+        "exp": 76708,
+        "low": 72157,
+        "high": 81259,
         "band": 4551,
         "bandPct": 5.9,
         "conf": 18,
@@ -2663,18 +2663,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52976,
-        "high": 61546,
+        "exp": 57258,
+        "low": 52973,
+        "high": 61543,
         "band": 4285,
         "bandPct": 7.5,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72117,
-        "high": 81301,
+        "exp": 76708,
+        "low": 72116,
+        "high": 81300,
         "band": 4592,
         "bandPct": 6,
         "conf": 18,
@@ -2695,18 +2695,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52938,
-        "high": 61584,
+        "exp": 57258,
+        "low": 52935,
+        "high": 61581,
         "band": 4323,
-        "bandPct": 7.5,
+        "bandPct": 7.6,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72076,
-        "high": 81342,
+        "exp": 76708,
+        "low": 72075,
+        "high": 81341,
         "band": 4633,
         "bandPct": 6,
         "conf": 18,
@@ -2727,18 +2727,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52900,
-        "high": 61622,
+        "exp": 57258,
+        "low": 52897,
+        "high": 61619,
         "band": 4361,
         "bandPct": 7.6,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 72035,
-        "high": 81383,
+        "exp": 76708,
+        "low": 72034,
+        "high": 81382,
         "band": 4674,
         "bandPct": 6.1,
         "conf": 18,
@@ -2759,18 +2759,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52863,
-        "high": 61659,
+        "exp": 57258,
+        "low": 52860,
+        "high": 61656,
         "band": 4398,
         "bandPct": 7.7,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71995,
-        "high": 81423,
+        "exp": 76708,
+        "low": 71994,
+        "high": 81422,
         "band": 4714,
         "bandPct": 6.1,
         "conf": 18,
@@ -2791,18 +2791,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52826,
-        "high": 61696,
+        "exp": 57258,
+        "low": 52823,
+        "high": 61693,
         "band": 4435,
         "bandPct": 7.7,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71956,
-        "high": 81462,
+        "exp": 76708,
+        "low": 71955,
+        "high": 81461,
         "band": 4753,
         "bandPct": 6.2,
         "conf": 18,
@@ -2823,18 +2823,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52789,
-        "high": 61733,
+        "exp": 57258,
+        "low": 52786,
+        "high": 61730,
         "band": 4472,
         "bandPct": 7.8,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71916,
-        "high": 81502,
+        "exp": 76708,
+        "low": 71915,
+        "high": 81501,
         "band": 4793,
         "bandPct": 6.2,
         "conf": 18,
@@ -2855,18 +2855,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52752,
-        "high": 61770,
-        "band": 4509,
+        "exp": 57258,
+        "low": 52750,
+        "high": 61766,
+        "band": 4508,
         "bandPct": 7.9,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71877,
-        "high": 81541,
+        "exp": 76708,
+        "low": 71876,
+        "high": 81540,
         "band": 4832,
         "bandPct": 6.3,
         "conf": 18,
@@ -2887,20 +2887,20 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52716,
-        "high": 61806,
+        "exp": 57258,
+        "low": 52713,
+        "high": 61803,
         "band": 4545,
         "bandPct": 7.9,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71838,
-        "high": 81580,
+        "exp": 76708,
+        "low": 71837,
+        "high": 81579,
         "band": 4871,
-        "bandPct": 6.3,
+        "bandPct": 6.4,
         "conf": 18,
         "kind": "uncertainty cone"
       }
@@ -2919,18 +2919,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52680,
-        "high": 61842,
+        "exp": 57258,
+        "low": 52677,
+        "high": 61839,
         "band": 4581,
         "bandPct": 8,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71800,
-        "high": 81618,
+        "exp": 76708,
+        "low": 71799,
+        "high": 81617,
         "band": 4909,
         "bandPct": 6.4,
         "conf": 18,
@@ -2951,18 +2951,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52645,
-        "high": 61877,
+        "exp": 57258,
+        "low": 52642,
+        "high": 61874,
         "band": 4616,
         "bandPct": 8.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71761,
-        "high": 81657,
+        "exp": 76708,
+        "low": 71760,
+        "high": 81656,
         "band": 4948,
         "bandPct": 6.5,
         "conf": 18,
@@ -2975,27 +2975,27 @@
       "isExpiry": false,
       "NIFTY": {
         "exp": 23980,
-        "low": 22422,
-        "high": 25538,
-        "band": 1558,
+        "low": 22421,
+        "high": 25539,
+        "band": 1559,
         "bandPct": 6.5,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52609,
-        "high": 61913,
+        "exp": 57258,
+        "low": 52606,
+        "high": 61910,
         "band": 4652,
         "bandPct": 8.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 71723,
-        "high": 81695,
-        "band": 4986,
+        "high": 81693,
+        "band": 4985,
         "bandPct": 6.5,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3015,18 +3015,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52574,
-        "high": 61948,
+        "exp": 57258,
+        "low": 52571,
+        "high": 61945,
         "band": 4687,
         "bandPct": 8.2,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71686,
-        "high": 81732,
+        "exp": 76708,
+        "low": 71685,
+        "high": 81731,
         "band": 5023,
         "bandPct": 6.5,
         "conf": 18,
@@ -3047,18 +3047,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52539,
-        "high": 61983,
+        "exp": 57258,
+        "low": 52536,
+        "high": 61980,
         "band": 4722,
         "bandPct": 8.2,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71649,
-        "high": 81769,
+        "exp": 76708,
+        "low": 71648,
+        "high": 81768,
         "band": 5060,
         "bandPct": 6.6,
         "conf": 18,
@@ -3079,19 +3079,19 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52505,
-        "high": 62017,
+        "exp": 57258,
+        "low": 52502,
+        "high": 62014,
         "band": 4756,
         "bandPct": 8.3,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 71611,
-        "high": 81807,
-        "band": 5098,
+        "high": 81805,
+        "band": 5097,
         "bandPct": 6.6,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3111,18 +3111,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52470,
-        "high": 62052,
+        "exp": 57258,
+        "low": 52467,
+        "high": 62049,
         "band": 4791,
         "bandPct": 8.4,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71575,
-        "high": 81843,
+        "exp": 76708,
+        "low": 71574,
+        "high": 81842,
         "band": 5134,
         "bandPct": 6.7,
         "conf": 18,
@@ -3143,18 +3143,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52436,
-        "high": 62086,
+        "exp": 57258,
+        "low": 52433,
+        "high": 62083,
         "band": 4825,
         "bandPct": 8.4,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71538,
-        "high": 81880,
+        "exp": 76708,
+        "low": 71537,
+        "high": 81879,
         "band": 5171,
         "bandPct": 6.7,
         "conf": 18,
@@ -3175,18 +3175,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52402,
-        "high": 62120,
-        "band": 4859,
+        "exp": 57258,
+        "low": 52400,
+        "high": 62116,
+        "band": 4858,
         "bandPct": 8.5,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71502,
-        "high": 81916,
+        "exp": 76708,
+        "low": 71501,
+        "high": 81915,
         "band": 5207,
         "bandPct": 6.8,
         "conf": 18,
@@ -3207,18 +3207,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52369,
-        "high": 62153,
+        "exp": 57258,
+        "low": 52366,
+        "high": 62150,
         "band": 4892,
         "bandPct": 8.5,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71466,
-        "high": 81952,
+        "exp": 76708,
+        "low": 71465,
+        "high": 81951,
         "band": 5243,
         "bandPct": 6.8,
         "conf": 18,
@@ -3239,18 +3239,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52335,
-        "high": 62187,
-        "band": 4926,
+        "exp": 57258,
+        "low": 52333,
+        "high": 62183,
+        "band": 4925,
         "bandPct": 8.6,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71430,
-        "high": 81988,
+        "exp": 76708,
+        "low": 71429,
+        "high": 81987,
         "band": 5279,
         "bandPct": 6.9,
         "conf": 18,
@@ -3271,19 +3271,19 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52302,
-        "high": 62220,
+        "exp": 57258,
+        "low": 52299,
+        "high": 62217,
         "band": 4959,
         "bandPct": 8.7,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
+        "exp": 76708,
         "low": 71394,
-        "high": 82024,
-        "band": 5315,
+        "high": 82022,
+        "band": 5314,
         "bandPct": 6.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3303,18 +3303,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52269,
-        "high": 62253,
+        "exp": 57258,
+        "low": 52266,
+        "high": 62250,
         "band": 4992,
         "bandPct": 8.7,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71359,
-        "high": 82059,
+        "exp": 76708,
+        "low": 71358,
+        "high": 82058,
         "band": 5350,
         "bandPct": 7,
         "conf": 18,
@@ -3335,18 +3335,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52236,
-        "high": 62286,
-        "band": 5025,
+        "exp": 57258,
+        "low": 52234,
+        "high": 62282,
+        "band": 5024,
         "bandPct": 8.8,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71324,
-        "high": 82094,
+        "exp": 76708,
+        "low": 71323,
+        "high": 82093,
         "band": 5385,
         "bandPct": 7,
         "conf": 18,
@@ -3367,18 +3367,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52204,
-        "high": 62318,
+        "exp": 57258,
+        "low": 52201,
+        "high": 62315,
         "band": 5057,
         "bandPct": 8.8,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71289,
-        "high": 82129,
+        "exp": 76708,
+        "low": 71288,
+        "high": 82128,
         "band": 5420,
         "bandPct": 7.1,
         "conf": 18,
@@ -3399,18 +3399,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52172,
-        "high": 62350,
+        "exp": 57258,
+        "low": 52169,
+        "high": 62347,
         "band": 5089,
         "bandPct": 8.9,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71255,
-        "high": 82163,
+        "exp": 76708,
+        "low": 71254,
+        "high": 82162,
         "band": 5454,
         "bandPct": 7.1,
         "conf": 18,
@@ -3431,18 +3431,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52139,
-        "high": 62383,
-        "band": 5122,
+        "exp": 57258,
+        "low": 52137,
+        "high": 62379,
+        "band": 5121,
         "bandPct": 8.9,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71220,
-        "high": 82198,
+        "exp": 76708,
+        "low": 71219,
+        "high": 82197,
         "band": 5489,
         "bandPct": 7.2,
         "conf": 18,
@@ -3463,18 +3463,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52108,
-        "high": 62414,
+        "exp": 57258,
+        "low": 52105,
+        "high": 62411,
         "band": 5153,
         "bandPct": 9,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71186,
-        "high": 82232,
+        "exp": 76708,
+        "low": 71185,
+        "high": 82231,
         "band": 5523,
         "bandPct": 7.2,
         "conf": 18,
@@ -3495,18 +3495,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52076,
-        "high": 62446,
+        "exp": 57258,
+        "low": 52073,
+        "high": 62443,
         "band": 5185,
         "bandPct": 9.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71152,
-        "high": 82266,
+        "exp": 76708,
+        "low": 71151,
+        "high": 82265,
         "band": 5557,
         "bandPct": 7.2,
         "conf": 18,
@@ -3527,18 +3527,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52044,
-        "high": 62478,
-        "band": 5217,
+        "exp": 57258,
+        "low": 52042,
+        "high": 62474,
+        "band": 5216,
         "bandPct": 9.1,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71118,
-        "high": 82300,
+        "exp": 76708,
+        "low": 71117,
+        "high": 82299,
         "band": 5591,
         "bandPct": 7.3,
         "conf": 18,
@@ -3559,18 +3559,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 52013,
-        "high": 62509,
+        "exp": 57258,
+        "low": 52010,
+        "high": 62506,
         "band": 5248,
         "bandPct": 9.2,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71085,
-        "high": 82333,
+        "exp": 76708,
+        "low": 71084,
+        "high": 82332,
         "band": 5624,
         "bandPct": 7.3,
         "conf": 18,
@@ -3591,18 +3591,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 51982,
-        "high": 62540,
+        "exp": 57258,
+        "low": 51979,
+        "high": 62537,
         "band": 5279,
         "bandPct": 9.2,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71051,
-        "high": 82367,
+        "exp": 76708,
+        "low": 71050,
+        "high": 82366,
         "band": 5658,
         "bandPct": 7.4,
         "conf": 18,
@@ -3623,18 +3623,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 51951,
-        "high": 62571,
+        "exp": 57258,
+        "low": 51948,
+        "high": 62568,
         "band": 5310,
         "bandPct": 9.3,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 71018,
-        "high": 82400,
+        "exp": 76708,
+        "low": 71017,
+        "high": 82399,
         "band": 5691,
         "bandPct": 7.4,
         "conf": 18,
@@ -3655,18 +3655,18 @@
         "kind": "uncertainty cone"
       },
       "BANKNIFTY": {
-        "exp": 57261,
-        "low": 51920,
-        "high": 62602,
+        "exp": 57258,
+        "low": 51917,
+        "high": 62599,
         "band": 5341,
         "bandPct": 9.3,
         "conf": 18,
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76709,
-        "low": 70985,
-        "high": 82433,
+        "exp": 76708,
+        "low": 70984,
+        "high": 82432,
         "band": 5724,
         "bandPct": 7.5,
         "conf": 18,
@@ -4019,7 +4019,7 @@
   "histHitRate": 40,
   "hitRate": 100,
   "resolved": 2,
-  "updatedAt": "2026-09-01T09:22:48.850Z",
+  "updatedAt": "2026-09-01T09:23:01.560Z",
   "dirHitRate": null,
   "dirResolved": 0,
   "regimeAcc": {}
