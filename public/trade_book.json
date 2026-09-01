@@ -49,13 +49,14 @@
       "invested": 14100,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 198.11,
+      "ltp": 199.6,
       "footprint": null,
       "delivery": null,
       "rr": 1.29,
       "reason": "Breakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA",
-      "unrealizedPnl": 0,
-      "unrealizedPct": 0
+      "unrealizedPnl": 4866,
+      "unrealizedPct": 34.51,
+      "peakPct": 34.51
     },
     "fno:INFY": {
       "sleeve": "FO",
@@ -109,8 +110,9 @@
       "delivery": null,
       "rr": 0.74,
       "reason": "Breakout watch: Hugging 20-day high (0.5% below); Above rising 20 & 50 EMA",
-      "unrealizedPnl": 0,
-      "unrealizedPct": 0
+      "unrealizedPnl": 291,
+      "unrealizedPct": 3.64,
+      "peakPct": 3.64
     },
     "fno:WIPRO": {
       "sleeve": "FO",
@@ -165,7 +167,8 @@
       "rr": 1.02,
       "reason": "Breakout watch: Hugging 20-day high (1.8% below); Above rising 20 & 50 EMA",
       "unrealizedPnl": 0,
-      "unrealizedPct": 0
+      "unrealizedPct": 0,
+      "peakPct": 0
     },
     "fno:MPHASIS": {
       "sleeve": "FO",
@@ -214,13 +217,14 @@
       "invested": 11825,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 2487,
+      "ltp": 2488.5,
       "footprint": null,
       "delivery": null,
       "rr": 0.48,
       "reason": "Breakout watch: Hugging 20-day high (0.2% below); Above rising 20 & 50 EMA",
-      "unrealizedPnl": 0,
-      "unrealizedPct": 0
+      "unrealizedPnl": 409,
+      "unrealizedPct": 3.46,
+      "peakPct": 3.46
     },
     "daily:vol_accum:SAIL": {
       "sleeve": "DAILY",
@@ -266,7 +270,7 @@
       "invested": 99812,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 198.04,
+      "ltp": 199.6,
       "dailyTake": 1.8,
       "structuralSL": 194.55,
       "footprint": {
@@ -280,15 +284,15 @@
       "delivery": null,
       "rr": 1.29,
       "reason": "Accumulation (vol 52/100): Up/down volume 1.38× — accumulation pressure; Stealth accumulation — volume rising while price still flat; OBV rising — on-balance volume confirms net inflow",
-      "unrealizedPnl": 0,
-      "unrealizedPct": 0
+      "unrealizedPnl": 786,
+      "unrealizedPct": 0.79
     }
   },
   "closed": [],
-  "updatedAt": "2026-09-01T05:36:01.958Z",
-  "equity": 3000000,
+  "updatedAt": "2026-09-01T05:40:33.942Z",
+  "equity": 3006352,
   "stats": {
-    "equity": 3000000,
+    "equity": 3006352,
     "cash": 2857263,
     "investedOpen": 142737,
     "cashSleeve": {
@@ -312,27 +316,27 @@
     "foSleeve": {
       "capital": 1000000,
       "cash": 957075,
-      "equity": 1000000,
-      "pct": 0,
+      "equity": 1005566,
+      "pct": 0.56,
       "open": 4,
       "closedPnl": 0,
       "goal": {
         "type": "monthly",
         "min": 10,
         "max": 15,
-        "mtdPct": 0,
-        "mtdPnl": 0,
+        "mtdPct": 0.56,
+        "mtdPnl": 5566,
         "expectMin": 0.33,
-        "projected": 0,
-        "status": "behind"
+        "projected": 16.8,
+        "status": "ahead"
       }
     },
     "dailySleeve": {
       "capital": 1000000,
       "cash": 900188,
       "deployed": 99812,
-      "equity": 1000000,
-      "pct": 0,
+      "equity": 1000786,
+      "pct": 0.08,
       "open": 1,
       "closedCount": 0,
       "winRate": null,
@@ -354,8 +358,8 @@
       "goal": {
         "type": "daily",
         "targetInr": 10000,
-        "todayPnl": 0,
-        "status": "flat"
+        "todayPnl": 786,
+        "status": "progress"
       }
     },
     "open": 4,
@@ -365,8 +369,8 @@
     "winRate": null,
     "realizedPnl": 0,
     "realizedPct": 0,
-    "unrealizedPnl": 0,
-    "totalPct": 0,
+    "unrealizedPnl": 6352,
+    "totalPct": 0.21,
     "profitFactor": null,
     "avgWinPct": null,
     "avgLossPct": null,
@@ -569,26 +573,26 @@
     "activeCooldowns": 1,
     "segmentRank": [
       {
-        "key": "CASH",
-        "name": "Cash",
-        "pct": 0,
+        "key": "FO",
+        "name": "F&O",
+        "pct": 0.56,
         "winRate": null,
         "trades": 0,
         "rank": 1,
         "consistent": false
       },
       {
-        "key": "FO",
-        "name": "F&O",
-        "pct": 0,
+        "key": "DAILY",
+        "name": "Daily",
+        "pct": 0.08,
         "winRate": null,
         "trades": 0,
         "rank": 2,
         "consistent": false
       },
       {
-        "key": "DAILY",
-        "name": "Daily",
+        "key": "CASH",
+        "name": "Cash",
         "pct": 0,
         "winRate": null,
         "trades": 0,
@@ -4166,7 +4170,7 @@
       "count": 0,
       "critical": 0,
       "issues": [],
-      "checkedAt": "2026-09-01T05:36:01.958Z"
+      "checkedAt": "2026-09-01T05:40:33.942Z"
     },
     "compliance": {
       "clean": true,
@@ -4227,7 +4231,7 @@
         "averagedThisMonth": 0,
         "pyramidedOpen": 0
       },
-      "checkedAt": "2026-09-01T05:36:01.958Z"
+      "checkedAt": "2026-09-01T05:40:33.942Z"
     }
   },
   "capitalCash": 1000000,
