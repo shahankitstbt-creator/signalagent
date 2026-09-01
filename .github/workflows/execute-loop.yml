@@ -74,8 +74,11 @@ jobs:
                 node scripts/screener.mjs --execute || true
                 DEPLOY=0
               fi
-              # persist state (rebase onto latest so scan.yml's own pushes never conflict-lose)
-              git add public/trade_book.json public/ledger.json public/board*.json public/tg_sent.json public/cas.json public/track_record.json public/goal.json public/oi_history.json 2>/dev/null || true
+              # persist state — CRITICAL: never stage the DAILY board (board.json / board-daily.json). The
+              # loop only owns the INTRADAY board; committing its stale checked-out board.json was reverting
+              # the daily scan's fresh board every 3 min (the whole board froze at an old date). The rebase
+              # below pulls origin's fresh board.json into the tree, so the deploy still ships it fresh.
+              git add public/trade_book.json public/ledger.json public/board-intraday.json public/tg_sent.json public/cas.json public/track_record.json public/goal.json public/oi_history.json 2>/dev/null || true
               git commit -m "execute-loop $(date -u +%FT%RZ)" || echo "no change"
               for r in 1 2 3 4 5; do
                 git fetch origin main
@@ -89,6 +92,8 @@ jobs:
               if grep -rl '^<<<<<<< ' public/*.json >/dev/null 2>&1; then git checkout -- public/; fi
               # deploy to Vercel only on the 30-min full-scan ticks (keeps well under Hobby deploy limits)
               if [ "$DEPLOY" = "1" ]; then
+                # GUARANTEE the deploy ships the freshest DAILY board (in case another workflow just wrote it)
+                git fetch origin main 2>/dev/null && git checkout origin/main -- public/board.json public/board-daily.json 2>/dev/null || true
                 npx --yes vercel@latest deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} || true
               fi
               ITER=$(( ITER + 1 ))
