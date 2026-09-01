@@ -83,6 +83,7 @@ function analyzeTF(b, tfMin, addBiz) {
   const rsiArr = rsiSeries(c), rsi = rsiArr[n - 1] ?? 50
   const atr = (atrSeries(b.h, b.l, c)[n - 1]) || price * 0.01
   const e20 = emaLast(c.slice(-60), 20), e50 = emaLast(c.slice(-80), 50)
+  const e20prev = emaLast(c.slice(-61, -1), 20)                          // 20-EMA one bar ago (to detect a fresh reclaim)
   const swingHi = Math.max(...b.h.slice(-40)), swingLo = Math.min(...b.l.slice(-40))
   const fibs = [[0.382, '38.2%'], [0.5, '50%'], [0.618, '61.8%'], [0.786, '78.6%']].map(([f, lbl]) => [swingHi - (swingHi - swingLo) * f, lbl])
   const nearestFib = fibs.reduce((best, x) => Math.abs(x[0] - price) < Math.abs(best[0] - price) ? x : best, fibs[0])
@@ -125,6 +126,15 @@ function analyzeTF(b, tfMin, addBiz) {
   else if (rsi < 30 && stretch < -2.5) { accu += 2; sm.push(`oversold & ${Math.abs(stretch).toFixed(1)}×ATR below mean → accumulation`) }
   if (bullDiv) { accu += 2; sm.push(`bullish divergence (price LL, RSI ${rsi.toFixed(0)} higher) → sellers exhausting`) }
   if (climaxDn) { accu += 2; sm.push('climax volume + reversal bar at lows → buying the flush') }
+  // CONFIRMED TURN (captures the bounce/rolldown on THIS timeframe the moment it confirms — not the falling
+  // knife, not too late): RSI turning up from oversold + a fresh reclaim of the mean → bounce LONG; the
+  // mirror (RSI rolling down from overbought + losing the mean) → distribution SHORT.
+  const rsiUp = rsiArr[last] != null && rsiArr[last - 2] != null && rsiArr[last] - rsiArr[last - 2] >= 3
+  const rsiDn = rsiArr[last] != null && rsiArr[last - 2] != null && rsiArr[last - 2] - rsiArr[last] >= 3
+  const reclaimedMean = c[last] > e20 && c[last - 1] <= e20prev            // just crossed back above the 20-EMA
+  const lostMean = c[last] < e20 && c[last - 1] >= e20prev                 // just lost the 20-EMA
+  if (rsi < 45 && rsiUp && reclaimedMean) { accu += 3; sm.push('oversold + RSI turning up + reclaimed the 20-EMA → bounce CONFIRMING (accumulation)') }
+  if (rsi > 55 && rsiDn && lostMean) { dist += 3; sm.push('overbought + RSI rolling over + lost the 20-EMA → top CONFIRMING (distribution)') }
 
   // ── PHASE — the smart-money cycle stage ──
   let phase
