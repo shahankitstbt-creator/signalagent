@@ -23,9 +23,9 @@
       "pinStrength": 100,
       "gammaMag": 46,
       "flow": {
-        "callChg": -58496295,
-        "putChg": -114373740,
-        "bias": -0.13,
+        "callChg": -75238800,
+        "putChg": -125807370,
+        "bias": -0.118,
         "label": "call covering (squeeze ↑) + put covering (support ↓)",
         "dir": "down"
       },
@@ -33,7 +33,7 @@
         {
           "dir": "down",
           "w": 1,
-          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -58496295 · ΔPE -114373740)"
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -75238800 · ΔPE -125807370)"
         },
         {
           "dir": "down",
@@ -49,7 +49,7 @@
       "mechanics": "Spot 24055.8 is BELOW the gamma-flip 24400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
       "why": [
         "Spot 24055.8 is BELOW the gamma-flip 24400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
-        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -58496295 · ΔPE -114373740)",
+        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -75238800 · ΔPE -125807370)",
         "▼ NEG GAMMA (flip 24400) · dealer pressure 46/100 — AMPLIFIES the close",
         "▼ Max-pain pin 24050 (-0.02% vs spot) · pin strength 100/100"
       ],
@@ -118,17 +118,17 @@
       "pinStrength": 25,
       "gammaMag": 14,
       "flow": {
-        "callChg": 180060,
-        "putChg": -249900,
-        "bias": -0.038,
-        "label": "call writing (cap ↑) + put covering (support ↓)",
+        "callChg": 152850,
+        "putChg": -281550,
+        "bias": -0.039,
+        "label": "put covering (support ↓)",
         "dir": "down"
       },
       "drivers": [
         {
           "dir": "down",
-          "w": 0.76,
-          "text": "Intraday OI flow: call writing (cap ↑) + put covering (support ↓) (ΔCE +180060 · ΔPE -249900)"
+          "w": 0.78,
+          "text": "Intraday OI flow: put covering (support ↓) (ΔCE +152850 · ΔPE -281550)"
         },
         {
           "dir": "up",
@@ -141,10 +141,10 @@
           "text": "POS GAMMA (flip 57400) · dealer pressure 14/100 — suppresses the close"
         }
       ],
-      "mechanics": "No strong pin or gamma signal. Mild DOWN tilt from flow (call writing (cap ↑) + put covering (support ↓)) + FII positioning → low-conviction close near 57387.",
+      "mechanics": "No strong pin or gamma signal. Mild DOWN tilt from flow (put covering (support ↓)) + FII positioning → low-conviction close near 57387.",
       "why": [
-        "No strong pin or gamma signal. Mild DOWN tilt from flow (call writing (cap ↑) + put covering (support ↓)) + FII positioning → low-conviction close near 57387.",
-        "▼ Intraday OI flow: call writing (cap ↑) + put covering (support ↓) (ΔCE +180060 · ΔPE -249900)",
+        "No strong pin or gamma signal. Mild DOWN tilt from flow (put covering (support ↓)) + FII positioning → low-conviction close near 57387.",
+        "▼ Intraday OI flow: put covering (support ↓) (ΔCE +152850 · ΔPE -281550)",
         "▲ Max-pain pin 57500 (+0.16% vs spot) · pin strength 25/100",
         "■ POS GAMMA (flip 57400) · dealer pressure 14/100 — suppresses the close"
       ],
@@ -334,10 +334,6 @@
         "close": 24090.85
       },
       {
-        "date": "2026-08-28",
-        "close": 24175.65
-      },
-      {
         "date": "2026-08-31",
         "close": 24080.4
       },
@@ -424,10 +420,6 @@
         "close": 57509.95
       },
       {
-        "date": "2026-08-28",
-        "close": 57496.3
-      },
-      {
         "date": "2026-08-31",
         "close": 58024.95
       },
@@ -512,10 +504,6 @@
       {
         "date": "2026-08-27",
         "close": 76933.59
-      },
-      {
-        "date": "2026-08-28",
-        "close": 77264.51
       },
       {
         "date": "2026-08-31",
@@ -4021,7 +4009,7 @@
   "histHitRate": 40,
   "hitRate": 75,
   "resolved": 4,
-  "updatedAt": "2026-09-01T10:30:47.805Z",
+  "updatedAt": "2026-09-01T11:39:20.634Z",
   "dirHitRate": 50,
   "dirResolved": 2,
   "regimeAcc": {

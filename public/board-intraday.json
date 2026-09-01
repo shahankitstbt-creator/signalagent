@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T10:30:47.805Z",
+  "generatedAt": "2026-09-01T11:39:20.634Z",
   "date": "2026-09-01",
   "timeframe": "intraday",
   "label": "Intraday 1h",
@@ -24,55 +24,55 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 67/100): Up/down volume 2.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
+          "reason": "Accumulation (vol 67/100): Up/down volume 2.18× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
           "direction": "LONG",
-          "ltp": 264.45,
-          "entry": 264.45,
-          "sl": 257.92,
+          "ltp": 264.1,
+          "entry": 264.1,
+          "sl": 257.57,
           "slPct": -2.5,
           "targets": [
             {
-              "price": 273.16,
+              "price": 272.81,
               "pct": 3.3,
               "by": "~10h",
               "days": 10
             },
             {
-              "price": 279.69,
+              "price": 279.34,
               "pct": 5.8,
               "by": "~13h",
               "days": 13
             },
             {
-              "price": 286.22,
+              "price": 285.87,
               "pct": 8.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 67.1,
+          "rsi": 66.3,
           "confidence": 92,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": -0.75,
+          "changePct": -0.88,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.2× (accumulation)"
+              "Up/down volume 2.18× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.081,
-            "rs50": 0.105,
+            "rs20": 0.08,
+            "rs50": 0.104,
             "leader": true
           },
-          "social": "⭐ TOP PICK (Grade A++) — EMKAY\n3 signals agree: Volume + Accumulation, Harmonic & Chart Patterns, Money Flow\n🕵️ Footprint 58/100: Stealth volume — buying while price still flat\nEntry ₹264.45 · SL ₹257.92 (-2.5%)\nT1 ₹273.16 (+3.3%) by ~10h · T2 +5.8% · T3 +8.2%\nPlan (₹1L, 1% risk): buy 153 sh · risk ₹999.09 · reward T1 ₹1332.63 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#EMKAY #swingtrading #nifty",
+          "social": "⭐ TOP PICK (Grade A++) — EMKAY\n3 signals agree: Volume + Accumulation, Harmonic & Chart Patterns, Money Flow\n🕵️ Footprint 58/100: Stealth volume — buying while price still flat\nEntry ₹264.1 · SL ₹257.57 (-2.5%)\nT1 ₹272.81 (+3.3%) by ~10h · T2 +5.8% · T3 +8.2%\nPlan (₹1L, 1% risk): buy 153 sh · risk ₹999.09 · reward T1 ₹1332.63 · R:R 1:1.33\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#EMKAY #swingtrading #nifty",
           "generators": [
             "Volume + Accumulation",
             "Harmonic & Chart Patterns",
@@ -89,7 +89,7 @@
             "capital": 100000,
             "riskPct": 1,
             "shares": 153,
-            "deploy": 40460.85,
+            "deploy": 40407.3,
             "riskRs": 999.09,
             "rewardT1Rs": 1332.63
           }
@@ -1004,14 +1004,13 @@
             "symbol": "NIFTY",
             "spot": 24055.8,
             "aligned": "SHORT",
-            "net": -8,
+            "net": -9,
             "longs": 0,
-            "shorts": 8,
+            "shorts": 9,
             "phase": "MARKDOWN",
             "phaseCount": {
               "RANGE": 1,
-              "MARKDOWN": 8,
-              "ACCUMULATION": 1
+              "MARKDOWN": 9
             },
             "timeframes": [
               {
@@ -1240,24 +1239,32 @@
               },
               {
                 "tf": "4h",
-                "dir": "NEUTRAL",
-                "phase": "ACCUMULATION",
-                "score": 0,
+                "dir": "SHORT",
+                "phase": "MARKDOWN",
+                "score": -3,
                 "trend": -3,
                 "dist": 0,
-                "accu": 3,
+                "accu": 0,
                 "entry": 24055.8,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
+                "sl": 24238.48,
+                "targets": [
+                  23812.23,
+                  23629.56,
+                  23446.88
+                ],
+                "etaDates": [
+                  "2026-09-03",
+                  "2026-09-07",
+                  "2026-09-08"
+                ],
+                "rr": 1.33,
                 "poc": 23092.79,
                 "vah": 23114.07,
                 "val": 23071.5,
                 "vwap": 24055.8,
-                "rsi": 40,
+                "rsi": 43,
                 "fib": "78.6%",
-                "reason": "✅ ACCUMULATION — smart money buying the dip · sell-side liquidity swept + hammer → smart money ACCUMULATING · falling EMA stack · at 78.6% Fib 24128.44"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 24128.44"
               },
               {
                 "tf": "1D",
@@ -1268,11 +1275,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 24055.8,
-                "sl": 24319.65,
+                "sl": 24321.22,
                 "targets": [
-                  23704,
-                  23440.15,
-                  23176.3
+                  23701.9,
+                  23436.48,
+                  23171.06
                 ],
                 "etaDates": [
                   "2026-09-04",
@@ -1282,9 +1289,9 @@
                 "rr": 1.33,
                 "poc": 24105.93,
                 "vah": 24781.71,
-                "val": 23118.25,
-                "vwap": 24225.24,
-                "rsi": 43,
+                "val": 23014.28,
+                "vwap": 24233.54,
+                "rsi": 42,
                 "fib": "61.8%",
                 "reason": "markdown — trend down, no accumulation yet · at 61.8% Fib 24052.48"
               }
@@ -1352,13 +1359,13 @@
             "symbol": "BANKNIFTY",
             "spot": 57409.6,
             "aligned": "SHORT",
-            "net": -8,
+            "net": -9,
             "longs": 0,
-            "shorts": 8,
+            "shorts": 9,
             "phase": "MARKDOWN",
             "phaseCount": {
-              "RANGE": 2,
-              "MARKDOWN": 8
+              "RANGE": 1,
+              "MARKDOWN": 9
             },
             "timeframes": [
               {
@@ -1587,39 +1594,47 @@
               },
               {
                 "tf": "4h",
-                "dir": "NEUTRAL",
-                "phase": "RANGE",
-                "score": -1,
-                "trend": -1,
+                "dir": "SHORT",
+                "phase": "MARKDOWN",
+                "score": -2,
+                "trend": -2,
                 "dist": 0,
                 "accu": 0,
                 "entry": 57409.6,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
+                "sl": 57993.63,
+                "targets": [
+                  56630.9,
+                  56046.87,
+                  55462.85
+                ],
+                "etaDates": [
+                  "2026-09-03",
+                  "2026-09-07",
+                  "2026-09-08"
+                ],
+                "rr": 1.33,
                 "poc": 52858.37,
                 "vah": 52932.38,
                 "val": 52784.35,
                 "vwap": 57409.6,
-                "rsi": 48,
+                "rsi": 49,
                 "fib": "61.8%",
-                "reason": "at 61.8% Fib 57477.8"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 57477.8"
               },
               {
                 "tf": "1D",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -3,
-                "trend": -3,
+                "score": -2,
+                "trend": -2,
                 "dist": 0,
                 "accu": 0,
                 "entry": 57409.6,
-                "sl": 58250.5,
+                "sl": 58268.5,
                 "targets": [
-                  56288.41,
-                  55447.51,
-                  54606.62
+                  56264.41,
+                  55405.52,
+                  54546.62
                 ],
                 "etaDates": [
                   "2026-09-04",
@@ -1630,7 +1645,7 @@
                 "poc": 57778.98,
                 "vah": 59402.85,
                 "val": 53202.6,
-                "vwap": 57524.55,
+                "vwap": 57549.84,
                 "rsi": 48,
                 "fib": "50%",
                 "reason": "markdown — trend down, no accumulation yet · at 50% Fib 57310.23"
@@ -1688,15 +1703,14 @@
           "name": "Gold (Spot XAU/USD)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4384.81,
+            "spot": 4382.12,
             "aligned": "SHORT",
-            "net": -8,
+            "net": -9,
             "longs": 0,
-            "shorts": 8,
-            "phase": "ACCUMULATION",
+            "shorts": 9,
+            "phase": "MARKDOWN",
             "phaseCount": {
-              "MARKDOWN": 6,
-              "ACCUMULATION": 3,
+              "MARKDOWN": 9,
               "RANGE": 1
             },
             "timeframes": [
@@ -1704,16 +1718,16 @@
                 "tf": "15m",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -3,
-                "trend": -3,
+                "score": -5,
+                "trend": -5,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
-                "sl": 4399.37,
+                "entry": 4382.12,
+                "sl": 4395.52,
                 "targets": [
-                  4365.39,
-                  4350.83,
-                  4336.27
+                  4364.25,
+                  4350.85,
+                  4337.46
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1721,28 +1735,28 @@
                   "2026-09-02"
                 ],
                 "rr": 1.33,
-                "poc": 4440.38,
-                "vah": 4472.98,
-                "val": 4426.41,
-                "vwap": 4411.15,
-                "rsi": 36,
+                "poc": 4439.64,
+                "vah": 4467.41,
+                "val": 4423.57,
+                "vwap": 4403.43,
+                "rsi": 39,
                 "fib": "78.6%",
-                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 4433.84"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 4431.23"
               },
               {
                 "tf": "35m",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -4,
-                "trend": -4,
+                "score": -3,
+                "trend": -3,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
-                "sl": 4406.2,
+                "entry": 4382.12,
+                "sl": 4404.21,
                 "targets": [
-                  4356.28,
-                  4334.89,
-                  4313.5
+                  4352.67,
+                  4330.59,
+                  4308.5
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1750,11 +1764,11 @@
                   "2026-09-02"
                 ],
                 "rr": 1.33,
-                "poc": 4611.47,
-                "vah": 4642.41,
-                "val": 4449.91,
-                "vwap": 4428.72,
-                "rsi": 32,
+                "poc": 4609.18,
+                "vah": 4640.12,
+                "val": 4447.62,
+                "vwap": 4423.95,
+                "rsi": 33,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 4434.81"
               },
@@ -1762,16 +1776,16 @@
                 "tf": "45m",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -5,
-                "trend": -5,
+                "score": -4,
+                "trend": -4,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
-                "sl": 4409.65,
+                "entry": 4382.12,
+                "sl": 4404.72,
                 "targets": [
-                  4351.7,
-                  4326.86,
-                  4302.02
+                  4351.99,
+                  4329.4,
+                  4306.8
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1779,28 +1793,28 @@
                   "2026-09-02"
                 ],
                 "rr": 1.33,
-                "poc": 4617.76,
-                "vah": 4685.31,
-                "val": 4478.67,
-                "vwap": 4430.34,
-                "rsi": 31,
+                "poc": 4615.47,
+                "vah": 4683.02,
+                "val": 4476.38,
+                "vwap": 4426.3,
+                "rsi": 32,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 4434.81"
               },
               {
                 "tf": "75m",
                 "dir": "SHORT",
-                "phase": "ACCUMULATION",
-                "score": -2,
+                "phase": "MARKDOWN",
+                "score": -5,
                 "trend": -5,
                 "dist": 0,
-                "accu": 3,
-                "entry": 4384.81,
-                "sl": 4419.24,
+                "accu": 0,
+                "entry": 4382.12,
+                "sl": 4415.27,
                 "targets": [
-                  4338.9,
-                  4304.47,
-                  4270.04
+                  4337.92,
+                  4304.77,
+                  4271.62
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1808,28 +1822,28 @@
                   "2026-09-03"
                 ],
                 "rr": 1.33,
-                "poc": 4653.84,
-                "vah": 4692.31,
-                "val": 4521.31,
-                "vwap": 4490.19,
+                "poc": 4651.55,
+                "vah": 4690.02,
+                "val": 4519.02,
+                "vwap": 4483.72,
                 "rsi": 30,
                 "fib": "78.6%",
-                "reason": "✅ ACCUMULATION — smart money buying the dip · sell-side liquidity swept + hammer → smart money ACCUMULATING · falling EMA stack"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack"
               },
               {
                 "tf": "90m",
                 "dir": "SHORT",
-                "phase": "ACCUMULATION",
-                "score": -2,
+                "phase": "MARKDOWN",
+                "score": -5,
                 "trend": -5,
                 "dist": 0,
-                "accu": 3,
-                "entry": 4384.81,
-                "sl": 4422.75,
+                "accu": 0,
+                "entry": 4382.12,
+                "sl": 4418.53,
                 "targets": [
-                  4334.23,
-                  4296.29,
-                  4258.36
+                  4333.58,
+                  4297.17,
+                  4260.77
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1837,28 +1851,28 @@
                   "2026-09-03"
                 ],
                 "rr": 1.33,
-                "poc": 4648.15,
-                "vah": 4699.98,
-                "val": 4483.21,
-                "vwap": 4495.42,
+                "poc": 4645.86,
+                "vah": 4697.69,
+                "val": 4480.92,
+                "vwap": 4490.98,
                 "rsi": 27,
                 "fib": "78.6%",
-                "reason": "✅ ACCUMULATION — smart money buying the dip · sell-side liquidity swept + hammer → smart money ACCUMULATING · falling EMA stack"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack"
               },
               {
                 "tf": "1h",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -5,
-                "trend": -5,
+                "score": -4,
+                "trend": -4,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
-                "sl": 4412.53,
+                "entry": 4382.12,
+                "sl": 4409.04,
                 "targets": [
-                  4347.85,
-                  4320.13,
-                  4292.41
+                  4346.22,
+                  4319.3,
+                  4292.38
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1866,10 +1880,10 @@
                   "2026-09-03"
                 ],
                 "rr": 1.33,
-                "poc": 4653.84,
-                "vah": 4700.86,
-                "val": 4572.61,
-                "vwap": 4436.15,
+                "poc": 4651.55,
+                "vah": 4707.12,
+                "val": 4570.32,
+                "vwap": 4430.43,
                 "rsi": 33,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 4438.02"
@@ -1882,12 +1896,12 @@
                 "trend": -5,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
-                "sl": 4426.88,
+                "entry": 4382.12,
+                "sl": 4425.38,
                 "targets": [
-                  4328.71,
-                  4286.63,
-                  4244.56
+                  4324.45,
+                  4281.19,
+                  4237.94
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -1895,34 +1909,42 @@
                   "2026-09-04"
                 ],
                 "rr": 1.33,
-                "poc": 4616.9,
-                "vah": 4689.93,
-                "val": 4427.02,
-                "vwap": 4518.26,
+                "poc": 4614.61,
+                "vah": 4687.64,
+                "val": 4424.73,
+                "vwap": 4514.39,
                 "rsi": 30,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack"
               },
               {
                 "tf": "3h",
-                "dir": "NEUTRAL",
-                "phase": "ACCUMULATION",
-                "score": 0,
+                "dir": "SHORT",
+                "phase": "MARKDOWN",
+                "score": -5,
                 "trend": -5,
                 "dist": 0,
-                "accu": 5,
-                "entry": 4384.81,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
-                "poc": 4416.46,
-                "vah": 4642.45,
-                "val": 4324.39,
-                "vwap": 4555.83,
-                "rsi": 29,
+                "accu": 0,
+                "entry": 4382.12,
+                "sl": 4437.63,
+                "targets": [
+                  4308.11,
+                  4252.61,
+                  4197.1
+                ],
+                "etaDates": [
+                  "2026-09-03",
+                  "2026-09-04",
+                  "2026-09-07"
+                ],
+                "rr": 1.33,
+                "poc": 4430.91,
+                "vah": 4640.16,
+                "val": 4322.1,
+                "vwap": 4548.94,
+                "rsi": 30,
                 "fib": "78.6%",
-                "reason": "✅ ACCUMULATION — smart money buying the dip · sell-side liquidity swept + hammer → smart money ACCUMULATING · oversold & 2.5×ATR below mean → accumulation · falling EMA stack"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack"
               },
               {
                 "tf": "4h",
@@ -1932,12 +1954,12 @@
                 "trend": -5,
                 "dist": 0,
                 "accu": 2,
-                "entry": 4384.81,
-                "sl": 4443.21,
+                "entry": 4382.12,
+                "sl": 4441.44,
                 "targets": [
-                  4306.94,
-                  4248.55,
-                  4190.15
+                  4303.03,
+                  4243.71,
+                  4184.39
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -1945,10 +1967,10 @@
                   "2026-09-08"
                 ],
                 "rr": 1.33,
-                "poc": 4420.45,
-                "vah": 4690.77,
-                "val": 4243.35,
-                "vwap": 4578.29,
+                "poc": 4418.16,
+                "vah": 4688.48,
+                "val": 4241.06,
+                "vwap": 4574.87,
                 "rsi": 25,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · oversold & 2.6×ATR below mean → accumulation · falling EMA stack"
@@ -1961,15 +1983,15 @@
                 "trend": -1,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4384.81,
+                "entry": 4382.12,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 4424.32,
-                "vah": 4891.13,
-                "val": 3957.5,
-                "vwap": 4179.4,
+                "poc": 4422.03,
+                "vah": 4888.84,
+                "val": 3955.21,
+                "vwap": 4184.34,
                 "rsi": 53,
                 "fib": "38.2%",
                 "reason": "at 38.2% Fib 4400.94"
@@ -1977,7 +1999,7 @@
             ]
           },
           "directional": null,
-          "spot": 4384.81,
+          "spot": 4382.12,
           "aligned": "SHORT"
         },
         {
@@ -2239,11 +2261,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 1988.9,
-                "sl": 1939.76,
+                "sl": 1935.88,
                 "targets": [
-                  2054.42,
-                  2103.56,
-                  2152.71
+                  2059.59,
+                  2112.61,
+                  2165.62
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -2251,11 +2273,11 @@
                   "2026-09-08"
                 ],
                 "rr": 1.33,
-                "poc": 1480.41,
+                "poc": 1502.47,
                 "vah": 1579.65,
-                "val": 1204.76,
-                "vwap": 1847.2,
-                "rsi": 75,
+                "val": 1226.81,
+                "vwap": 1849.2,
+                "rsi": 74,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -2541,9 +2563,9 @@
                 "entry": 1156,
                 "sl": 1126.75,
                 "targets": [
-                  1194.99,
+                  1195,
                   1224.24,
-                  1253.48
+                  1253.49
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -2552,9 +2574,9 @@
                 ],
                 "rr": 1.33,
                 "poc": 1171.68,
-                "vah": 1219.7,
+                "vah": 1212.31,
                 "val": 1079.34,
-                "vwap": 1148,
+                "vwap": 1148.93,
                 "rsi": 57,
                 "fib": "50%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 50% Fib 1151.15"
@@ -2796,11 +2818,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2505.5,
-                "sl": 2456.18,
+                "sl": 2457.09,
                 "targets": [
-                  2571.26,
-                  2620.57,
-                  2669.89
+                  2570.04,
+                  2618.45,
+                  2666.86
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -2810,9 +2832,9 @@
                 "rr": 1.33,
                 "poc": 2410.09,
                 "vah": 2502.52,
-                "val": 2274.15,
-                "vwap": 2456.81,
-                "rsi": 61,
+                "val": 2285.02,
+                "vwap": 2455.2,
+                "rsi": 63,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 2491.23"
               },
@@ -2825,11 +2847,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2505.5,
-                "sl": 2443.71,
+                "sl": 2443.42,
                 "targets": [
-                  2587.88,
-                  2649.67,
-                  2711.46
+                  2588.27,
+                  2650.34,
+                  2712.42
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -2837,11 +2859,11 @@
                   "2026-09-07"
                 ],
                 "rr": 1.33,
-                "poc": 2333.96,
+                "poc": 2323.09,
                 "vah": 2437.27,
                 "val": 2230.65,
-                "vwap": 2471.12,
-                "rsi": 59,
+                "vwap": 2472.69,
+                "rsi": 60,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 2491.23"
               },
@@ -2854,11 +2876,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2505.5,
-                "sl": 2431.24,
+                "sl": 2428.63,
                 "targets": [
-                  2604.52,
-                  2678.78,
-                  2753.04
+                  2607.99,
+                  2684.86,
+                  2761.73
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -2866,10 +2888,10 @@
                   "2026-09-08"
                 ],
                 "rr": 1.33,
-                "poc": 2304.13,
+                "poc": 2328.79,
                 "vah": 2445.93,
-                "val": 2211.66,
-                "vwap": 2452.71,
+                "val": 2223.99,
+                "vwap": 2452.37,
                 "rsi": 58,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -3170,11 +3192,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 1880.7,
-                "sl": 1834.4,
+                "sl": 1833.64,
                 "targets": [
-                  1942.43,
-                  1988.72,
-                  2035.02
+                  1943.45,
+                  1990.51,
+                  2037.57
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -3185,8 +3207,8 @@
                 "poc": 1690,
                 "vah": 1881.43,
                 "val": 1612.39,
-                "vwap": 1861.32,
-                "rsi": 55,
+                "vwap": 1860.97,
+                "rsi": 56,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 1885.39"
               },
@@ -3474,9 +3496,9 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 551.59,
-                "vah": 569.88,
-                "val": 510.81,
-                "vwap": 513.58,
+                "vah": 578.31,
+                "val": 519.25,
+                "vwap": 513.05,
                 "rsi": 64,
                 "fib": "38.2%",
                 "reason": ""
@@ -3746,11 +3768,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2369,
-                "sl": 2320.04,
+                "sl": 2319.09,
                 "targets": [
-                  2434.28,
-                  2483.24,
-                  2532.2
+                  2435.55,
+                  2485.47,
+                  2535.38
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -3758,11 +3780,11 @@
                   "2026-09-07"
                 ],
                 "rr": 1.33,
-                "poc": 2241.66,
-                "vah": 2325.64,
-                "val": 2054.32,
-                "vwap": 2336.18,
-                "rsi": 62,
+                "poc": 2215.82,
+                "vah": 2351.48,
+                "val": 2067.24,
+                "vwap": 2338.49,
+                "rsi": 61,
                 "fib": "50%",
                 "reason": "markup — trend up, no distribution yet · at 50% Fib 2358.5"
               },
@@ -4058,10 +4080,10 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 1413.93,
-                "vah": 1468.09,
-                "val": 1385.92,
-                "vwap": 1435.72,
+                "poc": 1421.4,
+                "vah": 1479.29,
+                "val": 1400.86,
+                "vwap": 1434.43,
                 "rsi": 49,
                 "fib": "78.6%",
                 "reason": "at 78.6% Fib 1418.95"
@@ -4368,7 +4390,7 @@
                 "poc": 4040.83,
                 "vah": 4519.72,
                 "val": 3661.01,
-                "vwap": 4620.55,
+                "vwap": 4621.09,
                 "rsi": 56,
                 "fib": "50%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 50% Fib 4638.5"
@@ -4397,7 +4419,7 @@
                 "poc": 4040.83,
                 "vah": 4486.7,
                 "val": 3727.06,
-                "vwap": 4600.77,
+                "vwap": 4600.82,
                 "rsi": 55,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 4633.98"
@@ -4631,11 +4653,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2234,
-                "sl": 2193.65,
+                "sl": 2192.92,
                 "targets": [
-                  2287.8,
-                  2328.14,
-                  2368.49
+                  2288.78,
+                  2329.86,
+                  2370.95
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -4643,10 +4665,10 @@
                   "2026-09-04"
                 ],
                 "rr": 1.33,
-                "poc": 1798.33,
-                "vah": 2028.5,
+                "poc": 1811.49,
+                "vah": 2015.35,
                 "val": 1765.45,
-                "vwap": 2178.92,
+                "vwap": 2174.24,
                 "rsi": 62,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -4660,11 +4682,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 2234,
-                "sl": 2183.5,
+                "sl": 2184.3,
                 "targets": [
-                  2301.33,
-                  2351.83,
-                  2402.33
+                  2300.26,
+                  2349.96,
+                  2399.65
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -4672,11 +4694,11 @@
                   "2026-09-07"
                 ],
                 "rr": 1.33,
-                "poc": 1824.73,
+                "poc": 1811.18,
                 "vah": 1926.29,
                 "val": 1750.24,
-                "vwap": 2118.73,
-                "rsi": 67,
+                "vwap": 2121.03,
+                "rsi": 68,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -4684,16 +4706,16 @@
                 "tf": "4h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 3,
-                "trend": 3,
+                "score": 4,
+                "trend": 4,
                 "dist": 0,
                 "accu": 0,
                 "entry": 2234,
-                "sl": 2177.34,
+                "sl": 2177.56,
                 "targets": [
-                  2309.55,
-                  2366.21,
-                  2422.86
+                  2309.26,
+                  2365.7,
+                  2422.15
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -4701,11 +4723,11 @@
                   "2026-09-08"
                 ],
                 "rr": 1.33,
-                "poc": 1811.18,
-                "vah": 1966.92,
-                "val": 1777.33,
-                "vwap": 2038.26,
-                "rsi": 69,
+                "poc": 1838.27,
+                "vah": 1953.38,
+                "val": 1763.78,
+                "vwap": 2037.63,
+                "rsi": 72,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -4977,16 +4999,16 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 3,
-                "trend": 3,
+                "score": 4,
+                "trend": 4,
                 "dist": 0,
                 "accu": 0,
                 "entry": 46.45,
-                "sl": 45.08,
+                "sl": 45.12,
                 "targets": [
-                  48.28,
-                  49.66,
-                  51.03
+                  48.23,
+                  49.56,
+                  50.89
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -4997,8 +5019,8 @@
                 "poc": 40.3,
                 "vah": 44.16,
                 "val": 39.74,
-                "vwap": 44.46,
-                "rsi": 64,
+                "vwap": 44.52,
+                "rsi": 63,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -5292,16 +5314,16 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 2,
-                "trend": 2,
+                "score": 3,
+                "trend": 3,
                 "dist": 0,
                 "accu": 0,
                 "entry": 1638,
-                "sl": 1605.03,
+                "sl": 1604.03,
                 "targets": [
-                  1681.96,
-                  1714.93,
-                  1747.9
+                  1683.3,
+                  1717.27,
+                  1751.25
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -5312,7 +5334,7 @@
                 "poc": 1647.55,
                 "vah": 1685.5,
                 "val": 1466.25,
-                "vwap": 1617.15,
+                "vwap": 1619.59,
                 "rsi": 59,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 1625.9"
@@ -5567,11 +5589,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 1167.8,
-                "sl": 1143.85,
+                "sl": 1146.46,
                 "targets": [
-                  1199.73,
-                  1223.68,
-                  1247.63
+                  1196.26,
+                  1217.6,
+                  1238.95
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -5580,10 +5602,10 @@
                 ],
                 "rr": 1.33,
                 "poc": 1119.37,
-                "vah": 1162.89,
+                "vah": 1165.69,
                 "val": 1103.93,
-                "vwap": 1143.7,
-                "rsi": 57,
+                "vwap": 1141.99,
+                "rsi": 59,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -5596,11 +5618,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 1167.8,
-                "sl": 1138.52,
+                "sl": 1138.34,
                 "targets": [
-                  1206.85,
-                  1236.13,
-                  1265.41
+                  1207.08,
+                  1236.54,
+                  1266
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -5609,9 +5631,9 @@
                 ],
                 "rr": 1.33,
                 "poc": 1113.41,
-                "vah": 1169.92,
-                "val": 1091.97,
-                "vwap": 1154.41,
+                "vah": 1177.72,
+                "val": 1095.87,
+                "vwap": 1153.65,
                 "rsi": 58,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 1162.1"
@@ -5625,11 +5647,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 1167.8,
-                "sl": 1135.04,
+                "sl": 1137.86,
                 "targets": [
-                  1211.48,
-                  1244.24,
-                  1277
+                  1207.72,
+                  1237.66,
+                  1267.61
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -5639,9 +5661,9 @@
                 "rr": 1.33,
                 "poc": 1114.58,
                 "vah": 1181.41,
-                "val": 1055.61,
-                "vwap": 1150.17,
-                "rsi": 60,
+                "val": 1047.75,
+                "vwap": 1150.53,
+                "rsi": 59,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 1162.1"
               },
@@ -5739,7 +5761,7 @@
           "kind": "Commodity",
           "direction": "RANGE",
           "dirTone": "flat",
-          "spot": 4385.2,
+          "spot": 4382.12,
           "lot": null,
           "grade": "B",
           "optionPlay": "Range — sell strangle",
@@ -6671,7 +6693,7 @@
               "by": "~12h"
             },
             {
-              "price": 3414.3,
+              "price": 3414.31,
               "pct": 3.3,
               "by": "~20h"
             }
@@ -6995,37 +7017,37 @@
           "label": "🚀 Momentum & Early Movers",
           "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
           "direction": "LONG",
-          "ltp": 270,
-          "entry": 270,
+          "ltp": 269.75,
+          "entry": 269.75,
           "sl": 265.4,
-          "slPct": -1.7,
+          "slPct": -1.6,
           "targets": [
             {
-              "price": 274.03,
+              "price": 273.78,
               "pct": 1.5,
               "by": "~3h",
               "days": 3
             },
             {
-              "price": 277.05,
+              "price": 276.8,
               "pct": 2.6,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 280.07,
+              "price": 279.82,
               "pct": 3.7,
               "by": "~21h",
               "days": 21
             }
           ],
-          "rr": 0.88,
-          "rsi": 50.5,
+          "rr": 0.93,
+          "rsi": 49.7,
           "confidence": 25,
           "accuracy": 25,
           "backtestTrades": 4,
           "delivery": null,
-          "changePct": 1.43,
+          "changePct": 1.33,
           "setupType": "Squeeze breakout",
           "footprint": {
             "score": 62,
@@ -7037,12 +7059,12 @@
             "strong": true
           },
           "rs": {
-            "rs20": 0.003,
-            "rs50": 0.008,
+            "rs20": 0.002,
+            "rs50": 0.007,
             "leader": true
           },
-          "social": "DHARMAJ — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹270 · Entry ₹270 · SL ₹265.4 (-1.7%)\nT1 ₹274.03 (+1.5%) by ~3h\nT2 ₹277.05 (+2.6%) · T3 ₹280.07 (+3.7%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #DHARMAJ #swingtrading #nifty",
-          "_momScore": 90,
+          "social": "DHARMAJ — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹269.75 · Entry ₹269.75 · SL ₹265.4 (-1.6%)\nT1 ₹273.78 (+1.5%) by ~3h\nT2 ₹276.8 (+2.6%) · T3 ₹279.82 (+3.7%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #DHARMAJ #swingtrading #nifty",
+          "_momScore": 94,
           "movingNow": false
         },
         {
@@ -7604,6 +7626,68 @@
         },
         {
           "generator": "momentum",
+          "symbol": "ARVINDFASN",
+          "name": "Arvind Fashions Ltd.",
+          "sector": "Consumer Services",
+          "indices": [
+            "NIFTY Total Market",
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
+          "direction": "LONG",
+          "ltp": 458.8,
+          "entry": 458.8,
+          "sl": 443.93,
+          "slPct": -3.2,
+          "targets": [
+            {
+              "price": 469.47,
+              "pct": 2.3,
+              "by": "~10h",
+              "days": 10
+            },
+            {
+              "price": 477.47,
+              "pct": 4.1,
+              "by": "~13h",
+              "days": 13
+            },
+            {
+              "price": 485.47,
+              "pct": 5.8,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 0.72,
+          "rsi": 64.7,
+          "confidence": 25,
+          "accuracy": 25,
+          "backtestTrades": 4,
+          "delivery": null,
+          "changePct": 0.3,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.038,
+            "rs50": 0.03,
+            "leader": true
+          },
+          "social": "ARVINDFASN — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹458.8 · Entry ₹458.8 · SL ₹443.93 (-3.2%)\nT1 ₹469.47 (+2.3%) by ~10h\nT2 ₹477.47 (+4.1%) · T3 ₹485.47 (+5.8%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ARVINDFASN #swingtrading #nifty",
+          "_momScore": 63,
+          "movingNow": false
+        },
+        {
+          "generator": "momentum",
           "symbol": "NIVABUPA",
           "name": "Niva Bupa Health Insurance Company Ltd.",
           "sector": "Financial Services",
@@ -7664,68 +7748,6 @@
             "leader": true
           },
           "social": "NIVABUPA — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹82.3 · Entry ₹82.3 · SL ₹80 (-2.8%)\nT1 ₹83.78 (+1.8%) by ~6h\nT2 ₹84.89 (+3.1%) · T3 ₹86 (+4.5%)\nSetup score 94/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #NIVABUPA #swingtrading #nifty",
-          "_momScore": 62,
-          "movingNow": false
-        },
-        {
-          "generator": "momentum",
-          "symbol": "ARVINDFASN",
-          "name": "Arvind Fashions Ltd.",
-          "sector": "Consumer Services",
-          "indices": [
-            "NIFTY Total Market",
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
-          "direction": "LONG",
-          "ltp": 458.05,
-          "entry": 458.05,
-          "sl": 443.95,
-          "slPct": -3.1,
-          "targets": [
-            {
-              "price": 468.55,
-              "pct": 2.3,
-              "by": "~10h",
-              "days": 10
-            },
-            {
-              "price": 476.43,
-              "pct": 4,
-              "by": "~13h",
-              "days": 13
-            },
-            {
-              "price": 484.31,
-              "pct": 5.7,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 0.74,
-          "rsi": 63.9,
-          "confidence": 25,
-          "accuracy": 25,
-          "backtestTrades": 4,
-          "delivery": null,
-          "changePct": 0.13,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 70,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "strong": true
-          },
-          "rs": {
-            "rs20": 0.036,
-            "rs50": 0.028,
-            "leader": true
-          },
-          "social": "ARVINDFASN — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹458.05 · Entry ₹458.05 · SL ₹443.95 (-3.1%)\nT1 ₹468.55 (+2.3%) by ~10h\nT2 ₹476.43 (+4%) · T3 ₹484.31 (+5.7%)\nBacktested first-target hit ~25% over 4 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #ARVINDFASN #swingtrading #nifty",
           "_momScore": 62,
           "movingNow": false
         },
@@ -7910,66 +7932,6 @@
           },
           "social": "JPOLYINVST — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹1011.8 · Entry ₹1011.8 · SL ₹988.13 (-2.3%)\nT1 ₹1043.36 (+3.1%) by ~6h\nT2 ₹1067.03 (+5.5%) · T3 ₹1090.7 (+7.8%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #JPOLYINVST #swingtrading #nifty",
           "_momScore": 61,
-          "movingNow": false
-        },
-        {
-          "generator": "momentum",
-          "symbol": "GILLANDERS",
-          "name": "Gillanders Arbuthnot & Company Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "🚀 Momentum & Early Movers",
-          "reason": "Squeeze firing — volatility expanding up (+1.9%)",
-          "direction": "LONG",
-          "ltp": 106.97,
-          "entry": 106.97,
-          "sl": 103.18,
-          "slPct": -3.5,
-          "targets": [
-            {
-              "price": 111.44,
-              "pct": 4.2,
-              "by": "~5h",
-              "days": 5
-            },
-            {
-              "price": 114.78,
-              "pct": 7.3,
-              "by": "~12h",
-              "days": 12
-            },
-            {
-              "price": 118.13,
-              "pct": 10.4,
-              "by": "~21h",
-              "days": 21
-            }
-          ],
-          "rr": 1.18,
-          "rsi": 54.1,
-          "confidence": 92,
-          "accuracy": null,
-          "backtestTrades": 2,
-          "delivery": null,
-          "changePct": 1.88,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 42,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base"
-            ],
-            "weak": true
-          },
-          "rs": {
-            "rs20": 0.023,
-            "rs50": 0.118,
-            "leader": true
-          },
-          "social": "GILLANDERS — 🚀 Momentum & Early Movers setup 📈\nSqueeze firing — volatility expanding up (+1.9%)\nLTP ₹106.97 · Entry ₹106.97 · SL ₹103.18 (-3.5%)\nT1 ₹111.44 (+4.2%) by ~5h\nT2 ₹114.78 (+7.3%) · T3 ₹118.13 (+10.4%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #GILLANDERS #swingtrading #nifty",
-          "_momScore": 60,
           "movingNow": false
         },
         {
@@ -8404,6 +8366,72 @@
           "social": "COFORGE — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹1988.9 · Entry ₹1988.9 · SL ₹1957.78 (-1.6%)\nT1 ₹2024.06 (+1.8%) by ~6h\nT2 ₹2050.42 (+3.1%) · T3 ₹2076.79 (+4.4%)\nBacktested first-target hit ~60% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #COFORGE #swingtrading #nifty",
           "_momScore": 58,
           "movingNow": false
+        },
+        {
+          "generator": "momentum",
+          "symbol": "IDBI",
+          "name": "IDBI Bank Ltd.",
+          "sector": "Financial Services",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Smallcap 100",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "🚀 Momentum & Early Movers",
+          "reason": "🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat",
+          "direction": "LONG",
+          "ltp": 92.06,
+          "entry": 92.06,
+          "sl": 89.05,
+          "slPct": -3.3,
+          "targets": [
+            {
+              "price": 94.22,
+              "pct": 2.3,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 95.85,
+              "pct": 4.1,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 97.47,
+              "pct": 5.9,
+              "by": "~10h",
+              "days": 10
+            }
+          ],
+          "rr": 0.72,
+          "rsi": 55.9,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0.07,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.004,
+            "rs50": 0.126,
+            "leader": true
+          },
+          "social": "IDBI — 🚀 Momentum & Early Movers setup 📈\n🕵️ Accumulation footprint — smart money in before the move: Stealth volume — buying while price still flat\nLTP ₹92.06 · Entry ₹92.06 · SL ₹89.05 (-3.3%)\nT1 ₹94.22 (+2.3%) by ~3h\nT2 ₹95.85 (+4.1%) · T3 ₹97.47 (+5.9%)\nSetup score 100/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #IDBI #swingtrading #nifty",
+          "_momScore": 58,
+          "movingNow": false
         }
       ]
     },
@@ -8704,7 +8732,7 @@
       "label": "📉 Short / Sell",
       "color": "#F23645",
       "desc": "The SELL side — identify DISTRIBUTION, tops, bull-traps & profit-booking BEFORE the drop. Three setups: breakdown below 20-day support (distribution), overbought rejection at the highs (profit-booking/reversal), and a failed breakout (bull trap). SHORT with stop ABOVE structure, targets below; F&O-eligible names trade as PE / short futures. Liquid names only.",
-      "count": 7,
+      "count": 6,
       "signals": [
         {
           "generator": "short_sell",
@@ -8959,55 +8987,6 @@
           "optionPlay": "Buy PE (bearish) / short futures — Bull trap — failed breakout",
           "delivery": null,
           "social": "📉 FORCEMOT — SELL/SHORT (Bull trap — failed breakout)\nBull trap: poked above ₹18038 then closed back below — trapped longs will sell\nEntry ₹17722 · SL ₹18069 · T1 ₹17201.5\n📌 Educational only, not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "short_sell",
-          "symbol": "KIRLOSENG",
-          "name": "Kirloskar Oil Eng Ltd.",
-          "sector": "Capital Goods",
-          "indices": [
-            "NIFTY 500",
-            "NIFTY Total Market",
-            "NIFTY MidSmallcap 400",
-            "NIFTY Smallcap 250",
-            "NSE Equity"
-          ],
-          "label": "📉 Short / Sell",
-          "direction": "SHORT",
-          "dirTone": "down",
-          "setupType": "Bull trap — failed breakout",
-          "ltp": 2138.3,
-          "entry": 2138.3,
-          "sl": 2179.43,
-          "slPct": 1.9,
-          "targets": [
-            {
-              "price": 2076.61,
-              "pct": 2.9,
-              "by": "~4h",
-              "days": 4
-            },
-            {
-              "price": 2035.48,
-              "pct": 4.8,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 1973.78,
-              "pct": 7.7,
-              "by": "~12h",
-              "days": 12
-            }
-          ],
-          "rsi": 61,
-          "confidence": 58,
-          "grade": "B",
-          "rr": 1.5,
-          "reason": "Bull trap: poked above ₹2144.4 then closed back below — trapped longs will sell",
-          "optionPlay": "Buy PE (bearish) / short futures — Bull trap — failed breakout",
-          "delivery": null,
-          "social": "📉 KIRLOSENG — SELL/SHORT (Bull trap — failed breakout)\nBull trap: poked above ₹2144.4 then closed back below — trapped longs will sell\nEntry ₹2138.3 · SL ₹2179.43 · T1 ₹2076.61\n📌 Educational only, not advice. Not SEBI-registered."
         },
         {
           "generator": "short_sell",
@@ -9452,55 +9431,55 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 47/100): Up/down volume 2.41× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow",
+          "reason": "Accumulation (vol 47/100): Up/down volume 2.38× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow",
           "direction": "LONG",
-          "ltp": 573.55,
-          "entry": 573.55,
-          "sl": 566.32,
+          "ltp": 573.95,
+          "entry": 573.95,
+          "sl": 566.63,
           "slPct": -1.3,
           "targets": [
             {
-              "price": 583.18,
+              "price": 583.71,
               "pct": 1.7,
               "by": "~11h",
               "days": 11
             },
             {
-              "price": 590.41,
-              "pct": 2.9,
+              "price": 591.02,
+              "pct": 3,
               "by": "~14h",
               "days": 14
             },
             {
-              "price": 597.63,
+              "price": 598.34,
               "pct": 4.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 50.7,
+          "rsi": 51.4,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 2,
           "delivery": null,
-          "changePct": -0.13,
+          "changePct": -0.06,
           "setupType": "Squeeze breakout",
           "footprint": {
             "score": 50,
             "flags": [
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base",
-              "Up/down volume 2.41× (accumulation)"
+              "Up/down volume 2.38× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.009,
-            "rs50": 0.023,
+            "rs20": 0.01,
+            "rs50": 0.024,
             "leader": true
           },
-          "social": "AJAXENGG — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Up/down volume 2.41× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow\nLTP ₹573.55 · Entry ₹573.55 · SL ₹566.32 (-1.3%)\nT1 ₹583.18 (+1.7%) by ~11h\nT2 ₹590.41 (+2.9%) · T3 ₹597.63 (+4.2%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AJAXENGG #swingtrading #nifty"
+          "social": "AJAXENGG — Volume + Accumulation setup 📈\nAccumulation (vol 47/100): Up/down volume 2.38× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow\nLTP ₹573.95 · Entry ₹573.95 · SL ₹566.63 (-1.3%)\nT1 ₹583.71 (+1.7%) by ~11h\nT2 ₹591.02 (+3%) · T3 ₹598.34 (+4.2%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AJAXENGG #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -10097,55 +10076,55 @@
             "NSE Equity"
           ],
           "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 67/100): Up/down volume 2.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
+          "reason": "Accumulation (vol 67/100): Up/down volume 2.18× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
           "direction": "LONG",
-          "ltp": 264.45,
-          "entry": 264.45,
-          "sl": 257.92,
+          "ltp": 264.1,
+          "entry": 264.1,
+          "sl": 257.57,
           "slPct": -2.5,
           "targets": [
             {
-              "price": 273.16,
+              "price": 272.81,
               "pct": 3.3,
               "by": "~10h",
               "days": 10
             },
             {
-              "price": 279.69,
+              "price": 279.34,
               "pct": 5.8,
               "by": "~13h",
               "days": 13
             },
             {
-              "price": 286.22,
+              "price": 285.87,
               "pct": 8.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 67.1,
+          "rsi": 66.3,
           "confidence": 92,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": -0.75,
+          "changePct": -0.88,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.2× (accumulation)"
+              "Up/down volume 2.18× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.081,
-            "rs50": 0.105,
+            "rs20": 0.08,
+            "rs50": 0.104,
             "leader": true
           },
-          "social": "EMKAY — Volume + Accumulation setup 📈\nAccumulation (vol 67/100): Up/down volume 2.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat\nLTP ₹264.45 · Entry ₹264.45 · SL ₹257.92 (-2.5%)\nT1 ₹273.16 (+3.3%) by ~10h\nT2 ₹279.69 (+5.8%) · T3 ₹286.22 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
+          "social": "EMKAY — Volume + Accumulation setup 📈\nAccumulation (vol 67/100): Up/down volume 2.18× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat\nLTP ₹264.1 · Entry ₹264.1 · SL ₹257.57 (-2.5%)\nT1 ₹272.81 (+3.3%) by ~10h\nT2 ₹279.34 (+5.8%) · T3 ₹285.87 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
         },
         {
           "generator": "vol_accum",
@@ -11138,53 +11117,53 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 573.55,
-          "entry": 573.55,
-          "sl": 566.32,
+          "ltp": 573.95,
+          "entry": 573.95,
+          "sl": 566.63,
           "slPct": -1.3,
           "targets": [
             {
-              "price": 583.18,
+              "price": 583.71,
               "pct": 1.7,
               "by": "~11h",
               "days": 11
             },
             {
-              "price": 590.41,
-              "pct": 2.9,
+              "price": 591.02,
+              "pct": 3,
               "by": "~14h",
               "days": 14
             },
             {
-              "price": 597.63,
+              "price": 598.34,
               "pct": 4.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 50.7,
+          "rsi": 51.4,
           "confidence": 95,
           "accuracy": null,
           "backtestTrades": 2,
           "delivery": null,
-          "changePct": -0.13,
+          "changePct": -0.06,
           "setupType": "Squeeze breakout",
           "footprint": {
             "score": 50,
             "flags": [
               "Outperforming NIFTY (relative-strength leader)",
               "Volatility coiled in a tight base",
-              "Up/down volume 2.41× (accumulation)"
+              "Up/down volume 2.38× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.009,
-            "rs50": 0.023,
+            "rs20": 0.01,
+            "rs50": 0.024,
             "leader": true
           },
-          "social": "AJAXENGG — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone\nLTP ₹573.55 · Entry ₹573.55 · SL ₹566.32 (-1.3%)\nT1 ₹583.18 (+1.7%) by ~11h\nT2 ₹590.41 (+2.9%) · T3 ₹597.63 (+4.2%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AJAXENGG #swingtrading #nifty"
+          "social": "AJAXENGG — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace + Ascending Triangle — pattern breakout/continuation zone\nLTP ₹573.95 · Entry ₹573.95 · SL ₹566.63 (-1.3%)\nT1 ₹583.71 (+1.7%) by ~11h\nT2 ₹591.02 (+3%) · T3 ₹598.34 (+4.2%)\nSetup score 95/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #AJAXENGG #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -11607,53 +11586,53 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Ascending Triangle — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 264.45,
-          "entry": 264.45,
-          "sl": 257.92,
+          "ltp": 264.1,
+          "entry": 264.1,
+          "sl": 257.57,
           "slPct": -2.5,
           "targets": [
             {
-              "price": 273.16,
+              "price": 272.81,
               "pct": 3.3,
               "by": "~10h",
               "days": 10
             },
             {
-              "price": 279.69,
+              "price": 279.34,
               "pct": 5.8,
               "by": "~13h",
               "days": 13
             },
             {
-              "price": 286.22,
+              "price": 285.87,
               "pct": 8.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 67.1,
+          "rsi": 66.3,
           "confidence": 92,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": -0.75,
+          "changePct": -0.88,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.2× (accumulation)"
+              "Up/down volume 2.18× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.081,
-            "rs50": 0.105,
+            "rs20": 0.08,
+            "rs50": 0.104,
             "leader": true
           },
-          "social": "EMKAY — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹264.45 · Entry ₹264.45 · SL ₹257.92 (-2.5%)\nT1 ₹273.16 (+3.3%) by ~10h\nT2 ₹279.69 (+5.8%) · T3 ₹286.22 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
+          "social": "EMKAY — Harmonic & Chart Patterns setup 📈\nBullish Ascending Triangle — pattern breakout/continuation zone\nLTP ₹264.1 · Entry ₹264.1 · SL ₹257.57 (-2.5%)\nT1 ₹272.81 (+3.3%) by ~10h\nT2 ₹279.34 (+5.8%) · T3 ₹285.87 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -12560,37 +12539,37 @@
           "label": "Harmonic & Chart Patterns",
           "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
           "direction": "LONG",
-          "ltp": 109,
-          "entry": 109,
+          "ltp": 109.04,
+          "entry": 109.04,
           "sl": 103.73,
-          "slPct": -4.8,
+          "slPct": -4.9,
           "targets": [
             {
-              "price": 113.73,
+              "price": 113.77,
               "pct": 4.3,
               "by": "~6h",
               "days": 6
             },
             {
-              "price": 117.28,
+              "price": 117.32,
               "pct": 7.6,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 120.82,
+              "price": 120.86,
               "pct": 10.8,
               "by": "~21h",
               "days": 21
             }
           ],
-          "rr": 0.9,
-          "rsi": 62.6,
+          "rr": 0.89,
+          "rsi": 62.7,
           "confidence": 83,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": 0.93,
+          "changePct": 0.96,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 38,
@@ -12605,7 +12584,7 @@
             "rs50": 0.056,
             "leader": true
           },
-          "social": "CROWN — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace — pattern breakout/continuation zone\nLTP ₹109 · Entry ₹109 · SL ₹103.73 (-4.8%)\nT1 ₹113.73 (+4.3%) by ~6h\nT2 ₹117.28 (+7.6%) · T3 ₹120.82 (+10.8%)\nSetup score 83/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #CROWN #swingtrading #nifty"
+          "social": "CROWN — Harmonic & Chart Patterns setup 📈\nBullish Bullish ABC retrace — pattern breakout/continuation zone\nLTP ₹109.04 · Entry ₹109.04 · SL ₹103.73 (-4.9%)\nT1 ₹113.77 (+4.3%) by ~6h\nT2 ₹117.32 (+7.6%) · T3 ₹120.86 (+10.8%)\nSetup score 83/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #CROWN #swingtrading #nifty"
         },
         {
           "generator": "harmonic",
@@ -12867,53 +12846,53 @@
           "label": "📊 Point & Figure",
           "reason": "P&F double-top breakout above ₹260.4 (box ₹3.1) with EMA cloud up — noise-filtered demand",
           "direction": "LONG",
-          "ltp": 264.45,
-          "entry": 264.45,
-          "sl": 257.92,
+          "ltp": 264.1,
+          "entry": 264.1,
+          "sl": 257.57,
           "slPct": -2.5,
           "targets": [
             {
-              "price": 273.16,
+              "price": 272.81,
               "pct": 3.3,
               "by": "~10h",
               "days": 10
             },
             {
-              "price": 279.69,
+              "price": 279.34,
               "pct": 5.8,
               "by": "~13h",
               "days": 13
             },
             {
-              "price": 286.22,
+              "price": 285.87,
               "pct": 8.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 67.1,
+          "rsi": 66.3,
           "confidence": 92,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": -0.75,
+          "changePct": -0.88,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.2× (accumulation)"
+              "Up/down volume 2.18× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.081,
-            "rs50": 0.105,
+            "rs20": 0.08,
+            "rs50": 0.104,
             "leader": true
           },
-          "social": "EMKAY — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹260.4 (box ₹3.1) with EMA cloud up — noise-filtered demand\nLTP ₹264.45 · Entry ₹264.45 · SL ₹257.92 (-2.5%)\nT1 ₹273.16 (+3.3%) by ~10h\nT2 ₹279.69 (+5.8%) · T3 ₹286.22 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty",
+          "social": "EMKAY — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹260.4 (box ₹3.1) with EMA cloud up — noise-filtered demand\nLTP ₹264.1 · Entry ₹264.1 · SL ₹257.57 (-2.5%)\nT1 ₹272.81 (+3.3%) by ~10h\nT2 ₹279.34 (+5.8%) · T3 ₹285.87 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty",
           "pnfBox": 3.1,
           "pnfBreak": 260.4
         },
@@ -13616,25 +13595,25 @@
           "label": "📊 Point & Figure",
           "reason": "P&F double-top breakout above ₹1494 (box ₹18) with EMA cloud up — noise-filtered demand",
           "direction": "LONG",
-          "ltp": 1523.2,
-          "entry": 1523.2,
+          "ltp": 1523.5,
+          "entry": 1523.5,
           "sl": 1461.51,
           "slPct": -4.1,
           "targets": [
             {
-              "price": 1569.06,
+              "price": 1569.36,
               "pct": 3,
               "by": "~4h",
               "days": 4
             },
             {
-              "price": 1603.46,
+              "price": 1603.76,
               "pct": 5.3,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 1637.86,
+              "price": 1638.16,
               "pct": 7.5,
               "by": "~21h",
               "days": 21
@@ -13646,23 +13625,23 @@
           "accuracy": null,
           "backtestTrades": 1,
           "delivery": null,
-          "changePct": 0.14,
+          "changePct": 0.16,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 3.36× (accumulation)"
+              "Up/down volume 3.37× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
             "rs20": 0.1,
-            "rs50": 0.277,
+            "rs50": 0.278,
             "leader": true
           },
-          "social": "3BBLACKBIO — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹1494 (box ₹18) with EMA cloud up — noise-filtered demand\nLTP ₹1523.2 · Entry ₹1523.2 · SL ₹1461.51 (-4.1%)\nT1 ₹1569.06 (+3%) by ~4h\nT2 ₹1603.46 (+5.3%) · T3 ₹1637.86 (+7.5%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #3BBLACKBIO #swingtrading #nifty",
+          "social": "3BBLACKBIO — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹1494 (box ₹18) with EMA cloud up — noise-filtered demand\nLTP ₹1523.5 · Entry ₹1523.5 · SL ₹1461.51 (-4.1%)\nT1 ₹1569.36 (+3%) by ~4h\nT2 ₹1603.76 (+5.3%) · T3 ₹1638.16 (+7.5%)\nSetup score 85/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #3BBLACKBIO #swingtrading #nifty",
           "pnfBox": 18,
           "pnfBreak": 1494
         },
@@ -13986,53 +13965,53 @@
           "label": "📊 Point & Figure",
           "reason": "P&F double-top breakout above ₹80 (box ₹1.6) with EMA cloud up — noise-filtered demand",
           "direction": "LONG",
-          "ltp": 82.49,
-          "entry": 82.49,
-          "sl": 80.85,
+          "ltp": 82.43,
+          "entry": 82.43,
+          "sl": 80.78,
           "slPct": -2,
           "targets": [
             {
-              "price": 84.68,
+              "price": 84.63,
               "pct": 2.7,
               "by": "~4h",
               "days": 4
             },
             {
-              "price": 86.32,
-              "pct": 4.6,
+              "price": 86.29,
+              "pct": 4.7,
               "by": "~12h",
               "days": 12
             },
             {
-              "price": 87.96,
-              "pct": 6.6,
+              "price": 87.94,
+              "pct": 6.7,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 74.7,
+          "rsi": 74.6,
           "confidence": 80,
           "accuracy": 80,
           "backtestTrades": 5,
           "delivery": null,
-          "changePct": 0.11,
+          "changePct": 0.04,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 50,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 1.82× (accumulation)"
+              "Up/down volume 1.85× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.138,
-            "rs50": 0.054,
+            "rs20": 0.137,
+            "rs50": 0.053,
             "leader": true
           },
-          "social": "SALSTEEL — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹80 (box ₹1.6) with EMA cloud up — noise-filtered demand\nLTP ₹82.49 · Entry ₹82.49 · SL ₹80.85 (-2%)\nT1 ₹84.68 (+2.7%) by ~4h\nT2 ₹86.32 (+4.6%) · T3 ₹87.96 (+6.6%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SALSTEEL #swingtrading #nifty",
+          "social": "SALSTEEL — 📊 Point & Figure setup 📈\nP&F double-top breakout above ₹80 (box ₹1.6) with EMA cloud up — noise-filtered demand\nLTP ₹82.43 · Entry ₹82.43 · SL ₹80.78 (-2%)\nT1 ₹84.63 (+2.7%) by ~4h\nT2 ₹86.29 (+4.7%) · T3 ₹87.94 (+6.7%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #SALSTEEL #swingtrading #nifty",
           "pnfBox": 1.6,
           "pnfBreak": 80
         },
@@ -16509,53 +16488,53 @@
           "label": "Money Flow",
           "reason": "MFI 67 rising + OBV up — money flowing in",
           "direction": "LONG",
-          "ltp": 264.45,
-          "entry": 264.45,
-          "sl": 257.92,
+          "ltp": 264.1,
+          "entry": 264.1,
+          "sl": 257.57,
           "slPct": -2.5,
           "targets": [
             {
-              "price": 273.16,
+              "price": 272.81,
               "pct": 3.3,
               "by": "~10h",
               "days": 10
             },
             {
-              "price": 279.69,
+              "price": 279.34,
               "pct": 5.8,
               "by": "~13h",
               "days": 13
             },
             {
-              "price": 286.22,
+              "price": 285.87,
               "pct": 8.2,
               "by": "~21h",
               "days": 21
             }
           ],
           "rr": 1.33,
-          "rsi": 67.1,
+          "rsi": 66.3,
           "confidence": 92,
           "accuracy": null,
           "backtestTrades": 3,
           "delivery": null,
-          "changePct": -0.75,
+          "changePct": -0.88,
           "setupType": "Breakout watch",
           "footprint": {
             "score": 58,
             "flags": [
               "Stealth volume — buying while price still flat",
               "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 2.2× (accumulation)"
+              "Up/down volume 2.18× (accumulation)"
             ],
             "strong": false
           },
           "rs": {
-            "rs20": 0.081,
-            "rs50": 0.105,
+            "rs20": 0.08,
+            "rs50": 0.104,
             "leader": true
           },
-          "social": "EMKAY — Money Flow setup 📈\nMFI 67 rising + OBV up — money flowing in\nLTP ₹264.45 · Entry ₹264.45 · SL ₹257.92 (-2.5%)\nT1 ₹273.16 (+3.3%) by ~10h\nT2 ₹279.69 (+5.8%) · T3 ₹286.22 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
+          "social": "EMKAY — Money Flow setup 📈\nMFI 67 rising + OBV up — money flowing in\nLTP ₹264.1 · Entry ₹264.1 · SL ₹257.57 (-2.5%)\nT1 ₹272.81 (+3.3%) by ~10h\nT2 ₹279.34 (+5.8%) · T3 ₹285.87 (+8.2%)\nSetup score 92/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #EMKAY #swingtrading #nifty"
         },
         {
           "generator": "money_flow",
@@ -17639,65 +17618,6 @@
         },
         {
           "generator": "money_flow",
-          "symbol": "LUMAXIND",
-          "name": "Lumax Industries Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Money Flow",
-          "reason": "MFI 75 rising + OBV up — money flowing in",
-          "direction": "LONG",
-          "ltp": 6422.5,
-          "entry": 6422.5,
-          "sl": 6314.67,
-          "slPct": -1.7,
-          "targets": [
-            {
-              "price": 6566.27,
-              "pct": 2.2,
-              "by": "~4h",
-              "days": 4
-            },
-            {
-              "price": 6674.1,
-              "pct": 3.9,
-              "by": "~7h",
-              "days": 7
-            },
-            {
-              "price": 6781.92,
-              "pct": 5.6,
-              "by": "~11h",
-              "days": 11
-            }
-          ],
-          "rr": 1.33,
-          "rsi": 72,
-          "confidence": 80,
-          "accuracy": 80,
-          "backtestTrades": 5,
-          "delivery": null,
-          "changePct": 0.02,
-          "setupType": "Breakout watch",
-          "footprint": {
-            "score": 58,
-            "flags": [
-              "Stealth volume — buying while price still flat",
-              "Outperforming NIFTY (relative-strength leader)",
-              "Up/down volume 3.84× (accumulation)"
-            ],
-            "strong": false
-          },
-          "rs": {
-            "rs20": 0.062,
-            "rs50": 0.099,
-            "leader": true
-          },
-          "social": "LUMAXIND — Money Flow setup 📈\nMFI 75 rising + OBV up — money flowing in\nLTP ₹6422.5 · Entry ₹6422.5 · SL ₹6314.67 (-1.7%)\nT1 ₹6566.27 (+2.2%) by ~4h\nT2 ₹6674.1 (+3.9%) · T3 ₹6781.92 (+5.6%)\nBacktested first-target hit ~80% over 5 past setups (measured, not a promise — small samples are noisy).\n📌 Educational only, not advice. Not SEBI-registered. #LUMAXIND #swingtrading #nifty"
-        },
-        {
-          "generator": "money_flow",
           "symbol": "BLUEDART",
           "name": "Blue Dart Express Ltd.",
           "sector": "Services",
@@ -17879,6 +17799,68 @@
             "leader": true
           },
           "social": "JUBLPHARMA — Money Flow setup 📈\nMFI 71 rising + OBV up — money flowing in\nLTP ₹907.6 · Entry ₹907.6 · SL ₹872.34 (-3.9%)\nT1 ₹926.71 (+2.1%) by ~3h\nT2 ₹941.04 (+3.7%) · T3 ₹955.37 (+5.3%)\nSetup score 75/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #JUBLPHARMA #swingtrading #nifty"
+        },
+        {
+          "generator": "money_flow",
+          "symbol": "KIRLOSENG",
+          "name": "Kirloskar Oil Eng Ltd.",
+          "sector": "Capital Goods",
+          "indices": [
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY MidSmallcap 400",
+            "NIFTY Smallcap 250",
+            "NSE Equity"
+          ],
+          "label": "Money Flow",
+          "reason": "MFI 73 rising + OBV up — money flowing in",
+          "direction": "LONG",
+          "ltp": 2138.3,
+          "entry": 2138.3,
+          "sl": 2085.64,
+          "slPct": -2.5,
+          "targets": [
+            {
+              "price": 2182.9,
+              "pct": 2.1,
+              "by": "~2h",
+              "days": 2
+            },
+            {
+              "price": 2216.35,
+              "pct": 3.7,
+              "by": "~12h",
+              "days": 12
+            },
+            {
+              "price": 2249.8,
+              "pct": 5.2,
+              "by": "~21h",
+              "days": 21
+            }
+          ],
+          "rr": 0.85,
+          "rsi": 60.8,
+          "confidence": 75,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": -0.13,
+          "setupType": "Breakout watch",
+          "footprint": {
+            "score": 38,
+            "flags": [
+              "Outperforming NIFTY (relative-strength leader)",
+              "Up/down volume 2.36× (accumulation)"
+            ],
+            "weak": true
+          },
+          "rs": {
+            "rs20": 0.015,
+            "rs50": 0.025,
+            "leader": true
+          },
+          "social": "KIRLOSENG — Money Flow setup 📈\nMFI 73 rising + OBV up — money flowing in\nLTP ₹2138.3 · Entry ₹2138.3 · SL ₹2085.64 (-2.5%)\nT1 ₹2182.9 (+2.1%) by ~2h\nT2 ₹2216.35 (+3.7%) · T3 ₹2249.8 (+5.2%)\nSetup score 75/100 (too little history to backtest).\n📌 Educational only, not advice. Not SEBI-registered. #KIRLOSENG #swingtrading #nifty"
         }
       ]
     },
@@ -18070,8 +18052,8 @@
                 "tf": "2h",
                 "dir": "NEUTRAL",
                 "phase": "RANGE",
-                "score": -1,
-                "trend": -1,
+                "score": 0,
+                "trend": 0,
                 "dist": 0,
                 "accu": 0,
                 "entry": 7686.14,
@@ -18081,8 +18063,8 @@
                 "rr": null,
                 "poc": 7508.75,
                 "vah": 7703.57,
-                "val": 7326.49,
-                "vwap": 7697.02,
+                "val": 7339.06,
+                "vwap": 7698.74,
                 "rsi": 48,
                 "fib": "61.8%",
                 "reason": "at 61.8% Fib 7696.43"
@@ -18101,7 +18083,7 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 7505.57,
-                "vah": 7657.52,
+                "vah": 7643.05,
                 "val": 7339.15,
                 "vwap": 7718.82,
                 "rsi": 48,
@@ -18122,10 +18104,10 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 7518.27,
-                "vah": 7701.18,
+                "vah": 7681.92,
                 "val": 7316.1,
-                "vwap": 7697.28,
-                "rsi": 50,
+                "vwap": 7696.61,
+                "rsi": 49,
                 "fib": "38.2%",
                 "reason": "at 38.2% Fib 7657.46"
               },
@@ -18138,11 +18120,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 7686.14,
-                "sl": 7593.29,
+                "sl": 7592.04,
                 "targets": [
-                  7809.94,
-                  7902.78,
-                  7995.63
+                  7811.61,
+                  7905.72,
+                  7999.82
                 ],
                 "etaDates": [
                   "2026-09-04",
@@ -18153,7 +18135,7 @@
                 "poc": 7497.99,
                 "vah": 7816.7,
                 "val": 6916.83,
-                "vwap": 7595.35,
+                "vwap": 7590.84,
                 "rsi": 54,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -18349,11 +18331,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 29456.97,
-                "sl": 29228.2,
+                "sl": 29228.88,
                 "targets": [
-                  29762,
-                  29990.76,
-                  30219.53
+                  29761.09,
+                  29989.18,
+                  30217.27
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -18364,8 +18346,8 @@
                 "poc": 29580.34,
                 "vah": 30092.03,
                 "val": 28989.93,
-                "vwap": 29419.79,
-                "rsi": 54,
+                "vwap": 29433.45,
+                "rsi": 52,
                 "fib": "61.8%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 61.8% Fib 29381.91"
               },
@@ -18399,11 +18381,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 29456.97,
-                "sl": 29080.8,
+                "sl": 29093,
                 "targets": [
-                  29958.53,
-                  30334.7,
-                  30710.87
+                  29942.27,
+                  30306.25,
+                  30670.22
                 ],
                 "etaDates": [
                   "2026-09-03",
@@ -18413,9 +18395,9 @@
                 "rr": 1.33,
                 "poc": 29441.36,
                 "vah": 30548.46,
-                "val": 28756.02,
-                "vwap": 29409.48,
-                "rsi": 53,
+                "val": 28861.45,
+                "vwap": 29425.21,
+                "rsi": 52,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 29340.63"
               },
@@ -18428,11 +18410,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 29456.97,
-                "sl": 28842.73,
+                "sl": 28819.59,
                 "targets": [
-                  30275.95,
-                  30890.19,
-                  31504.43
+                  30306.81,
+                  30944.19,
+                  31581.57
                 ],
                 "etaDates": [
                   "2026-09-04",
@@ -18443,7 +18425,7 @@
                 "poc": 29475.07,
                 "vah": 30762.2,
                 "val": 25415.67,
-                "vwap": 29129.12,
+                "vwap": 29132.64,
                 "rsi": 52,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -18650,16 +18632,16 @@
                 "tf": "2h",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -3,
-                "trend": -3,
+                "score": -2,
+                "trend": -2,
                 "dist": 0,
                 "accu": 0,
                 "entry": 53185.9,
-                "sl": 53449.5,
+                "sl": 53446.72,
                 "targets": [
-                  52834.43,
-                  52570.82,
-                  52307.22
+                  52838.14,
+                  52577.32,
+                  52316.5
                 ],
                 "etaDates": [
                   "2026-09-02",
@@ -18669,9 +18651,9 @@
                 "rr": 1.33,
                 "poc": 52462.71,
                 "vah": 53543.48,
-                "val": 51782.23,
-                "vwap": 53406.13,
-                "rsi": 38,
+                "val": 51862.29,
+                "vwap": 53415.78,
+                "rsi": 42,
                 "fib": "61.8%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 53161.63"
               },
@@ -18710,10 +18692,10 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 52405.47,
-                "vah": 54291.65,
+                "vah": 54140.75,
                 "val": 50519.3,
-                "vwap": 53560.75,
-                "rsi": 45,
+                "vwap": 53545.6,
+                "rsi": 44,
                 "fib": "61.8%",
                 "reason": "at 61.8% Fib 53046.06"
               },
@@ -18733,7 +18715,7 @@
                 "poc": 49537.54,
                 "vah": 53049.09,
                 "val": 48447.75,
-                "vwap": 52980.73,
+                "vwap": 52961.85,
                 "rsi": 50,
                 "fib": "50%",
                 "reason": "at 50% Fib 53143.19"
