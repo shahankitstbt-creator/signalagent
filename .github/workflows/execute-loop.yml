@@ -58,7 +58,14 @@ jobs:
             NOWMIN=$(( 10#$(date -u +%H)*60 + 10#$(date -u +%M) ))   # minutes-since-midnight UTC
             # Equity session 09:15–15:30 IST = 03:45–10:00 UTC (225–600). Only execute inside it.
             if [ "$NOWMIN" -ge 225 ] && [ "$NOWMIN" -le 601 ]; then
-              if [ $(( ITER % 10 )) -eq 0 ]; then
+              if [ "$ITER" -eq 0 ]; then
+                # FIRST iteration = the FULL DAILY scan. This is what regenerates board.json fresh every
+                # morning (intraday scans never touch board.json → it was going stale). The loop is now the
+                # reliable daily runner, and every deploy below ships this fresh board.json all session.
+                echo "[$(date -u +%RZ)] FIRST tick — FULL DAILY scan (regenerates board.json for the day) + self-improve"
+                node scripts/screener.mjs --full --top 80 --improve || true
+                DEPLOY=1
+              elif [ $(( ITER % 10 )) -eq 0 ]; then
                 echo "[$(date -u +%RZ)] FULL intraday scan (new signals + entries) — every ~30 min"
                 node scripts/screener.mjs --tf intraday --full || true
                 DEPLOY=1
