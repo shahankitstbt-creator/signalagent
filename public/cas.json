@@ -5,9 +5,9 @@
       "maxPain": 24050,
       "callWall": 24100,
       "putWall": 24000,
-      "gammaFlip": 24300,
+      "gammaFlip": 24350,
       "regime": "NEG GAMMA",
-      "pcr": 0.9,
+      "pcr": 1,
       "atm": 24000,
       "expiry": "01SEP2026",
       "dExp": 0,
@@ -21,11 +21,11 @@
       "direction": "UP",
       "confidence": 53,
       "pinStrength": 100,
-      "gammaMag": 47,
+      "gammaMag": 42,
       "flow": {
-        "callChg": -22756240,
-        "putChg": -102641370,
-        "bias": -0.186,
+        "callChg": -34919625,
+        "putChg": -100341735,
+        "bias": -0.152,
         "label": "call covering (squeeze ↑) + put covering (support ↓)",
         "dir": "down"
       },
@@ -33,7 +33,7 @@
         {
           "dir": "down",
           "w": 1,
-          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -22756240 · ΔPE -102641370)"
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -34919625 · ΔPE -100341735)"
         },
         {
           "dir": "up",
@@ -42,47 +42,47 @@
         },
         {
           "dir": "down",
-          "w": 0.47,
-          "text": "NEG GAMMA (flip 24300) · dealer pressure 47/100 — AMPLIFIES the close"
+          "w": 0.42,
+          "text": "NEG GAMMA (flip 24350) · dealer pressure 42/100 — AMPLIFIES the close"
         }
       ],
-      "mechanics": "Spot 23980.55 is BELOW the gamma-flip 24300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 23980.55 is BELOW the gamma-flip 24350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 23980.55 is BELOW the gamma-flip 24300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
-        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -22756240 · ΔPE -102641370)",
+        "Spot 23980.55 is BELOW the gamma-flip 24350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
+        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -34919625 · ΔPE -100341735)",
         "▲ Max-pain pin 24050 (+0.29% vs spot) · pin strength 100/100",
-        "▼ NEG GAMMA (flip 24300) · dealer pressure 47/100 — AMPLIFIES the close"
+        "▼ NEG GAMMA (flip 24350) · dealer pressure 42/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
+          "k": 24050,
+          "ce": 21068125,
+          "pe": 22823060
+        },
+        {
           "k": 24100,
-          "ce": 36988315,
-          "pe": 10669620
+          "ce": 31471635,
+          "pe": 10710765
         },
         {
           "k": 24000,
-          "ce": 17437290,
-          "pe": 29630770
-        },
-        {
-          "k": 24050,
-          "ce": 22386910,
-          "pe": 17377165
+          "ce": 14553370,
+          "pe": 27149135
         },
         {
           "k": 23950,
-          "ce": 5735470,
-          "pe": 19878430
+          "ce": 4620590,
+          "pe": 16462940
         },
         {
           "k": 24150,
-          "ce": 19437925,
-          "pe": 4455490
+          "ce": 15424695,
+          "pe": 4817865
         },
         {
           "k": 24200,
-          "ce": 15846285,
-          "pe": 3335020
+          "ce": 13988455,
+          "pe": 3295500
         }
       ],
       "tilt": -0.08,
@@ -118,9 +118,9 @@
       "pinStrength": 25,
       "gammaMag": 14,
       "flow": {
-        "callChg": 82890,
-        "putChg": -225510,
-        "bias": -0.028,
+        "callChg": 63750,
+        "putChg": -234540,
+        "bias": -0.027,
         "label": "put covering (support ↓)",
         "dir": "down"
       },
@@ -132,8 +132,8 @@
         },
         {
           "dir": "down",
-          "w": 0.56,
-          "text": "Intraday OI flow: put covering (support ↓) (ΔCE +82890 · ΔPE -225510)"
+          "w": 0.54,
+          "text": "Intraday OI flow: put covering (support ↓) (ΔCE +63750 · ΔPE -234540)"
         },
         {
           "dir": "down",
@@ -145,39 +145,39 @@
       "why": [
         "Spot 57264.15 is BELOW the gamma-flip 57300 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 57500 (+0.41% vs spot) · pin strength 25/100",
-        "▼ Intraday OI flow: put covering (support ↓) (ΔCE +82890 · ΔPE -225510)",
+        "▼ Intraday OI flow: put covering (support ↓) (ΔCE +63750 · ΔPE -234540)",
         "▼ NEG GAMMA (flip 57300) · dealer pressure 14/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
           "k": 57500,
-          "ce": 1969860,
-          "pe": 1955970
+          "ce": 1973790,
+          "pe": 1951740
         },
         {
           "k": 58000,
-          "ce": 1381320,
-          "pe": 995490
+          "ce": 1379070,
+          "pe": 993870
         },
         {
           "k": 57000,
-          "ce": 282030,
-          "pe": 854550
+          "ce": 280110,
+          "pe": 851850
         },
         {
           "k": 57700,
-          "ce": 336720,
-          "pe": 235950
+          "ce": 335010,
+          "pe": 236310
         },
         {
           "k": 57800,
-          "ce": 304620,
-          "pe": 219360
+          "ce": 303510,
+          "pe": 218550
         },
         {
           "k": 57400,
-          "ce": 190320,
-          "pe": 328680
+          "ce": 190230,
+          "pe": 329850
         }
       ],
       "tilt": 0.2,
@@ -521,7 +521,7 @@
       },
       {
         "date": "2026-09-01",
-        "close": 76707.77
+        "close": 76717.24
       }
     ]
   },
@@ -912,9 +912,9 @@
         "kind": "live footprint"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 76094,
-        "high": 77322,
+        "exp": 76717,
+        "low": 76103,
+        "high": 77331,
         "band": 614,
         "bandPct": 0.8,
         "conf": 47,
@@ -944,9 +944,9 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75840,
-        "high": 77576,
+        "exp": 76717,
+        "low": 75849,
+        "high": 77585,
         "band": 868,
         "bandPct": 1.1,
         "conf": 47,
@@ -976,9 +976,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75645,
-        "high": 77771,
+        "exp": 76717,
+        "low": 75654,
+        "high": 77780,
         "band": 1063,
         "bandPct": 1.4,
         "conf": 46,
@@ -1008,9 +1008,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75481,
-        "high": 77935,
+        "exp": 76717,
+        "low": 75490,
+        "high": 77944,
         "band": 1227,
         "bandPct": 1.6,
         "conf": 46,
@@ -1040,9 +1040,9 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75336,
-        "high": 78080,
+        "exp": 76717,
+        "low": 75345,
+        "high": 78089,
         "band": 1372,
         "bandPct": 1.8,
         "conf": 45,
@@ -1072,9 +1072,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75205,
-        "high": 78211,
+        "exp": 76717,
+        "low": 75214,
+        "high": 78220,
         "band": 1503,
         "bandPct": 2,
         "conf": 44,
@@ -1104,9 +1104,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 75084,
-        "high": 78332,
+        "exp": 76717,
+        "low": 75093,
+        "high": 78341,
         "band": 1624,
         "bandPct": 2.1,
         "conf": 44,
@@ -1136,9 +1136,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74972,
-        "high": 78444,
+        "exp": 76717,
+        "low": 74981,
+        "high": 78453,
         "band": 1736,
         "bandPct": 2.3,
         "conf": 43,
@@ -1168,9 +1168,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74867,
-        "high": 78549,
+        "exp": 76717,
+        "low": 74876,
+        "high": 78558,
         "band": 1841,
         "bandPct": 2.4,
         "conf": 43,
@@ -1200,9 +1200,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74767,
-        "high": 78649,
+        "exp": 76717,
+        "low": 74776,
+        "high": 78658,
         "band": 1941,
         "bandPct": 2.5,
         "conf": 42,
@@ -1232,10 +1232,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74673,
-        "high": 78743,
-        "band": 2035,
+        "exp": 76717,
+        "low": 74681,
+        "high": 78753,
+        "band": 2036,
         "bandPct": 2.7,
         "conf": 41,
         "kind": "uncertainty cone"
@@ -1264,9 +1264,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74582,
-        "high": 78834,
+        "exp": 76717,
+        "low": 74591,
+        "high": 78843,
         "band": 2126,
         "bandPct": 2.8,
         "conf": 41,
@@ -1296,9 +1296,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74495,
-        "high": 78921,
+        "exp": 76717,
+        "low": 74504,
+        "high": 78930,
         "band": 2213,
         "bandPct": 2.9,
         "conf": 40,
@@ -1328,9 +1328,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74412,
-        "high": 79004,
+        "exp": 76717,
+        "low": 74421,
+        "high": 79013,
         "band": 2296,
         "bandPct": 3,
         "conf": 40,
@@ -1360,9 +1360,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74331,
-        "high": 79085,
+        "exp": 76717,
+        "low": 74340,
+        "high": 79094,
         "band": 2377,
         "bandPct": 3.1,
         "conf": 39,
@@ -1392,9 +1392,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74253,
-        "high": 79163,
+        "exp": 76717,
+        "low": 74262,
+        "high": 79172,
         "band": 2455,
         "bandPct": 3.2,
         "conf": 38,
@@ -1424,10 +1424,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74178,
-        "high": 79238,
-        "band": 2530,
+        "exp": 76717,
+        "low": 74186,
+        "high": 79248,
+        "band": 2531,
         "bandPct": 3.3,
         "conf": 38,
         "kind": "uncertainty cone"
@@ -1456,9 +1456,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74104,
-        "high": 79312,
+        "exp": 76717,
+        "low": 74113,
+        "high": 79321,
         "band": 2604,
         "bandPct": 3.4,
         "conf": 37,
@@ -1488,9 +1488,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 74033,
-        "high": 79383,
+        "exp": 76717,
+        "low": 74042,
+        "high": 79392,
         "band": 2675,
         "bandPct": 3.5,
         "conf": 37,
@@ -1520,10 +1520,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73964,
-        "high": 79452,
-        "band": 2744,
+        "exp": 76717,
+        "low": 73972,
+        "high": 79462,
+        "band": 2745,
         "bandPct": 3.6,
         "conf": 36,
         "kind": "uncertainty cone"
@@ -1552,10 +1552,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73896,
-        "high": 79520,
-        "band": 2812,
+        "exp": 76717,
+        "low": 73904,
+        "high": 79530,
+        "band": 2813,
         "bandPct": 3.7,
         "conf": 35,
         "kind": "uncertainty cone"
@@ -1584,10 +1584,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73830,
-        "high": 79586,
-        "band": 2878,
+        "exp": 76717,
+        "low": 73838,
+        "high": 79596,
+        "band": 2879,
         "bandPct": 3.8,
         "conf": 35,
         "kind": "uncertainty cone"
@@ -1616,9 +1616,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73765,
-        "high": 79651,
+        "exp": 76717,
+        "low": 73774,
+        "high": 79660,
         "band": 2943,
         "bandPct": 3.8,
         "conf": 34,
@@ -1648,10 +1648,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73702,
-        "high": 79714,
-        "band": 3006,
+        "exp": 76717,
+        "low": 73710,
+        "high": 79724,
+        "band": 3007,
         "bandPct": 3.9,
         "conf": 34,
         "kind": "uncertainty cone"
@@ -1680,10 +1680,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73640,
-        "high": 79776,
-        "band": 3068,
+        "exp": 76717,
+        "low": 73648,
+        "high": 79786,
+        "band": 3069,
         "bandPct": 4,
         "conf": 33,
         "kind": "uncertainty cone"
@@ -1712,9 +1712,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73579,
-        "high": 79837,
+        "exp": 76717,
+        "low": 73588,
+        "high": 79846,
         "band": 3129,
         "bandPct": 4.1,
         "conf": 32,
@@ -1744,9 +1744,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73519,
-        "high": 79897,
+        "exp": 76717,
+        "low": 73528,
+        "high": 79906,
         "band": 3189,
         "bandPct": 4.2,
         "conf": 32,
@@ -1776,10 +1776,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73461,
-        "high": 79955,
-        "band": 3247,
+        "exp": 76717,
+        "low": 73469,
+        "high": 79965,
+        "band": 3248,
         "bandPct": 4.2,
         "conf": 31,
         "kind": "uncertainty cone"
@@ -1808,9 +1808,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73403,
-        "high": 80013,
+        "exp": 76717,
+        "low": 73412,
+        "high": 80022,
         "band": 3305,
         "bandPct": 4.3,
         "conf": 31,
@@ -1840,10 +1840,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73347,
-        "high": 80069,
-        "band": 3361,
+        "exp": 76717,
+        "low": 73355,
+        "high": 80079,
+        "band": 3362,
         "bandPct": 4.4,
         "conf": 30,
         "kind": "uncertainty cone"
@@ -1872,9 +1872,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73291,
-        "high": 80125,
+        "exp": 76717,
+        "low": 73300,
+        "high": 80134,
         "band": 3417,
         "bandPct": 4.5,
         "conf": 29,
@@ -1904,10 +1904,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73237,
-        "high": 80179,
-        "band": 3471,
+        "exp": 76717,
+        "low": 73245,
+        "high": 80189,
+        "band": 3472,
         "bandPct": 4.5,
         "conf": 29,
         "kind": "uncertainty cone"
@@ -1936,10 +1936,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73183,
-        "high": 80233,
-        "band": 3525,
+        "exp": 76717,
+        "low": 73191,
+        "high": 80243,
+        "band": 3526,
         "bandPct": 4.6,
         "conf": 28,
         "kind": "uncertainty cone"
@@ -1968,10 +1968,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73130,
-        "high": 80286,
-        "band": 3578,
+        "exp": 76717,
+        "low": 73138,
+        "high": 80296,
+        "band": 3579,
         "bandPct": 4.7,
         "conf": 28,
         "kind": "uncertainty cone"
@@ -2000,10 +2000,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73078,
-        "high": 80338,
-        "band": 3630,
+        "exp": 76717,
+        "low": 73086,
+        "high": 80348,
+        "band": 3631,
         "bandPct": 4.7,
         "conf": 27,
         "kind": "uncertainty cone"
@@ -2032,9 +2032,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 73026,
-        "high": 80390,
+        "exp": 76717,
+        "low": 73035,
+        "high": 80399,
         "band": 3682,
         "bandPct": 4.8,
         "conf": 26,
@@ -2064,9 +2064,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72975,
-        "high": 80441,
+        "exp": 76717,
+        "low": 72984,
+        "high": 80450,
         "band": 3733,
         "bandPct": 4.9,
         "conf": 26,
@@ -2096,9 +2096,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72925,
-        "high": 80491,
+        "exp": 76717,
+        "low": 72934,
+        "high": 80500,
         "band": 3783,
         "bandPct": 4.9,
         "conf": 25,
@@ -2128,10 +2128,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72876,
-        "high": 80540,
-        "band": 3832,
+        "exp": 76717,
+        "low": 72884,
+        "high": 80550,
+        "band": 3833,
         "bandPct": 5,
         "conf": 25,
         "kind": "uncertainty cone"
@@ -2160,10 +2160,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72827,
-        "high": 80589,
-        "band": 3881,
+        "exp": 76717,
+        "low": 72835,
+        "high": 80599,
+        "band": 3882,
         "bandPct": 5.1,
         "conf": 24,
         "kind": "uncertainty cone"
@@ -2192,10 +2192,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72779,
-        "high": 80637,
-        "band": 3929,
+        "exp": 76717,
+        "low": 72787,
+        "high": 80647,
+        "band": 3930,
         "bandPct": 5.1,
         "conf": 23,
         "kind": "uncertainty cone"
@@ -2224,9 +2224,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72731,
-        "high": 80685,
+        "exp": 76717,
+        "low": 72740,
+        "high": 80694,
         "band": 3977,
         "bandPct": 5.2,
         "conf": 23,
@@ -2256,10 +2256,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72684,
-        "high": 80732,
-        "band": 4024,
+        "exp": 76717,
+        "low": 72692,
+        "high": 80742,
+        "band": 4025,
         "bandPct": 5.2,
         "conf": 22,
         "kind": "uncertainty cone"
@@ -2288,9 +2288,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72637,
-        "high": 80779,
+        "exp": 76717,
+        "low": 72646,
+        "high": 80788,
         "band": 4071,
         "bandPct": 5.3,
         "conf": 22,
@@ -2320,9 +2320,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72591,
-        "high": 80825,
+        "exp": 76717,
+        "low": 72600,
+        "high": 80834,
         "band": 4117,
         "bandPct": 5.4,
         "conf": 21,
@@ -2352,10 +2352,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72546,
-        "high": 80870,
-        "band": 4162,
+        "exp": 76717,
+        "low": 72554,
+        "high": 80880,
+        "band": 4163,
         "bandPct": 5.4,
         "conf": 20,
         "kind": "uncertainty cone"
@@ -2384,10 +2384,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72501,
-        "high": 80915,
-        "band": 4207,
+        "exp": 76717,
+        "low": 72509,
+        "high": 80925,
+        "band": 4208,
         "bandPct": 5.5,
         "conf": 20,
         "kind": "uncertainty cone"
@@ -2416,9 +2416,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72456,
-        "high": 80960,
+        "exp": 76717,
+        "low": 72465,
+        "high": 80969,
         "band": 4252,
         "bandPct": 5.5,
         "conf": 19,
@@ -2448,9 +2448,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72412,
-        "high": 81004,
+        "exp": 76717,
+        "low": 72421,
+        "high": 81013,
         "band": 4296,
         "bandPct": 5.6,
         "conf": 19,
@@ -2480,10 +2480,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72369,
-        "high": 81047,
-        "band": 4339,
+        "exp": 76717,
+        "low": 72377,
+        "high": 81057,
+        "band": 4340,
         "bandPct": 5.7,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2512,10 +2512,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72326,
-        "high": 81090,
-        "band": 4382,
+        "exp": 76717,
+        "low": 72334,
+        "high": 81100,
+        "band": 4383,
         "bandPct": 5.7,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2544,10 +2544,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72283,
-        "high": 81133,
-        "band": 4425,
+        "exp": 76717,
+        "low": 72291,
+        "high": 81143,
+        "band": 4426,
         "bandPct": 5.8,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2576,9 +2576,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72240,
-        "high": 81176,
+        "exp": 76717,
+        "low": 72249,
+        "high": 81185,
         "band": 4468,
         "bandPct": 5.8,
         "conf": 18,
@@ -2608,10 +2608,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72199,
-        "high": 81217,
-        "band": 4509,
+        "exp": 76717,
+        "low": 72207,
+        "high": 81227,
+        "band": 4510,
         "bandPct": 5.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2640,10 +2640,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72157,
-        "high": 81259,
-        "band": 4551,
+        "exp": 76717,
+        "low": 72165,
+        "high": 81269,
+        "band": 4552,
         "bandPct": 5.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2672,10 +2672,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72116,
-        "high": 81300,
-        "band": 4592,
+        "exp": 76717,
+        "low": 72124,
+        "high": 81310,
+        "band": 4593,
         "bandPct": 6,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2704,10 +2704,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72075,
-        "high": 81341,
-        "band": 4633,
+        "exp": 76717,
+        "low": 72083,
+        "high": 81351,
+        "band": 4634,
         "bandPct": 6,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2736,9 +2736,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 72034,
-        "high": 81382,
+        "exp": 76717,
+        "low": 72043,
+        "high": 81391,
         "band": 4674,
         "bandPct": 6.1,
         "conf": 18,
@@ -2768,9 +2768,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71994,
-        "high": 81422,
+        "exp": 76717,
+        "low": 72003,
+        "high": 81431,
         "band": 4714,
         "bandPct": 6.1,
         "conf": 18,
@@ -2800,10 +2800,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71955,
-        "high": 81461,
-        "band": 4753,
+        "exp": 76717,
+        "low": 71963,
+        "high": 81471,
+        "band": 4754,
         "bandPct": 6.2,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2832,9 +2832,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71915,
-        "high": 81501,
+        "exp": 76717,
+        "low": 71924,
+        "high": 81510,
         "band": 4793,
         "bandPct": 6.2,
         "conf": 18,
@@ -2864,10 +2864,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71876,
-        "high": 81540,
-        "band": 4832,
+        "exp": 76717,
+        "low": 71884,
+        "high": 81550,
+        "band": 4833,
         "bandPct": 6.3,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2896,11 +2896,11 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71837,
-        "high": 81579,
+        "exp": 76717,
+        "low": 71846,
+        "high": 81588,
         "band": 4871,
-        "bandPct": 6.4,
+        "bandPct": 6.3,
         "conf": 18,
         "kind": "uncertainty cone"
       }
@@ -2928,10 +2928,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71799,
-        "high": 81617,
-        "band": 4909,
+        "exp": 76717,
+        "low": 71807,
+        "high": 81627,
+        "band": 4910,
         "bandPct": 6.4,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -2960,11 +2960,11 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71760,
-        "high": 81656,
+        "exp": 76717,
+        "low": 71769,
+        "high": 81665,
         "band": 4948,
-        "bandPct": 6.5,
+        "bandPct": 6.4,
         "conf": 18,
         "kind": "uncertainty cone"
       }
@@ -2992,10 +2992,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71723,
-        "high": 81693,
-        "band": 4985,
+        "exp": 76717,
+        "low": 71731,
+        "high": 81703,
+        "band": 4986,
         "bandPct": 6.5,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3024,10 +3024,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71685,
-        "high": 81731,
-        "band": 5023,
+        "exp": 76717,
+        "low": 71693,
+        "high": 81741,
+        "band": 5024,
         "bandPct": 6.5,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3056,10 +3056,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71648,
-        "high": 81768,
-        "band": 5060,
+        "exp": 76717,
+        "low": 71656,
+        "high": 81778,
+        "band": 5061,
         "bandPct": 6.6,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3088,10 +3088,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71611,
-        "high": 81805,
-        "band": 5097,
+        "exp": 76717,
+        "low": 71619,
+        "high": 81815,
+        "band": 5098,
         "bandPct": 6.6,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3120,10 +3120,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71574,
-        "high": 81842,
-        "band": 5134,
+        "exp": 76717,
+        "low": 71582,
+        "high": 81852,
+        "band": 5135,
         "bandPct": 6.7,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3152,9 +3152,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71537,
-        "high": 81879,
+        "exp": 76717,
+        "low": 71546,
+        "high": 81888,
         "band": 5171,
         "bandPct": 6.7,
         "conf": 18,
@@ -3184,10 +3184,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71501,
-        "high": 81915,
-        "band": 5207,
+        "exp": 76717,
+        "low": 71509,
+        "high": 81925,
+        "band": 5208,
         "bandPct": 6.8,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3216,10 +3216,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71465,
-        "high": 81951,
-        "band": 5243,
+        "exp": 76717,
+        "low": 71473,
+        "high": 81961,
+        "band": 5244,
         "bandPct": 6.8,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3248,10 +3248,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71429,
-        "high": 81987,
-        "band": 5279,
+        "exp": 76717,
+        "low": 71437,
+        "high": 81997,
+        "band": 5280,
         "bandPct": 6.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3280,10 +3280,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71394,
-        "high": 82022,
-        "band": 5314,
+        "exp": 76717,
+        "low": 71402,
+        "high": 82032,
+        "band": 5315,
         "bandPct": 6.9,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3312,9 +3312,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71358,
-        "high": 82058,
+        "exp": 76717,
+        "low": 71367,
+        "high": 82067,
         "band": 5350,
         "bandPct": 7,
         "conf": 18,
@@ -3344,10 +3344,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71323,
-        "high": 82093,
-        "band": 5385,
+        "exp": 76717,
+        "low": 71331,
+        "high": 82103,
+        "band": 5386,
         "bandPct": 7,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3376,9 +3376,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71288,
-        "high": 82128,
+        "exp": 76717,
+        "low": 71297,
+        "high": 82137,
         "band": 5420,
         "bandPct": 7.1,
         "conf": 18,
@@ -3408,10 +3408,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71254,
-        "high": 82162,
-        "band": 5454,
+        "exp": 76717,
+        "low": 71262,
+        "high": 82172,
+        "band": 5455,
         "bandPct": 7.1,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3440,9 +3440,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71219,
-        "high": 82197,
+        "exp": 76717,
+        "low": 71228,
+        "high": 82206,
         "band": 5489,
         "bandPct": 7.2,
         "conf": 18,
@@ -3472,10 +3472,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71185,
-        "high": 82231,
-        "band": 5523,
+        "exp": 76717,
+        "low": 71193,
+        "high": 82241,
+        "band": 5524,
         "bandPct": 7.2,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3504,10 +3504,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71151,
-        "high": 82265,
-        "band": 5557,
+        "exp": 76717,
+        "low": 71159,
+        "high": 82275,
+        "band": 5558,
         "bandPct": 7.2,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3536,9 +3536,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71117,
-        "high": 82299,
+        "exp": 76717,
+        "low": 71126,
+        "high": 82308,
         "band": 5591,
         "bandPct": 7.3,
         "conf": 18,
@@ -3568,10 +3568,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71084,
-        "high": 82332,
-        "band": 5624,
+        "exp": 76717,
+        "low": 71092,
+        "high": 82342,
+        "band": 5625,
         "bandPct": 7.3,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3600,9 +3600,9 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71050,
-        "high": 82366,
+        "exp": 76717,
+        "low": 71059,
+        "high": 82375,
         "band": 5658,
         "bandPct": 7.4,
         "conf": 18,
@@ -3632,10 +3632,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 71017,
-        "high": 82399,
-        "band": 5691,
+        "exp": 76717,
+        "low": 71025,
+        "high": 82409,
+        "band": 5692,
         "bandPct": 7.4,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3664,10 +3664,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 76708,
-        "low": 70984,
-        "high": 82432,
-        "band": 5724,
+        "exp": 76717,
+        "low": 70992,
+        "high": 82442,
+        "band": 5725,
         "bandPct": 7.5,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -4019,7 +4019,7 @@
   "histHitRate": 40,
   "hitRate": 100,
   "resolved": 2,
-  "updatedAt": "2026-09-01T09:54:58.988Z",
+  "updatedAt": "2026-09-01T09:58:22.203Z",
   "dirHitRate": null,
   "dirResolved": 0,
   "regimeAcc": {}
