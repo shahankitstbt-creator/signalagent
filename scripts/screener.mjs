@@ -704,7 +704,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     console.log(`Ledger: logged ${logged} confluence/F&O/option/reversal picks for tracking`)
 
     // ── TRADE BOOK: take every high-conviction signal as a paper trade + journal it ──
-    try { tb = syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots, tr?.generators || {}) } catch (e) { console.log('Trade book skipped:', e.message) }
+    try { tb = syncTradeBook(lg, closedNow, todayISO, today.toISOString(), fnoLots, tr?.generators || {}, false, inst?.bias || 'neutral') } catch (e) { console.log('Trade book skipped:', e.message) }
   } else if (tf === 'intraday') {
     // INTRADAY REFRESH: keep the journal LIVE during market hours — mark open positions to the
     // current price and take fresh intraday signals, WITHOUT running win/loss evaluation (that stays
@@ -723,7 +723,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       logged += logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots)
     }
     saveLedger(lg)
-    try { tb = syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots, {}, executeOnly) } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
+    try { tb = syncTradeBook(lg, [], todayISO, today.toISOString(), fnoLots, {}, executeOnly, inst?.bias || 'neutral') } catch (e) { console.log('Trade book (intraday) skipped:', e.message) }
     console.log(`${executeOnly ? 'EXECUTE-ONLY' : 'Intraday refresh'}: ${logged} signals logged, book marked-to-market + stops/square-off enforced`)
   }
 

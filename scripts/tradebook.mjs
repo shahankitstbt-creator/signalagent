@@ -383,7 +383,7 @@ function monthlyRollover(b, todayISO) {
   return snap
 }
 
-export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}, manageOnly = false) {
+export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().toISOString(), fnoLots = {}, genWinRates = {}, manageOnly = false, marketBias = 'neutral') {
   // manageOnly (fast execution worker): mark-to-market, honor stops, square-off, hedge/integrity ONLY —
   // do NOT open new trades. New entries come solely from the full daily/intraday scan (proper universe +
   // fresh prices), never from the restricted execute run. This keeps execution frequent AND entries clean.
@@ -673,9 +673,13 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (manageOnly) break                                    // execute-only worker: manage existing, open nothing new
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
-    // TWO-SIDED (user enabled shorts everywhere, 2026-09-01): the book now TAKES shorts on F&O stocks,
-    // indices & commodities — always as DEFINED-RISK PE / put debit spreads (sizeTrade→hedgeSpread), so a
-    // distribution top books a capped-loss short (the Nifty 24640 / Gold moves we were missing).
+    // TWO-SIDED (user enabled shorts everywhere, 2026-09-01): the book TAKES shorts as DEFINED-RISK PE /
+    // put debit spreads (sizeTrade→hedgeSpread) — capped-loss (the Nifty 24640 / Gold moves we were missing).
+    // REGIME GATE (backtest 2026-09-01: shorting into an UPTREND loses): only take a stock/index short when
+    // the market bias is NOT bullish (bearish/neutral, like now) OR it's very high-conviction (≥78). Commodity
+    // shorts self-gate (they only fire on a 20-day-low breakdown = their own downtrend).
+    const isShort = s.direction === 'SHORT' || s.direction === 'BEARISH' || s.optType === 'PE'
+    if (isShort && !s.commodity && marketBias === 'bullish' && (s.confidence ?? 0) < 78) continue
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
