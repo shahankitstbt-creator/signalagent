@@ -673,8 +673,9 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (manageOnly) break                                    // execute-only worker: manage existing, open nothing new
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
-    // LONG-ONLY backstop: never TAKE a short on an F&O stock, index, or commodity (user rule).
-    if ((s.direction === 'SHORT' || s.direction === 'BEARISH') && (fnoLots[sym] || fnoLots[s.underlying] || s.commodity || IDX.has(String(sym || '').toUpperCase()))) continue
+    // TWO-SIDED (user enabled shorts everywhere, 2026-09-01): the book now TAKES shorts on F&O stocks,
+    // indices & commodities — always as DEFINED-RISK PE / put debit spreads (sizeTrade→hedgeSpread), so a
+    // distribution top books a capped-loss short (the Nifty 24640 / Gold moves we were missing).
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)

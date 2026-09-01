@@ -620,19 +620,22 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
       const d = String(x.direction || 'LONG')
       if (/SHORT|BEAR/.test(d)) shortSyms.add(sym); else longSyms.add(sym)
     }
+    // TWO-SIDED EVERYWHERE (user enabled shorts on indices, commodities & F&O stocks). We no longer
+    // suppress shorts by instrument. We still avoid pure noise: a COUNTER-TREND signal (short while trend
+    // desks are long, or vice-versa) survives ONLY if it's a HIGH-conviction exhaustion setup (conf ≥ 68) —
+    // which is exactly the distribution-top / capitulation-bottom we want to catch (e.g. Nifty 24640 top).
     const kept = rev.filter(r => {
-      const sym = r.symbol || r.underlying
-      if (r.direction === 'SHORT' && longOnlyName(sym, fnoLots)) return false   // LONG-ONLY: no short on F&O/index/commodity
-      if (r.direction === 'SHORT' && longSyms.has(sym)) return false   // don't short a trend-BUY
-      if (r.direction === 'LONG' && shortSyms.has(sym)) return false   // don't buy a trend-SELL
+      const sym = r.symbol || r.underlying, conf = r.confidence ?? r.confluenceScore ?? 0
+      if (r.direction === 'SHORT' && longSyms.has(sym) && conf < 68) return false
+      if (r.direction === 'LONG' && shortSyms.has(sym) && conf < 68) return false
       return true
     })
     const dropped = rev.length - kept.length
     revCol.signals = kept; revCol.count = kept.length
-    console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} (long-only F&O/index/commodity + trend contradictions)` : ''}`)
-    // SELL desk — LONG-ONLY rule (no short on F&O/index/commodity) + defers to trend (no same-stock BUY+SELL)
+    console.log(`Reversal: ${kept.length} setups (${kept.filter(r => r.direction === 'SHORT').length} short / ${kept.filter(r => r.direction === 'LONG').length} long)${dropped ? ` · dropped ${dropped} (weak counter-trend only)` : ''}`)
+    // SELL desk — two-sided now; keep only the same-stock dedup for LOW-conviction counter-trend shorts.
     const scol = board.find(g => g.id === 'short_sell')
-    if (scol) { const before = scol.signals.length; scol.signals = (scol.signals || []).filter(s2 => { const sym = s2.symbol || s2.underlying; return !longOnlyName(sym, fnoLots) && !longSyms.has(sym) }); scol.count = scol.signals.length; console.log(`Short/Sell: ${scol.count} sell setups${before - scol.count ? ` · dropped ${before - scol.count} (long-only F&O/index/commodity + trend buys)` : ''}`) }
+    if (scol) { const before = scol.signals.length; scol.signals = (scol.signals || []).filter(s2 => { const sym = s2.symbol || s2.underlying; const conf = s2.confidence ?? 0; return !(longSyms.has(sym) && conf < 68) }); scol.count = scol.signals.length; console.log(`Short/Sell: ${scol.count} sell setups${before - scol.count ? ` · dropped ${before - scol.count} (weak counter-trend)` : ''}`) }
   }
   console.log(`F&O: ${fno.length} setups (${Object.keys(fnoLots).length} F&O instruments)`)
 
@@ -908,7 +911,9 @@ async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol
       const hi20 = Math.max(...h.slice(-20)), lo20 = Math.min(...l.slice(-20))
       // trend = price above BOTH EMAs (don't require e20>e50 — misses strong trends recovering from a dip)
       const up = px > e20 && px > e50, down = px < e20 && px < e50
-      const dir = (up && px >= hi20 * 0.97) ? 'LONG' : null   // LONG-ONLY: no shorts on Gold/Silver/Crude
+      // TWO-SIDED now (user enabled shorts everywhere): LONG a breakout near the 20-day high, SHORT a
+      // breakdown near the 20-day low — both trend-confirmed (price on the right side of BOTH EMAs).
+      const dir = (up && px >= hi20 * 0.97) ? 'LONG' : (down && px <= lo20 * 1.03) ? 'SHORT' : null
       if (!dir) continue
       const bull = dir === 'LONG', mult = bull ? 1 : -1
       const entry = round(px, 2), sl = round(bull ? entry - 1.5 * atr : entry + 1.5 * atr, 2)
@@ -948,7 +953,8 @@ function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
       }
     }
     if (!trade) continue
-    if (isShortSig(trade)) continue   // LONG-ONLY: never fire a PE/short on indices or F&O names
+    // TWO-SIDED: index PE (short) now fires when the read is bearish — a distribution top on Nifty/BankNifty
+    // books a defined-risk PE, exactly the move that used to be suppressed (e.g. Nifty 24640 → 23950).
     try {
       openOrUpdate(lg, {
         generator: 'fno', symbol: card.symbol, underlying: card.symbol, name: card.name, kind: 'Index Option',

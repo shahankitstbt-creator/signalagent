@@ -183,9 +183,9 @@ Codified from real results (re-analyse monthly). **Concentrate on proven winners
 
 ---
 
-## 6b. LONG-ONLY UNIVERSE (no shorting these)
+## 6b. TWO-SIDED UNIVERSE (shorts enabled everywhere — reversed 2026-09-01)
 
-**NEVER fire a SHORT** on **F&O-eligible stocks**, **indices** (Nifty, BankNifty, Sensex, MidcpNifty, FinNifty), or **commodities** (Gold, Silver, Crude, XAUUSD, XAGUSD). These trade **long-only** (buy / CE only). Enforced at every source: the Short/Sell desk, reversal shorts, index-option PE, commodity shorts, and a trade-book backstop that refuses to open a short on any of them. (Shorts may still appear on **non-F&O cash stocks** — those are informational; cash delivery can't be shorted anyway.)
+**Shorts fire everywhere now** — indices (Nifty/BankNifty/Sensex/MidcpNifty), commodities (Gold/Silver/Crude/XAU/XAG) AND F&O stocks — because the old long-only rule was making the system MISS clean down-moves (Nifty 24640→23950, Gold MCX 164500→152200, XAUUSD 4660→4360). Sources: Short/Sell desk, reversal (overbought-fade), index-option **PE** (`logIndexOptions`, fires on a bearish/distribution read), commodity SHORT (`logCommodities`, breakdown near the 20-day low). **The book TAKES them as DEFINED-RISK:** index & F&O-stock shorts → hedged **PE debit spreads** (`sizeTrade`→`hedgeSpread`, net-debit = max loss); commodity shorts → stop-defined (honor-stop caps the loss). Quality guard: a COUNTER-TREND short (against the trend desks' longs) survives only if it's **high-conviction (conf ≥ 68)** — i.e. a genuine distribution top, not weak noise. The Desk's Wyckoff phase (DISTRIBUTION/ACCUMULATION) is what flags the tops/bottoms; see [[protrader-metrics]]. (Superseded the earlier long-only rule per the user's explicit choice.)
 
 ---
 
