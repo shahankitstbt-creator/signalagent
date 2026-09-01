@@ -49,13 +49,13 @@
       "invested": 14100,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 198.77,
+      "ltp": 198.17,
       "footprint": null,
       "delivery": null,
       "rr": 1.29,
       "reason": "Breakout watch: Hugging 20-day high (1.4% below); Above rising 20 & 50 EMA",
-      "unrealizedPnl": 2277,
-      "unrealizedPct": 16.15,
+      "unrealizedPnl": 406,
+      "unrealizedPct": 2.88,
       "peakPct": 43.36
     },
     "fno:INFY": {
@@ -270,7 +270,7 @@
       "invested": 99812,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 198.77,
+      "ltp": 198.83,
       "dailyTake": 1.8,
       "structuralSL": 194.55,
       "footprint": {
@@ -284,17 +284,326 @@
       "delivery": null,
       "rr": 1.29,
       "reason": "Accumulation (vol 52/100): Up/down volume 1.38× — accumulation pressure; Stealth accumulation — volume rising while price still flat; OBV rising — on-balance volume confirms net inflow",
-      "unrealizedPnl": 368,
-      "unrealizedPct": 0.37
+      "unrealizedPnl": 398,
+      "unrealizedPct": 0.4
+    },
+    "fno:MAHABANK": {
+      "sleeve": "FO",
+      "id": "fno:MAHABANK",
+      "symbol": "MAHABANK",
+      "name": "Bank of Maharashtra",
+      "generator": "fno",
+      "gen": "fno",
+      "kind": "OPT",
+      "direction": "BUY",
+      "grade": "A+",
+      "confidence": 87,
+      "optType": "CE",
+      "entryPremium": 3,
+      "optionPlay": "Buy 82.5 CE (ATM) or 80 CE (ITM) — near expiry; or long futures",
+      "hedged": true,
+      "netDebit": 1,
+      "longPrem": 3,
+      "shortPrem": 2,
+      "hedgeNote": "Hedged CE debit spread — long ₹3 / short ₹2; net debit ₹1 = defined max loss",
+      "stockOption": true,
+      "commodity": false,
+      "qty": 6500,
+      "lots": 1,
+      "lotSize": 6500,
+      "notional": 541775,
+      "entryPrice": 83.35,
+      "sl": 81.94,
+      "targets": [
+        {
+          "price": 84.61,
+          "pct": 1.5,
+          "by": "~6h"
+        },
+        {
+          "price": 85.56,
+          "pct": 2.7,
+          "by": "~12h"
+        },
+        {
+          "price": 86.51,
+          "pct": 3.8,
+          "by": "~21h"
+        }
+      ],
+      "invested": 6500,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T06:13:11.053Z",
+      "ltp": 83.29,
+      "footprint": null,
+      "delivery": null,
+      "rr": 0.9,
+      "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (1.7% below)",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
+    },
+    "vol_accum:TCS": {
+      "sleeve": "FO",
+      "id": "vol_accum:TCS",
+      "symbol": "TCS",
+      "name": "Tata Consultancy Services Ltd.",
+      "generator": "vol_accum",
+      "gen": "Volume + Accumulation",
+      "kind": "OPT",
+      "direction": "LONG",
+      "grade": null,
+      "confidence": 95,
+      "optType": "CE",
+      "entryPremium": 82,
+      "optionPlay": null,
+      "hedged": true,
+      "netDebit": 41,
+      "longPrem": 82,
+      "shortPrem": 41,
+      "hedgeNote": "Hedged CE debit spread — long ₹82 / short ₹41; net debit ₹41 = defined max loss",
+      "stockOption": true,
+      "commodity": false,
+      "qty": 225,
+      "lots": 1,
+      "lotSize": 225,
+      "notional": 528413,
+      "entryPrice": 2348.5,
+      "sl": 2316.71,
+      "targets": [
+        {
+          "price": 2388.36,
+          "pct": 1.7,
+          "by": "~7h",
+          "days": 7
+        },
+        {
+          "price": 2418.25,
+          "pct": 3,
+          "by": "~10h",
+          "days": 10
+        },
+        {
+          "price": 2448.14,
+          "pct": 4.2,
+          "by": "~21h",
+          "days": 21
+        }
+      ],
+      "invested": 9225,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T06:13:11.053Z",
+      "ltp": 2348.5,
+      "footprint": {
+        "score": 58,
+        "flags": [
+          "Stealth volume — buying while price still flat",
+          "Outperforming NIFTY (relative-strength leader)",
+          "Up/down volume 2.76× (accumulation)"
+        ],
+        "strong": false
+      },
+      "delivery": null,
+      "rr": 1.25,
+      "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.76× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
+    },
+    "money_flow:BHEL": {
+      "sleeve": "FO",
+      "id": "money_flow:BHEL",
+      "symbol": "BHEL",
+      "name": "Bharat Heavy Electricals Ltd.",
+      "generator": "money_flow",
+      "gen": "Money Flow",
+      "kind": "OPT",
+      "direction": "LONG",
+      "grade": null,
+      "confidence": 83,
+      "optType": "CE",
+      "entryPremium": 15,
+      "optionPlay": null,
+      "hedged": true,
+      "netDebit": 7,
+      "longPrem": 15,
+      "shortPrem": 8,
+      "hedgeNote": "Hedged CE debit spread — long ₹15 / short ₹8; net debit ₹7 = defined max loss",
+      "stockOption": true,
+      "commodity": false,
+      "qty": 2625,
+      "lots": 1,
+      "lotSize": 2625,
+      "notional": 1129538,
+      "entryPrice": 430.3,
+      "sl": 424.01,
+      "targets": [
+        {
+          "price": 438.69,
+          "pct": 1.9,
+          "by": "~4h",
+          "days": 4
+        },
+        {
+          "price": 444.99,
+          "pct": 3.4,
+          "by": "~7h",
+          "days": 7
+        },
+        {
+          "price": 451.28,
+          "pct": 4.9,
+          "by": "~21h",
+          "days": 21
+        }
+      ],
+      "invested": 18375,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T06:13:11.053Z",
+      "ltp": 430.3,
+      "footprint": {
+        "score": 38,
+        "flags": [
+          "Stealth volume — buying while price still flat",
+          "Up/down volume 1.94× (accumulation)"
+        ],
+        "weak": true
+      },
+      "delivery": null,
+      "rr": 1.33,
+      "reason": "MFI 67 rising + OBV up — money flowing in",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
+    },
+    "daily:vol_accum:TCS": {
+      "sleeve": "DAILY",
+      "id": "daily:vol_accum:TCS",
+      "baseId": "vol_accum:TCS",
+      "symbol": "TCS",
+      "name": "Tata Consultancy Services Ltd.",
+      "generator": "vol_accum",
+      "gen": "Volume + Accumulation",
+      "kind": "CASH",
+      "direction": "LONG",
+      "grade": null,
+      "confidence": 95,
+      "optType": null,
+      "entryPremium": null,
+      "optionPlay": null,
+      "qty": 42,
+      "lots": null,
+      "lotSize": null,
+      "notional": 98637,
+      "entryPrice": 2348.5,
+      "sl": 2316.71,
+      "targets": [
+        {
+          "price": 2388.36,
+          "pct": 1.7,
+          "by": "~7h",
+          "days": 7
+        },
+        {
+          "price": 2418.25,
+          "pct": 3,
+          "by": "~10h",
+          "days": 10
+        },
+        {
+          "price": 2448.14,
+          "pct": 4.2,
+          "by": "~21h",
+          "days": 21
+        }
+      ],
+      "invested": 98637,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T06:13:11.053Z",
+      "ltp": 2348.5,
+      "dailyTake": 1.8,
+      "structuralSL": 2316.71,
+      "footprint": {
+        "score": 58,
+        "flags": [
+          "Stealth volume — buying while price still flat",
+          "Outperforming NIFTY (relative-strength leader)",
+          "Up/down volume 2.76× (accumulation)"
+        ],
+        "strong": false
+      },
+      "delivery": null,
+      "rr": 1.25,
+      "reason": "Accumulation (vol 85/100): 5-day volume > 20-day average (RVOL 0×); Up/down volume 2.76× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding)",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
+    },
+    "daily:money_flow:BHEL": {
+      "sleeve": "DAILY",
+      "id": "daily:money_flow:BHEL",
+      "baseId": "money_flow:BHEL",
+      "symbol": "BHEL",
+      "name": "Bharat Heavy Electricals Ltd.",
+      "generator": "money_flow",
+      "gen": "Money Flow",
+      "kind": "CASH",
+      "direction": "LONG",
+      "grade": null,
+      "confidence": 83,
+      "optType": null,
+      "entryPremium": null,
+      "optionPlay": null,
+      "qty": 232,
+      "lots": null,
+      "lotSize": null,
+      "notional": 99830,
+      "entryPrice": 430.3,
+      "sl": 424.01,
+      "targets": [
+        {
+          "price": 438.69,
+          "pct": 1.9,
+          "by": "~4h",
+          "days": 4
+        },
+        {
+          "price": 444.99,
+          "pct": 3.4,
+          "by": "~7h",
+          "days": 7
+        },
+        {
+          "price": 451.28,
+          "pct": 4.9,
+          "by": "~21h",
+          "days": 21
+        }
+      ],
+      "invested": 99830,
+      "entryDate": "2026-09-01",
+      "entryAt": "2026-09-01T06:13:11.053Z",
+      "ltp": 430.3,
+      "dailyTake": 1.8,
+      "structuralSL": 424.01,
+      "footprint": {
+        "score": 38,
+        "flags": [
+          "Stealth volume — buying while price still flat",
+          "Up/down volume 1.94× (accumulation)"
+        ],
+        "weak": true
+      },
+      "delivery": null,
+      "rr": 1.33,
+      "reason": "MFI 67 rising + OBV up — money flowing in",
+      "unrealizedPnl": 0,
+      "unrealizedPct": 0
     }
   },
   "closed": [],
-  "updatedAt": "2026-09-01T06:09:31.781Z",
-  "equity": 3002665,
+  "updatedAt": "2026-09-01T06:13:37.694Z",
+  "equity": 3000824,
   "stats": {
-    "equity": 3002665,
-    "cash": 2857263,
-    "investedOpen": 142737,
+    "equity": 3000824,
+    "cash": 2624696,
+    "investedOpen": 375304,
     "cashSleeve": {
       "capital": 1000000,
       "cash": 1000000,
@@ -315,29 +624,29 @@
     },
     "foSleeve": {
       "capital": 1000000,
-      "cash": 957075,
-      "equity": 1002297,
-      "pct": 0.23,
-      "open": 4,
+      "cash": 922975,
+      "equity": 1000426,
+      "pct": 0.04,
+      "open": 7,
       "closedPnl": 0,
       "goal": {
         "type": "monthly",
         "min": 10,
         "max": 15,
-        "mtdPct": 0.23,
-        "mtdPnl": 2297,
+        "mtdPct": 0.04,
+        "mtdPnl": 426,
         "expectMin": 0.33,
-        "projected": 6.9,
+        "projected": 1.2,
         "status": "behind"
       }
     },
     "dailySleeve": {
       "capital": 1000000,
-      "cash": 900188,
-      "deployed": 99812,
-      "equity": 1000368,
+      "cash": 701721,
+      "deployed": 298279,
+      "equity": 1000398,
       "pct": 0.04,
-      "open": 1,
+      "open": 3,
       "closedCount": 0,
       "winRate": null,
       "closedPnl": 0,
@@ -358,19 +667,19 @@
       "goal": {
         "type": "daily",
         "targetInr": 10000,
-        "todayPnl": 368,
+        "todayPnl": 398,
         "status": "progress"
       }
     },
-    "open": 4,
+    "open": 7,
     "closedCount": 0,
     "wins": 0,
     "losses": 0,
     "winRate": null,
     "realizedPnl": 0,
     "realizedPct": 0,
-    "unrealizedPnl": 2665,
-    "totalPct": 0.09,
+    "unrealizedPnl": 824,
+    "totalPct": 0.03,
     "profitFactor": null,
     "avgWinPct": null,
     "avgLossPct": null,
@@ -575,7 +884,7 @@
       {
         "key": "FO",
         "name": "F&O",
-        "pct": 0.23,
+        "pct": 0.04,
         "winRate": null,
         "trades": 0,
         "rank": 1,
@@ -4170,7 +4479,7 @@
       "count": 0,
       "critical": 0,
       "issues": [],
-      "checkedAt": "2026-09-01T06:09:31.781Z"
+      "checkedAt": "2026-09-01T06:13:37.694Z"
     },
     "compliance": {
       "clean": true,
@@ -4179,7 +4488,7 @@
       "total": 8,
       "rules": [
         {
-          "label": "F&O hedged / defined-risk — 4 option positions",
+          "label": "F&O hedged / defined-risk — 7 option positions",
           "pass": true,
           "count": 0,
           "detail": "all hedged spreads ✓"
@@ -4194,7 +4503,7 @@
           "label": "Daily squared by 15:30 — no day-trade held overnight",
           "pass": true,
           "count": 0,
-          "detail": "1 open, all intraday"
+          "detail": "3 open, all intraday"
         },
         {
           "label": "Sleeve caps ≤ ₹10L each",
@@ -4231,15 +4540,15 @@
         "averagedThisMonth": 0,
         "pyramidedOpen": 0
       },
-      "checkedAt": "2026-09-01T06:09:31.781Z"
+      "checkedAt": "2026-09-01T06:13:37.694Z"
     }
   },
   "capitalCash": 1000000,
   "capitalFO": 1000000,
   "cashCash": 1000000,
-  "cashFO": 957075,
+  "cashFO": 922975,
   "capitalDaily": 1000000,
-  "cashDaily": 900188,
+  "cashDaily": 701721,
   "dailyStartedAt": "2026-09-01",
   "realizedTotal": {
     "CASH": 0,
