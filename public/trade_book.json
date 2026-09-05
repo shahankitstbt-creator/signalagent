@@ -161,13 +161,13 @@
       "invested": 11825,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T05:35:41.146Z",
-      "ltp": 2423.5,
+      "ltp": 2422,
       "footprint": null,
       "delivery": null,
       "rr": 0.48,
       "reason": "Breakout watch: Hugging 20-day high (0.2% below); Above rising 20 & 50 EMA",
-      "unrealizedPnl": -8249,
-      "unrealizedPct": -69.76,
+      "unrealizedPnl": -8444,
+      "unrealizedPct": -71.41,
       "peakPct": 80.52
     },
     "fno:MAHABANK": {
@@ -343,7 +343,7 @@
       "invested": 18375,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T06:13:11.053Z",
-      "ltp": 431.1,
+      "ltp": 431.1000061035156,
       "footprint": {
         "score": 38,
         "flags": [
@@ -476,7 +476,7 @@
       "invested": 11200,
       "entryDate": "2026-09-01",
       "entryAt": "2026-09-01T08:40:10.646Z",
-      "ltp": 1838.699951171875,
+      "ltp": 1836,
       "footprint": {
         "score": 38,
         "flags": [
@@ -488,8 +488,8 @@
       "delivery": null,
       "rr": 1.33,
       "reason": "Bullish Bullish ABC retrace — pattern breakout/continuation zone",
-      "unrealizedPnl": 1528,
-      "unrealizedPct": 13.64,
+      "unrealizedPnl": 611,
+      "unrealizedPct": 5.46,
       "peakPct": 100
     },
     "harmonic:LTM": {
@@ -1429,10 +1429,10 @@
       "failureReason": "Squared off at 15:30 close at -0.39% (intraday — no overnight hold)"
     }
   ],
-  "updatedAt": "2026-09-04T10:30:57.576Z",
-  "equity": 2914717,
+  "updatedAt": "2026-09-05T10:32:07.325Z",
+  "equity": 2913605,
   "stats": {
-    "equity": 2914717,
+    "equity": 2913605,
     "cash": 2844889,
     "investedOpen": 142450,
     "cashSleeve": {
@@ -1448,7 +1448,7 @@
         "max": 10,
         "mtdPct": 0,
         "mtdPnl": 0,
-        "expectMin": 0.93,
+        "expectMin": 1.17,
         "projected": 0,
         "status": "behind"
       }
@@ -1456,18 +1456,18 @@
     "foSleeve": {
       "capital": 1000000,
       "cash": 847402,
-      "equity": 917230,
-      "pct": -8.28,
+      "equity": 916118,
+      "pct": -8.39,
       "open": 13,
       "closedPnl": -10148,
       "goal": {
         "type": "monthly",
         "min": 10,
         "max": 15,
-        "mtdPct": -8.28,
-        "mtdPnl": -82770,
-        "expectMin": 1.33,
-        "projected": -62.1,
+        "mtdPct": -8.39,
+        "mtdPnl": -83882,
+        "expectMin": 1.67,
+        "projected": -50.3,
         "status": "behind"
       }
     },
@@ -1517,8 +1517,8 @@
     "winRate": 33.3,
     "realizedPnl": -10148,
     "realizedPct": -0.51,
-    "unrealizedPnl": -72622,
-    "totalPct": -2.84,
+    "unrealizedPnl": -73734,
+    "totalPct": -2.88,
     "profitFactor": 0.06,
     "avgWinPct": 5.3,
     "avgLossPct": -59.6,
@@ -1725,7 +1725,7 @@
         "fix": "enter only on a reclaim of VWAP/POC with volume; skip the first 15 min noise"
       }
     ],
-    "activeCooldowns": 7,
+    "activeCooldowns": 6,
     "segmentRank": [
       {
         "key": "CASH",
@@ -1748,7 +1748,7 @@
       {
         "key": "FO",
         "name": "F&O",
-        "pct": -8.28,
+        "pct": -8.39,
         "winRate": 33.3,
         "trades": 3,
         "rank": 3,
@@ -1830,6 +1830,38 @@
       }
     ],
     "dailyLog": [
+      {
+        "day": "2026-09-04",
+        "startCapital": 2950228,
+        "endCapital": 2914717,
+        "pnl": -35511,
+        "pct": -1.2,
+        "sleeves": {
+          "CASH": {
+            "startCapital": 1000000,
+            "endCapital": 1000000,
+            "pnl": 0,
+            "trades": 0,
+            "winRate": null
+          },
+          "FO": {
+            "startCapital": 952741,
+            "endCapital": 917230,
+            "pnl": -35511,
+            "trades": 0,
+            "winRate": null
+          },
+          "DAILY": {
+            "startCapital": 997487,
+            "endCapital": 997487,
+            "pnl": 0,
+            "trades": 0,
+            "winRate": null
+          }
+        },
+        "trades": [],
+        "mistakes": []
+      },
       {
         "day": "2026-09-03",
         "startCapital": 2943284,
@@ -5514,7 +5546,7 @@
       "count": 0,
       "critical": 0,
       "issues": [],
-      "checkedAt": "2026-09-04T10:30:57.576Z"
+      "checkedAt": "2026-09-05T10:32:07.325Z"
     },
     "compliance": {
       "clean": true,
@@ -5575,7 +5607,7 @@
         "averagedThisMonth": 0,
         "pyramidedOpen": 0
       },
-      "checkedAt": "2026-09-04T10:30:57.576Z"
+      "checkedAt": "2026-09-05T10:32:07.325Z"
     }
   },
   "capitalCash": 1000000,
@@ -5591,7 +5623,6 @@
     "DAILY": -2513
   },
   "lossCooldown": {
-    "GOLD": "2026-08-31",
     "SAIL": "2026-09-01",
     "BHEL": "2026-09-01",
     "FORCEMOT": "2026-09-01",
@@ -6614,11 +6645,11 @@
   ],
   "dailyResetToken": "2026-08-12",
   "monthKey": "2026-09",
-  "dayKey": "2026-09-04",
-  "dayOpenEquity": 2950228,
+  "dayKey": "2026-09-05",
+  "dayOpenEquity": 2914717,
   "dayOpenSleeve": {
     "CASH": 1000000,
-    "FO": 952741,
+    "FO": 917230,
     "DAILY": 997487
   },
   "dailyLog": [
@@ -10286,6 +10317,38 @@
           "startCapital": 945797,
           "endCapital": 952741,
           "pnl": 6944,
+          "trades": 0,
+          "winRate": null
+        },
+        "DAILY": {
+          "startCapital": 997487,
+          "endCapital": 997487,
+          "pnl": 0,
+          "trades": 0,
+          "winRate": null
+        }
+      },
+      "trades": [],
+      "mistakes": []
+    },
+    {
+      "day": "2026-09-04",
+      "startCapital": 2950228,
+      "endCapital": 2914717,
+      "pnl": -35511,
+      "pct": -1.2,
+      "sleeves": {
+        "CASH": {
+          "startCapital": 1000000,
+          "endCapital": 1000000,
+          "pnl": 0,
+          "trades": 0,
+          "winRate": null
+        },
+        "FO": {
+          "startCapital": 952741,
+          "endCapital": 917230,
+          "pnl": -35511,
           "trades": 0,
           "winRate": null
         },

@@ -7,33 +7,33 @@
       "putWall": 23900,
       "gammaFlip": 23900,
       "regime": "NEG GAMMA",
-      "pcr": 1.03,
+      "pcr": 1.02,
       "atm": 23900,
       "expiry": "08SEP2026",
-      "dExp": 4,
+      "dExp": 3,
       "isExpiry": false,
       "distPct": 0.22,
       "casRegime": "VOLATILE",
-      "expectedClose": 23635,
-      "expectedMovePct": -1.1,
+      "expectedClose": 24161,
+      "expectedMovePct": 1.1,
       "band": 119,
       "magnitude": "big",
-      "direction": "DOWN",
-      "confidence": 54,
-      "pinStrength": 38,
+      "direction": "UP",
+      "confidence": 61,
+      "pinStrength": 58,
       "gammaMag": 44,
       "flow": {
-        "callChg": -55337100,
-        "putChg": -57418400,
-        "bias": -0.008,
+        "callChg": -36129210,
+        "putChg": -33696715,
+        "bias": 0.011,
         "label": "call covering (squeeze ↑) + put covering (support ↓)",
-        "dir": "down"
+        "dir": "up"
       },
       "drivers": [
         {
           "dir": "up",
           "w": 0.55,
-          "text": "Max-pain pin 23950 (+0.22% vs spot) · pin strength 38/100"
+          "text": "Max-pain pin 23950 (+0.22% vs spot) · pin strength 58/100"
         },
         {
           "dir": "down",
@@ -41,58 +41,58 @@
           "text": "NEG GAMMA (flip 23900) · dealer pressure 44/100 — AMPLIFIES the close"
         },
         {
-          "dir": "down",
-          "w": 0.16,
-          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -55337100 · ΔPE -57418400)"
+          "dir": "up",
+          "w": 0.22,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -36129210 · ΔPE -33696715)"
         }
       ],
-      "mechanics": "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
-        "▲ Max-pain pin 23950 (+0.22% vs spot) · pin strength 38/100",
+        "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
+        "▲ Max-pain pin 23950 (+0.22% vs spot) · pin strength 58/100",
         "▼ NEG GAMMA (flip 23900) · dealer pressure 44/100 — AMPLIFIES the close",
-        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -55337100 · ΔPE -57418400)"
+        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -36129210 · ΔPE -33696715)"
       ],
       "magnets": [
         {
           "k": 24000,
-          "ce": 16598335,
-          "pe": 6924320
+          "ce": 15177890,
+          "pe": 6590285
         },
         {
           "k": 23900,
-          "ce": 5456100,
-          "pe": 12630865
+          "ce": 5027750,
+          "pe": 11118835
         },
         {
           "k": 24100,
-          "ce": 11898510,
-          "pe": 2849340
-        },
-        {
-          "k": 23950,
-          "ce": 7891130,
-          "pe": 6626555
+          "ce": 11139765,
+          "pe": 2664610
         },
         {
           "k": 24200,
-          "ce": 11982620,
-          "pe": 2129270
+          "ce": 11718525,
+          "pe": 2004795
+        },
+        {
+          "k": 23950,
+          "ce": 7470060,
+          "pe": 5838040
         },
         {
           "k": 23800,
-          "ce": 1998685,
-          "pe": 11368435
+          "ce": 1997320,
+          "pe": 11021660
         }
       ],
-      "tilt": -0.25,
+      "tilt": 1.35,
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
-      "bias": "down",
-      "predictedClose": 23635,
-      "footprintScore": -0.3,
-      "target": 23635,
-      "dirWord": "BEARISH",
+      "bias": "up",
+      "predictedClose": 24161,
+      "footprintScore": 1.4,
+      "target": 24161,
+      "dirWord": "BULLISH",
       "instBias": null
     },
     "BANKNIFTY": {
@@ -105,7 +105,7 @@
       "pcr": 1.09,
       "atm": 57400,
       "expiry": "29SEP2026",
-      "dExp": 25,
+      "dExp": 24,
       "isExpiry": false,
       "distPct": 0.23,
       "casRegime": "VOLATILE",
@@ -114,15 +114,15 @@
       "band": 287,
       "magnitude": "normal",
       "direction": "UP",
-      "confidence": 56,
+      "confidence": 62,
       "pinStrength": 24,
       "gammaMag": 16,
       "flow": {
-        "callChg": -77280,
-        "putChg": -56400,
-        "bias": 0.002,
+        "callChg": -122340,
+        "putChg": 17280,
+        "bias": 0.013,
         "label": "OI steady",
-        "dir": "flat"
+        "dir": "up"
       },
       "drivers": [
         {
@@ -131,61 +131,61 @@
           "text": "Max-pain pin 57500 (+0.23% vs spot) · pin strength 24/100"
         },
         {
+          "dir": "up",
+          "w": 0.26,
+          "text": "Intraday OI flow: OI steady (ΔCE -122340 · ΔPE +17280)"
+        },
+        {
           "dir": "down",
           "w": 0.16,
           "text": "NEG GAMMA (flip 57400) · dealer pressure 16/100 — AMPLIFIES the close"
-        },
-        {
-          "dir": "flat",
-          "w": 0.04,
-          "text": "Intraday OI flow: OI steady (ΔCE -77280 · ΔPE -56400)"
         }
       ],
       "mechanics": "Spot 57369.65 is BELOW the gamma-flip 57400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: OI steady; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
         "Spot 57369.65 is BELOW the gamma-flip 57400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: OI steady; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 57500 (+0.23% vs spot) · pin strength 24/100",
-        "▼ NEG GAMMA (flip 57400) · dealer pressure 16/100 — AMPLIFIES the close",
-        "■ Intraday OI flow: OI steady (ΔCE -77280 · ΔPE -56400)"
+        "▲ Intraday OI flow: OI steady (ΔCE -122340 · ΔPE +17280)",
+        "▼ NEG GAMMA (flip 57400) · dealer pressure 16/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
           "k": 57500,
-          "ce": 1950060,
-          "pe": 1943100
+          "ce": 1948650,
+          "pe": 1942740
         },
         {
           "k": 58000,
-          "ce": 1327320,
-          "pe": 1047360
+          "ce": 1325880,
+          "pe": 1046280
         },
         {
           "k": 57000,
-          "ce": 302250,
-          "pe": 829950
+          "ce": 301980,
+          "pe": 829980
         },
         {
           "k": 57800,
-          "ce": 301830,
-          "pe": 209280
+          "ce": 301800,
+          "pe": 209550
         },
         {
           "k": 57700,
-          "ce": 290820,
-          "pe": 183210
+          "ce": 290790,
+          "pe": 182970
         },
         {
           "k": 57300,
-          "ce": 102840,
-          "pe": 349560
+          "ce": 102330,
+          "pe": 347100
         }
       ],
-      "tilt": 0.57,
+      "tilt": 1.38,
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
       "bias": "up",
       "predictedClose": 57714,
-      "footprintScore": 0.6,
+      "footprintScore": 1.4,
       "target": 57714,
       "dirWord": "BULLISH",
       "instBias": null
@@ -932,12 +932,12 @@
       "dayN": 1,
       "isExpiry": false,
       "NIFTY": {
-        "exp": 23635,
-        "low": 23516,
-        "high": 23754,
+        "exp": 24161,
+        "low": 24042,
+        "high": 24280,
         "band": 119,
         "bandPct": 0.5,
-        "conf": 54,
+        "conf": 61,
         "kind": "live footprint"
       },
       "BANKNIFTY": {
@@ -946,7 +946,7 @@
         "high": 58001,
         "band": 287,
         "bandPct": 0.5,
-        "conf": 56,
+        "conf": 62,
         "kind": "live footprint"
       },
       "SENSEX": {
@@ -3961,7 +3961,7 @@
   "histHitRate": 40,
   "hitRate": 75,
   "resolved": 4,
-  "updatedAt": "2026-09-04T10:30:43.032Z",
+  "updatedAt": "2026-09-05T10:31:53.456Z",
   "dirHitRate": 50,
   "dirResolved": 2,
   "regimeAcc": {
