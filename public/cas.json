@@ -10,7 +10,7 @@
       "pcr": 1.02,
       "atm": 23900,
       "expiry": "08SEP2026",
-      "dExp": 3,
+      "dExp": 2,
       "isExpiry": false,
       "distPct": 0.22,
       "casRegime": "VOLATILE",
@@ -23,9 +23,9 @@
       "pinStrength": 58,
       "gammaMag": 44,
       "flow": {
-        "callChg": -36129210,
-        "putChg": -33696715,
-        "bias": 0.011,
+        "callChg": -40182610,
+        "putChg": -38334595,
+        "bias": 0.008,
         "label": "call covering (squeeze ↑) + put covering (support ↓)",
         "dir": "up"
       },
@@ -42,8 +42,8 @@
         },
         {
           "dir": "up",
-          "w": 0.22,
-          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -36129210 · ΔPE -33696715)"
+          "w": 0.16,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -40182610 · ΔPE -38334595)"
         }
       ],
       "mechanics": "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
@@ -51,7 +51,7 @@
         "Spot 23897.7 is BELOW the gamma-flip 23900 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude big. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 23950 (+0.22% vs spot) · pin strength 58/100",
         "▼ NEG GAMMA (flip 23900) · dealer pressure 44/100 — AMPLIFIES the close",
-        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -36129210 · ΔPE -33696715)"
+        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -40182610 · ΔPE -38334595)"
       ],
       "magnets": [
         {
@@ -105,7 +105,7 @@
       "pcr": 1.09,
       "atm": 57400,
       "expiry": "29SEP2026",
-      "dExp": 24,
+      "dExp": 23,
       "isExpiry": false,
       "distPct": 0.23,
       "casRegime": "VOLATILE",
@@ -118,8 +118,8 @@
       "pinStrength": 24,
       "gammaMag": 16,
       "flow": {
-        "callChg": -122340,
-        "putChg": 17280,
+        "callChg": -126120,
+        "putChg": 12960,
         "bias": 0.013,
         "label": "OI steady",
         "dir": "up"
@@ -133,7 +133,7 @@
         {
           "dir": "up",
           "w": 0.26,
-          "text": "Intraday OI flow: OI steady (ΔCE -122340 · ΔPE +17280)"
+          "text": "Intraday OI flow: OI steady (ΔCE -126120 · ΔPE +12960)"
         },
         {
           "dir": "down",
@@ -145,7 +145,7 @@
       "why": [
         "Spot 57369.65 is BELOW the gamma-flip 57400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: OI steady; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 57500 (+0.23% vs spot) · pin strength 24/100",
-        "▲ Intraday OI flow: OI steady (ΔCE -122340 · ΔPE +17280)",
+        "▲ Intraday OI flow: OI steady (ΔCE -126120 · ΔPE +12960)",
         "▼ NEG GAMMA (flip 57400) · dealer pressure 16/100 — AMPLIFIES the close"
       ],
       "magnets": [
@@ -3961,7 +3961,7 @@
   "histHitRate": 40,
   "hitRate": 75,
   "resolved": 4,
-  "updatedAt": "2026-09-05T10:31:53.456Z",
+  "updatedAt": "2026-09-06T10:30:41.868Z",
   "dirHitRate": 50,
   "dirResolved": 2,
   "regimeAcc": {
