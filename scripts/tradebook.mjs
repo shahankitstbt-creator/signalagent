@@ -673,13 +673,18 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (manageOnly) break                                    // execute-only worker: manage existing, open nothing new
     if (Object.keys(b.open).length >= MAX_OPEN) break
     const sym = s.symbol || s.underlying
-    // TWO-SIDED (user enabled shorts everywhere, 2026-09-01): the book TAKES shorts as DEFINED-RISK PE /
-    // put debit spreads (sizeTrade→hedgeSpread) — capped-loss (the Nifty 24640 / Gold moves we were missing).
-    // REGIME GATE (backtest 2026-09-01: shorting into an UPTREND loses): only take a stock/index short when
-    // the market bias is NOT bullish (bearish/neutral, like now) OR it's very high-conviction (≥78). Commodity
-    // shorts self-gate (they only fire on a 20-day-low breakdown = their own downtrend).
+    // ── SYMMETRIC REGIME GATE — DON'T FIGHT THE REGIME WITH LEVERAGED BETS (fix for the Sept −12.8% F&O
+    // bleed: the book bought CALL options in a BEARISH market and 19 of them expired at −100%). A LEVERAGED
+    // trade (F&O option / commodity — the ones that can go −100%) is only taken WITH the regime, unless it's
+    // very high-conviction (≥78):
+    //   • bearish market  → no bullish CALL/long-option bets   (this is what bled in Sept)
+    //   • bullish market  → no bearish PUT/short bets          (shorting into an uptrend loses — the backtest)
+    // Cash delivery longs (non-leveraged, real stop, can't go −100%) are exempt — they're fine either way.
     const isShort = s.direction === 'SHORT' || s.direction === 'BEARISH' || s.optType === 'PE'
-    if (isShort && !s.commodity && marketBias === 'bullish' && (s.confidence ?? 0) < 78) continue
+    const conf = s.confidence ?? 0
+    const leveraged = !!(fnoLots[sym] || fnoLots[s.underlying] || s.optType || s.commodity)   // can go to −100%
+    if (isShort && marketBias === 'bullish' && !s.commodity && conf < 78) continue            // no shorts into a bull market
+    if (!isShort && marketBias === 'bearish' && leveraged && conf < 78) continue              // no bullish CALLs into a bear market
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
