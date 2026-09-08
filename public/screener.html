@@ -68,17 +68,21 @@
 
   <div class="filters">
     <span style="font-size:10px;color:var(--txt2);font-weight:700">PRESETS:</span>
+    <span class="preset" data-p="prebreak">🔎 Pre-Breakout</span>
     <span class="preset on" data-p="leaders">🌱 Stage-2 Leaders</span>
-    <span class="preset" data-p="momentum">🚀 Momentum (RS≥80)</span>
+    <span class="preset" data-p="momentum">🚀 Momentum</span>
     <span class="preset" data-p="near52">Near 52W High</span>
-    <span class="preset" data-p="accum">Accumulation (CMF+)</span>
+    <span class="preset" data-p="accum">Accumulation</span>
     <span class="preset" data-p="all">All cash</span>
     <label>Universe<select id="fMcap"><option value="">All</option><option>Large</option><option>Mid</option><option>Small</option></select></label>
-    <label>Min RS rank<input id="fRs" type="number" value="0" min="0" max="99" style="width:64px"></label>
-    <label>Min Stage-2<input id="fS2" type="number" value="0" min="0" max="100" style="width:64px"></label>
-    <label>Within % of 52WH<input id="f52" type="number" value="100" min="1" max="100" style="width:64px"></label>
-    <label>Min RSI<input id="fRsi" type="number" value="0" min="0" max="100" style="width:64px"></label>
-    <label>Search<input id="fq" placeholder="symbol…" style="width:90px"></label>
+    <label>Min RS rank<input id="fRs" type="number" value="0" min="0" max="99" style="width:60px"></label>
+    <label>Min Stage-2<input id="fS2" type="number" value="0" min="0" max="100" style="width:60px"></label>
+    <label>Min CMF<input id="fCmf" type="number" value="-99" step="0.05" style="width:60px"></label>
+    <label>Within % 52WH<input id="f52" type="number" value="100" min="1" max="100" style="width:60px"></label>
+    <label>Min RSI<input id="fRsi" type="number" value="0" min="0" max="100" style="width:56px"></label>
+    <label style="flex-direction:row;align-items:center;gap:4px"><input id="fStage2" type="checkbox"> Stage-2 only</label>
+    <label style="flex-direction:row;align-items:center;gap:4px"><input id="fPre" type="checkbox"> Pre-breakout only</label>
+    <label>Search<input id="fq" placeholder="symbol…" style="width:84px"></label>
   </div>
 
   <div class="tblwrap"><table>
@@ -90,10 +94,10 @@
 <script>
 const $=id=>document.getElementById(id);
 const N=(n,d=0)=>n==null?'—':(+n).toLocaleString('en-IN',{maximumFractionDigits:d});
-let DATA=null, SORT={k:'rsRank',dir:-1}, PRESET='leaders', SECTOR='';
+let DATA=null, SORT={k:'rsRank',dir:-1}, SECTOR='';
 const COLS=[
   ['symbol','Symbol','l'],['sector','Sector','l'],['mcap','Cap','l'],['price','Price'],['chgPct','Chg%'],
-  ['rsRank','RS'],['stage','Stage'],['stage2Score','S2'],['pctFrom52wHigh','52WH%'],['cmf','CMF'],['rsi','RSI'],['rvol','RVOL'],
+  ['rsRank','RS'],['stage','Stage'],['stage2Score','S2'],['preBreakoutScore','Pre-Brk'],['pctFrom52wHigh','52WH%'],['cmf','CMF'],['rsi','RSI'],['rvol','RVOL'],
   ['entry','Entry'],['sl','SL'],['t1','T1'],['reason','Setup','l'],
 ];
 function rsColor(r){const g=Math.round(2.55*r);return `rgb(${255-g},${Math.min(200,80+g)},${90})`}
@@ -112,18 +116,27 @@ function rotation(sectors){
   $('rot').innerHTML=(sectors||[]).slice(0,14).map(s=>`<span class="chip ${SECTOR===s.sector?'on':''}" data-s="${s.sector}">${s.sector} <span class="mono" style="color:${s.avgRS>=0?'var(--green)':'var(--red)'}">${s.avgRS>=0?'+':''}${s.avgRS}</span> <span class="sub">${s.pctStage2}%S2</span></span>`).join('');
   document.querySelectorAll('#rot .chip').forEach(c=>c.onclick=()=>{SECTOR=SECTOR===c.dataset.s?'':c.dataset.s;rotation(sectors);render()});
 }
+// presets just SET the filter controls — the controls do ALL the filtering, so they always work.
+const PRESETS={
+  prebreak:{fRs:55,fS2:0,fCmf:0.05,f52:100,fRsi:0,fStage2:false,fPre:true},
+  leaders:{fRs:72,fS2:72,fCmf:0.001,f52:20,fRsi:0,fStage2:true,fPre:false},
+  momentum:{fRs:80,fS2:0,fCmf:-99,f52:100,fRsi:0,fStage2:false,fPre:false},
+  near52:{fRs:0,fS2:0,fCmf:-99,f52:8,fRsi:0,fStage2:false,fPre:false},
+  accum:{fCmf:0.05,fRs:0,fS2:0,f52:100,fRsi:0,fStage2:false,fPre:false},
+  all:{fRs:0,fS2:0,fCmf:-99,f52:100,fRsi:0,fStage2:false,fPre:false},
+};
+function applyPreset(p){const c=PRESETS[p];if(!c)return;for(const k in c){const el=$(k);if(!el)continue;if(el.type==='checkbox')el.checked=c[k];else el.value=c[k]}render()}
 function passes(r){
   if(SECTOR&&r.sector!==SECTOR)return false;
   const mc=$('fMcap').value; if(mc&&r.mcap!==mc)return false;
-  if(r.rsRank<(+$('fRs').value||0))return false;
-  if(r.stage2Score<(+$('fS2').value||0))return false;
-  if(-r.pctFrom52wHigh>(+$('f52').value||100))return false;
+  if((r.rsRank||0)<(+$('fRs').value||0))return false;
+  if((r.stage2Score||0)<(+$('fS2').value||0))return false;
+  if((r.cmf==null?-99:r.cmf)<(+$('fCmf').value))return false;
+  if(-(r.pctFrom52wHigh||-100)>(+$('f52').value||100))return false;
   if((r.rsi||0)<(+$('fRsi').value||0))return false;
-  const q=$('fq').value.trim().toUpperCase(); if(q&&!(r.symbol||'').includes(q))return false;
-  if(PRESET==='leaders')return r.stage===2&&r.rsRank>=72&&r.stage2Score>=72&&r.cmf>0;
-  if(PRESET==='momentum')return r.rsRank>=80;
-  if(PRESET==='near52')return r.pctFrom52wHigh>-8;
-  if(PRESET==='accum')return r.cmf>0.05;
+  if($('fStage2').checked&&r.stage!==2)return false;
+  if($('fPre').checked&&!r.preBreakout)return false;
+  const q=$('fq').value.trim().toUpperCase(); if(q&&!(r.symbol||'').includes(q)&&!(r.name||'').toUpperCase().includes(q))return false;
   return true;
 }
 function render(){
@@ -131,26 +144,28 @@ function render(){
   $('hd').innerHTML=COLS.map(([k,lbl,cls])=>`<th class="${cls||''}" data-k="${k}">${lbl}${SORT.k===k?(SORT.dir<0?' ▾':' ▴'):''}</th>`).join('');
   document.querySelectorAll('#hd th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;SORT.dir=SORT.k===k?-SORT.dir:-1;SORT.k=k;render()});
   let rows=DATA.rows.filter(passes);
-  const sk=SORT.k, lead=Object.fromEntries((DATA.leaders||[]).map(l=>[l.symbol,l]));
+  const sk=SORT.k, lead=Object.fromEntries((DATA.leaders||[]).map(l=>[l.symbol,l])), pre=Object.fromEntries((DATA.preBreakouts||[]).map(l=>[l.symbol,l]));
   rows.sort((a,b)=>{let x=a[sk],y=b[sk]; if(sk==='reason'||sk==='symbol'||sk==='sector'||sk==='mcap'){x=String(a[sk==='reason'?'symbol':sk]||'');y=String(b[sk==='reason'?'symbol':sk]||'');return SORT.dir*x.localeCompare(y)} return SORT.dir*(((x??-1e9))-((y??-1e9)))});
   $('cnt').textContent=rows.length;
   $('tb').innerHTML=rows.slice(0,300).map(r=>{
-    const L=lead[r.symbol];
+    const L=lead[r.symbol]||pre[r.symbol];
     const stCls=r.stage===2?'st2':r.stage===4?'st4':'st1';
     return `<tr>
       <td class="l"><b>${r.symbol}</b></td><td class="l sub">${r.sector}</td><td class="l sub">${r.mcap}</td>
       <td class="mono">${N(r.price,2)}</td><td class="mono ${r.chgPct>=0?'up':'dn'}">${r.chgPct>=0?'+':''}${r.chgPct}</td>
       <td><span class="rs" style="background:${rsColor(r.rsRank)}22;color:${rsColor(r.rsRank)}">${r.rsRank}</span></td>
       <td><span class="pill ${stCls}">S${r.stage}</span></td><td class="mono">${r.stage2Score}</td>
+      <td class="mono">${r.preBreakout?`<span class="pill st2">${r.preBreakoutScore}</span>`:'—'}</td>
       <td class="mono ${r.pctFrom52wHigh>-8?'up':''}">${r.pctFrom52wHigh}%</td>
       <td class="mono ${r.cmf>0?'up':'dn'}">${r.cmf}</td><td class="mono">${r.rsi??'—'}</td><td class="mono">${r.rvol??'—'}</td>
       <td class="mono">${L?N(L.entry,2):'—'}</td><td class="mono dn">${L?N(L.sl,2):'—'}</td><td class="mono up">${L?N(L.targets?.[0]?.price,2):'—'}</td>
-      <td class="l sub" title="${L?.reason||''}" style="max-width:260px;overflow:hidden;text-overflow:ellipsis">${L?L.reason:(r.stage===2?'Stage-2 uptrend':r.stage===4?'Stage-4 decline':'base/transition')}</td>
-    </tr>`}).join('')||'<tr><td colspan="16" class="l sub" style="padding:20px">No stocks match these filters.</td></tr>';
+      <td class="l sub" title="${L?.reason||''}" style="max-width:280px;overflow:hidden;text-overflow:ellipsis">${L?L.reason:(r.preBreakout?'🔎 pre-breakout base':r.stage===2?'Stage-2 uptrend':r.stage===4?'Stage-4 decline':'base/transition')}</td>
+    </tr>`}).join('')||'<tr><td colspan="17" class="l sub" style="padding:20px">No stocks match these filters.</td></tr>';
 }
-document.querySelectorAll('.preset').forEach(p=>p.onclick=()=>{PRESET=p.dataset.p;document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('on',x===p));render()});
-['fMcap','fRs','fS2','f52','fRsi','fq'].forEach(id=>$(id).addEventListener('input',render));
-function load(){fetch('/screener.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DATA=d;$('upd').textContent='updated '+new Date(d.generatedAt).toLocaleString();health(d.marketHealth||{});rotation(d.sectors||[]);render()}).catch(()=>{$('tb').innerHTML='<tr><td colspan="16" class="l sub" style="padding:20px">Screener builds on the next scan.</td></tr>'})}
+document.querySelectorAll('.preset').forEach(p=>p.onclick=()=>{document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('on',x===p));applyPreset(p.dataset.p)});
+['fMcap','fRs','fS2','fCmf','f52','fRsi','fq','fStage2','fPre'].forEach(id=>$(id).addEventListener('input',render));
+let FIRST=true;
+function load(){fetch('/screener.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DATA=d;$('upd').textContent='updated '+new Date(d.generatedAt).toLocaleString();health(d.marketHealth||{});rotation(d.sectors||[]);if(FIRST){FIRST=false;applyPreset('leaders')}else render()}).catch(()=>{$('tb').innerHTML='<tr><td colspan="17" class="l sub" style="padding:20px">Screener builds on the next scan.</td></tr>'})}
 load();setInterval(load,60000);
 </script>
 </body>

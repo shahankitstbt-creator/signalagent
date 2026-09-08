@@ -985,11 +985,27 @@ async function computeScreener(scored, today) {
     if (near52) s2 += 15; if (off52low) s2 += 10; if (rsRaw > 0) s2 += 10
     const stage2Score = Math.min(100, s2)
     const stage = (above150 && sma150Rising && above50) ? 2 : (!above150 && price < sma50 && sma150 < sma150prev) ? 4 : above150 ? 3 : 1
+    const cmfVal = chaikinMF(h, l, c, v)
+    // ── PRE-BREAKOUT (catch it BEFORE the move starts): a tight coiling base + accumulation, sitting just
+    // under a breakout level, RS already improving — i.e. Stage-1 about to turn Stage-2. Entry = the break. ──
+    const hi50 = Math.max(...c.slice(-50)), hi20 = Math.max(...h.slice(-20)), lo20 = Math.min(...l.slice(-20))
+    const range20 = (hi20 - lo20) / price                                     // 20-day range width (coiling if small)
+    const nearBreak = (hi50 - price) / price <= 0.06 && price <= hi50 * 1.005 // within 6% below the 50-day high, not yet broken out
+    const upVol = v.slice(-10).reduce((a, x, k) => a + (c[c.length - 10 + k] >= c[c.length - 11 + k] ? (x || 0) : 0), 0)
+    const dnVol = v.slice(-10).reduce((a, x, k) => a + (c[c.length - 10 + k] < c[c.length - 11 + k] ? (x || 0) : 0), 0)
+    const accumulating = cmfVal > 0.05 || upVol > dnVol * 1.3                  // money quietly flowing in
+    const preBreakout = stage !== 4 && nearBreak && range20 < 0.15 && accumulating && rsRaw > 0 && above150 && price > sma50 * 0.98
+    let pbScore = 0
+    if (nearBreak) pbScore += 25; if (range20 < 0.12) pbScore += 20; else if (range20 < 0.15) pbScore += 10
+    if (cmfVal > 0.1) pbScore += 20; else if (cmfVal > 0.05) pbScore += 10
+    if (upVol > dnVol * 1.3) pbScore += 15; if (rsRaw > 0) pbScore += 10; if (sma150Rising) pbScore += 10
+    const preBreakoutScore = preBreakout ? Math.min(100, pbScore) : 0
     rows.push({
       symbol: st.symbol, name: st.name, sector: st.sector || '—', mcap: mcapSeg(st.indices), delivery: st._deliv?.pct ?? null,
       price: round(price), chgPct: st.changePct ?? 0, rsi: st.rsi ?? null, rvol: st.vol?.rvol ?? null,
       rsRaw, ret63: +ret63.toFixed(1), ret126: +ret126.toFixed(1), pctFrom52wHigh, stage2Score, stage, sma50: round(sma50),
-      above150, cmf: chaikinMF(h, l, c, v), emaStack: !!st.emaStack, avgVol: Math.round((v.slice(-20).reduce((a, x) => a + (x || 0), 0)) / 20),
+      preBreakout, preBreakoutScore, breakoutLevel: round(hi50),
+      above150, cmf: cmfVal, emaStack: !!st.emaStack, avgVol: Math.round((v.slice(-20).reduce((a, x) => a + (x || 0), 0)) / 20),
       entry: st.entry ?? round(price), sl: st.sl ?? null, targets: st.targets ?? null, setupType: st.setupType || null,
     })
   }
@@ -1030,7 +1046,18 @@ async function computeScreener(scored, today) {
         setupType: 'Stage-2 breakout leader',
       }
     })
-  return { rows: rows.sort((a, b) => b.rsRank - a.rsRank), marketHealth, sectors, leaders, generatedAt: today.toISOString(), date: today.toISOString().slice(0, 10) }
+  // ── PRE-BREAKOUT WATCH — catch the move BEFORE it starts: coiling bases with accumulation, sitting just
+  // under a breakout level, RS improving. Entry = a close above the breakout level; SL = below the base. ──
+  const preBreakouts = rows.filter(r => r.preBreakout && r.preBreakoutScore >= 55 && (r.delivery == null || r.delivery >= 40))
+    .sort((a, b) => b.preBreakoutScore - a.preBreakoutScore).slice(0, 20)
+    .map(r => ({
+      generator: 'prebreakout', symbol: r.symbol, name: r.name, sector: r.sector, kind: 'Stock', direction: 'LONG',
+      entry: r.breakoutLevel, trigger: `close > ₹${r.breakoutLevel}`, sl: round(Math.min(r.sma50, r.price * 0.95)),
+      targets: [round(r.breakoutLevel * 1.08), round(r.breakoutLevel * 1.15), round(r.breakoutLevel * 1.25)],
+      confidence: Math.min(85, 45 + r.preBreakoutScore * 0.4), pbScore: r.preBreakoutScore, rsRank: r.rsRank, cmf: r.cmf,
+      reason: `Pre-breakout: coiling base + accumulation (CMF ${r.cmf}) · RS ${r.rsRank} · ${((r.breakoutLevel - r.price) / r.price * 100).toFixed(1)}% under the ₹${r.breakoutLevel} breakout — buy the BREAK, not before`,
+    }))
+  return { rows: rows.sort((a, b) => b.rsRank - a.rsRank), marketHealth, sectors, leaders, preBreakouts, generatedAt: today.toISOString(), date: today.toISOString().slice(0, 10) }
 }
 
 function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {
