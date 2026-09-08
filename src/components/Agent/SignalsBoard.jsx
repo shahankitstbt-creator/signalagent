@@ -492,6 +492,12 @@ export default function SignalsBoard() {
     <div className="h-full flex flex-col bg-bg-base text-txt overflow-hidden">
       <HitPopups />
       <Toast />
+      {/* FLOATING Screener button — always-visible entry to the Stage-2 / RS cash-leaders screener */}
+      <a href="/screener.html" title="Cash Screener — Stage-2 & RS leaders (catches cash stocks before the move)"
+        className="mono text-xs font-bold flex items-center gap-2 card-hover"
+        style={{ position: 'fixed', right: '18px', bottom: '18px', zIndex: 60, padding: '11px 16px', borderRadius: '999px', background: 'linear-gradient(135deg,#16C784,#0E7F55)', color: '#fff', boxShadow: '0 6px 20px rgba(22,199,132,.45)' }}>
+        🌱 <span>Cash Screener</span>
+      </a>
       {/* header */}
       <div className="shrink-0 border-b border-border glass elev z-20">
         {/* tier 1 — brand · centered search · action cluster */}
@@ -528,6 +534,10 @@ export default function SignalsBoard() {
             <a href="/cas.html" title="Closing Auction (CAS) Predictor — where the option chain is pulling the 15:30 close"
               className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#FFB300,#FF6D00)', color: '#111' }}>
               🎯 <span className="hidden lg:inline">CAS</span>
+            </a>
+            <a href="/screener.html" title="Cash Screener — Stage-2 & RS leaders (catches cash stocks before the move)"
+              className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#16C784,#0E7F55)' }}>
+              🌱 <span className="hidden lg:inline">Screener</span>
             </a>
             <span className="hdiv hidden sm:block" />
             <button onClick={load} className="ibtn" title="Refresh board">⟳</button>

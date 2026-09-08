@@ -38,7 +38,7 @@ import { notifyTradeEvents } from './telegram.mjs'
 import { readFileSync } from 'node:fs'
 
 const TRADE_GENS = new Set(['vol_accum', 'vp_fib', 'money_flow', 'multibagger', 'harmonic'])   // feed confluence (high-quality)
-const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf', 'short_sell'])         // ALSO tracked in the ledger (pnf = Point & Figure, short_sell = the SELL side)
+const LEDGER_GENS = new Set([...TRADE_GENS, 'momentum', 'reversal', 'pnf', 'short_sell', 'stage2'])  // stage2 = ScreeningMantis-style Stage-2/RS cash leaders (feeds the Cash sleeve)
 // LONG-ONLY universe (user rule): NEVER fire a SHORT on F&O-eligible stocks, indices, or commodities.
 const NO_SHORT_INDEX = new Set(['NIFTY', 'BANKNIFTY', 'SENSEX', 'MIDCPNIFTY', 'MIDCPNIFTY50', 'FINNIFTY', 'NIFTYNXT50', 'BANKEX'])
 const NO_SHORT_COMMO = new Set(['GOLD', 'SILVER', 'CRUDEOIL', 'NATURALGAS', 'COPPER', 'XAUUSD', 'XAGUSD'])
@@ -520,6 +520,17 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const todayTs = Math.floor(today.getTime() / 1000)
   const todayISO = today.toISOString().slice(0, 10)
 
+  // ── SCREENER (Stage-2 + RS leaders) — cash-equity pre-move engine + market health + sector rotation.
+  // Runs on daily AND intraday so /screener.html stays current; leaders feed the 🌱 Stage-2 desk → Cash sleeve. ──
+  if (isDaily || tf === 'intraday') {
+    try {
+      const scr = await computeScreener(scored, today)
+      writeFileSync('public/screener.json', JSON.stringify(scr))
+      const s2col = board.find(g => g.id === 'stage2'); if (s2col) { s2col.signals = scr.leaders; s2col.count = scr.leaders.length }
+      console.log(`Screener: ${scr.rows.length} cash stocks ranked · ${scr.leaders.length} Stage-2 leaders · breadth ${scr.marketHealth.breadth} (${scr.marketHealth.above150}% >150SMA)`)
+    } catch (e) { console.log('Screener skipped:', e.message) }
+  }
+
   // ── LEDGER (DAILY only): track every signal to win/loss/expired; closed signals leave the board ──
   let tr = null, goal = null, closedNow = [], tb = null
   if (isDaily) {
@@ -932,6 +943,94 @@ async function logCommodities(lg, board, addBiz, todayISO, todayTs, barsBySymbol
   }
   if (n) console.log(`Commodities: ${n} Gold/Crude/Silver setups logged`)
   return n
+}
+
+// ── SCREENER ENGINE (ScreeningMantis-style, CASH equities) — Stan Weinstein STAGE 2 + Minervini/IBD
+// RELATIVE-STRENGTH leadership + market breadth + sector rotation. Catches LEADERS early (Stage 2 = a
+// fresh breakout from a base into a new uptrend), ranked by RS. Writes public/screener.json. ──
+function smaAt(c, len, off = 0) { const e = c.length - off, s = c.slice(Math.max(0, e - len), e); return s.length ? s.reduce((a, x) => a + x, 0) / s.length : c[c.length - 1] }
+function chaikinMF(h, l, c, v, len = 20) { let mfv = 0, vol = 0; for (let i = Math.max(1, c.length - len); i < c.length; i++) { const rng = (h[i] - l[i]) || 1e-9; mfv += (((c[i] - l[i]) - (h[i] - c[i])) / rng) * (v[i] || 0); vol += (v[i] || 0) } return vol ? +(mfv / vol).toFixed(3) : 0 }
+function mcapSeg(indices = []) {
+  const I = (indices || []).join(' ')
+  if (/NIFTY 50\b|NIFTY 100|LargeCap/i.test(I)) return 'Large'
+  if (/Midcap|MIDCAP/i.test(I)) return 'Mid'
+  if (/Smallcap|SMLCAP|Small/i.test(I)) return 'Small'
+  return 'Other'
+}
+async function computeScreener(scored, today) {
+  // nifty benchmark long returns for relative strength
+  let nR63 = 0, nR126 = 0
+  try {
+    const d = await getJSON('https://query1.finance.yahoo.com/v8/finance/chart/%5ENSEI?interval=1d&range=1y')
+    const nc = d?.chart?.result?.[0]?.indicators?.quote?.[0]?.close?.filter(x => x != null) || []
+    if (nc.length > 130) { const last = nc.at(-1); nR63 = (last - nc.at(-64)) / nc.at(-64) * 100; nR126 = (last - nc.at(-127)) / nc.at(-127) * 100 }
+  } catch { }
+  const rows = []
+  for (const st of scored) {
+    const d = st._d; if (!d || !d.c || d.c.length < 160) continue
+    const c = d.c, h = d.h, l = d.l, v = d.v || [], i = c.length - 1, price = c[i]
+    const sma50 = smaAt(c, 50), sma150 = smaAt(c, 150), sma200 = smaAt(c, 200), sma150prev = smaAt(c, 150, 20)
+    const win = c.slice(-252), high52 = Math.max(...win), low52 = Math.min(...win)
+    const pctFrom52wHigh = +(((price - high52) / high52) * 100).toFixed(1)          // 0 = at high, negative = below
+    const pctAbove52wLow = +(((price - low52) / low52) * 100).toFixed(1)
+    const ret63 = c.length > 64 ? (price - c[i - 63]) / c[i - 63] * 100 : 0
+    const ret126 = c.length > 127 ? (price - c[i - 126]) / c[i - 126] * 100 : 0
+    const rsRaw = +(((ret126 - nR126) * 0.6) + ((ret63 - nR63) * 0.4)).toFixed(1)    // relative outperformance vs Nifty
+    // ── Minervini/Weinstein trend-template → Stage-2 score ──
+    const above150 = price > sma150, sma150Rising = sma150 > sma150prev, above50 = price > sma50
+    const stack = sma50 > sma150 && sma150 > sma200
+    const near52 = pctFrom52wHigh > -25, off52low = pctAbove52wLow > 30
+    let s2 = 0
+    if (above150) s2 += 20; if (sma150Rising) s2 += 15; if (above50) s2 += 10; if (stack) s2 += 20
+    if (near52) s2 += 15; if (off52low) s2 += 10; if (rsRaw > 0) s2 += 10
+    const stage2Score = Math.min(100, s2)
+    const stage = (above150 && sma150Rising && above50) ? 2 : (!above150 && price < sma50 && sma150 < sma150prev) ? 4 : above150 ? 3 : 1
+    rows.push({
+      symbol: st.symbol, name: st.name, sector: st.sector || '—', mcap: mcapSeg(st.indices), delivery: st._deliv?.pct ?? null,
+      price: round(price), chgPct: st.changePct ?? 0, rsi: st.rsi ?? null, rvol: st.vol?.rvol ?? null,
+      rsRaw, ret63: +ret63.toFixed(1), ret126: +ret126.toFixed(1), pctFrom52wHigh, stage2Score, stage, sma50: round(sma50),
+      above150, cmf: chaikinMF(h, l, c, v), emaStack: !!st.emaStack, avgVol: Math.round((v.slice(-20).reduce((a, x) => a + (x || 0), 0)) / 20),
+      entry: st.entry ?? round(price), sl: st.sl ?? null, targets: st.targets ?? null, setupType: st.setupType || null,
+    })
+  }
+  // RS RANK = percentile of rsRaw (1..99, higher = stronger leader)
+  const byRs = [...rows].sort((a, b) => a.rsRaw - b.rsRaw)
+  const N = byRs.length || 1; byRs.forEach((r, idx) => { r.rsRank = Math.round((idx / (N - 1 || 1)) * 98) + 1 })
+  // ── MARKET HEALTH (breadth) ──
+  const pct = f => rows.length ? Math.round(100 * rows.filter(f).length / rows.length) : 0
+  const marketHealth = {
+    total: rows.length,
+    above50: pct(r => r.stage === 2 || r.above150),          // proxy participation
+    above150: pct(r => r.above150),
+    stage2: pct(r => r.stage === 2),
+    near52wHigh: pct(r => r.pctFrom52wHigh > -10),
+    positiveRS: pct(r => r.rsRaw > 0),
+    breadth: pct(r => r.above150) >= 55 ? 'HEALTHY' : pct(r => r.above150) >= 40 ? 'MIXED' : 'WEAK',
+    niftyRet63: +nR63.toFixed(1), niftyRet126: +nR126.toFixed(1),
+  }
+  // ── SECTOR ROTATION (avg RS + % Stage-2 by sector) ──
+  const bySec = {}
+  for (const r of rows) { const s = r.sector || '—'; (bySec[s] ||= { sector: s, n: 0, rsSum: 0, stage2: 0 }); bySec[s].n++; bySec[s].rsSum += r.rsRaw; if (r.stage === 2) bySec[s].stage2++ }
+  const sectors = Object.values(bySec).filter(s => s.n >= 3).map(s => ({ sector: s.sector, n: s.n, avgRS: +(s.rsSum / s.n).toFixed(1), pctStage2: Math.round(100 * s.stage2 / s.n) })).sort((a, b) => b.avgRS - a.avgRS)
+  // ── LEADERS — the tradeable CASH pre-move picks: Stage-2 + top RS + near 52W high + money flowing in.
+  // Real swing plan (entry / structural SL / leader-sized % targets). These feed the Cash sleeve. ──
+  const topSectors = new Set(sectors.slice(0, 6).map(s => s.sector))       // trade leaders in leading sectors
+  const leaders = rows
+    .filter(r => r.stage === 2 && r.rsRank >= 72 && r.stage2Score >= 72 && r.cmf > 0 && r.pctFrom52wHigh > -18 && (r.delivery == null || r.delivery >= 45))
+    .sort((a, b) => b.rsRank - a.rsRank).slice(0, 15)
+    .map(r => {
+      const entry = r.price, sl = round(Math.min(r.sma50, entry * 0.94))    // below the 50-SMA / ~6% structural stop
+      const conf = Math.min(90, Math.round(50 + r.rsRank * 0.25 + r.stage2Score * 0.15 + (topSectors.has(r.sector) ? 6 : 0)))
+      return {
+        generator: 'stage2', symbol: r.symbol, name: r.name, sector: r.sector, kind: 'Stock', direction: 'LONG', delivery: r.delivery,
+        entry, sl, targets: [round(entry * 1.08), round(entry * 1.15), round(entry * 1.25)].map((p, k) => ({ price: p, pct: [8, 15, 25][k], by: null })),
+        rr: round((entry * 0.08) / (entry - sl), 2), confidence: conf, grade: conf >= 80 ? 'A+' : conf >= 68 ? 'A' : 'B',
+        rsRank: r.rsRank, stage2Score: r.stage2Score, cmf: r.cmf, pctFrom52wHigh: r.pctFrom52wHigh,
+        reason: `Stage-2 leader · RS rank ${r.rsRank} · ${r.pctFrom52wHigh}% from 52W high · CMF ${r.cmf} (accumulation)${topSectors.has(r.sector) ? ` · ${r.sector} sector leading` : ''}`,
+        setupType: 'Stage-2 breakout leader',
+      }
+    })
+  return { rows: rows.sort((a, b) => b.rsRank - a.rsRank), marketHealth, sectors, leaders, generatedAt: today.toISOString(), date: today.toISOString().slice(0, 10) }
 }
 
 function logIndexOptions(lg, board, addBiz, todayISO, todayTs, fnoLots = {}) {

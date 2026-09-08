@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cash Screener — Stage-2 & RS Leaders</title>
+<style>
+  :root{--bg:#0A0F0D;--panel:#0E1512;--card:#121B17;--border:#1E2D26;--txt:#E0E8E4;--txt2:#7B9088;--muted:#3A4F46;--green:#16C784;--red:#F6465D;--gold:#FFB300;--cyan:#22D3EE;--blue:#3B82F6;--accent:#16C784;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:"Inter",system-ui,sans-serif;font-size:13px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .wrap{max-width:1320px;margin:0 auto;padding:14px}
+  .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px}
+  .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:18px;background:linear-gradient(135deg,var(--green),#0E7F55)}
+  h1{font-size:17px;margin:0;font-weight:700}
+  .sub{color:var(--txt2);font-size:11px}
+  a.back{text-decoration:none;color:var(--txt2);font-size:12px;font-weight:700;padding:6px 12px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
+  /* market health */
+  .health{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+  .hc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:9px 11px}
+  .hc .k{font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--txt2)}
+  .hc .v{font-size:18px;font-weight:800;margin-top:2px}
+  .bar{height:5px;border-radius:3px;background:#20302a;overflow:hidden;margin-top:5px}.bar>i{display:block;height:100%;background:var(--green)}
+  .sec{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);margin:14px 0 8px;font-weight:700}
+  /* sector rotation */
+  .rot{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+  .chip{font-size:11px;padding:4px 9px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer}
+  .chip.on{border-color:var(--green);background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green);font-weight:700}
+  /* filters */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:10px;margin-bottom:12px}
+  .filters label{font-size:10px;color:var(--txt2);display:flex;flex-direction:column;gap:3px}
+  .filters select,.filters input{background:var(--panel);border:1px solid var(--border);color:var(--txt);border-radius:7px;padding:5px 7px;font-size:12px}
+  .preset{font-size:11px;padding:5px 11px;border-radius:8px;border:1px solid var(--border);background:var(--panel);color:var(--txt2);cursor:pointer;font-weight:700}
+  .preset.on{border-color:var(--green);background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green)}
+  /* table */
+  .tblwrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:auto;max-height:70vh}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:7px 9px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border)}
+  th:first-child,td:first-child,th.l,td.l{text-align:left}
+  th{position:sticky;top:0;background:var(--panel);color:var(--txt2);text-transform:uppercase;font-size:9.5px;cursor:pointer;user-select:none}
+  tr:hover td{background:rgba(255,255,255,.02)}
+  .pill{font-weight:700;padding:1px 7px;border-radius:6px;font-size:10px}
+  .st2{background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green)}
+  .st4{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+  .st1,.st3{background:#20302a;color:var(--txt2)}
+  .rs{display:inline-block;min-width:30px;text-align:center;font-weight:800;border-radius:6px;padding:1px 5px}
+  .note{font-size:11px;color:var(--txt2);border-left:3px solid var(--green);padding:9px 11px;background:rgba(22,199,132,.06);border-radius:6px;line-height:1.6;margin-bottom:12px}
+  .up{color:var(--green)}.dn{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="/">← Board</a>
+    <div class="logo">🌱</div>
+    <div><h1>Cash Screener — Stage-2 &amp; RS Leaders</h1>
+      <div class="sub mono">Weinstein Stage-2 breakouts + Minervini relative-strength leadership · cash equities · catches leaders before the move</div></div>
+    <div style="margin-left:auto;text-align:right"><div class="mono" id="cnt" style="font-size:16px;font-weight:800">—</div><div class="sub">stocks · <span id="upd">—</span></div></div>
+  </div>
+
+  <div class="note">This screens <b>cash equities</b> for stocks entering a fresh <b>Stage-2 uptrend</b> (breakout from a base), ranked by <b>Relative Strength</b> vs the Nifty, near 52-week highs, with money flowing in (Chaikin) — the setups that tend to move <i>before</i> the crowd notices. <b>🌱 Leaders</b> (RS≥72, Stage-2, accumulation) carry a trade plan and feed the Cash sleeve. Educational only, not advice — no guaranteed accuracy. Not SEBI-registered.</div>
+
+  <div class="sec">Market Health</div>
+  <div class="health" id="health"></div>
+
+  <div class="sec">Sector Rotation <span class="sub" style="text-transform:none">— avg RS by sector (leaders first); click to filter</span></div>
+  <div class="rot" id="rot"></div>
+
+  <div class="filters">
+    <span style="font-size:10px;color:var(--txt2);font-weight:700">PRESETS:</span>
+    <span class="preset on" data-p="leaders">🌱 Stage-2 Leaders</span>
+    <span class="preset" data-p="momentum">🚀 Momentum (RS≥80)</span>
+    <span class="preset" data-p="near52">Near 52W High</span>
+    <span class="preset" data-p="accum">Accumulation (CMF+)</span>
+    <span class="preset" data-p="all">All cash</span>
+    <label>Universe<select id="fMcap"><option value="">All</option><option>Large</option><option>Mid</option><option>Small</option></select></label>
+    <label>Min RS rank<input id="fRs" type="number" value="0" min="0" max="99" style="width:64px"></label>
+    <label>Min Stage-2<input id="fS2" type="number" value="0" min="0" max="100" style="width:64px"></label>
+    <label>Within % of 52WH<input id="f52" type="number" value="100" min="1" max="100" style="width:64px"></label>
+    <label>Min RSI<input id="fRsi" type="number" value="0" min="0" max="100" style="width:64px"></label>
+    <label>Search<input id="fq" placeholder="symbol…" style="width:90px"></label>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr id="hd"></tr></thead>
+    <tbody id="tb"><tr><td colspan="12" class="l sub" style="padding:20px">Loading screener…</td></tr></tbody>
+  </table></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const N=(n,d=0)=>n==null?'—':(+n).toLocaleString('en-IN',{maximumFractionDigits:d});
+let DATA=null, SORT={k:'rsRank',dir:-1}, PRESET='leaders', SECTOR='';
+const COLS=[
+  ['symbol','Symbol','l'],['sector','Sector','l'],['mcap','Cap','l'],['price','Price'],['chgPct','Chg%'],
+  ['rsRank','RS'],['stage','Stage'],['stage2Score','S2'],['pctFrom52wHigh','52WH%'],['cmf','CMF'],['rsi','RSI'],['rvol','RVOL'],
+  ['entry','Entry'],['sl','SL'],['t1','T1'],['reason','Setup','l'],
+];
+function rsColor(r){const g=Math.round(2.55*r);return `rgb(${255-g},${Math.min(200,80+g)},${90})`}
+function health(mh){
+  const cells=[
+    ['Breadth',mh.breadth,mh.breadth==='HEALTHY'?'var(--green)':mh.breadth==='WEAK'?'var(--red)':'var(--gold)',null],
+    ['% > 150-SMA',mh.above150+'%',null,mh.above150],
+    ['% in Stage 2',mh.stage2+'%',null,mh.stage2],
+    ['Positive RS',mh.positiveRS+'%',null,mh.positiveRS],
+    ['Near 52W high',mh.near52wHigh+'%',null,mh.near52wHigh],
+    ['Nifty 6-mo',(mh.niftyRet126>=0?'+':'')+mh.niftyRet126+'%',mh.niftyRet126>=0?'var(--green)':'var(--red)',null],
+  ];
+  $('health').innerHTML=cells.map(([k,v,col,barPct])=>`<div class="hc"><div class="k">${k}</div><div class="v mono" style="color:${col||'var(--txt)'}">${v}</div>${barPct!=null?`<div class="bar"><i style="width:${barPct}%"></i></div>`:''}</div>`).join('');
+}
+function rotation(sectors){
+  $('rot').innerHTML=(sectors||[]).slice(0,14).map(s=>`<span class="chip ${SECTOR===s.sector?'on':''}" data-s="${s.sector}">${s.sector} <span class="mono" style="color:${s.avgRS>=0?'var(--green)':'var(--red)'}">${s.avgRS>=0?'+':''}${s.avgRS}</span> <span class="sub">${s.pctStage2}%S2</span></span>`).join('');
+  document.querySelectorAll('#rot .chip').forEach(c=>c.onclick=()=>{SECTOR=SECTOR===c.dataset.s?'':c.dataset.s;rotation(sectors);render()});
+}
+function passes(r){
+  if(SECTOR&&r.sector!==SECTOR)return false;
+  const mc=$('fMcap').value; if(mc&&r.mcap!==mc)return false;
+  if(r.rsRank<(+$('fRs').value||0))return false;
+  if(r.stage2Score<(+$('fS2').value||0))return false;
+  if(-r.pctFrom52wHigh>(+$('f52').value||100))return false;
+  if((r.rsi||0)<(+$('fRsi').value||0))return false;
+  const q=$('fq').value.trim().toUpperCase(); if(q&&!(r.symbol||'').includes(q))return false;
+  if(PRESET==='leaders')return r.stage===2&&r.rsRank>=72&&r.stage2Score>=72&&r.cmf>0;
+  if(PRESET==='momentum')return r.rsRank>=80;
+  if(PRESET==='near52')return r.pctFrom52wHigh>-8;
+  if(PRESET==='accum')return r.cmf>0.05;
+  return true;
+}
+function render(){
+  if(!DATA)return;
+  $('hd').innerHTML=COLS.map(([k,lbl,cls])=>`<th class="${cls||''}" data-k="${k}">${lbl}${SORT.k===k?(SORT.dir<0?' ▾':' ▴'):''}</th>`).join('');
+  document.querySelectorAll('#hd th').forEach(th=>th.onclick=()=>{const k=th.dataset.k;SORT.dir=SORT.k===k?-SORT.dir:-1;SORT.k=k;render()});
+  let rows=DATA.rows.filter(passes);
+  const sk=SORT.k, lead=Object.fromEntries((DATA.leaders||[]).map(l=>[l.symbol,l]));
+  rows.sort((a,b)=>{let x=a[sk],y=b[sk]; if(sk==='reason'||sk==='symbol'||sk==='sector'||sk==='mcap'){x=String(a[sk==='reason'?'symbol':sk]||'');y=String(b[sk==='reason'?'symbol':sk]||'');return SORT.dir*x.localeCompare(y)} return SORT.dir*(((x??-1e9))-((y??-1e9)))});
+  $('cnt').textContent=rows.length;
+  $('tb').innerHTML=rows.slice(0,300).map(r=>{
+    const L=lead[r.symbol];
+    const stCls=r.stage===2?'st2':r.stage===4?'st4':'st1';
+    return `<tr>
+      <td class="l"><b>${r.symbol}</b></td><td class="l sub">${r.sector}</td><td class="l sub">${r.mcap}</td>
+      <td class="mono">${N(r.price,2)}</td><td class="mono ${r.chgPct>=0?'up':'dn'}">${r.chgPct>=0?'+':''}${r.chgPct}</td>
+      <td><span class="rs" style="background:${rsColor(r.rsRank)}22;color:${rsColor(r.rsRank)}">${r.rsRank}</span></td>
+      <td><span class="pill ${stCls}">S${r.stage}</span></td><td class="mono">${r.stage2Score}</td>
+      <td class="mono ${r.pctFrom52wHigh>-8?'up':''}">${r.pctFrom52wHigh}%</td>
+      <td class="mono ${r.cmf>0?'up':'dn'}">${r.cmf}</td><td class="mono">${r.rsi??'—'}</td><td class="mono">${r.rvol??'—'}</td>
+      <td class="mono">${L?N(L.entry,2):'—'}</td><td class="mono dn">${L?N(L.sl,2):'—'}</td><td class="mono up">${L?N(L.targets?.[0]?.price,2):'—'}</td>
+      <td class="l sub" title="${L?.reason||''}" style="max-width:260px;overflow:hidden;text-overflow:ellipsis">${L?L.reason:(r.stage===2?'Stage-2 uptrend':r.stage===4?'Stage-4 decline':'base/transition')}</td>
+    </tr>`}).join('')||'<tr><td colspan="16" class="l sub" style="padding:20px">No stocks match these filters.</td></tr>';
+}
+document.querySelectorAll('.preset').forEach(p=>p.onclick=()=>{PRESET=p.dataset.p;document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('on',x===p));render()});
+['fMcap','fRs','fS2','f52','fRsi','fq'].forEach(id=>$(id).addEventListener('input',render));
+function load(){fetch('/screener.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DATA=d;$('upd').textContent='updated '+new Date(d.generatedAt).toLocaleString();health(d.marketHealth||{});rotation(d.sectors||[]);render()}).catch(()=>{$('tb').innerHTML='<tr><td colspan="16" class="l sub" style="padding:20px">Screener builds on the next scan.</td></tr>'})}
+load();setInterval(load,60000);
+</script>
+</body>
+</html>
