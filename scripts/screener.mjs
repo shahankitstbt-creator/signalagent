@@ -566,7 +566,7 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
     const learnStale = () => { try { return JSON.parse(readFileSync('public/learning.json', 'utf8')).date !== todayISO } catch { return true } }
     if (improve && learnStale()) {
       const extNote = await fetchExternalGainers()
-      const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr)
+      const si = await runSelfImprovement(scored, board, today, ledger, extNote, tr, inst)
       goal = si.goal
     } else {
       try { goal = JSON.parse(readFileSync('public/goal.json', 'utf8')) } catch {}
@@ -1679,7 +1679,7 @@ async function fetchExternalGainers() {
 // selectivity daily — NOT a guarantee; the number shown is always the real, measured win-rate.
 const GOAL = { target: 85, start: '2026-06-19' }
 
-async function runSelfImprovement(scored, board, today, ledger, externalNote, tr) {
+async function runSelfImprovement(scored, board, today, ledger, externalNote, tr, inst) {
   const tuning = loadTuning()
   const flagged = new Set()
   for (const g of board) if (LEDGER_GENS.has(g.id)) for (const s of g.signals) flagged.add(s.symbol)   // includes momentum wide-net
@@ -1718,6 +1718,17 @@ async function runSelfImprovement(scored, board, today, ledger, externalNote, tr
     if (measured < GOAL.target - 5) { tuning.qualityBar = Math.min(80, Math.max(50, tuning.qualityBar + (measured < GOAL.target - 15 ? 2 : 1))); adjustments.push(`Below ${GOAL.target}% (measured ${measured}%) → selectivity bar to ${tuning.qualityBar} (fewer, higher-quality signals; climbs faster when far below).`) }
     else if (measured > GOAL.target) { tuning.qualityBar = Math.max(45, tuning.qualityBar - 1); adjustments.push(`Above ${GOAL.target}% target → eased selectivity bar to ${tuning.qualityBar} (room for a little more coverage).`) }
   }
+  // ── REGIME-AWARE (was blind — the Sept −12.8% F&O bleed came from staying aggressive as the market
+  // turned bearish): in a BEARISH regime raise the selectivity FLOOR hard and go defensive; in a bull
+  // regime allow normal coverage. This is recorded so the daily learning shows the stance changed. ──
+  const bias = inst?.bias || 'neutral'
+  if (bias === 'bearish') {
+    tuning.qualityBar = Math.max(tuning.qualityBar || 0, 72)
+    adjustments.unshift(`🔻 BEARISH regime (${inst?.reasons?.[0] || 'FII net short'}) → DEFENSIVE: selectivity floor ${tuning.qualityBar}; book blocks leveraged long/CALL bets (regime gate) and favours PUTS + cash Stage-2 leaders that hold up. Don't fight the tape — fewer, aligned trades.`)
+  } else if (bias === 'bullish') {
+    adjustments.push(`🔺 BULLISH regime → normal long coverage; shorts gated. Ride leaders (Stage-2/RS), trail winners.`)
+  }
+  tuning.regimeBias = bias
   tuning.history = (tuning.history || []).concat([{ date: dateStr, movers: movers.length, caught: caught.length, missed: missed.length, catchRate, catchableRate, gapUpMovers, minMoveScore: tuning.minMoveScore, qualityBar: tuning.qualityBar }]).slice(-90)
   saveTuning(tuning)
 
