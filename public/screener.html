@@ -69,11 +69,11 @@
   <div class="filters">
     <span style="font-size:10px;color:var(--txt2);font-weight:700">PRESETS:</span>
     <span class="preset" data-p="prebreak">🔎 Pre-Breakout</span>
-    <span class="preset on" data-p="leaders">🌱 Stage-2 Leaders</span>
+    <span class="preset" data-p="leaders">🌱 Stage-2 Leaders</span>
     <span class="preset" data-p="momentum">🚀 Momentum</span>
     <span class="preset" data-p="near52">Near 52W High</span>
     <span class="preset" data-p="accum">Accumulation</span>
-    <span class="preset" data-p="all">All cash</span>
+    <span class="preset on" data-p="all">All cash (RS-ranked)</span>
     <label>Universe<select id="fMcap"><option value="">All</option><option>Large</option><option>Mid</option><option>Small</option></select></label>
     <label>Min RS rank<input id="fRs" type="number" value="0" min="0" max="99" style="width:60px"></label>
     <label>Min Stage-2<input id="fS2" type="number" value="0" min="0" max="100" style="width:60px"></label>
@@ -165,7 +165,7 @@ function render(){
 document.querySelectorAll('.preset').forEach(p=>p.onclick=()=>{document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('on',x===p));applyPreset(p.dataset.p)});
 ['fMcap','fRs','fS2','fCmf','f52','fRsi','fq','fStage2','fPre'].forEach(id=>$(id).addEventListener('input',render));
 let FIRST=true;
-function load(){fetch('/screener.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DATA=d;$('upd').textContent='updated '+new Date(d.generatedAt).toLocaleString();health(d.marketHealth||{});rotation(d.sectors||[]);if(FIRST){FIRST=false;applyPreset('leaders')}else render()}).catch(()=>{$('tb').innerHTML='<tr><td colspan="17" class="l sub" style="padding:20px">Screener builds on the next scan.</td></tr>'})}
+function load(){fetch('/screener.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{DATA=d;$('upd').textContent='updated '+new Date(d.generatedAt).toLocaleString();health(d.marketHealth||{});rotation(d.sectors||[]);if(FIRST){FIRST=false;applyPreset('all')}else render()}).catch(()=>{$('tb').innerHTML='<tr><td colspan="17" class="l sub" style="padding:20px">Screener builds on the next scan.</td></tr>'})}
 load();setInterval(load,60000);
 </script>
 </body>

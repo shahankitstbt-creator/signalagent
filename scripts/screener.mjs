@@ -521,13 +521,16 @@ export async function runScan({ full = false, top = 50, limit = 0, tf = 'daily',
   const todayISO = today.toISOString().slice(0, 10)
 
   // ── SCREENER (Stage-2 + RS leaders) — cash-equity pre-move engine + market health + sector rotation.
-  // Runs on daily AND intraday so /screener.html stays current; leaders feed the 🌱 Stage-2 desk → Cash sleeve. ──
-  if (isDaily || tf === 'intraday') {
+  // DAILY ONLY: Stage-2 / RS / 52-week-high / 150-SMA all need DAILY bars. (An intraday run has only
+  // intraday bars → every stock < 160 daily bars → it was writing an EMPTY screener. Never do that.) ──
+  if (isDaily) {
     try {
       const scr = await computeScreener(scored, today)
-      writeFileSync('public/screener.json', JSON.stringify(scr))
-      const s2col = board.find(g => g.id === 'stage2'); if (s2col) { s2col.signals = scr.leaders; s2col.count = scr.leaders.length }
-      console.log(`Screener: ${scr.rows.length} cash stocks ranked · ${scr.leaders.length} Stage-2 leaders · breadth ${scr.marketHealth.breadth} (${scr.marketHealth.above150}% >150SMA)`)
+      if (scr.rows.length) {
+        writeFileSync('public/screener.json', JSON.stringify(scr))
+        const s2col = board.find(g => g.id === 'stage2'); if (s2col) { s2col.signals = scr.leaders; s2col.count = scr.leaders.length }
+        console.log(`Screener: ${scr.rows.length} cash stocks ranked · ${scr.leaders.length} Stage-2 leaders · ${scr.preBreakouts.length} pre-breakouts · breadth ${scr.marketHealth.breadth} (${scr.marketHealth.above150}% >150SMA)`)
+      } else console.log('Screener: 0 rows — kept previous screener.json (guard)')
     } catch (e) { console.log('Screener skipped:', e.message) }
   }
 
