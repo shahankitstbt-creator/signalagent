@@ -6,7 +6,7 @@ const root = () => document.documentElement
 export function initTheme() {
   let t
   try { t = localStorage.getItem(KEY) } catch { t = null }
-  if (t !== 'light' && t !== 'dark') t = 'light'   // light by default
+  if (t !== 'light' && t !== 'dark') t = 'dark'   // dark by default (ScreeningMantis deep green-black look)
   root().setAttribute('data-theme', t)
   return t
 }

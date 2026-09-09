@@ -5,24 +5,25 @@
    Green = BUY / bullish · Red = SELL / bearish · cyan+violet = brand accent. */
 @theme {
   /* ---- default = OBSIDIAN DARK ---- */
-  --color-bg-base: #070B15;     /* app background — near-black navy */
-  --color-bg-panel: #0C1220;    /* content / columns */
-  --color-bg-card: #121B2E;     /* cards / rows */
-  --color-border: #1E2A44;      /* hairline borders */
-  --color-accent: #4F7DFF;      /* primary blue */
-  --color-accent-primary: #4F7DFF;
-  --color-green: #22E39A;       /* BUY / bullish */
-  --color-red: #FF4D6D;         /* SELL / bearish */
-  --color-yellow: #FFC24B;      /* warning / TP */
-  --color-purple: #8B5CF6;
-  --color-orange: #FF8A3D;
-  --color-cyan: #22D3EE;
-  --color-gold: #E0A32B;
-  --color-txt: #EAF1FF;         /* primary text */
-  --color-txt-sec: #8DA0C6;     /* secondary */
-  --color-txt-muted: #566384;   /* muted / placeholder */
-  --color-bull: #22E39A;
-  --color-bear: #FF4D6D;
+  /* ── ScreeningMantis design language — deep green-black + mint-emerald ── */
+  --color-bg-base: #0d1210;     /* app background — deep green-black */
+  --color-bg-panel: #0a0f0c;    /* content / columns */
+  --color-bg-card: #111815;     /* cards / rows */
+  --color-border: #304038;      /* hairline borders */
+  --color-accent: #42c99c;      /* primary — mint-emerald */
+  --color-accent-primary: #42c99c;
+  --color-green: #46c79b;       /* BUY / bullish / positive */
+  --color-red: #e16b72;         /* SELL / bearish / negative */
+  --color-yellow: #e5a73e;      /* warning / TP */
+  --color-purple: #af82d5;
+  --color-orange: #e8934a;
+  --color-cyan: #62a2ee;        /* secondary — soft blue */
+  --color-gold: #e5a73e;
+  --color-txt: #e8efe9;         /* primary text */
+  --color-txt-sec: #7d938a;     /* secondary */
+  --color-txt-muted: #4a5b52;   /* muted / placeholder */
+  --color-bull: #46c79b;
+  --color-bear: #e16b72;
   --font-mono: "Inter", system-ui, sans-serif;   /* clean sans everywhere; numbers stay tabular via .mono */
   --font-sans: "Inter", system-ui, sans-serif;
 }
@@ -88,7 +89,7 @@ body {
 .pill { border-radius: 999px; font-weight: 600; }
 
 /* primary gradient button — cyan → violet, glows in dark */
-.btn-primary { background: linear-gradient(90deg, var(--color-cyan), var(--color-purple)); color: #04121a; border-radius: 12px; font-weight: 700; box-shadow: 0 0 18px var(--glow-c); transition: filter .15s ease, transform .15s ease; }
+.btn-primary { background: linear-gradient(135deg, var(--color-accent), #1e9f76); color: #04140e; border-radius: 12px; font-weight: 700; box-shadow: 0 6px 18px color-mix(in srgb, var(--color-accent) 40%, transparent); transition: filter .15s ease, transform .15s ease; }
 .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
 /* '.mono' = clean Inter with TABULAR numbers (aligned columns) — not a code monospace look */
@@ -139,24 +140,25 @@ table.stbl > tbody > tr { transition: background .12s ease; }
    (Dark is the default identity; this is the airy alternative.)
    ══════════════════════════════════════════════════════════ */
 :root[data-theme="light"] {
-  --color-bg-base: #EEF2FA;
-  --color-bg-panel: #FFFFFF;
-  --color-bg-card: #FFFFFF;
-  --color-border: #DEE5F2;
-  --color-accent: #2F5BEA;
-  --color-accent-primary: #2F5BEA;
-  --color-green: #0BA574;
-  --color-red: #E23B4C;
-  --color-yellow: #C2840A;
-  --color-purple: #7C3AED;
-  --color-orange: #E8590C;
-  --color-cyan: #0891A6;
-  --color-gold: #B8860B;
-  --color-txt: #0C1428;
-  --color-txt-sec: #4C5C7A;
-  --color-txt-muted: #8493AE;
-  --color-bull: #0BA574;
-  --color-bear: #E23B4C;
+  /* ── ScreeningMantis light theme ── */
+  --color-bg-base: #f4f7f5;
+  --color-bg-panel: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-border: #cbd7d1;
+  --color-accent: #11795d;
+  --color-accent-primary: #11795d;
+  --color-green: #11795d;
+  --color-red: #b43d49;
+  --color-yellow: #a4740a;
+  --color-purple: #765099;
+  --color-orange: #c2610c;
+  --color-cyan: #2d6fb8;
+  --color-gold: #a4740a;
+  --color-txt: #0d1a15;
+  --color-txt-sec: #46584f;
+  --color-txt-muted: #7c8f86;
+  --color-bull: #11795d;
+  --color-bear: #b43d49;
   --glow-c: rgba(8,145,166,.14);
   --glow-v: rgba(124,58,237,.12);
   --grid: rgba(30,60,120,.035);
