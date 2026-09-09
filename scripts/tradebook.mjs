@@ -176,13 +176,17 @@ function sizeTrade(sig, fnoLots = {}) {
     const qty = lots * lot
     return hedgeSpread({ kind: 'OPT', sleeve: 'FO', optType: sig.optType, qty, lots, lotSize: lot, entryPremium: prem, notional: Math.round(entry * qty) })
   }
-  const lotFromMap = fnoLots[sig.symbol] || fnoLots[sig.underlying]
-  if (lotFromMap && !sig.lot) sig = { ...sig, lot: lotFromMap }
-  const isFno = sig.generator === 'fno' || !!sig.optionPlay || !!sig.lot
-  if (isFno && sig.lot) {
-    // F&O STOCK → buy a defined-risk ATM stock OPTION (CE for long, PE for short) — leverage + capped loss
-    const lotSize = sig.lot
-    const optType = (sig.direction === 'SHORT' || sig.direction === 'BEARISH') ? 'PE' : 'CE'
+  // ── OPTION vs CASH-DELIVERY — the key routing. Only the EXPLICIT F&O desk, an option-typed signal, or a
+  // SHORT (which must be a PE — you can't short delivery) becomes a leveraged option. Every CASH desk
+  // (stage2, momentum, money_flow, vol_accum, multibagger, harmonic, vp_fib) buys DELIVERY — even on
+  // F&O-eligible names — so it has a REAL stop and can't go −100%. (Routing every F&O-eligible LONG to a
+  // CALL option is exactly what bled −₹302k of calls in Sept AND left the cash sleeve empty.) ──
+  const short = sig.direction === 'SHORT' || sig.direction === 'BEARISH' || sig.optType === 'PE'
+  const lotSize = sig.lot || fnoLots[sig.symbol] || fnoLots[sig.underlying]
+  const isFnoOpt = sig.generator === 'fno' || !!sig.optType || (short && lotSize)
+  if (isFnoOpt && lotSize) {
+    // F&O OPTION (CE for long, PE for short) — defined-risk debit spread
+    const optType = short ? 'PE' : 'CE'
     const prem = Math.round(entry * STOCK_OPT_PREM_PCT)                 // est. monthly ATM stock-option premium
     const perLot = prem * lotSize
     if (!prem || perLot > foMax) return null
@@ -190,7 +194,8 @@ function sizeTrade(sig, fnoLots = {}) {
     const qty = lots * lotSize
     return hedgeSpread({ kind: 'OPT', sleeve: 'FO', optType, stockOption: true, qty, lots, lotSize, entryPremium: prem, notional: Math.round(entry * qty) })
   }
-  if (entry <= sl) return null   // long cash guard
+  if (short) return null          // a short that has no option path can't be a cash-delivery LONG — skip it
+  if (entry <= sl) return null    // long cash guard
   const riskAmt = CAP_CASH * RISK_PCT / 100, maxDeploy = CAP_CASH * MAX_DEPLOY_PCT / 100, riskPerShare = entry - sl
   let qty = Math.floor(riskAmt / riskPerShare)
   if (qty * entry > maxDeploy) qty = Math.floor(maxDeploy / entry)
@@ -683,7 +688,7 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     // Cash delivery longs (non-leveraged, real stop, can't go −100%) are exempt — they're fine either way.
     const isShort = s.direction === 'SHORT' || s.direction === 'BEARISH' || s.optType === 'PE'
     const conf = s.confidence ?? 0
-    const leveraged = !!(fnoLots[sym] || fnoLots[s.underlying] || s.optType || s.commodity)   // can go to −100%
+    const leveraged = !!(s.optType || s.commodity || s.generator === 'fno')   // OPTION/commodity (−100% risk) — NOT cash-desk delivery on an F&O-eligible name
     if (isShort && marketBias === 'bullish' && !s.commodity && conf < 78) continue            // no shorts into a bull market
     // NO bullish CALL/long-leveraged bets in a BEARISH market — NO conviction exemption. Even a 90-conf
     // setup loses when the whole market falls (Sept: 43 CE trades = −₹302k, many high-conviction). Cash
