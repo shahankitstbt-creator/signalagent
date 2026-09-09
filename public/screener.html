@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cash Screener — Stage-2 & RS Leaders</title>
 <style>
-  :root{--bg:#0A0F0D;--panel:#0E1512;--card:#121B17;--border:#1E2D26;--txt:#E0E8E4;--txt2:#7B9088;--muted:#3A4F46;--green:#16C784;--red:#F6465D;--gold:#FFB300;--cyan:#22D3EE;--blue:#3B82F6;--accent:#16C784;}
+  :root{--bg:#0d1210;--panel:#0a0f0c;--card:#111815;--border:#304038;--border2:#233029;--txt:#e8efe9;--txt2:#7d938a;--muted:#4a5b52;--green:#42c99c;--green2:#1e9f76;--red:#e16b72;--gold:#e5a73e;--cyan:#62a2ee;--blue:#62a2ee;--purple:#af82d5;--accent:#42c99c;--pos:#46c79b;--neg:#e16b72;--shadow:0 12px 36px #00000047;}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);font-family:"Inter",system-ui,sans-serif;font-size:13px}
   .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
@@ -44,8 +44,20 @@
   .st4{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
   .st1,.st3{background:#20302a;color:var(--txt2)}
   .rs{display:inline-block;min-width:30px;text-align:center;font-weight:800;border-radius:6px;padding:1px 5px}
-  .note{font-size:11px;color:var(--txt2);border-left:3px solid var(--green);padding:9px 11px;background:rgba(22,199,132,.06);border-radius:6px;line-height:1.6;margin-bottom:12px}
-  .up{color:var(--green)}.dn{color:var(--red)}
+  .note{font-size:11px;color:var(--txt2);border-left:3px solid var(--green);padding:9px 11px;background:color-mix(in srgb,var(--green) 7%,transparent);border-radius:6px;line-height:1.6;margin-bottom:12px}
+  .up{color:var(--pos)}.dn{color:var(--neg)}
+  .hc,.tblwrap{box-shadow:var(--shadow)}
+  .guide{background:linear-gradient(180deg,color-mix(in srgb,var(--green) 9%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--green) 26%,var(--border));border-radius:14px;padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow)}
+  .guide h2{font-size:14px;margin:0 0 3px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .guide .lede{font-size:12px;color:var(--txt2);margin-bottom:12px;line-height:1.6;max-width:780px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+  .step{background:var(--panel);border:1px solid var(--border2);border-radius:10px;padding:10px 12px}
+  .step .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--green);color:#04140e;font-weight:800;font-size:11px;margin-bottom:6px}
+  .step b{font-size:12px}.step p{font-size:11px;color:var(--txt2);margin:3px 0 0;line-height:1.55}
+  .guide .foot{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .gbtn{font-size:12px;font-weight:700;padding:7px 14px;border-radius:9px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--green),var(--green2));color:#04140e}
+  .gdismiss{font-size:11px;color:var(--txt2);cursor:pointer;text-decoration:underline;background:none;border:none}
+  .key{display:inline-block;padding:1px 6px;border-radius:5px;background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green);font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -58,7 +70,22 @@
     <div style="margin-left:auto;text-align:right"><div class="mono" id="cnt" style="font-size:16px;font-weight:800">—</div><div class="sub">stocks · <span id="upd">—</span></div></div>
   </div>
 
-  <div class="note">This screens <b>cash equities</b> for stocks entering a fresh <b>Stage-2 uptrend</b> (breakout from a base), ranked by <b>Relative Strength</b> vs the Nifty, near 52-week highs, with money flowing in (Chaikin) — the setups that tend to move <i>before</i> the crowd notices. <b>🌱 Leaders</b> (RS≥72, Stage-2, accumulation) carry a trade plan and feed the Cash sleeve. Educational only, not advice — no guaranteed accuracy. Not SEBI-registered.</div>
+  <div class="guide" id="guide">
+    <h2>🧭 How to read this screener</h2>
+    <div class="lede">This finds <b>cash equities</b> that tend to move <i>before</i> the crowd notices — stocks entering a fresh uptrend, ranked by strength, with smart money quietly accumulating. Read it top-to-bottom: check the <b>market</b>, find the <b>leading sectors</b>, then the <b>leading stocks</b> in them.</div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><b>Market Health</b><p>Is the tide with you? <span class="key">Breadth</span>, % of stocks above their 150-day average, % in Stage-2. Green = trade long freely; weak = be picky.</p></div>
+      <div class="step"><span class="n">2</span><b>Sector Rotation</b><p>Where money is flowing — sectors by average <span class="key">RS</span>. Trade leaders in the <b>leading</b> sectors; click a chip to filter to it.</p></div>
+      <div class="step"><span class="n">3</span><b>RS rank &amp; Stage</b><p><span class="key">RS</span> 1–99 = strength vs the Nifty (leaders are high). <span class="key">Stage</span> 2 = fresh uptrend (buy), 4 = decline (avoid). <span class="key">S2</span> scores the breakout quality.</p></div>
+      <div class="step"><span class="n">4</span><b>🔎 Pre-Breakout</b><p>Catch it <b>before</b> it starts: a tight coiling base + accumulation (<span class="key">CMF</span>+) sitting just under a breakout level. Entry = the break, not before.</p></div>
+      <div class="step"><span class="n">5</span><b>Presets &amp; Filters</b><p>One-click <span class="key">Leaders</span> / <span class="key">Pre-Breakout</span> / <span class="key">Momentum</span>, then narrow with Min RS, Stage-2-only, CMF, 52-week-high — every filter composes.</p></div>
+    </div>
+    <div class="foot">
+      <button class="gbtn" onclick="document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('on',x.dataset.p==='leaders'));applyPreset('leaders')">Show me the Leaders →</button>
+      <button class="gdismiss" onclick="try{localStorage.setItem('sm_guide','1')}catch(e){}; document.getElementById('guide').style.display='none'">Got it — hide this</button>
+      <span class="sub" style="margin-left:auto">Educational only, not advice · no guaranteed accuracy · not SEBI-registered</span>
+    </div>
+  </div>
 
   <div class="sec">Market Health</div>
   <div class="health" id="health"></div>
@@ -93,6 +120,7 @@
 
 <script>
 const $=id=>document.getElementById(id);
+try{if(localStorage.getItem('sm_guide'))$('guide').style.display='none'}catch(e){}   // show intro once, then remembered
 const N=(n,d=0)=>n==null?'—':(+n).toLocaleString('en-IN',{maximumFractionDigits:d});
 let DATA=null, SORT={k:'rsRank',dir:-1}, SECTOR='';
 const COLS=[
