@@ -70,6 +70,7 @@ const FO_OPT_MAX_HOLD = 6           // TIME-STOP: never hold an F&O option/sprea
 const BOOK_AT_PCT = 40              // book 50% of a position once it's up this much
 const TRAIL_EXIT_PCT = 10          // after partial book, exit the runner if it gives back to this
 const MAX_OPEN = 70                   // concurrent positions across both sleeves (options are cheap → many fit the F&O sleeve)
+const FO_MAX_OPEN = 8                 // HARD cap on concurrent F&O OPTION positions — each can go −100%, so over-trading them (21 open in Sept) turned a bad regime into a −34% bleed. Fewer, higher-conviction, defined-risk.
 
 // ── MARKET SESSION (IST) — the paper book only executes fills during REAL market hours, squares off
 // day-trades at 15:30, trades commodities until 23:30, and NEVER changes on weekends/holidays.
@@ -684,7 +685,12 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     const conf = s.confidence ?? 0
     const leveraged = !!(fnoLots[sym] || fnoLots[s.underlying] || s.optType || s.commodity)   // can go to −100%
     if (isShort && marketBias === 'bullish' && !s.commodity && conf < 78) continue            // no shorts into a bull market
-    if (!isShort && marketBias === 'bearish' && leveraged && conf < 78) continue              // no bullish CALLs into a bear market
+    // NO bullish CALL/long-leveraged bets in a BEARISH market — NO conviction exemption. Even a 90-conf
+    // setup loses when the whole market falls (Sept: 43 CE trades = −₹302k, many high-conviction). Cash
+    // delivery longs (real stop) are still allowed; leveraged calls are not.
+    if (!isShort && marketBias === 'bearish' && leveraged) continue
+    // HARD CAP on concurrent F&O OPTION positions — stop the over-trading that amplified the bleed.
+    if (leveraged && !s.commodity && Object.values(b.open).filter(p => p.sleeve === 'FO' && p.kind === 'OPT').length >= FO_MAX_OPEN) continue
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
