@@ -1,5 +1,196 @@
 {
-  "live": {},
+  "live": {
+    "NIFTY": {
+      "spot": 23398.1,
+      "maxPain": 23400,
+      "callWall": 23700,
+      "putWall": 23300,
+      "gammaFlip": 23400,
+      "regime": "NEG GAMMA",
+      "pcr": 1.25,
+      "atm": 23400,
+      "expiry": "15SEP2026",
+      "dExp": 3,
+      "isExpiry": false,
+      "distPct": 0.01,
+      "casRegime": "VOLATILE",
+      "expectedClose": 23141,
+      "expectedMovePct": -1.1,
+      "band": 117,
+      "magnitude": "big",
+      "direction": "DOWN",
+      "confidence": 57,
+      "pinStrength": 58,
+      "gammaMag": 44,
+      "flow": {
+        "callChg": -3807700,
+        "putChg": -27727050,
+        "bias": -0.159,
+        "label": "call covering (squeeze ↑) + put covering (support ↓)",
+        "dir": "down"
+      },
+      "drivers": [
+        {
+          "dir": "down",
+          "w": 1,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -3807700 · ΔPE -27727050)"
+        },
+        {
+          "dir": "down",
+          "w": 0.44,
+          "text": "NEG GAMMA (flip 23400) · dealer pressure 44/100 — AMPLIFIES the close"
+        },
+        {
+          "dir": "up",
+          "w": 0.02,
+          "text": "Max-pain pin 23400 (+0.01% vs spot) · pin strength 58/100"
+        }
+      ],
+      "mechanics": "Spot 23398.1 is BELOW the gamma-flip 23400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
+      "why": [
+        "Spot 23398.1 is BELOW the gamma-flip 23400 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bearish → likely DOWN, magnitude big. (We call direction + size here, not an exact number.)",
+        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -3807700 · ΔPE -27727050)",
+        "▼ NEG GAMMA (flip 23400) · dealer pressure 44/100 — AMPLIFIES the close",
+        "▲ Max-pain pin 23400 (+0.01% vs spot) · pin strength 58/100"
+      ],
+      "magnets": [
+        {
+          "k": 23300,
+          "ce": 2777060,
+          "pe": 13802295
+        },
+        {
+          "k": 23400,
+          "ce": 6159140,
+          "pe": 8989695
+        },
+        {
+          "k": 23500,
+          "ce": 9299940,
+          "pe": 4245605
+        },
+        {
+          "k": 23200,
+          "ce": 1161355,
+          "pe": 11038040
+        },
+        {
+          "k": 23700,
+          "ce": 10039900,
+          "pe": 1500915
+        },
+        {
+          "k": 23250,
+          "ce": 1402895,
+          "pe": 8038615
+        }
+      ],
+      "tilt": -0.78,
+      "window": "15:15–15:30 IST",
+      "lean": "VOLATILE",
+      "bias": "down",
+      "predictedClose": 23141,
+      "footprintScore": -0.8,
+      "target": 23141,
+      "dirWord": "BEARISH",
+      "instBias": null
+    },
+    "BANKNIFTY": {
+      "spot": 56606.55,
+      "maxPain": 56800,
+      "callWall": 57000,
+      "putWall": 56000,
+      "gammaFlip": 56600,
+      "regime": "POS GAMMA",
+      "pcr": 1.27,
+      "atm": 56600,
+      "expiry": "29SEP2026",
+      "dExp": 17,
+      "isExpiry": false,
+      "distPct": 0.34,
+      "casRegime": "MAGNET",
+      "expectedClose": 56694,
+      "expectedMovePct": 0.15,
+      "band": 142,
+      "magnitude": "normal",
+      "direction": "UP",
+      "confidence": 62,
+      "pinStrength": 20,
+      "gammaMag": 9,
+      "flow": {
+        "callChg": -2450880,
+        "putChg": -2477190,
+        "bias": -0.002,
+        "label": "call covering (squeeze ↑) + put covering (support ↓)",
+        "dir": "flat"
+      },
+      "drivers": [
+        {
+          "dir": "up",
+          "w": 0.85,
+          "text": "Max-pain pin 56800 (+0.34% vs spot) · pin strength 20/100"
+        },
+        {
+          "dir": "flat",
+          "w": 0.09,
+          "text": "POS GAMMA (flip 56600) · dealer pressure 9/100 — suppresses the close"
+        },
+        {
+          "dir": "flat",
+          "w": 0.04,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2450880 · ΔPE -2477190)"
+        }
+      ],
+      "mechanics": "POSITIVE gamma but spot 56606.55 sits 0.34% below max pain 56800. Writers + dealers drag price PART-WAY to the pin into the close → drift UP toward ≈56694 (rarely all the way in one session).",
+      "why": [
+        "POSITIVE gamma but spot 56606.55 sits 0.34% below max pain 56800. Writers + dealers drag price PART-WAY to the pin into the close → drift UP toward ≈56694 (rarely all the way in one session).",
+        "▲ Max-pain pin 56800 (+0.34% vs spot) · pin strength 20/100",
+        "■ POS GAMMA (flip 56600) · dealer pressure 9/100 — suppresses the close",
+        "■ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2450880 · ΔPE -2477190)"
+      ],
+      "magnets": [
+        {
+          "k": 57000,
+          "ce": 839640,
+          "pe": 861300
+        },
+        {
+          "k": 56000,
+          "ce": 262260,
+          "pe": 868260
+        },
+        {
+          "k": 56500,
+          "ce": 399150,
+          "pe": 631200
+        },
+        {
+          "k": 57200,
+          "ce": 224400,
+          "pe": 112200
+        },
+        {
+          "k": 56800,
+          "ce": 177600,
+          "pe": 146670
+        },
+        {
+          "k": 56900,
+          "ce": 174090,
+          "pe": 133530
+        }
+      ],
+      "tilt": 0.85,
+      "window": "15:15–15:30 IST",
+      "lean": "MAGNET",
+      "bias": "up",
+      "predictedClose": 56694,
+      "footprintScore": 0.8,
+      "target": 56694,
+      "dirWord": "BULLISH",
+      "instBias": null
+    }
+  },
   "history": [
     {
       "date": "2026-08-31",
@@ -801,22 +992,22 @@
       "dayN": 1,
       "isExpiry": false,
       "NIFTY": {
-        "exp": 23398,
-        "low": 23211,
-        "high": 23585,
-        "band": 187,
-        "bandPct": 0.8,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 23141,
+        "low": 23024,
+        "high": 23258,
+        "band": 117,
+        "bandPct": 0.5,
+        "conf": 57,
+        "kind": "live footprint"
       },
       "BANKNIFTY": {
-        "exp": 56607,
-        "low": 56041,
-        "high": 57173,
-        "band": 566,
-        "bandPct": 1,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 56694,
+        "low": 56552,
+        "high": 56836,
+        "band": 142,
+        "bandPct": 0.3,
+        "conf": 62,
+        "kind": "live footprint"
       },
       "SENSEX": {
         "exp": 74782,
@@ -833,22 +1024,22 @@
       "dayN": 2,
       "isExpiry": true,
       "NIFTY": {
-        "exp": 23398,
-        "low": 23133,
-        "high": 23663,
-        "band": 265,
-        "bandPct": 1.1,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 23400,
+        "low": 23260,
+        "high": 23540,
+        "band": 140,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "BANKNIFTY": {
-        "exp": 56607,
-        "low": 55806,
-        "high": 57408,
-        "band": 801,
-        "bandPct": 1.4,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 56800,
+        "low": 56460,
+        "high": 57140,
+        "band": 340,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "SENSEX": {
         "exp": 74782,
@@ -897,22 +1088,22 @@
       "dayN": 4,
       "isExpiry": true,
       "NIFTY": {
-        "exp": 23398,
-        "low": 23024,
-        "high": 23772,
-        "band": 374,
-        "bandPct": 1.6,
-        "conf": 46,
-        "kind": "uncertainty cone"
+        "exp": 23400,
+        "low": 23260,
+        "high": 23540,
+        "band": 140,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "BANKNIFTY": {
-        "exp": 56607,
-        "low": 55475,
-        "high": 57739,
-        "band": 1132,
-        "bandPct": 2,
-        "conf": 46,
-        "kind": "uncertainty cone"
+        "exp": 56800,
+        "low": 56460,
+        "high": 57140,
+        "band": 340,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "SENSEX": {
         "exp": 74782,
@@ -3670,7 +3861,7 @@
   "histHitRate": 40,
   "hitRate": 75,
   "resolved": 4,
-  "updatedAt": "2026-09-11T10:30:49.944Z",
+  "updatedAt": "2026-09-12T10:30:39.701Z",
   "dirHitRate": 50,
   "dirResolved": 2,
   "regimeAcc": {
