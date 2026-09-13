@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-12T10:30:39.701Z",
-  "date": "2026-09-12",
+  "generatedAt": "2026-09-13T10:30:38.894Z",
+  "date": "2026-09-13",
   "timeframe": "intraday",
   "label": "Intraday 1h",
   "note": "Intraday 1h signals. Each card shows its MEASURED backtested first-target hit-rate — not a guaranteed win-rate. Astro is traditional/educational (no proven edge).",
@@ -251,6 +251,90 @@
             "deploy": 22281.3,
             "riskRs": 992.37,
             "rewardT1Rs": 691.98
+          }
+        },
+        {
+          "generator": "confluence",
+          "symbol": "ADANIENT",
+          "name": "Adani Enterprises Ltd.",
+          "sector": "Metals & Mining",
+          "indices": [
+            "NIFTY 50",
+            "NIFTY 100",
+            "NIFTY 200",
+            "NIFTY 500",
+            "NIFTY Total Market",
+            "NIFTY Metal",
+            "NSE Equity"
+          ],
+          "label": "Volume + Accumulation",
+          "reason": "Accumulation (vol 67/100): Up/down volume 4.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
+          "direction": "LONG",
+          "ltp": 3060,
+          "entry": 3060,
+          "sl": 2995.09,
+          "slPct": -2.1,
+          "targets": [
+            {
+              "price": 3109.14,
+              "pct": 1.6,
+              "by": "~3h",
+              "days": 3
+            },
+            {
+              "price": 3145.99,
+              "pct": 2.8,
+              "by": "~6h",
+              "days": 6
+            },
+            {
+              "price": 3182.84,
+              "pct": 4,
+              "by": "~10h",
+              "days": 10
+            }
+          ],
+          "rr": 0.76,
+          "rsi": 57.3,
+          "confidence": 95,
+          "accuracy": null,
+          "backtestTrades": 3,
+          "delivery": null,
+          "changePct": 0,
+          "setupType": "Squeeze breakout",
+          "footprint": {
+            "score": 70,
+            "flags": [
+              "Stealth volume — buying while price still flat",
+              "Outperforming NIFTY (relative-strength leader)",
+              "Volatility coiled in a tight base"
+            ],
+            "strong": true
+          },
+          "rs": {
+            "rs20": 0.042,
+            "rs50": 0.088,
+            "leader": true
+          },
+          "social": "⭐ TOP PICK (Grade A++) — ADANIENT\n2 signals agree: Volume + Accumulation, Money Flow + Nifty Metal Vedic bias bullish\n🕵️ Footprint 70/100: Stealth volume — buying while price still flat\nEntry ₹3060 · SL ₹2995.09 (-2.1%)\nT1 ₹3109.14 (+1.6%) by ~3h · T2 +2.8% · T3 +4%\nPlan (₹1L, 1% risk): buy 15 sh · risk ₹973.65 · reward T1 ₹737.1 · R:R 1:0.76\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#ADANIENT #swingtrading #nifty",
+          "generators": [
+            "Volume + Accumulation",
+            "Money Flow"
+          ],
+          "genCount": 2,
+          "grade": "A++",
+          "confluenceScore": 163,
+          "vedicAsset": "Nifty Metal",
+          "vedicLabel": "BUY / TEJI",
+          "vedicAligned": true,
+          "strongDeliv": false,
+          "plan": {
+            "capital": 100000,
+            "riskPct": 1,
+            "shares": 15,
+            "deploy": 45900,
+            "riskRs": 973.65,
+            "rewardT1Rs": 737.1
           }
         },
         {
@@ -879,84 +963,6 @@
             "riskRs": 995.11,
             "rewardT1Rs": 817.48
           }
-        },
-        {
-          "generator": "confluence",
-          "symbol": "LAXMIDENTL",
-          "name": "Laxmi Dental Limited",
-          "sector": "Equity",
-          "indices": [
-            "NSE Equity"
-          ],
-          "label": "Volume + Accumulation",
-          "reason": "Accumulation (vol 47/100): Up/down volume 1.96× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); OBV rising — on-balance volume confirms net inflow",
-          "direction": "LONG",
-          "ltp": 202.84,
-          "entry": 202.84,
-          "sl": 199.65,
-          "slPct": -1.6,
-          "targets": [
-            {
-              "price": 206.82,
-              "pct": 2,
-              "by": "~17h",
-              "days": 17
-            },
-            {
-              "price": 209.8,
-              "pct": 3.4,
-              "by": "~20h",
-              "days": 20
-            },
-            {
-              "price": 212.78,
-              "pct": 4.9,
-              "by": "~24h",
-              "days": 24
-            }
-          ],
-          "rr": 1.25,
-          "rsi": 56.9,
-          "confidence": 95,
-          "accuracy": null,
-          "backtestTrades": 3,
-          "delivery": null,
-          "changePct": -0.57,
-          "setupType": "Squeeze breakout",
-          "footprint": {
-            "score": 50,
-            "flags": [
-              "Outperforming NIFTY (relative-strength leader)",
-              "Volatility coiled in a tight base",
-              "Up/down volume 1.96× (accumulation)"
-            ],
-            "strong": false
-          },
-          "rs": {
-            "rs20": 0.036,
-            "rs50": 0.064,
-            "leader": true
-          },
-          "social": "⭐ TOP PICK (Grade A+) — LAXMIDENTL\n2 signals agree: Volume + Accumulation, Money Flow + Nifty 50 Vedic bias bullish\n🕵️ Footprint 50/100: Outperforming NIFTY (relative-strength leader)\nEntry ₹202.84 · SL ₹199.65 (-1.6%)\nT1 ₹206.82 (+2%) by ~17h · T2 +3.4% · T3 +4.9%\nPlan (₹1L, 1% risk): buy 313 sh · risk ₹998.47 · reward T1 ₹1245.74 · R:R 1:1.25\nLimited backtest history. 📌 Educational only, not advice. Not SEBI-registered.\n#LAXMIDENTL #swingtrading #nifty",
-          "generators": [
-            "Volume + Accumulation",
-            "Money Flow"
-          ],
-          "genCount": 2,
-          "grade": "A+",
-          "confluenceScore": 156,
-          "vedicAsset": "Nifty 50",
-          "vedicLabel": "BUY ON DIP",
-          "vedicAligned": true,
-          "strongDeliv": false,
-          "plan": {
-            "capital": 100000,
-            "riskPct": 1,
-            "shares": 313,
-            "deploy": 63488.92,
-            "riskRs": 998.47,
-            "rewardT1Rs": 1245.74
-          }
         }
       ]
     },
@@ -1203,11 +1209,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 23398.1,
-                "sl": 23585.82,
+                "sl": 23597.19,
                 "targets": [
-                  23147.81,
-                  22960.09,
-                  22772.37
+                  23132.64,
+                  22933.55,
+                  22734.45
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -1219,7 +1225,7 @@
                 "vah": 23114.07,
                 "val": 23071.5,
                 "vwap": 23398.1,
-                "rsi": 28,
+                "rsi": 26,
                 "fib": "78.6%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 78.6% Fib 23489.84"
               },
@@ -1249,9 +1255,9 @@
           "directional": {
             "direction": "NEUTRAL",
             "dirTone": "flat",
-            "D": 0,
+            "D": 2,
             "grade": "B",
-            "conviction": 50,
+            "conviction": 64,
             "optionPlay": "No directional edge — range 23300–23700. Wait for a break or sell premium.",
             "spot": 23398.1,
             "entry": 23398.1,
@@ -1266,21 +1272,21 @@
             "positioning": [
               {
                 "expiry": "13OCT2026",
-                "daysOut": 31,
+                "daysOut": 30,
                 "resistance": 24500,
                 "support": 23500,
                 "pcr": 0.78
               },
               {
                 "expiry": "29DEC2026",
-                "daysOut": 108,
+                "daysOut": 107,
                 "resistance": 24000,
                 "support": 23000,
                 "pcr": 2.39
               },
               {
                 "expiry": "30MAR2027",
-                "daysOut": 199,
+                "daysOut": 198,
                 "resistance": 24000,
                 "support": 24000,
                 "pcr": 2.82
@@ -1288,14 +1294,13 @@
             ],
             "note": "ATM option ≈ 0.5 delta → premium moves ~half the index points. Far expiry shows where big money is building. Enter on confirmation / at next open.",
             "reasons": [
-              "Options: Call unwinding · Put build-up (bearish)",
               "PCR 1.25 — puts written (support below)",
               "Breadth weak — 22% advancing",
               "RSI 28 at 20-day low — oversold bounce zone",
               "OI walls (15SEP2026): resistance 23700 (max call OI) · support 23300 (max put OI)",
-              "📅 ~31d out (13OCT): big call OI 24500 · put floor 23500 · PCR 0.78 — medium-term cap building",
-              "📅 ~108d out (29DEC): big call OI 24000 · put floor 23000 · PCR 2.39 — medium-term support building",
-              "📅 ~199d out (30MAR): big call OI 24000 · put floor 24000 · PCR 2.82 — medium-term support building",
+              "📅 ~30d out (13OCT): big call OI 24500 · put floor 23500 · PCR 0.78 — medium-term cap building",
+              "📅 ~107d out (29DEC): big call OI 24000 · put floor 23000 · PCR 2.39 — medium-term support building",
+              "📅 ~198d out (30MAR): big call OI 24000 · put floor 24000 · PCR 2.82 — medium-term support building",
               "Far-month smart money building a FLOOR — put-writing PCR 2.82 at 24000 (medium-term bullish)"
             ]
           },
@@ -1501,16 +1506,16 @@
                 "tf": "4h",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -2,
-                "trend": -2,
+                "score": -3,
+                "trend": -3,
                 "dist": 0,
                 "accu": 0,
                 "entry": 56606.55,
-                "sl": 57176.04,
+                "sl": 57231.89,
                 "targets": [
-                  55847.23,
-                  55277.73,
-                  54708.24
+                  55772.76,
+                  55147.42,
+                  54522.08
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -1558,19 +1563,18 @@
             ]
           },
           "directional": {
-            "direction": "BULLISH",
-            "dirTone": "up",
-            "D": 3,
-            "grade": "A",
-            "conviction": 71,
-            "optionPlay": "Buy BANKNIFTY 56600 CE (29SEP2026 for the move; 30MAR2027 monthly for positional)",
+            "direction": "NEUTRAL",
+            "dirTone": "flat",
+            "D": 1,
+            "grade": "B",
+            "conviction": 57,
+            "optionPlay": "No directional edge — range 56000–57000. Wait for a break or sell premium.",
             "spot": 56606.55,
             "entry": 56606.55,
-            "sl": 56000,
+            "sl": null,
             "targets": [
-              57173,
-              58022,
-              58871
+              56000,
+              57000
             ],
             "resistance": 57000,
             "support": 56000,
@@ -1578,21 +1582,21 @@
             "positioning": [
               {
                 "expiry": "27OCT2026",
-                "daysOut": 45,
+                "daysOut": 44,
                 "resistance": 58000,
                 "support": 58000,
                 "pcr": 1.49
               },
               {
                 "expiry": "29DEC2026",
-                "daysOut": 108,
+                "daysOut": 107,
                 "resistance": 57000,
                 "support": 57000,
                 "pcr": 5.17
               },
               {
                 "expiry": "30MAR2027",
-                "daysOut": 199,
+                "daysOut": 198,
                 "resistance": 57000,
                 "support": 57000,
                 "pcr": 64
@@ -1600,13 +1604,12 @@
             ],
             "note": "ATM option ≈ 0.5 delta → premium moves ~half the index points. Far expiry shows where big money is building. Enter on confirmation / at next open.",
             "reasons": [
-              "Options: Long call build-up · Put writing (bullish)",
               "PCR 1.27 — puts written (support below)",
               "Breadth weak — 36% advancing",
               "OI walls (29SEP2026): resistance 57000 (max call OI) · support 56000 (max put OI)",
-              "📅 ~45d out (27OCT): big call OI 58000 · put floor 58000 · PCR 1.49 — medium-term support building",
-              "📅 ~108d out (29DEC): big call OI 57000 · put floor 57000 · PCR 5.17 — medium-term support building",
-              "📅 ~199d out (30MAR): big call OI 57000 · put floor 57000 · PCR 64 — medium-term support building",
+              "📅 ~44d out (27OCT): big call OI 58000 · put floor 58000 · PCR 1.49 — medium-term support building",
+              "📅 ~107d out (29DEC): big call OI 57000 · put floor 57000 · PCR 5.17 — medium-term support building",
+              "📅 ~198d out (30MAR): big call OI 57000 · put floor 57000 · PCR 64 — medium-term support building",
               "Far-month smart money building a FLOOR — put-writing PCR 64 at 57000 (medium-term bullish)"
             ]
           },
@@ -1620,7 +1623,7 @@
           "name": "Gold (Spot XAU/USD)",
           "mtf": {
             "symbol": "GOLD",
-            "spot": 4348.39,
+            "spot": 4348.36,
             "aligned": "LEAN SHORT",
             "net": -3,
             "longs": 1,
@@ -1636,16 +1639,16 @@
                 "tf": "15m",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 5,
+                "score": 3,
                 "trend": 5,
-                "dist": 0,
+                "dist": 2,
                 "accu": 0,
-                "entry": 4391.09,
-                "sl": 4377.21,
+                "entry": 4348.36,
+                "sl": 4335.47,
                 "targets": [
-                  4409.6,
-                  4423.48,
-                  4437.37
+                  4365.55,
+                  4378.44,
+                  4391.33
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -1653,13 +1656,13 @@
                   "2026-09-14"
                 ],
                 "rr": 1.33,
-                "poc": 4386.8,
-                "vah": 4407,
-                "val": 4344.57,
-                "vwap": 4388.54,
+                "poc": 4344.07,
+                "vah": 4364.27,
+                "val": 4301.84,
+                "vwap": 4346.08,
                 "rsi": 59,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 4402.15"
+                "reason": "markup — trend up, no distribution yet · bearish divergence (price HH, RSI 59 lower) → buyers weakening · rising EMA stack · at 38.2% Fib 4402.15"
               },
               {
                 "tf": "35m",
@@ -1669,15 +1672,15 @@
                 "trend": 1,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
+                "entry": 4348.36,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 4430.09,
-                "vah": 4443.72,
-                "val": 4373.61,
-                "vwap": 4378.93,
+                "poc": 4387.36,
+                "vah": 4400.99,
+                "val": 4330.88,
+                "vwap": 4336.2,
                 "rsi": 56,
                 "fib": "38.2%",
                 "reason": "at 38.2% Fib 4402.15"
@@ -1686,19 +1689,19 @@
                 "tf": "45m",
                 "dir": "NEUTRAL",
                 "phase": "RANGE",
-                "score": -1,
-                "trend": -1,
+                "score": 1,
+                "trend": 1,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
+                "entry": 4348.36,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 4430.76,
-                "vah": 4473.04,
-                "val": 4365.93,
-                "vwap": 4376.89,
+                "poc": 4388.03,
+                "vah": 4424.67,
+                "val": 4317.56,
+                "vwap": 4334.5,
                 "rsi": 55,
                 "fib": "38.2%",
                 "reason": "at 38.2% Fib 4402.15"
@@ -1711,15 +1714,15 @@
                 "trend": -1,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
+                "entry": 4348.36,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 4423.17,
-                "vah": 4477.63,
-                "val": 4362.98,
-                "vwap": 4388.22,
+                "poc": 4380.44,
+                "vah": 4434.9,
+                "val": 4320.25,
+                "vwap": 4346.1,
                 "rsi": 53,
                 "fib": "50%",
                 "reason": "at 50% Fib 4406.45"
@@ -1732,12 +1735,12 @@
                 "trend": -3,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
-                "sl": 4431.19,
+                "entry": 4348.36,
+                "sl": 4390.25,
                 "targets": [
-                  4337.62,
-                  4297.52,
-                  4257.42
+                  4292.5,
+                  4250.61,
+                  4208.71
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -1745,10 +1748,10 @@
                   "2026-09-15"
                 ],
                 "rr": 1.33,
-                "poc": 4414.55,
-                "vah": 4508.73,
-                "val": 4356.24,
-                "vwap": 4398.49,
+                "poc": 4380.79,
+                "vah": 4466,
+                "val": 4313.51,
+                "vwap": 4356.13,
                 "rsi": 52,
                 "fib": "50%",
                 "reason": "markdown — trend down, no accumulation yet · at 50% Fib 4406.45"
@@ -1757,19 +1760,19 @@
                 "tf": "1h",
                 "dir": "NEUTRAL",
                 "phase": "RANGE",
-                "score": -1,
-                "trend": -1,
+                "score": 0,
+                "trend": 0,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
+                "entry": 4348.36,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 4423.17,
-                "vah": 4466.17,
-                "val": 4357.25,
-                "vwap": 4386.07,
+                "poc": 4380.44,
+                "vah": 4423.44,
+                "val": 4314.52,
+                "vwap": 4343.1,
                 "rsi": 53,
                 "fib": "50%",
                 "reason": "at 50% Fib 4406.45"
@@ -1782,12 +1785,12 @@
                 "trend": -2,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
-                "sl": 4438.97,
+                "entry": 4348.36,
+                "sl": 4391,
                 "targets": [
-                  4327.25,
-                  4279.36,
-                  4231.48
+                  4291.51,
+                  4248.88,
+                  4206.24
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -1795,10 +1798,10 @@
                   "2026-09-16"
                 ],
                 "rr": 1.33,
-                "poc": 4412.52,
-                "vah": 4630.74,
-                "val": 4311.39,
-                "vwap": 4400.65,
+                "poc": 4369.79,
+                "vah": 4588.01,
+                "val": 4279.31,
+                "vwap": 4359.12,
                 "rsi": 50,
                 "fib": "50%",
                 "reason": "markdown — trend down, no accumulation yet · at 50% Fib 4406.45"
@@ -1811,12 +1814,12 @@
                 "trend": -3,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
-                "sl": 4446.21,
+                "entry": 4348.36,
+                "sl": 4404.84,
                 "targets": [
-                  4317.6,
-                  4262.49,
-                  4207.37
+                  4273.06,
+                  4216.58,
+                  4160.1
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -1824,10 +1827,10 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 4412.52,
-                "vah": 4577.52,
-                "val": 4343.33,
-                "vwap": 4426.21,
+                "poc": 4369.79,
+                "vah": 4524.14,
+                "val": 4289.95,
+                "vwap": 4384.98,
                 "rsi": 48,
                 "fib": "61.8%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 4419.14"
@@ -1840,12 +1843,12 @@
                 "trend": -3,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4391.09,
-                "sl": 4456.38,
+                "entry": 4348.36,
+                "sl": 4407.63,
                 "targets": [
-                  4304.04,
-                  4238.75,
-                  4173.46
+                  4269.33,
+                  4210.06,
+                  4150.79
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -1853,11 +1856,11 @@
                   "2026-09-18"
                 ],
                 "rr": 1.33,
-                "poc": 4417,
-                "vah": 4572.99,
-                "val": 4293.85,
-                "vwap": 4418.29,
-                "rsi": 47,
+                "poc": 4375.83,
+                "vah": 4531.06,
+                "val": 4253.28,
+                "vwap": 4378.37,
+                "rsi": 45,
                 "fib": "61.8%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 4416.79"
               },
@@ -1865,27 +1868,27 @@
                 "tf": "1D",
                 "dir": "NEUTRAL",
                 "phase": "RANGE",
-                "score": -1,
-                "trend": -1,
+                "score": 0,
+                "trend": 0,
                 "dist": 0,
                 "accu": 0,
-                "entry": 4348.39,
+                "entry": 4348.36,
                 "sl": null,
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 5263.95,
-                "vah": 5365.43,
-                "val": 4391.21,
-                "vwap": 4095.86,
-                "rsi": 48,
+                "poc": 4368.77,
+                "vah": 4795,
+                "val": 3942.55,
+                "vwap": 4216.7,
+                "rsi": 51,
                 "fib": "38.2%",
                 "reason": "at 38.2% Fib 4400.94"
               }
             ]
           },
           "directional": null,
-          "spot": 4348.39,
+          "spot": 4348.36,
           "aligned": "LEAN SHORT"
         },
         {
@@ -2106,16 +2109,16 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 4,
-                "trend": 4,
+                "score": 3,
+                "trend": 3,
                 "dist": 0,
                 "accu": 0,
                 "entry": 3060,
-                "sl": 2988.76,
+                "sl": 2979.72,
                 "targets": [
-                  3154.98,
-                  3226.22,
-                  3297.46
+                  3167.04,
+                  3247.32,
+                  3327.61
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -2123,11 +2126,11 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 3022.21,
-                "vah": 3151.74,
+                "poc": 3011.84,
+                "vah": 3141.38,
                 "val": 2934.13,
-                "vwap": 2996.25,
-                "rsi": 56,
+                "vwap": 2983.33,
+                "rsi": 57,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 3042.1"
               },
@@ -2395,11 +2398,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 419,
-                "sl": 412.9,
+                "sl": 412.5,
                 "targets": [
-                  427.13,
-                  433.23,
-                  439.33
+                  427.67,
+                  434.17,
+                  440.68
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -2410,7 +2413,7 @@
                 "poc": 384.41,
                 "vah": 406.38,
                 "val": 377.59,
-                "vwap": 416.44,
+                "vwap": 416.34,
                 "rsi": 54,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -2424,11 +2427,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 419,
-                "sl": 411.49,
+                "sl": 411.72,
                 "targets": [
-                  429.01,
-                  436.52,
-                  444.02
+                  428.7,
+                  435.98,
+                  443.26
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -2437,9 +2440,9 @@
                 ],
                 "rr": 1.33,
                 "poc": 380.76,
-                "vah": 400.57,
+                "vah": 402.16,
                 "val": 375.21,
-                "vwap": 411.92,
+                "vwap": 412.87,
                 "rsi": 56,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
@@ -2684,16 +2687,16 @@
                 "tf": "2h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 5,
-                "trend": 5,
+                "score": 4,
+                "trend": 4,
                 "dist": 0,
                 "accu": 0,
                 "entry": 431,
-                "sl": 422.53,
+                "sl": 422.97,
                 "targets": [
-                  442.3,
-                  450.77,
-                  459.24
+                  441.71,
+                  449.74,
+                  457.77
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -2701,11 +2704,11 @@
                   "2026-09-16"
                 ],
                 "rr": 1.33,
-                "poc": 413.06,
-                "vah": 431.64,
-                "val": 406.37,
-                "vwap": 429.82,
-                "rsi": 54,
+                "poc": 415.92,
+                "vah": 430.85,
+                "val": 405.25,
+                "vwap": 429.14,
+                "rsi": 55,
                 "fib": "50%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack · at 50% Fib 430.02"
               },
@@ -2747,11 +2750,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 431,
-                "sl": 418.44,
+                "sl": 419.49,
                 "targets": [
-                  447.75,
-                  460.32,
-                  472.88
+                  446.35,
+                  457.86,
+                  469.38
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -2762,10 +2765,10 @@
                 "poc": 408.04,
                 "vah": 430.72,
                 "val": 395.22,
-                "vwap": 424.57,
+                "vwap": 425.04,
                 "rsi": 56,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 427.62"
+                "reason": "markup — trend up, no distribution yet · rising EMA stack · at 38.2% Fib 428.69"
               },
               {
                 "tf": "1D",
@@ -3041,11 +3044,11 @@
                 "dist": 2,
                 "accu": 0,
                 "entry": 344.5,
-                "sl": 337.97,
+                "sl": 337.45,
                 "targets": [
-                  353.21,
-                  359.74,
-                  366.28
+                  353.9,
+                  360.95,
+                  368
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -3053,28 +3056,28 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 332.42,
-                "vah": 344.98,
+                "poc": 327.85,
+                "vah": 347.27,
                 "val": 303.88,
-                "vwap": 336.63,
-                "rsi": 62,
+                "vwap": 336.7,
+                "rsi": 61,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · bearish divergence (price HH, RSI 62 lower) → buyers weakening · rising EMA stack"
+                "reason": "markup — trend up, no distribution yet · bearish divergence (price HH, RSI 61 lower) → buyers weakening · rising EMA stack"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 5,
+                "score": 3,
                 "trend": 5,
-                "dist": 0,
+                "dist": 2,
                 "accu": 0,
                 "entry": 344.5,
-                "sl": 337.29,
+                "sl": 336.58,
                 "targets": [
-                  354.11,
-                  361.32,
-                  368.54
+                  355.06,
+                  362.98,
+                  370.9
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -3082,13 +3085,13 @@
                   "2026-09-18"
                 ],
                 "rr": 1.33,
-                "poc": 327.85,
+                "poc": 330.14,
                 "vah": 349.55,
                 "val": 281.04,
-                "vwap": 334.72,
-                "rsi": 62,
+                "vwap": 334.54,
+                "rsi": 61,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · rising EMA stack"
+                "reason": "markup — trend up, no distribution yet · bearish divergence (price HH, RSI 61 lower) → buyers weakening · rising EMA stack"
               },
               {
                 "tf": "1D",
@@ -3149,8 +3152,8 @@
             "shorts": 0,
             "phase": "DISTRIBUTION",
             "phaseCount": {
-              "MARKUP": 8,
-              "DISTRIBUTION": 2
+              "MARKUP": 6,
+              "DISTRIBUTION": 4
             },
             "timeframes": [
               {
@@ -3330,17 +3333,17 @@
               {
                 "tf": "2h",
                 "dir": "LONG",
-                "phase": "MARKUP",
-                "score": 5,
+                "phase": "DISTRIBUTION",
+                "score": 2,
                 "trend": 5,
-                "dist": 0,
+                "dist": 3,
                 "accu": 0,
                 "entry": 1969,
-                "sl": 1938.13,
+                "sl": 1936.43,
                 "targets": [
-                  2010.16,
-                  2041.04,
-                  2071.91
+                  2012.43,
+                  2044.99,
+                  2077.56
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -3348,13 +3351,13 @@
                   "2026-09-16"
                 ],
                 "rr": 1.33,
-                "poc": 1854.72,
-                "vah": 1945.21,
-                "val": 1776.3,
-                "vwap": 1887.43,
+                "poc": 1842.65,
+                "vah": 1957.27,
+                "val": 1788.36,
+                "vwap": 1896.53,
                 "rsi": 69,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · rising EMA stack"
+                "reason": "⚠️ DISTRIBUTION — smart money selling into the rally · buy-side liquidity swept + rejection wick → smart money DISTRIBUTING · rising EMA stack"
               },
               {
                 "tf": "3h",
@@ -3365,11 +3368,11 @@
                 "dist": 3,
                 "accu": 0,
                 "entry": 1969,
-                "sl": 1929.43,
+                "sl": 1927.32,
                 "targets": [
-                  2021.76,
-                  2061.33,
-                  2100.9
+                  2024.57,
+                  2066.25,
+                  2107.93
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -3379,26 +3382,26 @@
                 "rr": 1.33,
                 "poc": 1845.74,
                 "vah": 1981.4,
-                "val": 1534.52,
-                "vwap": 1876.33,
-                "rsi": 70,
+                "val": 1518.56,
+                "vwap": 1885.41,
+                "rsi": 66,
                 "fib": "38.2%",
                 "reason": "⚠️ DISTRIBUTION — smart money selling into the rally · buy-side liquidity swept + rejection wick → smart money DISTRIBUTING · rising EMA stack"
               },
               {
                 "tf": "4h",
                 "dir": "LONG",
-                "phase": "MARKUP",
-                "score": 5,
+                "phase": "DISTRIBUTION",
+                "score": 2,
                 "trend": 5,
-                "dist": 0,
+                "dist": 3,
                 "accu": 0,
                 "entry": 1969,
-                "sl": 1922.69,
+                "sl": 1919.13,
                 "targets": [
-                  2030.75,
-                  2077.05,
-                  2123.36
+                  2035.5,
+                  2085.37,
+                  2135.25
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -3409,10 +3412,10 @@
                 "poc": 1847.61,
                 "vah": 1981.4,
                 "val": 1425.67,
-                "vwap": 1869.04,
-                "rsi": 68,
+                "vwap": 1880.1,
+                "rsi": 67,
                 "fib": "38.2%",
-                "reason": "markup — trend up, no distribution yet · rising EMA stack"
+                "reason": "⚠️ DISTRIBUTION — smart money selling into the rally · buy-side liquidity swept + rejection wick → smart money DISTRIBUTING · rising EMA stack"
               },
               {
                 "tf": "1D",
@@ -3716,10 +3719,10 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 344.52,
-                "vah": 358.24,
-                "val": 303.35,
-                "vwap": 294.4,
-                "rsi": 59,
+                "vah": 360.35,
+                "val": 301.23,
+                "vwap": 293.47,
+                "rsi": 58,
                 "fib": "38.2%",
                 "reason": ""
               },
@@ -3769,13 +3772,13 @@
             "symbol": "INOXWIND",
             "spot": 76.5,
             "aligned": "LONG",
-            "net": 8,
-            "longs": 8,
+            "net": 9,
+            "longs": 9,
             "shorts": 0,
             "phase": "MARKUP",
             "phaseCount": {
-              "MARKUP": 8,
-              "RANGE": 2
+              "MARKUP": 9,
+              "RANGE": 1
             },
             "timeframes": [
               {
@@ -3956,28 +3959,28 @@
                 "tf": "2h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 4,
-                "trend": 4,
+                "score": 5,
+                "trend": 5,
                 "dist": 0,
                 "accu": 0,
                 "entry": 76.5,
-                "sl": 74.78,
+                "sl": 74.81,
                 "targets": [
-                  78.79,
-                  80.52,
-                  82.24
+                  78.76,
+                  80.45,
+                  82.14
                 ],
                 "etaDates": [
                   "2026-09-14",
                   "2026-09-15",
                   "2026-09-16"
                 ],
-                "rr": 1.33,
+                "rr": 1.34,
                 "poc": 74.1,
                 "vah": 79.39,
                 "val": 73.12,
-                "vwap": 73.41,
-                "rsi": 60,
+                "vwap": 73.37,
+                "rsi": 62,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
@@ -3985,16 +3988,16 @@
                 "tf": "3h",
                 "dir": "LONG",
                 "phase": "MARKUP",
-                "score": 3,
-                "trend": 3,
+                "score": 4,
+                "trend": 4,
                 "dist": 0,
                 "accu": 0,
                 "entry": 76.5,
-                "sl": 74.35,
+                "sl": 74.46,
                 "targets": [
-                  79.36,
-                  81.51,
-                  83.65
+                  79.22,
+                  81.26,
+                  83.3
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -4002,34 +4005,42 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 75.03,
+                "poc": 74.36,
                 "vah": 84.69,
-                "val": 70.03,
-                "vwap": 73.44,
-                "rsi": 61,
+                "val": 70.7,
+                "vwap": 73.46,
+                "rsi": 62,
                 "fib": "38.2%",
                 "reason": "markup — trend up, no distribution yet · rising EMA stack"
               },
               {
                 "tf": "4h",
-                "dir": "NEUTRAL",
-                "phase": "RANGE",
-                "score": 1,
-                "trend": 1,
+                "dir": "LONG",
+                "phase": "MARKUP",
+                "score": 2,
+                "trend": 2,
                 "dist": 0,
                 "accu": 0,
                 "entry": 76.5,
-                "sl": null,
-                "targets": null,
-                "etaDates": null,
-                "rr": null,
+                "sl": 74.16,
+                "targets": [
+                  79.62,
+                  81.95,
+                  84.29
+                ],
+                "etaDates": [
+                  "2026-09-15",
+                  "2026-09-17",
+                  "2026-09-18"
+                ],
+                "rr": 1.33,
                 "poc": 75.56,
-                "vah": 92.13,
-                "val": 73.05,
-                "vwap": 74.15,
-                "rsi": 59,
+                "vah": 91.12,
+                "val": 71.04,
+                "vwap": 73.97,
+                "rsi": 60,
                 "fib": "38.2%",
-                "reason": ""
+                "reason": "markup — trend up, no distribution yet"
               },
               {
                 "tf": "1D",
@@ -4242,11 +4253,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 718.5,
-                "sl": 730.29,
+                "sl": 729.57,
                 "targets": [
-                  702.79,
-                  691,
-                  679.21
+                  703.74,
+                  692.67,
+                  681.61
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -4254,10 +4265,10 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 719.9,
-                "vah": 743.51,
+                "poc": 722.68,
+                "vah": 746.29,
                 "val": 712.96,
-                "vwap": 720.03,
+                "vwap": 721.1,
                 "rsi": 49,
                 "fib": "50%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 50% Fib 720.13"
@@ -4544,12 +4555,12 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 1126.01,
-                "vah": 1604.58,
+                "vah": 1584.22,
                 "val": 1014,
-                "vwap": 1666.67,
-                "rsi": 72,
+                "vwap": 1664.39,
+                "rsi": 70,
                 "fib": "38.2%",
-                "reason": "⚠️ DISTRIBUTION — smart money selling into the rally · buy-side liquidity swept + rejection wick → smart money DISTRIBUTING · overbought & 2.7×ATR above mean → exhaustion / distribution risk · rising EMA stack"
+                "reason": "⚠️ DISTRIBUTION — smart money selling into the rally · buy-side liquidity swept + rejection wick → smart money DISTRIBUTING · overbought & 2.8×ATR above mean → exhaustion / distribution risk · rising EMA stack"
               },
               {
                 "tf": "1D",
@@ -4772,7 +4783,7 @@
                 "poc": 11421.7,
                 "vah": 11609.8,
                 "val": 10686.4,
-                "vwap": 11219.34,
+                "vwap": 11227.91,
                 "rsi": 51,
                 "fib": "78.6%",
                 "reason": "at 78.6% Fib 11076.51"
@@ -4791,8 +4802,8 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 10574.16,
-                "vah": 11370.85,
-                "val": 10323.77,
+                "vah": 11325.33,
+                "val": 10278.25,
                 "vwap": 11228.4,
                 "rsi": 49,
                 "fib": "78.6%",
@@ -4811,10 +4822,10 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 10528.64,
-                "vah": 11234.27,
+                "poc": 10574.16,
+                "vah": 11188.75,
                 "val": 10232.73,
-                "vwap": 11278.9,
+                "vwap": 11283.98,
                 "rsi": 48,
                 "fib": "78.6%",
                 "reason": "falling EMA stack · at 78.6% Fib 11076.51"
@@ -5029,11 +5040,11 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 327.95,
+                "poc": 329.38,
                 "vah": 332.95,
-                "val": 304.38,
-                "vwap": 324.13,
-                "rsi": 54,
+                "val": 302.95,
+                "vwap": 323.95,
+                "rsi": 53,
                 "fib": "50%",
                 "reason": "at 50% Fib 324.43"
               },
@@ -5071,10 +5082,10 @@
                 "targets": null,
                 "etaDates": null,
                 "rr": null,
-                "poc": 326.74,
+                "poc": 324.26,
                 "vah": 332.95,
                 "val": 258.46,
-                "vwap": 324.24,
+                "vwap": 324.31,
                 "rsi": 52,
                 "fib": "50%",
                 "reason": "rising EMA stack · at 50% Fib 322.78"
@@ -5309,7 +5320,7 @@
                 "poc": 354.11,
                 "vah": 405.17,
                 "val": 341.05,
-                "vwap": 350.29,
+                "vwap": 350.61,
                 "rsi": 53,
                 "fib": "38.2%",
                 "reason": ""
@@ -5323,11 +5334,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 353.45,
-                "sl": 359.15,
+                "sl": 359.35,
                 "targets": [
-                  345.86,
-                  340.16,
-                  334.47
+                  345.59,
+                  339.69,
+                  333.8
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -5335,13 +5346,13 @@
                   "2026-09-17"
                 ],
                 "rr": 1.33,
-                "poc": 429.88,
-                "vah": 444.8,
-                "val": 366.14,
-                "vwap": 354.35,
-                "rsi": 49,
+                "poc": 353.93,
+                "vah": 423.1,
+                "val": 341.72,
+                "vwap": 354.24,
+                "rsi": 48,
                 "fib": "50%",
-                "reason": "markdown — trend down, no accumulation yet · at 50% Fib 352.67"
+                "reason": "markdown — trend down, no accumulation yet · at 50% Fib 355.15"
               },
               {
                 "tf": "4h",
@@ -5352,11 +5363,11 @@
                 "dist": 0,
                 "accu": 0,
                 "entry": 353.45,
-                "sl": 360.98,
+                "sl": 360.57,
                 "targets": [
-                  343.41,
-                  335.88,
-                  328.35
+                  343.96,
+                  336.85,
+                  329.73
                 ],
                 "etaDates": [
                   "2026-09-15",
@@ -5364,13 +5375,13 @@
                   "2026-09-18"
                 ],
                 "rr": 1.33,
-                "poc": 426.26,
-                "vah": 467.15,
+                "poc": 429.53,
+                "vah": 463.88,
                 "val": 375.55,
-                "vwap": 359.21,
-                "rsi": 46,
+                "vwap": 359.13,
+                "rsi": 45,
                 "fib": "61.8%",
-                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 352.99"
+                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 352.9"
               },
               {
                 "tf": "1D",
@@ -5468,12 +5479,12 @@
           "kind": "Commodity",
           "direction": "BUY",
           "dirTone": "up",
-          "spot": 4348.39,
+          "spot": 4348.36,
           "lot": null,
           "grade": "B",
           "optionPlay": "Buy ATM Call / long futures",
-          "reason": "Vedic daily bias +57 (BUY / TEJI). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +57 (BUY / TEJI). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
+          "reason": "Vedic daily bias +33 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — GOLD (Commodity) BUY\nVedic daily bias +33 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #gold #options",
           "rank": 90
         },
         {
@@ -5481,14 +5492,14 @@
           "underlying": "SILVER",
           "name": "Silver",
           "kind": "Commodity",
-          "direction": "RANGE",
-          "dirTone": "flat",
+          "direction": "BUY",
+          "dirTone": "up",
           "spot": null,
           "lot": null,
           "grade": "B",
-          "optionPlay": "Range — sell strangle",
-          "reason": "Vedic daily bias +11 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.",
-          "social": "📊 F&O — SILVER (Commodity) RANGE\nVedic daily bias +11 (RANGE / NEUTRAL). Tradition — pair with MCX structure + volume.\n👉 Range — sell strangle\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
+          "optionPlay": "Buy ATM Call / long futures",
+          "reason": "Vedic daily bias +31 (BUY ON DIP). Tradition — pair with MCX structure + volume.",
+          "social": "📊 F&O — SILVER (Commodity) BUY\nVedic daily bias +31 (BUY ON DIP). Tradition — pair with MCX structure + volume.\n👉 Buy ATM Call / long futures\n📌 Educational only, not advice. Not SEBI-registered. #fno #silver #options",
           "rank": 90
         },
         {
@@ -5500,8 +5511,8 @@
           "dirTone": "up",
           "spot": 3060,
           "lot": 309,
-          "grade": "A+",
-          "confidence": 100,
+          "grade": "A++",
+          "confidence": 95,
           "delivery": null,
           "entry": 3060,
           "sl": 2995.09,
@@ -5510,28 +5521,28 @@
             {
               "price": 3109.14,
               "pct": 1.6,
-              "by": "~3h"
+              "by": "~3h",
+              "days": 3
             },
             {
               "price": 3145.99,
               "pct": 2.8,
-              "by": "~6h"
+              "by": "~6h",
+              "days": 6
             },
             {
               "price": 3182.84,
               "pct": 4,
-              "by": "~10h"
+              "by": "~10h",
+              "days": 10
             }
           ],
           "rr": 0.76,
           "optionPlay": "Buy 3100 CE (ATM) or 3000 CE (ITM) — near expiry; or long futures",
           "futures": "1 lot = 309 sh ≈ ₹9,45,540 notional",
-          "reason": "Squeeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below)",
-          "changePct": 0,
-          "setupType": "Squeeze breakout",
-          "rsi": 57.3,
-          "social": "📊 F&O — ADANIENT (Stock) BUY\nSqueeze breakout: Volatility squeeze — coiled for a move; Hugging 20-day high (2.7% below)\n👉 Buy 3100 CE (ATM) or 3000 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
-          "rank": 60
+          "reason": "Accumulation (vol 67/100): Up/down volume 4.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat",
+          "social": "📊 F&O — ADANIENT (Stock) BUY\nAccumulation (vol 67/100): Up/down volume 4.2× — accumulation pressure; Volume dries up on dips, expands on rallies (strong hands holding); Stealth accumulation — volume rising while price still flat\n👉 Buy 3100 CE (ATM) or 3000 CE (ITM) — near expiry; or long futures · 1 lot = 309 sh\n📌 Educational only, not advice. Not SEBI-registered. #fno #adanient #options",
+          "rank": 82
         },
         {
           "generator": "fno",
@@ -14551,7 +14562,7 @@
       "id": "vedic_astro",
       "label": "Vedic Astro · Nifty & Gold",
       "color": "#9333EA",
-      "desc": "Dwitiya · Shukla (waxing) · Shukla yoga · Karana Balava · Moon Virgo · Hasta (Pada 1) · lord Moon. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
+      "desc": "Tritiya · Shukla (waxing) · Brahma yoga · Karana Taitila · Moon Virgo · Chitra (Pada 1) · lord Mars. Per-asset bias from Nava Tara + significators (tradition — no proven edge).",
       "count": 11,
       "signals": [
         {
@@ -14560,107 +14571,91 @@
           "isAssetBias": true,
           "symbol": "NIFTY",
           "name": "Nifty 50",
-          "score": 34,
+          "score": 30,
           "label": "BUY ON DIP",
           "biasTone": "up",
-          "navaTara": "Param Mitra (pos 9)",
+          "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
             {
-              "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "2:38 PM–3:40 PM",
+              "time": "11:33 AM–12:35 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "3:39 PM–4:41 PM",
               "planet": "Mercury",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "4:29 AM–5:27 AM",
+              "time": "1:33 AM–2:32 AM",
               "planet": "Jupiter",
               "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
+              "planet": "Mercury",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
           "bullCount": 7,
-          "bearCount": 8,
+          "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Virgo"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty 50 — Vedic daily bias +34 (BUY ON DIP)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 11:34 AM–12:35 PM Mercury, 2:38 PM–3:40 PM Jupiter, 6:45 PM–7:43 PM Mercury\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
+          "social": "🔮 Nifty 50 — Vedic daily bias +30 (BUY ON DIP)\nBullish windows (IST): 8:29 AM–9:30 AM Mercury, 11:33 AM–12:35 PM Jupiter, 3:39 PM–4:41 PM Mercury, 6:44 PM–7:42 PM Jupiter\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#nifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14668,121 +14663,117 @@
           "isAssetBias": true,
           "symbol": "BANKNIFTY",
           "name": "Bank Nifty",
-          "score": 5,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Vadha (pos 7)",
-          "navaBad": true,
+          "score": 69,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Mitra (pos 8)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
-              "planet": "Mercury",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "3:39 PM–4:41 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:32 AM",
+              "planet": "Jupiter",
+              "prime": true,
               "session": "night"
             },
             {
               "time": "4:29 AM–5:27 AM",
-              "planet": "Jupiter",
-              "prime": true,
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
+              "planet": "Mercury",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
-          "bullCount": 9,
-          "bearCount": 8,
+          "bullCount": 11,
+          "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Mitra (pos 8) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Virgo",
             "Venus strong in Libra"
           ],
-          "reasonsBear": [
-            "Nava Tara Vadha (pos 7) from natal Vishakha — danger/avoid"
-          ],
-          "social": "🔮 Bank Nifty — Vedic daily bias +5 (RANGE / NEUTRAL)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 11:34 AM–12:35 PM Mercury, 2:38 PM–3:40 PM Jupiter, 5:43 PM–6:45 PM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Bank Nifty — Vedic daily bias +69 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 8:29 AM–9:30 AM Mercury, 11:33 AM–12:35 PM Jupiter, 2:38 PM–3:39 PM Venus\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#banknifty #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14790,107 +14781,92 @@
           "isAssetBias": true,
           "symbol": "SENSEX",
           "name": "Sensex",
-          "score": 34,
-          "label": "BUY ON DIP",
+          "score": 46,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Mitra (pos 8)",
+          "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
           "bullWindows": [
             {
-              "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "2:38 PM–3:40 PM",
+              "time": "11:33 AM–12:35 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "3:39 PM–4:41 PM",
               "planet": "Mercury",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "4:29 AM–5:27 AM",
+              "time": "1:33 AM–2:32 AM",
               "planet": "Jupiter",
               "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
+              "planet": "Mercury",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
           "bullCount": 7,
-          "bearCount": 8,
+          "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Mitra (pos 8) — supportive star",
+            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Virgo"
           ],
           "reasonsBear": [],
-          "social": "🔮 Sensex — Vedic daily bias +34 (BUY ON DIP)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 11:34 AM–12:35 PM Mercury, 2:38 PM–3:40 PM Jupiter, 6:45 PM–7:43 PM Mercury\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
+          "social": "🔮 Sensex — Vedic daily bias +46 (BUY / TEJI)\nBullish windows (IST): 8:29 AM–9:30 AM Mercury, 11:33 AM–12:35 PM Jupiter, 3:39 PM–4:41 PM Mercury, 6:44 PM–7:42 PM Jupiter\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#sensex #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -14898,132 +14874,130 @@
           "isAssetBias": true,
           "symbol": "GOLD",
           "name": "Gold",
-          "score": 57,
-          "label": "BUY / TEJI",
+          "score": 33,
+          "label": "BUY ON DIP",
           "biasTone": "up",
-          "navaTara": "Sadhaka (pos 6)",
-          "navaBad": false,
+          "navaTara": "Vadha (pos 7)",
+          "navaBad": true,
           "bullWindows": [
             {
+              "time": "6:26 AM–7:27 AM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "day"
+            },
+            {
               "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "12:35 PM–1:37 PM",
-              "planet": "Moon",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "4:41 PM–5:43 PM",
-              "planet": "Sun",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "7:43 PM–8:41 PM",
+              "time": "9:30 AM–10:32 AM",
               "planet": "Moon",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "1:36 PM–2:38 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "11:37 PM–12:35 AM",
+              "time": "8:41 PM–9:39 PM",
               "planet": "Sun",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "2:32 AM–3:30 AM",
+              "time": "11:36 PM–12:35 AM",
               "planet": "Moon",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:32 AM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "3:30 AM–4:29 AM",
+              "planet": "Sun",
               "prime": false,
               "session": "night"
             },
             {
               "time": "4:29 AM–5:27 AM",
-              "planet": "Jupiter",
-              "prime": true,
+              "planet": "Venus",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
-          "bullCount": 11,
-          "bearCount": 8,
+          "bullCount": 13,
+          "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Venus strong in Libra",
             "Sun strong in Leo"
           ],
-          "reasonsBear": [],
-          "social": "🔮 Gold — Vedic daily bias +57 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 12:35 PM–1:37 PM Moon, 2:38 PM–3:40 PM Jupiter, 4:41 PM–5:43 PM Sun\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
+          "reasonsBear": [
+            "Nava Tara Vadha (pos 7) from natal Pushya — danger/avoid"
+          ],
+          "social": "🔮 Gold — Vedic daily bias +33 (BUY ON DIP)\nBullish windows (IST): 6:26 AM–7:27 AM Sun, 7:27 AM–8:29 AM Venus, 9:30 AM–10:32 AM Moon, 11:33 AM–12:35 PM Jupiter\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#gold #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15031,63 +15005,63 @@
           "isAssetBias": true,
           "symbol": "SILVER",
           "name": "Silver",
-          "score": 11,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Janma (pos 1)",
+          "score": 31,
+          "label": "BUY ON DIP",
+          "biasTone": "up",
+          "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
             {
               "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "12:35 PM–1:37 PM",
-              "planet": "Moon",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "7:43 PM–8:41 PM",
+              "time": "9:30 AM–10:32 AM",
               "planet": "Moon",
               "prime": true,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "2:32 AM–3:30 AM",
+              "time": "11:36 PM–12:35 AM",
               "planet": "Moon",
               "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:32 AM",
+              "planet": "Jupiter",
+              "prime": false,
               "session": "night"
             },
             {
               "time": "4:29 AM–5:27 AM",
-              "planet": "Jupiter",
+              "planet": "Venus",
               "prime": false,
               "session": "night"
             }
@@ -15095,58 +15069,54 @@
           "bearWindows": [
             {
               "time": "6:26 AM–7:27 AM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "8:29 AM–9:30 AM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "4:41 PM–5:43 PM",
               "planet": "Sun",
               "session": "day"
             },
             {
-              "time": "8:41 PM–9:40 PM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "10:38 PM–11:37 PM",
+              "time": "12:35 PM–1:36 PM",
+              "planet": "Mars",
+              "session": "day"
+            },
+            {
+              "time": "1:36 PM–2:38 PM",
+              "planet": "Sun",
+              "session": "day"
+            },
+            {
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "11:37 PM–12:35 AM",
+              "time": "8:41 PM–9:39 PM",
               "planet": "Sun",
+              "session": "night"
+            },
+            {
+              "time": "12:35 AM–1:33 AM",
+              "planet": "Saturn",
+              "session": "night"
+            },
+            {
+              "time": "2:32 AM–3:30 AM",
+              "planet": "Mars",
               "session": "night"
             },
             {
               "time": "3:30 AM–4:29 AM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "5:27 AM–6:26 AM",
-              "planet": "Mars",
+              "planet": "Sun",
               "session": "night"
             }
           ],
           "bullCount": 9,
-          "bearCount": 10,
+          "bearCount": 9,
           "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Venus strong in Libra",
             "Jupiter strong in Cancer"
@@ -15154,7 +15124,7 @@
           "reasonsBear": [
             "Sun (bearish karaka) strong in Leo"
           ],
-          "social": "🔮 Silver — Vedic daily bias +11 (RANGE / NEUTRAL)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 12:35 PM–1:37 PM Moon, 2:38 PM–3:40 PM Jupiter, 5:43 PM–6:45 PM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
+          "social": "🔮 Silver — Vedic daily bias +31 (BUY ON DIP)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 9:30 AM–10:32 AM Moon, 11:33 AM–12:35 PM Jupiter, 2:38 PM–3:39 PM Venus\nBearish windows: 6:26 AM–7:27 AM Sun, 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 1:36 PM–2:38 PM Sun\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#silver #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15162,118 +15132,104 @@
           "isAssetBias": true,
           "symbol": "NIFTYFMCG",
           "name": "Nifty FMCG",
-          "score": 26,
-          "label": "BUY ON DIP",
+          "score": 54,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Janma (pos 1)",
+          "navaTara": "Sampat (pos 2)",
           "navaBad": false,
           "bullWindows": [
             {
               "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "12:35 PM–1:37 PM",
-              "planet": "Moon",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "7:43 PM–8:41 PM",
+              "time": "9:30 AM–10:32 AM",
               "planet": "Moon",
               "prime": true,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "2:32 AM–3:30 AM",
+              "time": "11:36 PM–12:35 AM",
               "planet": "Moon",
               "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:32 AM",
+              "planet": "Jupiter",
+              "prime": false,
               "session": "night"
             },
             {
               "time": "4:29 AM–5:27 AM",
-              "planet": "Jupiter",
+              "planet": "Venus",
               "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
           "bullCount": 9,
-          "bearCount": 8,
+          "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Sampat (pos 2) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Venus strong in Libra",
             "Jupiter strong in Cancer"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty FMCG — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 12:35 PM–1:37 PM Moon, 2:38 PM–3:40 PM Jupiter, 5:43 PM–6:45 PM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
+          "social": "🔮 Nifty FMCG — Vedic daily bias +54 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 9:30 AM–10:32 AM Moon, 11:33 AM–12:35 PM Jupiter, 2:38 PM–3:39 PM Venus\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Sampat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfmcg #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15281,122 +15237,117 @@
           "isAssetBias": true,
           "symbol": "NIFTYMETAL",
           "name": "Nifty Metal",
-          "score": -1,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Vipat (pos 3)",
-          "navaBad": true,
+          "score": 47,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Kshema (pos 4)",
+          "navaBad": false,
           "bullWindows": [
             {
-              "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "8:29 AM–9:30 AM",
-              "planet": "Mars",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "4:41 PM–5:43 PM",
+              "time": "6:26 AM–7:27 AM",
               "planet": "Sun",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "12:35 PM–1:36 PM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "1:36 PM–2:38 PM",
+              "planet": "Sun",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "11:37 PM–12:35 AM",
+              "time": "8:41 PM–9:39 PM",
               "planet": "Sun",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "4:29 AM–5:27 AM",
+              "time": "1:33 AM–2:32 AM",
               "planet": "Jupiter",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "3:30 AM–4:29 AM",
+              "planet": "Sun",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "3:39 PM–4:41 PM",
+              "planet": "Mercury",
+              "session": "day"
+            },
+            {
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "session": "night"
             },
             {
-              "time": "8:41 PM–9:40 PM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "5:27 AM–6:26 AM",
               "planet": "Mercury",
-              "session": "night"
-            },
-            {
-              "time": "3:30 AM–4:29 AM",
-              "planet": "Saturn",
               "session": "night"
             }
           ],
           "bullCount": 10,
-          "bearCount": 7,
+          "bearCount": 6,
           "reasonsBull": [
+            "Nava Tara Kshema (pos 4) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Sun strong in Leo"
           ],
           "reasonsBear": [
-            "Nava Tara Vipat (pos 3) from natal Bharani — danger/avoid",
             "Mercury (bearish karaka) strong in Virgo"
           ],
-          "social": "🔮 Nifty Metal — Vedic daily bias -1 (RANGE / NEUTRAL)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 8:29 AM–9:30 AM Mars, 2:38 PM–3:40 PM Jupiter, 3:40 PM–4:41 PM Mars\nBearish windows: 6:26 AM–7:27 AM Saturn, 11:34 AM–12:35 PM Mercury, 1:37 PM–2:38 PM Saturn, 6:45 PM–7:43 PM Mercury\nNava Tara: Vipat. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
+          "social": "🔮 Nifty Metal — Vedic daily bias +47 (BUY / TEJI)\nBullish windows (IST): 6:26 AM–7:27 AM Sun, 11:33 AM–12:35 PM Jupiter, 12:35 PM–1:36 PM Mars, 1:36 PM–2:38 PM Sun\nBearish windows: 8:29 AM–9:30 AM Mercury, 10:32 AM–11:33 AM Saturn, 3:39 PM–4:41 PM Mercury, 10:38 PM–11:36 PM Mercury\nNava Tara: Kshema. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftymetal #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15404,126 +15355,104 @@
           "isAssetBias": true,
           "symbol": "NIFTYPHARMA",
           "name": "Nifty Pharma",
-          "score": 2,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Pratyak (pos 5)",
-          "navaBad": true,
+          "score": 54,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Sadhaka (pos 6)",
+          "navaBad": false,
           "bullWindows": [
             {
-              "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": true,
               "session": "day"
             },
             {
-              "time": "12:35 PM–1:37 PM",
+              "time": "9:30 AM–10:32 AM",
               "planet": "Moon",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "2:38 PM–3:40 PM",
+              "time": "11:33 AM–12:35 PM",
               "planet": "Jupiter",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "3:39 PM–4:41 PM",
               "planet": "Mercury",
               "prime": true,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "7:43 PM–8:41 PM",
-              "planet": "Moon",
-              "prime": false,
-              "session": "night"
-            },
-            {
-              "time": "9:40 PM–10:38 PM",
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "2:32 AM–3:30 AM",
+              "time": "11:36 PM–12:35 AM",
               "planet": "Moon",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "4:29 AM–5:27 AM",
+              "time": "1:33 AM–2:32 AM",
               "planet": "Jupiter",
               "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
+              "planet": "Mercury",
+              "prime": true,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
-          "bullCount": 10,
-          "bearCount": 8,
+          "bullCount": 9,
+          "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Sadhaka (pos 6) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Mercury strong in Virgo",
             "Jupiter strong in Cancer"
           ],
-          "reasonsBear": [
-            "Nava Tara Pratyak (pos 5) from natal Ashlesha — danger/avoid"
-          ],
-          "social": "🔮 Nifty Pharma — Vedic daily bias +2 (RANGE / NEUTRAL)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 11:34 AM–12:35 PM Mercury, 12:35 PM–1:37 PM Moon, 2:38 PM–3:40 PM Jupiter\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Pratyak. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty Pharma — Vedic daily bias +54 (BUY / TEJI)\nBullish windows (IST): 8:29 AM–9:30 AM Mercury, 9:30 AM–10:32 AM Moon, 11:33 AM–12:35 PM Jupiter, 3:39 PM–4:41 PM Mercury\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Sadhaka. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftypharma #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15531,38 +15460,56 @@
           "isAssetBias": true,
           "symbol": "NIFTYIT",
           "name": "Nifty IT",
-          "score": 26,
-          "label": "BUY ON DIP",
+          "score": 50,
+          "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Mitra (pos 8)",
+          "navaTara": "Param Mitra (pos 9)",
           "navaBad": false,
           "bullWindows": [
             {
-              "time": "11:34 AM–12:35 PM",
-              "planet": "Mercury",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
+              "time": "7:27 AM–8:29 AM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": true,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "3:39 PM–4:41 PM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
+              "planet": "Mercury",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "4:29 AM–5:27 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
               "planet": "Mercury",
               "prime": true,
               "session": "night"
@@ -15570,56 +15517,41 @@
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
-          "bullCount": 5,
-          "bearCount": 8,
+          "bullCount": 8,
+          "bearCount": 5,
           "reasonsBull": [
-            "Nava Tara Mitra (pos 8) — supportive star",
+            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Mercury strong in Virgo",
             "Venus strong in Libra"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty IT — Vedic daily bias +26 (BUY ON DIP)\nBullish windows (IST): 11:34 AM–12:35 PM Mercury, 5:43 PM–6:45 PM Venus, 6:45 PM–7:43 PM Mercury, 12:35 AM–1:34 AM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
+          "social": "🔮 Nifty IT — Vedic daily bias +50 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 8:29 AM–9:30 AM Mercury, 2:38 PM–3:39 PM Venus, 3:39 PM–4:41 PM Mercury\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyit #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15630,96 +15562,97 @@
           "score": 58,
           "label": "BUY / TEJI",
           "biasTone": "up",
-          "navaTara": "Param Mitra (pos 9)",
+          "navaTara": "Janma (pos 1)",
           "navaBad": false,
           "bullWindows": [
             {
+              "time": "7:27 AM–8:29 AM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
               "time": "8:29 AM–9:30 AM",
-              "planet": "Mars",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
               "planet": "Mercury",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "3:40 PM–4:41 PM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "prime": true,
               "session": "day"
             },
             {
-              "time": "5:43 PM–6:45 PM",
+              "time": "2:38 PM–3:39 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "3:39 PM–4:41 PM",
               "planet": "Mercury",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "2:32 AM–3:30 AM",
+              "planet": "Mars",
+              "prime": true,
+              "session": "night"
+            },
+            {
+              "time": "4:29 AM–5:27 AM",
+              "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
               "time": "5:27 AM–6:26 AM",
-              "planet": "Mars",
-              "prime": true,
+              "planet": "Mercury",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             }
           ],
-          "bullCount": 9,
-          "bearCount": 4,
+          "bullCount": 11,
+          "bearCount": 2,
           "reasonsBull": [
-            "Nava Tara Param Mitra (pos 9) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Venus strong in Libra",
             "Mercury strong in Virgo"
           ],
           "reasonsBear": [],
-          "social": "🔮 Nifty Auto — Vedic daily bias +58 (BUY / TEJI)\nBullish windows (IST): 8:29 AM–9:30 AM Mars, 11:34 AM–12:35 PM Mercury, 3:40 PM–4:41 PM Mars, 5:43 PM–6:45 PM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 1:37 PM–2:38 PM Saturn, 8:41 PM–9:40 PM Saturn, 3:30 AM–4:29 AM Saturn\nNava Tara: Param Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
+          "social": "🔮 Nifty Auto — Vedic daily bias +58 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 8:29 AM–9:30 AM Mercury, 12:35 PM–1:36 PM Mars, 2:38 PM–3:39 PM Venus\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 AM–1:33 AM Saturn\nNava Tara: Janma. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyauto #vedicastro"
         },
         {
           "generator": "vedic_astro",
@@ -15727,121 +15660,117 @@
           "isAssetBias": true,
           "symbol": "NIFTYFIN",
           "name": "Nifty Financial",
-          "score": 5,
-          "label": "RANGE / NEUTRAL",
-          "biasTone": "flat",
-          "navaTara": "Vadha (pos 7)",
-          "navaBad": true,
+          "score": 69,
+          "label": "BUY / TEJI",
+          "biasTone": "up",
+          "navaTara": "Mitra (pos 8)",
+          "navaBad": false,
           "bullWindows": [
             {
               "time": "7:27 AM–8:29 AM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "11:34 AM–12:35 PM",
-              "planet": "Mercury",
-              "prime": false,
-              "session": "day"
-            },
-            {
-              "time": "2:38 PM–3:40 PM",
-              "planet": "Jupiter",
-              "prime": true,
-              "session": "day"
-            },
-            {
-              "time": "5:43 PM–6:45 PM",
               "planet": "Venus",
               "prime": false,
               "session": "day"
             },
             {
-              "time": "6:45 PM–7:43 PM",
+              "time": "8:29 AM–9:30 AM",
               "planet": "Mercury",
               "prime": false,
-              "session": "night"
+              "session": "day"
             },
             {
-              "time": "9:40 PM–10:38 PM",
+              "time": "11:33 AM–12:35 PM",
+              "planet": "Jupiter",
+              "prime": true,
+              "session": "day"
+            },
+            {
+              "time": "2:38 PM–3:39 PM",
+              "planet": "Venus",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "3:39 PM–4:41 PM",
+              "planet": "Mercury",
+              "prime": false,
+              "session": "day"
+            },
+            {
+              "time": "6:44 PM–7:42 PM",
               "planet": "Jupiter",
               "prime": true,
               "session": "night"
             },
             {
-              "time": "12:35 AM–1:34 AM",
+              "time": "9:39 PM–10:38 PM",
               "planet": "Venus",
               "prime": false,
               "session": "night"
             },
             {
-              "time": "1:34 AM–2:32 AM",
+              "time": "10:38 PM–11:36 PM",
               "planet": "Mercury",
               "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "1:33 AM–2:32 AM",
+              "planet": "Jupiter",
+              "prime": true,
               "session": "night"
             },
             {
               "time": "4:29 AM–5:27 AM",
-              "planet": "Jupiter",
-              "prime": true,
+              "planet": "Venus",
+              "prime": false,
+              "session": "night"
+            },
+            {
+              "time": "5:27 AM–6:26 AM",
+              "planet": "Mercury",
+              "prime": false,
               "session": "night"
             }
           ],
           "bearWindows": [
             {
-              "time": "6:26 AM–7:27 AM",
+              "time": "10:32 AM–11:33 AM",
               "planet": "Saturn",
               "session": "day"
             },
             {
-              "time": "8:29 AM–9:30 AM",
+              "time": "12:35 PM–1:36 PM",
               "planet": "Mars",
               "session": "day"
             },
             {
-              "time": "1:37 PM–2:38 PM",
-              "planet": "Saturn",
-              "session": "day"
-            },
-            {
-              "time": "3:40 PM–4:41 PM",
-              "planet": "Mars",
-              "session": "day"
-            },
-            {
-              "time": "8:41 PM–9:40 PM",
-              "planet": "Saturn",
-              "session": "night"
-            },
-            {
-              "time": "10:38 PM–11:37 PM",
+              "time": "7:42 PM–8:41 PM",
               "planet": "Mars",
               "session": "night"
             },
             {
-              "time": "3:30 AM–4:29 AM",
+              "time": "12:35 AM–1:33 AM",
               "planet": "Saturn",
               "session": "night"
             },
             {
-              "time": "5:27 AM–6:26 AM",
+              "time": "2:32 AM–3:30 AM",
               "planet": "Mars",
               "session": "night"
             }
           ],
-          "bullCount": 9,
-          "bearCount": 8,
+          "bullCount": 11,
+          "bearCount": 5,
           "reasonsBull": [
+            "Nava Tara Mitra (pos 8) — supportive star",
             "Shukla paksha (waxing Moon)",
             "Jupiter strong in Cancer",
             "Mercury strong in Virgo",
             "Venus strong in Libra"
           ],
-          "reasonsBear": [
-            "Nava Tara Vadha (pos 7) from natal Vishakha — danger/avoid"
-          ],
-          "social": "🔮 Nifty Financial — Vedic daily bias +5 (RANGE / NEUTRAL)\nBullish windows (IST): 7:27 AM–8:29 AM Jupiter, 11:34 AM–12:35 PM Mercury, 2:38 PM–3:40 PM Jupiter, 5:43 PM–6:45 PM Venus\nBearish windows: 6:26 AM–7:27 AM Saturn, 8:29 AM–9:30 AM Mars, 1:37 PM–2:38 PM Saturn, 3:40 PM–4:41 PM Mars\nNava Tara: Vadha. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
+          "reasonsBear": [],
+          "social": "🔮 Nifty Financial — Vedic daily bias +69 (BUY / TEJI)\nBullish windows (IST): 7:27 AM–8:29 AM Venus, 8:29 AM–9:30 AM Mercury, 11:33 AM–12:35 PM Jupiter, 2:38 PM–3:39 PM Venus\nBearish windows: 10:32 AM–11:33 AM Saturn, 12:35 PM–1:36 PM Mars, 7:42 PM–8:41 PM Mars, 12:35 AM–1:33 AM Saturn\nNava Tara: Mitra. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered.\n#niftyfin #vedicastro"
         }
       ]
     },
@@ -15849,7 +15778,7 @@
       "id": "astro_timing",
       "label": "Hora & Rahu-Kaal Timing",
       "color": "#DB2777",
-      "desc": "Saturday · ☀ 6:26 AM–6:45 PM · Rahu Kaal 9:30 AM–11:03 AM (avoid fresh entries) · Moon Virgo · Hasta (Pada 1) · lord Moon",
+      "desc": "Sunday · ☀ 6:26 AM–6:44 PM · Rahu Kaal 5:11 PM–6:44 PM (avoid fresh entries) · Moon Virgo · Chitra (Pada 1) · lord Mars",
       "count": 24,
       "signals": [
         {
@@ -15857,312 +15786,312 @@
           "isAstro": true,
           "isHora": true,
           "time": "6:26 AM–7:27 AM",
-          "lord": "Saturn",
+          "lord": "Sun",
           "session": "day",
-          "stance": "SELL / EXIT",
-          "stanceTone": "down",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
           "rahu": false,
-          "note": "Saturn hora — weak for equities",
-          "social": "🕉️ Hora 6:26 AM–7:27 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 6:26 AM–7:27 AM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
           "time": "7:27 AM–8:29 AM",
-          "lord": "Jupiter",
+          "lord": "Venus",
           "session": "day",
-          "stance": "PRIME BUY",
-          "stanceTone": "up",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
           "rahu": false,
-          "note": "Jupiter hora — PRIME window for Nifty/Bank",
-          "social": "🕉️ Hora 7:27 AM–8:29 AM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 7:27 AM–8:29 AM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
           "time": "8:29 AM–9:30 AM",
-          "lord": "Mars",
+          "lord": "Mercury",
           "session": "day",
-          "stance": "SELL / EXIT",
-          "stanceTone": "down",
+          "stance": "BUY",
+          "stanceTone": "up",
           "rahu": false,
-          "note": "Mars hora — volatile/weak for index",
-          "social": "🕉️ Hora 8:29 AM–9:30 AM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 8:29 AM–9:30 AM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
           "time": "9:30 AM–10:32 AM",
-          "lord": "Sun",
-          "session": "day",
-          "stance": "Rahu Kaal — no new trades",
-          "stanceTone": "down",
-          "rahu": true,
-          "note": "Sun hora — energy, confidence",
-          "social": "🕉️ Hora 9:30 AM–10:32 AM IST — Sun (Rahu Kaal — no new trades). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "10:32 AM–11:34 AM",
-          "lord": "Venus",
-          "session": "day",
-          "stance": "Rahu Kaal — no new trades",
-          "stanceTone": "down",
-          "rahu": true,
-          "note": "Venus hora — sugar, autos, silver drift",
-          "social": "🕉️ Hora 10:32 AM–11:34 AM IST — Venus (Rahu Kaal — no new trades). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "11:34 AM–12:35 PM",
-          "lord": "Mercury",
-          "session": "day",
-          "stance": "BUY",
-          "stanceTone": "up",
-          "rahu": false,
-          "note": "Mercury hora — favourable for Nifty/IT",
-          "social": "🕉️ Hora 11:34 AM–12:35 PM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "12:35 PM–1:37 PM",
           "lord": "Moon",
           "session": "day",
           "stance": "NEUTRAL",
           "stanceTone": "flat",
           "rahu": false,
           "note": "Moon hora — sentiment, FMCG, silver",
-          "social": "🕉️ Hora 12:35 PM–1:37 PM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 9:30 AM–10:32 AM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "1:37 PM–2:38 PM",
+          "time": "10:32 AM–11:33 AM",
           "lord": "Saturn",
           "session": "day",
           "stance": "SELL / EXIT",
           "stanceTone": "down",
           "rahu": false,
           "note": "Saturn hora — weak for equities",
-          "social": "🕉️ Hora 1:37 PM–2:38 PM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 10:32 AM–11:33 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "2:38 PM–3:40 PM",
+          "time": "11:33 AM–12:35 PM",
           "lord": "Jupiter",
           "session": "day",
           "stance": "PRIME BUY",
           "stanceTone": "up",
           "rahu": false,
           "note": "Jupiter hora — PRIME window for Nifty/Bank",
-          "social": "🕉️ Hora 2:38 PM–3:40 PM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 11:33 AM–12:35 PM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "3:40 PM–4:41 PM",
+          "time": "12:35 PM–1:36 PM",
           "lord": "Mars",
           "session": "day",
           "stance": "SELL / EXIT",
           "stanceTone": "down",
           "rahu": false,
           "note": "Mars hora — volatile/weak for index",
-          "social": "🕉️ Hora 3:40 PM–4:41 PM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 12:35 PM–1:36 PM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "4:41 PM–5:43 PM",
+          "time": "1:36 PM–2:38 PM",
           "lord": "Sun",
           "session": "day",
           "stance": "NEUTRAL",
           "stanceTone": "flat",
           "rahu": false,
           "note": "Sun hora — energy, confidence",
-          "social": "🕉️ Hora 4:41 PM–5:43 PM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 1:36 PM–2:38 PM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "5:43 PM–6:45 PM",
+          "time": "2:38 PM–3:39 PM",
           "lord": "Venus",
           "session": "day",
           "stance": "NEUTRAL",
           "stanceTone": "flat",
           "rahu": false,
           "note": "Venus hora — sugar, autos, silver drift",
-          "social": "🕉️ Hora 5:43 PM–6:45 PM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 2:38 PM–3:39 PM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "6:45 PM–7:43 PM",
+          "time": "3:39 PM–4:41 PM",
+          "lord": "Mercury",
+          "session": "day",
+          "stance": "BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 3:39 PM–4:41 PM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "4:41 PM–5:42 PM",
+          "lord": "Moon",
+          "session": "day",
+          "stance": "Rahu Kaal — no new trades",
+          "stanceTone": "down",
+          "rahu": true,
+          "note": "Moon hora — sentiment, FMCG, silver",
+          "social": "🕉️ Hora 4:41 PM–5:42 PM IST — Moon (Rahu Kaal — no new trades). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "5:42 PM–6:44 PM",
+          "lord": "Saturn",
+          "session": "day",
+          "stance": "Rahu Kaal — no new trades",
+          "stanceTone": "down",
+          "rahu": true,
+          "note": "Saturn hora — weak for equities",
+          "social": "🕉️ Hora 5:42 PM–6:44 PM IST — Saturn (Rahu Kaal — no new trades). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "6:44 PM–7:42 PM",
+          "lord": "Jupiter",
+          "session": "night",
+          "stance": "PRIME BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Jupiter hora — PRIME window for Nifty/Bank",
+          "social": "🕉️ Hora 6:44 PM–7:42 PM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "7:42 PM–8:41 PM",
+          "lord": "Mars",
+          "session": "night",
+          "stance": "SELL / EXIT",
+          "stanceTone": "down",
+          "rahu": false,
+          "note": "Mars hora — volatile/weak for index",
+          "social": "🕉️ Hora 7:42 PM–8:41 PM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "8:41 PM–9:39 PM",
+          "lord": "Sun",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 8:41 PM–9:39 PM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "9:39 PM–10:38 PM",
+          "lord": "Venus",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 9:39 PM–10:38 PM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "10:38 PM–11:36 PM",
           "lord": "Mercury",
           "session": "night",
           "stance": "BUY",
           "stanceTone": "up",
           "rahu": false,
           "note": "Mercury hora — favourable for Nifty/IT",
-          "social": "🕉️ Hora 6:45 PM–7:43 PM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 10:38 PM–11:36 PM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "7:43 PM–8:41 PM",
+          "time": "11:36 PM–12:35 AM",
           "lord": "Moon",
           "session": "night",
           "stance": "NEUTRAL",
           "stanceTone": "flat",
           "rahu": false,
           "note": "Moon hora — sentiment, FMCG, silver",
-          "social": "🕉️ Hora 7:43 PM–8:41 PM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 11:36 PM–12:35 AM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "8:41 PM–9:40 PM",
+          "time": "12:35 AM–1:33 AM",
           "lord": "Saturn",
           "session": "night",
           "stance": "SELL / EXIT",
           "stanceTone": "down",
           "rahu": false,
           "note": "Saturn hora — weak for equities",
-          "social": "🕉️ Hora 8:41 PM–9:40 PM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 12:35 AM–1:33 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
-          "time": "9:40 PM–10:38 PM",
+          "time": "1:33 AM–2:32 AM",
           "lord": "Jupiter",
           "session": "night",
           "stance": "PRIME BUY",
           "stanceTone": "up",
           "rahu": false,
           "note": "Jupiter hora — PRIME window for Nifty/Bank",
-          "social": "🕉️ Hora 9:40 PM–10:38 PM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "10:38 PM–11:37 PM",
-          "lord": "Mars",
-          "session": "night",
-          "stance": "SELL / EXIT",
-          "stanceTone": "down",
-          "rahu": false,
-          "note": "Mars hora — volatile/weak for index",
-          "social": "🕉️ Hora 10:38 PM–11:37 PM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "11:37 PM–12:35 AM",
-          "lord": "Sun",
-          "session": "night",
-          "stance": "NEUTRAL",
-          "stanceTone": "flat",
-          "rahu": false,
-          "note": "Sun hora — energy, confidence",
-          "social": "🕉️ Hora 11:37 PM–12:35 AM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "12:35 AM–1:34 AM",
-          "lord": "Venus",
-          "session": "night",
-          "stance": "NEUTRAL",
-          "stanceTone": "flat",
-          "rahu": false,
-          "note": "Venus hora — sugar, autos, silver drift",
-          "social": "🕉️ Hora 12:35 AM–1:34 AM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "1:34 AM–2:32 AM",
-          "lord": "Mercury",
-          "session": "night",
-          "stance": "BUY",
-          "stanceTone": "up",
-          "rahu": false,
-          "note": "Mercury hora — favourable for Nifty/IT",
-          "social": "🕉️ Hora 1:34 AM–2:32 AM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 1:33 AM–2:32 AM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         },
         {
           "generator": "astro_timing",
           "isAstro": true,
           "isHora": true,
           "time": "2:32 AM–3:30 AM",
-          "lord": "Moon",
-          "session": "night",
-          "stance": "NEUTRAL",
-          "stanceTone": "flat",
-          "rahu": false,
-          "note": "Moon hora — sentiment, FMCG, silver",
-          "social": "🕉️ Hora 2:32 AM–3:30 AM IST — Moon (NEUTRAL). Moon hora — sentiment, FMCG, silver. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "3:30 AM–4:29 AM",
-          "lord": "Saturn",
-          "session": "night",
-          "stance": "SELL / EXIT",
-          "stanceTone": "down",
-          "rahu": false,
-          "note": "Saturn hora — weak for equities",
-          "social": "🕉️ Hora 3:30 AM–4:29 AM IST — Saturn (SELL / EXIT). Saturn hora — weak for equities. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "4:29 AM–5:27 AM",
-          "lord": "Jupiter",
-          "session": "night",
-          "stance": "PRIME BUY",
-          "stanceTone": "up",
-          "rahu": false,
-          "note": "Jupiter hora — PRIME window for Nifty/Bank",
-          "social": "🕉️ Hora 4:29 AM–5:27 AM IST — Jupiter (PRIME BUY). Jupiter hora — PRIME window for Nifty/Bank. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
-        },
-        {
-          "generator": "astro_timing",
-          "isAstro": true,
-          "isHora": true,
-          "time": "5:27 AM–6:26 AM",
           "lord": "Mars",
           "session": "night",
           "stance": "SELL / EXIT",
           "stanceTone": "down",
           "rahu": false,
           "note": "Mars hora — volatile/weak for index",
-          "social": "🕉️ Hora 5:27 AM–6:26 AM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+          "social": "🕉️ Hora 2:32 AM–3:30 AM IST — Mars (SELL / EXIT). Mars hora — volatile/weak for index. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "3:30 AM–4:29 AM",
+          "lord": "Sun",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Sun hora — energy, confidence",
+          "social": "🕉️ Hora 3:30 AM–4:29 AM IST — Sun (NEUTRAL). Sun hora — energy, confidence. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "4:29 AM–5:27 AM",
+          "lord": "Venus",
+          "session": "night",
+          "stance": "NEUTRAL",
+          "stanceTone": "flat",
+          "rahu": false,
+          "note": "Venus hora — sugar, autos, silver drift",
+          "social": "🕉️ Hora 4:29 AM–5:27 AM IST — Venus (NEUTRAL). Venus hora — sugar, autos, silver drift. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
+        },
+        {
+          "generator": "astro_timing",
+          "isAstro": true,
+          "isHora": true,
+          "time": "5:27 AM–6:26 AM",
+          "lord": "Mercury",
+          "session": "night",
+          "stance": "BUY",
+          "stanceTone": "up",
+          "rahu": false,
+          "note": "Mercury hora — favourable for Nifty/IT",
+          "social": "🕉️ Hora 5:27 AM–6:26 AM IST — Mercury (BUY). Mercury hora — favourable for Nifty/IT. Tradition / educational only — astrology has NO proven market edge. Not advice. Not SEBI-registered."
         }
       ]
     },
@@ -17975,14 +17904,14 @@
           "mtf": {
             "symbol": "S&P 500",
             "spot": 7656.98,
-            "aligned": "SHORT",
-            "net": -4,
+            "aligned": "LEAN SHORT",
+            "net": -3,
             "longs": 0,
-            "shorts": 4,
+            "shorts": 3,
             "phase": "MARKDOWN",
             "phaseCount": {
-              "RANGE": 6,
-              "MARKDOWN": 4
+              "RANGE": 7,
+              "MARKDOWN": 3
             },
             "timeframes": [
               {
@@ -18137,32 +18066,24 @@
               },
               {
                 "tf": "2h",
-                "dir": "SHORT",
-                "phase": "MARKDOWN",
-                "score": -4,
-                "trend": -4,
+                "dir": "NEUTRAL",
+                "phase": "RANGE",
+                "score": -1,
+                "trend": -1,
                 "dist": 0,
                 "accu": 0,
                 "entry": 7656.98,
-                "sl": 7698,
-                "targets": [
-                  7602.29,
-                  7561.27,
-                  7520.26
-                ],
-                "etaDates": [
-                  "2026-09-14",
-                  "2026-09-15",
-                  "2026-09-16"
-                ],
-                "rr": 1.33,
-                "poc": 7672.15,
-                "vah": 7816.7,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
+                "poc": 7747.57,
+                "vah": 7804.13,
                 "val": 7527.6,
-                "vwap": 7679.74,
-                "rsi": 48,
+                "vwap": 7677.22,
+                "rsi": 49,
                 "fib": "61.8%",
-                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 7653.18"
+                "reason": "at 61.8% Fib 7653.18"
               },
               {
                 "tf": "3h",
@@ -18178,7 +18099,7 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 7505.57,
-                "vah": 7686.46,
+                "vah": 7700.93,
                 "val": 7339.15,
                 "vwap": 7677.03,
                 "rsi": 48,
@@ -18199,9 +18120,9 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 7519.51,
-                "vah": 7656.06,
+                "vah": 7672.12,
                 "val": 7334.77,
-                "vwap": 7698.74,
+                "vwap": 7696.28,
                 "rsi": 48,
                 "fib": "61.8%",
                 "reason": "at 61.8% Fib 7670.46"
@@ -18230,7 +18151,7 @@
             ]
           },
           "spot": 7656.98,
-          "aligned": "SHORT",
+          "aligned": "LEAN SHORT",
           "ccy": "$"
         },
         {
@@ -18241,14 +18162,14 @@
           "mtf": {
             "symbol": "NASDAQ 100",
             "spot": 29368.44,
-            "aligned": "SHORT",
-            "net": -5,
+            "aligned": "LEAN SHORT",
+            "net": -3,
             "longs": 1,
-            "shorts": 6,
+            "shorts": 4,
             "phase": "MARKDOWN",
             "phaseCount": {
-              "RANGE": 3,
-              "MARKDOWN": 6,
+              "RANGE": 5,
+              "MARKDOWN": 4,
               "MARKUP": 1
             },
             "timeframes": [
@@ -18412,32 +18333,24 @@
               },
               {
                 "tf": "2h",
-                "dir": "SHORT",
-                "phase": "MARKDOWN",
-                "score": -4,
-                "trend": -4,
+                "dir": "NEUTRAL",
+                "phase": "RANGE",
+                "score": -1,
+                "trend": -1,
                 "dist": 0,
                 "accu": 0,
                 "entry": 29368.44,
-                "sl": 29582.97,
-                "targets": [
-                  29082.4,
-                  28867.87,
-                  28653.34
-                ],
-                "etaDates": [
-                  "2026-09-14",
-                  "2026-09-15",
-                  "2026-09-16"
-                ],
-                "rr": 1.33,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
                 "poc": 29554.74,
                 "vah": 30044.9,
                 "val": 28989.16,
-                "vwap": 29396.59,
-                "rsi": 50,
+                "vwap": 29378.35,
+                "rsi": 51,
                 "fib": "50%",
-                "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 50% Fib 29353.39"
+                "reason": "at 50% Fib 29353.39"
               },
               {
                 "tf": "3h",
@@ -18470,32 +18383,24 @@
               },
               {
                 "tf": "4h",
-                "dir": "SHORT",
-                "phase": "MARKDOWN",
-                "score": -2,
-                "trend": -2,
+                "dir": "NEUTRAL",
+                "phase": "RANGE",
+                "score": 0,
+                "trend": 0,
                 "dist": 0,
                 "accu": 0,
                 "entry": 29368.44,
-                "sl": 29703.23,
-                "targets": [
-                  28922.05,
-                  28587.26,
-                  28252.47
-                ],
-                "etaDates": [
-                  "2026-09-15",
-                  "2026-09-17",
-                  "2026-09-18"
-                ],
-                "rr": 1.33,
+                "sl": null,
+                "targets": null,
+                "etaDates": null,
+                "rr": null,
                 "poc": 29461.58,
-                "vah": 30222.34,
+                "vah": 30311.84,
                 "val": 28879.83,
-                "vwap": 29481.82,
+                "vwap": 29468.79,
                 "rsi": 50,
                 "fib": "61.8%",
-                "reason": "markdown — trend down, no accumulation yet · at 61.8% Fib 29381.91"
+                "reason": "rising EMA stack · at 61.8% Fib 29381.91"
               },
               {
                 "tf": "1D",
@@ -18521,7 +18426,7 @@
             ]
           },
           "spot": 29368.44,
-          "aligned": "SHORT",
+          "aligned": "LEAN SHORT",
           "ccy": "$"
         },
         {
@@ -18705,16 +18610,16 @@
                 "tf": "2h",
                 "dir": "SHORT",
                 "phase": "MARKDOWN",
-                "score": -4,
-                "trend": -4,
+                "score": -3,
+                "trend": -3,
                 "dist": 0,
                 "accu": 0,
                 "entry": 52573.29,
-                "sl": 52906.01,
+                "sl": 52914.05,
                 "targets": [
-                  52129.66,
-                  51796.94,
-                  51464.21
+                  52118.94,
+                  51778.18,
+                  51437.42
                 ],
                 "etaDates": [
                   "2026-09-14",
@@ -18724,8 +18629,8 @@
                 "rr": 1.33,
                 "poc": 53503.45,
                 "vah": 54103.87,
-                "val": 52422.68,
-                "vwap": 53075.47,
+                "val": 52342.63,
+                "vwap": 53072.9,
                 "rsi": 45,
                 "fib": "61.8%",
                 "reason": "markdown — trend down, no accumulation yet · falling EMA stack · at 61.8% Fib 52672.06"
@@ -18744,7 +18649,7 @@
                 "etaDates": null,
                 "rr": null,
                 "poc": 52266.26,
-                "vah": 53535.51,
+                "vah": 53656.4,
                 "val": 51601.41,
                 "vwap": 53151.68,
                 "rsi": 43,
@@ -18767,7 +18672,7 @@
                 "poc": 52338.93,
                 "vah": 54306.98,
                 "val": 51099.78,
-                "vwap": 53288.03,
+                "vwap": 53268.76,
                 "rsi": 43,
                 "fib": "78.6%",
                 "reason": "falling EMA stack · at 78.6% Fib 52409.21"
