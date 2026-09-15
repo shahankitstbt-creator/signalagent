@@ -158,6 +158,11 @@ function hedgeSpread(o) {
 function sizeTrade(sig, fnoLots = {}) {
   const entry = sig.entry, sl = sig.sl
   if (!entry || !sl) return null
+  // ── CONVICTION-BASED SIZING (user: "when the setup is there, take HIGH quantity") — scale the position
+  // with how strong the setup is. A top-conviction leader gets ~1.6× the base size; a marginal one ~0.7×.
+  // Applied to CASH (delivery, real stop — safe to size up); F&O options stay modest (never amplify −100% bets).
+  const conf = sig.confidence ?? ({ 'A++': 92, 'A+': 84, 'A': 74, 'B': 62, 'C': 50 }[sig.grade] ?? 60)
+  const convMult = conf >= 85 ? 1.6 : conf >= 78 ? 1.3 : conf >= 70 ? 1.0 : conf >= 62 ? 0.8 : 0.6
   // COMMODITY (Gold/Crude/Silver) → F&O sleeve, price-move P&L (unleveraged paper model; ₹-budget
   // sized so P&L is % move × budget — currency-independent and can't blow up like an option).
   if (sig.commodity) {
@@ -196,7 +201,9 @@ function sizeTrade(sig, fnoLots = {}) {
   }
   if (short) return null          // a short that has no option path can't be a cash-delivery LONG — skip it
   if (entry <= sl) return null    // long cash guard
-  const riskAmt = CAP_CASH * RISK_PCT / 100, maxDeploy = CAP_CASH * MAX_DEPLOY_PCT / 100, riskPerShare = entry - sl
+  // CASH delivery, CONVICTION-SIZED: high-conviction leaders deploy MORE (up to ~1.6× base ≈ ₹1.6L), marginal
+  // setups less — concentrate capital on the best. Both risk-per-trade AND max-deploy scale with conviction.
+  const riskAmt = CAP_CASH * RISK_PCT / 100 * convMult, maxDeploy = CAP_CASH * MAX_DEPLOY_PCT / 100 * convMult, riskPerShare = entry - sl
   let qty = Math.floor(riskAmt / riskPerShare)
   if (qty * entry > maxDeploy) qty = Math.floor(maxDeploy / entry)
   if (qty < 1) return null
@@ -696,6 +703,10 @@ export function syncTradeBook(ledger, closedNow, todayISO, nowISO = new Date().t
     if (!isShort && marketBias === 'bearish' && leveraged) continue
     // HARD CAP on concurrent F&O OPTION positions — stop the over-trading that amplified the bleed.
     if (leveraged && !s.commodity && Object.values(b.open).filter(p => p.sleeve === 'FO' && p.kind === 'OPT').length >= FO_MAX_OPEN) continue
+    // F&O OPTION CONVICTION FLOOR — options bled −₹242k over 59 trades (41% win) by CHURNING marginal setups.
+    // Take an option ONLY when the setup is genuinely strong (conf ≥ 74): fewer, higher-conviction, bigger.
+    // (This is exactly "when the setup is there, take it" — and skip the rest instead of churning losers.)
+    if (leveraged && !s.commodity && conf < 74) continue
     if (openSyms.has(sym)) continue                                     // already holding this stock
     if (inCooldown(sym)) continue                                       // recently stopped out → cooldown (don't repeat)
     const size = sizeTrade(s, fnoLots)
