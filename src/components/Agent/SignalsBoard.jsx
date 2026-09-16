@@ -539,10 +539,6 @@ export default function SignalsBoard() {
               className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#16C784,#0E7F55)' }}>
               🌱 <span className="hidden lg:inline">Screener</span>
             </a>
-            <a href="/?view=chart" target="_blank" rel="noopener" title="Full chart engine — real-time*, drawing tools, auto-Harmonic/Fib, watchlist (opens in a new window)"
-              className="mono text-[11px] px-3 py-1.5 rounded-lg text-white font-bold card-hover flex items-center gap-1.5" style={{ background: 'linear-gradient(90deg,#62a2ee,#3B6BFF)' }}>
-              📈 <span className="hidden lg:inline">Chart</span>
-            </a>
             <span className="hdiv hidden sm:block" />
             <button onClick={load} className="ibtn" title="Refresh board">⟳</button>
             <button onClick={scanNow} disabled={scanning} className="ibtn" title="Run a fresh scan now">{scanning ? '⏳' : '🔄'}</button>
