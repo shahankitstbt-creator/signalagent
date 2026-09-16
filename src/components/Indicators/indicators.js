@@ -11,6 +11,7 @@ import { vpIndicator } from './VolumeProfile'
 import { liquidityIndicator } from './LiquidityEngine'
 import { fvgIndicator } from './ImbalanceFVG'
 import { MORE } from './moreIndicators'
+import { AUTO } from './autoPatterns'
 
 const line = (data, color, lineWidth = 1, key = 'l', lineStyle = 0) => ({ key, kind: 'line', color, lineWidth, lineStyle, data })
 const xy = (bars, vals) => bars.map((b, i) => vals[i] == null ? null : ({ time: b.time, value: vals[i] })).filter(Boolean)
@@ -168,6 +169,7 @@ export const INDICATORS = {
 
   // ── Extended built-ins ──
   ...MORE,
+  ...AUTO,
 
   // ── Institutional engines (semantic colors; periods/tolerances configurable) ──
   vp: vpIndicator,
