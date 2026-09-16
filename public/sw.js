@@ -1,6 +1,6 @@
 // ProTrader PWA service worker — NETWORK-FIRST (so new deploys never get stuck on a
 // stale cached shell). Only immutable hashed /assets/* are cache-first. v2.
-const CACHE = 'protrader-v2'
+const CACHE = 'protrader-v3'
 
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', e => {
