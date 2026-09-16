@@ -548,7 +548,6 @@ export default function SignalsBoard() {
             <button onClick={() => { const t = toggleTheme(); setTheme(t); toast(t === 'dark' ? '🌙 Dark theme on' : '☀️ Light theme on') }} className="ibtn" title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}>{theme === 'dark' ? '☀️' : '🌙'}</button>
             <span className="hdiv hidden sm:block" />
             <button onClick={() => setView('agent')} className="ibtn" title="Content agent">📣</button>
-            <button onClick={() => setView('chart')} className="ibtn" title="Charts">📈</button>
           </div>
         </div>
 
