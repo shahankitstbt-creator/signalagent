@@ -1,5 +1,196 @@
 {
-  "live": {},
+  "live": {
+    "NIFTY": {
+      "spot": 22421.95,
+      "maxPain": 22500,
+      "callWall": 22700,
+      "putWall": 22300,
+      "gammaFlip": 22750,
+      "regime": "NEG GAMMA",
+      "pcr": 0.93,
+      "atm": 22400,
+      "expiry": "06OCT2026",
+      "dExp": 4,
+      "isExpiry": false,
+      "distPct": 0.35,
+      "casRegime": "VOLATILE",
+      "expectedClose": 22556,
+      "expectedMovePct": 0.6,
+      "band": 112,
+      "magnitude": "normal",
+      "direction": "UP",
+      "confidence": 53,
+      "pinStrength": 33,
+      "gammaMag": 29,
+      "flow": {
+        "callChg": -35159085,
+        "putChg": -45878610,
+        "bias": -0.065,
+        "label": "call covering (squeeze ↑) + put covering (support ↓)",
+        "dir": "down"
+      },
+      "drivers": [
+        {
+          "dir": "down",
+          "w": 1,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -35159085 · ΔPE -45878610)"
+        },
+        {
+          "dir": "up",
+          "w": 0.87,
+          "text": "Max-pain pin 22500 (+0.35% vs spot) · pin strength 33/100"
+        },
+        {
+          "dir": "down",
+          "w": 0.29,
+          "text": "NEG GAMMA (flip 22750) · dealer pressure 29/100 — AMPLIFIES the close"
+        }
+      ],
+      "mechanics": "Spot 22421.95 is BELOW the gamma-flip 22750 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+      "why": [
+        "Spot 22421.95 is BELOW the gamma-flip 22750 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -35159085 · ΔPE -45878610)",
+        "▲ Max-pain pin 22500 (+0.35% vs spot) · pin strength 33/100",
+        "▼ NEG GAMMA (flip 22750) · dealer pressure 29/100 — AMPLIFIES the close"
+      ],
+      "magnets": [
+        {
+          "k": 22700,
+          "ce": 9669010,
+          "pe": 2634970
+        },
+        {
+          "k": 22500,
+          "ce": 6886425,
+          "pe": 4915755
+        },
+        {
+          "k": 22300,
+          "ce": 3193580,
+          "pe": 8171540
+        },
+        {
+          "k": 22600,
+          "ce": 6089395,
+          "pe": 2513160
+        },
+        {
+          "k": 22400,
+          "ce": 3563820,
+          "pe": 4235660
+        },
+        {
+          "k": 22200,
+          "ce": 841035,
+          "pe": 6505330
+        }
+      ],
+      "tilt": 0.07,
+      "window": "15:15–15:30 IST",
+      "lean": "VOLATILE",
+      "bias": "up",
+      "predictedClose": 22556,
+      "footprintScore": 0.1,
+      "target": 22556,
+      "dirWord": "BULLISH",
+      "instBias": null
+    },
+    "BANKNIFTY": {
+      "spot": 54450.75,
+      "maxPain": 54800,
+      "callWall": 55000,
+      "putWall": 55000,
+      "gammaFlip": 54500,
+      "regime": "NEG GAMMA",
+      "pcr": 1.27,
+      "atm": 54500,
+      "expiry": "27OCT2026",
+      "dExp": 25,
+      "isExpiry": false,
+      "distPct": 0.64,
+      "casRegime": "VOLATILE",
+      "expectedClose": 54777,
+      "expectedMovePct": 0.6,
+      "band": 272,
+      "magnitude": "normal",
+      "direction": "UP",
+      "confidence": 53,
+      "pinStrength": 22,
+      "gammaMag": 7,
+      "flow": {
+        "callChg": -2137260,
+        "putChg": -2429250,
+        "bias": -0.033,
+        "label": "call covering (squeeze ↑) + put covering (support ↓)",
+        "dir": "down"
+      },
+      "drivers": [
+        {
+          "dir": "up",
+          "w": 1,
+          "text": "Max-pain pin 54800 (+0.64% vs spot) · pin strength 22/100"
+        },
+        {
+          "dir": "down",
+          "w": 0.66,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2137260 · ΔPE -2429250)"
+        },
+        {
+          "dir": "down",
+          "w": 0.07,
+          "text": "NEG GAMMA (flip 54500) · dealer pressure 7/100 — AMPLIFIES the close"
+        }
+      ],
+      "mechanics": "Spot 54450.75 is BELOW the gamma-flip 54500 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+      "why": [
+        "Spot 54450.75 is BELOW the gamma-flip 54500 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+        "▲ Max-pain pin 54800 (+0.64% vs spot) · pin strength 22/100",
+        "▼ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2137260 · ΔPE -2429250)",
+        "▼ NEG GAMMA (flip 54500) · dealer pressure 7/100 — AMPLIFIES the close"
+      ],
+      "magnets": [
+        {
+          "k": 55000,
+          "ce": 705330,
+          "pe": 740280
+        },
+        {
+          "k": 54000,
+          "ce": 214290,
+          "pe": 586530
+        },
+        {
+          "k": 54500,
+          "ce": 360840,
+          "pe": 425610
+        },
+        {
+          "k": 54800,
+          "ce": 134820,
+          "pe": 99450
+        },
+        {
+          "k": 54700,
+          "ce": 83880,
+          "pe": 105840
+        },
+        {
+          "k": 54200,
+          "ce": 74370,
+          "pe": 113220
+        }
+      ],
+      "tilt": 0.2,
+      "window": "15:15–15:30 IST",
+      "lean": "VOLATILE",
+      "bias": "up",
+      "predictedClose": 54777,
+      "footprintScore": 0.2,
+      "target": 54777,
+      "dirWord": "BULLISH",
+      "instBias": null
+    }
+  },
   "history": [
     {
       "date": "2026-08-31",
@@ -991,26 +1182,26 @@
   ],
   "forecast": [
     {
-      "date": "2026-10-02",
+      "date": "2026-10-05",
       "dayN": 1,
       "isExpiry": false,
       "NIFTY": {
-        "exp": 22422,
-        "low": 22243,
-        "high": 22601,
-        "band": 179,
-        "bandPct": 0.8,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 22556,
+        "low": 22444,
+        "high": 22668,
+        "band": 112,
+        "bandPct": 0.5,
+        "conf": 53,
+        "kind": "live footprint"
       },
       "BANKNIFTY": {
-        "exp": 54451,
-        "low": 53906,
-        "high": 54996,
-        "band": 545,
-        "bandPct": 1,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 54777,
+        "low": 54505,
+        "high": 55049,
+        "band": 272,
+        "bandPct": 0.5,
+        "conf": 53,
+        "kind": "live footprint"
       },
       "SENSEX": {
         "exp": 71910,
@@ -1023,26 +1214,26 @@
       }
     },
     {
-      "date": "2026-10-05",
+      "date": "2026-10-06",
       "dayN": 2,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
-        "exp": 22422,
-        "low": 22168,
-        "high": 22676,
-        "band": 254,
-        "bandPct": 1.1,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 22500,
+        "low": 22365,
+        "high": 22635,
+        "band": 135,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "BANKNIFTY": {
-        "exp": 54451,
-        "low": 53681,
-        "high": 55221,
-        "band": 770,
-        "bandPct": 1.4,
-        "conf": 47,
-        "kind": "uncertainty cone"
+        "exp": 54800,
+        "low": 54473,
+        "high": 55127,
+        "band": 327,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "SENSEX": {
         "exp": 71910,
@@ -1055,9 +1246,9 @@
       }
     },
     {
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "dayN": 3,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 22111,
@@ -1087,26 +1278,26 @@
       }
     },
     {
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "dayN": 4,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
-        "exp": 22422,
-        "low": 22063,
-        "high": 22781,
-        "band": 359,
-        "bandPct": 1.6,
-        "conf": 46,
-        "kind": "uncertainty cone"
+        "exp": 22500,
+        "low": 22365,
+        "high": 22635,
+        "band": 135,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "BANKNIFTY": {
-        "exp": 54451,
-        "low": 53362,
-        "high": 55540,
-        "band": 1089,
-        "bandPct": 2,
-        "conf": 46,
-        "kind": "uncertainty cone"
+        "exp": 54800,
+        "low": 54473,
+        "high": 55127,
+        "band": 327,
+        "bandPct": 0.6,
+        "conf": 52,
+        "kind": "expiry pin"
       },
       "SENSEX": {
         "exp": 71910,
@@ -1119,9 +1310,9 @@
       }
     },
     {
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "dayN": 5,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 22021,
@@ -1151,7 +1342,7 @@
       }
     },
     {
-      "date": "2026-10-09",
+      "date": "2026-10-12",
       "dayN": 6,
       "isExpiry": false,
       "NIFTY": {
@@ -1183,9 +1374,9 @@
       }
     },
     {
-      "date": "2026-10-12",
+      "date": "2026-10-13",
       "dayN": 7,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21947,
@@ -1215,9 +1406,9 @@
       }
     },
     {
-      "date": "2026-10-13",
+      "date": "2026-10-14",
       "dayN": 8,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21915,
@@ -1247,9 +1438,9 @@
       }
     },
     {
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "dayN": 9,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21884,
@@ -1279,9 +1470,9 @@
       }
     },
     {
-      "date": "2026-10-15",
+      "date": "2026-10-16",
       "dayN": 10,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21855,
@@ -1311,7 +1502,7 @@
       }
     },
     {
-      "date": "2026-10-16",
+      "date": "2026-10-19",
       "dayN": 11,
       "isExpiry": false,
       "NIFTY": {
@@ -1343,9 +1534,9 @@
       }
     },
     {
-      "date": "2026-10-19",
+      "date": "2026-10-20",
       "dayN": 12,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21801,
@@ -1375,9 +1566,9 @@
       }
     },
     {
-      "date": "2026-10-20",
+      "date": "2026-10-21",
       "dayN": 13,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21775,
@@ -1407,9 +1598,9 @@
       }
     },
     {
-      "date": "2026-10-21",
+      "date": "2026-10-22",
       "dayN": 14,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21751,
@@ -1439,9 +1630,9 @@
       }
     },
     {
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "dayN": 15,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21727,
@@ -1471,7 +1662,7 @@
       }
     },
     {
-      "date": "2026-10-23",
+      "date": "2026-10-26",
       "dayN": 16,
       "isExpiry": false,
       "NIFTY": {
@@ -1503,9 +1694,9 @@
       }
     },
     {
-      "date": "2026-10-26",
+      "date": "2026-10-27",
       "dayN": 17,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21682,
@@ -1535,9 +1726,9 @@
       }
     },
     {
-      "date": "2026-10-27",
+      "date": "2026-10-28",
       "dayN": 18,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21661,
@@ -1567,9 +1758,9 @@
       }
     },
     {
-      "date": "2026-10-28",
+      "date": "2026-10-29",
       "dayN": 19,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21640,
@@ -1599,9 +1790,9 @@
       }
     },
     {
-      "date": "2026-10-29",
+      "date": "2026-10-30",
       "dayN": 20,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21620,
@@ -1631,7 +1822,7 @@
       }
     },
     {
-      "date": "2026-10-30",
+      "date": "2026-11-02",
       "dayN": 21,
       "isExpiry": false,
       "NIFTY": {
@@ -1663,9 +1854,9 @@
       }
     },
     {
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "dayN": 22,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21581,
@@ -1695,9 +1886,9 @@
       }
     },
     {
-      "date": "2026-11-03",
+      "date": "2026-11-04",
       "dayN": 23,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21562,
@@ -1727,9 +1918,9 @@
       }
     },
     {
-      "date": "2026-11-04",
+      "date": "2026-11-05",
       "dayN": 24,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21543,
@@ -1759,9 +1950,9 @@
       }
     },
     {
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "dayN": 25,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21525,
@@ -1791,7 +1982,7 @@
       }
     },
     {
-      "date": "2026-11-06",
+      "date": "2026-11-09",
       "dayN": 26,
       "isExpiry": false,
       "NIFTY": {
@@ -1823,9 +2014,9 @@
       }
     },
     {
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "dayN": 27,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21490,
@@ -1855,9 +2046,9 @@
       }
     },
     {
-      "date": "2026-11-10",
+      "date": "2026-11-11",
       "dayN": 28,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21473,
@@ -1887,9 +2078,9 @@
       }
     },
     {
-      "date": "2026-11-11",
+      "date": "2026-11-12",
       "dayN": 29,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21456,
@@ -1919,9 +2110,9 @@
       }
     },
     {
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "dayN": 30,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21440,
@@ -1951,7 +2142,7 @@
       }
     },
     {
-      "date": "2026-11-13",
+      "date": "2026-11-16",
       "dayN": 31,
       "isExpiry": false,
       "NIFTY": {
@@ -1983,9 +2174,9 @@
       }
     },
     {
-      "date": "2026-11-16",
+      "date": "2026-11-17",
       "dayN": 32,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21407,
@@ -2015,9 +2206,9 @@
       }
     },
     {
-      "date": "2026-11-17",
+      "date": "2026-11-18",
       "dayN": 33,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21392,
@@ -2047,9 +2238,9 @@
       }
     },
     {
-      "date": "2026-11-18",
+      "date": "2026-11-19",
       "dayN": 34,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21376,
@@ -2079,9 +2270,9 @@
       }
     },
     {
-      "date": "2026-11-19",
+      "date": "2026-11-20",
       "dayN": 35,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21361,
@@ -2111,7 +2302,7 @@
       }
     },
     {
-      "date": "2026-11-20",
+      "date": "2026-11-23",
       "dayN": 36,
       "isExpiry": false,
       "NIFTY": {
@@ -2143,9 +2334,9 @@
       }
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-24",
       "dayN": 37,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21331,
@@ -2175,9 +2366,9 @@
       }
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-25",
       "dayN": 38,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21316,
@@ -2207,9 +2398,9 @@
       }
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "dayN": 39,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21302,
@@ -2239,9 +2430,9 @@
       }
     },
     {
-      "date": "2026-11-26",
+      "date": "2026-11-27",
       "dayN": 40,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21288,
@@ -2271,7 +2462,7 @@
       }
     },
     {
-      "date": "2026-11-27",
+      "date": "2026-11-30",
       "dayN": 41,
       "isExpiry": false,
       "NIFTY": {
@@ -2303,9 +2494,9 @@
       }
     },
     {
-      "date": "2026-11-30",
+      "date": "2026-12-01",
       "dayN": 42,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21260,
@@ -2335,9 +2526,9 @@
       }
     },
     {
-      "date": "2026-12-01",
+      "date": "2026-12-02",
       "dayN": 43,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21246,
@@ -2367,9 +2558,9 @@
       }
     },
     {
-      "date": "2026-12-02",
+      "date": "2026-12-03",
       "dayN": 44,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21232,
@@ -2399,9 +2590,9 @@
       }
     },
     {
-      "date": "2026-12-03",
+      "date": "2026-12-04",
       "dayN": 45,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21219,
@@ -2431,7 +2622,7 @@
       }
     },
     {
-      "date": "2026-12-04",
+      "date": "2026-12-07",
       "dayN": 46,
       "isExpiry": false,
       "NIFTY": {
@@ -2463,9 +2654,9 @@
       }
     },
     {
-      "date": "2026-12-07",
+      "date": "2026-12-08",
       "dayN": 47,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21192,
@@ -2495,9 +2686,9 @@
       }
     },
     {
-      "date": "2026-12-08",
+      "date": "2026-12-09",
       "dayN": 48,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21179,
@@ -2527,9 +2718,9 @@
       }
     },
     {
-      "date": "2026-12-09",
+      "date": "2026-12-10",
       "dayN": 49,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21166,
@@ -2559,9 +2750,9 @@
       }
     },
     {
-      "date": "2026-12-10",
+      "date": "2026-12-11",
       "dayN": 50,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21154,
@@ -2591,7 +2782,7 @@
       }
     },
     {
-      "date": "2026-12-11",
+      "date": "2026-12-14",
       "dayN": 51,
       "isExpiry": false,
       "NIFTY": {
@@ -2623,9 +2814,9 @@
       }
     },
     {
-      "date": "2026-12-14",
+      "date": "2026-12-15",
       "dayN": 52,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21129,
@@ -2655,9 +2846,9 @@
       }
     },
     {
-      "date": "2026-12-15",
+      "date": "2026-12-16",
       "dayN": 53,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21116,
@@ -2687,9 +2878,9 @@
       }
     },
     {
-      "date": "2026-12-16",
+      "date": "2026-12-17",
       "dayN": 54,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21104,
@@ -2719,9 +2910,9 @@
       }
     },
     {
-      "date": "2026-12-17",
+      "date": "2026-12-18",
       "dayN": 55,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21092,
@@ -2751,7 +2942,7 @@
       }
     },
     {
-      "date": "2026-12-18",
+      "date": "2026-12-21",
       "dayN": 56,
       "isExpiry": false,
       "NIFTY": {
@@ -2783,9 +2974,9 @@
       }
     },
     {
-      "date": "2026-12-21",
+      "date": "2026-12-22",
       "dayN": 57,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21068,
@@ -2815,9 +3006,9 @@
       }
     },
     {
-      "date": "2026-12-22",
+      "date": "2026-12-23",
       "dayN": 58,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21056,
@@ -2847,9 +3038,9 @@
       }
     },
     {
-      "date": "2026-12-23",
+      "date": "2026-12-24",
       "dayN": 59,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21044,
@@ -2879,9 +3070,9 @@
       }
     },
     {
-      "date": "2026-12-24",
+      "date": "2026-12-25",
       "dayN": 60,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 21033,
@@ -2911,7 +3102,7 @@
       }
     },
     {
-      "date": "2026-12-25",
+      "date": "2026-12-28",
       "dayN": 61,
       "isExpiry": false,
       "NIFTY": {
@@ -2943,9 +3134,9 @@
       }
     },
     {
-      "date": "2026-12-28",
+      "date": "2026-12-29",
       "dayN": 62,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 21010,
@@ -2975,9 +3166,9 @@
       }
     },
     {
-      "date": "2026-12-29",
+      "date": "2026-12-30",
       "dayN": 63,
-      "isExpiry": true,
+      "isExpiry": false,
       "NIFTY": {
         "exp": 22422,
         "low": 20998,
@@ -3007,9 +3198,9 @@
       }
     },
     {
-      "date": "2026-12-30",
+      "date": "2026-12-31",
       "dayN": 64,
-      "isExpiry": false,
+      "isExpiry": true,
       "NIFTY": {
         "exp": 22422,
         "low": 20987,
@@ -3033,38 +3224,6 @@
         "low": 67308,
         "high": 76512,
         "band": 4602,
-        "bandPct": 6.4,
-        "conf": 18,
-        "kind": "uncertainty cone"
-      }
-    },
-    {
-      "date": "2026-12-31",
-      "dayN": 65,
-      "isExpiry": true,
-      "NIFTY": {
-        "exp": 22422,
-        "low": 20976,
-        "high": 23868,
-        "band": 1446,
-        "bandPct": 6.4,
-        "conf": 18,
-        "kind": "uncertainty cone"
-      },
-      "BANKNIFTY": {
-        "exp": 54451,
-        "low": 50061,
-        "high": 58841,
-        "band": 4390,
-        "bandPct": 8.1,
-        "conf": 18,
-        "kind": "uncertainty cone"
-      },
-      "SENSEX": {
-        "exp": 71910,
-        "low": 67272,
-        "high": 76548,
-        "band": 4638,
         "bandPct": 6.4,
         "conf": 18,
         "kind": "uncertainty cone"
@@ -3416,7 +3575,7 @@
   "histHitRate": 40,
   "hitRate": 83,
   "resolved": 6,
-  "updatedAt": "2026-10-01T10:30:52.455Z",
+  "updatedAt": "2026-10-02T10:30:36.439Z",
   "dirHitRate": 25,
   "dirResolved": 4,
   "regimeAcc": {
