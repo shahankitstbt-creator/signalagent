@@ -7,33 +7,33 @@
       "putWall": 22500,
       "gammaFlip": 22500,
       "regime": "POS GAMMA",
-      "pcr": 1.27,
+      "pcr": 1.29,
       "atm": 22500,
       "expiry": "13OCT2026",
-      "dExp": 4,
+      "dExp": 3,
       "isExpiry": false,
       "distPct": -0.09,
-      "casRegime": "TILTED",
-      "expectedClose": 22497,
-      "expectedMovePct": -0.1,
-      "band": 68,
-      "magnitude": "normal",
-      "direction": "DOWN",
-      "confidence": 56,
-      "pinStrength": 38,
+      "casRegime": "PINNED",
+      "expectedClose": 22500,
+      "expectedMovePct": -0.09,
+      "band": 34,
+      "magnitude": "quiet",
+      "direction": "FLAT",
+      "confidence": 72,
+      "pinStrength": 60,
       "gammaMag": 36,
       "flow": {
-        "callChg": 12019345,
-        "putChg": 4159350,
-        "bias": -0.082,
+        "callChg": 11671725,
+        "putChg": 31420155,
+        "bias": 0.207,
         "label": "call writing (cap ↑) + put writing (floor ↑)",
-        "dir": "down"
+        "dir": "up"
       },
       "drivers": [
         {
-          "dir": "down",
+          "dir": "up",
           "w": 1,
-          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +12019345 · ΔPE +4159350)"
+          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +11671725 · ΔPE +31420155)"
         },
         {
           "dir": "flat",
@@ -43,56 +43,56 @@
         {
           "dir": "down",
           "w": 0.22,
-          "text": "Max-pain pin 22500 (-0.09% vs spot) · pin strength 38/100"
+          "text": "Max-pain pin 22500 (-0.09% vs spot) · pin strength 60/100"
         }
       ],
-      "mechanics": "No strong pin or gamma signal. Mild DOWN tilt from flow (call writing (cap ↑) + put writing (floor ↑)) + FII positioning → low-conviction close near 22497.",
+      "mechanics": "POSITIVE gamma + pin strength 60/100 at max pain 22500 (3d to expiry). Writers defend 22500 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈22500. Quiet close, not a trend.",
       "why": [
-        "No strong pin or gamma signal. Mild DOWN tilt from flow (call writing (cap ↑) + put writing (floor ↑)) + FII positioning → low-conviction close near 22497.",
-        "▼ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +12019345 · ΔPE +4159350)",
+        "POSITIVE gamma + pin strength 60/100 at max pain 22500 (3d to expiry). Writers defend 22500 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈22500. Quiet close, not a trend.",
+        "▲ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +11671725 · ΔPE +31420155)",
         "■ POS GAMMA (flip 22500) · dealer pressure 36/100 — suppresses the close",
-        "▼ Max-pain pin 22500 (-0.09% vs spot) · pin strength 38/100"
+        "▼ Max-pain pin 22500 (-0.09% vs spot) · pin strength 60/100"
       ],
       "magnets": [
         {
           "k": 22500,
-          "ce": 9898460,
-          "pe": 13191165
+          "ce": 9524385,
+          "pe": 12890735
         },
         {
           "k": 22400,
-          "ce": 2939820,
-          "pe": 10872160
+          "ce": 2769130,
+          "pe": 10726625
         },
         {
           "k": 22300,
-          "ce": 1928810,
-          "pe": 11560185
+          "ce": 1877200,
+          "pe": 11361090
         },
         {
           "k": 22700,
-          "ce": 9573395,
-          "pe": 3143205
+          "ce": 9048910,
+          "pe": 2886975
         },
         {
           "k": 22600,
-          "ce": 7754955,
-          "pe": 4138745
+          "ce": 7383285,
+          "pe": 4032015
         },
         {
           "k": 22200,
-          "ce": 1135875,
-          "pe": 8738795
+          "ce": 1101685,
+          "pe": 8626085
         }
       ],
-      "tilt": -1.02,
+      "tilt": 0.58,
       "window": "15:15–15:30 IST",
-      "lean": "TILTED",
-      "bias": "down",
-      "predictedClose": 22497,
-      "footprintScore": -1,
-      "target": 22497,
-      "dirWord": "BEARISH",
+      "lean": "PINNED",
+      "bias": "flat",
+      "predictedClose": 22500,
+      "footprintScore": 0.6,
+      "target": 22500,
+      "dirWord": "NEUTRAL",
       "instBias": null
     },
     "BANKNIFTY": {
@@ -105,7 +105,7 @@
       "pcr": 0.95,
       "atm": 55300,
       "expiry": "27OCT2026",
-      "dExp": 18,
+      "dExp": 17,
       "isExpiry": false,
       "distPct": 0.08,
       "casRegime": "VOLATILE",
@@ -118,22 +118,22 @@
       "pinStrength": 15,
       "gammaMag": 10,
       "flow": {
-        "callChg": 778170,
-        "putChg": 739530,
-        "bias": -0.008,
+        "callChg": 2251860,
+        "putChg": 1479660,
+        "bias": -0.166,
         "label": "call writing (cap ↑) + put writing (floor ↑)",
         "dir": "down"
       },
       "drivers": [
         {
+          "dir": "down",
+          "w": 1,
+          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +2251860 · ΔPE +1479660)"
+        },
+        {
           "dir": "up",
           "w": 0.2,
           "text": "Max-pain pin 55300 (+0.08% vs spot) · pin strength 15/100"
-        },
-        {
-          "dir": "down",
-          "w": 0.16,
-          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +778170 · ΔPE +739530)"
         },
         {
           "dir": "down",
@@ -144,40 +144,40 @@
       "mechanics": "Spot 55256.65 is BELOW the gamma-flip 56000 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bearish → likely DOWN, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
         "Spot 55256.65 is BELOW the gamma-flip 56000 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bearish → likely DOWN, magnitude normal. (We call direction + size here, not an exact number.)",
+        "▼ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +2251860 · ΔPE +1479660)",
         "▲ Max-pain pin 55300 (+0.08% vs spot) · pin strength 15/100",
-        "▼ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +778170 · ΔPE +739530)",
         "▼ NEG GAMMA (flip 56000) · dealer pressure 10/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
           "k": 55000,
-          "ce": 932430,
-          "pe": 1241640
+          "ce": 930000,
+          "pe": 1240560
         },
         {
           "k": 56000,
-          "ce": 1153830,
-          "pe": 663180
+          "ce": 1148400,
+          "pe": 658440
         },
         {
           "k": 55500,
-          "ce": 743460,
-          "pe": 646470
+          "ce": 731040,
+          "pe": 634560
         },
         {
           "k": 55300,
-          "ce": 208410,
+          "ce": 208350,
           "pe": 217470
         },
         {
           "k": 55200,
-          "ce": 162600,
-          "pe": 218370
+          "ce": 162360,
+          "pe": 218220
         },
         {
           "k": 54900,
           "ce": 125820,
-          "pe": 160800
+          "pe": 160350
         }
       ],
       "tilt": -0.6,
@@ -1246,12 +1246,12 @@
       "dayN": 1,
       "isExpiry": false,
       "NIFTY": {
-        "exp": 22497,
-        "low": 22429,
-        "high": 22565,
-        "band": 68,
-        "bandPct": 0.3,
-        "conf": 56,
+        "exp": 22500,
+        "low": 22466,
+        "high": 22534,
+        "band": 34,
+        "bandPct": 0.2,
+        "conf": 72,
         "kind": "live footprint"
       },
       "BANKNIFTY": {
@@ -3475,7 +3475,7 @@
   "histHitRate": 40,
   "hitRate": 83,
   "resolved": 6,
-  "updatedAt": "2026-10-09T10:30:40.916Z",
+  "updatedAt": "2026-10-10T10:30:54.641Z",
   "dirHitRate": 25,
   "dirResolved": 4,
   "regimeAcc": {
