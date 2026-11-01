@@ -10,7 +10,7 @@
       "pcr": 1.03,
       "atm": 23050,
       "expiry": "03NOV2026",
-      "dExp": 3,
+      "dExp": 2,
       "isExpiry": false,
       "distPct": -0.23,
       "casRegime": "PINNED",
@@ -23,18 +23,13 @@
       "pinStrength": 54,
       "gammaMag": 32,
       "flow": {
-        "callChg": -1117025,
-        "putChg": 3838510,
-        "bias": 0.04,
-        "label": "put writing (floor ↑)",
+        "callChg": -34891805,
+        "putChg": -32165965,
+        "bias": 0.014,
+        "label": "call covering (squeeze ↑) + put covering (support ↓)",
         "dir": "up"
       },
       "drivers": [
-        {
-          "dir": "up",
-          "w": 0.8,
-          "text": "Intraday OI flow: put writing (floor ↑) (ΔCE -1117025 · ΔPE +3838510)"
-        },
         {
           "dir": "down",
           "w": 0.57,
@@ -44,14 +39,19 @@
           "dir": "flat",
           "w": 0.32,
           "text": "POS GAMMA (flip 23050) · dealer pressure 32/100 — suppresses the close"
+        },
+        {
+          "dir": "up",
+          "w": 0.28,
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -34891805 · ΔPE -32165965)"
         }
       ],
-      "mechanics": "POSITIVE gamma + pin strength 54/100 at max pain 23000 (3d to expiry). Writers defend 23000 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈23000. Quiet close, not a trend.",
+      "mechanics": "POSITIVE gamma + pin strength 54/100 at max pain 23000 (2d to expiry). Writers defend 23000 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈23000. Quiet close, not a trend.",
       "why": [
-        "POSITIVE gamma + pin strength 54/100 at max pain 23000 (3d to expiry). Writers defend 23000 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈23000. Quiet close, not a trend.",
-        "▲ Intraday OI flow: put writing (floor ↑) (ΔCE -1117025 · ΔPE +3838510)",
+        "POSITIVE gamma + pin strength 54/100 at max pain 23000 (2d to expiry). Writers defend 23000 and dealers sell strength / buy weakness, so the 15:15–15:30 auction CONVERGES to ≈23000. Quiet close, not a trend.",
         "▼ Max-pain pin 23000 (-0.23% vs spot) · pin strength 54/100",
-        "■ POS GAMMA (flip 23050) · dealer pressure 32/100 — suppresses the close"
+        "■ POS GAMMA (flip 23050) · dealer pressure 32/100 — suppresses the close",
+        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -34891805 · ΔPE -32165965)"
       ],
       "magnets": [
         {
@@ -105,7 +105,7 @@
       "pcr": 1.18,
       "atm": 54700,
       "expiry": "23NOV2026",
-      "dExp": 23,
+      "dExp": 22,
       "isExpiry": false,
       "distPct": 0.39,
       "casRegime": "VOLATILE",
@@ -118,9 +118,9 @@
       "pinStrength": 24,
       "gammaMag": 6,
       "flow": {
-        "callChg": -1426890,
-        "putChg": -439110,
-        "bias": 0.119,
+        "callChg": -2801940,
+        "putChg": -1259760,
+        "bias": 0.148,
         "label": "call covering (squeeze ↑) + put covering (support ↓)",
         "dir": "up"
       },
@@ -128,7 +128,7 @@
         {
           "dir": "up",
           "w": 1,
-          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -1426890 · ΔPE -439110)"
+          "text": "Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2801940 · ΔPE -1259760)"
         },
         {
           "dir": "up",
@@ -144,7 +144,7 @@
       "mechanics": "Spot 54686.95 is BELOW the gamma-flip 54700 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
         "Spot 54686.95 is BELOW the gamma-flip 54700 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call covering (squeeze ↑) + put covering (support ↓); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
-        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -1426890 · ΔPE -439110)",
+        "▲ Intraday OI flow: call covering (squeeze ↑) + put covering (support ↓) (ΔCE -2801940 · ΔPE -1259760)",
         "▲ Max-pain pin 54900 (+0.39% vs spot) · pin strength 24/100",
         "▼ NEG GAMMA (flip 54700) · dealer pressure 6/100 — AMPLIFIES the close"
       ],
@@ -3163,7 +3163,7 @@
   "histHitRate": 40,
   "hitRate": 83,
   "resolved": 6,
-  "updatedAt": "2026-10-31T10:30:54.000Z",
+  "updatedAt": "2026-11-01T10:30:46.389Z",
   "dirHitRate": 25,
   "dirResolved": 4,
   "regimeAcc": {
