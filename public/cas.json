@@ -7,7 +7,7 @@
       "putWall": 25000,
       "gammaFlip": 25350,
       "regime": "NEG GAMMA",
-      "pcr": 1.12,
+      "pcr": 1.11,
       "atm": 25350,
       "expiry": "01DEC2026",
       "dExp": 7,
@@ -19,16 +19,10 @@
       "band": 127,
       "magnitude": "normal",
       "direction": "UP",
-      "confidence": 65,
+      "confidence": 59,
       "pinStrength": 36,
       "gammaMag": 15,
-      "flow": {
-        "callChg": 27746810,
-        "putChg": 35626435,
-        "bias": 0.074,
-        "label": "call writing (cap ↑) + put writing (floor ↑)",
-        "dir": "up"
-      },
+      "flow": null,
       "drivers": [
         {
           "dir": "up",
@@ -36,61 +30,55 @@
           "text": "Max-pain pin 25450 (+0.4% vs spot) · pin strength 36/100"
         },
         {
-          "dir": "up",
-          "w": 1,
-          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +27746810 · ΔPE +35626435)"
-        },
-        {
           "dir": "down",
           "w": 0.15,
           "text": "NEG GAMMA (flip 25350) · dealer pressure 15/100 — AMPLIFIES the close"
         }
       ],
-      "mechanics": "Spot 25349.65 is BELOW the gamma-flip 25350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 25349.65 is BELOW the gamma-flip 25350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: n/a; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 25349.65 is BELOW the gamma-flip 25350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+        "Spot 25349.65 is BELOW the gamma-flip 25350 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: n/a; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 25450 (+0.4% vs spot) · pin strength 36/100",
-        "▲ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +27746810 · ΔPE +35626435)",
         "▼ NEG GAMMA (flip 25350) · dealer pressure 15/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
           "k": 25500,
-          "ce": 4560270,
-          "pe": 3686670
+          "ce": 4564885,
+          "pe": 3705845
         },
         {
           "k": 25400,
-          "ce": 2837835,
-          "pe": 2654535
+          "ce": 2836340,
+          "pe": 2590445
         },
         {
           "k": 25000,
-          "ce": 1050920,
-          "pe": 4112615
+          "ce": 1001650,
+          "pe": 4040985
         },
         {
           "k": 25600,
-          "ce": 2950805,
-          "pe": 1593670
+          "ce": 2950220,
+          "pe": 1592305
         },
         {
           "k": 25700,
-          "ce": 2973295,
-          "pe": 1402310
+          "ce": 2974530,
+          "pe": 1397500
         },
         {
           "k": 25300,
-          "ce": 1090245,
-          "pe": 1960725
+          "ce": 1094730,
+          "pe": 1940900
         }
       ],
-      "tilt": 1.8,
+      "tilt": 1,
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
       "bias": "up",
       "predictedClose": 25502,
-      "footprintScore": 1.8,
+      "footprintScore": 1,
       "target": 25502,
       "dirWord": "BULLISH",
       "instBias": null
@@ -114,16 +102,10 @@
       "band": 313,
       "magnitude": "normal",
       "direction": "UP",
-      "confidence": 53,
+      "confidence": 59,
       "pinStrength": 25,
       "gammaMag": 5,
-      "flow": {
-        "callChg": 5521290,
-        "putChg": 5316570,
-        "bias": -0.027,
-        "label": "call writing (cap ↑) + put writing (floor ↑)",
-        "dir": "down"
-      },
+      "flow": null,
       "drivers": [
         {
           "dir": "up",
@@ -132,60 +114,54 @@
         },
         {
           "dir": "down",
-          "w": 0.54,
-          "text": "Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +5521290 · ΔPE +5316570)"
-        },
-        {
-          "dir": "down",
           "w": 0.05,
           "text": "NEG GAMMA (flip 62600) · dealer pressure 5/100 — AMPLIFIES the close"
         }
       ],
-      "mechanics": "Spot 62585.35 is BELOW the gamma-flip 62600 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+      "mechanics": "Spot 62585.35 is BELOW the gamma-flip 62600 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: n/a; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
       "why": [
-        "Spot 62585.35 is BELOW the gamma-flip 62600 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: call writing (cap ↑) + put writing (floor ↑); net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
+        "Spot 62585.35 is BELOW the gamma-flip 62600 → NEGATIVE gamma: dealers hedge WITH the move (sell weakness / buy strength), so the 15:15–15:30 window AMPLIFIES. This is the regime behind the sudden 1–2% closing swings. Flow: n/a; net tilt bullish → likely UP, magnitude normal. (We call direction + size here, not an exact number.)",
         "▲ Max-pain pin 63000 (+0.66% vs spot) · pin strength 25/100",
-        "▼ Intraday OI flow: call writing (cap ↑) + put writing (floor ↑) (ΔCE +5521290 · ΔPE +5316570)",
         "▼ NEG GAMMA (flip 62600) · dealer pressure 5/100 — AMPLIFIES the close"
       ],
       "magnets": [
         {
           "k": 63000,
-          "ce": 569220,
-          "pe": 525930
+          "ce": 568230,
+          "pe": 525810
         },
         {
           "k": 62000,
-          "ce": 175680,
-          "pe": 431250
+          "ce": 176220,
+          "pe": 430650
         },
         {
           "k": 62500,
-          "ce": 136770,
-          "pe": 155430
-        },
-        {
-          "k": 62900,
-          "ce": 42450,
-          "pe": 30360
+          "ce": 137040,
+          "pe": 155250
         },
         {
           "k": 63300,
-          "ce": 52140,
-          "pe": 20610
+          "ce": 52200,
+          "pe": 20550
+        },
+        {
+          "k": 62900,
+          "ce": 42570,
+          "pe": 30090
         },
         {
           "k": 63200,
           "ce": 47790,
-          "pe": 21300
+          "pe": 21240
         }
       ],
-      "tilt": 0.2,
+      "tilt": 1,
       "window": "15:15–15:30 IST",
       "lean": "VOLATILE",
       "bias": "up",
       "predictedClose": 62961,
-      "footprintScore": 0.2,
+      "footprintScore": 1,
       "target": 62961,
       "dirWord": "BULLISH",
       "instBias": null
@@ -598,6 +574,10 @@
       {
         "date": "2026-11-20",
         "close": 25800.6
+      },
+      {
+        "date": "2026-11-23",
+        "close": 25349.65
       }
     ],
     "BANKNIFTY": [
@@ -904,6 +884,10 @@
       {
         "date": "2026-11-20",
         "close": 64635.2
+      },
+      {
+        "date": "2026-11-23",
+        "close": 62585.35
       }
     ],
     "SENSEX": [
@@ -1210,6 +1194,10 @@
       {
         "date": "2026-11-20",
         "close": 83919.71
+      },
+      {
+        "date": "2026-11-23",
+        "close": 82435.99
       }
     ]
   },
@@ -1587,7 +1575,7 @@
         "high": 25629,
         "band": 127,
         "bandPct": 0.5,
-        "conf": 65,
+        "conf": 59,
         "kind": "live footprint"
       },
       "BANKNIFTY": {
@@ -1596,14 +1584,14 @@
         "high": 63274,
         "band": 313,
         "bandPct": 0.5,
-        "conf": 53,
+        "conf": 59,
         "kind": "live footprint"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 83249,
-        "high": 84591,
-        "band": 671,
+        "exp": 82436,
+        "low": 81777,
+        "high": 83095,
+        "band": 659,
         "bandPct": 0.8,
         "conf": 47,
         "kind": "uncertainty cone"
@@ -1632,10 +1620,10 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82971,
-        "high": 84869,
-        "band": 949,
+        "exp": 82436,
+        "low": 81503,
+        "high": 83369,
+        "band": 933,
         "bandPct": 1.1,
         "conf": 47,
         "kind": "uncertainty cone"
@@ -1664,10 +1652,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82757,
-        "high": 85083,
-        "band": 1163,
+        "exp": 82436,
+        "low": 81294,
+        "high": 83578,
+        "band": 1142,
         "bandPct": 1.4,
         "conf": 46,
         "kind": "uncertainty cone"
@@ -1696,10 +1684,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82577,
-        "high": 85263,
-        "band": 1343,
+        "exp": 82436,
+        "low": 81117,
+        "high": 83755,
+        "band": 1319,
         "bandPct": 1.6,
         "conf": 46,
         "kind": "uncertainty cone"
@@ -1728,10 +1716,10 @@
         "kind": "expiry pin"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82419,
-        "high": 85421,
-        "band": 1501,
+        "exp": 82436,
+        "low": 80961,
+        "high": 83911,
+        "band": 1475,
         "bandPct": 1.8,
         "conf": 45,
         "kind": "uncertainty cone"
@@ -1760,10 +1748,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82276,
-        "high": 85564,
-        "band": 1644,
+        "exp": 82436,
+        "low": 80821,
+        "high": 84051,
+        "band": 1615,
         "bandPct": 2,
         "conf": 44,
         "kind": "uncertainty cone"
@@ -1792,10 +1780,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82144,
-        "high": 85696,
-        "band": 1776,
+        "exp": 82436,
+        "low": 80691,
+        "high": 84181,
+        "band": 1745,
         "bandPct": 2.1,
         "conf": 44,
         "kind": "uncertainty cone"
@@ -1824,10 +1812,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 82021,
-        "high": 85819,
-        "band": 1899,
+        "exp": 82436,
+        "low": 80571,
+        "high": 84301,
+        "band": 1865,
         "bandPct": 2.3,
         "conf": 43,
         "kind": "uncertainty cone"
@@ -1856,10 +1844,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81906,
-        "high": 85934,
-        "band": 2014,
+        "exp": 82436,
+        "low": 80458,
+        "high": 84414,
+        "band": 1978,
         "bandPct": 2.4,
         "conf": 43,
         "kind": "uncertainty cone"
@@ -1888,10 +1876,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81797,
-        "high": 86043,
-        "band": 2123,
+        "exp": 82436,
+        "low": 80351,
+        "high": 84521,
+        "band": 2085,
         "bandPct": 2.5,
         "conf": 42,
         "kind": "uncertainty cone"
@@ -1920,10 +1908,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81693,
-        "high": 86147,
-        "band": 2227,
+        "exp": 82436,
+        "low": 80249,
+        "high": 84623,
+        "band": 2187,
         "bandPct": 2.7,
         "conf": 41,
         "kind": "uncertainty cone"
@@ -1952,10 +1940,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81594,
-        "high": 86246,
-        "band": 2326,
+        "exp": 82436,
+        "low": 80151,
+        "high": 84721,
+        "band": 2285,
         "bandPct": 2.8,
         "conf": 41,
         "kind": "uncertainty cone"
@@ -1984,10 +1972,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81499,
-        "high": 86341,
-        "band": 2421,
+        "exp": 82436,
+        "low": 80058,
+        "high": 84814,
+        "band": 2378,
         "bandPct": 2.9,
         "conf": 40,
         "kind": "uncertainty cone"
@@ -2016,10 +2004,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81408,
-        "high": 86432,
-        "band": 2512,
+        "exp": 82436,
+        "low": 79968,
+        "high": 84904,
+        "band": 2468,
         "bandPct": 3,
         "conf": 40,
         "kind": "uncertainty cone"
@@ -2048,10 +2036,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81320,
-        "high": 86520,
-        "band": 2600,
+        "exp": 82436,
+        "low": 79882,
+        "high": 84990,
+        "band": 2554,
         "bandPct": 3.1,
         "conf": 39,
         "kind": "uncertainty cone"
@@ -2080,10 +2068,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81235,
-        "high": 86605,
-        "band": 2685,
+        "exp": 82436,
+        "low": 79798,
+        "high": 85074,
+        "band": 2638,
         "bandPct": 3.2,
         "conf": 38,
         "kind": "uncertainty cone"
@@ -2112,10 +2100,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81152,
-        "high": 86688,
-        "band": 2768,
+        "exp": 82436,
+        "low": 79717,
+        "high": 85155,
+        "band": 2719,
         "bandPct": 3.3,
         "conf": 38,
         "kind": "uncertainty cone"
@@ -2144,10 +2132,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 81072,
-        "high": 86768,
-        "band": 2848,
+        "exp": 82436,
+        "low": 79638,
+        "high": 85234,
+        "band": 2798,
         "bandPct": 3.4,
         "conf": 37,
         "kind": "uncertainty cone"
@@ -2176,10 +2164,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80994,
-        "high": 86846,
-        "band": 2926,
+        "exp": 82436,
+        "low": 79561,
+        "high": 85311,
+        "band": 2875,
         "bandPct": 3.5,
         "conf": 37,
         "kind": "uncertainty cone"
@@ -2208,10 +2196,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80918,
-        "high": 86922,
-        "band": 3002,
+        "exp": 82436,
+        "low": 79487,
+        "high": 85385,
+        "band": 2949,
         "bandPct": 3.6,
         "conf": 36,
         "kind": "uncertainty cone"
@@ -2240,10 +2228,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80843,
-        "high": 86997,
-        "band": 3077,
+        "exp": 82436,
+        "low": 79414,
+        "high": 85458,
+        "band": 3022,
         "bandPct": 3.7,
         "conf": 35,
         "kind": "uncertainty cone"
@@ -2272,10 +2260,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80771,
-        "high": 87069,
-        "band": 3149,
+        "exp": 82436,
+        "low": 79343,
+        "high": 85529,
+        "band": 3093,
         "bandPct": 3.8,
         "conf": 35,
         "kind": "uncertainty cone"
@@ -2304,10 +2292,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80700,
-        "high": 87140,
-        "band": 3220,
+        "exp": 82436,
+        "low": 79273,
+        "high": 85599,
+        "band": 3163,
         "bandPct": 3.8,
         "conf": 34,
         "kind": "uncertainty cone"
@@ -2336,10 +2324,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80631,
-        "high": 87209,
-        "band": 3289,
+        "exp": 82436,
+        "low": 79205,
+        "high": 85667,
+        "band": 3231,
         "bandPct": 3.9,
         "conf": 34,
         "kind": "uncertainty cone"
@@ -2368,10 +2356,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80563,
-        "high": 87277,
-        "band": 3357,
+        "exp": 82436,
+        "low": 79139,
+        "high": 85733,
+        "band": 3297,
         "bandPct": 4,
         "conf": 33,
         "kind": "uncertainty cone"
@@ -2400,10 +2388,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80497,
-        "high": 87343,
-        "band": 3423,
+        "exp": 82436,
+        "low": 79073,
+        "high": 85799,
+        "band": 3363,
         "bandPct": 4.1,
         "conf": 32,
         "kind": "uncertainty cone"
@@ -2432,10 +2420,10 @@
         "kind": "uncertainty cone"
       },
       "SENSEX": {
-        "exp": 83920,
-        "low": 80432,
-        "high": 87408,
-        "band": 3488,
+        "exp": 82436,
+        "low": 79009,
+        "high": 85863,
+        "band": 3427,
         "bandPct": 4.2,
         "conf": 32,
         "kind": "uncertainty cone"
@@ -2787,7 +2775,7 @@
   "histHitRate": 40,
   "hitRate": 83,
   "resolved": 6,
-  "updatedAt": "2026-11-24T00:13:54.513Z",
+  "updatedAt": "2026-11-24T10:30:45.605Z",
   "dirHitRate": 25,
   "dirResolved": 4,
   "regimeAcc": {
